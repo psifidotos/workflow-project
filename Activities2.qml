@@ -39,64 +39,21 @@ Rectangle {
     }
 
     Item{
-
         id:lists
         y:workareaY+(workareaY/3)
-        height:mainView.height
 
-        ListView {
-            id:mod1
-            height:workareaHeight*model.count
+        ListView{
+            id:allareas
+            width:mainView.width
 
-            x:5
-            spacing:3+workareaY / 5
-
-            model:WorkAreasModel1{}
-            delegate:WorkArea{
-            }
-
-        }
-
-        ListView {
-            id:mod2
-
-            height:workareaHeight*model.count
-
-            x:10+mainView.workareaWidth
-            spacing:3+workareaY / 5
-
-
-            model:WorkAreasModel2{}
-            delegate:WorkArea{
+            orientation: ListView.Horizontal
+            spacing:60+3.5*mainView.scaleMeter
+            model:WorkAreasCompleteModel{}
+            delegate: WorkAreaList{
 
             }
         }
 
-        ListView {
-            id:mod3
-
-            height:workareaHeight*model.count
-            x:15+2*mainView.workareaWidth
-            spacing:3+workareaY / 5
-
-            model:WorkAreasModel3{}
-            delegate:WorkArea{
-
-            }
-        }
-
-        ListView {
-            id:mod4
-
-            height:workareaHeight*model.count
-            x:20+3*mainView.workareaWidth
-            spacing:3+workareaY / 5
-
-            model:WorkAreasModel4{}
-            delegate:WorkArea{
-
-            }
-        }
     }
 
 
