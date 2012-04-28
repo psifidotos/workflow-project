@@ -245,9 +245,9 @@ Item{
     function clicked(mouse){
         dTextIItem.firstrun = false;
 
-        mainIText.forceActiveFocus();
         var pos = mainIText.characterPositionAt(mouse);
         mainIText.cursorPosition = pos;
+        mainIText.forceActiveFocus();
         pencilI.opacity = 0;
 
         dTextIItem.acceptedText = dTextIItem.text

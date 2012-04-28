@@ -183,10 +183,11 @@ Component{
             PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: true }
 
             ParallelAnimation{
-                NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
             }
 
 
