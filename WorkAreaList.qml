@@ -15,6 +15,8 @@ Component{
 
             spacing:3+workareaY / 5
 
+            interactive:false
+
             model:workareas
             delegate:WorkArea{
             }
