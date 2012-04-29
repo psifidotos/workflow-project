@@ -2,7 +2,7 @@ import QtQuick 1.0
 
 Rectangle{
 
-    width:mainWorkArea.width - workAreaButtons.width
+    width:60+3*mainView.scaleMeter
 
     height:40
     color: fromColor
@@ -56,22 +56,7 @@ Rectangle{
             addWorkArea.border.color = addWorkArea.borderFromColor;
         }
 
-        onClicked:{
-            var counts = mainWorkArea.ListView.view.model.count;
-            console.debug(counts);
-            var lastobj = mainWorkArea.ListView.view.model.get(counts-1);
-
-             mainWorkArea.ListView.view.model.insert(counts-1, {
-                                                        "elemTitle": "Dynamic",
-                                                        "elemImg":lastobj.elemImg,
-                                                        "elemShowAdd":false,
-                                                        "gridRow":lastobj.gridRow,
-                                                        "gridColumn":lastobj.gridColumn,
-                                                        "elemTempOnDragging":false});
-
-              mainWorkArea.ListView.view.model.setProperty(counts ,"gridRow",gridRow+1);
-        /*    console.debug(mainWorkArea.gridRow+"-"+mainWorkArea.gridColumn);*/
-        }
-
     }
+
 }
+

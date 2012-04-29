@@ -6,16 +6,13 @@ Component{
      id: mainWorkArea
 
      property alias normalStateArea_visible: normalStateWorkArea.visible
-     property alias addArea_visible: addWorkArea.visible
      property alias workAreaName_visible: workAreaName.visible
      property alias areaButtons_visible: workAreaButtons.visible
 
-     //width:borderRectangle.width + workAreaButtons.width + 12
-     //height:borderRectangle.height + workAreaName.height + 20;
-     // width:workareas.cellWidth
-     // height:workareas.cellHeight
-     width:60+3*mainView.scaleMeter
-     height:50+2*mainView.scaleMeter
+     //width:60+3*mainView.scaleMeter
+     //height:50+2*mainView.scaleMeter
+     width:1.4 * mainView.workareaHeight
+     height:mainView.workareaHeight
 
         Item{
             id:normalWorkArea
@@ -82,68 +79,38 @@ Component{
 
             DTextLine{
                 id:workAreaName
-               // anchors.top:normalStateWorkArea.bottom
                 y:normalStateWorkArea.height-7
                 width:50+mainView.scaleMeter*3
                 height:20+2.5*mainView.scaleMeter/5
                 text: elemTitle
-                acceptedText: elemTitle
-            }
-
-/*
-            TextInput {
-
-                id:workAreaName
-                width:50+mainView.scaleMeter*3
-
-                text: elemTitle
-                font.family: "Helvetica"
-                font.italic: true
-                font.pointSize: 5+mainView.scaleMeter/10
-                color: "#323232"
-            }
-*/
-            AddWorkAreaButton{
-                id:addWorkArea
+               // acceptedText: elemTitle
             }
 
             states: [
                 State {
                     name: "s1"
-
-                //    when: (!elemShowAdd)
                     PropertyChanges {
                         target: mainWorkArea
                         normalStateArea_visible: true
                         workAreaName_visible:true
-                        addArea_visible: false
-                        //areaButtons_visible:false
                     }
                 },
-               State {
-                   name: "s2"
-                   when: (elemShowAdd)
-                   PropertyChanges {
-                        target: mainWorkArea
-                        normalStateArea_visible: false
-                        workAreaName_visible:false
-                        addArea_visible: true
-                        //areaButtons_visible:false
-
-                   }
-                },
-                State {
+  /*              State {
                     name: "dragging"
                     when: (loc.currentId == gridRow)&&(elemVisible)
-                     PropertyChanges { target: normalWorkArea; x: loc.mouseX - width/2; y: loc.mouseY - height/2; scale: 0.5; z: 18 }
+                     PropertyChanges {
+                         target: normalWorkArea;
+                         x: loc.mouseX - width/2;
+                         y: loc.mouseY - height/2;
+                         scale: 0.5;
+                         z: 18 }
                      PropertyChanges {
                          target: mainWorkArea
                          normalStateArea_visible: true
                          workAreaName_visible:true
-                         addArea_visible: false
                          areaButtons_visible:false
                      }
-                },
+                }, testing for dragging*/
                 State {
                     name:"hidden"
                     when: (!elemVisible)
@@ -151,7 +118,6 @@ Component{
                         target: mainWorkArea
                         normalStateArea_visible: false
                         workAreaName_visible:false
-                        addArea_visible: false
                         areaButtons_visible:false
                     }
 
@@ -173,9 +139,8 @@ Component{
             PropertyAction { target: borderRectangle; property: "height"; value: 0 }
             PropertyAction { target: workAreaName; property: "opacity"; value: 0 }
 
-            NumberAnimation { target: mainWorkArea; property: "height"; to: 50+2*mainView.scaleMeter; duration: 400; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "opacity"; to: 1; duration: 700; easing.type: Easing.InOutQuad }
-        //    NumberAnimation { target: borderRectangle; property: "height"; to: 110; duration: 400; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainWorkArea; property: "height"; to: mainView.workareaHeight; duration: 400; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
             NumberAnimation { target: workAreaName; property: "opacity"; to: 1; duration: 200; easing.type: Easing.InOutQuad }
         }
 
@@ -194,6 +159,7 @@ Component{
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: false }
         }
+
 
     }//Item
 

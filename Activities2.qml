@@ -22,7 +22,7 @@ Rectangle {
 
     Behavior on scaleMeter{
         NumberAnimation {
-            duration: 200;
+            duration: 100;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -50,7 +50,6 @@ Rectangle {
             spacing:60+3.5*mainView.scaleMeter
             model:WorkAreasCompleteModel{}
             delegate: WorkAreaList{
-
             }
         }
 

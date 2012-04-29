@@ -21,15 +21,6 @@ ListModel {
                     elemImg:"Images/screens/desk2.png"
                     elemShowAdd: false
                     elemTempOnDragging: false
-                },
-
-                ListElement {
-                    gridRow:2
-                    gridColumn:0
-                    elemTitle: "KDe"
-                    elemImg:"Images/screens/desk2.png"
-                    elemShowAdd: true
-                    elemTempOnDragging: false
                 }
 
         ]
@@ -62,15 +53,6 @@ ListModel {
                 elemTitle: "All Lessons"
                 elemImg:"Images/screens/less3.png"
                 elemShowAdd: false
-                elemTempOnDragging: false
-            },
-
-            ListElement {
-                gridRow:3
-                gridColumn:1
-                elemTitle: "All Lessons"
-                elemImg:"Images/screens/less3.png"
-                elemShowAdd: true
                 elemTempOnDragging: false
             }
 
@@ -115,15 +97,6 @@ ListModel {
                 elemImg:"Images/screens/dev4.png"
                 elemShowAdd: false
                 elemTempOnDragging: false
-            },
-
-            ListElement {
-                gridRow:4
-                gridColumn:2
-                elemTitle: "Bash"
-                elemImg:"Images/screens/dev4.png"
-                elemShowAdd: true
-                elemTempOnDragging: false
             }
         ]
     }
@@ -147,15 +120,6 @@ ListModel {
                 elemTitle: "Mint"
                 elemImg:"Images/screens/linux2.png"
                 elemShowAdd: false
-                elemTempOnDragging: false
-            },
-
-            ListElement {
-                gridRow:2
-                gridColumn:3
-                elemTitle: "Mint"
-                elemImg:"Images/screens/linux2.png"
-                elemShowAdd: true
                 elemTempOnDragging: false
             }
 
