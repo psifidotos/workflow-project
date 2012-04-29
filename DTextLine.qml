@@ -107,17 +107,25 @@ Item{
 
         Behavior on color{
             ColorAnimation {
-                duration: 200;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-        Behavior on space{
+        Behavior on width{
             NumberAnimation {
-                duration: 200;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
+
+        Behavior on height{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
 
         //from: http://qt.gitorious.org/qt-components/qt-components/blobs/1be426261941ce4751dbda11b3a6c2b974646225/components/behaviors/TextEditMouseBehavior.qml
         function characterPositionAt(mouse) {

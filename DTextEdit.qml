@@ -82,6 +82,7 @@ Item{
     TextEdit {
         id:mainText
         property int space:0;
+        //property int spaceN:
 
         width:dTextItem.width -30 - space;
         height: dTextItem.height - space;
@@ -106,17 +107,25 @@ Item{
 
         Behavior on color{
             ColorAnimation {
-                duration: 200;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-        Behavior on space{
+        Behavior on width{
             NumberAnimation {
-                duration: 200;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
+
+        Behavior on height{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
         //from: http://qt.gitorious.org/qt-components/qt-components/blobs/1be426261941ce4751dbda11b3a6c2b974646225/components/behaviors/TextEditMouseBehavior.qml
         function characterPositionAt(mouse) {
             var mappedMouse = mapToItem(mainText, mouse.x, mouse.y);
@@ -197,8 +206,8 @@ Item{
             }
             PropertyChanges{
                 target:mainText
-                color:mainText.activColor
                 space:21
+                color:mainText.activColor
             }
             PropertyChanges{
                 target:pencilImg
@@ -248,9 +257,10 @@ Item{
     function clicked(mouse){
         dTextItem.firstrun = false;
 
+        mainText.forceActiveFocus();
         var pos = mainText.characterPositionAt(mouse);
         mainText.cursorPosition = pos;
-        mainText.forceActiveFocus();
+
         pencilImg.opacity = 0;
 
         dTextItem.acceptedText = dTextItem.text

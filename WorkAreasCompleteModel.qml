@@ -9,7 +9,7 @@ ListModel {
                     gridRow:0
                     gridColumn:0
                     elemTitle:"Movies"
-                    elemImg:"Images/screens/desk1.png"
+                    elemImg:"Images/backgrounds/background1.jpg"
                     elemShowAdd: false
                     elemTempOnDragging: false
                 },
@@ -18,7 +18,7 @@ ListModel {
                     gridRow:1
                     gridColumn:0
                     elemTitle: "KDe"
-                    elemImg:"Images/screens/desk2.png"
+                    elemImg:"Images/backgrounds/background1.jpg"
                     elemShowAdd: false
                     elemTempOnDragging: false
                 }
@@ -33,7 +33,7 @@ ListModel {
                 gridRow:0
                 gridColumn:1
                 elemTitle:"Programming"
-                elemImg:"Images/screens/less1.png"
+                elemImg:"Images/backgrounds/background2.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             },
@@ -42,7 +42,7 @@ ListModel {
                 gridRow:1
                 gridColumn:1
                 elemTitle: "Image Editing"
-                elemImg:"Images/screens/less2.png"
+                elemImg: "Images/backgrounds/background2.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             },
@@ -51,7 +51,7 @@ ListModel {
                 gridRow:2
                 gridColumn:1
                 elemTitle: "All Lessons"
-                elemImg:"Images/screens/less3.png"
+                elemImg:"Images/backgrounds/background2.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             }
@@ -66,7 +66,7 @@ ListModel {
                 gridRow:0
                 gridColumn:2
                 elemTitle:"School"
-                elemImg:"Images/screens/dev1.png"
+                elemImg:"Images/backgrounds/background3.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
 
@@ -76,7 +76,7 @@ ListModel {
                 gridRow:1
                 gridColumn:2
                 elemTitle: "Lyrics"
-                elemImg:"Images/screens/dev2.png"
+                elemImg:"Images/backgrounds/background3.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             },
@@ -85,7 +85,7 @@ ListModel {
                 gridRow:2
                 gridColumn:2
                 elemTitle: "Cyclos"
-                elemImg:"Images/screens/dev3.png"
+                elemImg:"Images/backgrounds/background3.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             },
@@ -94,7 +94,7 @@ ListModel {
                 gridRow:3
                 gridColumn:2
                 elemTitle: "Bash"
-                elemImg:"Images/screens/dev4.png"
+                elemImg:"Images/backgrounds/background3.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             }
@@ -109,7 +109,7 @@ ListModel {
                 gridRow:0
                 gridColumn:3
                 elemTitle:"OpenSuse"
-                elemImg:"Images/screens/linux1.png"
+                elemImg:"Images/backgrounds/background4.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             },
@@ -118,7 +118,7 @@ ListModel {
                 gridRow:1
                 gridColumn:3
                 elemTitle: "Mint"
-                elemImg:"Images/screens/linux2.png"
+                elemImg:"Images/backgrounds/background4.jpg"
                 elemShowAdd: false
                 elemTempOnDragging: false
             }
