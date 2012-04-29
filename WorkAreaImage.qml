@@ -7,8 +7,10 @@ BorderImage {
 
    property int tempMeter: mainView.scaleMeter/5;
 
-   border.left: 12; border.top: 12;
-   border.right: 13; border.bottom: 14;
+   border.left: 10; border.top: 10;
+   border.right: 14; border.bottom: 14;
+   horizontalTileMode: BorderImage.Repeat
+   verticalTileMode: BorderImage.Repeat
 
 
    Rectangle{
