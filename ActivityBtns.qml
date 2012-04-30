@@ -53,6 +53,13 @@ Item{
                 stopActivityBtn.scale = 1;
             }
 
+            onClicked: {
+                var ind = mainActivity.getCurrentIndex();
+                stoppedActivitiesList.model.setProperty(ind,"CState","Stopped");
+                mainActivity.ListView.view.model.setProperty(ind,"CState","Stopped");
+                stopActBack.changedChildState();
+            }
+
         }
     }
 

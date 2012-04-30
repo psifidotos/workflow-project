@@ -2,32 +2,37 @@
 import QtQuick 1.1
 
 ListModel {
+
     ListElement {
+        code:"235"
         Current:false
         Name:"Δομημένος Προγραμματισμός"
         Icon:"Images/icons/activity1.png"
-        State:"Running"
+        CState:"Running"
     }
 
     ListElement {
+        code:"234"
         Current:true
         Name:"Chess"
         Icon:"Images/icons/activity2.png"
-        State:"Running"
+        CState:"Stopped"
     }
 
     ListElement {
+        code:"202"
         Current:false
         Name:"Programming"
         Icon:"Images/icons/activity3.png"
-        State:"Running"
+        CState:"Running"
     }
 
     ListElement {
+        code:"3423"
         Current:false
         Name:"Designing"
         Icon:"Images/icons/activity4.png"
-        State:"Running"
+        CState:"Running"
     }
 
 }

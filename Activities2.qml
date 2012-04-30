@@ -124,6 +124,8 @@ Rectangle {
             border.width:1
 
             ListView {
+                id: activitiesList
+
                 orientation: ListView.Horizontal
                 height: workareaY
                 width: mainView.width<allareas.width ? allareas.width : mainView.width
@@ -134,7 +136,7 @@ Rectangle {
                 spacing: workareaY / 10
                 interactive:false
 
-                id: activitiesList
+
                 model: ActivitiesModel1{}
                 delegate: Activity{
 
@@ -184,7 +186,7 @@ Rectangle {
     Rectangle {
         id: stopActBack
 
-        x:stoppedActivitiesList.model.count > 0 ? mainView.width - width : mainView.width - 2
+        x:shownActivities > 0 ? mainView.width - width : mainView.width - 2
         y:0
         width: 2*mainView.workareaWidth/3
         height: mainView.height - y
@@ -193,10 +195,19 @@ Rectangle {
         border.color: "#d9808080"
         border.width:1
 
+        property int shownActivities: stoppedActivitiesList.model.count
+
+        Behavior on x{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
         ListView {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
-            height: model.count*((2*workareaHeight/3)+spacing)
+            height: stopActBack.shownActivities * ((2*workareaHeight/3)+spacing)
             width: stopActBack.width - spacing
             anchors.bottom: stopActBack.bottom
             anchors.right: stopActBack.right
@@ -207,6 +218,13 @@ Rectangle {
             model: ActivitiesModel1{}
             delegate: ActivityStopped{
 
+            }
+
+            Behavior on height{
+                NumberAnimation {
+                    duration: 400;
+                    easing.type: Easing.InOutQuad;
+                }
             }
         }
 
@@ -221,6 +239,21 @@ Rectangle {
                 GradientStop { position: 0.0; color: "#770f0f0f" }
                 GradientStop { position: 1.0; color: "#00797979" }
             }
+        }
+
+        function changedChildState(){
+            var counter = 0;
+
+            for (var i=0; i<stoppedActivitiesList.model.count; ++i)
+            {
+                var elem = stoppedActivitiesList.model.get(i);
+
+                if (elem.CState === "Stopped")
+                   counter++;
+            }
+            shownActivities = counter;
+            console.debug("into:"+shownActivities);
+
         }
 
     }
@@ -296,6 +329,7 @@ Rectangle {
     }
 
 }
+
 
 
 

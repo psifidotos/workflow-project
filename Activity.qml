@@ -5,9 +5,28 @@ Component{
 
     Item{
         id:mainActivity
+        property string neededState:"Running"
 
-        width:mainView.workareaWidth
-        height:width/2
+        opacity: CState === neededState ? 1 : 0
+
+        width: CState === neededState ? mainView.workareaWidth : 0
+        height: CState === neededState ? width/2 : 0
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on width{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+
         Image{
           id:activityIcon
           rotation:-20
@@ -101,6 +120,15 @@ Component{
             width:parent.width-(mainView.scaleMeter-10)
             x:mainView.scaleMeter-10
             height:mainView.scaleMeter - 15
+        }
+
+        function getCurrentIndex(){
+            for(var i=0; ListView.view.model.count; ++i){
+                var obj = ListView.view.model.get(i);
+                if (obj.code === code)
+                    return i;
+            }
+            return -1;
         }
 
     }
