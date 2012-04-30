@@ -88,7 +88,7 @@ Rectangle {
 
         //Top Activities Banner
         //    Row{
-        Image{
+   /*     Image{
             id:actImag1Shad
             source:"Images/activitiesBack2Shadow.png"
             fillMode: Image.TileHorizontally
@@ -97,16 +97,31 @@ Rectangle {
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY/4
             smooth: true
+        }*/
+
+        Rectangle{
+            id:actImag1Shad
+            anchors.top: actImag1.bottom
+            y:actImag1.height
+            width: mainView.width<allareas.width ? allareas.width : mainView.width
+            height: workareaY/6
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                GradientStop { position: 1.0; color: "#00797979" }
+            }
         }
 
-        Image {
+        Rectangle {
             id: actImag1
-            source: "Images/activitiesBack2.png"
-            fillMode: Image.TileHorizontally
+            //source: "Images/activitiesBack2.png"
+            //fillMode: Image.TileHorizontally
             y:oxygenTitle.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY-workareaY/10
-            smooth: true
+            //smooth: true
+            color: "#646464"
+            border.color: "#77ffffff"
+            border.width:1
 
             ListView {
                 orientation: ListView.Horizontal
@@ -164,6 +179,55 @@ Rectangle {
     }
 
 
+    // Stopped Activities
+
+    Rectangle {
+        id: stopActBack
+
+        x:stoppedActivitiesList.model.count > 0 ? mainView.width - width : mainView.width - 2
+        y:0
+        width: 2*mainView.workareaWidth/3
+        height: mainView.height - y
+
+        color: "#ebebeb"
+        border.color: "#d9808080"
+        border.width:1
+
+        ListView {
+            id: stoppedActivitiesList
+            orientation: ListView.Vertical
+            height: model.count*((2*workareaHeight/3)+spacing)
+            width: stopActBack.width - spacing
+            anchors.bottom: stopActBack.bottom
+            anchors.right: stopActBack.right
+            anchors.rightMargin: spacing
+
+            spacing: workareaHeight/12
+            interactive:false
+            model: ActivitiesModel1{}
+            delegate: ActivityStopped{
+
+            }
+        }
+
+        Rectangle{
+            id:stpActShad
+            height: workareaWidth/30
+            width: stopActBack.height
+         //   anchors.right: stopActBack.left
+            rotation: 90
+            transformOrigin: Item.TopLeft
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#770f0f0f" }
+                GradientStop { position: 1.0; color: "#00797979" }
+            }
+        }
+
+    }
+    // Stopped Activities
+
+
+
     //ScrollBars
 
 
@@ -185,13 +249,25 @@ Rectangle {
 
 
 
-        Image{
+        /*Image{
             source:"Images/buttons/titleShadow.png"
             anchors.top:oxygenTitle.bottom
             width:oxygenTitle.width
-            height:oxygenTitle.height/2
+            height:3*oxygenTitle.height/5
             fillMode: Image.TileHorizontally
+            smooth:true
+        }*/
+
+        Rectangle{
+            anchors.top: oxygenTitle.bottom
+            width:oxygenTitle.width
+            height:3*oxygenTitle.height/6
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                GradientStop { position: 1.0; color: "#00797979" }
+            }
         }
+
         Text{
             anchors.top:oxygenTitle.top
             anchors.horizontalCenter: oxygenTitle.horizontalCenter
@@ -204,14 +280,18 @@ Rectangle {
 
     }
 
+
+
     Slider {
         id:zoomSlider
         anchors.bottom: mainView.bottom
-        anchors.right: mainView.right
+        anchors.bottomMargin: 5
+        anchors.right: stopActBack.left
+        anchors.rightMargin: 5
         maximum: 65
         minimum: 35
         value: 50
-        width:150
+        width:125
 
     }
 
