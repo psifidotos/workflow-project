@@ -4,6 +4,10 @@ import QtQuick 1.1
 Component{
     Item{
         //height:mainView.workareaHeight*workalist.model.count + 250
+        height:workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
+
+        onHeightChanged: allareas.changedChildHeight();
+
         ListView {
             id:workalist
 
@@ -27,6 +31,9 @@ Component{
                     easing.type: Easing.InOutQuad;
                 }
             }
+
+             //onHeightChanged: console.debug(height);
+            //onHeightChanged: allareas.changedChildHeight()
         }
 
         AddWorkAreaButton{
@@ -35,7 +42,7 @@ Component{
             z:3
 
             anchors.top:workalist.bottom
-            anchors.topMargin: mainView.workareaHeight/4
+            anchors.topMargin: mainView.workareaHeight/5
             anchors.horizontalCenter: workalist.horizontalCenter
 
             MouseArea {

@@ -37,12 +37,13 @@ Rectangle {
 
         anchors.fill: parent
         contentWidth: allareas.width
-        contentHeight: mainView.workareaHeight * 5 //improved in feature
+        contentHeight: allareas.height
+
         boundsBehavior: Flickable.StopAtBounds
 
         Image{
             width:mainView.width<allareas.width ? allareas.width : mainView.width
-            height:parent.height
+            height:mainView.height<allareas.height ? allareas.height : mainView.height
             source:"Images/greyBackground.png"
             fillMode: Image.Tile
         }
@@ -55,16 +56,32 @@ Rectangle {
 
             y:workareaY+(workareaY/3)
             width:model.count*(workareaWidth)
-            //  width:mainView.width
-            height:mainView.height
+            height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
             orientation: ListView.Horizontal
             spacing:60+3.5*mainView.scaleMeter
-
             interactive:false
+
+            property int maxWorkAreasHeight: 0
+            property int scrollingMargin: 30
 
             model:WorkAreasCompleteModel{}
             delegate: WorkAreaList{
             }
+
+            function changedChildHeight(){
+                var max=0;
+
+                for (var i=0; i<allareas.children[0].children.length; ++i)
+                {
+                    var tempH = allareas.children[0].children[i].height;
+                    //console.debug(tempL);
+                    if (tempH>max)
+                      max = tempH;
+                }
+
+                allareas.maxWorkAreasHeight = max;
+            }
+
         }
 
         //}
@@ -86,7 +103,6 @@ Rectangle {
             id: actImag1
             source: "Images/activitiesBack2.png"
             fillMode: Image.TileHorizontally
-            //   anchors.top: oxygenTitle.bottom
             y:oxygenTitle.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY-workareaY/10
