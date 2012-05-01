@@ -31,6 +31,21 @@ Rectangle {
     ListView{
         id:instanceOfActivitiesList
         model: ActivitiesModel1{}
+
+        function setCState(cod, val){
+            var ind = getCurrentIndex(cod);
+            model.setProperty(ind,"CState",val);
+        }
+
+        function getCurrentIndex(cod){
+            for(var i=0; model.count; ++i){
+                var obj = model.get(i);
+                if (obj.code === cod)
+                    return i;
+            }
+            return -1;
+        }
+
     }
 
 

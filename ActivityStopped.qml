@@ -144,20 +144,10 @@ Component{
             }
 
             onClicked: {
-                var ind = stpActivity.getCurrentIndex();
-                stpActivity.ListView.view.model.setProperty(ind,"CState","Running");
-            //    activitiesList.model.setProperty(ind,"CState","Running");
-
+                instanceOfActivitiesList.setCState(code,"Running");
             }
         }
 
-        function getCurrentIndex(){
-            for(var i=0; ListView.view.model.count; ++i){
-                var obj = ListView.view.model.get(i);
-                if (obj.code === code)
-                    return i;
-            }
-            return -1;
-        }
+
     }
 }

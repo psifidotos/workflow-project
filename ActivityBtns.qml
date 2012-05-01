@@ -54,9 +54,7 @@ Item{
             }
 
             onClicked: {
-                var ind = mainActivity.getCurrentIndex();
-           //     stoppedActivitiesList.model.setProperty(ind,"CState","Stopped");
-                mainActivity.ListView.view.model.setProperty(ind,"CState","Stopped");
+                instanceOfActivitiesList.setCState(code,"Stopped");
                 stopActBack.changedChildState();
             }
 
