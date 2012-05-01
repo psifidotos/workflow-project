@@ -113,8 +113,7 @@ Component{
             source: "Images/buttons/player_play.png"
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
-            anchors.verticalCenter:  stpActivity.verticalCenter
-            anchors.leftMargin: 20
+            anchors.top: stpActivity.top
 
             width: stpActivity.width/2
             height: width

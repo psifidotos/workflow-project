@@ -35,7 +35,10 @@ Rectangle {
     Flickable{
         id: view
 
-        anchors.fill: parent
+        width:stopActBack.x
+        height:mainView.height
+
+        //anchors.fill: parent
         contentWidth: allareas.width
         contentHeight: allareas.height
 
@@ -252,8 +255,6 @@ Rectangle {
                    counter++;
             }
             shownActivities = counter;
-            console.debug("into:"+shownActivities);
-
         }
 
     }
