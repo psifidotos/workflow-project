@@ -6,6 +6,7 @@ Component{
     Item{
         id: stpActivity
 
+        property string ccode:code
         property string neededState:"Stopped"
 
         opacity: CState === neededState ? 1 : 0
@@ -13,33 +14,35 @@ Component{
         width: CState === neededState ? stoppedActivitiesList.width : 0
         height: CState === neededState ? 2*mainView.workareaHeight/3 : 0
 
+        y: CState !== neededState ? -100 : 0
+
         property string curState: CState
 
         onCurStateChanged:{
-            stopActBack.changedChildState();
+            stoppedActivitiesList.changedChildState();
         }
 
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 300;
+                duration: 100;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-        Behavior on width{
+       Behavior on width{
             NumberAnimation {
-                duration: 300;
+                duration: 100;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-        Behavior on height{
+    /*    Behavior on height{
             NumberAnimation {
                 duration: 300;
                 easing.type: Easing.InOutQuad;
             }
-        }
+        }*/
 
         property real defOpacity :0.5
 
@@ -49,8 +52,9 @@ Component{
             rotation:-20
             opacity:parent.defOpacity
             source: Icon
-
-            anchors.right: stpActivity.right
+          //  x:25
+          //  anchors.right: stpActivity.right
+            x:stpActivity.width/2
             width:5+mainView.scaleMeter
             height:width
 
@@ -144,7 +148,13 @@ Component{
             }
 
             onClicked: {
+
+                var x1 = activityIcon.x;
+                var y1 = activityIcon.y;
+
+                activityAnimation.animateStoppedToActive(code,activityIcon.mapToItem(mainView,x1, y1));
                 instanceOfActivitiesList.setCState(code,"Running");
+
             }
         }
 

@@ -49,6 +49,126 @@ Rectangle {
     }
 
 
+    Image{
+        id:activityAnimation
+        opacity:1
+
+        width:5+mainView.scaleMeter
+        height:width
+        rotation:20
+
+        z:40
+
+        property int toX:0
+        property int toY:0
+
+        function animateStoppedToActive(cod, coord){
+            animateActivity(cod,coord,activitiesList);
+        }
+
+        function animateActiveToStop(cod, coord){
+            animateActivity(cod,coord,stoppedActivitiesList);
+        }
+
+        function animateActivity(cod,coord,lst){
+            var pos = instanceOfActivitiesList.getCurrentIndex(cod);
+            if (pos>=0){
+                activityAnimation.x = coord.x
+                activityAnimation.y = coord.y
+
+                var elem=instanceOfActivitiesList.model.get(pos);
+                activityAnimation.source = elem.Icon
+
+                var newPosElem=lst; // if no child found
+
+                var rchild = lst.children[0];
+
+                for(var i=0; i < rchild.children.length; ++i){
+                    // console.debug(cod+"-"+rchild.children[i].ccode);
+                    if (rchild.children[i].ccode===cod)
+                    {
+                    //    console.debug("found");
+                        newPosElem = rchild.children[i].children[0];
+                      //  console.debug("coords:"+newPosElem.x+"-"+newPosElem.y);
+                    }
+                }
+
+                var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.x,newPosElem.y);
+
+                if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
+                    activityAnimation.toX = mainView.width;
+                else
+                    activityAnimation.toX = fixPosElem.x;
+
+                if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
+                    activityAnimation.toY = mainView.height;
+                else
+                    activityAnimation.toY = fixPosElem.y;
+
+                playActAnimation.start();
+
+                //console.debug("-----------------");
+            }
+        }
+
+        ParallelAnimation{
+            id:playActAnimation
+            property int animationDur:1000
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: activityAnimation;
+                    property: "opacity";
+                    duration: playActAnimation.animationDur/2;
+                    easing.type: Easing.InOutQuad;
+                    to: 0.6
+                }
+                NumberAnimation {
+                    target: activityAnimation;
+                    property: "opacity";
+                    duration: playActAnimation.animationDur/2;
+                    easing.type: Easing.InOutQuad;
+                    to: 0
+                }
+            }
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: activityAnimation;
+                    property: "scale";
+                    duration: playActAnimation.animationDur/2;
+                    easing.type: Easing.InOutQuad;
+                    to: 1.5
+                }
+                NumberAnimation {
+                    target: activityAnimation;
+                    property: "scale";
+                    duration: playActAnimation.animationDur/2;
+                    easing.type: Easing.InOutQuad;
+                    to: 0.8
+                }
+            }
+
+            PropertyAnimation{
+                target:activityAnimation
+                duration: playActAnimation.animationDur
+                property: "x"
+                to:activityAnimation.toX
+                easing.type: Easing.InOutQuad;
+            }
+
+            PropertyAnimation{
+                target:activityAnimation
+                duration: playActAnimation.animationDur
+                property: "y"
+                to:activityAnimation.toY
+                easing.type: Easing.InOutQuad;
+            }
+
+        }
+
+    }
+
     Flickable{
         id: view
 
@@ -68,8 +188,6 @@ Rectangle {
             fillMode: Image.Tile
         }
 
-        //Item{
-        //  id:lists
 
         ListView{
             id:allareas
@@ -104,20 +222,8 @@ Rectangle {
 
         }
 
-        //}
 
         //Top Activities Banner
-        //    Row{
-   /*     Image{
-            id:actImag1Shad
-            source:"Images/activitiesBack2Shadow.png"
-            fillMode: Image.TileHorizontally
-            anchors.top: actImag1.bottom
-            y:actImag1.height
-            width: mainView.width<allareas.width ? allareas.width : mainView.width
-            height: workareaY/4
-            smooth: true
-        }*/
 
         Rectangle{
             id:actImag1Shad
@@ -155,7 +261,6 @@ Rectangle {
                 //   x: 10
                 spacing: workareaY / 10
                 interactive:false
-
 
                 model: instanceOfActivitiesList.model
                 delegate: Activity{
@@ -206,16 +311,14 @@ Rectangle {
     Rectangle {
         id: stopActBack
 
-        x:shownActivities > 0 ? mainView.width - width : mainView.width - 2
-        y:0
+        x:stoppedActivitiesList.shownActivities > 0 ? mainView.width - width : mainView.width - 2
+        y:oxygenTitle.height
         width: 2*mainView.workareaWidth/3
         height: mainView.height - y
 
         color: "#ebebeb"
         border.color: "#d9808080"
         border.width:1
-
-        property int shownActivities: stoppedActivitiesList.model.count
 
         Behavior on x{
             NumberAnimation {
@@ -227,17 +330,25 @@ Rectangle {
         ListView {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
-            height: stopActBack.shownActivities * ((2*workareaHeight/3)+spacing)
+            height: shownActivities !==0 ? shownActivities * ((2*workareaHeight/3)+spacing) : workareaHeight
+            //height: model.count * ((2*workareaHeight/3)+spacing)
             width: stopActBack.width - spacing
-            anchors.bottom: stopActBack.bottom
+
+            //y:shownActivities===0 ? stopActBack.height : stopActBack.height-height-5
+            y:stopActBack.height-height-5
+
+            //   anchors.top: stopActBack.top
             anchors.right: stopActBack.right
             anchors.rightMargin: spacing
 
             spacing: workareaHeight/12
+
+            property int shownActivities: 4
+
             interactive:false
             model: instanceOfActivitiesList.model
-            delegate: ActivityStopped{
 
+            delegate: ActivityStopped{
             }
 
             Behavior on height{
@@ -245,6 +356,20 @@ Rectangle {
                     duration: 400;
                     easing.type: Easing.InOutQuad;
                 }
+            }
+            function changedChildState(){
+                var counter = 0;
+
+                for (var i=0; i<stoppedActivitiesList.model.count; ++i)
+                {
+                    var elem = stoppedActivitiesList.model.get(i);
+
+                    if (elem.CState === "Stopped")
+                       counter++;
+                }
+                shownActivities = counter;
+            //    if (shownActivities <2)
+                //    shownActivities = 2;
             }
         }
 
@@ -259,19 +384,6 @@ Rectangle {
                 GradientStop { position: 0.0; color: "#770f0f0f" }
                 GradientStop { position: 1.0; color: "#00797979" }
             }
-        }
-
-        function changedChildState(){
-            var counter = 0;
-
-            for (var i=0; i<stoppedActivitiesList.model.count; ++i)
-            {
-                var elem = stoppedActivitiesList.model.get(i);
-
-                if (elem.CState === "Stopped")
-                   counter++;
-            }
-            shownActivities = counter;
         }
 
     }

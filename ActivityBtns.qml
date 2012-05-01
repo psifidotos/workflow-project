@@ -55,7 +55,13 @@ Item{
 
             onClicked: {
                 instanceOfActivitiesList.setCState(code,"Stopped");
-                stopActBack.changedChildState();
+                stoppedActivitiesList.changedChildState();
+
+                var x1 = activityIcon.x;
+                var y1 = activityIcon.y;
+
+                activityAnimation.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
+
             }
 
         }
