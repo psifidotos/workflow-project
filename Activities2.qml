@@ -28,9 +28,11 @@ Rectangle {
         }
     }
 
-    function addWorkArea(pos){
-
+    ListView{
+        id:instanceOfActivitiesList
+        model: ActivitiesModel1{}
     }
+
 
     Flickable{
         id: view
@@ -140,7 +142,7 @@ Rectangle {
                 interactive:false
 
 
-                model: ActivitiesModel1{}
+                model: instanceOfActivitiesList.model
                 delegate: Activity{
 
                 }
@@ -218,7 +220,7 @@ Rectangle {
 
             spacing: workareaHeight/12
             interactive:false
-            model: ActivitiesModel1{}
+            model: instanceOfActivitiesList.model
             delegate: ActivityStopped{
 
             }

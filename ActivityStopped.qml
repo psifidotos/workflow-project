@@ -146,7 +146,7 @@ Component{
             onClicked: {
                 var ind = stpActivity.getCurrentIndex();
                 stpActivity.ListView.view.model.setProperty(ind,"CState","Running");
-                activitiesList.model.setProperty(ind,"CState","Running");
+            //    activitiesList.model.setProperty(ind,"CState","Running");
 
             }
         }
