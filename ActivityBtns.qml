@@ -54,7 +54,8 @@ Item{
             }
 
             onClicked: {
-                instanceOfActivitiesList.setCState(code,"Stopped");
+                instanceOfActivitiesList.setCState(code,"Stopped");                
+
                 stoppedActivitiesList.changedChildState();
 
                 var x1 = activityIcon.x;

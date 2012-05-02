@@ -35,6 +35,29 @@ Rectangle {
         function setCState(cod, val){
             var ind = getCurrentIndex(cod);
             model.setProperty(ind,"CState",val);
+
+            instanceOfWorkAreasList.setCState(cod,val);
+        }
+
+        function getCurrentIndex(cod){
+            for(var i=0; model.count; ++i){
+                var obj = model.get(i);
+                if (obj.code === cod)
+                    return i;
+            }
+            return -1;
+        }
+
+    }
+
+    ListView{
+        id:instanceOfWorkAreasList
+        model: WorkAreasCompleteModel{}
+
+        function setCState(cod, val){
+            var ind = getCurrentIndex(cod);
+            model.setProperty(ind,"CState",val);
+
         }
 
         function getCurrentIndex(cod){
@@ -196,13 +219,16 @@ Rectangle {
             width:model.count*(workareaWidth)
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
             orientation: ListView.Horizontal
-            spacing:60+3.5*mainView.scaleMeter
+         //   spacing:60+3.5*mainView.scaleMeter
+            spacing:mainView.scaleMeter/10
             interactive:false
 
             property int maxWorkAreasHeight: 0
             property int scrollingMargin: 30
 
-            model:WorkAreasCompleteModel{}
+            //model:WorkAreasCompleteModel{}
+            model:instanceOfWorkAreasList.model
+
             delegate: WorkAreaList{
             }
 

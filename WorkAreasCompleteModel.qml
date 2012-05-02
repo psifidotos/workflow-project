@@ -3,7 +3,8 @@ import QtQuick 1.0
 
 ListModel {
     ListElement {
-        code:"d3f"
+        code:"235"
+        CState:"Running"
         workareas: [
                 ListElement {
                     gridRow:0
@@ -27,7 +28,8 @@ ListModel {
     }
 
     ListElement {
-        code:"c2f"
+        code:"234"
+        CState:"Stopped"
         workareas: [
             ListElement {
                 gridRow:0
@@ -60,7 +62,8 @@ ListModel {
     }
 
     ListElement {
-        code:"e6f"
+        code:"202"
+        CState:"Running"
         workareas: [
             ListElement {
                 gridRow:0
@@ -103,7 +106,8 @@ ListModel {
 
 
     ListElement {
-        code:"e6f"
+        code:"3423"
+        CState:"Running"
         workareas: [
             ListElement {
                 gridRow:0

@@ -3,16 +3,44 @@ import QtQuick 1.1
 
 Component{
     Item{
+        id: workList
+
         //height:mainView.workareaHeight*workalist.model.count + 250
-        height:workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
+      //  height:workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
+      //  width: 1.4 * mainView.workareaHeight
+      //  width:0
+        property string tCState : CState
+
+        property string neededState:"Running"
+        property string ccode:code
+
+        opacity: CState === neededState ? 1 : 0
+
+        width: CState === neededState ? 1.4 * mainView.workareaHeight : 0
+        height: CState === neededState ? workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5 : 0
 
         onHeightChanged: allareas.changedChildHeight();
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on width{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
 
         ListView {
             id:workalist
 
             height:mainView.workareaHeight*model.count+(model.count-1)*spacing
-            width:1.4 * mainView.workareaHeight
+            width: CState === "Running" ? 1.4 * mainView.workareaHeight : 0
+
 
             x:10
             z:5
@@ -45,6 +73,8 @@ Component{
             anchors.topMargin: mainView.workareaHeight/5
             anchors.horizontalCenter: workalist.horizontalCenter
 
+            opacity: CState === neededState ? 1 : 0
+
             MouseArea {
                 anchors.fill: parent
 
@@ -59,10 +89,7 @@ Component{
                                                "gridRow":lastobj.gridRow+1,
                                                "gridColumn":lastobj.gridColumn,
                                                "elemTempOnDragging":false} );
-
                 }
-
-
             }
 
         }

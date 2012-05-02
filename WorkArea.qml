@@ -11,7 +11,7 @@ Component{
 
      //width:60+3*mainView.scaleMeter
      //height:50+2*mainView.scaleMeter
-     width:1.4 * mainView.workareaHeight
+     width: 1.4 * mainView.workareaHeight
      height:mainView.workareaHeight
 
         Item{
