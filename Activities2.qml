@@ -254,7 +254,7 @@ Rectangle {
         Rectangle{
             id:actImag1Shad
             anchors.top: actImag1.bottom
-            y:actImag1.height
+            //y:actImag1.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY/6
             gradient: Gradient {
@@ -265,12 +265,9 @@ Rectangle {
 
         Rectangle {
             id: actImag1
-            //source: "Images/activitiesBack2.png"
-            //fillMode: Image.TileHorizontally
             y:oxygenTitle.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY-workareaY/10
-            //smooth: true
             color: "#646464"
             border.color: "#77ffffff"
             border.width:1
@@ -353,6 +350,20 @@ Rectangle {
             }
         }
 
+        Text{
+            text:"Stopped Activities"
+            width:stopActBack.width
+            x:-stopActBack.width/2 + 2*font.pointSize
+            anchors.verticalCenter: stopActBack.verticalCenter
+            rotation:-90
+
+            color:"#bcbbbb"
+
+            font.family: "Helvetica"
+            font.bold: true
+            font.pointSize: 4+(mainView.scaleMeter) /10
+        }
+
         ListView {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
@@ -412,12 +423,91 @@ Rectangle {
             }
         }
 
+
+
     }
     // Stopped Activities
 
+    //Add Activity Button
+    Rectangle{
+        id: addActivityBtn
+        width: stoppedActivitiesList.shownActivities > 0 ? stopActBack.width-1 : stopActBack.width /2
+        height: stoppedActivitiesList.shownActivities > 0 ? actImag1.height : actImag1.height / 2
+        x:mainView.width - width
+
+        anchors.top: stopActBack.top
+
+        property color openStpActiv1: "#ebebeb"
+        property color openStpActiv2: "#bdbdbd"
+        property color closStpActiv1: "#77333333"
+        property color closStpActiv2: "#77333333"
+
+        property color currentColor1: stoppedActivitiesList.shownActivities > 0 ? openStpActiv1 : closStpActiv1
+        property color currentColor2: stoppedActivitiesList.shownActivities > 0 ? openStpActiv2 : closStpActiv2
+
+        border.color: stoppedActivitiesList.shownActivities > 0 ? "#00000000" : actImag1.border.color
+        border.width: stoppedActivitiesList.shownActivities > 0 ? 0 : 1
 
 
-    //ScrollBars
+
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: addActivityBtn.currentColor2  }
+            GradientStop { position: 0.15; color: addActivityBtn.currentColor1 }
+            GradientStop { position: 0.85; color: addActivityBtn.currentColor1 }
+            GradientStop { position: 1.0; color: addActivityBtn.currentColor2  }
+        }
+
+        Behavior on x{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on width{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on currentColor1{
+            ColorAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+        Behavior on currentColor2{
+            ColorAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+
+        Image{
+            anchors.centerIn: addActivityBtn
+            width:stoppedActivitiesList.shownActivities > 0 ? addActivityBtn.width/5 : addActivityBtn.height/2
+            height:width
+            source:stoppedActivitiesList.shownActivities > 0 ? "Images/buttons/addActivity1.png" : "Images/buttons/addActivity2.png"
+        }
+
+
+        Rectangle{
+            id:addActShad1
+            anchors.top: addActivityBtn.top
+            //y:actImag1.height
+            width: addActivityBtn.width
+            height: workareaY/6
+            opacity: stoppedActivitiesList.shownActivities > 0 ? 1:0
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                GradientStop { position: 1.0; color: "#00797979" }
+            }
+        }
+    }
+
+    //Add Activity Button
 
 
     Rectangle{
@@ -436,16 +526,6 @@ Rectangle {
             fillMode:Image.PreserveAspectCrop
         }
 
-
-
-        /*Image{
-            source:"Images/buttons/titleShadow.png"
-            anchors.top:oxygenTitle.bottom
-            width:oxygenTitle.width
-            height:3*oxygenTitle.height/5
-            fillMode: Image.TileHorizontally
-            smooth:true
-        }*/
 
         Rectangle{
             anchors.top: oxygenTitle.bottom
