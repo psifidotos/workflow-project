@@ -466,7 +466,7 @@ Rectangle {
 
         Behavior on width{
             NumberAnimation {
-                duration: 400;
+                duration: stoppedActivitiesList.shownActivities > 0 ? 0 : 400
                 easing.type: Easing.InOutQuad;
             }
         }

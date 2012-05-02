@@ -155,6 +155,9 @@ Item{
                 dTextItem.textAccepted();
                 event.accepted = true;
             }
+            else if (event.key === Qt.Key_Escape){
+                mainView.forceActiveFocus();
+            }
         }
     }
 
