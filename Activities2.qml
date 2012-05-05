@@ -48,6 +48,52 @@ Rectangle {
             return -1;
         }
 
+        function cloneActivity(cod){
+            var p = getCurrentIndex(cod);
+
+            var ob = model.get(p);
+            var nId = getNextId();
+
+            model.insert(p+1,
+                         {"code": nId,
+                          "Current":false,
+                          "Name":"New Activity",
+                          "Icon":ob.Icon,
+                          "CState":"Running"}
+                         );
+            instanceOfWorkAreasList.cloneActivity(cod,nId);
+        }
+
+        function removeActivity(cod){
+            var n = getCurrentIndex(cod);
+            model.remove(n);
+            instanceOfWorkAreasList.removeActivity(cod);
+        }
+
+        function addNewActivity(){
+            var nId = getNextId();
+
+            model.append( {  "code": nId,
+                             "Current":false,
+                             "Name":"New Activity",
+                             "Icon":"Images/icons/plasma.png",
+                             "CState":"Running"} );
+
+
+            instanceOfWorkAreasList.addNewActivity(nId);
+        }
+
+        function getNextId(){
+            var max = 0;
+
+            for(var i=0; i<model.count; ++i){
+                var obj = model.get(i);
+                if (obj.code > max)
+                    max = obj.code
+            }
+            return max+1;
+        }
+
     }
 
     ListView{
@@ -68,6 +114,47 @@ Rectangle {
             }
             return -1;
         }
+
+        function removeActivity(cod){
+            var ind = getCurrentIndex(cod);
+
+            model.remove(ind);
+        }
+
+        function cloneActivity(cod,ncod){
+            var ind = getCurrentIndex(cod);
+            var ob = model.get(ind);
+
+            model.insert(ind+1, {"code": ncod,
+                             "CState":"Running",
+                             "elemImg":ob.elemImg,
+                             "workareas":[{
+                                              "gridRow":0,
+                                              "gridColumn":0,
+                                              "elemTitle":"New Workarea",
+                                              "elemShowAdd":false,
+                                              "elemTempOnDragging": false
+                             }]
+                         });
+
+        }
+
+        function addNewActivity(cod){
+
+            model.append( {  "code": cod,
+                             "CState":"Running",
+                             "elemImg":"Images/backgrounds/background5.jpg",
+                             "workareas":[{
+                                              "gridRow":0,
+                                              "gridColumn":0,
+                                              "elemTitle":"New Workarea",
+                                              "elemShowAdd":false,
+                                              "elemTempOnDragging": false
+                             }]
+                         });
+
+        }
+
 
     }
 
@@ -353,15 +440,16 @@ Rectangle {
         Text{
             text:"Stopped Activities"
             width:stopActBack.width
-            x:-stopActBack.width/2 + 2*font.pointSize
+            x:-stopActBack.width/2 + 3*workareaWidth/30
             anchors.verticalCenter: stopActBack.verticalCenter
+           // anchors.left: stopActBack.left
             rotation:-90
 
             color:"#bcbbbb"
 
             font.family: "Helvetica"
             font.bold: true
-            font.pointSize: 4+(mainView.scaleMeter) /10
+            font.pointSize: 6+(mainView.scaleMeter) /10
         }
 
         ListView {
@@ -382,7 +470,7 @@ Rectangle {
 
             property int shownActivities: 4
 
-            interactive:false
+            //interactive:false
             model: instanceOfActivitiesList.model
 
             delegate: ActivityStopped{
@@ -504,6 +592,23 @@ Rectangle {
                 GradientStop { position: 0.0; color: "#aa0f0f0f" }
                 GradientStop { position: 1.0; color: "#00797979" }
             }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+
+            }
+
+            onExited: {
+            }
+
+            onClicked: {
+                instanceOfActivitiesList.addNewActivity();
+            }
+
         }
     }
 

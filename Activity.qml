@@ -10,7 +10,9 @@ Component{
 
         opacity: CState === neededState ? 1 : 0
 
-        width: CState === neededState ? mainView.workareaWidth : 0
+        property int defWidth:mainView.workareaWidth
+
+        width: CState === neededState ? defWidth : 0
         height: CState === neededState ? width/2 : 0
 
         Behavior on opacity{
@@ -122,6 +124,7 @@ Component{
             x:mainView.scaleMeter-10
             height:mainView.scaleMeter - 15
         }
+
 
         function getCurrentIndex(){
             for(var i=0; ListView.view.model.count; ++i){

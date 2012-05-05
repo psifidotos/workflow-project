@@ -14,6 +14,8 @@ Component{
         property string neededState:"Running"
         property string ccode:code
 
+        property string eelemImg : elemImg
+
         opacity: CState === neededState ? 1 : 0
 
         width: CState === neededState ? 1.4 * mainView.workareaHeight : 0

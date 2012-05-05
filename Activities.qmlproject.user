@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.4.1, 2012-05-02T21:54:13. -->
+<!-- Written by Qt Creator 2.4.1, 2012-05-05T18:17:09. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -125,7 +125,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">QmlProjectManager.QmlRunConfiguration</value>
     <value type="QString" key="QmlProjectManager.QmlRunConfiguration.MainScript">CurrentFile</value>
     <value type="QString" key="QmlProjectManager.QmlRunConfiguration.QDeclarativeViewerArguments"></value>
-    <value type="int" key="QmlProjectManager.QmlRunConfiguration.QtVersion">3</value>
+    <value type="int" key="QmlProjectManager.QmlRunConfiguration.QtVersion">1</value>
     <valuelist type="QVariantList" key="QmlProjectManager.QmlRunConfiguration.UserEnvironmentChanges"/>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
@@ -141,7 +141,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
-  <value type="QString">{c02edb5f-585c-409a-a868-fb7669527031}</value>
+  <value type="QString">{5a5b10d1-4e85-4608-934a-57dad0447a8c}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>

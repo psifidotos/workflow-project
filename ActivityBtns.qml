@@ -101,6 +101,11 @@ Item{
                 duplicateActivityBtn.scale = 1;
             }
 
+            onClicked: {
+                instanceOfActivitiesList.cloneActivity(code);
+            }
+
+
         }
     }
 
@@ -134,6 +139,10 @@ Item{
             onExited: {
                 activityButtons.state = "hide";
                 deleteActivityBtn.scale = 1;
+            }
+
+            onClicked: {
+                instanceOfActivitiesList.removeActivity(code);
             }
 
         }

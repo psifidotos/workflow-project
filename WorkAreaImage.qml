@@ -25,7 +25,7 @@ BorderImage {
        height:parent.height-30
            clip:true
            Image {
-             source: elemImg
+             source: workList.eelemImg
              fillMode:Image.PreserveAspectCrop
              width:parent.width
              height:parent.height
