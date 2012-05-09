@@ -9,6 +9,7 @@ Component{
       //  height:workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
       //  width: 1.4 * mainView.workareaHeight
       //  width:0
+
         property string tCState : CState
 
         property string neededState:"Running"
@@ -75,7 +76,7 @@ Component{
             anchors.topMargin: mainView.workareaHeight/5
             anchors.horizontalCenter: workalist.horizontalCenter
 
-            opacity: CState === neededState ? 1 : 0
+            opacity:  CState === neededState ? 1 : 0
 
             MouseArea {
                 anchors.fill: parent

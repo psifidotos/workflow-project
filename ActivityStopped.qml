@@ -6,20 +6,24 @@ Component{
     Item{
         id: stpActivity
 
-        property string ccode:code
+        property int ccode:code
         property string neededState:"Stopped"
 
-        opacity: CState === neededState ? 1 : 0
+        opacity: CState === neededState ? 1 : 0.1
 
-        width: CState === neededState ? stoppedActivitiesList.width : 0
-        height: CState === neededState ? 2*mainView.workareaHeight/3 : 0
+        //width: CState === neededState ? stoppedActivitiesList.width : 0
+        width: stoppedActivitiesList.width
+        height: CState === neededState ? basicHeight : 0
 
-        y: CState !== neededState ? -100 : 0
+        property real basicHeight:2*mainView.workareaHeight/3
+
+        y: CState !== neededState ? -basicHeight : 0
+        //y: -basicHeight
 
         property string curState: CState
 
         onCurStateChanged:{
-            stoppedActivitiesList.changedChildState();
+            stoppedPanel.changedChildState();
         }
 
 
@@ -152,7 +156,7 @@ Component{
                 var x1 = activityIcon.x;
                 var y1 = activityIcon.y;
 
-                activityAnimation.animateStoppedToActive(code,activityIcon.mapToItem(mainView,x1, y1));
+                activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
                 instanceOfActivitiesList.setCState(code,"Running");
 
             }

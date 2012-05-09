@@ -107,7 +107,7 @@ Item{
                 target: workAreaButtons
                 opacityDel: 1
                 deleteY:buttonsSpace
-                opacityClone: 1
+                opacityClone: 0
                 duplicateY: buttonsSize+2*buttonsSpace
             }
         },

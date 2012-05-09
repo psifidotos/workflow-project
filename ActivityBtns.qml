@@ -56,12 +56,12 @@ Item{
             onClicked: {
                 instanceOfActivitiesList.setCState(code,"Stopped");                
 
-                stoppedActivitiesList.changedChildState();
+                stoppedPanel.changedChildState();
 
                 var x1 = activityIcon.x;
                 var y1 = activityIcon.y;
 
-                activityAnimation.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
+                activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
 
             }
 
@@ -156,9 +156,9 @@ Item{
             PropertyChanges {
                 target: activityButtons
 
-                opacityDel: 1
+                opacityDel: allwlists.activitiesShown > 1 ? 1 : 0
                 opacityDup: 1
-                opacityStop: 1
+                opacityStop: allwlists.activitiesShown > 1 ? 1 : 0
 
                 xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
                 xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43

@@ -59,6 +59,8 @@ Component{
                     id:workAreaButtons
                     height: normalWorkArea.height -  (4*mainView.scaleMeter/5)
 
+                    opacity: mainWorkArea.ListView.view.model.count>1 ? 1 : 0
+
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
