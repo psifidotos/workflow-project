@@ -30,6 +30,15 @@ BorderImage {
              width:parent.width
              height:parent.height
            }
+
+           Image {
+             source: "Images/backgrounds/screenglass.png"
+             opacity:0.6
+          //   fillMode:Image.PreserveAspectCrop
+             width:parent.width
+             height:parent.height
+           }
     }
+
 
 }

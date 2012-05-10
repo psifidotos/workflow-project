@@ -5,6 +5,8 @@ ListView{
 
     model: WorkAreasCompleteModel{}
 
+    property int addednew:0
+
     function setCState(cod, val){
         var ind = getCurrentIndex(cod);
         model.setProperty(ind,"CState",val);
@@ -45,10 +47,23 @@ ListView{
     }
 
     function addNewActivity(cod){
+        var newwall;
+        if (addednew % 4 === 0)
+            newwall = "Images/backgrounds/emptydesk1.png";
+        else if (addednew % 4 === 1)
+            newwall = "Images/backgrounds/emptydesk2.png";
+        else if (addednew % 4 === 2)
+            newwall = "Images/backgrounds/emptydesk3.png";
+        else if (addednew % 4 === 3)
+            newwall = "Images/backgrounds/emptydesk4.png";
+
+
+
+        addednew++;
 
         model.append( {  "code": cod,
                          "CState":"Running",
-                         "elemImg":"Images/backgrounds/background5.jpg",
+                         "elemImg":newwall,
                          "workareas":[{
                                           "gridRow":0,
                                           "gridColumn":0,
