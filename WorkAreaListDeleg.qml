@@ -53,7 +53,7 @@ Component{
             interactive:false
 
             model:workareas
-            delegate:WorkArea{
+            delegate:WorkAreaDeleg{
             }
 
             Behavior on height{

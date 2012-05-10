@@ -47,7 +47,7 @@ Item{
             //model:WorkAreasCompleteModel{}
             model:instanceOfWorkAreasList.model
 
-            delegate: WorkAreaList{
+            delegate: WorkAreaListDeleg{
             }
 
             function changedChildHeight(){
@@ -104,7 +104,7 @@ Item{
                 interactive:false
 
                 model: instanceOfActivitiesList.model
-                delegate: Activity{
+                delegate: ActivityDeleg{
 
                 }
 

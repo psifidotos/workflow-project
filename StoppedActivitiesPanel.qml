@@ -58,7 +58,7 @@ Rectangle {
         //interactive:false
         model: instanceOfActivitiesList.model
 
-        delegate: ActivityStopped{
+        delegate: ActivityStoppedDeleg{
         }
 
         Behavior on height{
