@@ -18,11 +18,11 @@ BorderImage {
            y:(mainView.scaleMeter/2)-(mainView.scaleMeter/10)
            width:parent.width-(3*workBordImage.tempMeter+mainView.scaleMeter/4)
            height:parent.height-(3*workBordImage.tempMeter+mainView.scaleMeter/5)*/
-
-       x:14
-       y:15
-       width:parent.width-28
-       height:parent.height-30
+       id:workBordImageMainImage
+       x:mainWorkArea.imagex
+       y:mainWorkArea.imagey
+       width:mainWorkArea.imagewidth
+       height:mainWorkArea.imageheight
            clip:true
            Image {
              source: workList.eelemImg

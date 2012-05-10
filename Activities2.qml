@@ -36,6 +36,10 @@ Rectangle {
         id:instanceOfWorkAreasList
     }
 
+    SharedTasksList{
+        id:instanceOfTasksList
+    }
+
     ActivityAnimationMainView{
         id:activityAnimate
     }

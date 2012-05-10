@@ -14,6 +14,13 @@ Component{
      width: 1.4 * mainView.workareaHeight
      height:mainView.workareaHeight
 
+     property int actCode: code
+
+     property int imagex:14
+     property int imagey:15
+     property int imagewidth:borderRectangle.width-2*imagex
+     property int imageheight:borderRectangle.height-2*imagey
+
         Item{
             id:normalWorkArea
 
@@ -78,6 +85,22 @@ Component{
 
 
             }//Row
+            ListView{
+                id:tasksSList
+
+                x:mainWorkArea.imagex
+                y:mainWorkArea.imagey
+                width:mainWorkArea.imagewidth
+                height:mainWorkArea.imageheight
+
+                clip:true
+                spacing:0
+
+                model:instanceOfTasksList.model
+                delegate:WorkAreaTaskDeleg{
+
+                }
+            }
 
             DTextLine{
                 id:workAreaName

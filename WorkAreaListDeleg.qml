@@ -13,7 +13,7 @@ Component{
         property string tCState : CState
 
         property string neededState:"Running"
-        property string ccode:code
+        property int ccode:code
 
         property string eelemImg : elemImg
 
@@ -53,7 +53,10 @@ Component{
             interactive:false
 
             model:workareas
+
+
             delegate:WorkAreaDeleg{
+
             }
 
             Behavior on height{
@@ -63,7 +66,7 @@ Component{
                 }
             }
 
-             //onHeightChanged: console.debug(height);
+            //onHeightChanged: console.debug(height);
             //onHeightChanged: allareas.changedChildHeight()
         }
 
