@@ -160,13 +160,13 @@ Component{
 
         ListView.onAdd: ParallelAnimation {
             PropertyAction { target: mainWorkArea; property: "height"; value: 0 }
-            PropertyAction { target: borderRectangle; property: "opacity"; value: 0 }
+       //     PropertyAction { target: borderRectangle; property: "opacity"; value: 0 }
             PropertyAction { target: borderRectangle; property: "height"; value: 0 }
-            PropertyAction { target: workAreaName; property: "opacity"; value: 0 }
+            PropertyAction { target: mainWorkArea; property: "opacity"; value: 0 }
 
             NumberAnimation { target: mainWorkArea; property: "height"; to: mainView.workareaHeight; duration: 400; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: workAreaName; property: "opacity"; to: 1; duration: 200; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "height"; to: mainView.workareaHeight; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainWorkArea; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
         }
 
         ListView.onRemove: SequentialAnimation {

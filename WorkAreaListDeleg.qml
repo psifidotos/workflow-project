@@ -24,6 +24,9 @@ Component{
 
         onHeightChanged: allareas.changedChildHeight();
 
+        property int bWidth: 1.4 * mainView.workareaHeight
+        property int bHeight:  mainView.workareaHeight*workalist.model.count+(workalist.model.count-1)*workalist.spacing
+
         Behavior on opacity{
             NumberAnimation {
                 duration: 300;
@@ -41,9 +44,8 @@ Component{
         ListView {
             id:workalist
 
-            height:mainView.workareaHeight*model.count+(model.count-1)*spacing
-            width: CState === "Running" ? 1.4 * mainView.workareaHeight : 0
-
+            height:workList.bHeight
+            width: CState === "Running" ? workList.bWidth : 0
 
             x:10
             z:5
@@ -98,6 +100,27 @@ Component{
                 }
             }
 
+        }
+
+        ListView.onAdd: ParallelAnimation {
+            PropertyAction { target: workList; property: "width"; value: 0 }
+            PropertyAction { target: workList; property: "opacity"; value: 0 }
+
+            NumberAnimation { target: workList; property: "width"; to: workList.bWidth; duration: 400; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
+        }
+
+        ListView.onRemove: SequentialAnimation {
+            PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
+
+            ParallelAnimation{
+                NumberAnimation { target: workList; property: "width"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+            }
+
+
+            // Make sure delayRemove is set back to false so that the item can be destroyed
+            PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
         }
     }
 
