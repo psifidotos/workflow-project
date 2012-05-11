@@ -9,7 +9,7 @@ Component{
         property int ccode:code
         property string neededState:"Stopped"
 
-        opacity: CState === neededState ? 1 : 0.1
+        opacity: CState === neededState ? 1 : 0
 
         //width: CState === neededState ? stoppedActivitiesList.width : 0
         width: stoppedActivitiesList.width

@@ -6,10 +6,12 @@ Component{
     Item{
         id: taskDeleg1
 
-        width:mainWorkArea.imagewidth - imageTask.width - 5
-        height:(gridRow === desktop)&&(actCode === activities) ? imageTask.height : 0
+        property bool shown: (onAllActivities !== true)&&((gridRow === desktop)&&(actCode === activities))
 
-        opacity: (gridRow === desktop)&&(actCode === activities) ? 1 : 0
+        width:mainWorkArea.imagewidth - imageTask.width - 5
+        height: shown ? imageTask.height : 0
+
+        opacity: shown ? 1 : 0
 
         Image{
             id:imageTask
@@ -42,5 +44,7 @@ Component{
 
 
     }
+
+
 
 }

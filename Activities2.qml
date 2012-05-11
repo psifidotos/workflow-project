@@ -63,6 +63,9 @@ Rectangle {
     }
 
 
+    AllActivitiesTasks{
+        id:allActT
+    }
 
     Slider {
         id:zoomSlider
@@ -76,6 +79,8 @@ Rectangle {
         width:125
 
     }
+
+
 
 }
 

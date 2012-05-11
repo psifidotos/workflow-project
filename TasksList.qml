@@ -63,6 +63,30 @@ ListModel {
         activities:2
     }
 
+    ListElement {
+        code:6
+        onAllDesktops:false
+        onAllActivities:true
+        classClass: "LibreOffice"
+        name:"New Document<4> - Around"
+        icon:"Images/icons/dolphin.png"
+        shaded:false
+        desktop:1
+        activities:2
+    }
+
+    ListElement {
+        code:7
+        onAllDesktops:false
+        onAllActivities:true
+        classClass: "Firefox"
+        name:"www.in.gr"
+        icon:"Images/icons/activity3.png"
+        shaded:false
+        desktop:1
+        activities:1
+    }
+
 
 
 }
