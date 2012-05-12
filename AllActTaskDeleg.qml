@@ -13,19 +13,33 @@ Component{
 
         property int spacing: 20
 
+        property alias imageTask2Width: imageTask2.width
+        property alias textY: taskTitleRec.y
+        property alias textOpacity: taskTitleRec.opacity
+
+        state:"nohovered"
+
         Image{
             id:imageTask2
             source: icon
-            width:(3* allActTaskL.height / 5)
             height:width
 
             anchors.horizontalCenter: parent.horizontalCenter
+
+            y:-height/5
+
+            Behavior on width{
+                NumberAnimation {
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
         }
 
         Image{
             id:imageTask2Ref
             source: icon
-            width:(3* allActTaskL.height / 5)
+            width:imageTask2.width
             height:width
 
             anchors.horizontalCenter: imageTask2.horizontalCenter
@@ -34,15 +48,33 @@ Component{
             transform: Rotation { origin.x: 0; origin.y: height/3; axis { x: 1; y: 0; z: 0 } angle: 180 }
 
             opacity:0.15
+
         }
 
 
         Rectangle{
+            id: taskTitleRec
+
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: imageTask2.bottom
+
             width:taskDeleg2.width - taskDeleg2.spacing
             height:taskTitle2.height
             color:"#00e2e2e2"
+
+            Behavior on y{
+                NumberAnimation {
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
             Text{
                 id:taskTitle2
 
@@ -57,11 +89,46 @@ Component{
                 font.italic: false
                 font.bold: true
                 font.pointSize: 4+(mainView.scaleMeter) / 12
-                color:"#222222"
+                color:"#333333"
             }
         }
 
 
+        states: [
+            State {
+                name: "nohovered"
+                PropertyChanges {
+                    target: taskDeleg2
+                    imageTask2Width:(3* allActTaskL.height / 5)
+                    textY: imageTask2.y+imageTask2.height
+                    textOpacity: 0.3
+                }
+            },
+            State {
+                name:"hovered"
+                PropertyChanges {
+                    target: taskDeleg2
+                    textY: 4 * (imageTask2.y+imageTask2.height) / 5
+                    imageTask2Width: 2* (3* allActTaskL.height / 5)
+                    textOpacity: 1
+                }
+
+            }
+
+        ]
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                taskDeleg2.state = "hovered";
+            }
+
+            onExited: {
+                taskDeleg2.state = "nohovered";
+            }
+        }
     }
 
 }

@@ -18,7 +18,7 @@ Item{
 
         //anchors.fill: parent
         contentWidth: allareas.width
-        contentHeight: allareas.height
+        contentHeight: allareas.height + allActT.height
 
         boundsBehavior: Flickable.StopAtBounds
 
