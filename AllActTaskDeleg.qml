@@ -28,12 +28,8 @@ Component{
 
             y:-height/5
 
-            Behavior on width{
-                NumberAnimation {
-                    duration: 500;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
+            width:(3* allActTaskL.height / 5)
+
         }
 
         Image{
@@ -61,26 +57,14 @@ Component{
             height:taskTitle2.height
             color:"#00e2e2e2"
 
-            Behavior on y{
-                NumberAnimation {
-                    duration: 500;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 500;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
+            y: imageTask2.y+imageTask2.height
+            opacity: 0.3
 
             Text{
                 id:taskTitle2
 
-                //width:parent.width
                 clip:true
-                //horizontalAlignment: Text.AlignLeft
+
                 anchors.horizontalCenter: parent.horizontalCenter
 
 
@@ -97,12 +81,7 @@ Component{
         states: [
             State {
                 name: "nohovered"
-                PropertyChanges {
-                    target: taskDeleg2
-                    imageTask2Width:(3* allActTaskL.height / 5)
-                    textY: imageTask2.y+imageTask2.height
-                    textOpacity: 0.3
-                }
+
             },
             State {
                 name:"hovered"
@@ -115,6 +94,36 @@ Component{
 
             }
 
+        ]
+
+        transitions: [
+
+            Transition {
+                from:"nohovered"; to:"hovered"
+                reversible: true
+
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: taskDeleg2;
+                        property: "imageTask2Width"
+                        duration: 500;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: taskDeleg2;
+                        property: "textY"
+                        duration: 500;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: taskDeleg2;
+                        property: "textOpacity"
+                        duration: 500;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+            }
         ]
 
         MouseArea {
