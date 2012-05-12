@@ -1,5 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import ".."
 
 Component{
 
@@ -55,7 +56,7 @@ Component{
             id:activityIcon
             rotation:-20
             opacity:parent.defOpacity
-            source: Icon
+            source: "../" + Icon
           //  x:25
           //  anchors.right: stpActivity.right
             x:stpActivity.width/2
@@ -118,7 +119,7 @@ Component{
         Image{
             id:playActivity
             opacity:0
-            source: "Images/buttons/player_play.png"
+            source: "../Images/buttons/player_play.png"
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
             anchors.top: stpActivity.top

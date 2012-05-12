@@ -9,7 +9,7 @@ ListModel {
         onAllActivities:false
         classClass: "Firefox"
         name:"Αρχική Σελίδα..."
-        icon:"Images/icons/activity3.png"
+        icon:"../Images/icons/activity3.png"
         shaded:false
         desktop:2
         activities:2
@@ -21,7 +21,7 @@ ListModel {
         onAllActivities:false
         classClass: "Dolphin"
         name:"Home Folder..."
-        icon:"Images/icons/file_manager.png"
+        icon:"../Images/icons/file_manager.png"
         shaded:false
         desktop:1
         activities:3
@@ -33,7 +33,7 @@ ListModel {
         onAllActivities:false
         classClass: "Dolphin"
         name:"My Documents"
-        icon:"Images/icons/file_manager.png"
+        icon:"../Images/icons/file_manager.png"
         shaded:false
         desktop:1
         activities:1
@@ -45,7 +45,7 @@ ListModel {
         onAllActivities:false
         classClass: "LibreOffice"
         name:"New Document..."
-        icon:"Images/icons/dolphin.png"
+        icon:"../Images/icons/dolphin.png"
         shaded:false
         desktop:1
         activities:2
@@ -57,7 +57,7 @@ ListModel {
         onAllActivities:false
         classClass: "LibreOffice"
         name:"New Document<2> - Various Text"
-        icon:"Images/icons/dolphin.png"
+        icon:"../Images/icons/dolphin.png"
         shaded:false
         desktop:1
         activities:2
@@ -69,7 +69,7 @@ ListModel {
         onAllActivities:true
         classClass: "LibreOffice"
         name:"New Document<4> - Around"
-        icon:"Images/icons/dolphin.png"
+        icon:"../Images/icons/dolphin.png"
         shaded:false
         desktop:1
         activities:2
@@ -81,7 +81,7 @@ ListModel {
         onAllActivities:true
         classClass: "Firefox"
         name:"www.in.gr"
-        icon:"Images/icons/activity3.png"
+        icon:"../Images/icons/activity3.png"
         shaded:false
         desktop:1
         activities:1

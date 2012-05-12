@@ -1,5 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import ".."
 
 Component{
 
@@ -34,7 +35,7 @@ Component{
           id:activityIcon
           rotation:-20
           opacity:1
-          source: Icon
+          source: "../" + Icon
           x:mainView.scaleMeter/10
           y:mainView.scaleMeter/3
           width:5+mainView.scaleMeter
@@ -71,7 +72,7 @@ Component{
             id:fadeIcon
             rotation:0
             opacity:1
-            source: "Images/buttons/activityIconFade.png"
+            source: "../Images/buttons/activityIconFade.png"
             x:0
             y:0
             width:1.2*activityIcon.width

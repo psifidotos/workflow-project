@@ -1,6 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import "delegates"
+import "instances"
 
 Rectangle {
     width: 1024;  height: 700
