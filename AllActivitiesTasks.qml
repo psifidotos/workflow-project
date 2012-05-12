@@ -10,6 +10,14 @@ Item{
     width:allActTaskL.width+50
     height:allActRectShad.height+allActRect.height
 
+    x: mainView.showWinds ? 0 : -width
+
+    Behavior on x{
+        NumberAnimation {
+            duration: 500;
+            easing.type: Easing.InOutQuad;
+        }
+    }
 
     Rectangle{
         id:allActRectShad

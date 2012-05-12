@@ -59,7 +59,7 @@ Rectangle{
 
     Image{
         id:plusIcon
-        opacity:0.5
+        opacity:0.7
         anchors.centerIn: addActivityBtn
         width:stoppedPanel.shownActivities > 0 ? addActivityBtn.width/5 : addActivityBtn.height/2
         height:width
@@ -68,6 +68,13 @@ Rectangle{
         Behavior on opacity{
             NumberAnimation {
                 duration: 400
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on scale{
+            NumberAnimation {
+                duration: 500;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -93,10 +100,12 @@ Rectangle{
 
         onEntered: {
             plusIcon.opacity = 1;
+            plusIcon.scale = 1.2;
         }
 
         onExited: {
-            plusIcon.opacity = 0.5;
+            plusIcon.opacity = 0.7;
+            plusIcon.scale = 1;
         }
 
         onClicked: {

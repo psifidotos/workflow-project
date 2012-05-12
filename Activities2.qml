@@ -23,6 +23,8 @@ Rectangle {
 
     property int workareaWidth: (60+3*mainView.scaleMeter) - (mainView.scaleMeter/5) + 10 + (mainView.scaleMeter-5)/3;
 
+    property bool showWinds: true
+
     Behavior on scaleMeter{
         NumberAnimation {
             duration: 100;

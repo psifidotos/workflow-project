@@ -87,12 +87,14 @@ Component{
 
             }//Row
             ListView{
+
                 id:tasksSList
 
                 x:mainWorkArea.imagex
                 y:mainWorkArea.imagey
                 width:mainWorkArea.imagewidth
-                height:mainWorkArea.imageheight
+                height:mainView.showWinds ? mainWorkArea.imageheight : 0
+                opacity:mainView.showWinds ? 1 : 0
 
                 clip:true
                 spacing:0
@@ -100,6 +102,20 @@ Component{
                 model:instanceOfTasksList.model
                 delegate:WorkAreaTaskDeleg{
 
+                }
+
+                Behavior on opacity{
+                    NumberAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                Behavior on height{
+                    NumberAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad;
+                    }
                 }
             }
 

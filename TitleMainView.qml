@@ -39,4 +39,9 @@ Rectangle{
         color:"#777777"
     }
 
+    ShowWindowsButton{
+        x:parent.height/2
+        y:parent.height/10
+    }
+
 }

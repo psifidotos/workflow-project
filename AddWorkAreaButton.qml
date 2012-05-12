@@ -29,6 +29,7 @@ Rectangle{
             width:parent.width
             height:parent.height
 
+
         }
 
     }
@@ -49,11 +50,13 @@ Rectangle{
 
             addWorkArea.color = addWorkArea.toColor;
             addWorkArea.border.color = addWorkArea.borderToColor;
+
         }
 
         onExited: {
             addWorkArea.color = addWorkArea.fromColor;
             addWorkArea.border.color = addWorkArea.borderFromColor;
+
         }
 
     }
