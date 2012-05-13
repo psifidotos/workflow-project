@@ -51,13 +51,13 @@ ListView{
     function addNewActivity(cod){
         var newwall;
         if (addednew % 4 === 0)
-            newwall = "Images/backgrounds/emptydesk1.png";
+            newwall = "../Images/backgrounds/emptydesk1.png";
         else if (addednew % 4 === 1)
-            newwall = "Images/backgrounds/emptydesk2.png";
+            newwall = "../Images/backgrounds/emptydesk2.png";
         else if (addednew % 4 === 2)
-            newwall = "Images/backgrounds/emptydesk3.png";
+            newwall = "../Images/backgrounds/emptydesk3.png";
         else if (addednew % 4 === 3)
-            newwall = "Images/backgrounds/emptydesk4.png";
+            newwall = "../Images/backgrounds/emptydesk4.png";
 
 
 

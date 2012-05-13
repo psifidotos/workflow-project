@@ -6,20 +6,20 @@ Item{
 
     state: "hide"
     property alias opacityDel : deleteWorkareaBtn.opacity
-    property alias deleteY:deleteWorkareaBtn.y
+    property alias deleteY: deleteWorkareaBtn.y
     property alias opacityClone : duplicateWorkareaBtn.opacity
-    property alias duplicateY:duplicateWorkareaBtn.y
+    property alias duplicateY: duplicateWorkareaBtn.y
 
-    property int buttonsSize:8+(mainView.scaleMeter/5)
-    property int buttonsSpace:mainView.scaleMeter/10
-    property int buttonsX:3*mainView.scaleMeter/10
-    property int buttonsY:mainView.scaleMeter/10
+    property int buttonsSize: 8+(mainView.scaleMeter/5)
+    property int buttonsSpace: mainView.scaleMeter/10
+    property int buttonsX:0.3 * mainView.scaleMeter
+    property int buttonsY: mainView.scaleMeter/10
 
     property real curBtnScale:1.4
 
     Image{
         id:deleteWorkareaBtn
-        source: "Images/buttons/workarea_delete.png"
+        source: "../Images/buttons/workarea_delete.png"
         width: buttonsSize
         height: buttonsSize
         x:0
@@ -66,7 +66,7 @@ Item{
 
     Image{
         id:duplicateWorkareaBtn
-        source: "Images/buttons/window_duplicate.png"
+        source: "../Images/buttons/window_duplicate.png"
         width: buttonsSize
         height: buttonsSize
         x:0

@@ -22,7 +22,7 @@ Rectangle{
     Rectangle{
         anchors.top: oxygenTitle.bottom
         width:oxygenTitle.width
-        height:3*oxygenTitle.height/6
+        height:oxygenTitle.height/2
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#aa0f0f0f" }
             GradientStop { position: 1.0; color: "#00797979" }

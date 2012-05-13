@@ -73,7 +73,7 @@ Component{
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true
-                font.pointSize: 4+(mainView.scaleMeter) / 12
+                font.pointSize: 4+(mainView.scaleMeter/12)
                 color:"#333333"
             }
         }
@@ -89,7 +89,7 @@ Component{
                 PropertyChanges {
                     target: taskDeleg2
                     textY: 4 * (imageTask2.y+imageTask2.height) / 5
-                    imageTask2Width: 2* (3* allActTaskL.height / 5)
+                    imageTask2Width: 1.2 * allActTaskL.height
                     textOpacity: 1
                 }
 

@@ -8,11 +8,6 @@ Component{
     Item{
         id: workList
 
-        //height:mainView.workareaHeight*workalist.model.count + 250
-      //  height:workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
-      //  width: 1.4 * mainView.workareaHeight
-      //  width:0
-
         property string tCState : CState
 
         property string neededState:"Running"
@@ -59,7 +54,6 @@ Component{
 
             model:workareas
 
-
             delegate:WorkAreaDeleg{
 
             }
@@ -71,8 +65,6 @@ Component{
                 }
             }
 
-            //onHeightChanged: console.debug(height);
-            //onHeightChanged: allareas.changedChildHeight()
         }
 
         AddWorkAreaButton{
@@ -80,7 +72,7 @@ Component{
 
             z:3
 
-            anchors.top:workalist.bottom
+            anchors.top: workalist.bottom
             anchors.topMargin: mainView.workareaHeight/5
             anchors.horizontalCenter: workalist.horizontalCenter
 

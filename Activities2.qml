@@ -10,6 +10,7 @@ Rectangle {
     color: "#dcdcdc"
     id:mainView
     //  z:0
+    clip:true
     anchors.fill: parent
 
     property int currentColumn:-1
@@ -21,7 +22,7 @@ Rectangle {
     property int workareaHeight:(3.6 - zoomingHeightFactor)*scaleMeter
     property int workareaY:2*scaleMeter
 
-    property int workareaWidth: (60+3*mainView.scaleMeter) - (mainView.scaleMeter/5) + 10 + (mainView.scaleMeter-5)/3;
+    property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
 
     property bool showWinds: true
 

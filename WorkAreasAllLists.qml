@@ -35,7 +35,7 @@ Item{
         ListView{
             id:allareas
 
-            y:workareaY+(workareaY/3)
+            y:1.33* workareaY
             width:model.count*(workareaWidth)
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
             orientation: ListView.Horizontal
@@ -87,7 +87,7 @@ Item{
             id: actImag1
             y:oxygenT.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
-            height: workareaY-workareaY/10
+            height: 0.9*workareaY
             color: "#646464"
             border.color: allwlists.actImagBordColor
             border.width:1

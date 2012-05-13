@@ -10,7 +10,7 @@ Rectangle {
 
     x:stoppedActivitiesList.shownActivities > 0 ? mainView.width - width : mainView.width - 2
     y:oxygenT.height
-    width: 2*mainView.workareaWidth/3
+    width: 0.66*mainView.workareaWidth
     height: mainView.height - y
 
     color: "#ebebeb"
@@ -27,7 +27,7 @@ Rectangle {
     Text{
         text:"Stopped Activities"
         width:stopActBack.width
-        x:-stopActBack.width/2 + 3*workareaWidth/30
+        x:-stopActBack.width/2 + workareaWidth/10
         anchors.verticalCenter: stopActBack.verticalCenter
        // anchors.left: stopActBack.left
         rotation:-90
@@ -42,7 +42,7 @@ Rectangle {
     ListView {
         id: stoppedActivitiesList
         orientation: ListView.Vertical
-        height: shownActivities !==0 ? shownActivities * ((2*workareaHeight/3)+spacing) : workareaHeight
+        height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
         //height: model.count * ((2*workareaHeight/3)+spacing)
         width: stopActBack.width - spacing
 

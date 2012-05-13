@@ -16,7 +16,7 @@ Component{
         width: stoppedActivitiesList.width
         height: CState === neededState ? basicHeight : 0
 
-        property real basicHeight:2*mainView.workareaHeight/3
+        property real basicHeight:0.66*mainView.workareaHeight
 
         y: CState !== neededState ? -basicHeight : 0
         //y: -basicHeight
@@ -89,7 +89,7 @@ Component{
             font.family: "Helvetica"
             font.bold: true
             font.italic: true
-            font.pointSize: 3+(mainView.scaleMeter) /10
+            font.pointSize: 3+(mainView.scaleMeter/10)
 
             color:"#4d4b4b"
             opacity:parent.defOpacity
@@ -111,7 +111,7 @@ Component{
             anchors.top:stpActivityName.bottom
             anchors.topMargin: 15
 
-            width:stopActBack.width -(2*(stopActBack.width/10))
+            width:0.8 * stopActBack.width
             height:2
             color:"#d7d7d7"
         }

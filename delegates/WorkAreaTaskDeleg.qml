@@ -28,6 +28,7 @@ Component{
             width:taskDeleg1.width
             height:taskTitle.height
             color:"#eee2e2e2"
+            radius:height/3
             Text{
                 id:taskTitle
 
@@ -38,7 +39,7 @@ Component{
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true
-                font.pointSize: 4+(mainView.scaleMeter) / 12
+                font.pointSize: 3+(mainView.scaleMeter) / 12
                 color:"#222222"
             }
         }

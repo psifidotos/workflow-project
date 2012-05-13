@@ -51,7 +51,7 @@ Item{
                 anchors.verticalCenter: parent.verticalCenter
                 source: initTick
                 width: parent.width - 15
-                height: 3*width/4
+                height: 0.75*width
                 smooth:true
 
                 property string initTick:"Images/buttons/darkTick.png"
@@ -91,7 +91,7 @@ Item{
 
         font.family: "Helvetica"
         font.italic: true
-        font.pointSize: 5+(mainView.scaleMeter) /10
+        font.pointSize: 5+(mainView.scaleMeter/10)
 
         color: origColor
 
@@ -164,8 +164,8 @@ Item{
     Image{
         id:pencilI
         anchors.right: dTextIItem.right
-        width:3*dTextIItem.height/5
-        height:2*dTextIItem.height / 3
+        width: 0.6 * dTextIItem.height
+        height:0.66 * dTextIItem.height
         source:"Images/buttons/darkPencil.png"
         opacity: 0
         smooth:true

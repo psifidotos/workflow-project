@@ -65,7 +65,7 @@ Item{
         color:"#ebebeb"
 
 
-        property int taskWidth: 3* mainView.workareaWidth / 4
+        property int taskWidth: 0.75 * mainView.workareaWidth
 
 
         ListView{

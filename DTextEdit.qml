@@ -51,7 +51,7 @@ Item{
                 anchors.verticalCenter: parent.verticalCenter
                 source: initTick
                 width: parent.width - 15
-                height: 3*width/4
+                height: 0.75*width
                 smooth:true
 
                 property string initTick:"Images/buttons/darkTick.png"
@@ -92,7 +92,7 @@ Item{
         font.family: "Helvetica"
         font.bold: true
         font.italic: true
-        font.pointSize: 5+(mainView.scaleMeter) /10
+        font.pointSize: 5+(mainView.scaleMeter/10)
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom
@@ -168,7 +168,7 @@ Item{
         anchors.bottom: dTextItem.bottom
         anchors.bottomMargin: 3
 
-        width:2*dTextItem.height/5
+        width:0.4*dTextItem.height
         height:dTextItem.height / 2
         source:"Images/buttons/listPencil.png"
         opacity: 1

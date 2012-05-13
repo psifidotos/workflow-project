@@ -10,8 +10,6 @@ Component{
      property alias workAreaName_visible: workAreaName.visible
      property alias areaButtons_visible: workAreaButtons.visible
 
-     //width:60+3*mainView.scaleMeter
-     //height:50+2*mainView.scaleMeter
      width: 1.4 * mainView.workareaHeight
      height:mainView.workareaHeight
 
@@ -25,12 +23,9 @@ Component{
         Item{
             id:normalWorkArea
 
-            //parent:workareas
-
-     //       x: mainWorkArea.x + 5; y: mainWorkArea.y + 5
             x:mainView.scaleMeter/10; y:x;
             width: mainWorkArea.width - (mainView.scaleMeter/5);
-            height: mainWorkArea.height - (mainView.scaleMeter/5) + (4*mainView.scaleMeter/5);
+            height: mainWorkArea.height + (0.6*mainView.scaleMeter);
 
             Behavior on x { enabled: normalWorkArea.state!="dragging"; NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
             Behavior on y { enabled: normalWorkArea.state!="dragging"; NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
@@ -121,9 +116,9 @@ Component{
 
             DTextLine{
                 id:workAreaName
-                y:normalStateWorkArea.height-7
-                width:50+mainView.scaleMeter*3
-                height:20+2.5*mainView.scaleMeter/5
+                y: normalStateWorkArea.height-7
+                width: 50 + 3*mainView.scaleMeter
+                height: 20 + mainView.scaleMeter/2
                 text: elemTitle
                // acceptedText: elemTitle
             }
@@ -137,22 +132,6 @@ Component{
                         workAreaName_visible:true
                     }
                 },
-  /*              State {
-                    name: "dragging"
-                    when: (loc.currentId == gridRow)&&(elemVisible)
-                     PropertyChanges {
-                         target: normalWorkArea;
-                         x: loc.mouseX - width/2;
-                         y: loc.mouseY - height/2;
-                         scale: 0.5;
-                         z: 18 }
-                     PropertyChanges {
-                         target: mainWorkArea
-                         normalStateArea_visible: true
-                         workAreaName_visible:true
-                         areaButtons_visible:false
-                     }
-                }, testing for dragging*/
                 State {
                     name:"hidden"
                     when: (!elemVisible)
@@ -177,7 +156,6 @@ Component{
 
         ListView.onAdd: ParallelAnimation {
             PropertyAction { target: mainWorkArea; property: "height"; value: 0 }
-       //     PropertyAction { target: borderRectangle; property: "opacity"; value: 0 }
             PropertyAction { target: borderRectangle; property: "height"; value: 0 }
             PropertyAction { target: mainWorkArea; property: "opacity"; value: 0 }
 
