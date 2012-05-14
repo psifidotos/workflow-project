@@ -117,7 +117,7 @@ Component{
             DTextLine{
                 id:workAreaName
                 y: normalStateWorkArea.height-7
-                width: 50 + 3*mainView.scaleMeter
+                width: 50 + 3.3*mainView.scaleMeter
                 height: 20 + mainView.scaleMeter/2
                 text: elemTitle
                // acceptedText: elemTitle

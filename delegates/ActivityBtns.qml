@@ -23,7 +23,7 @@ Item{
 
     Image{
         id:stopActivityBtn
-        source: "Images/buttons/player_stop.png"
+        source: "../Images/buttons/player_stop.png"
         width: buttonsSize
         height: buttonsSize
         x:buttonsX
@@ -70,7 +70,7 @@ Item{
 
     Image{
         id:duplicateActivityBtn
-        source: "Images/buttons/cloneActivity.png"
+        source: "../Images/buttons/cloneActivity.png"
         width: buttonsSize
         height: buttonsSize
         x:buttonsSize+buttonsSpace+buttonsX
@@ -111,7 +111,7 @@ Item{
 
     Image{
         id:deleteActivityBtn
-        source: "Images/buttons/mail_delete.png"
+        source: "../Images/buttons/mail_delete.png"
         width: buttonsSize
         height: buttonsSize
         x:2*buttonsSize+2*buttonsSpace+buttonsX
