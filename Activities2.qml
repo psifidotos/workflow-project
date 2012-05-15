@@ -4,6 +4,8 @@ import QtQuick 1.1
 import "delegates"
 import "instances"
 
+import "ui"
+
 Rectangle {
     width: 1024;  height: 700
 
@@ -84,8 +86,6 @@ Rectangle {
         width:125
 
     }
-
-
 
 }
 

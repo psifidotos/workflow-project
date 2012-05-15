@@ -10,7 +10,7 @@ Component{
         property bool shown: (onAllActivities !== true)&&((gridRow === desktop)&&(actCode === activities))
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
-        height: shown ? 1.3*imageTask.height : 0
+        height: shown ? 1.1 * imageTask.height : 0
 
 
         opacity: shown ? 1 : 0
@@ -26,9 +26,26 @@ Component{
         Image{
             id:imageTask
             source: icon
-            width:25
+            width:1.5*taskTitleRec.height
             height:width
             y:0.1 * taskDeleg1.height
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    taskDeleg1.state = "hovered"
+                    workAreaButtons.state="show"
+                    tasksBtns.state = "show"
+                }
+
+                onExited: {
+                    taskDeleg1.state = "def"
+                    tasksBtns.state = "hide"
+                }
+
+            }
         }
 
 
@@ -68,6 +85,22 @@ Component{
                     }
                 }
             }
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    taskDeleg1.state = "hovered"
+                    workAreaButtons.state="show"
+                    tasksBtns.state = "show"
+                }
+
+                onExited: {
+                    taskDeleg1.state = "def"
+                    tasksBtns.state = "hide"
+                }
+
+            }
         }
 
         WATaskDelegButtons{
@@ -95,22 +128,7 @@ Component{
 
         ]
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
 
-            onEntered: {
-                taskDeleg1.state = "hovered"
-                workAreaButtons.state="show"
-                tasksBtns.state = "show"
-            }
-
-            onExited: {
-                taskDeleg1.state = "def"
-                tasksBtns.state = "hide"
-            }
-
-        }
 
     }
 

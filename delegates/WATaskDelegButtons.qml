@@ -1,59 +1,94 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import "../ui"
+
 Item {
     id: buttonsArea
     width: mainWorkArea.imagewidth
     height: taskDeleg1.height
     state: "hide"
 
+    //y: -height/5
+
     property alias opacityClose: closeBtn.opacity
     property alias xClose: closeBtn.x
+    property alias opacityWSt:  placeStateBtn.opacity
+    property alias xWSt:  placeStateBtn.x
 
-    property int buttonsSize:0.55*height
-    property int buttonsSpace: buttonsSize/10
+    property int buttonsSize: 1.7*taskTitleRec.height
+    property int buttonsSpace: -buttonsSize/8
 
-    Rectangle{
+
+    CloseWindowButton{
         id:closeBtn
 
         width: parent.buttonsSize
         height: width
-        color: backDef
-        border.color: "#616161"
-        border.width: 1
-        radius:4
-
-        property color backDef: "#e4e4e4"
-        property color backHover: "#fcd0d0"
-
-        Image{
-            source:"../Images/buttons/close_window.png"
-            width:0.7 * parent.width
-            height:width
-            anchors.centerIn: parent
-            smooth:true
-        }
-
-        Behavior on color{
-            ColorAnimation {
-                duration: 500
-            }
-        }
 
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
 
             onEntered: {
+                closeBtn.onEntered();
                 buttonsArea.state = "show"
-                closeBtn.color = closeBtn.backHover
             }
 
             onExited: {
+                closeBtn.onExited();
                 buttonsArea.state = "hide"
-                closeBtn.color = closeBtn.backDef
             }
+
+            onReleased: {
+                closeBtn.onReleased();
+            }
+
+            onPressed: {
+                closeBtn.onPressed();
+            }
+
+
         }
+
+    }
+
+    WindowPlaceButton{
+        id: placeStateBtn
+
+        width: parent.buttonsSize
+        height: width
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            z:4
+
+            onEntered: {
+                placeStateBtn.onEntered();
+                buttonsArea.state = "show";
+            }
+
+            onExited: {
+                placeStateBtn.onExited();
+                buttonsArea.state = "hide";
+            }
+
+            onClicked: {
+                placeStateBtn.nextState();
+            }
+
+            onReleased: {
+                placeStateBtn.onReleased();
+            }
+
+            onPressed: {
+                placeStateBtn.onPressed();
+            }
+
+
+        }
+
     }
 
     states: [
@@ -64,7 +99,9 @@ Item {
                 target: buttonsArea
 
                 opacityClose: 1
-                xClose: width - buttonsSize - buttonsSpace
+                xClose: width - buttonsSize
+                opacityWSt: 1
+                xWSt: width - 2*buttonsSize - buttonsSpace
             }
         },
        State {
@@ -74,6 +111,9 @@ Item {
 
                opacityClose: 0
                xClose: 0
+               opacityWSt: 0
+               xWSt: 0
+
            }
         }
     ]
@@ -99,20 +139,23 @@ Item {
                     }
                 }
 
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: buttonsArea;
+                        property: "xWSt";
+                        duration: 300;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: buttonsArea;
+                        property: "opacityWSt";
+                        duration: 300;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
             }
         }
     ]
-/*
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
 
-        onEntered: {
-            buttonsArea.state = "show"
-        }
-
-        onExited: {
-            buttonsArea.state = "hide"
-        }
-    }*/
 }
