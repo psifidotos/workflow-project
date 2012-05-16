@@ -25,8 +25,8 @@ Item{
                 target: winStateBtn
                 imgIcon:"../Images/buttons/plasma_ui/oneDesktop.png"
                 imgIconHov:"../Images/buttons/plasma_ui/oneDesktopHov.png"
-                mainIconWidth: 0.4 * winStateItem.width
-                mainIconHeight: 0.8 * mainIconWidth
+                mainIconWidth: 0.45 * winStateItem.width
+                mainIconHeight: 0.85 * mainIconWidth
             }
         },
         State {

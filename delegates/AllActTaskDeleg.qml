@@ -31,6 +31,21 @@ Component{
 
             width:(3* allActTaskL.height / 5)
 
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    taskDeleg2.state = "hovered";
+                    allTasksBtns.state = "show";
+                }
+
+                onExited: {
+                    taskDeleg2.state = "nohovered";
+                    allTasksBtns.state = "hide";
+                }
+            }
+
         }
 
         Image{
@@ -75,6 +90,35 @@ Component{
                 font.bold: true
                 font.pointSize: 4+(mainView.scaleMeter/12)
                 color:"#333333"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    taskDeleg2.state = "hovered";
+                    allTasksBtns.state = "show";
+                }
+
+                onExited: {
+                    taskDeleg2.state = "nohovered";
+                    allTasksBtns.state = "hide";
+                }
+            }
+        }
+
+        AllTaskDelegButtons{
+            id:allTasksBtns
+        }
+
+        Connections {
+            target: allTasksBtns
+            onChangedStatus:{
+                if (allTasksBtns.status == "hover")
+                    taskDeleg2.state = "hovered";
+                else
+                    taskDeleg2.state = "nohovered";
             }
         }
 
@@ -127,18 +171,6 @@ Component{
             }
         ]
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                taskDeleg2.state = "hovered";
-            }
-
-            onExited: {
-                taskDeleg2.state = "nohovered";
-            }
-        }
     }
 
 }
