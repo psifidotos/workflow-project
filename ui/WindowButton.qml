@@ -97,6 +97,8 @@ Item{
 
         Image{
             id:mainIcon
+            x:0
+            y:0
             anchors.centerIn: parent
             width:0.6 * parent.width
             height:width
@@ -185,6 +187,10 @@ Item{
             mainBtn.onReleased();
         }
 
+        onClicked: {
+            mainBtn.onClicked();
+        }
+
 
     }
 
@@ -204,6 +210,23 @@ Item{
 
     function onReleased(){
         mainBtn.state="simple"
+    }
+
+    function onClicked(){
+        mainBtn.state="pressed";
+
+        var x1 = mainIcon.x;
+        var y1 = mainIcon.y;
+
+        var crd = mainIcon.mapToItem(mainView,x1, y1);
+
+        btnIconAnimate.animateIcon(mainIcon.source,
+                                   mainIcon.height/mainIcon.width,
+                                   mainIcon.width,
+                                   crd);
+
+        mainBtn.state="hovered";
+
     }
 
 

@@ -48,6 +48,9 @@ Item {
                 closeBtn.onPressed();
             }
 
+            onClicked: {
+                closeBtn.onClicked();
+            }
 
         }
 
@@ -75,6 +78,7 @@ Item {
             }
 
             onClicked: {
+                placeStateBtn.onClicked();
                 placeStateBtn.nextState();
             }
 

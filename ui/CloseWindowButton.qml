@@ -8,5 +8,4 @@ WindowButton{
 
     imgIcon:"../Images/buttons/plasma_ui/closeWindow.png"
     imgIconHov:"../Images/buttons/plasma_ui/closeWindowHov.png"
-
 }

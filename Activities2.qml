@@ -51,6 +51,10 @@ Rectangle {
         id:activityAnimate
     }
 
+    BtnIconAnimatMainView{
+        id:btnIconAnimate
+    }
+
     WorkAreasAllLists{
         id: allWorkareas
     }

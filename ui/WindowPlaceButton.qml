@@ -64,7 +64,8 @@ Item{
         }
 
         onClicked: {
-            winStateItem.nextState()
+            winStateItem.onClicked();
+            winStateItem.nextState();
         }
 
         onReleased: {
@@ -97,6 +98,10 @@ Item{
 
     function onPressed(){
         winStateBtn.onPressed();
+    }
+
+    function onClicked(){
+        winStateBtn.onClicked();
     }
 
     function onReleased(){
