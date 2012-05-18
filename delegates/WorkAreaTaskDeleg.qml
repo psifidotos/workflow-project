@@ -7,13 +7,20 @@ Component{
     Item{
         id: taskDeleg1
 
-        property bool shown: (onAllActivities !== true)&&((gridRow === desktop)&&(actCode === activities))
+        property bool shown: ( (onAllActivities !== true)&&
+                             ((gridRow === desktop)&&
+                              (actCode === activities)) ) ||
+                             ( (onAllActivities !== true)&&
+                             ((onAllDesktops === true)&&
+                              (actCode === activities)) )
+
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
         height: shown ? 1.1 * imageTask.height : 0
 
 
         opacity: shown ? 1 : 0
+
 
         property alias taskTitleRecColor : taskTitleRec.color
         property alias taskTitleColor: taskTitle.color
@@ -22,6 +29,21 @@ Component{
         property color taskTitleRecColorH : "#e8c5f3ca";
         property color taskTitleColorD : "#222222";
         property color taskTitleColorH : "#13200e";
+
+
+        Behavior on height{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
 
         Image{
             id:imageTask

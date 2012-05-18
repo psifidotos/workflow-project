@@ -10,9 +10,16 @@ Item{
     width:allActTaskL.width+50
     height:allActRectShad.height+allActRect.height
 
-    x: mainView.showWinds ? 0 : -width
+    x: mainView.showWinds && (allActTaskL.shownTasks>0) ? 0 : -width
 
     Behavior on x{
+        NumberAnimation {
+            duration: 500;
+            easing.type: Easing.InOutQuad;
+        }
+    }
+
+    Behavior on width{
         NumberAnimation {
             duration: 500;
             easing.type: Easing.InOutQuad;
@@ -86,24 +93,23 @@ Item{
             }
         }
 
-        Component.onCompleted: allActRect.changedChildState()
+        Component.onCompleted: allActTasksPanel.changedChildState()
 
-
-        function changedChildState(){
-            var counter = 0;
-
-            for (var i=0; i<allActTaskL.model.count; ++i)
-            {
-                var elem = allActTaskL.model.get(i);
-
-                if (elem.onAllActivities === true)
-                    counter++;
-            }
-
-            allActTaskL.shownTasks = counter;
-        }
 
     }
 
+    function changedChildState(){
+        var counter = 0;
+
+        for (var i=0; i<allActTaskL.model.count; ++i)
+        {
+            var elem = allActTaskL.model.get(i);
+
+            if (elem.onAllActivities === true)
+                counter++;
+        }
+
+        allActTaskL.shownTasks = counter;
+    }
 
 }

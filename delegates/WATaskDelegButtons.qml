@@ -50,17 +50,32 @@ Item {
 
             onClicked: {
                 closeBtn.onClicked();
+                instanceOfTasksList.removeTask(code);
             }
 
         }
 
     }
 
+
     WindowPlaceButton{
         id: placeStateBtn
 
         width: parent.buttonsSize
         height: width
+
+        allDesks: onAllDesktops
+        allActiv: onAllActivities
+
+        function informState(){
+
+            if (placeStateBtn.state == "one")
+                instanceOfTasksList.setTaskState(code,"oneDesktop");
+            else if (placeStateBtn.state == "allDesktops")
+                instanceOfTasksList.setTaskState(code,"allDesktops");
+            else if (placeStateBtn.state == "everywhere")
+                instanceOfTasksList.setTaskState(code,"allActivities");
+        }
 
         MouseArea {
             anchors.fill: parent
@@ -80,6 +95,7 @@ Item {
             onClicked: {
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
+                placeStateBtn.informState();
             }
 
             onReleased: {
@@ -94,6 +110,7 @@ Item {
         }
 
     }
+
 
     states: [
         State {

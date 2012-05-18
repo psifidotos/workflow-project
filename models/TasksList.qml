@@ -17,7 +17,7 @@ ListModel {
 
     ListElement {
         code:2
-        onAllDesktops:false
+        onAllDesktops:true
         onAllActivities:false
         classClass: "Dolphin"
         name:"Home Folder..."
@@ -52,7 +52,7 @@ ListModel {
     }
 
     ListElement {
-        code:5
+        code:6
         onAllDesktops:false
         onAllActivities:false
         classClass: "LibreOffice"
@@ -64,8 +64,8 @@ ListModel {
     }
 
     ListElement {
-        code:6
-        onAllDesktops:false
+        code:7
+        onAllDesktops:true
         onAllActivities:true
         classClass: "LibreOffice"
         name:"New Document<4> - Around"
@@ -76,8 +76,8 @@ ListModel {
     }
 
     ListElement {
-        code:7
-        onAllDesktops:false
+        code:8
+        onAllDesktops:true
         onAllActivities:true
         classClass: "Firefox"
         name:"www.in.gr"

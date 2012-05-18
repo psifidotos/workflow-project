@@ -7,10 +7,13 @@ Component{
     Item{
         id: taskDeleg2
 
-        width: onAllActivities === true ? allActRect.taskWidth+spacing :0
-        height: onAllActivities === true ? imageTask2.height+taskTitle2.height : 0
+        property bool mustBeShown: (onAllActivities === true)&&
+                                   (onAllDesktops === true)
 
-        opacity: onAllActivities === true ? 1 : 0
+        width: mustBeShown ? allActRect.taskWidth+spacing : 0
+        height: mustBeShown ? imageTask2.height+taskTitle2.height : 0
+
+        opacity: mustBeShown ? 1 : 0
 
         property int spacing: 20
 
@@ -19,6 +22,20 @@ Component{
         property alias textOpacity: taskTitleRec.opacity
 
         state:"nohovered"
+
+        Behavior on width{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
 
         Image{
             id:imageTask2
