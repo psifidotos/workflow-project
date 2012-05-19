@@ -129,6 +129,16 @@ Component{
             id:tasksBtns
         }
 
+        Connections {
+            target: tasksBtns
+            onChangedStatus:{
+                if (tasksBtns.status == "hover")
+                    taskDeleg1.state = "hovered";
+                else
+                    taskDeleg1.state = "def";
+            }
+        }
+
         states:[
             State {
                 name: "def"

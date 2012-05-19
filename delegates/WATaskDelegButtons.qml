@@ -10,6 +10,7 @@ Item {
     state: "hide"
 
     //y: -height/5
+    property string status:"nothover"
 
     property alias opacityClose: closeBtn.opacity
     property alias xClose: closeBtn.x
@@ -19,6 +20,7 @@ Item {
     property int buttonsSize: 1.7*taskTitleRec.height
     property int buttonsSpace: -buttonsSize/8
 
+    signal changedStatus();
 
     CloseWindowButton{
         id:closeBtn
@@ -32,12 +34,16 @@ Item {
 
             onEntered: {
                 closeBtn.onEntered();
-                buttonsArea.state = "show"
+                buttonsArea.state = "show";
+                buttonsArea.status = "hover";
+                buttonsArea.changedStatus();
             }
 
             onExited: {
                 closeBtn.onExited();
-                buttonsArea.state = "hide"
+                buttonsArea.state = "hide";
+                buttonsArea.status = "nothoverred";
+                buttonsArea.changedStatus();
             }
 
             onReleased: {
@@ -85,11 +91,15 @@ Item {
             onEntered: {
                 placeStateBtn.onEntered();
                 buttonsArea.state = "show";
+                buttonsArea.status = "hover";
+                buttonsArea.changedStatus();
             }
 
             onExited: {
                 placeStateBtn.onExited();
                 buttonsArea.state = "hide";
+                buttonsArea.status = "nothoverred";
+                buttonsArea.changedStatus();
             }
 
             onClicked: {
