@@ -173,6 +173,8 @@ Component{
                   NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
                   NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
                   NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
             }
 
 

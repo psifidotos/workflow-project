@@ -55,7 +55,6 @@ Component{
             model:workareas
 
             delegate:WorkAreaDeleg{
-
             }
 
             Behavior on height{
@@ -97,6 +96,116 @@ Component{
 
         }
 
+        Text{
+            id:taskOrFTitle
+            anchors.topMargin: mainView.scaleMeter/5
+            anchors.top:addWorkArea.bottom
+            anchors.left: addWorkArea.left
+
+            width:parent.width
+            opacity:orphansList.shownOrphanWindows > 0 ? 1:0
+            height:orphansList.shownOrphanWindows > 0 ? 2.6*font.pointSize:0
+
+            //clip:true
+
+            text:"Orphaned Windows"
+            font.family: "Helvetica"
+            font.italic: true
+            font.pointSize: 4+(mainView.scaleMeter/10)
+            color: "#80808c";
+
+            Behavior on height{
+                NumberAnimation{
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+            Behavior on opacity{
+                NumberAnimation{
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
+
+        Rectangle{
+            id:taskOrFTitleL
+            width: 0.9 * workList.bWidth
+            //y:taskOrFTitle.height
+            anchors.top : taskOrFTitle.bottom
+            anchors.left: taskOrFTitle.left
+
+            opacity:orphansList.shownOrphanWindows > 0 ? 1:0
+            height:orphansList.shownOrphanWindows > 0 ? 2:0
+            color:taskOrFTitle.color;
+
+            Behavior on height{
+                NumberAnimation{
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+            Behavior on opacity{
+                NumberAnimation{
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
+
+        ListView {
+            id:orphansList
+
+            width: CState === "Running" ? workList.bWidth : 0
+
+            anchors.topMargin: windsHeight/3
+            //y: taskOrFTitleL.height+taskOrFTitle.height
+
+            anchors.top : taskOrFTitleL.bottom
+            anchors.left: taskOrFTitleL.left
+
+            property int fontSiz: 4+ mainView.scaleMeter / 12
+            property int windsHeight:3 * fontSiz
+
+            //height: shownOrphanWindows * windsHeight
+            height: 200
+
+            property int shownOrphanWindows: 0
+
+            interactive:false
+           // clip:true
+
+            model:instanceOfTasksList.model
+
+            delegate:WorkAreaOrphanTaskDeleg{
+
+            }
+
+            Behavior on height{
+                NumberAnimation{
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            function changedOrphansWindows(){
+                var counter = 0;
+
+                for (var i=0; i<orphansList.children[0].children.length; ++i)
+                {
+                    var chd = orphansList.children[0].children[i];
+
+                    if (chd.shown === true)
+                        counter++;
+                }
+
+                orphansList.shownOrphanWindows = counter;
+
+            }
+
+        }
+
+
         ListView.onAdd: ParallelAnimation {
             PropertyAction { target: workList; property: "width"; value: 0 }
             PropertyAction { target: workList; property: "opacity"; value: 0 }
@@ -117,6 +226,8 @@ Component{
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
         }
+
+
     }
 
 }

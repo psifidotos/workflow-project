@@ -22,14 +22,20 @@ Component{
         opacity: shown ? 1 : 0
 
 
+
         property alias taskTitleRecColor : taskTitleRec.color
         property alias taskTitleColor: taskTitle.color
 
         property color taskTitleRecColorD : "#eee2e2e2";
-        property color taskTitleRecColorH : "#e8c5f3ca";
+        property color taskTitleRecColorH : "#ff00b110";
         property color taskTitleColorD : "#222222";
-        property color taskTitleColorH : "#13200e";
+        property color taskTitleColorH : "#ffffff";
 
+//        property color taskTitleColorD : taskOrFTitle.color;
+ //       property color taskTitleColorH : "#ffffff";
+
+        //property color taskTitleRecColorD : "#0000b110";
+        //property color taskTitleRecColorH : "#ff00b110";
 
         Behavior on height{
             NumberAnimation {
@@ -160,10 +166,6 @@ Component{
 
         ]
 
-
-
     }
-
-
 
 }
