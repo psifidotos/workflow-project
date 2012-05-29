@@ -50,6 +50,7 @@ Rectangle{
         height: 0.91 * oxygenTitle.height
         width: 0.95 * height
 
+        state: mainView.lockActivities ? "active" : "inactive"
 
         mainIconWidthInactive: 0.95 * height
         mainIconHeightInactive: 0.91 * oxygenTitle.height
@@ -74,6 +75,10 @@ Rectangle{
 
             onClicked: {
                 lckBtn.onClicked();
+                if (mainView.lockActivities === true)
+                    mainView.lockActivities = false;
+                else
+                    mainView.lockActivities = true;
             }
 
         }

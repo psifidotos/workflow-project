@@ -10,6 +10,8 @@ Item{
 
     property bool firstrun: true
 
+    property bool enableEditing: true
+
     property string acceptedText : ""
 
     BorderImage{
@@ -64,16 +66,21 @@ Item{
                 z:15
 
                 onEntered:{
-                    backImage.source = backImage.hoverSource;
-                    tickImage.source = tickImage.hoverTick
+                    if(dTextItem.enableEditing === true){
+                        backImage.source = backImage.hoverSource;
+                        tickImage.source = tickImage.hoverTick;
+                    }
                 }
                 onExited:{
-                    backImage.source = backImage.initSource;
-                    tickImage.source = tickImage.initTick;
+                    if(dTextItem.enableEditing === true){
+                        backImage.source = backImage.initSource;
+                        tickImage.source = tickImage.initTick;
+                    }
                 }
 
                 onClicked: {
-                    dTextItem.textAccepted();
+                    if(dTextItem.enableEditing === true)
+                        dTextItem.textAccepted();
                 }
             }
         }
@@ -139,14 +146,17 @@ Item{
 
 
             onEntered:{
-                dTextItem.entered();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.entered();
             }
             onExited:{
-                dTextItem.exited();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.exited();
             }
 
             onClicked: {
-                dTextItem.clicked(mouse);
+                if(dTextItem.enableEditing === true)
+                    dTextItem.clicked(mouse);
             }
         }
 
@@ -186,14 +196,17 @@ Item{
 
 
             onEntered:{
-                dTextItem.entered();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.entered();
             }
             onExited:{
-                dTextItem.exited();
+                if(dTextItem.enableEditing  === true)
+                    dTextItem.exited();
             }
 
             onClicked: {
-                dTextItem.clicked(mouse);
+                if(dTextItem.enableEditing  === true)
+                    dTextItem.clicked(mouse);
             }
         }
     }

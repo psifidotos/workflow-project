@@ -9,6 +9,8 @@ Rectangle{
 
     anchors.top: stoppedPanel.top
 
+    opacity:mainView.lockActivities ? 0 : 1
+
     property color openStpActiv1: "#ebebeb"
     property color openStpActiv2: "#bdbdbd"
     property color closStpActiv1: "#77333333"
@@ -56,6 +58,12 @@ Rectangle{
         }
     }
 
+    Behavior on opacity{
+        NumberAnimation {
+            duration: 400;
+            easing.type: Easing.InOutQuad;
+        }
+    }
 
     Image{
         id:plusIcon

@@ -53,15 +53,27 @@ Component{
               hoverEnabled: true
 
               onEntered: {
-                  activityBtnsI.state="show"
-                  fadeIcon.opacity = 0;
-                  activityIcon.rotation = 0;
+                  if (mainView.lockActivities === false){
+                      activityBtnsI.state="show";
+                      stopActLocked.state="hide";
+                      fadeIcon.opacity = 0;
+                      activityIcon.rotation = 0;
+                  }
+                  else
+                      stopActLocked.state="show";
+
               }
 
               onExited: {
-                  activityBtnsI.state="hide"
-                  fadeIcon.opacity = 1;
-                  activityIcon.rotation = -20;
+                  if (mainView.lockActivities === false){
+                      activityBtnsI.state="hide";
+                      stopActLocked.state="hide";
+                      fadeIcon.opacity = 1;
+                      activityIcon.rotation = -20;
+                  }
+                  else
+                      stopActLocked.state="hide";
+
               }
 
           }
@@ -95,6 +107,8 @@ Component{
             width:40+2.7*mainView.scaleMeter
             height:20+mainView.scaleMeter
 
+            enableEditing: mainView.lockActivities === true ? false:true
+
             MouseArea {
                 anchors.left: parent.left
                 height:parent.height
@@ -102,17 +116,30 @@ Component{
                 hoverEnabled: true
 
                 onEntered: {
-                    activityBtnsI.state="show";
-                    activityName.entered();
+                    if (mainView.lockActivities === false){
+                        activityBtnsI.state="show";
+                        stopActLocked.state="hide";
+                        activityName.entered();
+                    }
+                    else
+                        stopActLocked.state="show";
+
                 }
 
                 onExited: {
-                    activityBtnsI.state="hide";
-                    activityName.exited();
+                    if (mainView.lockActivities === false){
+                        activityBtnsI.state="hide";
+                        stopActLocked.state="hide";
+                        activityName.exited();
+                    }
+                    else
+                        stopActLocked.state="hide";
                 }
 
                 onClicked: {
-                    activityName.clicked(mouse);
+                    if (mainView.lockActivities === false){
+                        activityName.clicked(mouse);
+                    }
                 }
 
             }
@@ -123,7 +150,73 @@ Component{
 
             width:parent.width-(mainView.scaleMeter-10)
             x:mainView.scaleMeter-10
-            height:mainView.scaleMeter - 15
+            height:mainView.scaleMeter - 15           
+        }
+
+        Image{
+          id:stopActLocked
+          opacity:1
+          source: "../Images/buttons/player_stop.png"
+          anchors.top: parent.top
+          anchors.right: parent.right
+         // x:mainView.scaleMeter/10
+         // y:mainView.scaleMeter/3
+          width:5+0.8*mainView.scaleMeter
+          height:width
+          state: "hide"
+
+          Behavior on opacity{
+              NumberAnimation {
+                  duration: 400;
+                  easing.type: Easing.InOutQuad;
+              }
+          }
+
+          Behavior on scale{
+              NumberAnimation {
+                  duration: 400;
+                  easing.type: Easing.InOutQuad;
+              }
+          }
+
+          MouseArea {
+              anchors.fill: parent
+              hoverEnabled: true
+
+              onEntered: {
+                  stopActLocked.state="show";
+                  stopActLocked.scale=1.2;
+              }
+
+              onExited: {
+                  stopActLocked.state="hide";
+                  stopActLocked.scale=1;
+              }
+
+              onClicked: {
+                  activityBtnsI.clickedStopped();
+              }
+
+          }
+
+          states: [
+              State {
+                  name: "show"
+                  PropertyChanges {
+                      target: stopActLocked
+                      opacity: allwlists.activitiesShown > 1 ? 1 : 0
+                  }
+              },
+              State {
+                  name:"hide"
+                  PropertyChanges {
+                      target: stopActLocked
+                      opacity:0
+                  }
+
+              }
+
+          ]
         }
 
 
