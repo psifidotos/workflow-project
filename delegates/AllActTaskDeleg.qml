@@ -48,6 +48,10 @@ Component{
 
             y:-height/5
 
+            //correcting the animation
+            property int toRX:x + (allActRect.taskWidth+spacing)/2
+            property int toRY:y
+
             width:(3* allActTaskL.height / 5)
 
             MouseArea {

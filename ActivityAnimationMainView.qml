@@ -44,6 +44,7 @@ Image{
                 {
             //        console.debug("found");
                     newPosElem = rchild.children[i].children[0]; //the icon position
+               //     console.debug(newPosElem);
                //     console.debug("coords:"+newPosElem.x+"-"+newPosElem.y);
                 }
             }

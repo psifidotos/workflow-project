@@ -49,7 +49,7 @@ Image{
                 }
             }
 
-            var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.x,newPosElem.y);
+            var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
             if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
                 taskAnimation.toX = mainView.width;

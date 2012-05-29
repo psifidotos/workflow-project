@@ -7,7 +7,7 @@ Item{
     id:allActTasksPanel
 
     anchors.bottom: mainView.bottom
-    width:allActTaskL.width+50
+    width:allActTaskL.shownTasks * allActRect.taskWidth+50
     height:allActRectShad.height+allActRect.height
 
     x: mainView.showWinds && (allActTaskL.shownTasks>0) ? 0 : -width
@@ -79,7 +79,7 @@ Item{
             id:allActTaskL
 
             anchors.bottom: allActRect.bottom
-            width:shownTasks * allActRect.taskWidth
+            width:model.count * allActRect.taskWidth
             height:mainView.workareaHeight / 2
 
             model:instanceOfTasksList.model

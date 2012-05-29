@@ -18,7 +18,7 @@ Component{
 
         property real basicHeight:0.66*mainView.workareaHeight
 
-        y: CState !== neededState ? -basicHeight : 0
+      //  y: CState !== neededState ? -basicHeight : 0
         //y: -basicHeight
 
         property string curState: CState
@@ -83,7 +83,7 @@ Component{
             id:stpActivityName
             text:Name
 
-            width:stoppedActivitiesList.width
+            width:0.9*stoppedActivitiesList.width
             wrapMode: TextEdit.Wrap
 
             font.family: "Helvetica"
@@ -95,6 +95,7 @@ Component{
             opacity:parent.defOpacity
 
             anchors.top: activityIcon.bottom
+
             horizontalAlignment: Text.AlignRight
 
             Behavior on opacity{

@@ -42,18 +42,20 @@ Rectangle {
     ListView {
         id: stoppedActivitiesList
         orientation: ListView.Vertical
-        height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
-        //height: model.count * ((2*workareaHeight/3)+spacing)
+       // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
+        height: model.count * ((0.66*workareaHeight)+spacing)
         width: stopActBack.width - spacing
 
         //y:shownActivities===0 ? stopActBack.height : stopActBack.height-height-5
-        y:stopActBack.height-height-5
+        //y:stopActBack.height-height-5
+       // y:stopActBack.height-(shownActivities*0.66*mainView.workareaHeight)
+        y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
 
         //   anchors.top: stopActBack.top
         anchors.right: stopActBack.right
         anchors.rightMargin: spacing
 
-        spacing: workareaHeight/12
+       // spacing: workareaHeight/12
 
         property int shownActivities: 4
 
@@ -64,6 +66,13 @@ Rectangle {
         }
 
         Behavior on height{
+            NumberAnimation {
+                duration: 400;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on y{
             NumberAnimation {
                 duration: 400;
                 easing.type: Easing.InOutQuad;
@@ -95,7 +104,7 @@ Rectangle {
             if (elem.CState === "Stopped")
                counter++;
         }
-        shownActivities = counter;
+        stoppedActivitiesList.shownActivities = counter;
     //    if (shownActivities <2)
         //    shownActivities = 2;
     }
