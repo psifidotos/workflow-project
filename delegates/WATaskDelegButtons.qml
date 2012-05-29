@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import "../ui"
+import ".."
 
 Item {
     id: buttonsArea
@@ -106,6 +107,14 @@ Item {
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
+
+                if (placeStateBtn.state == "everywhere"){
+                    var x1 = imageTask.x;
+                    var y1 = imageTask.y;
+
+                    taskAnimate.animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1));
+                }
+
             }
 
             onReleased: {

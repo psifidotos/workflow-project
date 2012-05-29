@@ -26,7 +26,7 @@ Component{
         property alias taskTitleRecColor : taskTitleRec.color
         property alias taskTitleColor: taskTitle.color
 
-        property color taskTitleRecColorD : "#eee2e2e2";
+        property color taskTitleRecColorD : onAllDesktops === false ? "#eee2e2e2" : "#f7f7f7";
         property color taskTitleRecColorH : "#ff00b110";
         property color taskTitleColorD : "#222222";
         property color taskTitleColorH : "#ffffff";
@@ -53,7 +53,7 @@ Component{
 
         Image{
             id:imageTask
-            source: icon
+            source: "../" + icon
             width:1.5*taskTitleRec.height
             height:width
             y:0.1 * taskDeleg1.height

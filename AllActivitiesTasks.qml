@@ -112,4 +112,8 @@ Item{
         allActTaskL.shownTasks = counter;
     }
 
+    function getList(){
+        return allActTaskL;
+    }
+
 }

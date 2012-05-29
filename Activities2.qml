@@ -48,9 +48,7 @@ Rectangle {
         id:instanceOfTasksList
     }
 
-    ActivityAnimationMainView{
-        id:activityAnimate
-    }
+
 
     BtnIconAnimatMainView{
         id:btnIconAnimate
@@ -77,6 +75,14 @@ Rectangle {
 
     AllActivitiesTasks{
         id:allActT
+    }
+
+    ActivityAnimationMainView{
+        id:activityAnimate
+    }
+
+    TaskAnimationMainView{
+        id:taskAnimate
     }
 
     Slider {

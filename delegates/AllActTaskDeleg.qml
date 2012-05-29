@@ -21,6 +21,8 @@ Component{
         property alias textY: taskTitleRec.y
         property alias textOpacity: taskTitleRec.opacity
 
+        property int ccode:code
+
         state:"nohovered"
 
         Behavior on width{
@@ -39,7 +41,7 @@ Component{
 
         Image{
             id:imageTask2
-            source: icon
+            source: "../"+icon
             height:width
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -67,7 +69,7 @@ Component{
 
         Image{
             id:imageTask2Ref
-            source: icon
+            source: "../"+icon
             width:imageTask2.width
             height:width
 

@@ -92,7 +92,7 @@ Component{
 
                 onClicked:{
                     var counts = workalist.model.count;
-                    console.debug(counts);
+                //    console.debug(counts);
                     var lastobj = workalist.model.get(counts-1);
 
                     workalist.model.append( {  "elemTitle": "Dynamic",
@@ -214,6 +214,14 @@ Component{
 
             }
 
+        }
+
+        Rectangle{
+
+            x: 1.05 * parent.width
+            width:1
+            height:2*mainView.height
+            color:"#25727272"
         }
 
 

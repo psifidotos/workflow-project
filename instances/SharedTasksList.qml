@@ -7,16 +7,16 @@ ListView{
 
     function setTaskState(cod, val){
         var ind = getCurrentIndex(cod);
-        console.debug(cod+"-"+ind+"-"+val);
-        if (val == "oneDesktop"){
+    //    console.debug(cod+"-"+ind+"-"+val);
+        if (val === "oneDesktop"){
            model.setProperty(ind,"onAllDesktops",false);
            model.setProperty(ind,"onAllActivities",false);
         }
-        else if (val == "allDesktops"){
+        else if (val === "allDesktops"){
             model.setProperty(ind,"onAllDesktops",true);
             model.setProperty(ind,"onAllActivities",false);
         }
-        else if (val == "allActivities"){
+        else if (val === "allActivities"){
             model.setProperty(ind,"onAllDesktops",true);
             model.setProperty(ind,"onAllActivities",true);
         }
