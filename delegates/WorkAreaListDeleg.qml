@@ -15,6 +15,10 @@ Component{
 
         property string eelemImg : elemImg
 
+        property int addedHeight:taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
+
+
+
         opacity: CState === neededState ? 1 : 0
 
         width: CState === neededState ? 1.4 * mainView.workareaHeight : 0
@@ -24,6 +28,10 @@ Component{
 
         property int bWidth: 1.4 * mainView.workareaHeight
         property int bHeight:  mainView.workareaHeight*workalist.model.count+(workalist.model.count-1)*workalist.spacing
+
+        onAddedHeightChanged:{
+            allareas.changedChildHeight();
+        }
 
         Behavior on opacity{
             NumberAnimation {
@@ -53,6 +61,8 @@ Component{
             interactive:false
 
             model:workareas
+
+
 
             delegate:WorkAreaDeleg{
             }
@@ -166,9 +176,10 @@ Component{
 
             property int fontSiz: 4+ mainView.scaleMeter / 12
             property int windsHeight:3 * fontSiz
+            property int rHeight: (shownOrphanWindows+2) * windsHeight //for scrolling in vertical
 
-            //height: shownOrphanWindows * windsHeight
-            height: 200
+            height: model.count * windsHeight
+
 
             property int shownOrphanWindows: 0
 
@@ -189,7 +200,7 @@ Component{
             }
 
             function changedOrphansWindows(){
-                var counter = 0;
+                var counter = 0;                
 
                 for (var i=0; i<orphansList.children[0].children.length; ++i)
                 {
@@ -197,7 +208,7 @@ Component{
 
                     if (chd.shown === true)
                         counter++;
-                }
+                }                
 
                 orphansList.shownOrphanWindows = counter;
 

@@ -48,7 +48,6 @@ Item{
                 }
 
                 mainWorkArea.ListView.view.model.remove(gridRow);
-
             }
 
             onEntered: {

@@ -57,7 +57,7 @@ Item{
 
                 for (var i=0; i<allareas.children[0].children.length; ++i)
                 {
-                    var tempH = allareas.children[0].children[i].height;
+                    var tempH = allareas.children[0].children[i].height +  allareas.children[0].children[i].addedHeight;
                     //console.debug(tempL);
                     if (tempH>max)
                         max = tempH;
