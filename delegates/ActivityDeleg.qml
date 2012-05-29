@@ -41,6 +41,10 @@ Component{
           width:5+mainView.scaleMeter
           height:width
 
+          //for the animation to be precise
+          property int toRX:x - width/2
+          property int toRY:y - height/2
+
           Behavior on rotation{
               NumberAnimation {
                   duration: 200;
