@@ -17,6 +17,7 @@ Component{
 
         property int addedHeight:taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
 
+        property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (mainView.showWinds === true)
 
 
         opacity: CState === neededState ? 1 : 0
@@ -113,8 +114,8 @@ Component{
             anchors.left: addWorkArea.left
 
             width:parent.width
-            opacity:orphansList.shownOrphanWindows > 0 ? 1:0
-            height:orphansList.shownOrphanWindows > 0 ? 2.6*font.pointSize:0
+            opacity: workList.showWindowsSection === true ? 1:0
+            height: workList.showWindowsSection === true ? 2.6*font.pointSize:0
 
             //clip:true
 
@@ -145,8 +146,8 @@ Component{
             anchors.top : taskOrFTitle.bottom
             anchors.left: taskOrFTitle.left
 
-            opacity:orphansList.shownOrphanWindows > 0 ? 1:0
-            height:orphansList.shownOrphanWindows > 0 ? 2:0
+            opacity: workList.showWindowsSection === true ? 1:0
+            height: workList.showWindowsSection === true ? 2:0
             color:taskOrFTitle.color;
 
             Behavior on height{
@@ -176,7 +177,10 @@ Component{
 
             property int fontSiz: 4+ mainView.scaleMeter / 12
             property int windsHeight:3 * fontSiz
-            property int rHeight: (shownOrphanWindows+2) * windsHeight //for scrolling in vertical
+
+            //for scrolling in vertical
+            opacity: workList.showWindowsSection === true ? 1 : 0
+            property int rHeight: workList.showWindowsSection === true ? (shownOrphanWindows+2) * windsHeight : 0
 
             height: model.count * windsHeight
 
