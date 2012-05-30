@@ -113,6 +113,15 @@ Component{
 
             enableEditing: mainView.lockActivities === true ? false:true
 
+            Connections{
+                target:mainView
+                onLockActivitiesChanged:{
+                    if (activityName.state === "active"){
+                        activityName.textNotAccepted();
+                    }
+                }
+            }
+
             MouseArea {
                 anchors.left: parent.left
                 height:parent.height
@@ -147,6 +156,7 @@ Component{
                 }
 
             }
+
         }
 
         ActivityBtns{

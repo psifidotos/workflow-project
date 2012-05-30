@@ -288,5 +288,11 @@ Item{
         mainView.forceActiveFocus();
     }
 
+    function textNotAccepted(){
+        //dTextItem.acceptedText = dTextItem.text;
+        dTextItem.state = "inactive";
+        mainView.forceActiveFocus();
+    }
+
 }
 
