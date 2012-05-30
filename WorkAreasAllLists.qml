@@ -35,8 +35,8 @@ Item{
         ListView{
             id:allareas
 
-            y:1.33* workareaY
-            width:model.count*(workareaWidth)
+            y:1.33 * mainView.workareaY
+            width: activitiesList.shownActivities * (1.2 * mainView.workareaWidth)
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
             orientation: ListView.Horizontal
             //   spacing:60+3.5*mainView.scaleMeter
