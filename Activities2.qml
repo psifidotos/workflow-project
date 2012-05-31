@@ -87,6 +87,8 @@ Rectangle {
         id:taskAnimate
     }
 
+
+
     Slider {
         id:zoomSlider
         anchors.bottom: mainView.bottom
@@ -98,6 +100,10 @@ Rectangle {
         value: 50
         width:125
 
+    }
+
+    WorkAreaFull{
+        id:wkFull
     }
 
 }

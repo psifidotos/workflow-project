@@ -197,6 +197,18 @@ Component{
         function clickedWorkarea(){
             mainView.currentDesktop = gridRow
             instanceOfActivitiesList.setCurrent(actCode) ;
+
+            var x1 = borderRectangle.x;
+            var y1 = borderRectangle.y;
+            var w1 = borderRectangle.width;
+            var h1 = borderRectangle.height;
+
+            var mapXY = borderRectangle.mapToItem(mainView,x1,y1);
+
+            wkFull.setInitPosition(mapXY,w1,h1,elemImg,elemTitle);
+
+            wkFull.changeState();
+
         }
 
 
