@@ -7,7 +7,7 @@ ListView{
     model: ActivitiesModel1{}
 
     function setCState(cod, val){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
         model.setProperty(ind,"CState",val);
 
         instanceOfWorkAreasList.setCState(cod,val);
@@ -16,13 +16,26 @@ ListView{
     }
 
     function getCState(cod){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
 
         return model.get(ind).CState;
     }
 
-    function getCurrentIndex(cod){
-        for(var i=0; model.count; ++i){
+    function setCurrent(cod){
+
+        for(var i=0; i<model.count; ++i){
+            model.setProperty(i,"Current",false);
+        }
+
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"Current",true);
+
+        instanceOfWorkAreasList.setCurrent(cod);
+
+    }
+
+    function getIndexFor(cod){
+        for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
                 return i;
@@ -31,7 +44,7 @@ ListView{
     }
 
     function cloneActivity(cod){
-        var p = getCurrentIndex(cod);
+        var p = getIndexFor(cod);
 
         var ob = model.get(p);
         var nId = getNextId();
@@ -49,7 +62,7 @@ ListView{
     }
 
     function removeActivity(cod){
-        var n = getCurrentIndex(cod);
+        var n = getIndexFor(cod);
         model.remove(n);
         instanceOfWorkAreasList.removeActivity(cod);
         allWorkareas.updateShowActivities();

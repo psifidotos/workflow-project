@@ -29,6 +29,8 @@ Rectangle {
     property bool showWinds: true
     property bool lockActivities: false
 
+    property int currentDesktop: 2
+
     Behavior on scaleMeter{
         NumberAnimation {
             duration: 100;

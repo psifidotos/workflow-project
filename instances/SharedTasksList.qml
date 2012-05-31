@@ -6,7 +6,7 @@ ListView{
     model: TasksList{}
 
     function setTaskState(cod, val){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
     //    console.debug(cod+"-"+ind+"-"+val);
         if (val === "oneDesktop"){
            model.setProperty(ind,"onAllDesktops",false);
@@ -24,7 +24,7 @@ ListView{
         allActT.changedChildState();
     }
 
-    function getCurrentIndex(cod){
+    function getIndexFor(cod){
 
         for(var i=0; model.count; ++i){
             var obj = model.get(i);
@@ -36,7 +36,7 @@ ListView{
     }
 
     function removeTask(cod){
-        var n = getCurrentIndex(cod);
+        var n = getIndexFor(cod);
         model.remove(n);
         //instanceOfTasksList.removeTask(cod);
         //instanceOfWorkAreasList.removeActivity(cod);

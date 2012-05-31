@@ -25,7 +25,7 @@ Image{
     }
 
     function animateActivity(cod,coord,lst){
-        var pos = instanceOfActivitiesList.getCurrentIndex(cod);
+        var pos = instanceOfActivitiesList.getIndexFor(cod);
         if (pos>=0){
             activityAnimation.x = coord.x
             activityAnimation.y = coord.y
@@ -45,7 +45,7 @@ Image{
     }
 
     function getActivityCoord(cod,lst){
-        var pos = instanceOfActivitiesList.getCurrentIndex(cod);
+        var pos = instanceOfActivitiesList.getIndexFor(cod);
         var fixPosElem;
         if (pos>=0){
 

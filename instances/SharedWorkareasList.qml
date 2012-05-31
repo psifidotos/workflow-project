@@ -10,13 +10,23 @@ ListView{
     property int addednew:0
 
     function setCState(cod, val){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
         model.setProperty(ind,"CState",val);
 
     }
 
-    function getCurrentIndex(cod){
-        for(var i=0; model.count; ++i){
+    function setCurrent(cod){
+        for(var i=0; i<model.count; ++i){
+            model.setProperty(i,"Current",false);
+        }
+
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"Current",true);
+
+    }
+
+    function getIndexFor(cod){
+        for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
                 return i;
@@ -25,7 +35,7 @@ ListView{
     }
 
     function getActivitySize(cod){
-        for(var i=0; model.count; ++i){
+        for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
                 return obj.workareas.count;
@@ -34,13 +44,13 @@ ListView{
     }
 
     function removeActivity(cod){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
 
         model.remove(ind);
     }
 
     function cloneActivity(cod,ncod){
-        var ind = getCurrentIndex(cod);
+        var ind = getIndexFor(cod);
         var ob = model.get(ind);
 
         model.insert(ind+1, {"code": ncod,

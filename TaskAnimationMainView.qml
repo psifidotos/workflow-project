@@ -22,7 +22,7 @@ Image{
     function animateEverywhereToActivity(cid, coord){
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());
-        var pos = instanceOfTasksList.getCurrentIndex(cid);
+        var pos = instanceOfTasksList.getIndexFor(cid);
         if (pos>=0){
             taskAnimation.x = coord.x
             taskAnimation.y = coord.y
@@ -62,7 +62,7 @@ Image{
     }
 
     function animateTask(cid,coord,lst){
-        var pos = instanceOfTasksList.getCurrentIndex(cid);
+        var pos = instanceOfTasksList.getIndexFor(cid);
         if (pos>=0){
             taskAnimation.x = coord.x
             taskAnimation.y = coord.y
@@ -110,7 +110,7 @@ Image{
 
     ParallelAnimation{
         id:playTaskAnimation
-        property int animationDur:1600
+        property int animationDur:900
 
         SequentialAnimation{
             NumberAnimation {

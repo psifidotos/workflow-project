@@ -54,6 +54,10 @@ Component{
                             workAreaButtons.state="hide"
                         }
 
+                        onClicked: {
+                            mainWorkArea.clickedWorkarea();
+                        }
+
 
                     }//image mousearea
                 }
@@ -76,6 +80,7 @@ Component{
                             workAreaButtons.state="hide"
                         }
 
+
                     }//image mousearea
                 }
 
@@ -91,13 +96,16 @@ Component{
                 height:mainView.showWinds ? mainWorkArea.imageheight : 0
                 opacity:mainView.showWinds ? 1 : 0
 
-                clip:true
+                clip:false
                 spacing:0
+                interactive:false
+
 
                 model:instanceOfTasksList.model
                 delegate:WorkAreaTaskDeleg{
 
                 }
+
 
                 Behavior on opacity{
                     NumberAnimation {
@@ -184,6 +192,11 @@ Component{
 
         function getTasksList(){
             return tasksSList;
+        }
+
+        function clickedWorkarea(){
+            mainView.currentDesktop = gridRow
+            instanceOfActivitiesList.setCurrent(actCode) ;
         }
 
 

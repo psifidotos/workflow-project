@@ -3,7 +3,7 @@ import QtQuick 1.0
 BorderImage {
 
    id:workBordImage
-   source: "../Images/activitiesBorderImage.png"
+   source: ((Current === true) && (gridRow === mainView.currentDesktop)) ? "../Images/activeActivitiesBorderImage.png" : "../Images/activitiesBorderImage.png"
 
    property int tempMeter: mainView.scaleMeter/5;
 
@@ -11,7 +11,6 @@ BorderImage {
    border.right: 14; border.bottom: 14;
    horizontalTileMode: BorderImage.Repeat
    verticalTileMode: BorderImage.Repeat
-
 
    Rectangle{
 

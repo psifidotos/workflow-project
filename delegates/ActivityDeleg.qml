@@ -30,7 +30,6 @@ Component{
             }
         }
 
-
         Image{
           id:activityIcon
           rotation:-20

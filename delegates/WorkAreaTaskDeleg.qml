@@ -77,6 +77,10 @@ Component{
                     tasksBtns.state = "hide"
                 }
 
+                onClicked: {
+                    mainWorkArea.clickedWorkarea();
+                }
+
             }
         }
 
@@ -91,6 +95,7 @@ Component{
             color: taskDeleg1.taskTitleRecColorD
             radius:height/3
             y:0.1 * taskDeleg1.height
+            clip:true
 
             Behavior on color{
                 ColorAnimation {
@@ -130,6 +135,10 @@ Component{
                 onExited: {
                     taskDeleg1.state = "def"
                     tasksBtns.state = "hide"
+                }
+
+                onClicked: {
+                    mainWorkArea.clickedWorkarea();
                 }
 
             }

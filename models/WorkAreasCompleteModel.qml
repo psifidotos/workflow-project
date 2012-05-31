@@ -5,6 +5,7 @@ ListModel {
     ListElement {
         code:0
         CState:"Running"
+        Current:false
         elemImg:"../Images/backgrounds/background1.jpg"
         workareas: [
                 ListElement {
@@ -29,6 +30,7 @@ ListModel {
     ListElement {
         code:1
         CState:"Stopped"
+        Current:false
         elemImg:"../Images/backgrounds/background2.jpg"
         workareas: [
             ListElement {
@@ -61,6 +63,7 @@ ListModel {
     ListElement {
         code:2
         CState:"Running"
+        Current:true
         elemImg:"../Images/backgrounds/background3.jpg"
         workareas: [
             ListElement {
@@ -102,6 +105,7 @@ ListModel {
     ListElement {
         code:3
         CState:"Running"
+        Current:false
         elemImg:"../Images/backgrounds/background4.jpg"
         workareas: [
             ListElement {
