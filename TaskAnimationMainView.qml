@@ -19,9 +19,46 @@ Image{
         animateTask(cid,coord,allActT.getList());
     }
 
-    function animateActiveToStop(cod, coord){
+    function animateEverywhereToActivity(cid, coord){
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());
+        var pos = instanceOfTasksList.getCurrentIndex(cid);
+        if (pos>=0){
+            taskAnimation.x = coord.x
+            taskAnimation.y = coord.y
+
+            var elem = instanceOfTasksList.model.get(pos);
+            taskAnimation.source = elem.icon;
+
+            var activityCode = elem.activities;
+            var desktopPos = elem.desktop + 1;//desktops count from 0?
+
+            var actCState = instanceOfActivitiesList.getCState(activityCode);
+
+            if (actCState == "Stopped"){
+
+                var toCoord = activityAnimate.getActivityCoord(activityCode,stoppedPanel.getList());
+
+                taskAnimation.toX = toCoord.x;
+                taskAnimation.toY = toCoord.y;
+
+                playTaskAnimation.start();
+            }
+            else if (desktopPos > instanceOfWorkAreasList.getActivitySize(activityCode) ) {
+
+                var col = allWorkareas.getActivityColumn(activityCode);
+
+                animateTask(cid,coord,col.getOrphanList());
+
+            }
+            else{
+                var col2 = allWorkareas.getActivityColumn(activityCode);
+                var work = col2.getWorkarea(desktopPos);
+
+                animateTask(cid,coord,work.getTasksList());
+            }
+
+        }
     }
 
     function animateTask(cid,coord,lst){
@@ -51,18 +88,18 @@ Image{
 
             var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
-            if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
+        /*    if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
                 taskAnimation.toX = mainView.width;
             else if (fixPosElem.x<0)
                 taskAnimation.toX = 0;
-            else
+            else*/
                 taskAnimation.toX = fixPosElem.x;
 
-            if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
+/*            if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
                 taskAnimation.toY = mainView.height;
             else if (fixPosElem.y<0)
                 taskAnimation.toY = 0;
-            else
+            else */
                 taskAnimation.toY = fixPosElem.y;
 
             playTaskAnimation.start();

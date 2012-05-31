@@ -182,6 +182,10 @@ Component{
             PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: false }
         }
 
+        function getTasksList(){
+            return tasksSList;
+        }
+
 
     }//Item
 

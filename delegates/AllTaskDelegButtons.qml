@@ -114,6 +114,13 @@ Item {
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
+
+                if (placeStateBtn !== "everywhere"){
+                    var x1 = imageTask2.x;
+                    var y1 = imageTask2.y;
+
+                    taskAnimate.animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1));
+                }
             }
 
             onReleased: {

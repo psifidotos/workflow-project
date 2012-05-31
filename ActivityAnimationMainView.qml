@@ -33,43 +33,62 @@ Image{
             var elem=instanceOfActivitiesList.model.get(pos);
             activityAnimation.source = elem.Icon
 
-            var newPosElem=lst; // if no child found
+            var toCoord = activityAnimation.getActivityCoord(cod,lst);
 
-            var rchild = lst.children[0];
-
-            for(var i=0; i < rchild.children.length; ++i){
-          //      console.debug(cod+"-"+rchild.children[i].ccode);
-            //    console.log(rchild.children[i]);
-                if (rchild.children[i].ccode === cod)
-                {
-            //        console.debug("found");
-                    newPosElem = rchild.children[i].children[0]; //the icon position
-               //     console.debug(newPosElem);
-               //     console.debug("coords:"+newPosElem.x+"-"+newPosElem.y);
-                }
-            }
-
-            var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
-
-            if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
-                activityAnimation.toX = mainView.width;
-            else if (fixPosElem.x<0)
-                activityAnimation.toX = 0;
-            else
-                activityAnimation.toX = fixPosElem.x;
-
-            if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
-                activityAnimation.toY = mainView.height;
-            else if (fixPosElem.y<0)
-                activityAnimation.toY = 0;
-            else
-                activityAnimation.toY = fixPosElem.y;
+            activityAnimation.toX = toCoord.x;
+            activityAnimation.toY = toCoord.y;
 
             playActAnimation.start();
 
             //console.debug("-----------------");
         }
     }
+
+    function getActivityCoord(cod,lst){
+        var pos = instanceOfActivitiesList.getCurrentIndex(cod);
+        var fixPosElem;
+        if (pos>=0){
+
+            var elem=instanceOfActivitiesList.model.get(pos);
+
+            var newPosElem=lst; // if no child found
+
+            var rchild = lst.children[0];
+
+            for(var i=0; i < rchild.children.length; ++i){
+                //      console.debug(cod+"-"+rchild.children[i].ccode);
+                //    console.log(rchild.children[i]);
+                if (rchild.children[i].ccode === cod)
+                {
+                    //        console.debug("found");
+                    newPosElem = rchild.children[i].children[0]; //the icon position
+                    //     console.debug(newPosElem);
+                    //     console.debug("coords:"+newPosElem.x+"-"+newPosElem.y);
+                }
+            }
+
+            fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
+
+       /*     if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
+                fixPosElem.toX = mainView.width;
+            else if (fixPosElem.x<0)
+                fixPosElem.toX = 0;
+            else*/
+                fixPosElem.toX = fixPosElem.x;
+
+/*            if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
+                fixPosElem.toY = mainView.height;
+            else if (fixPosElem.y<0)
+                fixPosElem.toY = 0;
+            else*/
+                fixPosElem.toY = fixPosElem.y;
+
+        }
+
+        return fixPosElem;
+
+    }
+
 
     ParallelAnimation{
         id:playActAnimation

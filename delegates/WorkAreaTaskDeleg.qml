@@ -18,6 +18,7 @@ Component{
         width:mainWorkArea.imagewidth - imageTask.width - 5
         height: shown ? 1.1 * imageTask.height : 0
 
+        property int ccode:code
 
         opacity: shown ? 1 : 0
 
@@ -57,6 +58,9 @@ Component{
             width:1.5*taskTitleRec.height
             height:width
             y:0.1 * taskDeleg1.height
+
+            property int toRX:x
+            property int toRY:y
 
             MouseArea {
                 anchors.fill: parent

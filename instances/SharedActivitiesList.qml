@@ -15,6 +15,12 @@ ListView{
         allWorkareas.updateShowActivities();
     }
 
+    function getCState(cod){
+        var ind = getCurrentIndex(cod);
+
+        return model.get(ind).CState;
+    }
+
     function getCurrentIndex(cod){
         for(var i=0; model.count; ++i){
             var obj = model.get(i);

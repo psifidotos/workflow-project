@@ -250,6 +250,14 @@ Component{
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
         }
 
+        function getOrphanList(){
+            return orphansList;
+        }
+
+        function getWorkarea(war){
+            return workalist.children[0].children[war];
+        }
+
 
     }
 

@@ -24,6 +24,15 @@ ListView{
         return -1;
     }
 
+    function getActivitySize(cod){
+        for(var i=0; model.count; ++i){
+            var obj = model.get(i);
+            if (obj.code === cod)
+                return obj.workareas.count;
+        }
+        return -1;
+    }
+
     function removeActivity(cod){
         var ind = getCurrentIndex(cod);
 

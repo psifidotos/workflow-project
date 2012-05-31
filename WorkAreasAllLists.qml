@@ -168,4 +168,17 @@ Item{
         }
         activitiesList.shownActivities = counter;
     }
+
+    function getActivityColumn(cd){
+
+        for (var i=0; i<allareas.children[0].children.length; ++i)
+        {
+            var elem = allareas.children[0].children[i];
+
+            if (elem.ccode === cd)
+                return elem;
+
+        }
+
+    }
 }

@@ -18,7 +18,9 @@ Component{
 
         height: shown? orphansList.windsHeight : 0
         opacity: shown ? 1 : 0
-        state:"def"        
+        state: "def"
+
+        property int ccode:code
 
         property int buttonsSize: 1.1 * height
 
@@ -57,6 +59,10 @@ Component{
             width:parent.width
             height:parent.height
             radius: 0.4 * height
+
+            property int toRX:x
+            property int toRY:y
+
 
             Behavior on color{
                 ColorAnimation {
