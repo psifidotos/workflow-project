@@ -14,12 +14,78 @@ Rectangle{
     Rectangle{
         id:selectionRect
 
-        color:"#55ffffff"
-        border.width: 1
-        border.color: "#aaaaaa"
+        color:"#00ffffff"
+        border.width: 2
+        border.color:redBorder
 
         opacity:0;
         radius:8;
+        property int padding:2
+
+        state:"blue"
+
+        property color redBorder: "#ffc0bbbb"
+        property color greenBorder: "#ffc0bbbb"
+        property color blueBorder: "#ffc0bbbb"
+
+        property string imageRed: "Images/textures/redTexture.png"
+        property string imageGreen: "Images/textures/greenTexture.png"
+        property string imageBlue: "Images/textures/blueTexture.png"
+
+        property alias redImgOpac: redImage.opacity
+        property alias greenImgOpac: greenImage.opacity
+        property alias blueImgOpac: blueImage.opacity
+
+        Image{
+            id:redImage
+            property int padding:2
+            width: selectionRect.width - 2*selectionRect.padding
+            height: selectionRect.height - 2*selectionRect.padding
+            anchors.centerIn: parent
+            source: selectionRect.imageRed
+            fillMode: Image.Tile
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 300;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
+
+        Image{
+            id:greenImage
+
+            width: selectionRect.width - 2*selectionRect.padding
+            height: selectionRect.height - 2*selectionRect.padding
+            anchors.centerIn: parent
+            source: selectionRect.imageGreen
+            fillMode: Image.Tile
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 300;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
+
+        Image{
+            id:blueImage
+            property int padding:2
+            width: selectionRect.width - 2*selectionRect.padding
+            height: selectionRect.height - 2*selectionRect.padding
+            anchors.centerIn: parent
+            source: selectionRect.imageBlue
+            fillMode: Image.Tile
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 300;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
 
         Behavior on x{
             NumberAnimation {
@@ -48,6 +114,36 @@ Rectangle{
                 easing.type: Easing.InOutQuad;
             }
         }
+
+        states: [
+            State {
+                name: "red"
+                PropertyChanges {
+                    target: selectionRect
+                    redImgOpac: 1
+                    greenImgOpac: 0
+                    blueImgOpac: 0
+                }
+            },
+            State {
+                name:"green"
+                PropertyChanges {
+                    target: selectionRect
+                    redImgOpac: 0
+                    greenImgOpac: 1
+                    blueImgOpac: 0
+                }
+            },
+            State {
+                name:"blue"
+                PropertyChanges {
+                    target: selectionRect
+                    redImgOpac: 0
+                    greenImgOpac: 0
+                    blueImgOpac: 1
+                }
+            }
+        ]
     }
 
     Image{
@@ -140,6 +236,7 @@ Rectangle{
                                     var bordRect = workAreaD.getBorderRectangle();
                                     var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
 
+                                    selectionRect.state = "blue";
 
                                     selectionRect.x = fixBCoord.x-4;
                                     selectionRect.y = fixBCoord.y-4;
@@ -164,6 +261,8 @@ Rectangle{
 
                                 var fixBCoord2 = addArea.mapToItem(mainDraggingItem,addArea.x, addArea.y);
 
+                                selectionRect.state = "red";
+
                                 selectionRect.x = fixBCoord2.x;
                                 selectionRect.y = fixBCoord2.y;
 
@@ -187,6 +286,8 @@ Rectangle{
             var allTaskP = centralArea.childAt(fixCC.x,fixCC.y).children[0];
 
             var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
+
+            selectionRect.state = "green";
 
             selectionRect.x = fixBCoord3.x;
             selectionRect.y = fixBCoord3.y;
