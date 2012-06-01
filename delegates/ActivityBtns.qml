@@ -229,15 +229,17 @@ Item{
 
 
     function clickedStopped(){
-        instanceOfActivitiesList.setCState(code,"Stopped");
-
-        stoppedPanel.changedChildState();
 
         var x1 = activityIcon.x;
         var y1 = activityIcon.y;
 
-        //activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
         mainView.getDynLib().animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
+
+        instanceOfActivitiesList.setCState(code,"Stopped");
+
+        stoppedPanel.changedChildState();
+
+        //activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
 
     }
 }

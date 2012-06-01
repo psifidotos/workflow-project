@@ -35,7 +35,7 @@ Image{
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
 
-            if (actCState == "Stopped"){
+            if (actCState === "Stopped"){
 
                 var toCoord = mainView.getDynLib().getActivityCoord(activityCode,stoppedPanel.getList());
 
@@ -76,42 +76,32 @@ Image{
             var rchild = lst.children[0];
 
             for(var i=0; i < rchild.children.length; ++i){
-          //      console.debug(cod+"-"+rchild.children[i].ccode);
-            //    console.log(rchild.children[i]);
+
                 if (rchild.children[i].ccode === cid)
                 {
-            //        console.debug("found");
+
 
                     newPosElem = rchild.children[i].children[0]; //the icon position
-             //       console.debug("coords:"+newPosElem.x+"-"+newPosElem.y);
+
                 }
             }
 
             var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
-        /*    if (fixPosElem.x>mainView.width) //fix wrong computations with stopped activities
-                taskAnimation.toX = mainView.width;
-            else if (fixPosElem.x<0)
-                taskAnimation.toX = 0;
-            else*/
-                taskAnimation.toX = fixPosElem.x;
+            taskAnimation.toX = fixPosElem.x;
 
-/*            if (fixPosElem.y>mainView.height) //fix wrong computations with stopped activities
-                taskAnimation.toY = mainView.height;
-            else if (fixPosElem.y<0)
-                taskAnimation.toY = 0;
-            else */
-                taskAnimation.toY = fixPosElem.y;
+
+            taskAnimation.toY = fixPosElem.y;
 
             playTaskAnimation.start();
 
-            //console.debug("-----------------");
+
         }
     }
 
     ParallelAnimation{
         id:playTaskAnimation
-        property int animationDur:900
+        property int animationDur:1000
 
         SequentialAnimation{
             NumberAnimation {

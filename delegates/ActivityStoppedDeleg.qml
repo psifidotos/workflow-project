@@ -54,8 +54,8 @@ Component{
             height:width
 
             //for the animation to be precise
-            property int toRX:stopActBack.shownActivities > 1 ? x - width:x - width- stopActBack.width
-            property int toRY:stopActBack.shownActivities > 1 ? y : -height
+            property int toRX:stopActBack.shownActivities > 0 ? x - width:x - width- stopActBack.width
+            property int toRY:stopActBack.shownActivities > 0 ? y : -height
 
 
             Behavior on rotation{
