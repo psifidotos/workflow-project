@@ -220,7 +220,7 @@ Item{
 
         var crd = mainIcon.mapToItem(mainView,x1, y1);
 
-        btnIconAnimate.animateIcon(mainIcon.source,
+        mainView.getDynLib().animateIcon(mainIcon.source,
                                    mainIcon.height/mainIcon.width,
                                    mainIcon.width,
                                    crd);

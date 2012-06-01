@@ -37,7 +37,7 @@ Image{
 
             if (actCState == "Stopped"){
 
-                var toCoord = activityAnimate.getActivityCoord(activityCode,stoppedPanel.getList());
+                var toCoord = mainView.getDynLib().getActivityCoord(activityCode,stoppedPanel.getList());
 
                 taskAnimation.toX = toCoord.x;
                 taskAnimation.toY = toCoord.y;

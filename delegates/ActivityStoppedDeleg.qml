@@ -153,7 +153,8 @@ Component{
                 var x1 = activityIcon.x;
                 var y1 = activityIcon.y;
 
-                activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+                //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+                mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
                 instanceOfActivitiesList.setCState(code,"Running");
 
             }

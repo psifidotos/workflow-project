@@ -6,6 +6,8 @@ import "instances"
 
 import "ui"
 
+import "DynamicAnimations.js" as DynamAnim
+
 Rectangle {
     id:mainView
     width: 1024;  height: 700
@@ -89,25 +91,6 @@ Rectangle {
             z:4
         }
 
-        BtnIconAnimatMainView{
-            id:btnIconAnimate
-            z:25
-        }
-
-
-        ActivityAnimationMainView{
-            id:activityAnimate
-            z:5
-        }
-
-        TaskAnimationMainView{
-            id:taskAnimate
-            z:6
-        }
-
-
-
-
 
         Slider {
             id:zoomSlider
@@ -136,6 +119,12 @@ Rectangle {
         id:mDragInt
     }
 
+
+    Component.onCompleted: DynamAnim.createComponents();
+
+    function getDynLib(){
+        return DynamAnim;
+    }
 
 }
 
