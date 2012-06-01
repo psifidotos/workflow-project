@@ -10,7 +10,6 @@ Item {
     height: taskDeleg1.height
     state: "hide"
 
-    //y: -height/5
     property string status:"nothover"
 
     property alias opacityClose: closeBtn.opacity

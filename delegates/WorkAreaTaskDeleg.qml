@@ -8,11 +8,11 @@ Component{
         id: taskDeleg1
 
         property bool shown: ( (onAllActivities !== true)&&
-                             ((gridRow === desktop)&&
-                              (actCode === activities)) ) ||
+                              ((gridRow === desktop)&&
+                               (actCode === activities)) ) ||
                              ( (onAllActivities !== true)&&
-                             ((onAllDesktops === true)&&
-                              (actCode === activities)) )
+                              ((onAllDesktops === true)&&
+                               (actCode === activities)) )
 
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
@@ -21,6 +21,8 @@ Component{
         property string ccode:code
 
         opacity: shown ? 1 : 0
+
+        property bool isPressed
 
 
 
@@ -32,8 +34,8 @@ Component{
         property color taskTitleColorD : "#222222";
         property color taskTitleColorH : "#ffffff";
 
-//        property color taskTitleColorD : taskOrFTitle.color;
- //       property color taskTitleColorH : "#ffffff";
+        //        property color taskTitleColorD : taskOrFTitle.color;
+        //       property color taskTitleColorH : "#ffffff";
 
         //property color taskTitleRecColorD : "#0000b110";
         //property color taskTitleRecColorH : "#ff00b110";
@@ -136,14 +138,16 @@ Component{
 
 
                 onEntered: {
-                    taskDeleg1.state = "hovered"
-                    workAreaButtons.state="show"
-                    tasksBtns.state = "show"
+                    if (taskDeleg1.isPressed === false){
+                        taskDeleg1.state = "hovered"
+                        workAreaButtons.state="show"
+                        tasksBtns.state = "show"
+                    }
                 }
 
                 onExited: {
-                    taskDeleg1.state = "def"
-                    tasksBtns.state = "hide"
+                    taskDeleg1.state = "def";
+                    tasksBtns.state = "hide";
                 }
 
                 onClicked: {
@@ -151,6 +155,11 @@ Component{
                 }
 
                 onPressAndHold:{
+                    taskDeleg1.isPressed = true;
+                    taskDeleg1.state = "def";
+                    tasksBtns.state = "hide";
+                    workAreaButtons.state="hide";
+
                     var nCor = mapToItem(mainView,mouse.x,mouse.y);
                     mDragInt.enableDragging(nCor,imageTask.source);
                 }
@@ -163,6 +172,7 @@ Component{
                 }
 
                 onReleased:{
+                    taskDeleg1.isPressed = false;
                     mDragInt.disableDragging();
                 }
 
