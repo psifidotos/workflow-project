@@ -18,7 +18,7 @@ Component{
         width:mainWorkArea.imagewidth - imageTask.width - 5
         height: shown ? 1.1 * imageTask.height : 0
 
-        property int ccode:code
+        property string ccode:code
 
         opacity: shown ? 1 : 0
 

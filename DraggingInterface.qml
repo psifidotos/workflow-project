@@ -8,7 +8,7 @@ Rectangle{
     color:"#05000000"
     opacity:0
 
-    property int drActiv: -1
+    property string drActiv: ""
     property int drDesktop: -1
 
     Rectangle{

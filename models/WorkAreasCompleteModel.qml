@@ -3,7 +3,7 @@ import QtQuick 1.0
 
 ListModel {
     ListElement {
-        code:0
+        code:"a0a"
         CState:"Running"
         Current:false
         elemImg:"../Images/backgrounds/background1.jpg"
@@ -28,7 +28,7 @@ ListModel {
     }
 
     ListElement {
-        code:1
+        code:"b0b"
         CState:"Stopped"
         Current:false
         elemImg:"../Images/backgrounds/background2.jpg"
@@ -61,7 +61,7 @@ ListModel {
     }
 
     ListElement {
-        code:2
+        code:"c0c"
         CState:"Running"
         Current:true
         elemImg:"../Images/backgrounds/background3.jpg"
@@ -103,7 +103,7 @@ ListModel {
 
 
     ListElement {
-        code:3
+        code:"d0d"
         CState:"Running"
         Current:false
         elemImg:"../Images/backgrounds/background4.jpg"

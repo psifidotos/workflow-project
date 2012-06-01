@@ -11,7 +11,7 @@ Component{
         property string tCState : CState
 
         property string neededState:"Running"
-        property int ccode:code
+        property string ccode:code
 
         property string eelemImg : elemImg
 

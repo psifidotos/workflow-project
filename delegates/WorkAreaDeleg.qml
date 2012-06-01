@@ -15,7 +15,7 @@ Component{
 
      property string typeId : "workareaDeleg"
 
-     property int actCode: code
+     property string actCode: code
      property int desktop: gridRow
 
      property int imagex:14

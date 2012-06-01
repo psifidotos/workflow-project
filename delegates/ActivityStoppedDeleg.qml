@@ -7,7 +7,7 @@ Component{
     Item{
         id: stpActivity
 
-        property int ccode:code
+        property string ccode:code
         property string neededState:"Stopped"
 
         opacity: CState === neededState ? 1 : 0

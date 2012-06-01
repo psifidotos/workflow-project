@@ -63,6 +63,7 @@ Image{
 
     function animateTask(cid,coord,lst){
         var pos = instanceOfTasksList.getIndexFor(cid);
+
         if (pos>=0){
             taskAnimation.x = coord.x
             taskAnimation.y = coord.y

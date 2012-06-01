@@ -20,7 +20,7 @@ Component{
         opacity: shown ? 1 : 0
         state: "def"
 
-        property int ccode:code
+        property string ccode:code
 
         property int buttonsSize: 1.1 * height
 

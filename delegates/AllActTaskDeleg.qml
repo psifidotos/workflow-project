@@ -21,7 +21,7 @@ Component{
         property alias textY: taskTitleRec.y
         property alias textOpacity: taskTitleRec.opacity
 
-        property int ccode:code
+        property string ccode:code
 
         state:"nohovered"
 

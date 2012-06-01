@@ -7,7 +7,7 @@ Component{
     Item{
         id:mainActivity
         property string neededState:"Running"
-        property int ccode:code
+        property string ccode:code
 
         opacity: CState === neededState ? 1 : 0
 

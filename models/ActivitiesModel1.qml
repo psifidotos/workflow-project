@@ -4,7 +4,7 @@ import QtQuick 1.1
 ListModel {
 
     ListElement {
-        code:0
+        code:"a0a"
         Current:false
         Name:"Δομημένος Προγραμματισμός"
         Icon:"Images/icons/activity1.png"
@@ -12,7 +12,7 @@ ListModel {
     }
 
     ListElement {
-        code:1
+        code:"b0b"
         Current:true
         Name:"Chess"
         Icon:"Images/icons/activity2.png"
@@ -20,7 +20,7 @@ ListModel {
     }
 
     ListElement {
-        code:2
+        code:"c0c"
         Current:false
         Name:"Programming"
         Icon:"Images/icons/activity3.png"
@@ -28,7 +28,7 @@ ListModel {
     }
 
     ListElement {
-        code:3
+        code:"d0d"
         Current:false
         Name:"Designing"
         Icon:"Images/icons/activity4.png"

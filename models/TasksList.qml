@@ -4,7 +4,7 @@ import QtQuick 1.1
 ListModel {
 
     ListElement {
-        code:0
+        code:"123"
         onAllDesktops:false
         onAllActivities:false
         classClass: "Firefox"
@@ -12,11 +12,11 @@ ListModel {
         icon:"Images/icons/activity3.png"
         shaded:false
         desktop:2
-        activities:2
+        activities:"b0b"
     }
 
     ListElement {
-        code:2
+        code:"234"
         onAllDesktops:true
         onAllActivities:false
         classClass: "Dolphin"
@@ -24,11 +24,11 @@ ListModel {
         icon:"Images/icons/file_manager.png"
         shaded:false
         desktop:1
-        activities:3
+        activities:"c0c"
     }
 
     ListElement {
-        code:3
+        code:"124"
         onAllDesktops:false
         onAllActivities:false
         classClass: "Dolphin"
@@ -36,11 +36,11 @@ ListModel {
         icon:"Images/icons/file_manager.png"
         shaded:false
         desktop:1
-        activities:1
+        activities:"a0a"
     }
 
     ListElement {
-        code:5
+        code:"127"
         onAllDesktops:false
         onAllActivities:false
         classClass: "LibreOffice"
@@ -48,11 +48,11 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:2
+        activities:"b0b"
     }
 
     ListElement {
-        code:6
+        code:"132"
         onAllDesktops:false
         onAllActivities:false
         classClass: "LibreOffice"
@@ -60,11 +60,11 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:2
+        activities:"b0b"
     }
 
     ListElement {
-        code:7
+        code:"136"
         onAllDesktops:true
         onAllActivities:true
         classClass: "LibreOffice"
@@ -72,11 +72,11 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:2
+        activities:"b0b"
     }
 
     ListElement {
-        code:8
+        code:"143"
         onAllDesktops:true
         onAllActivities:true
         classClass: "Firefox"
@@ -84,7 +84,7 @@ ListModel {
         icon:"Images/icons/activity3.png"
         shaded:false
         desktop:1
-        activities:1
+        activities:"b0b"
     }
 
 
