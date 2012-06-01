@@ -65,27 +65,7 @@ Component{
                     }//image mousearea
                 }
 
-                WorkAreaBtns{
-                    id:workAreaButtons
-                    height: normalWorkArea.height -  (4*mainView.scaleMeter/5)
 
-                    opacity: mainWorkArea.ListView.view.model.count>1 ? 1 : 0
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-
-                        onEntered: {
-                            workAreaButtons.state="show"
-                        }
-
-                        onExited: {
-                            workAreaButtons.state="hide"
-                        }
-
-
-                    }//image mousearea
-                }
 
 
             }//Row
@@ -124,6 +104,16 @@ Component{
                     }
                 }
             }
+
+            WorkAreaBtns{
+                id:workAreaButtons
+                //height: normalWorkArea.height -  (4*mainView.scaleMeter/5)
+
+                x:borderRectangle.width+borderRectangle.x - 0.85*width
+                y:-0.25*height
+                opacity: mainWorkArea.ListView.view.model.count>1 ? 1 : 0
+            }
+
 
             DTextLine{
                 id:workAreaName

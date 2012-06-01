@@ -28,6 +28,7 @@ Item {
 
         width: parent.buttonsSize
         height: width
+        x: buttonsArea.width - buttonsSize
 
         MouseArea {
             anchors.fill: parent
@@ -70,6 +71,7 @@ Item {
 
         width: parent.buttonsSize
         height: width
+        x: buttonsArea.width - 2*buttonsSize - buttonsSpace
 
         allDesks: onAllDesktops
         allActiv: onAllActivities
@@ -139,9 +141,9 @@ Item {
                 target: buttonsArea
 
                 opacityClose: 1
-                xClose: width - buttonsSize
+          //      xClose: width - buttonsSize
                 opacityWSt: 1
-                xWSt: width - 2*buttonsSize - buttonsSpace
+          //      xWSt: width - 2*buttonsSize - buttonsSpace
             }
         },
        State {
@@ -150,9 +152,9 @@ Item {
                target: buttonsArea
 
                opacityClose: 0
-               xClose: 0
+            //   xClose: 0
                opacityWSt: 0
-               xWSt: 0
+             //  xWSt: 0
 
            }
         }
@@ -167,12 +169,6 @@ Item {
                 ParallelAnimation{
                     NumberAnimation {
                         target: buttonsArea;
-                        property: "xClose";
-                        duration: 300;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: buttonsArea;
                         property: "opacityClose";
                         duration: 300;
                         easing.type: Easing.InOutQuad;
@@ -180,12 +176,6 @@ Item {
                 }
 
                 ParallelAnimation{
-                    NumberAnimation {
-                        target: buttonsArea;
-                        property: "xWSt";
-                        duration: 300;
-                        easing.type: Easing.InOutQuad;
-                    }
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";

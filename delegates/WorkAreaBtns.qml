@@ -1,8 +1,11 @@
 import QtQuick 1.0
 
+import "../ui"
+
 Item{
     id: workAreaButtons
-    width:10+(mainView.scaleMeter-5)/3
+    width:buttonsSize
+    height:width
 
     state: "hide"
     property alias opacityDel : deleteWorkareaBtn.opacity
@@ -10,23 +13,19 @@ Item{
     property alias opacityClone : duplicateWorkareaBtn.opacity
     property alias duplicateY: duplicateWorkareaBtn.y
 
-    property int buttonsSize: 8+(mainView.scaleMeter/5)
+    property int buttonsSize: 8+(0.6 * mainView.scaleMeter)
     property int buttonsSpace: mainView.scaleMeter/10
     property int buttonsX:0.3 * mainView.scaleMeter
     property int buttonsY: mainView.scaleMeter/10
 
     property real curBtnScale:1.4
 
-    Image{
+    CloseWindowButton{
         id:deleteWorkareaBtn
-        source: "../Images/buttons/workarea_delete.png"
-        width: buttonsSize
-        height: buttonsSize
-        x:0
-        y:parent.height - buttonsSize
-        opacity:0
-        z:10
-        smooth:true
+
+        width: parent.buttonsSize
+        height: width
+
 
         Behavior on scale{
             NumberAnimation {
@@ -41,6 +40,8 @@ Item{
 
             onClicked: {
 
+                deleteWorkareaBtn.onClicked();
+
                 for (var i=gridRow+1;i<mainWorkArea.ListView.view.model.count;i++)
                 {
                     var currentPos = mainWorkArea.ListView.view.model.get(i).gridRow;
@@ -51,17 +52,32 @@ Item{
             }
 
             onEntered: {
+                deleteWorkareaBtn.onEntered();
+
                 workAreaButtons.state = "show";
-                deleteWorkareaBtn.scale = curBtnScale;
+                deleteWorkareaBtn.scale = workAreaButtons.curBtnScale;
             }
 
             onExited: {
+                deleteWorkareaBtn.onExited();
+
                 workAreaButtons.state = "hide";
                 deleteWorkareaBtn.scale = 1;
             }
 
+            onReleased: {
+                deleteWorkareaBtn.onReleased();
+            }
+
+            onPressed: {
+                deleteWorkareaBtn.onPressed();
+            }
+
         }
+
+
     }
+
 
     Image{
         id:duplicateWorkareaBtn
@@ -105,7 +121,7 @@ Item{
             PropertyChanges {
                 target: workAreaButtons
                 opacityDel: 1
-                deleteY:buttonsSpace
+            //    deleteY:buttonsSpace
                 opacityClone: 0
                 duplicateY: buttonsSize+2*buttonsSpace
             }
@@ -115,7 +131,7 @@ Item{
             PropertyChanges {
                 target: workAreaButtons
                 opacityDel: 0
-                deleteY:normalStateWorkArea.height
+          //      deleteY:normalStateWorkArea.height
                 opacityClone: 0
                 duplicateY:normalStateWorkArea.height
             }

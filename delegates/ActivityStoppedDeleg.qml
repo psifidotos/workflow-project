@@ -12,14 +12,10 @@ Component{
 
         opacity: CState === neededState ? 1 : 0
 
-        //width: CState === neededState ? stoppedActivitiesList.width : 0
         width: stoppedActivitiesList.width
         height: CState === neededState ? basicHeight : 0
 
         property real basicHeight:0.66*mainView.workareaHeight
-
-      //  y: CState !== neededState ? -basicHeight : 0
-        //y: -basicHeight
 
         property string curState: CState
 
@@ -42,12 +38,6 @@ Component{
             }
         }
 
-    /*    Behavior on height{
-            NumberAnimation {
-                duration: 300;
-                easing.type: Easing.InOutQuad;
-            }
-        }*/
 
         property real defOpacity :0.5
 
@@ -64,8 +54,8 @@ Component{
             height:width
 
             //for the animation to be precise
-            property int toRX:x - width
-            property int toRY:y
+            property int toRX:stopActBack.shownActivities > 1 ? x - width:x - width- stopActBack.width
+            property int toRY:stopActBack.shownActivities > 1 ? y : -height
 
 
             Behavior on rotation{

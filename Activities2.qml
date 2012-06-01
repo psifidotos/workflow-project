@@ -60,10 +60,6 @@ Rectangle {
 
         property string typeId: "centralArea"
 
-        BtnIconAnimatMainView{
-            id:btnIconAnimate
-            z:4
-        }
 
         WorkAreasAllLists{
             id: allWorkareas
@@ -93,6 +89,12 @@ Rectangle {
             z:4
         }
 
+        BtnIconAnimatMainView{
+            id:btnIconAnimate
+            z:25
+        }
+
+
         ActivityAnimationMainView{
             id:activityAnimate
             z:5
@@ -102,6 +104,8 @@ Rectangle {
             id:taskAnimate
             z:6
         }
+
+
 
 
 
