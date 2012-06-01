@@ -106,6 +106,15 @@ Rectangle {
             width:125
             z:10
 
+            Image{
+
+                x:-0.4*width
+                y:-0.3*height
+                width:30
+                height:1.5*width
+                source:"Images/buttons/magnifyingglass.png"
+            }
+
         }
 
         WorkAreaFull{
