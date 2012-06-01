@@ -65,29 +65,33 @@ Component{
             property int toRY:y
 
             MouseArea {
+                id: imageMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onEntered: {
-                    taskDeleg1.state = "hovered"
-                    workAreaButtons.state="show"
-                    tasksBtns.state = "show"
+                    taskDeleg1.onEntered();
                 }
 
                 onExited: {
-                    taskDeleg1.state = "def"
-                    tasksBtns.state = "hide"
+                    taskDeleg1.onExited();
                 }
 
                 onClicked: {
-                    mainWorkArea.clickedWorkarea();
+                    taskDeleg1.onClicked(mouse);
                 }
 
                 onPressAndHold:{
-                    var nCor = mapToItem(mainView,mouse.x,mouse.y);
-                    mDragInt.enableDragging(nCor,imageTask.source);
+                    taskDeleg1.onPressAndHold(mouse,imageMouseArea);
                 }
 
+                onPositionChanged: {
+                    taskDeleg1.onPositionChanged(mouse,imageMouseArea);
+                }
+
+                onReleased:{
+                    taskDeleg1.onReleased(mouse);
+                }
             }
         }
 
@@ -135,45 +139,28 @@ Component{
                 anchors.fill: parent
                 hoverEnabled: true
 
-
-
                 onEntered: {
-                    if (taskDeleg1.isPressed === false){
-                        taskDeleg1.state = "hovered"
-                        workAreaButtons.state="show"
-                        tasksBtns.state = "show"
-                    }
+                    taskDeleg1.onEntered();
                 }
 
                 onExited: {
-                    taskDeleg1.state = "def";
-                    tasksBtns.state = "hide";
+                    taskDeleg1.onExited();
                 }
 
                 onClicked: {
-                    mainWorkArea.clickedWorkarea();
+                    taskDeleg1.onClicked(mouse);
                 }
 
                 onPressAndHold:{
-                    taskDeleg1.isPressed = true;
-                    taskDeleg1.state = "def";
-                    tasksBtns.state = "hide";
-                    workAreaButtons.state="hide";
-
-                    var nCor = mapToItem(mainView,mouse.x,mouse.y);
-                    mDragInt.enableDragging(nCor,imageTask.source);
+                    taskDeleg1.onPressAndHold(mouse,mstArea);
                 }
 
                 onPositionChanged: {
-                    if (pressed){
-                        var nCor = mapToItem(mainView,mouse.x,mouse.y);
-                        mDragInt.onPstChanged(nCor);
-                    }
+                    taskDeleg1.onPositionChanged(mouse,mstArea);
                 }
 
                 onReleased:{
-                    taskDeleg1.isPressed = false;
-                    mDragInt.disableDragging();
+                    taskDeleg1.onReleased(mouse);
                 }
 
             }
@@ -214,6 +201,47 @@ Component{
 
         ]
 
+
+        function onEntered() {
+            if (taskDeleg1.isPressed === false){
+                taskDeleg1.state = "hovered"
+                workAreaButtons.state="show"
+                tasksBtns.state = "show"
+            }
+        }
+
+        function onExited() {
+            taskDeleg1.state = "def";
+            tasksBtns.state = "hide";
+        }
+
+        function onClicked(mouse) {
+            mainWorkArea.clickedWorkarea();
+        }
+
+        function onPressAndHold(mouse,obj) {
+            taskDeleg1.isPressed = true;
+            taskDeleg1.state = "def";
+            tasksBtns.state = "hide";
+            workAreaButtons.state="hide";
+
+            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            mDragInt.enableDragging(nCor,imageTask.source);
+        }
+
+        function onPositionChanged(mouse,obj) {
+            if (taskDeleg1.isPressed === true){
+                var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+                mDragInt.onPstChanged(nCor);
+            }
+        }
+
+        function onReleased(mouse) {
+            taskDeleg1.isPressed = false;
+            mDragInt.disableDragging();
+        }
     }
+
+
 
 }
