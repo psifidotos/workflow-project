@@ -81,6 +81,11 @@ Component{
                     mainWorkArea.clickedWorkarea();
                 }
 
+                onPressAndHold:{
+                    var nCor = mapToItem(mainView,mouse.x,mouse.y);
+                    mDragInt.enableDragging(nCor,imageTask.source);
+                }
+
             }
         }
 
@@ -123,8 +128,12 @@ Component{
                 }
             }
             MouseArea {
+                id:mstArea
+
                 anchors.fill: parent
                 hoverEnabled: true
+
+
 
                 onEntered: {
                     taskDeleg1.state = "hovered"
@@ -139,6 +148,22 @@ Component{
 
                 onClicked: {
                     mainWorkArea.clickedWorkarea();
+                }
+
+                onPressAndHold:{
+                    var nCor = mapToItem(mainView,mouse.x,mouse.y);
+                    mDragInt.enableDragging(nCor,imageTask.source);
+                }
+
+                onPositionChanged: {
+                    if (pressed){
+                        var nCor = mapToItem(mainView,mouse.x,mouse.y);
+                        mDragInt.onPstChanged(nCor);
+                    }
+                }
+
+                onReleased:{
+                    mDragInt.disableDragging();
                 }
 
             }

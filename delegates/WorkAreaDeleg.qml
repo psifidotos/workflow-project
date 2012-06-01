@@ -13,7 +13,10 @@ Component{
      width: 1.4 * mainView.workareaHeight
      height:mainView.workareaHeight
 
+     property string typeId : "workareaDeleg"
+
      property int actCode: code
+     property int desktop: gridRow
 
      property int imagex:14
      property int imagey:15
@@ -209,6 +212,11 @@ Component{
 
             wkFull.changeState();
 
+        }
+
+
+        function getBorderRectangle(){
+            return borderRectangle;
         }
 
 

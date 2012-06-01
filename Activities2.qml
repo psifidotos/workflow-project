@@ -7,10 +7,11 @@ import "instances"
 import "ui"
 
 Rectangle {
+    id:mainView
     width: 1024;  height: 700
 
     color: "#dcdcdc"
-    id:mainView
+
     //  z:0
     clip:true
     anchors.fill: parent
@@ -50,61 +51,87 @@ Rectangle {
         id:instanceOfTasksList
     }
 
+    Item{
+        id:centralArea
+        x: 0
+        y:0
+        width:mainView.width
+        height:mainView.height
+
+        property string typeId: "centralArea"
+
+        BtnIconAnimatMainView{
+            id:btnIconAnimate
+            z:4
+        }
+
+        WorkAreasAllLists{
+            id: allWorkareas
+            z:4
+        }
 
 
-    BtnIconAnimatMainView{
-        id:btnIconAnimate
+        StoppedActivitiesPanel{
+            id:stoppedPanel
+            z:4
+        }
+
+
+        MainAddActivityButton{
+            id: mAddActivityBtn
+            z:4
+        }
+
+        TitleMainView{
+            id:oxygenT
+            z:4
+        }
+
+
+        AllActivitiesTasks{
+            id:allActT
+            z:4
+        }
+
+        ActivityAnimationMainView{
+            id:activityAnimate
+            z:5
+        }
+
+        TaskAnimationMainView{
+            id:taskAnimate
+            z:6
+        }
+
+
+
+        Slider {
+            id:zoomSlider
+            // anchors.bottom: mainView.bottom
+            // anchors.bottomMargin: 5
+            //  anchors.right: stoppedPanel.left
+            //  anchors.rightMargin: 5
+            y:mainView.height - height - 5
+            x:stoppedPanel.x - width - 5
+            maximum: 65
+            minimum: 35
+            value: 50
+            width:125
+            z:10
+
+        }
+
+        WorkAreaFull{
+            id:wkFull
+            z:11
+        }
+
     }
 
-    WorkAreasAllLists{
-        id: allWorkareas
+    DraggingInterface{
+        id:mDragInt
     }
 
-
-    StoppedActivitiesPanel{
-        id:stoppedPanel
-    }
-
-
-    MainAddActivityButton{
-        id: mAddActivityBtn
-    }
-
-    TitleMainView{
-        id:oxygenT
-    }
-
-
-    AllActivitiesTasks{
-        id:allActT
-    }
-
-    ActivityAnimationMainView{
-        id:activityAnimate
-    }
-
-    TaskAnimationMainView{
-        id:taskAnimate
-    }
-
-
-
-    Slider {
-        id:zoomSlider
-        anchors.bottom: mainView.bottom
-        anchors.bottomMargin: 5
-        anchors.right: stoppedPanel.left
-        anchors.rightMargin: 5
-        maximum: 65
-        minimum: 35
-        value: 50
-        width:125
-
-    }
-
-    WorkAreaFull{
-        id:wkFull
-    }
 
 }
 

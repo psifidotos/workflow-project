@@ -11,6 +11,12 @@ Item{
     property color actImagBordColor: "#77ffffff"
 
     property alias activitiesShown:activitiesList.shownActivities
+    property alias flickableV:view.interactive
+
+    width:mainView.width
+    height:mainView.height
+
+    property string typeId : "workareasMainView"
 
     Flickable{
         id: view
@@ -24,11 +30,14 @@ Item{
 
         boundsBehavior: Flickable.StopAtBounds
 
+        property string typeId : "workareasFlick"
+
         Image{
             width:mainView.width<allareas.width ? allareas.width : mainView.width
             height:mainView.height<allareas.height ? allareas.height : mainView.height
             source:"Images/greyBackground.png"
             fillMode: Image.Tile
+            property string typeId : "workareasFlickImage1"
         }
 
 
@@ -42,6 +51,7 @@ Item{
             //   spacing:60+3.5*mainView.scaleMeter
             spacing:mainView.scaleMeter/10
             interactive:false
+            property string typeId : "workareasFlickList1"
 
             property int maxWorkAreasHeight: 0
             property int scrollingMargin: 30

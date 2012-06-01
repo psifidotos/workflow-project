@@ -6,11 +6,14 @@ Item{
 
     id:allActTasksPanel
 
-    anchors.bottom: mainView.bottom
+    //anchors.bottom: mainView.bottom
+    y:mainView.height-height
     width:allActTaskL.shownTasks * allActRect.taskWidth+50
     height:allActRectShad.height+allActRect.height
 
     x: mainView.showWinds && (allActTaskL.shownTasks>0) ? 0 : -width
+
+    property string typeId:"allActivitiesTasks"
 
     Behavior on x{
         NumberAnimation {

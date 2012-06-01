@@ -19,6 +19,7 @@ Component{
 
         property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (mainView.showWinds === true)
 
+        property string typeId : "workareasActItem"
 
         opacity: CState === neededState ? 1 : 0
 
@@ -53,6 +54,7 @@ Component{
 
             height:workList.bHeight
             width: CState === "Running" ? workList.bWidth : 0
+            property string typeId : "workalistForActivity"
 
             x:10
             z:5
@@ -80,7 +82,9 @@ Component{
         AddWorkAreaButton{
             id:addWorkArea
 
-            z:3
+
+
+            property string typeId : "addWorkArea"
 
             anchors.top: workalist.bottom
             anchors.topMargin: mainView.workareaHeight/5
@@ -256,6 +260,10 @@ Component{
 
         function getWorkarea(war){
             return workalist.children[0].children[war];
+        }
+
+        function getWorkareaSize(){
+            return workalist.model.count;
         }
 
 
