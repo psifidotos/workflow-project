@@ -24,7 +24,7 @@ ListModel {
         icon:"Images/icons/file_manager.png"
         shaded:false
         desktop:1
-        activities:"c0c"
+        activities:"d0d"
     }
 
     ListElement {
@@ -48,7 +48,7 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:"b0b"
+        activities:"c0c"
     }
 
     ListElement {
@@ -60,7 +60,7 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:"b0b"
+        activities:"c0c"
     }
 
     ListElement {
@@ -72,7 +72,7 @@ ListModel {
         icon:"Images/icons/dolphin.png"
         shaded:false
         desktop:1
-        activities:"b0b"
+        activities:"c0c"
     }
 
     ListElement {
@@ -84,7 +84,7 @@ ListModel {
         icon:"Images/icons/activity3.png"
         shaded:false
         desktop:1
-        activities:"b0b"
+        activities:"c0c"
     }
 
 

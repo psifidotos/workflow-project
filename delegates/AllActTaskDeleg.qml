@@ -7,8 +7,9 @@ Component{
     Item{
         id: taskDeleg2
 
-        property bool mustBeShown: (onAllActivities === true)&&
-                                   (onAllDesktops === true)
+        property bool mustBeShown: ( ((onAllActivities === true)&&
+                                   (onAllDesktops === true) )
+                                   && (isPressed === false) )
 
         width: mustBeShown ? allActRect.taskWidth+spacing : 0
         height: mustBeShown ? imageTask2.height+taskTitle2.height : 0
@@ -16,12 +17,15 @@ Component{
         opacity: mustBeShown ? 1 : 0
 
         property int spacing: 20
+        property string ccode:code
+        property bool isPressed:false
+
 
         property alias imageTask2Width: imageTask2.width
         property alias textY: taskTitleRec.y
         property alias textOpacity: taskTitleRec.opacity
 
-        property string ccode:code
+
 
         state:"nohovered"
 
@@ -55,17 +59,32 @@ Component{
             width:(3* allActTaskL.height / 5)
 
             MouseArea {
+                id:imageMouseArea2
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onEntered: {
-                    taskDeleg2.state = "hovered";
-                    allTasksBtns.state = "show";
+                    taskDeleg2.onEntered();
                 }
 
                 onExited: {
-                    taskDeleg2.state = "nohovered";
-                    allTasksBtns.state = "hide";
+                    taskDeleg2.onExited();
+                }
+
+                onClicked: {
+                    taskDeleg2.onClicked(mouse);
+                }
+
+                onPressAndHold:{
+                    taskDeleg2.onPressAndHold(mouse, imageMouseArea2);
+                }
+
+                onPositionChanged: {
+                    taskDeleg2.onPositionChanged(mouse, imageMouseArea2);
+                }
+
+                onReleased:{
+                    taskDeleg2.onReleased(mouse);
                 }
             }
 
@@ -193,6 +212,43 @@ Component{
 
             }
         ]
+
+        function onEntered() {
+            if (taskDeleg2.isPressed === false){
+                taskDeleg2.state = "hovered";
+                allTasksBtns.state = "show";
+            }
+        }
+
+        function onExited() {
+            taskDeleg2.state = "nohovered";
+            allTasksBtns.state = "hide";
+        }
+
+        function onClicked(mouse) {
+
+        }
+
+        function onPressAndHold(mouse,obj) {
+            taskDeleg2.isPressed = true;
+            taskDeleg2.state = "nohovered";
+            allTasksBtns.state = "hide";
+
+            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            mDragInt.enableDragging(nCor,imageTask2.source);
+        }
+
+        function onPositionChanged(mouse,obj) {
+            if (taskDeleg2.isPressed === true){
+                var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+                mDragInt.onPstChanged(nCor);
+            }
+        }
+
+        function onReleased(mouse) {
+            taskDeleg2.isPressed = false;
+            mDragInt.disableDragging();
+        }
 
     }
 

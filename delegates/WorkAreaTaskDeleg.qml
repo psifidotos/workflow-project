@@ -7,22 +7,21 @@ Component{
     Item{
         id: taskDeleg1
 
-        property bool shown: ( (onAllActivities !== true)&&
-                              ((gridRow === desktop)&&
-                               (actCode === activities)) ) ||
-                             ( (onAllActivities !== true)&&
-                              ((onAllDesktops === true)&&
-                               (actCode === activities)) )
+        property bool shown: ( (((onAllActivities !== true)&&
+                                 ((gridRow === desktop)&&
+                                  (actCode === activities))) ||
+                                ((onAllActivities !== true)&&
+                                 ((onAllDesktops === true)&&
+                                  (actCode === activities))))
+                              && (isPressed === false) )
 
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
         height: shown ? 1.1 * imageTask.height : 0
-
-        property string ccode:code
-
         opacity: shown ? 1 : 0
 
-        property bool isPressed
+        property string ccode:code
+        property bool isPressed:false
 
 
 

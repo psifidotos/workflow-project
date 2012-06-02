@@ -50,11 +50,11 @@ Component{
                         hoverEnabled: true
 
                         onEntered: {
-                            workAreaButtons.state="show"
+                            workAreaButtons.state="show";
                         }
 
                         onExited: {
-                            workAreaButtons.state="hide"
+                            workAreaButtons.state="hide";
                         }
 
                         onClicked: {
@@ -132,19 +132,7 @@ Component{
                         normalStateArea_visible: true
                         workAreaName_visible:true
                     }
-                },
-                State {
-                    name:"hidden"
-                    when: (!elemVisible)
-                    PropertyChanges {
-                        target: mainWorkArea
-                        normalStateArea_visible: false
-                        workAreaName_visible:false
-                        areaButtons_visible:false
-                    }
-
                 }
-
             ]
 
             transitions: Transition { NumberAnimation { property: "scale"; duration: 150} }
@@ -190,6 +178,7 @@ Component{
         function clickedWorkarea(){
             mainView.currentDesktop = gridRow
             instanceOfActivitiesList.setCurrent(actCode) ;
+            workAreaButtons.state="hide";
 
             var x1 = borderRectangle.x;
             var y1 = borderRectangle.y;
