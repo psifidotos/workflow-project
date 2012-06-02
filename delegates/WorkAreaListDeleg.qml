@@ -82,8 +82,6 @@ Component{
         AddWorkAreaButton{
             id:addWorkArea
 
-
-
             property string typeId : "addWorkArea"
 
             anchors.top: workalist.bottom
@@ -96,16 +94,7 @@ Component{
                 anchors.fill: parent
 
                 onClicked:{
-                    var counts = workalist.model.count;
-                //    console.debug(counts);
-                    var lastobj = workalist.model.get(counts-1);
-
-                    workalist.model.append( {  "elemTitle": "Dynamic",
-                                               "elemImg":lastobj.elemImg,
-                                               "elemShowAdd":false,
-                                               "gridRow":lastobj.gridRow+1,
-                                               "gridColumn":lastobj.gridColumn,
-                                               "elemTempOnDragging":false} );
+                    instanceOfWorkAreasList.addWorkarea(code);
                 }
             }
 

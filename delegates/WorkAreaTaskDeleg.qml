@@ -225,7 +225,17 @@ Component{
             workAreaButtons.state="hide";
 
             var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-            mDragInt.enableDragging(nCor,imageTask.source);
+
+            var coord1 = imageTask.mapToItem(mainView,imageTask.x, imageTask.y);
+
+            var everySt = ((onAllActivities === true) && (onAllDesktops === true));
+
+            mDragInt.enableDragging(nCor,
+                                    imageTask.source,code,
+                                    mainWorkArea.actCode,
+                                    mainWorkArea.desktop,
+                                    coord1,
+                                    everySt);
         }
 
         function onPositionChanged(mouse,obj) {
@@ -237,7 +247,7 @@ Component{
 
         function onReleased(mouse) {
             taskDeleg1.isPressed = false;
-            mDragInt.disableDragging();
+            mDragInt.onReleased(mouse);
         }
     }
 

@@ -49,6 +49,23 @@ ListView{
         model.remove(ind);
     }
 
+    function addWorkarea(actCode){
+        var ind = getIndexFor(actCode);
+        var actOb = model.get(ind);
+        var workMod = actOb.workareas;
+
+        var counts = workMod.count;
+        var lastobj = workMod.get(counts-1);
+
+        workMod.append( {  "elemTitle": "Dynamic",
+                           "elemImg":lastobj.elemImg,
+                           "elemShowAdd":false,
+                           "gridRow":lastobj.gridRow+1,
+                           "gridColumn":lastobj.gridColumn,
+                           "elemTempOnDragging":false} );
+
+    }
+
     function cloneActivity(cod,ncod){
         var ind = getIndexFor(cod);
         var ob = model.get(ind);
@@ -57,12 +74,12 @@ ListView{
                          "CState":"Running",
                          "elemImg":ob.elemImg,
                          "workareas":[{
-                                          "gridRow":0,
-                                          "gridColumn":0,
-                                          "elemTitle":"New Workarea",
-                                          "elemShowAdd":false,
-                                          "elemTempOnDragging": false
-                         }]
+                                 "gridRow":0,
+                                 "gridColumn":0,
+                                 "elemTitle":"New Workarea",
+                                 "elemShowAdd":false,
+                                 "elemTempOnDragging": false
+                             }]
                      });
 
     }
@@ -86,12 +103,12 @@ ListView{
                          "CState":"Running",
                          "elemImg":newwall,
                          "workareas":[{
-                                          "gridRow":0,
-                                          "gridColumn":0,
-                                          "elemTitle":"New Workarea",
-                                          "elemShowAdd":false,
-                                          "elemTempOnDragging": false
-                         }]
+                                 "gridRow":0,
+                                 "gridColumn":0,
+                                 "elemTitle":"New Workarea",
+                                 "elemShowAdd":false,
+                                 "elemTempOnDragging": false
+                             }]
                      });
 
     }

@@ -8,8 +8,21 @@ Rectangle{
     color:"#05000000"
     opacity:0
 
+    property string intTaskId
+    property string intActId
+    property string intDesktop
+    property int intX1
+    property int intY1
+    property bool intIsEverywhere
+
     property string drActiv: ""
     property int drDesktop: -1
+
+    //0 - over a Workarea
+    //1 - over an AddWorkarea button
+    //2 - over everywhere tasks
+    property int lastSelection
+
 
     Rectangle{
         id:selectionRect
@@ -172,12 +185,20 @@ Rectangle{
 
     }
 
-    function enableDragging(ms,src){
+    function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere){
         mainDraggingItem.opacity = 1;
         mouseDraggingArea.enabled = true;
         mainDraggingItem.z = 100;
         allWorkareas.flickableV = false;
+
         iconImg.source = src;
+        mainDraggingItem.intTaskId = taskI;
+        mainDraggingItem.intActId = actI;
+        mainDraggingItem.intDesktop = deskI;
+        mainDraggingItem.intX1 = coord1.x;
+        mainDraggingItem.intY1 = coord1.y;
+        mainDraggingItem.intIsEverywhere = everywhere
+
         onPstChanged(ms);
     }
 
@@ -188,6 +209,46 @@ Rectangle{
         mouseDraggingArea.enabled = false;
         mainDraggingItem.z = 1;
         allWorkareas.flickableV = true;
+    }
+
+    function onReleased(mouse){
+        if (mainDraggingItem.lastSelection === 0){
+            if ( (mainDraggingItem.intActId !== mainDraggingItem.drActiv) ||
+                 (mainDraggingItem.intDesktop !== mainDraggingItem.drDesktop) ||
+                 (mainDraggingItem.intIsEverywhere === true)){
+
+                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+                instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+                instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
+
+                var co1 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
+                mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
+                                                                 co1);
+
+            }
+        }
+        else if (mainDraggingItem.lastSelection === 1){
+            instanceOfWorkAreasList.addWorkarea(mainDraggingItem.drActiv);
+            var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
+
+
+            instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+            instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works-1);
+
+            //    var co12 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
+            //   mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
+            //                                                  co12);
+        }
+        else if (mainDraggingItem.lastSelection === 2){
+
+            instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
+
+            var co13 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
+            mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,
+                                                            co13);
+        }
+
+        disableDragging();
     }
 
     function onPstChanged(mouse){
@@ -247,6 +308,8 @@ Rectangle{
 
                                     mainDraggingItem.drActiv = workAreaD.actCode;
                                     mainDraggingItem.drDesktop = workAreaD.desktop;
+
+                                    mainDraggingItem.lastSelection = 0;
                                 }
 
 
@@ -272,6 +335,7 @@ Rectangle{
 
                                 mainDraggingItem.drActiv = activityCode;
                                 mainDraggingItem.drDesktop = desktopsNum;
+                                mainDraggingItem.lastSelection = 1;
                             }
 
                         }
@@ -296,6 +360,7 @@ Rectangle{
             selectionRect.height = 1.1 * allTaskPO.height;
             selectionRect.opacity = 1;
 
+            mainDraggingItem.lastSelection = 2;
         }
 
 

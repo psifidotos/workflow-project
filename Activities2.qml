@@ -94,10 +94,6 @@ Rectangle {
 
         Slider {
             id:zoomSlider
-            // anchors.bottom: mainView.bottom
-            // anchors.bottomMargin: 5
-            //  anchors.right: stoppedPanel.left
-            //  anchors.rightMargin: 5
             y:mainView.height - height - 5
             x:stoppedPanel.x - width - 5
             maximum: 65
@@ -107,7 +103,6 @@ Rectangle {
             z:10
 
             Image{
-
                 x:-0.4*width
                 y:-0.3*height
                 width:30

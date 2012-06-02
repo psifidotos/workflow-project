@@ -11,14 +11,13 @@ Item {
     state: "hide"
 
     property string status:"nothover"
+    property int buttonsSize: 1.7*taskTitleRec.height
+    property int buttonsSpace: -buttonsSize/8
 
     property alias opacityClose: closeBtn.opacity
     property alias xClose: closeBtn.x
     property alias opacityWSt:  placeStateBtn.opacity
     property alias xWSt:  placeStateBtn.x
-
-    property int buttonsSize: 1.7*taskTitleRec.height
-    property int buttonsSpace: -buttonsSize/8
 
     signal changedStatus();
 
@@ -113,7 +112,6 @@ Item {
                     var x1 = imageTask.x;
                     var y1 = imageTask.y;
 
-                    //taskAnimate.animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1));
                     mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1));
                 }
 

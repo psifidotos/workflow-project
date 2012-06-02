@@ -24,6 +24,17 @@ ListView{
         allActT.changedChildState();
     }
 
+    function setTaskActivity(cod, val){
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"activities",val);
+    }
+
+    function setTaskDesktop(cod, val){
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"desktop",val);
+    }
+
+
     function getIndexFor(cod){
 
         for(var i=0; model.count; ++i){

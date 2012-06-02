@@ -18,6 +18,8 @@ Component{
 
         property int spacing: 20
         property string ccode:code
+        property string cActCode:activities
+        property int cDesktop:desktop
         property bool isPressed:false
 
 
@@ -235,7 +237,16 @@ Component{
             allTasksBtns.state = "hide";
 
             var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-            mDragInt.enableDragging(nCor,imageTask2.source);
+
+            var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
+
+            mDragInt.enableDragging(nCor,
+                                    imageTask2.source,
+                                    taskDeleg2.ccode,
+                                    taskDeleg2.cActCode,
+                                    taskDeleg2.cDesktop,
+                                    coord1,
+                                    true);
         }
 
         function onPositionChanged(mouse,obj) {
@@ -247,7 +258,7 @@ Component{
 
         function onReleased(mouse) {
             taskDeleg2.isPressed = false;
-            mDragInt.disableDragging();
+            mDragInt.onReleased(mouse);
         }
 
     }
