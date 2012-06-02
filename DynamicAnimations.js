@@ -40,18 +40,18 @@ function getActivityCoord(cod,lst){
 
 //Tasks Animations
 
-function animateDesktopToEverywhere(cid, coord){
+function animateDesktopToEverywhere(cid, coord, anim){
     var newObject = taskAnimComp.createObject(mainView);
 
-    newObject.animateDesktopToEverywhere(cid, coord);
+    newObject.animateDesktopToEverywhere(cid, coord, anim);
 
     newObject.destroy(2000);
 }
 
-function animateEverywhereToActivity(cid, coord){
+function animateEverywhereToActivity(cid, coord, anim){
     var newObject = taskAnimComp.createObject(mainView);
 
-    newObject.animateEverywhereToActivity(cid, coord)
+    newObject.animateEverywhereToActivity(cid, coord, anim)
 
     newObject.destroy(2000);
 }

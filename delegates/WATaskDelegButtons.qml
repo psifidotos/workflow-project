@@ -112,7 +112,7 @@ Item {
                     var x1 = imageTask.x;
                     var y1 = imageTask.y;
 
-                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1));
+                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
                 }
 
             }

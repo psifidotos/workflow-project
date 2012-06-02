@@ -119,7 +119,7 @@ Item {
                     var x1 = imageTask2.x;
                     var y1 = imageTask2.y;
 
-                    mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1));
+                    mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
                 }
             }
 

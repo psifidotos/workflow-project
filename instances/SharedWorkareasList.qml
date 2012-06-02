@@ -40,6 +40,7 @@ ListView{
             if (obj.code === cod)
                 return obj.workareas.count;
         }
+
         return -1;
     }
 

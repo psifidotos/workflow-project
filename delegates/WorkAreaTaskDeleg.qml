@@ -13,7 +13,8 @@ Component{
                                 ((onAllActivities !== true)&&
                                  ((onAllDesktops === true)&&
                                   (actCode === activities))))
-                              && (isPressed === false) )
+                              && (isPressed === false)
+                              && (shaded === false))
 
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
@@ -24,7 +25,6 @@ Component{
         property bool isPressed:false
 
 
-
         property alias taskTitleRecColor : taskTitleRec.color
         property alias taskTitleColor: taskTitle.color
 
@@ -33,11 +33,6 @@ Component{
         property color taskTitleColorD : "#222222";
         property color taskTitleColorH : "#ffffff";
 
-        //        property color taskTitleColorD : taskOrFTitle.color;
-        //       property color taskTitleColorH : "#ffffff";
-
-        //property color taskTitleRecColorD : "#0000b110";
-        //property color taskTitleRecColorH : "#ff00b110";
 
         Behavior on height{
             NumberAnimation {
@@ -230,12 +225,17 @@ Component{
 
             var everySt = ((onAllActivities === true) && (onAllDesktops === true));
 
+            if ((onAllDesktops === true)&&(onAllActivities === false))
+                instanceOfTasksList.setTaskShaded(code,true);
+
             mDragInt.enableDragging(nCor,
-                                    imageTask.source,code,
+                                    imageTask.source,
+                                    ccode,
                                     mainWorkArea.actCode,
                                     mainWorkArea.desktop,
                                     coord1,
-                                    everySt);
+                                    everySt,
+                                    shaded);
         }
 
         function onPositionChanged(mouse,obj) {
@@ -246,8 +246,9 @@ Component{
         }
 
         function onReleased(mouse) {
+            if (taskDeleg1.isPressed === true)
+                mDragInt.onMReleased(mouse);
             taskDeleg1.isPressed = false;
-            mDragInt.onReleased(mouse);
         }
     }
 

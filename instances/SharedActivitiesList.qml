@@ -42,6 +42,7 @@ ListView{
             if (obj.code === cod)
                 return i;
         }
+
         return -1;
     }
 
@@ -85,16 +86,6 @@ ListView{
     }
 
     function getNextId(){
-/*        var max = 0;
-
-
-        for(var i=0; i<model.count; ++i){
-            var obj = model.get(i);
-            if (obj.code > max)
-                max = obj.code
-        }
-        return max+1;*/
-
         newActivityCounter++;
         return "dY"+newActivityCounter;
 

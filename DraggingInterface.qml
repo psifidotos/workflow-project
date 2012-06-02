@@ -7,6 +7,7 @@ Rectangle{
 
     color:"#05000000"
     opacity:0
+    z:-1
 
     property string intTaskId
     property string intActId
@@ -14,9 +15,11 @@ Rectangle{
     property int intX1
     property int intY1
     property bool intIsEverywhere
+    property bool intIsShaded //for allDesktops purposes and not Everywhere
 
     property string drActiv: ""
     property int drDesktop: -1
+
 
     //0 - over a Workarea
     //1 - over an AddWorkarea button
@@ -166,28 +169,9 @@ Rectangle{
         opacity:0.8
     }
 
-    MouseArea {
-        id:mouseDraggingArea
-        anchors.fill: parent
-        hoverEnabled: true
 
-        enabled:false
-
-        onPositionChanged:{
-            mainDraggingItem.onPstChanged(mouse);
-        }
-
-
-        onReleased:{
-            mainDraggingItem.disableDragging();
-            console.debug("Released...");
-        }
-
-    }
-
-    function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere){
+    function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
         mainDraggingItem.opacity = 1;
-        mouseDraggingArea.enabled = true;
         mainDraggingItem.z = 100;
         allWorkareas.flickableV = false;
 
@@ -197,33 +181,43 @@ Rectangle{
         mainDraggingItem.intDesktop = deskI;
         mainDraggingItem.intX1 = coord1.x;
         mainDraggingItem.intY1 = coord1.y;
-        mainDraggingItem.intIsEverywhere = everywhere
+        mainDraggingItem.intIsEverywhere = everywhere;
+        mainDraggingItem.intIsShaded = shaded;
 
         onPstChanged(ms);
     }
 
     function disableDragging(){
         mainDraggingItem.opacity = 0;
-        mainDraggingItem.drActiv = -1;
-        mainDraggingItem.drDesktop = -1;
-        mouseDraggingArea.enabled = false;
-        mainDraggingItem.z = 1;
+        mainDraggingItem.enabled = false;
+        mainDraggingItem.z = -1;
         allWorkareas.flickableV = true;
     }
 
-    function onReleased(mouse){
+    function onMReleased(mouse){
+
+        var iX1 = iconImg.x;
+        var iY1 = iconImg.y;
+
         if (mainDraggingItem.lastSelection === 0){
             if ( (mainDraggingItem.intActId !== mainDraggingItem.drActiv) ||
                  (mainDraggingItem.intDesktop !== mainDraggingItem.drDesktop) ||
                  (mainDraggingItem.intIsEverywhere === true)){
 
-                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+                if(mainDraggingItem.intIsShaded === false)
+                    instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+                else{
+                    instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
+                    instanceOfTasksList.setTaskShaded(mainDraggingItem.intTaskId,false);
+                }
+
                 instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
                 instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
 
-                var co1 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
+                var co1 = mainView.mapToItem(mainView,iX1,iY1);
                 mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
-                                                                 co1);
+                                                                 co1,
+                                                                 2);
 
             }
         }
@@ -231,21 +225,17 @@ Rectangle{
             instanceOfWorkAreasList.addWorkarea(mainDraggingItem.drActiv);
             var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
 
-
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
             instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works-1);
-
-            //    var co12 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
-            //   mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
-            //                                                  co12);
         }
         else if (mainDraggingItem.lastSelection === 2){
 
             instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
 
-            var co13 = mainView.mapToItem(mainView,mainDraggingItem.intX1,mainDraggingItem.intY1);
+            var co13 = mainView.mapToItem(mainView,iX1,iY1);
             mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,
-                                                            co13);
+                                                            co13,
+                                                            2);
         }
 
         disableDragging();
@@ -375,3 +365,4 @@ Rectangle{
             return false;
     }
 }
+

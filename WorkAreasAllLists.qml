@@ -187,7 +187,6 @@ Item{
 
             if (elem.ccode === cd)
                 return elem;
-
         }
 
     }

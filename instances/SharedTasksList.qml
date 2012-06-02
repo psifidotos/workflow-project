@@ -7,10 +7,10 @@ ListView{
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
-    //    console.debug(cod+"-"+ind+"-"+val);
+
         if (val === "oneDesktop"){
-           model.setProperty(ind,"onAllDesktops",false);
-           model.setProperty(ind,"onAllActivities",false);
+            model.setProperty(ind,"onAllDesktops",false);
+            model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allDesktops"){
             model.setProperty(ind,"onAllDesktops",true);
@@ -34,24 +34,29 @@ ListView{
         model.setProperty(ind,"desktop",val);
     }
 
+    function setTaskShaded(cod, val){
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"shaded",val);
+    }
+
+
 
     function getIndexFor(cod){
 
-        for(var i=0; model.count; ++i){
+        for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
-                return i;
+               return i;
         }
 
         return -1;
     }
 
+
+
     function removeTask(cod){
         var n = getIndexFor(cod);
         model.remove(n);
-        //instanceOfTasksList.removeTask(cod);
-        //instanceOfWorkAreasList.removeActivity(cod);
-        //allWorkareas.updateShowActivities();
     }
 
 }

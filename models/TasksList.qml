@@ -2,7 +2,6 @@
 import QtQuick 1.1
 
 ListModel {
-
     ListElement {
         code:"123"
         onAllDesktops:false
@@ -14,7 +13,6 @@ ListModel {
         desktop:2
         activities:"b0b"
     }
-
     ListElement {
         code:"234"
         onAllDesktops:true
@@ -26,7 +24,6 @@ ListModel {
         desktop:1
         activities:"d0d"
     }
-
     ListElement {
         code:"124"
         onAllDesktops:false
@@ -38,7 +35,6 @@ ListModel {
         desktop:1
         activities:"a0a"
     }
-
     ListElement {
         code:"127"
         onAllDesktops:false
@@ -50,7 +46,6 @@ ListModel {
         desktop:1
         activities:"c0c"
     }
-
     ListElement {
         code:"132"
         onAllDesktops:false
@@ -62,7 +57,6 @@ ListModel {
         desktop:1
         activities:"c0c"
     }
-
     ListElement {
         code:"136"
         onAllDesktops:true
@@ -74,7 +68,6 @@ ListModel {
         desktop:1
         activities:"c0c"
     }
-
     ListElement {
         code:"143"
         onAllDesktops:true
@@ -86,7 +79,4 @@ ListModel {
         desktop:1
         activities:"c0c"
     }
-
-
-
 }

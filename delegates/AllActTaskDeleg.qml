@@ -246,7 +246,8 @@ Component{
                                     taskDeleg2.cActCode,
                                     taskDeleg2.cDesktop,
                                     coord1,
-                                    true);
+                                    true,
+                                    shaded);
         }
 
         function onPositionChanged(mouse,obj) {
@@ -257,8 +258,9 @@ Component{
         }
 
         function onReleased(mouse) {
+            if (taskDeleg2.isPressed === true)
+                mDragInt.onMReleased(mouse);
             taskDeleg2.isPressed = false;
-            mDragInt.onReleased(mouse);
         }
 
     }

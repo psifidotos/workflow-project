@@ -14,12 +14,15 @@ Image{
     property int toX:0
     property int toY:0
 
-    function animateDesktopToEverywhere(cid, coord){
+    //animation 1: a jump
+    //animation 2: a line
+
+    function animateDesktopToEverywhere(cid, coord, anim){
         //ListView of running activities
-        animateTask(cid,coord,allActT.getList());
+        animateTask(cid,coord,allActT.getList(),anim );
     }
 
-    function animateEverywhereToActivity(cid, coord){
+    function animateEverywhereToActivity(cid, coord, anim){
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());
         var pos = instanceOfTasksList.getIndexFor(cid);
@@ -42,26 +45,31 @@ Image{
                 taskAnimation.toX = toCoord.x;
                 taskAnimation.toY = toCoord.y;
 
-                playTaskAnimation.start();
+                if (anim===1)
+                    playTaskAnimation.start();
+                else if (anim===2)
+                    playTaskAnimation2.start();
             }
             else if (desktopPos > instanceOfWorkAreasList.getActivitySize(activityCode) ) {
 
                 var col = allWorkareas.getActivityColumn(activityCode);
 
-                animateTask(cid,coord,col.getOrphanList());
+                animateTask(cid,coord,col.getOrphanList(),anim);
 
             }
             else{
                 var col2 = allWorkareas.getActivityColumn(activityCode);
+
                 var work = col2.getWorkarea(desktopPos);
 
-                animateTask(cid,coord,work.getTasksList());
+                animateTask(cid,coord,work.getTasksList(),anim);
+
             }
 
         }
     }
 
-    function animateTask(cid,coord,lst){
+    function animateTask(cid,coord,lst,anim){
         var pos = instanceOfTasksList.getIndexFor(cid);
 
         if (pos>=0){
@@ -93,8 +101,10 @@ Image{
 
             taskAnimation.toY = fixPosElem.y;
 
-            playTaskAnimation.start();
-
+            if (anim===1)
+                playTaskAnimation.start();
+            else if (anim===2)
+                playTaskAnimation2.start();
 
         }
     }
@@ -148,6 +158,52 @@ Image{
         PropertyAnimation{
             target:taskAnimation
             duration: playTaskAnimation.animationDur
+            property: "y"
+            to:taskAnimation.toY
+            easing.type: Easing.InOutQuad;
+        }
+
+    }
+    //////////////////////////////////////////
+    ParallelAnimation{
+        id:playTaskAnimation2
+        property int animationDur:750
+
+
+        NumberAnimation {
+            target: taskAnimation;
+            property: "opacity";
+            duration: playTaskAnimation2.animationDur;
+            easing.type: Easing.InOutQuad;
+            to: 0.6
+        }
+        NumberAnimation {
+            target: taskAnimation;
+            property: "opacity";
+            duration: playTaskAnimation2.animationDur;
+            easing.type: Easing.InOutQuad;
+            to: 0
+        }
+        NumberAnimation {
+            target: taskAnimation;
+            property: "scale";
+            duration: playTaskAnimation2.animationDur;
+            easing.type: Easing.InOutQuad;
+            to: 0.8
+        }
+
+
+        PropertyAnimation{
+            target:taskAnimation
+            duration: playTaskAnimation2.animationDur
+            property: "x"
+            to:taskAnimation.toX
+            easing.type: Easing.InOutQuad;
+        }
+
+        PropertyAnimation{
+            target:taskAnimation
+            duration: playTaskAnimation2.animationDur
             property: "y"
             to:taskAnimation.toY
             easing.type: Easing.InOutQuad;
