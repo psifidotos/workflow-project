@@ -84,7 +84,7 @@ Component{
                 }
 
                 onReleased:{
-                    taskDeleg1.onReleased(mouse);
+                    taskDeleg1.onReleased(mouse, mstArea);
                 }
             }
         }
@@ -154,7 +154,7 @@ Component{
                 }
 
                 onReleased:{
-                    taskDeleg1.onReleased(mouse);
+                    taskDeleg1.onReleased(mouse, mstArea);
                 }
 
             }
@@ -245,9 +245,12 @@ Component{
             }
         }
 
-        function onReleased(mouse) {
-            if (taskDeleg1.isPressed === true)
-                mDragInt.onMReleased(mouse);
+        function onReleased(mouse, obj) {
+            if (taskDeleg1.isPressed === true){
+                var mouseV = obj.mapToItem(mainView,mouse.x,mouse.y);
+
+                mDragInt.onMReleased(mouse,mouseV);
+            }
             taskDeleg1.isPressed = false;
         }
     }

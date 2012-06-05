@@ -51,7 +51,16 @@ function animateDesktopToEverywhere(cid, coord, anim){
 function animateEverywhereToActivity(cid, coord, anim){
     var newObject = taskAnimComp.createObject(mainView);
 
-    newObject.animateEverywhereToActivity(cid, coord, anim)
+    newObject.animateEverywhereToActivity(cid, coord, anim);
+
+    newObject.destroy(2000);
+}
+
+//General Animations
+function animateEverywhereToXY(cid, coord1, coord2, anim){
+    var newObject = taskAnimComp.createObject(mainView);
+
+    newObject.animateEverywhereToXY(cid, coord1, coord2, anim);
 
     newObject.destroy(2000);
 }
@@ -64,3 +73,5 @@ function animateIcon(pth,rt,wdth,coord){
 
     newObject.destroy(2000);
 }
+
+

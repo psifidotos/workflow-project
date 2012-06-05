@@ -22,6 +22,26 @@ Image{
         animateTask(cid,coord,allActT.getList(),anim );
     }
 
+    function animateEverywhereToXY(cid, coord1, coord2, anim){
+        var pos = instanceOfTasksList.getIndexFor(cid);
+        if (pos>=0){
+            taskAnimation.x = coord1.x
+            taskAnimation.y = coord1.y
+
+            var elem = instanceOfTasksList.model.get(pos);
+            taskAnimation.source = elem.icon;
+
+            taskAnimation.toX = coord2.x;
+            taskAnimation.toY = coord2.y;
+
+            if (anim===1)
+                playTaskAnimation.start();
+            else if (anim===2)
+                playTaskAnimation2.start();
+        }
+
+    }
+
     function animateEverywhereToActivity(cid, coord, anim){
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());

@@ -194,7 +194,7 @@ Rectangle{
         allWorkareas.flickableV = true;
     }
 
-    function onMReleased(mouse){
+    function onMReleased(mouse, viewXY){
 
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
@@ -211,6 +211,7 @@ Rectangle{
                     instanceOfTasksList.setTaskShaded(mainDraggingItem.intTaskId,false);
                 }
 
+
                 instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
                 instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
 
@@ -225,8 +226,26 @@ Rectangle{
             instanceOfWorkAreasList.addWorkarea(mainDraggingItem.drActiv);
             var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
 
+            if(mainDraggingItem.intIsShaded === false)
+                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+            else{
+                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
+                instanceOfTasksList.setTaskShaded(mainDraggingItem.intTaskId,false);
+            }
+
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
             instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works-1);
+
+            var co14 = mainView.mapToItem(mainView,iX1,iY1);
+            var toCol4 = mainView.mapToItem(mainView,mouse.x,mouse.y);
+
+            viewXY.x = viewXY.x-30;
+
+            mainView.getDynLib().animateEverywhereToXY(mainDraggingItem.intTaskId,
+                                                             co14,
+                                                             viewXY,
+                                                             2);
+
         }
         else if (mainDraggingItem.lastSelection === 2){
 
@@ -282,7 +301,8 @@ Rectangle{
                                 var workAreaD = onlyWorkArList.childAt(fixC5.x,fixC5.y);
 
                                 if((mainDraggingItem.drActiv!==workAreaD.actCode)||
-                                        (mainDraggingItem.drDesktop!==workAreaD.desktop)){
+                                   (mainDraggingItem.drDesktop!==workAreaD.desktop) ||
+                                   (selectionRect.state !== "blue")){
 
                                     var bordRect = workAreaD.getBorderRectangle();
                                     var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
@@ -308,9 +328,9 @@ Rectangle{
                         else if (mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"addWorkArea")){
                             var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
 
-                            if((mainDraggingItem.drActiv!== activityCode)||
-                                    (mainDraggingItem.drDesktop!==desktopsNum)){
-
+                            if((mainDraggingItem.drActiv!== activityCode) ||
+                               (mainDraggingItem.drDesktop!==desktopsNum) ||
+                               (selectionRect.state = "red")){
 
                                 var fixBCoord2 = addArea.mapToItem(mainDraggingItem,addArea.x, addArea.y);
 
@@ -325,7 +345,8 @@ Rectangle{
 
                                 mainDraggingItem.drActiv = activityCode;
                                 mainDraggingItem.drDesktop = desktopsNum;
-                                mainDraggingItem.lastSelection = 1;
+                                mainDraggingItem.lastSelection = 1;                               
+
                             }
 
                         }
@@ -346,7 +367,7 @@ Rectangle{
             selectionRect.x = fixBCoord3.x;
             selectionRect.y = fixBCoord3.y;
 
-            selectionRect.width = allTaskP.width;
+            selectionRect.width = allTaskPO.width;
             selectionRect.height = 1.1 * allTaskPO.height;
             selectionRect.opacity = 1;
 
