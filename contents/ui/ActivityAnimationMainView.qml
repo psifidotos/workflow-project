@@ -1,9 +1,11 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
 
-Image{
+QIconItem{
     id:activityAnimation
-    opacity:1
+    opacity:0
 
     width:5+mainView.scaleMeter
     height:width
@@ -31,7 +33,12 @@ Image{
             activityAnimation.y = coord.y
 
             var elem=instanceOfActivitiesList.model.get(pos);
-            activityAnimation.source = elem.Icon
+
+            if (elem.Icon == "")
+                activityAnimation.icon = QIcon("plasma");
+            else
+                activityAnimation.icon = QIcon(elem.Icon);
+            //activityAnimation.source = elem.Icon
 
             var toCoord = activityAnimation.getActivityCoord(cod,lst);
 

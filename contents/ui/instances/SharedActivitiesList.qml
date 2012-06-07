@@ -1,18 +1,59 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.plasma.core 0.1 as PlasmaCore
+
 import ".."
 import "../models"
 
 ListView{
-    model: ActivitiesModel1{}
+
+    PlasmaCore.DataSource {
+        id: activitySource
+        engine: "org.kde.activities"
+        onSourceAdded: {
+            if (source != "Status") {
+                connectSource(source)
+            }
+        }
+
+        Component.onCompleted: {
+            connectedSources = sources.filter(function(val) {
+                return val !== "Status";
+            })
+        }
+    }
+
+    //model: ActivitiesModel1{}
+
+    model: PlasmaCore.DataModel {
+      dataSource: activitySource
+  //	keyRoleFilter: ".*"
+    }
 
     property int newActivityCounter:0
 
     function setCState(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"CState",val);
+        model.setProperty(ind,"cState",val);
 
         instanceOfWorkAreasList.setCState(cod,val);
+
+    }
+
+    function stopActivity(cod){
+        var activityId = cod;
+        var service = activitySource.serviceForSource(activityId);
+        var operation = service.operationDescription("stop");
+        service.startOperationCall(operation);
+
+        allWorkareas.updateShowActivities();
+    }
+
+    function startActivity(cod){
+        var activityId = cod;
+        var service = activitySource.serviceForSource(activityId);
+        var operation = service.operationDescription("start");
+        service.startOperationCall(operation);
 
         allWorkareas.updateShowActivities();
     }
@@ -39,7 +80,7 @@ ListView{
     function getIndexFor(cod){
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
-            if (obj.code === cod)
+            if (obj.DataEngineSource === cod)
                 return i;
         }
 
@@ -78,7 +119,7 @@ ListView{
                          "Current":false,
                          "Name":"New Activity",
                          "Icon":"Images/icons/plasma.png",
-                         "CState":"Running"} );
+                         "cState":"Running"} );
 
 
         instanceOfWorkAreasList.addNewActivity(nId);

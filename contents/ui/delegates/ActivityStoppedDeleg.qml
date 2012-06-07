@@ -1,5 +1,9 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
+
 import ".."
 
 Component{
@@ -7,17 +11,19 @@ Component{
     Item{
         id: stpActivity
 
-        property string ccode:code
-        property string neededState:"Stopped"
+        property string neededState: "Stopped"
+        property string ccode: model["DataEngineSource"]
+        property string cState: model["State"]
 
-        opacity: CState === neededState ? 1 : 0
+
+        opacity: cState === neededState ? 1 : 0
 
         width: stoppedActivitiesList.width
-        height: CState === neededState ? basicHeight : 0
+        height: cState === neededState ? basicHeight : 0
 
         property real basicHeight:0.66*mainView.workareaHeight
 
-        property string curState: CState
+        property string curState: cState
 
         onCurStateChanged:{
             stoppedPanel.changedChildState();
@@ -42,16 +48,18 @@ Component{
         property real defOpacity :0.5
 
 
-        Image{
+        QIconItem{
             id:activityIcon
             rotation:-20
             opacity:parent.defOpacity
-            source: "../" + Icon
+            //source: "../" + Icon
+            icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
           //  x:25
           //  anchors.right: stpActivity.right
             x:stpActivity.width/2
             width:5+mainView.scaleMeter
             height:width
+            smooth:true
 
             //for the animation to be precise
             property int toRX:stopActBack.shownActivities > 0 ? x - width:x - width- stopActBack.width
@@ -150,12 +158,15 @@ Component{
 
             onClicked: {
 
+                instanceOfActivitiesList.startActivity(ccode);
+
                 var x1 = activityIcon.x;
                 var y1 = activityIcon.y;
 
                 //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
                 mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-                instanceOfActivitiesList.setCState(code,"Running");
+
+                //instanceOfActivitiesList.setCState(ccode,"Running");
 
             }
         }

@@ -173,7 +173,7 @@ Item{
         {
             var elem = activitiesList.model.get(i);
 
-            if (elem.CState === "Running")
+            if (elem.State === "Running")
                 counter++;
         }
         activitiesList.shownActivities = counter;

@@ -101,12 +101,10 @@ Rectangle {
         {
             var elem = stoppedActivitiesList.model.get(i);
 
-            if (elem.CState === "Stopped")
+            if (elem.State === "Stopped")
                counter++;
         }
-        stoppedActivitiesList.shownActivities = counter;
-    //    if (shownActivities <2)
-        //    shownActivities = 2;
+      stoppedActivitiesList.shownActivities = counter;
     }
 
     //return stopped activities listview

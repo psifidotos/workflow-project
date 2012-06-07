@@ -233,9 +233,10 @@ Item{
         var x1 = activityIcon.x;
         var y1 = activityIcon.y;
 
-        mainView.getDynLib().animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
+        mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainView,x1, y1));
 
-        instanceOfActivitiesList.setCState(code,"Stopped");
+        instanceOfActivitiesList.stopActivity(ccode);
+        //instanceOfActivitiesList.setCState(code,"Stopped");
 
         stoppedPanel.changedChildState();
 

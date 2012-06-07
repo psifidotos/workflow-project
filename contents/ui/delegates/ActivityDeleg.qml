@@ -1,5 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
 import ".."
 
 Component{
@@ -7,14 +10,19 @@ Component{
     Item{
         id:mainActivity
         property string neededState:"Running"
-        property string ccode:code
+        property string ccode: model["DataEngineSource"]
+        property string cState: model["State"]
 
-        opacity: CState === neededState ? 1 : 0
+        opacity: cState === neededState ? 1 : 0
 
         property int defWidth:mainView.workareaWidth
 
-        width: CState === neededState ? defWidth : 0
-        height: CState === neededState ? width/2 : 0
+        width: cState === neededState ? defWidth : 0
+        height: cState === neededState ? width/2 : 0
+
+        onCStateChanged:{
+            allwlists.updateShowActivities();
+        }
 
         Behavior on opacity{
             NumberAnimation {
@@ -30,11 +38,13 @@ Component{
             }
         }
 
-        Image{
+        QIconItem{
           id:activityIcon
           rotation:-20
           opacity:1
-          source: "../" + Icon
+          //source: "../" + Icon
+          icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
+          smooth:true
           x:mainView.scaleMeter/10
           y:mainView.scaleMeter/3
           width:5+mainView.scaleMeter
@@ -258,7 +268,7 @@ Component{
         function getCurrentIndex(){
             for(var i=0; ListView.view.model.count; ++i){
                 var obj = ListView.view.model.get(i);
-                if (obj.code === code)
+                if (obj.model["DataEngineSource"] === ccode)
                     return i;
             }
             return -1;
