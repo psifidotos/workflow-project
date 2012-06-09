@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=Workflow
+Comment=Activities and WorkAreas in QML
+Icon=preferences-activities
+Type=Service
+
+X-KDE-ServiceTypes=Plasma/Applet
+X-KDE-Library=plasma_applet_workflow
+X-KDE-PluginInfo-Author=Michail Vourlakos
+X-KDE-PluginInfo-Email=admin@opentoolsandspace.org
+X-KDE-PluginInfo-Name=org.opentoolsandspace.workflow
+X-KDE-PluginInfo-Version=0.1
+X-KDE-PluginInfo-Website=http://www.opentoolsandspace.org/
+X-KDE-PluginInfo-Category=Examples
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+
