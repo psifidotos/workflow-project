@@ -24,8 +24,8 @@ workflow::workflow(QObject *parent, const QVariantList &args)
 : Plasma::PopupApplet(parent, args),
 m_mainWidget(0)
 {
-   setPopupIcon("plasma-desktop");
-   resize(350, 200);
+   setPopupIcon("preferences-activities");
+   resize(1000, 700);
 }
 
 workflow::~workflow()
@@ -51,7 +51,7 @@ QGraphicsWidget *workflow::graphicsWidget()
     
     KStandardDirs *sd =    KGlobal::dirs();
     
-    QString path =  sd->findResource("data","plasma-workflowplasmoid/Rect.qml");
+    QString path =  sd->findResource("data","plasma-workflowplasmoid/qml/Activities2.qml");
   
     declarativeWidget = new Plasma::DeclarativeWidget(this);
     declarativeWidget->setInitializationDelayed(true);

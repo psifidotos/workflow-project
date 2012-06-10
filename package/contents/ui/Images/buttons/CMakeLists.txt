@@ -1,0 +1,29 @@
+install(FILES 
+	      activityIconFade.png
+	      addActivity1.png
+	      addActivity2.png
+	      cloneActivity.png
+	      close_window.png
+	      darkPencil.png
+	      darkTick.png
+	      editBox.png
+	      editBox2.png
+	      editBoxHover2.png
+	      lightTick.png
+	      listPencil.png
+	      magnifyingglass.png
+	      mail_delete.png
+	      nowindowsadd.png
+	      nowindowsicon.png
+	      player_play.png
+	      player_stop.png
+	      titleLight.png
+	      titleShadow.png
+	      window_duplicate.png
+	      withwindowsicon.png
+	      withwindowsminus.png
+	      workarea_delete.png
+        DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid/qml/Images/buttons)
+
+add_subdirectory(plasma_ui)
+        
