@@ -26,7 +26,4 @@ install(TARGETS plasma_applet_workflow
 install(FILES plasma-applet-workflow.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
         
-install(FILES Rect.qml
-        DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid)
-        
 add_subdirectory(package/contents/ui)
