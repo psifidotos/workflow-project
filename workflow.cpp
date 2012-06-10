@@ -20,61 +20,78 @@
 #include "workflow.h"
 
 
+#include <Plasma/Extender>
+#include <Plasma/ExtenderItem>
+#include <Plasma/ToolTipManager>
+
 workflow::workflow(QObject *parent, const QVariantList &args)
 : Plasma::PopupApplet(parent, args),
 m_mainWidget(0)
 {
-   setPopupIcon("preferences-activities");
-   resize(1000, 700);
+    setPopupIcon("preferences-activities");
+    setAspectRatioMode(Plasma::IgnoreAspectRatio);
 }
 
 workflow::~workflow()
 {
 
 }
-
+/*
 QGraphicsWidget *workflow::graphicsWidget()
-{
-  
-  if (!m_mainWidget) {
-    
+{  
+  return m_workWidget;
+}*/
+
+void workflow::init(){
+
+    Plasma::ToolTipManager::self()->registerWidget(this);
+    extender()->setEmptyExtenderMessage(i18n("No Activities..."));
+    // don't grow too much height
+    //extender()->setMaximumHeight(300);
+    if (extender()->item("Activities") == 0) {
+      // create the item
+      Plasma::ExtenderItem *item = new Plasma::ExtenderItem(extender());
+      // initialize the item
+      initExtenderItem(item);
+      // set item name and title
+      item->setName("Activities");
+      item->setTitle("Activities");
+    }
+    // connect data sources
+}
+
+void workflow::initExtenderItem(Plasma::ExtenderItem *item) {
+
     m_mainWidget = new QGraphicsWidget(this);
-    m_mainWidget->setPreferredSize(440, 250);    
-    
-    
-    mainLayout = new QGraphicsLinearLayout(Qt::Vertical);
+    m_mainWidget->setPreferredSize(350, 200);
+    //m_mainWidget->setMinimumSize(50,50);
+
+    mainLayout = new QGraphicsLinearLayout(m_mainWidget);
+    mainLayout->setOrientation(Qt::Vertical);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
-    
- //   lbl_text = new Plasma::Label(this);
-//    lbl_text->setText(i18n("Hello World!!!\n.....second line......"));
-    
+
     KStandardDirs *sd =    KGlobal::dirs();
-    
+
     QString path =  sd->findResource("data","plasma-workflowplasmoid/qml/Activities2.qml");
-  
+
     declarativeWidget = new Plasma::DeclarativeWidget(this);
     declarativeWidget->setInitializationDelayed(true);
     declarativeWidget->setQmlPath(path);
    // declarativeWidget->engine();
-    
+
   //  QString mainText("Hello World!!!\n.....second line - change - ......\n");
   //  mainText.append(path);
-    
-  //  lbl_text->setText(mainText.toUtf8().constData());
-    
-   // mainLayout->addItem(lbl_text);
-    mainLayout->addItem(declarativeWidget);   
-    
-    
-    m_mainWidget->setLayout(mainLayout);
-    
-  }
-  
-  return m_mainWidget;
-}
 
-void workflow::init(){
+  //  lbl_text->setText(mainText.toUtf8().constData());
+
+   // mainLayout->addItem(lbl_text);
+    mainLayout->addItem(declarativeWidget);
+
+
+    m_mainWidget->setLayout(mainLayout);
+
+    item->setWidget(m_mainWidget);
 }
 
    

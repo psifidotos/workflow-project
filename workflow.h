@@ -28,10 +28,18 @@
 #include <Plasma/PopupApplet>
 #include <plasma/widgets/declarativewidget.h>
 
+#include <QGraphicsLinearLayout>
+
 #include <KGlobal>
 #include <KStandardDirs>
+
 				
-#include <QGraphicsLinearLayout>
+
+class WorkflowWidget;
+
+namespace Plasma {
+  class ExtenderItem;
+};
 				
 // Define our plasma Applet
 class workflow : public Plasma::PopupApplet
@@ -43,29 +51,23 @@ class workflow : public Plasma::PopupApplet
         ~workflow();
 	
         /**
-         * The widget that displays the calendar.
+         * The widget that displays the QML class.
          */
-        virtual QGraphicsWidget *graphicsWidget();
+   //     virtual QGraphicsWidget *graphicsWidget();
 	
-
-        // The paintInterface procedure paints the applet to the desktop
-//        void paintInterface(QPainter *painter,
-  //              const QStyleOptionGraphicsItem *option,
-    //            const QRect& contentsRect);
-	
-        virtual void init();
-
-protected:
- //   virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
-
+        virtual void init();    
+        void initExtenderItem(Plasma::ExtenderItem *item);
     private:
-	Plasma::DeclarativeWidget *declarativeWidget;
+
 	QGraphicsLinearLayout *mainLayout;
-	QGraphicsWidget *m_mainWidget;
+    QGraphicsWidget *m_mainWidget;
+
 	Plasma::Label  *lbl_text;
-	
+    Plasma::DeclarativeWidget *declarativeWidget;
+
 };
  
 // This is the command that links your applet to the .desktop file
 K_EXPORT_PLASMA_APPLET(workflow,workflow)
+
 #endif
