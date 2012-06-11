@@ -18,7 +18,7 @@ set(workflow_SRCS workflow.cpp)
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})
 target_link_libraries(plasma_applet_workflow
-                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS})
+                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTDECLARATIVE_LIBRARY} ${KDE4_KFILE_LIBS})
  
 install(TARGETS plasma_applet_workflow
         DESTINATION ${PLUGIN_INSTALL_DIR})

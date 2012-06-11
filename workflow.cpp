@@ -19,10 +19,21 @@
 
 #include "workflow.h"
 
+#include <QDeclarativeContext>
+#include <QDeclarativeEngine>
+#include <QDeclarativeComponent>
 
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
+#include <Plasma/Service>
+#include <Plasma/ServiceJob>
+
+#include <KIconDialog>
+#include <KWindowSystem>
+#include <KConfigGroup>
+
+
 
 workflow::workflow(QObject *parent, const QVariantList &args)
 : Plasma::PopupApplet(parent, args),
@@ -54,8 +65,8 @@ void workflow::init(){
       // initialize the item
       initExtenderItem(item);
       // set item name and title
-      item->setName("Activities");
-      item->setTitle("Activities");
+      item->setName("WorkFlow");
+      item->setTitle("WorkFlow");
     }
     // connect data sources
 }
@@ -87,13 +98,56 @@ void workflow::initExtenderItem(Plasma::ExtenderItem *item) {
 
    // mainLayout->addItem(lbl_text);
     mainLayout->addItem(declarativeWidget);
-
-
     m_mainWidget->setLayout(mainLayout);
+
+    //the activitymanager class will be directly accessible from qml
+    if (declarativeWidget->engine()) {
+        QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
+        if (ctxt) {
+            ctxt->setContextProperty("workflowManager", this);
+        }
+    }
 
     item->setWidget(m_mainWidget);
 }
 
+////INVOKES
+
+void workflow::setIcon(QString id, QString name) const
+{
+  Plasma::Service *service = dataEngine("org.kde.activities")->serviceForSource(id);
+  KConfigGroup op = service->operationDescription("setIcon");
+  op.writeEntry("Icon", name);
+  Plasma::ServiceJob *job = service->startOperationCall(op);
+  connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
+
+QString workflow::chooseIcon(QString id) const
+{
+    KIconDialog *dialog = new KIconDialog;
+    dialog->setup(KIconLoader::Desktop);
+    dialog->setProperty("DoNotCloseController", true);
+    KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
+    dialog->showDialog();
+    KWindowSystem::forceActiveWindow(dialog->winId());
+    QString icon = dialog->openDialog();
+    dialog->deleteLater();
+
+    if (icon != "")
+        workflow::setIcon(id,icon);
+
+    return icon;
+}
+
+void workflow::cloneCurrentActivity()
+{
+ //   PlasmaApp::self()->cloneCurrentActivity();
+}
+
+void workflow::createActivity(const QString &pluginName)
+{
+  //  PlasmaApp::self()->createActivity(pluginName);
+}
    
 #include "workflow.moc"
    

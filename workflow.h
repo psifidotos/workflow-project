@@ -49,14 +49,16 @@ class workflow : public Plasma::PopupApplet
         // Basic Create/Destroy
         workflow(QObject *parent, const QVariantList &args);
         ~workflow();
-	
-        /**
-         * The widget that displays the QML class.
-         */
-   //     virtual QGraphicsWidget *graphicsWidget();
-	
+
         virtual void init();    
         void initExtenderItem(Plasma::ExtenderItem *item);
+
+        Q_INVOKABLE void cloneCurrentActivity();
+        Q_INVOKABLE void createActivity(const QString &pluginName);
+//        Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
+//        Q_INVOKABLE void downloadActivityScripts();
+        Q_INVOKABLE QString chooseIcon(QString) const;
+
     private:
 
 	QGraphicsLinearLayout *mainLayout;
@@ -65,6 +67,7 @@ class workflow : public Plasma::PopupApplet
 	Plasma::Label  *lbl_text;
     Plasma::DeclarativeWidget *declarativeWidget;
 
+    void setIcon(QString id, QString name) const;
 };
  
 // This is the command that links your applet to the .desktop file

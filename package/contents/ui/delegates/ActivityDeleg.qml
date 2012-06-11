@@ -89,6 +89,12 @@ Component{
 
               }
 
+              onClicked: {
+               if (mainView.lockActivities === false){
+                   workflowManager.chooseIcon(ccode);
+               }
+              }
+
           }
 
         }
