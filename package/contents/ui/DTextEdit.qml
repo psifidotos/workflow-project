@@ -14,6 +14,8 @@ Item{
 
     property string acceptedText : ""
 
+    property string actCode: ""
+
     BorderImage{
         id:backImage
 
@@ -286,6 +288,7 @@ Item{
         dTextItem.acceptedText = dTextItem.text;
         dTextItem.state = "inactive";
         mainView.forceActiveFocus();
+        instanceOfActivitiesList.setName(dTextItem.actCode,dTextItem.acceptedText);
     }
 
     function textNotAccepted(){

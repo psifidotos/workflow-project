@@ -26,34 +26,26 @@
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
-#include <Plasma/Service>
-#include <Plasma/ServiceJob>
-
-#include <KIconDialog>
-#include <KWindowSystem>
-#include <KConfigGroup>
 
 
 
-workflow::workflow(QObject *parent, const QVariantList &args)
-: Plasma::PopupApplet(parent, args),
-m_mainWidget(0)
+
+WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
+    Plasma::PopupApplet(parent, args),
+    m_mainWidget(0),
+    actManager(0)
 {
     setPopupIcon("preferences-activities");
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
+    actManager = new ActivityManager(this);
+
 }
 
-workflow::~workflow()
+WorkFlow::~WorkFlow()
 {
-
 }
-/*
-QGraphicsWidget *workflow::graphicsWidget()
-{  
-  return m_workWidget;
-}*/
 
-void workflow::init(){
+void WorkFlow::init(){
 
     Plasma::ToolTipManager::self()->registerWidget(this);
     extender()->setEmptyExtenderMessage(i18n("No Activities..."));
@@ -71,10 +63,10 @@ void workflow::init(){
     // connect data sources
 }
 
-void workflow::initExtenderItem(Plasma::ExtenderItem *item) {
+void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     m_mainWidget = new QGraphicsWidget(this);
-    m_mainWidget->setPreferredSize(350, 200);
+    m_mainWidget->setPreferredSize(550, 300);
     //m_mainWidget->setMinimumSize(50,50);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
@@ -104,50 +96,17 @@ void workflow::initExtenderItem(Plasma::ExtenderItem *item) {
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
         if (ctxt) {
-            ctxt->setContextProperty("workflowManager", this);
+            ctxt->setContextProperty("activityManager", actManager);
         }
     }
 
     item->setWidget(m_mainWidget);
+    resize(550,300);
 }
 
 ////INVOKES
 
-void workflow::setIcon(QString id, QString name) const
-{
-  Plasma::Service *service = dataEngine("org.kde.activities")->serviceForSource(id);
-  KConfigGroup op = service->operationDescription("setIcon");
-  op.writeEntry("Icon", name);
-  Plasma::ServiceJob *job = service->startOperationCall(op);
-  connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
-}
 
-QString workflow::chooseIcon(QString id) const
-{
-    KIconDialog *dialog = new KIconDialog;
-    dialog->setup(KIconLoader::Desktop);
-    dialog->setProperty("DoNotCloseController", true);
-    KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
-    dialog->showDialog();
-    KWindowSystem::forceActiveWindow(dialog->winId());
-    QString icon = dialog->openDialog();
-    dialog->deleteLater();
-
-    if (icon != "")
-        workflow::setIcon(id,icon);
-
-    return icon;
-}
-
-void workflow::cloneCurrentActivity()
-{
- //   PlasmaApp::self()->cloneCurrentActivity();
-}
-
-void workflow::createActivity(const QString &pluginName)
-{
-  //  PlasmaApp::self()->createActivity(pluginName);
-}
    
 #include "workflow.moc"
    

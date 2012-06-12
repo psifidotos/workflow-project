@@ -41,21 +41,27 @@ ListView{
     }
 
     function stopActivity(cod){
-        var activityId = cod;
+        /*var activityId = cod;
         var service = activitySource.serviceForSource(activityId);
         var operation = service.operationDescription("stop");
         service.startOperationCall(operation);
 
-        allWorkareas.updateShowActivities();
+        allWorkareas.updateShowActivities();*/
+        activityManager.stop(cod);
     }
 
     function startActivity(cod){
-        var activityId = cod;
+        /*var activityId = cod;
         var service = activitySource.serviceForSource(activityId);
         var operation = service.operationDescription("start");
         service.startOperationCall(operation);
 
-        allWorkareas.updateShowActivities();
+        allWorkareas.updateShowActivities();*/
+        activityManager.start(cod);
+    }
+
+    function setName(cod,title){
+        activityManager.setName(cod,title);
     }
 
     function getCState(cod){
@@ -65,6 +71,8 @@ ListView{
     }
 
     function setCurrent(cod){
+
+        activityManager.setCurrent(cod);
 
         for(var i=0; i<model.count; ++i){
             model.setProperty(i,"Current",false);
@@ -88,9 +96,13 @@ ListView{
     }
 
     function cloneActivity(cod){
-        var p = getIndexFor(cod);
 
+        var p = getIndexFor(cod);
         var ob = model.get(p);
+
+        activityManager.clone(cod,"New Activity",ob.Icon);
+
+
         var nId = getNextId();
 
         model.insert(p+1,
@@ -106,6 +118,8 @@ ListView{
     }
 
     function removeActivity(cod){
+        activityManager.remove(cod);
+
         var n = getIndexFor(cod);
         model.remove(n);
         instanceOfWorkAreasList.removeActivity(cod);
@@ -114,6 +128,7 @@ ListView{
 
     function addNewActivity(){
         var nId = getNextId();
+        activityManager.add("---","New Activity");
 
         model.append( {  "code": nId,
                          "Current":false,

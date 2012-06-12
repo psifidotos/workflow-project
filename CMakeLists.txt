@@ -13,7 +13,7 @@ include_directories(
    )
  
 # We add our source code here
-set(workflow_SRCS workflow.cpp)
+set(workflow_SRCS workflow.cpp activitymanager.cpp)
  
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})

@@ -33,31 +33,27 @@
 #include <KGlobal>
 #include <KStandardDirs>
 
-				
+#include "activitymanager.h"
 
-class WorkflowWidget;
 
 namespace Plasma {
   class ExtenderItem;
 };
+
 				
 // Define our plasma Applet
-class workflow : public Plasma::PopupApplet
+class WorkFlow : public Plasma::PopupApplet
 {
     Q_OBJECT
     public:
         // Basic Create/Destroy
-        workflow(QObject *parent, const QVariantList &args);
-        ~workflow();
+        WorkFlow(QObject *parent, const QVariantList &args);
+        ~WorkFlow();
 
         virtual void init();    
         void initExtenderItem(Plasma::ExtenderItem *item);
 
-        Q_INVOKABLE void cloneCurrentActivity();
-        Q_INVOKABLE void createActivity(const QString &pluginName);
-//        Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
-//        Q_INVOKABLE void downloadActivityScripts();
-        Q_INVOKABLE QString chooseIcon(QString) const;
+      //  WorkFlow *getApplet();
 
     private:
 
@@ -67,10 +63,10 @@ class workflow : public Plasma::PopupApplet
 	Plasma::Label  *lbl_text;
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    void setIcon(QString id, QString name) const;
+    ActivityManager *actManager;
 };
  
 // This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(workflow,workflow)
+K_EXPORT_PLASMA_APPLET(WorkFlow,WorkFlow)
 
 #endif

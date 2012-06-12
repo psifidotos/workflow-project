@@ -15,7 +15,7 @@ Component{
 
         opacity: cState === neededState ? 1 : 0
 
-        property int defWidth:mainView.workareaWidth
+        property int defWidth:0.98*mainView.workareaWidth
 
         width: cState === neededState ? defWidth : 0
         height: cState === neededState ? width/2 : 0
@@ -26,14 +26,14 @@ Component{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 300;
+                duration: 900;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on width{
             NumberAnimation {
-                duration: 300;
+                duration: 900;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -91,7 +91,7 @@ Component{
 
               onClicked: {
                if (mainView.lockActivities === false){
-                   workflowManager.chooseIcon(ccode);
+                   activityManager.chooseIcon(ccode);
                }
               }
 
@@ -127,6 +127,7 @@ Component{
             height:20+mainView.scaleMeter
 
             enableEditing: mainView.lockActivities === true ? false:true
+            actCode: ccode
 
             Connections{
                 target:mainView
