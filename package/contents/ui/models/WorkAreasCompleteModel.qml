@@ -2,6 +2,7 @@
 import QtQuick 1.0
 
 ListModel {
+    /*
     ListElement {
         code:"a0a"
         CState:"Running"
@@ -126,5 +127,5 @@ ListModel {
 
         ]
     }
-
+*/
 }

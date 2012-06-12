@@ -94,7 +94,8 @@ Item{
             }
 
             onClicked: {
-                instanceOfActivitiesList.setCurrent(ccode);
+                //instanceOfActivitiesList.setCurrent(ccode);
+                instanceOfActivitiesList.createWorkAreasModel();
             }
 
 

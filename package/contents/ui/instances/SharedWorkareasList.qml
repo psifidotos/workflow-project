@@ -58,7 +58,7 @@ ListView{
         var counts = workMod.count;
         var lastobj = workMod.get(counts-1);
 
-        workMod.append( {  "elemTitle": "Dynamic",
+        workMod.append( {  "elemTitle": "New Workarea",
                            "elemImg":lastobj.elemImg,
                            "elemShowAdd":false,
                            "gridRow":lastobj.gridRow+1,
@@ -85,6 +85,16 @@ ListView{
 
     }
 
+    function addNewActivityF(cod, stat, cur){
+        addNewActivity(cod);
+
+        var ind = getIndexFor(cod);
+
+        model.setProperty(ind,"CState",stat);
+        model.setProperty(ind,"Current",cur);
+
+    }
+
     function addNewActivity(cod){
         var newwall;
         if (addednew % 4 === 0)
@@ -97,11 +107,11 @@ ListView{
             newwall = "../Images/backgrounds/emptydesk4.png";
 
 
-
         addednew++;
 
         model.append( {  "code": cod,
-                         "CState":"Running",
+                         "CState":"Stopped",
+                         "Current":false,
                          "elemImg":newwall,
                          "workareas":[{
                                  "gridRow":0,

@@ -50,6 +50,22 @@ ListView{
         activityManager.stop(cod);
     }
 
+
+    function createWorkAreasModel(){
+        for(var i=0; i<model.count; ++i){
+            var obj = model.get(i);
+
+            instanceOfWorkAreasList.addNewActivity(obj.DataEngineSource,obj.State,obj.Current);
+
+            for(var j=0; j<3; ++j){
+                instanceOfWorkAreasList.addWorkarea(obj.DataEngineSource);
+            }
+
+//            if (obj.DataEngineSource === cod)
+//                return i;
+        }
+    }
+
     function startActivity(cod){
         /*var activityId = cod;
         var service = activitySource.serviceForSource(activityId);
@@ -129,15 +145,14 @@ ListView{
     function addNewActivity(){
         var nId = getNextId();
         activityManager.add("---","New Activity");
-
+/*
         model.append( {  "code": nId,
                          "Current":false,
                          "Name":"New Activity",
                          "Icon":"Images/icons/plasma.png",
                          "cState":"Running"} );
 
-
-        instanceOfWorkAreasList.addNewActivity(nId);
+        instanceOfWorkAreasList.addNewActivity(nId);*/
         allWorkareas.updateShowActivities();
     }
 

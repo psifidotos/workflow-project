@@ -161,6 +161,7 @@ Item{
         pageSize: view.visibleArea.widthRatio
     }
 
+
     //return activities listview
     function getList(){
         return activitiesList;
