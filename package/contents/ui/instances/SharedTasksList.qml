@@ -1,9 +1,38 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import "../models"
+import org.kde.plasma.core 0.1 as PlasmaCore
 
 ListView{
-    model: TasksList{}
+//    model: TasksList{}
+
+    PlasmaCore.DataSource {
+        id: tasksSource
+        engine: "tasks"
+        onSourceAdded: {
+            //if (source != "Status") {
+                connectSource(source)
+           // }
+        }
+
+        Component.onCompleted: {
+            connectedSources = sources.filter(function(val) {
+                return true;
+            })
+
+            allActT.changedChildState();
+
+        }
+    }
+
+    //model: ActivitiesModel1{}
+
+    model: PlasmaCore.DataModel {
+      dataSource: tasksSource
+    //  keyRoleFilter: ".*"
+    }
+
+
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);

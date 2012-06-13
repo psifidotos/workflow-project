@@ -19,6 +19,11 @@
 
 #include "workflow.h"
 
+#include <KDebug>
+#include <KGlobalSettings>
+
+
+
 #include <QDeclarativeContext>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
@@ -26,6 +31,10 @@
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
+#include <Plasma/Corona>
+#include <Plasma/Containment>
+#include <Plasma/Wallpaper>
+
 
 
 
@@ -39,6 +48,9 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     actManager = new ActivityManager(this);
 
+    qDebug() << KGlobalSettings::self()->desktopPath();
+
+   // qDebug() << containment()->activity();
 }
 
 WorkFlow::~WorkFlow()

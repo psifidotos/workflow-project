@@ -2,6 +2,9 @@
 import QtQuick 1.1
 import ".."
 
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
 Component{
 
     Item{
@@ -9,10 +12,10 @@ Component{
 
         property bool shown: ( (((onAllActivities !== true)&&
                                  ((gridRow === desktop)&&
-                                  (actCode === activities))) ||
+                                  (actCode === activities[0]))) ||
                                 ((onAllActivities !== true)&&
                                  ((onAllDesktops === true)&&
-                                  (actCode === activities))))
+                                  (actCode === activities[0]))))
                               && (isPressed === false)
                               && (shaded === false))
 
@@ -21,7 +24,7 @@ Component{
         height: shown ? 1.1 * imageTask.height : 0
         opacity: shown ? 1 : 0
 
-        property string ccode:code
+        property string ccode: model["DataEngineSource"]
         property bool isPressed:false
 
 
@@ -48,9 +51,13 @@ Component{
             }
         }
 
-        Image{
+        QIconItem{
             id:imageTask
-            source: "../" + icon
+
+            icon:  model["icon"]
+            smooth:true
+
+
             width:1.5*taskTitleRec.height
             height:width
             y:0.1 * taskDeleg1.height

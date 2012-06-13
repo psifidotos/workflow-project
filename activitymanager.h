@@ -3,6 +3,12 @@
 
 #include <QObject>
 
+/*
+namespace KActivities
+{
+    class Consumer;
+}*/
+
 class ActivityManager : public QObject
 {
     Q_OBJECT
@@ -10,8 +16,8 @@ public:
     explicit ActivityManager(QObject *parent = 0);
     ~ActivityManager();
 
-//    Q_INVOKABLE void cloneCurrentActivity();
-//    Q_INVOKABLE void createActivity(const QString &pluginName);
+//  Q_INVOKABLE void cloneCurrentActivity();
+//  Q_INVOKABLE void createActivity(const QString &pluginName);
 //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
 //  Q_INVOKABLE void downloadActivityScripts();
 
@@ -28,6 +34,7 @@ public:
 private:
     void setIcon(QString id, QString name) const;
 
+//    KActivities::Controller *m_actController;
 };
 
 #endif // ACTIVITYMANAGER_H

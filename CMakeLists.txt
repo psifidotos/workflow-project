@@ -4,6 +4,7 @@ project(plasma-workflowplasmoid)
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
 include(KDE4Defaults)
+include_directories(${KDEBASE_WORKSPACE_SOURCE_DIR}/libs/kworkspace)
  
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 include_directories(
@@ -18,8 +19,10 @@ set(workflow_SRCS workflow.cpp activitymanager.cpp)
 # Now make sure all files get to the right place
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})
 target_link_libraries(plasma_applet_workflow
-                      ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTDECLARATIVE_LIBRARY} ${KDE4_KFILE_LIBS})
- 
+                      plasma ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
+                      ${KDE4_KFILE_LIBS} ${KACTIVITIES_LIBRARY}
+                      taskmanager kworkspace)
+
 install(TARGETS plasma_applet_workflow
         DESTINATION ${PLUGIN_INSTALL_DIR})
  

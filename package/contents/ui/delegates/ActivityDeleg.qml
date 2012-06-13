@@ -13,29 +13,12 @@ Component{
         property string ccode: model["DataEngineSource"]
         property string cState: model["State"]
 
-        opacity: cState === neededState ? 1 : 0
-
         property int defWidth:0.98*mainView.workareaWidth
 
-        width: cState === neededState ? defWidth : 0
-        height: cState === neededState ? width/2 : 0
+        state:cState === neededState ? "show" : "hide"
 
         onCStateChanged:{
             allwlists.updateShowActivities();
-        }
-
-        Behavior on opacity{
-            NumberAnimation {
-                duration: 900;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        Behavior on width{
-            NumberAnimation {
-                duration: 900;
-                easing.type: Easing.InOutQuad;
-            }
         }
 
         QIconItem{
@@ -270,6 +253,51 @@ Component{
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }
         }
+
+        states: [
+            State {
+                name: "show"
+                PropertyChanges {
+                    target: mainActivity
+
+                    opacity: 1
+                    width: defWidth
+                    height: width/2
+                }
+            },
+           State {
+               name: "hide"
+               PropertyChanges {
+                   target: mainActivity
+
+                   opacity: 0
+                   width: 0
+                  // height: 0
+               }
+            }
+        ]
+
+        transitions: [
+
+            Transition {
+                from:"hide"; to:"show"
+                reversible: true
+                ParallelAnimation{
+                        NumberAnimation {
+                            target: mainActivity;
+                            property: "opacity";
+                            duration: 700;
+                            easing.type: Easing.InOutQuad;
+                        }
+                        NumberAnimation {
+                            target: mainActivity;
+                            property: "width";
+                            duration: 700;
+                            easing.type: Easing.InOutQuad;
+                        }
+                    }
+                }
+        ]
 
 
         function getCurrentIndex(){

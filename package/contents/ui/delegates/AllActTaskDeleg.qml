@@ -2,6 +2,9 @@
 import QtQuick 1.1
 import ".."
 
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
 Component{
 
     Item{
@@ -17,8 +20,8 @@ Component{
         opacity: mustBeShown ? 1 : 0
 
         property int spacing: 20
-        property string ccode:code
-        property string cActCode:activities
+        property string ccode: model["DataEngineSource"]
+        property string cActCode: activities || 0 ? "" : activities[0]
         property int cDesktop:desktop
         property bool isPressed:false
 
@@ -45,9 +48,11 @@ Component{
             }
         }
 
-        Image{
+        QIconItem{
             id:imageTask2
-            source: "../"+icon
+            icon: model["icon"]
+            smooth:true
+
             height:width
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -92,9 +97,10 @@ Component{
 
         }
 
-        Image{
+        QIconItem{
             id:imageTask2Ref
-            source: "../"+icon
+            icon: model["icon"]
+
             width:imageTask2.width
             height:width
 

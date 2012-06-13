@@ -86,16 +86,12 @@ ListView{
     }
 
     function addNewActivityF(cod, stat, cur){
-        addNewActivity(cod);
+        addNewActivity(cod, stat);
 
-        var ind = getIndexFor(cod);
-
-        model.setProperty(ind,"CState",stat);
-        model.setProperty(ind,"Current",cur);
-
+       // setCState(cod,stat);
     }
 
-    function addNewActivity(cod){
+    function addNewActivity(cod, stat){
         var newwall;
         if (addednew % 4 === 0)
             newwall = "../Images/backgrounds/emptydesk1.png";
@@ -110,7 +106,7 @@ ListView{
         addednew++;
 
         model.append( {  "code": cod,
-                         "CState":"Stopped",
+                         "CState":stat,
                          "Current":false,
                          "elemImg":newwall,
                          "workareas":[{

@@ -20,6 +20,8 @@ ListView{
             connectedSources = sources.filter(function(val) {
                 return val !== "Status";
             })
+
+            createWorkAreasModel();
         }
     }
 
@@ -31,14 +33,14 @@ ListView{
     }
 
     property int newActivityCounter:0
-
+/*
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         model.setProperty(ind,"cState",val);
 
         instanceOfWorkAreasList.setCState(cod,val);
 
-    }
+    }*/
 
     function stopActivity(cod){
         /*var activityId = cod;
@@ -48,6 +50,7 @@ ListView{
 
         allWorkareas.updateShowActivities();*/
         activityManager.stop(cod);
+        instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
 
@@ -64,6 +67,8 @@ ListView{
 //            if (obj.DataEngineSource === cod)
 //                return i;
         }
+
+        allWorkareas.updateShowActivities();
     }
 
     function startActivity(cod){
@@ -74,29 +79,30 @@ ListView{
 
         allWorkareas.updateShowActivities();*/
         activityManager.start(cod);
+        instanceOfWorkAreasList.setCState(cod,"Running");
     }
 
     function setName(cod,title){
         activityManager.setName(cod,title);
     }
-
+/*
     function getCState(cod){
         var ind = getIndexFor(cod);
 
         return model.get(ind).CState;
-    }
+    }*/
 
     function setCurrent(cod){
 
         activityManager.setCurrent(cod);
-
+/*
         for(var i=0; i<model.count; ++i){
             model.setProperty(i,"Current",false);
         }
 
         var ind = getIndexFor(cod);
         model.setProperty(ind,"Current",true);
-
+*/
         instanceOfWorkAreasList.setCurrent(cod);
 
     }
@@ -144,7 +150,8 @@ ListView{
 
     function addNewActivity(){
         var nId = getNextId();
-        activityManager.add("---","New Activity");
+        var res = activityManager.add("---","New Activity");
+
 /*
         model.append( {  "code": nId,
                          "Current":false,

@@ -2,6 +2,8 @@
 
 #include <QDeclarativeEngine>
 
+#include <QDBusInterface>
+
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
 #include <Plasma/Applet>
@@ -11,6 +13,7 @@
 #include <KIconDialog>
 #include <KWindowSystem>
 #include <KConfigGroup>
+
 
 
 ActivityManager::ActivityManager(QObject *parent) :
@@ -99,6 +102,11 @@ void ActivityManager::remove(QString id) {
   op.writeEntry("Id", id);
   Plasma::ServiceJob *job = service->startOperationCall(op);
   connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+
+  //KActivities::Consumer *m_C = new KActivities::Consumer(this);
+  //m_C->removeActivity(id);
+//  KActivities::Controller().removeActivity(id);
+
 }
 
 
