@@ -217,7 +217,8 @@ Component{
         }
 
         function onClicked(mouse) {
-            mainWorkArea.clickedWorkarea();
+           // mainWorkArea.clickedWorkarea();
+            taskManager.activateTask(taskDeleg1.ccode);
         }
 
         function onPressAndHold(mouse,obj) {
@@ -236,7 +237,7 @@ Component{
                 instanceOfTasksList.setTaskShaded(code,true);
 
             mDragInt.enableDragging(nCor,
-                                    imageTask.source,
+                                    imageTask.icon,
                                     ccode,
                                     mainWorkArea.actCode,
                                     mainWorkArea.desktop,

@@ -15,7 +15,7 @@ Component{
 
      property string typeId : "workareaDeleg"
 
-     property string actCode: code
+     property string actCode: workList.ccode
      property int desktop: gridRow
 
      property int imagex:14
@@ -176,7 +176,9 @@ Component{
         }
 
         function clickedWorkarea(){
+
             mainView.currentDesktop = gridRow
+            /*
             instanceOfActivitiesList.setCurrent(actCode) ;
             workAreaButtons.state="hide";
 
@@ -190,7 +192,10 @@ Component{
             wkFull.setInitPosition(mapXY,w1,h1,elemImg,elemTitle);
 
             wkFull.changeState();
+*/
 
+            taskManager.setCurrentDesktop(mainWorkArea.desktop);
+            activityManager.setCurrent(actCode);
         }
 
 

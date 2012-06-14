@@ -1,6 +1,9 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
 Rectangle{
     id:mainDraggingItem
     anchors.fill: mainView
@@ -162,11 +165,12 @@ Rectangle{
         ]
     }
 
-    Image{
+    QIconItem{
         id:iconImg
         width:mainView.scaleMeter
         height:width
         opacity:0.8
+        smooth:true
     }
 
 
@@ -175,7 +179,7 @@ Rectangle{
         mainDraggingItem.z = 100;
         allWorkareas.flickableV = false;
 
-        iconImg.source = src;
+        iconImg.icon = src;
         mainDraggingItem.intTaskId = taskI;
         mainDraggingItem.intActId = actI;
         mainDraggingItem.intDesktop = deskI;

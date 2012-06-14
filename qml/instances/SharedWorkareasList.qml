@@ -110,7 +110,7 @@ ListView{
                          "Current":false,
                          "elemImg":newwall,
                          "workareas":[{
-                                 "gridRow":0,
+                                 "gridRow":1,
                                  "gridColumn":0,
                                  "elemTitle":"New Workarea",
                                  "elemShowAdd":false,

@@ -46,7 +46,9 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 {
     setPopupIcon("preferences-activities");
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
+
     actManager = new ActivityManager(this);
+    taskManager = new PTaskManager(this);
 
     qDebug() << KGlobalSettings::self()->desktopPath();
 
@@ -55,6 +57,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
 WorkFlow::~WorkFlow()
 {
+    delete actManager;
+    delete taskManager;
 }
 
 void WorkFlow::init(){
@@ -109,6 +113,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
         if (ctxt) {
             ctxt->setContextProperty("activityManager", actManager);
+            ctxt->setContextProperty("taskManager", taskManager);
         }
     }
 

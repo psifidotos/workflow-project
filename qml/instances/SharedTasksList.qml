@@ -9,6 +9,7 @@ ListView{
     PlasmaCore.DataSource {
         id: tasksSource
         engine: "tasks"
+        interval: 3000;
         onSourceAdded: {
             //if (source != "Status") {
                 connectSource(source)
@@ -36,18 +37,23 @@ ListView{
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
+        var obj = model.get(ind);
 
         if (val === "oneDesktop"){
-            model.setProperty(ind,"onAllDesktops",false);
-            model.setProperty(ind,"onAllActivities",false);
+            taskManager.setOnAllDesktops(obj.DataEngineSource,false);
+
+            //model.setProperty(ind,"onAllDesktops",false);
+           // model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allDesktops"){
-            model.setProperty(ind,"onAllDesktops",true);
-            model.setProperty(ind,"onAllActivities",false);
+            taskManager.setOnAllDesktops(obj.DataEngineSource,true);
+            //model.setProperty(ind,"onAllDesktops",true);
+            //model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allActivities"){
-            model.setProperty(ind,"onAllDesktops",true);
-            model.setProperty(ind,"onAllActivities",true);
+            taskManager.setOnAllDesktops(obj.DataEngineSource,true);
+            //model.setProperty(ind,"onAllDesktops",true);
+            //model.setProperty(ind,"onAllActivities",true);
         }
 
         allActT.changedChildState();
@@ -55,17 +61,19 @@ ListView{
 
     function setTaskActivity(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"activities",val);
+       // model.setProperty(ind,"activities",val);
     }
 
     function setTaskDesktop(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"desktop",val);
+   //     model.setProperty(ind,"desktop",val);
+        var obj = model.get(ind);
+        taskManager.setOnDesktop(obj.DataEngineSource,val);
     }
 
     function setTaskShaded(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"shaded",val);
+     //   model.setProperty(ind,"shaded",val);
     }
 
 
@@ -74,7 +82,7 @@ ListView{
 
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
-            if (obj.code === cod)
+            if (obj.DataEngineSource === cod)
                return i;
         }
 
@@ -84,8 +92,10 @@ ListView{
 
 
     function removeTask(cod){
-        var n = getIndexFor(cod);
-        model.remove(n);
+        var ind = getIndexFor(cod);
+   //     model.setProperty(ind,"desktop",val);
+        var obj = model.get(ind);
+        taskManager.closeTask(obj.DataEngineSource);
     }
 
 }

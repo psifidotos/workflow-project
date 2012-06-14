@@ -10,6 +10,7 @@ ListView{
     PlasmaCore.DataSource {
         id: activitySource
         engine: "org.kde.activities"
+        interval: 3000;
         onSourceAdded: {
             if (source != "Status") {
                 connectSource(source)
@@ -85,12 +86,12 @@ ListView{
     function setName(cod,title){
         activityManager.setName(cod,title);
     }
-/*
+
     function getCState(cod){
         var ind = getIndexFor(cod);
 
-        return model.get(ind).CState;
-    }*/
+        return model.get(ind).State;
+    }
 
     function setCurrent(cod){
 

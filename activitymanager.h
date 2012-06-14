@@ -3,11 +3,7 @@
 
 #include <QObject>
 
-/*
-namespace KActivities
-{
-    class Consumer;
-}*/
+
 
 class ActivityManager : public QObject
 {
@@ -34,7 +30,6 @@ public:
 private:
     void setIcon(QString id, QString name) const;
 
-//    KActivities::Controller *m_actController;
 };
 
 #endif // ACTIVITYMANAGER_H

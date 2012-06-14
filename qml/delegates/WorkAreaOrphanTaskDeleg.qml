@@ -10,7 +10,7 @@ Component{
 
         property bool shown: ( (onAllActivities !== true)&&
                               ((desktop > workalist.model.count - 1)&&
-                               (workList.ccode === activities)) &&
+                               (workList.ccode === activities[0])) &&
                               (onAllDesktops !== true) )
 
 

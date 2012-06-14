@@ -34,6 +34,7 @@
 #include <KStandardDirs>
 
 #include "activitymanager.h"
+#include "ptaskmanager.h"
 
 
 namespace Plasma {
@@ -64,6 +65,7 @@ class WorkFlow : public Plasma::PopupApplet
     Plasma::DeclarativeWidget *declarativeWidget;
 
     ActivityManager *actManager;
+    PTaskManager *taskManager;
 };
  
 // This is the command that links your applet to the .desktop file

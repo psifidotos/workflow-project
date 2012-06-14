@@ -1,13 +1,17 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
 
-Image{
+
+QIconItem{
     id:taskAnimation
     opacity:1
 
     width:5+mainView.scaleMeter
     height:width
     rotation:10
+    smooth:true
 
     z:40
 
@@ -29,7 +33,7 @@ Image{
             taskAnimation.y = coord1.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.source = elem.icon;
+            taskAnimation.icon = elem.icon;
 
             taskAnimation.toX = coord2.x;
             taskAnimation.toY = coord2.y;
@@ -51,9 +55,9 @@ Image{
             taskAnimation.y = coord.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.source = elem.icon;
+            taskAnimation.icon = elem.icon;
 
-            var activityCode = elem.activities;
+            var activityCode = elem.activities[0];
             var desktopPos = elem.desktop + 1;//desktops count from 0?
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
@@ -97,7 +101,7 @@ Image{
             taskAnimation.y = coord.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.source = elem.icon
+            taskAnimation.icon = elem.icon
 
             var newPosElem=lst; // if no child found
 

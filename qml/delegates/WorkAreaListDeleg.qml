@@ -68,9 +68,12 @@ Component{
 
             property string typeId : "addWorkArea"
 
-            anchors.top: workalist.bottom
-            anchors.topMargin: mainView.workareaHeight/5
-            anchors.horizontalCenter: workalist.horizontalCenter
+          //  anchors.top: workalist.bottom
+          //  anchors.topMargin: mainView.workareaHeight/5
+            //anchors.horizontalCenter: workList.horizontalCenter
+            y: workalist.height+mainView.workareaHeight/5
+          //  x: 1.2*(workList.width/2 - width/2)
+            x:0.35 * mainView.scaleMeter
 
             opacity: workList.tCState === workList.neededState ? 1 : 0
 

@@ -63,7 +63,7 @@ Item {
 
             onClicked: {
                 closeBtn.onClicked();
-                instanceOfTasksList.removeTask(code);
+                instanceOfTasksList.removeTask(taskDeleg2.ccode);
                 allActT.changedChildState();
             }
 
@@ -84,11 +84,11 @@ Item {
 
         function informState(){
             if (placeStateBtn.state == "one")
-                instanceOfTasksList.setTaskState(code,"oneDesktop");
+                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"oneDesktop");
             else if (placeStateBtn.state == "allDesktops")
-                instanceOfTasksList.setTaskState(code,"allDesktops");
+                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allDesktops");
             else if (placeStateBtn.state == "everywhere")
-                instanceOfTasksList.setTaskState(code,"allActivities");
+                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allActivities");
         }
 
         MouseArea {
