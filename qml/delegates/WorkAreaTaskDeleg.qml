@@ -218,7 +218,8 @@ Component{
 
         function onClicked(mouse) {
            // mainWorkArea.clickedWorkarea();
-            taskManager.activateTask(taskDeleg1.ccode);
+            instanceOfTasksList.setCurrentTask(taskDeleg1.ccode);
+
         }
 
         function onPressAndHold(mouse,obj) {

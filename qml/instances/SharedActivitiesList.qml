@@ -10,7 +10,8 @@ ListView{
     PlasmaCore.DataSource {
         id: activitySource
         engine: "org.kde.activities"
-        interval: 3000;
+        interval: 1000
+
         onSourceAdded: {
             if (source != "Status") {
                 connectSource(source)
@@ -34,6 +35,23 @@ ListView{
     }
 
     property int newActivityCounter:0
+
+    WorkerScript{
+        id:actWorker
+        source: "ActivitiesWorker.js"
+
+        onMessage:{
+            if (messageObject.ntype === 'stopActivity')
+                activityManager.stop(messageObject.ncode);
+            else if (messageObject.ntype === 'startActivity')
+                activityManager.start(messageObject.ncode);
+            else if (messageObject.ntype === 'setCurrentActivity')
+                activityManager.setCurrent(messageObject.ncode);
+        }
+
+    }
+
+
 /*
     function setCState(cod, val){
         var ind = getIndexFor(cod);
@@ -44,13 +62,11 @@ ListView{
     }*/
 
     function stopActivity(cod){
-        /*var activityId = cod;
-        var service = activitySource.serviceForSource(activityId);
-        var operation = service.operationDescription("stop");
-        service.startOperationCall(operation);
 
-        allWorkareas.updateShowActivities();*/
-        activityManager.stop(cod);
+//        stopActivityWorker.code = cod;
+ //       stopActivityWorker.sendMessage(cod);
+        actWorker.sendMessage({type:"stopActivity", code:cod});
+
         instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
@@ -79,7 +95,10 @@ ListView{
         service.startOperationCall(operation);
 
         allWorkareas.updateShowActivities();*/
-        activityManager.start(cod);
+        //startActivityWorker.code = cod;
+        //startActivityWorker.sendMessage(cod);
+        actWorker.sendMessage({type:"startActivity", code:cod});
+
         instanceOfWorkAreasList.setCState(cod,"Running");
     }
 
@@ -95,15 +114,10 @@ ListView{
 
     function setCurrent(cod){
 
-        activityManager.setCurrent(cod);
-/*
-        for(var i=0; i<model.count; ++i){
-            model.setProperty(i,"Current",false);
-        }
+        //setCurrentActivityWorker.code = cod;
+        //setCurrentActivityWorker.sendMessage(cod);
 
-        var ind = getIndexFor(cod);
-        model.setProperty(ind,"Current",true);
-*/
+        actWorker.sendMessage({type:"setCurrentActivity", code:cod});
         instanceOfWorkAreasList.setCurrent(cod);
 
     }

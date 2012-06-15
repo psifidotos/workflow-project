@@ -9,7 +9,7 @@ Component{
         id: taskDelegOr1
 
         property bool shown: ( (onAllActivities !== true)&&
-                              ((desktop > workalist.model.count - 1)&&
+                              ((desktop > workalist.model.count)&&
                                (workList.ccode === activities[0])) &&
                               (onAllDesktops !== true) )
 

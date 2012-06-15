@@ -50,6 +50,21 @@ ListView{
         model.remove(ind);
     }
 
+    function removeWorkArea(actCode,desktop)
+    {
+        var ind = getIndexFor(actCode);
+        var actOb = model.get(ind);
+        var workMod = actOb.workareas;
+
+        for (var i=desktop+1; i<workMod.count; i++)
+        {
+            workMod.setProperty(i ,"gridRow",i-1);
+        }
+
+        workMod.remove(desktop-1);
+
+    }
+
     function addWorkarea(actCode){
         var ind = getIndexFor(actCode);
         var actOb = model.get(ind);

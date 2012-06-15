@@ -9,7 +9,8 @@ ListView{
     PlasmaCore.DataSource {
         id: tasksSource
         engine: "tasks"
-        interval: 3000;
+        interval: 1000
+
         onSourceAdded: {
             //if (source != "Status") {
                 connectSource(source)
@@ -33,7 +34,17 @@ ListView{
     //  keyRoleFilter: ".*"
     }
 
+    WorkerScript{
+        id:setCurrentDesktopWorker
+        property string desktop
+        onMessage: taskManager.setCurrentDesktop(desktop);
+    }
 
+    WorkerScript{
+        id:setCurrentTaskWorker
+        property string code
+        onMessage: taskManager.activateTask(code);
+    }
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
@@ -63,6 +74,7 @@ ListView{
         var ind = getIndexFor(cod);
        // model.setProperty(ind,"activities",val);
     }
+
 
     function setTaskDesktop(cod, val){
         var ind = getIndexFor(cod);
@@ -96,6 +108,14 @@ ListView{
    //     model.setProperty(ind,"desktop",val);
         var obj = model.get(ind);
         taskManager.closeTask(obj.DataEngineSource);
+    }
+
+    function setCurrentDesktop(desk){
+        taskManager.setCurrentDesktop(desk);
+    }
+
+    function setCurrentTask(cod){
+        taskManager.activateTask(cod);
     }
 
 }
