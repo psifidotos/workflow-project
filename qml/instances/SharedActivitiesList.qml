@@ -7,117 +7,86 @@ import "../models"
 
 ListView{
 
-    PlasmaCore.DataSource {
-        id: activitySource
-        engine: "org.kde.activities"
-        interval: 1000
-
-        onSourceAdded: {
-            if (source != "Status") {
-                connectSource(source)
-            }
-        }
-
-        Component.onCompleted: {
-            connectedSources = sources.filter(function(val) {
-                return val !== "Status";
-            })
-
-            createWorkAreasModel();
-        }
-    }
-
-    //model: ActivitiesModel1{}
-
-    model: PlasmaCore.DataModel {
-      dataSource: activitySource
-  //	keyRoleFilter: ".*"
-    }
+    model: ActivitiesModel1{}
 
     property int newActivityCounter:0
 
-    WorkerScript{
-        id:actWorker
-        source: "ActivitiesWorker.js"
-
-        onMessage:{
-            if (messageObject.ntype === 'stopActivity')
-                activityManager.stop(messageObject.ncode);
-            else if (messageObject.ntype === 'startActivity')
-                activityManager.start(messageObject.ncode);
-            else if (messageObject.ntype === 'setCurrentActivity')
-                activityManager.setCurrent(messageObject.ncode);
+    function printModel(){
+        console.debug("---- Activities Model -----");
+        for(var i=0; i<model.count; ++i){
+            var obj = model.get(i);
+            console.debug(obj.code + " - " + obj.Name + " - " +obj.Icon + " - " +obj.Current + " - " +obj.CState);
         }
-
+        console.debug("----  -----");
     }
 
-
-/*
     function setCState(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"cState",val);
+        model.setProperty(ind,"CState",val);
 
         instanceOfWorkAreasList.setCState(cod,val);
 
-    }*/
+
+        allWorkareas.updateShowActivities();
+        stoppedPanel.changedChildState();
+
+    }
+
+    function activityAddedIn(source,title,icon,stat,cur)
+    {
+        if (stat === "")
+            stat = "Running";
+
+        model.append( {  "code": source,
+                         "Current":cur,
+                         "Name":title,
+                         "Icon":icon,
+                         "CState":stat} );
+
+        instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
+
+        for(var j=0; j<3; ++j){
+            instanceOfWorkAreasList.addWorkarea(source);
+        }
+
+        setCState(source,stat);
+
+    }
 
     function stopActivity(cod){
 
-//        stopActivityWorker.code = cod;
- //       stopActivityWorker.sendMessage(cod);
-        actWorker.sendMessage({type:"stopActivity", code:cod});
+        activityManager.stop(cod);
 
+        setCState(cod,"Stopped");
         instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
 
-    function createWorkAreasModel(){
-        for(var i=0; i<model.count; ++i){
-            var obj = model.get(i);
-
-            instanceOfWorkAreasList.addNewActivity(obj.DataEngineSource,obj.State,obj.Current);
-
-            for(var j=0; j<3; ++j){
-                instanceOfWorkAreasList.addWorkarea(obj.DataEngineSource);
-            }
-
-//            if (obj.DataEngineSource === cod)
-//                return i;
-        }
-
-        allWorkareas.updateShowActivities();
-    }
-
     function startActivity(cod){
-        /*var activityId = cod;
-        var service = activitySource.serviceForSource(activityId);
-        var operation = service.operationDescription("start");
-        service.startOperationCall(operation);
 
-        allWorkareas.updateShowActivities();*/
-        //startActivityWorker.code = cod;
-        //startActivityWorker.sendMessage(cod);
-        actWorker.sendMessage({type:"startActivity", code:cod});
+        activityManager.start(cod);
 
+        setCState(cod,"Running");
         instanceOfWorkAreasList.setCState(cod,"Running");
     }
 
     function setName(cod,title){
         activityManager.setName(cod,title);
+
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"Name",title);
     }
 
     function getCState(cod){
         var ind = getIndexFor(cod);
 
-        return model.get(ind).State;
+        return model.get(ind).CState;
     }
 
     function setCurrent(cod){
 
-        //setCurrentActivityWorker.code = cod;
-        //setCurrentActivityWorker.sendMessage(cod);
+        activityManager.setCurrent(cod);
 
-        actWorker.sendMessage({type:"setCurrentActivity", code:cod});
         instanceOfWorkAreasList.setCurrent(cod);
 
     }
@@ -125,7 +94,7 @@ ListView{
     function getIndexFor(cod){
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
-            if (obj.DataEngineSource === cod)
+            if (obj.code === cod)
                 return i;
         }
 
@@ -159,6 +128,7 @@ ListView{
 
         var n = getIndexFor(cod);
         model.remove(n);
+
         instanceOfWorkAreasList.removeActivity(cod);
         allWorkareas.updateShowActivities();
     }
@@ -166,22 +136,11 @@ ListView{
     function addNewActivity(){
         var nId = getNextId();
         var res = activityManager.add("---","New Activity");
-
-/*
-        model.append( {  "code": nId,
-                         "Current":false,
-                         "Name":"New Activity",
-                         "Icon":"Images/icons/plasma.png",
-                         "cState":"Running"} );
-
-        instanceOfWorkAreasList.addNewActivity(nId);*/
-        allWorkareas.updateShowActivities();
     }
 
     function getNextId(){
         newActivityCounter++;
         return "dY"+newActivityCounter;
-
     }
 
 }

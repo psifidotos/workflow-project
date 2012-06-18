@@ -101,7 +101,7 @@ Rectangle {
         {
             var elem = stoppedActivitiesList.model.get(i);
 
-            if (elem.State === "Stopped")
+            if (elem.CState === "Stopped")
                counter++;
         }
       stoppedActivitiesList.shownActivities = counter;

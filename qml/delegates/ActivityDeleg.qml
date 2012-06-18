@@ -10,28 +10,44 @@ Component{
     Item{
         id:mainActivity
         property string neededState:"Running"
-        property string ccode: model["DataEngineSource"]
-        property string cState: model["State"]
+        property string ccode:code
+        property string tCState: CState
 
-        property int defWidth:0.98*mainView.workareaWidth
+        opacity: CState === neededState ? 1 : 0.2
 
-        state:cState === neededState ? "show" : "hide"
+        property int defWidth: CState === neededState ? mainView.workareaWidth : 0
 
-        onCStateChanged:{
-            allwlists.updateShowActivities();
+        width: defWidth
+        height: mainView.workareaWidth / 2
+
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on width{
+            NumberAnimation {
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
         }
 
         QIconItem{
           id:activityIcon
           rotation:-20
-          opacity:1
+          opacity: CState===neededState ? 1:0
+
           //source: "../" + Icon
-          icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
-          smooth:true
+          icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
           x:mainView.scaleMeter/10
           y:mainView.scaleMeter/3
-          width:5+mainView.scaleMeter
+       //   width: mainActivity.tCState === neededState ? 5+mainView.scaleMeter : 0
+          width: 5+mainView.scaleMeter
           height:width
+          smooth:true
 
           //for the animation to be precise
           property int toRX:x - width/2
@@ -72,12 +88,6 @@ Component{
 
               }
 
-              onClicked: {
-               if (mainView.lockActivities === false){
-                   activityManager.chooseIcon(ccode);
-               }
-              }
-
           }
 
         }
@@ -85,7 +95,7 @@ Component{
         Image{
             id:fadeIcon
             rotation:0
-            opacity:1
+            opacity: CState===neededState ? 1:0
             source: "../Images/buttons/activityIconFade.png"
             x:0
             y:0
@@ -109,8 +119,11 @@ Component{
             width:40+2.7*mainView.scaleMeter
             height:20+mainView.scaleMeter
 
+            opacity: CState===neededState ? 1:0
+
             enableEditing: mainView.lockActivities === true ? false:true
-            actCode: ccode
+
+            actCode: mainActivity.ccode
 
             Connections{
                 target:mainView
@@ -163,7 +176,8 @@ Component{
 
             width:parent.width-(mainView.scaleMeter-10)
             x:mainView.scaleMeter-10
-            height:mainView.scaleMeter - 15           
+            height:mainView.scaleMeter - 15
+            opacity: CState===neededState ? 1:0
         }
 
         Image{
@@ -254,56 +268,11 @@ Component{
             PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }
         }
 
-        states: [
-            State {
-                name: "show"
-                PropertyChanges {
-                    target: mainActivity
-
-                    opacity: 1
-                    width: defWidth
-                    height: width/2
-                }
-            },
-           State {
-               name: "hide"
-               PropertyChanges {
-                   target: mainActivity
-
-                   opacity: 0
-                   width: 0
-                  // height: 0
-               }
-            }
-        ]
-
-        transitions: [
-
-            Transition {
-                from:"hide"; to:"show"
-                reversible: true
-                ParallelAnimation{
-                        NumberAnimation {
-                            target: mainActivity;
-                            property: "opacity";
-                            duration: 700;
-                            easing.type: Easing.InOutQuad;
-                        }
-                        NumberAnimation {
-                            target: mainActivity;
-                            property: "width";
-                            duration: 700;
-                            easing.type: Easing.InOutQuad;
-                        }
-                    }
-                }
-        ]
-
 
         function getCurrentIndex(){
             for(var i=0; ListView.view.model.count; ++i){
                 var obj = ListView.view.model.get(i);
-                if (obj.model["DataEngineSource"] === ccode)
+                if (obj.code === code)
                     return i;
             }
             return -1;
@@ -313,3 +282,4 @@ Component{
 
 
 }
+

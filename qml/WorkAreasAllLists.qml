@@ -18,6 +18,8 @@ Item{
 
     property string typeId : "workareasMainView"
 
+
+
     Flickable{
         id: view
 
@@ -45,7 +47,7 @@ Item{
             id:allareas
 
             y:1.33 * mainView.workareaY
-            width: activitiesList.shownActivities * (1.2 * mainView.workareaWidth)
+            width: activitiesList.shownActivities *  mainView.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
             orientation: ListView.Horizontal
             //   spacing:60+3.5*mainView.scaleMeter
@@ -55,6 +57,7 @@ Item{
 
             property int maxWorkAreasHeight: 0
             property int scrollingMargin: 30
+
 
             //model:WorkAreasCompleteModel{}
             model:instanceOfWorkAreasList.model
@@ -97,6 +100,7 @@ Item{
             id: actImag1
             y:oxygenT.height
             width: mainView.width<allareas.width ? allareas.width : mainView.width
+
             height: 0.9*workareaY
             color: "#646464"
             border.color: allwlists.actImagBordColor
@@ -106,22 +110,26 @@ Item{
                 id: activitiesList
 
                 orientation: ListView.Horizontal
-                height: workareaY
+                height: 1.2*workareaY
+               // width:mainView.width
                 width: mainView.width<allareas.width ? allareas.width : mainView.width
+               // width:1.2*allareas.width
+
                 // anchors.top: parent.top
                 //  anchors.left: parent.left
                 y: workareaY / 12
-                //   x: 10
                 spacing: workareaY / 10
                 interactive:false
 
                 model: instanceOfActivitiesList.model
                 delegate: ActivityDeleg{
-
                 }
 
-                property int shownActivities:model.count;
+                property int shownActivities;
 
+                Component.onCompleted: {
+                    allwlists.updateShowActivities();
+                }
             }
 
         }
@@ -162,6 +170,7 @@ Item{
     }
 
 
+
     //return activities listview
     function getList(){
         return activitiesList;
@@ -174,10 +183,13 @@ Item{
         {
             var elem = activitiesList.model.get(i);
 
-            if (elem.State === "Running")
+            if (elem.CState === "Running")
                 counter++;
         }
-        activitiesList.shownActivities = counter;
+
+        activitiesList.shownActivities = counter+1;
+     //   console.debug(counter);
+        //activitiesList.shownActivities = 8;
     }
 
     function getActivityColumn(cd){

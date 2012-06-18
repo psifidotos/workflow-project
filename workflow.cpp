@@ -95,7 +95,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     QString path =  sd->findResource("data","plasma-workflowplasmoid/qml/Activities2.qml");
 
     declarativeWidget = new Plasma::DeclarativeWidget(this);
-    declarativeWidget->setInitializationDelayed(true);
+  //  declarativeWidget->setInitializationDelayed(true);
     declarativeWidget->setQmlPath(path);
    // declarativeWidget->engine();
 
@@ -114,11 +114,23 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
         if (ctxt) {
             ctxt->setContextProperty("activityManager", actManager);
             ctxt->setContextProperty("taskManager", taskManager);
+
+            QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
+            QObject* qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
+
+
+            if(!rootObject)
+                qDebug() << "root was not found...";
+
+            if(qmlActEng)
+                actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
+
+
         }
     }
 
     item->setWidget(m_mainWidget);
-    resize(550,300);
+    resize(1000,700);
 }
 
 ////INVOKES

@@ -44,6 +44,7 @@ Rectangle {
 
     SharedActivitiesList{
         id:instanceOfActivitiesList
+        objectName: "instActivitiesEngine"
     }
 
     SharedWorkareasList{

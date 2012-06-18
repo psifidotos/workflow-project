@@ -4,8 +4,8 @@ import "../models"
 import org.kde.plasma.core 0.1 as PlasmaCore
 
 ListView{
-//    model: TasksList{}
-
+    model: TasksList{}
+/*
     PlasmaCore.DataSource {
         id: tasksSource
         engine: "tasks"
@@ -25,14 +25,14 @@ ListView{
             allActT.changedChildState();
 
         }
-    }
+    }*/
 
-    //model: ActivitiesModel1{}
 
+/*
     model: PlasmaCore.DataModel {
       dataSource: tasksSource
     //  keyRoleFilter: ".*"
-    }
+    }*/
 
     WorkerScript{
         id:setCurrentDesktopWorker
@@ -94,7 +94,7 @@ ListView{
 
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
-            if (obj.DataEngineSource === cod)
+            if (obj.code === cod)
                return i;
         }
 

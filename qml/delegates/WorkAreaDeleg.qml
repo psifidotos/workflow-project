@@ -195,7 +195,6 @@ Component{
 */
 
             instanceOfActivitiesList.setCurrent(actCode);
-        //    console.debug("ok");
             instanceOfTasksList.setCurrentDesktop(mainWorkArea.desktop);
         }
 

@@ -1,7 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-ListModel {
+ListModel {/*
     ListElement {
         code:"123"
         onAllDesktops:false
@@ -78,5 +78,5 @@ ListModel {
         shaded:false
         desktop:1
         activities:"c0c"
-    }
+    }*/
 }

@@ -12,7 +12,6 @@ ListView{
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         model.setProperty(ind,"CState",val);
-
     }
 
     function setCurrent(cod){
@@ -56,9 +55,9 @@ ListView{
         var actOb = model.get(ind);
         var workMod = actOb.workareas;
 
-        for (var i=desktop+1; i<workMod.count; i++)
+        for (var i=desktop-1; i<workMod.count; i++)
         {
-            workMod.setProperty(i ,"gridRow",i-1);
+            workMod.setProperty(i ,"gridRow",i);
         }
 
         workMod.remove(desktop-1);
@@ -103,10 +102,11 @@ ListView{
     function addNewActivityF(cod, stat, cur){
         addNewActivity(cod, stat);
 
-       // setCState(cod,stat);
+        setCState(cod,stat);
     }
 
     function addNewActivity(cod, stat){
+
         var newwall;
         if (addednew % 4 === 0)
             newwall = "../Images/backgrounds/emptydesk1.png";

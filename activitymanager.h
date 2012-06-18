@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include <Plasma/DataEngine>
 
 
 class ActivityManager : public QObject
@@ -26,9 +27,22 @@ public:
     Q_INVOKABLE void setName(QString id, QString name);
     Q_INVOKABLE void remove(QString id);
 
+    void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
+
+signals:
+    void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
+
+
+public slots:
+  void dataUpdated(QString source, Plasma::DataEngine::Data data);
+  void activityAdded(QString id);
+  void activityRemoved(QString id);
 
 private:
     void setIcon(QString id, QString name) const;
+
+    QObject *qmlActEngine;
+    Plasma::DataEngine *plasmaActEngine;
 
 };
 

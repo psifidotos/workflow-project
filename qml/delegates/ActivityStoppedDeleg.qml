@@ -12,40 +12,36 @@ Component{
         id: stpActivity
 
         property string neededState: "Stopped"
-        property string ccode: model["DataEngineSource"]
-        property string cState: model["State"]
+        property string ccode: code
+        property string cState: CState
 
 
-        opacity: cState === neededState ? 1 : 0
+        opacity: CState === neededState ? 1 : 0
 
         width: stoppedActivitiesList.width
-        height: cState === neededState ? basicHeight : 0
+        height: CState === neededState ? basicHeight : 0
 
         property real basicHeight:0.66*mainView.workareaHeight
+        property real defOpacity :0.5
 
-        property string curState: cState
-
-        onCurStateChanged:{
-            stoppedPanel.changedChildState();
+        onCStateChanged:{
+            //stoppedPanel.changedChildState();
         }
 
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 100;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-       Behavior on width{
+        Behavior on width{
             NumberAnimation {
-                duration: 100;
+                duration: 400;
                 easing.type: Easing.InOutQuad;
             }
         }
-
-
-        property real defOpacity :0.5
 
 
         QIconItem{
@@ -54,8 +50,8 @@ Component{
             opacity:parent.defOpacity
             //source: "../" + Icon
             icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
-          //  x:25
-          //  anchors.right: stpActivity.right
+            //  x:25
+            //  anchors.right: stpActivity.right
             x:stpActivity.width/2
             width:5+mainView.scaleMeter
             height:width

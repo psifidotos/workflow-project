@@ -23,6 +23,7 @@ Component{
 
         state: tCState === neededState ? "show" : "hide"
 
+
         onHeightChanged: allareas.changedChildHeight();
 
         property int bWidth: 1.4 * mainView.workareaHeight
@@ -37,7 +38,7 @@ Component{
             id:workalist
 
             height:workList.bHeight
-            width: workList.CState === "Running" ? workList.bWidth : 0
+            width: workList.tCState === workList.neededState ? workList.bWidth : 0
             property string typeId : "workalistForActivity"
 
             x:10
@@ -147,7 +148,7 @@ Component{
         ListView {
             id:orphansList
 
-            width: tCState === "Running" ? workList.bWidth : 0
+            width: workList.tCState === workList.neededState ? workList.bWidth : 0
 
             anchors.topMargin: windsHeight/3
             //y: taskOrFTitleL.height+taskOrFTitle.height

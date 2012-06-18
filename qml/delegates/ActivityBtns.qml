@@ -95,6 +95,7 @@ Item{
 
             onClicked: {
                 //instanceOfActivitiesList.setCurrent(ccode);
+                //instanceOfActivitiesList.cloneActivity(ccode);
             }
 
 
@@ -239,7 +240,7 @@ Item{
 
         //instanceOfActivitiesList.setCState(code,"Stopped");
 
-        stoppedPanel.changedChildState();
+ //       stoppedPanel.changedChildState();
 
         //activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
 

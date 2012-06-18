@@ -1,5 +1,4 @@
 install(FILES 
-          ActivitiesWorker.js
 	  SharedActivitiesList.qml
 	  SharedTasksList.qml
 	  SharedWorkareasList.qml

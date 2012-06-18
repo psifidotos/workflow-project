@@ -2,7 +2,7 @@
 import QtQuick 1.1
 
 ListModel {
-
+/*
     ListElement {
         code:"a0a"
         Current:false
@@ -34,5 +34,5 @@ ListModel {
         Icon:"Images/icons/activity4.png"
         CState:"Running"
     }
-
+*/
 }
