@@ -96,6 +96,7 @@ Item{
             onClicked: {
                 //instanceOfActivitiesList.setCurrent(ccode);
                 //instanceOfActivitiesList.cloneActivity(ccode);
+                instanceOfActivitiesList.updateWallpaper(ccode);
             }
 
 

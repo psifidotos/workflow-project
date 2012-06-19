@@ -99,6 +99,11 @@ ListView{
 
     }
 
+    function setWallpaper(cod,path){
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"elemImg",path);
+    }
+
     function addNewActivityF(cod, stat, cur){
         addNewActivity(cod, stat);
 

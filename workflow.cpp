@@ -35,7 +35,7 @@
 #include <Plasma/Containment>
 #include <Plasma/Wallpaper>
 
-
+#include <QDir>
 
 
 
@@ -50,7 +50,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
 
-    qDebug() << KGlobalSettings::self()->desktopPath();
+
+    //qDebug() << fpath << "-" << KGlobalSettings::self()->desktopPath();
 
    // qDebug() << containment()->activity();
 }

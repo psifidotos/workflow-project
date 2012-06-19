@@ -18,6 +18,7 @@ public:
 //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
 //  Q_INVOKABLE void downloadActivityScripts();
 
+    Q_INVOKABLE QString getWallpaper(QString source) const;
     Q_INVOKABLE QString chooseIcon(QString) const;
     Q_INVOKABLE void add(QString id, QString name);
     Q_INVOKABLE void clone(QString id, QString name, QString icon);
@@ -40,6 +41,7 @@ public slots:
 
 private:
     void setIcon(QString id, QString name) const;
+
 
     QObject *qmlActEngine;
     Plasma::DataEngine *plasmaActEngine;

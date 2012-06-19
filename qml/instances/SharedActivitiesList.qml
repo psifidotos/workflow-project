@@ -51,6 +51,10 @@ ListView{
 
         setCState(source,stat);
 
+       // updateWallpaper(source,1000);
+       // var pt = activityManager.getWallpaper(source);
+  //      instanceOfWorkAreasList.setWallpaper(source,pt);
+        updateWallpaper(source);
     }
 
     function stopActivity(cod){
@@ -61,6 +65,26 @@ ListView{
         instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
+    Timer {
+        id:wallPapTimer
+        property string cd
+        interval: 750; running: false; repeat: false
+        onTriggered: {
+            updateWallpaper(cd);
+        }
+    }
+
+    function updateWallpaper(cod){
+        var pt = activityManager.getWallpaper(cod);
+        if (pt !== "")
+            instanceOfWorkAreasList.setWallpaper(cod,pt);
+    }
+
+    function updateWallpaperInt(cod,inter){
+        wallPapTimer.cd = cod;
+        wallPapTimer.interval = inter;
+        wallPapTimer.start();
+    }
 
     function startActivity(cod){
 
@@ -68,6 +92,11 @@ ListView{
 
         setCState(cod,"Running");
         instanceOfWorkAreasList.setCState(cod,"Running");
+
+        updateWallpaperInt(cod,1000);
+
+//        var pt = activityManager.getWallpaper(cod);
+ //       instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
 
     function setName(cod,title){
@@ -113,10 +142,10 @@ ListView{
 
         model.insert(p+1,
                      {"code": nId,
-                      "Current":false,
-                      "Name":"New Activity",
-                      "Icon":ob.Icon,
-                      "CState":"Running"}
+                         "Current":false,
+                         "Name":"New Activity",
+                         "Icon":ob.Icon,
+                         "CState":"Running"}
                      );
         instanceOfWorkAreasList.cloneActivity(cod,nId);
 
