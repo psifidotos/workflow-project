@@ -180,10 +180,10 @@ Component{
             opacity: CState===neededState ? 1:0
         }
 
-        Image{
+        QIconItem{
           id:stopActLocked
           opacity:1
-          source: "../Images/buttons/player_stop.png"
+          icon: QIcon("player_stop")
           anchors.top: parent.top
           anchors.right: parent.right
          // x:mainView.scaleMeter/10

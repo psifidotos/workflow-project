@@ -34,7 +34,7 @@ Rectangle{
     Text{
         anchors.top:oxygenTitle.top
         anchors.horizontalCenter: oxygenTitle.horizontalCenter
-        text:"Activities"
+        text:""
         font.family: "Helvetica"
         font.italic: true
         font.pointSize: 5+(mainView.scaleMeter) /10

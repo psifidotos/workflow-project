@@ -59,12 +59,47 @@ ListView{
         updateWallpaper(source);
     }
 
+    function setCurrentIns(source,cur)
+    {
+        var ind = getIndexFor(source);
+        model.setProperty(ind,"Current",cur);
+
+        instanceOfWorkAreasList.setCurrentIns(source,cur);
+    }
+
+    function activityUpdatedIn(source,title,icon,stat,cur)
+    {
+        if (stat === "")
+            stat = "Running";
+
+        var ind = getIndexFor(source);
+        if(ind>-1){
+            model.setProperty(ind,"Name",title);
+            model.setProperty(ind,"Icon",icon);
+            setCState(source,stat);
+            setCurrentIns(source,cur);
+        }
+
+    }
+
+    function activityRemovedIn(cod){
+        var p = getIndexFor(cod);
+        if (p>-1){
+            model.remove(p);
+
+            instanceOfWorkAreasList.removeActivity(cod);
+            allWorkareas.updateShowActivities();
+        }
+
+    }
+
+
     function stopActivity(cod){
 
         activityManager.stop(cod);
 
-        setCState(cod,"Stopped");
-        instanceOfWorkAreasList.setCState(cod,"Stopped");
+     //   setCState(cod,"Stopped");
+      //  instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
     Timer {
@@ -92,8 +127,8 @@ ListView{
 
         activityManager.start(cod);
 
-        setCState(cod,"Running");
-        instanceOfWorkAreasList.setCState(cod,"Running");
+    //    setCState(cod,"Running");
+      //  instanceOfWorkAreasList.setCState(cod,"Running");
 
         updateWallpaperInt(cod,1000);
 
@@ -104,8 +139,8 @@ ListView{
     function setName(cod,title){
         activityManager.setName(cod,title);
 
-        var ind = getIndexFor(cod);
-        model.setProperty(ind,"Name",title);
+     //   var ind = getIndexFor(cod);
+      //  model.setProperty(ind,"Name",title);
     }
 
     function getCState(cod){
@@ -118,7 +153,7 @@ ListView{
 
         activityManager.setCurrent(cod);
 
-        instanceOfWorkAreasList.setCurrent(cod);
+      //  instanceOfWorkAreasList.setCurrent(cod);
 
     }
 
@@ -161,13 +196,14 @@ ListView{
         if(activityManager.askForDelete(ob.Name) == vbYes){
             activityManager.remove(cod);
 
-            var n = getIndexFor(cod);
-            model.remove(n);
+       //     var n = getIndexFor(cod);
+         //   model.remove(n);
 
-            instanceOfWorkAreasList.removeActivity(cod);
+       //     instanceOfWorkAreasList.removeActivity(cod);
             allWorkareas.updateShowActivities();
         }
     }
+
 
     function addNewActivity(){
         var nId = getNextId();

@@ -36,6 +36,8 @@ void ActivityManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
 
+    connect(this, SIGNAL(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
+            qmlActEngine,SLOT(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
     // connect data sources
 
     foreach (const QString source, plasmaActEngine->sources())
@@ -44,6 +46,7 @@ void ActivityManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     // activity addition and removal
     connect(plasmaActEngine, SIGNAL(sourceAdded(QString)), this, SLOT(activityAdded(QString)));
     connect(plasmaActEngine, SIGNAL(sourceRemoved(QString)), this, SLOT(activityRemoved(QString)));
+    //connect(plasmaActEngine, SIGNAL(sourceRemoved(QString)), qmlActEngine, SLOT(activityRemovedIn(QVariant(QString))));
 }
 
 
@@ -118,6 +121,14 @@ void ActivityManager::dataUpdated(QString source, Plasma::DataEngine::Data data)
         QString walp = this->getWallpaper(source);
         qDebug()<<source<<"-"<<walp;
     }
+    else
+    {
+        emit activityUpdatedIn(QVariant(source),
+                               QVariant(data["Name"].toString()),
+                               QVariant(data["Icon"].toString()),
+                               QVariant(data["State"].toString()),
+                               QVariant(data["Current"].toBool()));
+    }
     /*
   ActivityWidget *activity = m_activities[source];
   // update activity info
@@ -159,6 +170,10 @@ void ActivityManager::activityRemoved(QString id) {
     //   return;
     // delete the activity
     // delete m_activities.take(id);
+    QVariant returnedValue;
+
+    QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
+                              Q_ARG(QVariant, id));
 }
 
 
