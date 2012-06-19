@@ -26,6 +26,8 @@ ActivityManager::ActivityManager(QObject *parent) :
 
 ActivityManager::~ActivityManager()
 {
+    foreach (const QString source, plasmaActEngine->sources())
+        plasmaActEngine->disconnectSource(source, this);
 }
 
 void ActivityManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
@@ -174,6 +176,9 @@ void ActivityManager::activityRemoved(QString id) {
 
     QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
                               Q_ARG(QVariant, id));
+
+    plasmaActEngine->disconnectSource(id, this);
+
 }
 
 
