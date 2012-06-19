@@ -98,8 +98,8 @@ ListView{
 
         activityManager.stop(cod);
 
-     //   setCState(cod,"Stopped");
-      //  instanceOfWorkAreasList.setCState(cod,"Stopped");
+        setCState(cod,"Stopped");
+        instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
     Timer {
@@ -127,8 +127,8 @@ ListView{
 
         activityManager.start(cod);
 
-    //    setCState(cod,"Running");
-      //  instanceOfWorkAreasList.setCState(cod,"Running");
+        setCState(cod,"Running");
+        instanceOfWorkAreasList.setCState(cod,"Running");
 
         updateWallpaperInt(cod,1000);
 

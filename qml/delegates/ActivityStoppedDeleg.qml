@@ -22,7 +22,7 @@ Component{
         height: CState === neededState ? basicHeight : 0
 
         property real basicHeight:0.66*mainView.workareaHeight
-        property real defOpacity :0.5
+        property real defOpacity :0.65
 
         onCStateChanged:{
             //stoppedPanel.changedChildState();
