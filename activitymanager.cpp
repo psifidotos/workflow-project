@@ -131,47 +131,20 @@ void ActivityManager::dataUpdated(QString source, Plasma::DataEngine::Data data)
                                QVariant(data["State"].toString()),
                                QVariant(data["Current"].toBool()));
     }
-    /*
-  ActivityWidget *activity = m_activities[source];
-  // update activity info
-  activity->setName(data["Name"].toString());
-  activity->setState(data["State"].toString());
-  activity->setIcon(data["Icon"].toString());
-  activity->setCurrent(data["Current"].toBool());
-  // update current activity name and icon
-  if (data["Current"].toBool()) {
-    m_currentName = data["Name"].toString();
-    m_currentIcon = data["Icon"].toString();
-  }
-  // sort activities */
-    // sortActivities();
+
 }
 
 void ActivityManager::activityAdded(QString id) {
-    // skip the Status source
+
     if (id == "Status")
         return;
-    // create a new activity object
-    // ActivityWidget *activity = new ActivityWidget(extender()->item("Activities"), id);
-    // add activity to the list
-    //  m_activities.insert(id, activity);
-    // connect activity update signal
 
     plasmaActEngine->connectSource(id, this);
-    // connect activity start/stop signals
-    //  connect(activity, SIGNAL(setCurrent(QString)), this, SLOT(setCurrent(QString)));
-    //  connect(activity, SIGNAL(startActivity(QString)), this, SLOT(start(QString)));
-    //  connect(activity, SIGNAL(stopActivity(QString)), this, SLOT(stop(QString)));
-    //  connect(activity, SIGNAL(addActivity(QString)), this, SLOT(add(QString)));
-    //  connect(activity, SIGNAL(removeActivity(QString)), this, SLOT(remove(QString)));
-    //  connect(activity, SIGNAL(renameActivity(QString,QString)), this, SLOT(setName(QString,QString)));
+
 }
 
 void ActivityManager::activityRemoved(QString id) {
-    // if (!m_activities.contains(id))
-    //   return;
-    // delete the activity
-    // delete m_activities.take(id);
+
     QVariant returnedValue;
 
     QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
@@ -180,7 +153,6 @@ void ActivityManager::activityRemoved(QString id) {
     plasmaActEngine->disconnectSource(id, this);
 
 }
-
 
 
 

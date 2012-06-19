@@ -1,6 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1
 
 import ".."
 import "../models"
@@ -12,6 +14,85 @@ ListView{
     property int newActivityCounter:0
 
     property int vbYes:3
+
+    PlasmaComponents.Dialog{
+        id:removeDialog
+
+        property string activityCode
+        property string activityName
+
+        buttons:[
+            Item{
+                anchors.right: parent.right
+                height:30
+                PlasmaComponents.Button{
+                    id:button1
+                    anchors.right: button2.left
+                    anchors.rightMargin: 10
+                    anchors.bottom: parent.bottom
+                    width:100
+                    text:i18n("Yes")
+                    iconSource:"dialog-apply"
+
+                    onClicked:{
+                        activityManager.remove(removeDialog.activityCode);
+                        instanceOfActivitiesList.activityRemovedIn(removeDialog.activityCode);
+                        removeDialog.close();
+                    }
+                }
+                PlasmaComponents.Button{
+                    id:button2
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    width:100
+                    text:i18n("No")
+                    iconSource:"editdelete"
+
+                    onClicked:{
+                        removeDialog.close();
+                    }
+                }
+            }
+        ]
+        title:[
+            Text{
+                id:titleMesg
+                color:"#ffffff"
+                text:"Remove Activity..."
+                width:parent.width
+                horizontalAlignment:Text.AlignHCenter
+            },
+            Rectangle{
+                anchors.top:titleMesg.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:0.93*parent.width
+                color:"#ffffff"
+                opacity:0.3
+                height:1
+/*                gradient: Gradient {
+                    GradientStop {position: 0; color: "#00ffffff"}
+                    GradientStop {position: 0.5; color: "#ffffffff"}
+                    GradientStop {position: 1; color: "#00ffffff"}
+                }*/
+            }
+
+        ]
+        content:[
+            QIconItem{
+                anchors.topMargin:10
+                id:infIcon
+                icon:QIcon("messagebox_info")
+                width:70
+                height:70
+            },
+            Text{
+                anchors.left: infIcon.right
+                anchors.verticalCenter: infIcon.verticalCenter
+                color:"#ffffff"
+                text:"Are you sure you want to remove activity <b>"+removeDialog.activityName+"</b> ?"
+            }
+        ]
+    }
 
     function printModel(){
         console.debug("---- Activities Model -----");
@@ -53,10 +134,14 @@ ListView{
 
         setCState(source,stat);
 
-       // updateWallpaper(source,1000);
-       // var pt = activityManager.getWallpaper(source);
-  //      instanceOfWorkAreasList.setWallpaper(source,pt);
+        // updateWallpaper(source,1000);
+        // var pt = activityManager.getWallpaper(source);
+        //      instanceOfWorkAreasList.setWallpaper(source,pt);
         updateWallpaper(source);
+    }
+
+    function setIcon(cod){
+        activityManager.chooseIcon(cod);
     }
 
     function setCurrentIns(source,cur)
@@ -132,15 +217,15 @@ ListView{
 
         updateWallpaperInt(cod,1000);
 
-//        var pt = activityManager.getWallpaper(cod);
- //       instanceOfWorkAreasList.setWallpaper(cod,pt);
+        //        var pt = activityManager.getWallpaper(cod);
+        //       instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
 
     function setName(cod,title){
         activityManager.setName(cod,title);
 
-     //   var ind = getIndexFor(cod);
-      //  model.setProperty(ind,"Name",title);
+        //   var ind = getIndexFor(cod);
+        //  model.setProperty(ind,"Name",title);
     }
 
     function getCState(cod){
@@ -153,7 +238,7 @@ ListView{
 
         activityManager.setCurrent(cod);
 
-      //  instanceOfWorkAreasList.setCurrent(cod);
+        //  instanceOfWorkAreasList.setCurrent(cod);
 
     }
 
@@ -193,15 +278,9 @@ ListView{
         var p = getIndexFor(cod);
         var ob = model.get(p);
 
-        if(activityManager.askForDelete(ob.Name) == vbYes){
-            activityManager.remove(cod);
-
-       //     var n = getIndexFor(cod);
-         //   model.remove(n);
-
-       //     instanceOfWorkAreasList.removeActivity(cod);
-            allWorkareas.updateShowActivities();
-        }
+        removeDialog.activityName = ob.Name;
+        removeDialog.activityCode = cod;
+        removeDialog.open();
     }
 
 

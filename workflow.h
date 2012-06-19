@@ -54,8 +54,6 @@ class WorkFlow : public Plasma::PopupApplet
         virtual void init();    
         void initExtenderItem(Plasma::ExtenderItem *item);
 
-      //  WorkFlow *getApplet();
-
     private:
 
 	QGraphicsLinearLayout *mainLayout;

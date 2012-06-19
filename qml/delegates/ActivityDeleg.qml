@@ -87,6 +87,10 @@ Component{
                       stopActLocked.state="hide";
 
               }
+              onClicked: {
+                  if (mainView.lockActivities === false)
+                      instanceOfActivitiesList.setIcon(ccode);
+              }
 
           }
 

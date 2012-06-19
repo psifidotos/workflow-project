@@ -23,7 +23,6 @@
 #include <KGlobalSettings>
 
 
-
 #include <QDeclarativeContext>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
@@ -46,6 +45,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 {
     setPopupIcon("preferences-activities");
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
+    setPassivePopup(true);
 
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
@@ -127,8 +127,6 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 }
 
 ////INVOKES
-
-
    
 #include "workflow.moc"
    
