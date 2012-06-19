@@ -68,7 +68,7 @@ void WorkFlow::init(){
     extender()->setEmptyExtenderMessage(i18n("No Activities..."));
     // don't grow too much height
     //extender()->setMaximumHeight(300);
-    if (extender()->item("Activities") == 0) {
+    if (extender()->item("WorkFlow") == 0) {
       // create the item
       Plasma::ExtenderItem *item = new Plasma::ExtenderItem(extender());
       // initialize the item
@@ -95,21 +95,13 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     QString path =  sd->findResource("data","plasma-workflowplasmoid/qml/Activities2.qml");
 
-    declarativeWidget = new Plasma::DeclarativeWidget(this);
+    declarativeWidget = new Plasma::DeclarativeWidget();
   //  declarativeWidget->setInitializationDelayed(true);
     declarativeWidget->setQmlPath(path);
-   // declarativeWidget->engine();
 
-  //  QString mainText("Hello World!!!\n.....second line - change - ......\n");
-  //  mainText.append(path);
-
-  //  lbl_text->setText(mainText.toUtf8().constData());
-
-   // mainLayout->addItem(lbl_text);
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
 
-    //the activitymanager class will be directly accessible from qml
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
         if (ctxt) {
@@ -117,7 +109,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
             ctxt->setContextProperty("taskManager", taskManager);
 
             QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
-            QObject* qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
+            QObject *qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
 
 
             if(!rootObject)
@@ -125,10 +117,10 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
             if(qmlActEng)
                 actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
-
-
         }
     }
+
+    //the activitymanager class will be directly accessible from qml
 
     item->setWidget(m_mainWidget);
     resize(1000,700);
