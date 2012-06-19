@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void start(QString id);
     Q_INVOKABLE void setName(QString id, QString name);
     Q_INVOKABLE void remove(QString id);
+    Q_INVOKABLE int askForDelete(QString activityName);
 
     void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
 

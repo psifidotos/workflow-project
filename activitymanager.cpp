@@ -15,6 +15,7 @@
 #include <KIcon>
 #include <KWindowSystem>
 #include <KConfigGroup>
+#include <KMessageBox>
 
 
 
@@ -187,6 +188,15 @@ QString ActivityManager::chooseIcon(QString id) const
         ActivityManager::setIcon(id,icon);
 
     return icon;
+}
+
+int ActivityManager::askForDelete(QString activityName)
+{
+    QString question("Do you yeally want to delete activity ");
+    question.append(activityName);
+    question.append(" ?");
+    int responce =  KMessageBox::questionYesNo(0,question,"Delete Activity");
+    return responce;
 }
 
 void ActivityManager::add(QString id, QString name) {

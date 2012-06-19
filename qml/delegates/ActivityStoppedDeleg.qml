@@ -134,7 +134,6 @@ Component{
                     easing.type: Easing.InOutQuad;
                 }
             }
-
         }
 
         MouseArea{

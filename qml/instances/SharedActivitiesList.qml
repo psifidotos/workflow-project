@@ -11,6 +11,8 @@ ListView{
 
     property int newActivityCounter:0
 
+    property int vbYes:3
+
     function printModel(){
         console.debug("---- Activities Model -----");
         for(var i=0; i<model.count; ++i){
@@ -153,13 +155,18 @@ ListView{
     }
 
     function removeActivity(cod){
-        activityManager.remove(cod);
+        var p = getIndexFor(cod);
+        var ob = model.get(p);
 
-        var n = getIndexFor(cod);
-        model.remove(n);
+        if(activityManager.askForDelete(ob.Name) == vbYes){
+            activityManager.remove(cod);
 
-        instanceOfWorkAreasList.removeActivity(cod);
-        allWorkareas.updateShowActivities();
+            var n = getIndexFor(cod);
+            model.remove(n);
+
+            instanceOfWorkAreasList.removeActivity(cod);
+            allWorkareas.updateShowActivities();
+        }
     }
 
     function addNewActivity(){
