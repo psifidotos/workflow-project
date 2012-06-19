@@ -1,6 +1,9 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.qtextracomponents 0.1
+
 Item{
     id: activityButtons
 
@@ -21,9 +24,9 @@ Item{
 
     property real curBtnScale:1.4
 
-    Image{
+     QIconItem{
         id:stopActivityBtn
-        source: "../Images/buttons/player_stop.png"
+        icon: QIcon("player_stop")
         width: buttonsSize
         height: buttonsSize
         x:buttonsX
@@ -60,9 +63,10 @@ Item{
         }
     }
 
-    Image{
-        id:duplicateActivityBtn
-        source: "../Images/buttons/cloneActivity.png"
+
+    QIconItem{
+        id:duplicateActivityBtn        
+        icon:QIcon("reload")
         width: buttonsSize
         height: buttonsSize
         x:buttonsSize+buttonsSpace+buttonsX
@@ -103,9 +107,9 @@ Item{
         }
     }
 
-    Image{
+    QIconItem{
         id:deleteActivityBtn
-        source: "../Images/buttons/mail_delete.png"
+        icon: QIcon("editdelete")
         width: buttonsSize
         height: buttonsSize
         x:2*buttonsSize+2*buttonsSpace+buttonsX

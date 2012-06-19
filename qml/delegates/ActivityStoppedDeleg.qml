@@ -116,10 +116,11 @@ Component{
             color:"#d7d7d7"
         }
 
-        Image{
+
+        QIconItem{
             id:playActivity
             opacity:0
-            source: "../Images/buttons/player_play.png"
+            icon: QIcon("player_play")
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
             anchors.top: stpActivity.top
