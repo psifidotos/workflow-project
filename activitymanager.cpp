@@ -12,6 +12,7 @@
 
 
 #include <KIconDialog>
+#include <KIcon>
 #include <KWindowSystem>
 #include <KConfigGroup>
 
@@ -87,6 +88,12 @@ QString  ActivityManager::getWallpaper(QString source) const
         iterat++;
     }
     return "";
+}
+
+QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
+{
+    KIcon icon3(ic);
+    return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
 void ActivityManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {

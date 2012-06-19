@@ -20,6 +20,7 @@ public:
 
     Q_INVOKABLE QString getWallpaper(QString source) const;
     Q_INVOKABLE QString chooseIcon(QString) const;
+    Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
     Q_INVOKABLE void add(QString id, QString name);
     Q_INVOKABLE void clone(QString id, QString name, QString icon);
     Q_INVOKABLE void setCurrent(QString id);

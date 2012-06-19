@@ -43,19 +43,18 @@ Component{
             }
         }
 
-
-        QIconItem{
+        QPixmapItem{
             id:activityIcon
             rotation:-20
             opacity:parent.defOpacity
-            //source: "../" + Icon
-            icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
+            smooth:true
+            pixmap: Icon == "" ? activityManager.disabledPixmapForIcon("plasma") : activityManager.disabledPixmapForIcon(Icon)
             //  x:25
             //  anchors.right: stpActivity.right
             x:stpActivity.width/2
             width:5+mainView.scaleMeter
             height:width
-            smooth:true
+
 
             //for the animation to be precise
             property int toRX:stopActBack.shownActivities > 0 ? x - width:x - width- stopActBack.width
@@ -127,6 +126,7 @@ Component{
 
             width: stpActivity.width/2
             height: width
+
 
             Behavior on opacity{
                 NumberAnimation {
