@@ -1,9 +1,4 @@
 install(FILES 
-	    background1.jpg
-	    background2.jpg
-	    background3.jpg
-	    background4.jpg
-	    background5.jpg
 	    emptydesk1.png
 	    emptydesk2.png
 	    emptydesk3.png

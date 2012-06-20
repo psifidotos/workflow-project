@@ -5,8 +5,6 @@ install(FILES
 	      AddWorkAreaButton.qml
 	      AllActivitiesTasks.qml
 	      BtnIconAnimatMainView.qml
-	      DTextEdit.qml
-	      DTextLine.qml
 	      DraggingInterface.qml
 	      MainAddActivityButton.qml
 	      ScrollBar.qml

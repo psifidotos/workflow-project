@@ -4,6 +4,8 @@ install(FILES
 	    ActivityStoppedDeleg.qml
 	    AllActTaskDeleg.qml
 	    AllTaskDelegButtons.qml
+            DTextEdit.qml
+            DTextLine.qml
 	    WATaskDelegButtons.qml
 	    WorkAreaBtns.qml
 	    WorkAreaDeleg.qml

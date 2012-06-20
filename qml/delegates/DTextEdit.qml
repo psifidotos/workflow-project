@@ -1,23 +1,26 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
-import QtQuick 1.1
+import QtQuick 1.0
 
 Item{
 
-    id:dTextIItem
+    id:dTextItem
 
     state: "inactive"
-    property alias text : mainIText.text
+    property alias text : mainText.text
 
-    property bool firstrun:true
+    property bool firstrun: true
+
+    property bool enableEditing: true
 
     property string acceptedText : ""
 
+    property string actCode: ""
 
     BorderImage{
-        id:backIImage
+        id:backImage
 
         opacity:0
-        source: initSource
+        source:"../Images/buttons/editBox2.png"
 
         border.left: 15; border.top: 15;
         border.right: 40; border.bottom: 15;
@@ -27,8 +30,8 @@ Item{
         width:parent.width
         height:parent.height
 
-        property string initSource:"Images/buttons/editBox2.png"
-        property string hoverSource:"Images/buttons/editBoxHover2.png"
+        property string initSource:"../Images/buttons/editBox2.png"
+        property string hoverSource:"../Images/buttons/editBoxHover2.png"
 
         Behavior on opacity{
             NumberAnimation {
@@ -38,13 +41,14 @@ Item{
         }
 
         Item{
-            id:tickRectangleI
+            id:tickRectangle
             width: 40
             height: parent.height
             anchors.right: parent.right
 
+
             Image{
-                id:tickIImage;
+                id:tickImage;
 
                 anchors.left: parent.left
                 anchors.leftMargin: 10
@@ -54,55 +58,60 @@ Item{
                 height: 0.75*width
                 smooth:true
 
-                property string initTick:"Images/buttons/darkTick.png"
-                property string hoverTick:"Images/buttons/lightTick.png"
+                property string initTick:"../Images/buttons/darkTick.png"
+                property string hoverTick:"../Images/buttons/lightTick.png"
             }
 
             MouseArea{
                 anchors.fill: parent
                 hoverEnabled: true
+                z:15
 
                 onEntered:{
-                    backIImage.source = backIImage.hoverSource;
-                    tickIImage.source = tickIImage.hoverTick
-
+                    if(dTextItem.enableEditing === true){
+                        backImage.source = backImage.hoverSource;
+                        tickImage.source = tickImage.hoverTick;
+                    }
                 }
                 onExited:{
-                    backIImage.source = backIImage.initSource;
-                    tickIImage.source = tickIImage.initTick;
+                    if(dTextItem.enableEditing === true){
+                        backImage.source = backImage.initSource;
+                        tickImage.source = tickImage.initTick;
+                    }
                 }
 
                 onClicked: {
-                    dTextIItem.textAccepted();
+                    if(dTextItem.enableEditing === true)
+                        dTextItem.textAccepted();
                 }
             }
         }
     }
 
-
-
-    TextInput {
-        id:mainIText
-
-        width:dTextIItem.width-30-space;
-        height: dTextIItem.height-space;
-
+    TextEdit {
+        id:mainText
         property int space:0;
+        //property int spaceN:
+
+        width:dTextItem.width -30 - space;
+        height: dTextItem.height - space;
+
+        wrapMode: TextEdit.Wrap
 
         font.family: "Helvetica"
+        font.bold: true
         font.italic: true
         font.pointSize: 5+(mainView.scaleMeter/10)
 
         color: origColor
+        verticalAlignment: TextEdit.AlignBottom
 
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        //anchors.centerIn: parent
         focus:true
 
-
-        property color origColor: "#323232"
+        property color origColor: "#f0f0f0"
         property color activColor: "#444444"
 
         Behavior on color{
@@ -126,48 +135,55 @@ Item{
             }
         }
 
-
         //from: http://qt.gitorious.org/qt-components/qt-components/blobs/1be426261941ce4751dbda11b3a6c2b974646225/components/behaviors/TextEditMouseBehavior.qml
         function characterPositionAt(mouse) {
-            var mappedMouse = mapToItem(mainIText, mouse.x, mouse.y);
+            var mappedMouse = mapToItem(mainText, mouse.x, mouse.y);
 
-            return mainIText.positionAt(mappedMouse.x, mappedMouse.y);
+            return mainText.positionAt(mappedMouse.x, mappedMouse.y);
         }
+
         MouseArea{
             anchors.fill: parent
             hoverEnabled: true
 
+
             onEntered:{
-                dTextIItem.entered();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.entered();
             }
             onExited:{
-                dTextIItem.exited();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.exited();
             }
 
             onClicked: {
-                dTextIItem.clicked(mouse);
+                if(dTextItem.enableEditing === true)
+                    dTextItem.clicked(mouse);
             }
         }
 
         Keys.onPressed: {
             if ((event.key === Qt.Key_Enter)||(event.key === Qt.Key_Return)) {
-                dTextIItem.textAccepted();
+                dTextItem.textAccepted();
                 event.accepted = true;
             }
             else if (event.key === Qt.Key_Escape){
                 mainView.forceActiveFocus();
             }
         }
-
     }
 
     Image{
-        id:pencilI
-        anchors.right: dTextIItem.right
-        width: 0.6 * dTextIItem.height
-        height:0.66 * dTextIItem.height
-        source:"Images/buttons/darkPencil.png"
-        opacity: 0
+        id:pencilImg
+        anchors.right: dTextItem.right
+        anchors.rightMargin: 10
+        anchors.bottom: dTextItem.bottom
+        anchors.bottomMargin: 3
+
+        width:0.4*dTextItem.height
+        height:dTextItem.height / 2
+        source:"../Images/buttons/listPencil.png"
+        opacity: 1
         smooth:true
 
         Behavior on opacity{
@@ -176,67 +192,69 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
-
         MouseArea{
             anchors.fill: parent
             hoverEnabled: true
 
+
             onEntered:{
-                dTextIItem.entered();
+                if(dTextItem.enableEditing === true)
+                    dTextItem.entered();
             }
             onExited:{
-                dTextIItem.exited();
+                if(dTextItem.enableEditing  === true)
+                    dTextItem.exited();
             }
 
             onClicked: {
-                dTextIItem.clicked(mouse);
+                if(dTextItem.enableEditing  === true)
+                    dTextItem.clicked(mouse);
             }
         }
     }
 
 
-
     states: [
         State {
             name: "active"
-            when: mainIText.activeFocus
+            when: mainText.activeFocus
             PropertyChanges{
-                target:backIImage
+                target:backImage
                 opacity:1
             }
             PropertyChanges{
-                target:mainIText
-                color:mainIText.activColor
-                space:17
+                target:mainText
+                space:21
+                color:mainText.activColor
             }
             PropertyChanges{
-                target:pencilI
+                target:pencilImg
                 opacity:0
             }
 
         },
         State{
             name: "inactive"
-            when: !mainIText.activeFocus
+            when: !mainText.activeFocus
             PropertyChanges{
-                target:backIImage
+                target:backImage
                 opacity:0
             }
             PropertyChanges{
-                target:mainIText
-                color:mainIText.origColor
+                target:mainText
+                color:mainText.origColor
             }
             PropertyChanges{
-                target:pencilI
+                target:pencilImg
                 opacity:0
             }
             StateChangeScript {
                 name: "checkFirstRun"
                 script: {
-                    if (dTextIItem.firstrun)
-                        dTextIItem.acceptedText = dTextIItem.text
+                    if (dTextItem.firstrun)
+                        dTextItem.acceptedText = dTextItem.text
                     else
-                        dTextIItem.text = dTextIItem.acceptedText
+                        dTextItem.text = dTextItem.acceptedText
                 }
             }
 
@@ -244,30 +262,40 @@ Item{
 
     ]
 
+
     function entered(){
-        if(dTextIItem.state=="inactive")
-            pencilI.opacity = 1;
+        if(dTextItem.state=="inactive")
+            pencilImg.opacity = 1;
     }
 
     function exited(){
-        pencilI.opacity = 0;
+        pencilImg.opacity = 0;
     }
 
     function clicked(mouse){
-        dTextIItem.firstrun = false;
+        dTextItem.firstrun = false;
 
-        var pos = mainIText.characterPositionAt(mouse);
-        mainIText.cursorPosition = pos;
-        mainIText.forceActiveFocus();
-        pencilI.opacity = 0;
+        mainText.forceActiveFocus();
+        var pos = mainText.characterPositionAt(mouse);
+        mainText.cursorPosition = pos;
 
-        dTextIItem.acceptedText = dTextIItem.text
+        pencilImg.opacity = 0;
+
+        dTextItem.acceptedText = dTextItem.text
     }
 
     function textAccepted(){
-        dTextIItem.acceptedText = dTextIItem.text;
-        dTextIItem.state = "inactive";
+        dTextItem.acceptedText = dTextItem.text;
+        dTextItem.state = "inactive";
+        mainView.forceActiveFocus();
+        instanceOfActivitiesList.setName(dTextItem.actCode,dTextItem.acceptedText);
+    }
+
+    function textNotAccepted(){
+        //dTextItem.acceptedText = dTextItem.text;
+        dTextItem.state = "inactive";
         mainView.forceActiveFocus();
     }
 
 }
+

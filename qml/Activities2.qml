@@ -160,7 +160,7 @@ Rectangle {
         Text{
             id:titleMesg
             color:"#ffffff"
-            text:"Remove Activity..."
+            text: i18n("Remove Activity")+"..."
             width:parent.width
             horizontalAlignment:Text.AlignHCenter
             anchors.top:parent.top
