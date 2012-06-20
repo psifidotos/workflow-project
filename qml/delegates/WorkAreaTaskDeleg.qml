@@ -12,19 +12,19 @@ Component{
 
         property bool shown: ( (((onAllActivities !== true)&&
                                  ((gridRow === desktop)&&
-                                  (actCode === activities[0]))) ||
+                                  (actCode === activities))) ||
                                 ((onAllActivities !== true)&&
                                  ((onAllDesktops === true)&&
-                                  (actCode === activities[0]))))
-                              && (isPressed === false)
-                              && (shaded === false))
+                                  (actCode === activities))))
+                              && (isPressed === false) //hide it in dragging
+                              && (inDragging === false))  //when in all desktops state to hide the others in dragging
 
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
         height: shown ? 1.1 * imageTask.height : 0
         opacity: shown ? 1 : 0
 
-        property string ccode: model["DataEngineSource"]
+        property string ccode: code
         property bool isPressed:false
 
 
@@ -54,7 +54,7 @@ Component{
         QIconItem{
             id:imageTask
 
-            icon:  model["icon"]
+            icon:  Icon
             smooth:true
 
 
@@ -121,7 +121,7 @@ Component{
                 //width:parent.width
                 //clip:true
 
-                text:name
+                text: name || 0 ? name : ""
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true
@@ -235,7 +235,7 @@ Component{
             var everySt = ((onAllActivities === true) && (onAllDesktops === true));
 
             if ((onAllDesktops === true)&&(onAllActivities === false))
-                instanceOfTasksList.setTaskShaded(code,true);
+                instanceOfTasksList.setTaskInDragging(code,true);
 
             mDragInt.enableDragging(nCor,
                                     imageTask.icon,
@@ -244,7 +244,7 @@ Component{
                                     mainWorkArea.desktop,
                                     coord1,
                                     everySt,
-                                    shaded);
+                                    inDragging);
         }
 
         function onPositionChanged(mouse,obj) {

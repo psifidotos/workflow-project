@@ -78,7 +78,7 @@ Component{
 
                 anchors.bottom: parent.bottom
                 x : 5
-                text:name
+                text:name || 0 ? name : ""
                 font.family: "Helvetica"
                 font.italic: true
                 font.pointSize: orphansList.fontSiz

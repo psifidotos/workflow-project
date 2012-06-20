@@ -34,7 +34,6 @@ ListView{
 
         allWorkareas.updateShowActivities();
         stoppedPanel.changedChildState();
-
     }
 
     function activityAddedIn(source,title,icon,stat,cur)
@@ -153,7 +152,10 @@ ListView{
     function getCState(cod){
         var ind = getIndexFor(cod);
 
-        return model.get(ind).CState;
+        if(ind>-1)
+            return model.get(ind).CState;
+        else
+            return "";
     }
 
     function setCurrent(cod){

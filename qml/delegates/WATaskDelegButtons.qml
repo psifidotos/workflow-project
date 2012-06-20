@@ -71,8 +71,8 @@ Item {
         height: width
         x: buttonsArea.width - 2*buttonsSize - buttonsSpace
 
-        allDesks: onAllDesktops
-        allActiv: onAllActivities
+        allDesks: onAllDesktops || 0 ? true : false
+        allActiv: onAllActivities || 0 ? true : false
 
         function informState(){
 

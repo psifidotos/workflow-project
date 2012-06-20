@@ -20,8 +20,8 @@ Component{
         opacity: mustBeShown ? 1 : 0
 
         property int spacing: 20
-        property string ccode: model["DataEngineSource"]
-        property string cActCode: activities || 0 ? "" : activities[0]
+        property string ccode: code
+        property string cActCode: activities || 0 ? "" : activities
         property int cDesktop:desktop
         property bool isPressed:false
 
@@ -50,7 +50,7 @@ Component{
 
         QIconItem{
             id:imageTask2
-            icon: model["icon"]
+            icon: Icon
             smooth:true
 
             height:width
@@ -99,7 +99,7 @@ Component{
 
         QIconItem{
             id:imageTask2Ref
-            icon: model["icon"]
+            icon: Icon
 
             width:imageTask2.width
             height:width
@@ -234,7 +234,7 @@ Component{
         }
 
         function onClicked(mouse) {
-
+            instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
         }
 
         function onPressAndHold(mouse,obj) {
@@ -253,7 +253,7 @@ Component{
                                     taskDeleg2.cDesktop,
                                     coord1,
                                     true,
-                                    shaded);
+                                    inDragging);
         }
 
         function onPositionChanged(mouse,obj) {

@@ -1,15 +1,16 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-ListModel {/*
+ListModel {
+    /*
     ListElement {
         code:"123"
         onAllDesktops:false
         onAllActivities:false
         classClass: "Firefox"
         name:"Αρχική Σελίδα..."
-        icon:"Images/icons/activity3.png"
-        shaded:false
+        Icon:"Images/icons/activity3.png"
+        inDragging:false
         desktop:2
         activities:"b0b"
     }
@@ -19,8 +20,8 @@ ListModel {/*
         onAllActivities:false
         classClass: "Dolphin"
         name:"Home Folder..."
-        icon:"Images/icons/file_manager.png"
-        shaded:false
+        Icon:"Images/icons/file_manager.png"
+        inDragging:false
         desktop:1
         activities:"d0d"
     }
@@ -30,8 +31,8 @@ ListModel {/*
         onAllActivities:false
         classClass: "Dolphin"
         name:"My Documents"
-        icon:"Images/icons/file_manager.png"
-        shaded:false
+        Icon:"Images/icons/file_manager.png"
+        inDragging:false
         desktop:1
         activities:"a0a"
     }
@@ -41,8 +42,8 @@ ListModel {/*
         onAllActivities:false
         classClass: "LibreOffice"
         name:"New Document..."
-        icon:"Images/icons/dolphin.png"
-        shaded:false
+        Icon:"Images/icons/dolphin.png"
+        inDragging:false
         desktop:1
         activities:"c0c"
     }
@@ -52,8 +53,8 @@ ListModel {/*
         onAllActivities:false
         classClass: "LibreOffice"
         name:"New Document<2> - Various Text"
-        icon:"Images/icons/dolphin.png"
-        shaded:false
+        Icon:"Images/icons/dolphin.png"
+        inDragging:false
         desktop:1
         activities:"c0c"
     }
@@ -63,8 +64,8 @@ ListModel {/*
         onAllActivities:true
         classClass: "LibreOffice"
         name:"New Document<4> - Around"
-        icon:"Images/icons/dolphin.png"
-        shaded:false
+        Icon:"Images/icons/dolphin.png"
+        inDragging:false
         desktop:1
         activities:"c0c"
     }
@@ -74,8 +75,8 @@ ListModel {/*
         onAllActivities:true
         classClass: "Firefox"
         name:"www.in.gr"
-        icon:"Images/icons/activity3.png"
-        shaded:false
+        Icon:"Images/icons/activity3.png"
+        inDragging:false
         desktop:1
         activities:"c0c"
     }*/

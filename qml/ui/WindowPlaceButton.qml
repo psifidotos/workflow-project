@@ -89,10 +89,10 @@ Item{
         if (winStateItem.state == "one")
             winStateItem.state = "allDesktops";
         else if (winStateItem.state == "allDesktops")
+     //       winStateItem.state = "one";
+            winStateItem.state = "everywhere";
+        else if (winStateItem.state == "everywhere")
             winStateItem.state = "one";
-   //         winStateItem.state = "everywhere";
-   //     else if (winStateItem.state == "everywhere")
-    //        winStateItem.state = "one";
     }
 
     function onEntered(){

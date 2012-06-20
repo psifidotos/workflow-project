@@ -110,13 +110,17 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
             QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
             QObject *qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
+            QObject *qmlTaskEng = rootObject->findChild<QObject*>("instTasksEngine");
 
 
             if(!rootObject)
                 qDebug() << "root was not found...";
-
-            if(qmlActEng)
-                actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
+            else{
+                if(qmlActEng)
+                    actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
+                if(qmlTaskEng)
+                    taskManager->setQMlObject(qmlTaskEng, dataEngine("tasks"));
+            }
         }
     }
 

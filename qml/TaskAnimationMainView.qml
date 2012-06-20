@@ -57,7 +57,7 @@ QIconItem{
             var elem = instanceOfTasksList.model.get(pos);
             taskAnimation.icon = elem.icon;
 
-            var activityCode = elem.activities[0];
+            var activityCode = elem.activities;
             var desktopPos = elem.desktop + 1;//desktops count from 0?
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);

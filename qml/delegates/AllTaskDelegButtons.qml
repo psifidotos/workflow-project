@@ -79,8 +79,8 @@ Item {
         height: width
         y:buttonsSize + buttonsSpace
 
-        allDesks: onAllDesktops
-        allActiv: onAllActivities
+        allDesks: onAllDesktops || 0 ? true : false
+        allActiv: onAllActivities || 0 ? true : false
 
         function informState(){
             if (placeStateBtn.state == "one")

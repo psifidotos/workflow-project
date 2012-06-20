@@ -5,66 +5,27 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 
 ListView{
     model: TasksList{}
-/*
-    PlasmaCore.DataSource {
-        id: tasksSource
-        engine: "tasks"
-        interval: 1000
 
-        onSourceAdded: {
-            //if (source != "Status") {
-                connectSource(source)
-           // }
-        }
-
-        Component.onCompleted: {
-            connectedSources = sources.filter(function(val) {
-                return true;
-            })
-
-            allActT.changedChildState();
-
-        }
-    }*/
-
-
-/*
-    model: PlasmaCore.DataModel {
-      dataSource: tasksSource
-    //  keyRoleFilter: ".*"
-    }*/
-
-    WorkerScript{
-        id:setCurrentDesktopWorker
-        property string desktop
-        onMessage: taskManager.setCurrentDesktop(desktop);
-    }
-
-    WorkerScript{
-        id:setCurrentTaskWorker
-        property string code
-        onMessage: taskManager.activateTask(code);
-    }
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
         var obj = model.get(ind);
 
         if (val === "oneDesktop"){
-            taskManager.setOnAllDesktops(obj.DataEngineSource,false);
+            taskManager.setOnAllDesktops(obj.code,false);
 
-            //model.setProperty(ind,"onAllDesktops",false);
-           // model.setProperty(ind,"onAllActivities",false);
+            model.setProperty(ind,"onAllDesktops",false);
+            model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allDesktops"){
-            taskManager.setOnAllDesktops(obj.DataEngineSource,true);
-            //model.setProperty(ind,"onAllDesktops",true);
-            //model.setProperty(ind,"onAllActivities",false);
+            taskManager.setOnAllDesktops(obj.code,true);
+            model.setProperty(ind,"onAllDesktops",true);
+            model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allActivities"){
-            taskManager.setOnAllDesktops(obj.DataEngineSource,true);
-            //model.setProperty(ind,"onAllDesktops",true);
-            //model.setProperty(ind,"onAllActivities",true);
+            taskManager.setOnAllDesktops(obj.code,true);
+            model.setProperty(ind,"onAllDesktops",true);
+            model.setProperty(ind,"onAllActivities",true);
         }
 
         allActT.changedChildState();
@@ -80,14 +41,13 @@ ListView{
         var ind = getIndexFor(cod);
    //     model.setProperty(ind,"desktop",val);
         var obj = model.get(ind);
-        taskManager.setOnDesktop(obj.DataEngineSource,val);
+        taskManager.setOnDesktop(obj.code,val);
     }
 
-    function setTaskShaded(cod, val){
+    function setTaskInDragging(cod, val){
         var ind = getIndexFor(cod);
-     //   model.setProperty(ind,"shaded",val);
+        model.setProperty(ind,"inDragging",val);
     }
-
 
 
     function getIndexFor(cod){
@@ -97,17 +57,41 @@ ListView{
             if (obj.code === cod)
                return i;
         }
-
         return -1;
     }
 
 
+    function taskAddedIn(source,onalld,onalla,classc,nam, icn, indrag, desk, activit)
+    {
+        var fact;
+        if (activit === undefined)
+            fact="";
+        else
+            fact=activit[0];
+
+        model.append( {  "code": source,
+                         "onAllDesktops":onalld,
+                         "onAllActivities":onalla,
+                         "classClass":classc,
+                         "name":nam,
+                         "Icon":icn,
+                         "inDragging":indrag,
+                         "desktop":desk,
+                         "activities":fact} );
+
+        allActT.changedChildState();
+    }
+
+    function removeTaskIn(cod){
+        var ind = getIndexFor(cod);
+        if (ind>-1)
+            model.remove(ind);
+    }
+
 
     function removeTask(cod){
-        var ind = getIndexFor(cod);
-   //     model.setProperty(ind,"desktop",val);
-        var obj = model.get(ind);
-        taskManager.closeTask(obj.DataEngineSource);
+        removeTaskIn(cod);
+        taskManager.closeTask(obj.code);
     }
 
     function setCurrentDesktop(desk){

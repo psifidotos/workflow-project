@@ -56,6 +56,7 @@ Rectangle {
 
     SharedTasksList{
         id:instanceOfTasksList
+        objectName: "instTasksEngine"
     }
 
     Item{
