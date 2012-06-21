@@ -10,8 +10,7 @@ Component{
     Item{
         id: taskDeleg2
 
-        property bool mustBeShown: ( ((onAllActivities === true)&&
-                                   (onAllDesktops === true) )
+        property bool mustBeShown: ( (onAllActivities === true )
                                    && (isPressed === false) )
 
         width: mustBeShown ? allActRect.taskWidth+spacing : 0
@@ -21,8 +20,8 @@ Component{
 
         property int spacing: 20
         property string ccode: code
-        property string cActCode: activities || 0 ? "" : activities
-        property int cDesktop:desktop
+        property string cActCode: activities === undefined ? mainView.currentActivity : activities
+        property int cDesktop:desktop === undefined ? mainView.currentDesktop : desktop
         property bool isPressed:false
 
 
@@ -134,7 +133,7 @@ Component{
                 anchors.horizontalCenter: parent.horizontalCenter
 
 
-                text:name
+                text:name === undefined ? "" : name
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true

@@ -20,11 +20,11 @@ ListView{
         else if (val === "allDesktops"){
             taskManager.setOnAllDesktops(obj.code,true);
             model.setProperty(ind,"onAllDesktops",true);
-            model.setProperty(ind,"onAllActivities",false);
+            //model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allActivities"){
             taskManager.setOnAllDesktops(obj.code,true);
-            model.setProperty(ind,"onAllDesktops",true);
+          //  model.setProperty(ind,"onAllDesktops",true);
             model.setProperty(ind,"onAllActivities",true);
         }
 
@@ -33,14 +33,15 @@ ListView{
 
     function setTaskActivity(cod, val){
         var ind = getIndexFor(cod);
-       // model.setProperty(ind,"activities",val);
+        model.setProperty(ind,"activities",val);
     }
 
 
     function setTaskDesktop(cod, val){
         var ind = getIndexFor(cod);
-   //     model.setProperty(ind,"desktop",val);
         var obj = model.get(ind);
+        model.setProperty(ind,"desktop",val);
+
         taskManager.setOnDesktop(obj.code,val);
     }
 
@@ -91,7 +92,7 @@ ListView{
 
     function removeTask(cod){
         removeTaskIn(cod);
-        taskManager.closeTask(obj.code);
+        taskManager.closeTask(cod);
     }
 
     function setCurrentDesktop(desk){
@@ -100,6 +101,7 @@ ListView{
 
     function setCurrentTask(cod){
         taskManager.activateTask(cod);
+        workflowManager.hidePopupDialog();
     }
 
 }

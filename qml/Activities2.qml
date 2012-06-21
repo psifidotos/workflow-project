@@ -24,9 +24,6 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property int currentColumn:-1
-    property int currentRow:-1
-
     property int scaleMeter:zoomSlider.value
 
     property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
@@ -43,6 +40,7 @@ Rectangle {
 
 
 
+    property string currentActivity
     property int currentDesktop: 2
 
     Behavior on scaleMeter{
@@ -157,7 +155,7 @@ Rectangle {
     }
     function setZoomSlider(v){
         zoomSlider.value = v;
-        console.debug("Zoom:"+z);
+        console.debug("Zoom:"+v);
     }
 
     function setAnimations(v){

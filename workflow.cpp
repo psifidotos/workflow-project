@@ -71,18 +71,17 @@ WorkFlow::~WorkFlow()
 
 void WorkFlow::init(){
 
-
     Plasma::ToolTipManager::self()->registerWidget(this);
 
     extender()->setEmptyExtenderMessage(i18n("No Activities..."));
-    // don't grow too much height
+
     //extender()->setMaximumHeight(300);
     if (extender()->item("WorkFlow") == 0) {
-        // create the item
+
         Plasma::ExtenderItem *item = new Plasma::ExtenderItem(extender());
-        // initialize the item
+
         initExtenderItem(item);
-        // set item name and title
+
         item->setName("WorkFlow");
         item->setTitle("WorkFlow");
 
@@ -159,6 +158,11 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     m_mainWidget->resize(wD.toFloat(),hD.toFloat());
 }
 ///SLOTS
+
+void WorkFlow::hidePopupDialog()
+{
+    this->hidePopup();
+}
 
 void WorkFlow::geomChanged()
 {

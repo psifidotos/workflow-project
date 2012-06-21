@@ -49,6 +49,9 @@ ListView{
 
         instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
 
+        if (cur)
+            mainView.currentActivity = source;
+
         for(var j=0; j<3; ++j){
             instanceOfWorkAreasList.addWorkarea(source);
         }
@@ -69,6 +72,9 @@ ListView{
     {
         var ind = getIndexFor(source);
         model.setProperty(ind,"Current",cur);
+
+        if (cur)
+            mainView.currentActivity = source;
 
         instanceOfWorkAreasList.setCurrentIns(source,cur);
     }
@@ -162,8 +168,7 @@ ListView{
 
         activityManager.setCurrent(cod);
 
-        //  instanceOfWorkAreasList.setCurrent(cod);
-
+        instanceOfWorkAreasList.setCurrent(cod);
     }
 
     function getIndexFor(cod){

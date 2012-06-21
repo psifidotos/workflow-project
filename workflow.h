@@ -62,6 +62,7 @@ public:
     Q_INVOKABLE void setShowWindows(bool show);
     Q_INVOKABLE void setLockActivities(bool lock);
     Q_INVOKABLE void setAnimations(bool anim);
+    Q_INVOKABLE void hidePopupDialog();
 
 public slots:
     void geomChanged();

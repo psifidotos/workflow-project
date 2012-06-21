@@ -212,7 +212,7 @@ Rectangle{
                     instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
                 else{
                     instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
-                    instanceOfTasksList.setTaskShaded(mainDraggingItem.intTaskId,false);
+                    instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
                 }
 
 
@@ -234,7 +234,7 @@ Rectangle{
                 instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
             else{
                 instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
-                instanceOfTasksList.setTaskShaded(mainDraggingItem.intTaskId,false);
+                instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
             }
 
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);

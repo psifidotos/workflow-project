@@ -8,7 +8,6 @@ function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
     btnAnimComp = Qt.createComponent("BtnIconAnimatMainView.qml");
-    wallTimer = Qt.createComponent("WallpaperTimer.qml");
 }
 
 

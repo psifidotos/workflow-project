@@ -28,12 +28,13 @@ QIconItem{
 
     function animateEverywhereToXY(cid, coord1, coord2, anim){
         var pos = instanceOfTasksList.getIndexFor(cid);
+        console.debug("animateEverywhereToXY:"+pos);
         if (pos>=0){
             taskAnimation.x = coord1.x
             taskAnimation.y = coord1.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.icon;
+            taskAnimation.icon = elem.Icon;
 
             taskAnimation.toX = coord2.x;
             taskAnimation.toY = coord2.y;
@@ -50,12 +51,13 @@ QIconItem{
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());
         var pos = instanceOfTasksList.getIndexFor(cid);
+        console.debug("animateEverywhereToActivity:"+pos);
         if (pos>=0){
             taskAnimation.x = coord.x
             taskAnimation.y = coord.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.icon;
+            taskAnimation.icon = elem.Icon;
 
             var activityCode = elem.activities;
             var desktopPos = elem.desktop + 1;//desktops count from 0?
@@ -79,7 +81,6 @@ QIconItem{
                 var col = allWorkareas.getActivityColumn(activityCode);
 
                 animateTask(cid,coord,col.getOrphanList(),anim);
-
             }
             else{
                 var col2 = allWorkareas.getActivityColumn(activityCode);
@@ -101,7 +102,8 @@ QIconItem{
             taskAnimation.y = coord.y
 
             var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.icon
+            taskAnimation.icon = elem.Icon
+            console.debug("icon:"+elem.Icon);
 
             var newPosElem=lst; // if no child found
 
@@ -111,18 +113,13 @@ QIconItem{
 
                 if (rchild.children[i].ccode === cid)
                 {
-
-
                     newPosElem = rchild.children[i].children[0]; //the icon position
-
                 }
             }
 
             var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
             taskAnimation.toX = fixPosElem.x;
-
-
             taskAnimation.toY = fixPosElem.y;
 
             if (anim===1)

@@ -34,25 +34,25 @@ Item{
             }
         },
         State {
-            name: "allDesktops"
-            when: (allDesks) && (!allActiv)
-            PropertyChanges {
-                target: winStateBtn
-                imgIcon:"../Images/buttons/plasma_ui/everywhereW.png"
-                imgIconHov:"../Images/buttons/plasma_ui/everywhereWHov.png"
-                mainIconWidth: 0.35 * winStateItem.width
-                mainIconHeight: 1.55 * mainIconWidth
-            }
-        },
-        State {
             name: "everywhere"
-            when:(allDesks) && (allActiv)
+            when: allActiv
             PropertyChanges {
                 target: winStateBtn
                 imgIcon:"../Images/buttons/plasma_ui/oneDesktop.png"
                 imgIconHov:"../Images/buttons/plasma_ui/oneDesktopHov.png"
                 mainIconWidth: 0.45 * winStateItem.width
                 mainIconHeight: 0.85 * mainIconWidth
+            }
+        },
+        State {
+            name: "allDesktops"
+            when: allDesks
+            PropertyChanges {
+                target: winStateBtn
+                imgIcon:"../Images/buttons/plasma_ui/everywhereW.png"
+                imgIconHov:"../Images/buttons/plasma_ui/everywhereWHov.png"
+                mainIconWidth: 0.35 * winStateItem.width
+                mainIconHeight: 1.55 * mainIconWidth
             }
         }
     ]

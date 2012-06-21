@@ -232,7 +232,7 @@ Component{
 
             var coord1 = imageTask.mapToItem(mainView,imageTask.x, imageTask.y);
 
-            var everySt = ((onAllActivities === true) && (onAllDesktops === true));
+            var everySt = (onAllActivities === true);
 
             if ((onAllDesktops === true)&&(onAllActivities === false))
                 instanceOfTasksList.setTaskInDragging(code,true);

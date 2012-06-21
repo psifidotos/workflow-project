@@ -221,8 +221,8 @@ Component{
             }
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
-        }*/
-
+        }
+*/
 
 /*
         ListView.onAdd: ParallelAnimation {
@@ -295,8 +295,8 @@ Component{
             return orphansList;
         }
 
-        function getWorkarea(war){
-            return workalist.children[0].children[war];
+        function getWorkarea(war){ //desktop counts from 1
+            return workalist.children[0].children[war-1];
         }
 
         function getWorkareaSize(){
