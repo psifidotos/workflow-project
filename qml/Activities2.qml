@@ -14,6 +14,8 @@ import "DynamicAnimations.js" as DynamAnim
 
 Rectangle {
     id:mainView
+    objectName: "instMainView"
+
     width: 1024;  height: 700
 
     color: "#dcdcdc"
@@ -35,6 +37,11 @@ Rectangle {
 
     property bool showWinds: true
     property bool lockActivities: false
+
+    onShowWindsChanged: workflowManager.setShowWindows(showWinds);
+    onLockActivitiesChanged: workflowManager.setLockActivities(lockActivities);
+
+
 
     property int currentDesktop: 2
 
@@ -103,10 +110,12 @@ Rectangle {
             y:mainView.height - height - 5
             x:stoppedPanel.x - width - 5
             maximum: 65
-            minimum: 35
-            value: 50
+            minimum: 32
+            value:50
             width:125
             z:10
+
+            onValueChanged: workflowManager.setZoomFactor(value);
 
             Image{
                 x:-0.4*width
@@ -130,12 +139,30 @@ Rectangle {
     }
 
 
-    Component.onCompleted: DynamAnim.createComponents();
+    Component.onCompleted:{
+        DynamAnim.createComponents();
+    }
 
     function getDynLib(){
         return DynamAnim;
     }
+    /*-------------------Loading values-------------------*/
+    function setShowWindows(v){
+        mainView.showWinds = v;
+        console.debug("ShowW:"+v);
+    }
+    function setLockActivities(v){
+        mainView.lockActivities = v;
+        console.debug("LockA:"+ v);
+    }
+    function setZoomSlider(v){
+        zoomSlider.value = v;
+        console.debug("Zoom:"+z);
+    }
 
+    function setAnimations(v){
+        //
+    }
 
     /*--------------------Dialogs ---------------- */
     Rectangle{

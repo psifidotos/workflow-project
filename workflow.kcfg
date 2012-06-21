@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="workflowrc"/>
+  <group name="workflow">
+    <entry name="Activities" type="StringList">
+      <label>The various activities ids</label>
+    </entry>
+    <entry name="NoOfWorkareas" type="StringList">
+      <label>the number of workareas per activity</label>
+    </entry>
+    <entry name="WorkareasNames" type="StringList">
+      <label>the various workareas names per activity</label>
+    </entry>    
+  </group>
+</kcfg>

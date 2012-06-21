@@ -1,0 +1,5 @@
+File=workflow.kcfg
+ClassName=WorkFlowSettings
+Singleton=true
+Mutators=true
+ 

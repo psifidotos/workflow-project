@@ -145,8 +145,6 @@ void ActivityManager::activityAdded(QString id) {
 
 void ActivityManager::activityRemoved(QString id) {
 
-    QVariant returnedValue;
-
     QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
                               Q_ARG(QVariant, id));
 
@@ -199,7 +197,7 @@ void ActivityManager::add(QString id, QString name) {
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }
 
-void ActivityManager::clone(QString id, QString name, QString icon) {
+void ActivityManager::clone(QString id, QString name) {
     Plasma::Service *service = plasmaActEngine->serviceForSource(id);
     KConfigGroup op = service->operationDescription("add");
     op.writeEntry("Name", name);

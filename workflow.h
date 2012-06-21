@@ -32,40 +32,64 @@
 
 #include <KGlobal>
 #include <KStandardDirs>
+#include <KConfigGroup>
 
 #include "activitymanager.h"
 #include "ptaskmanager.h"
 
 
 namespace Plasma {
-  class ExtenderItem;
+class ExtenderItem;
 };
 
-				
+
 // Define our plasma Applet
 class WorkFlow : public Plasma::PopupApplet
 {
     Q_OBJECT
-    public:
-        // Basic Create/Destroy
-        WorkFlow(QObject *parent, const QVariantList &args);
-        ~WorkFlow();
 
-        virtual void init();    
-        void initExtenderItem(Plasma::ExtenderItem *item);
+public:
+    WorkFlow(QObject *parent, const QVariantList &args);
+    ~WorkFlow();
 
-    private:
+    virtual void init();
+    void initExtenderItem(Plasma::ExtenderItem *item);
 
-	QGraphicsLinearLayout *mainLayout;
+    Q_INVOKABLE void loadConfigurationFiles();
+    ///Properties
+
+    Q_INVOKABLE void setZoomFactor(int zoom);
+    Q_INVOKABLE void setShowWindows(bool show);
+    Q_INVOKABLE void setLockActivities(bool lock);
+    Q_INVOKABLE void setAnimations(bool anim);
+
+public slots:
+    void geomChanged();
+
+private:
+    bool m_lockActivities;
+    bool m_showWindows;
+    int m_zoomFactor;
+    bool m_animations;
+
+    QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
 
-	Plasma::Label  *lbl_text;
+    Plasma::Label  *lbl_text;
     Plasma::DeclarativeWidget *declarativeWidget;
+
+    KConfigGroup appConfig;
 
     ActivityManager *actManager;
     PTaskManager *taskManager;
+
+    QObject *mainQML;
+
+
+
+    void saveConfigurationFiles();
 };
- 
+
 // This is the command that links your applet to the .desktop file
 K_EXPORT_PLASMA_APPLET(WorkFlow,WorkFlow)
 
