@@ -4,8 +4,11 @@
 #include <KDebug>
 #include <KWindowSystem>
 
-#include <QX11Info>
-#include <NETRootInfo>
+#ifdef Q_WS_X11
+    #include <QX11Info>
+    #include <NETRootInfo>
+    #include <X11/Xlib.h>
+#endif
 
 #include <taskmanager/task.h>
 
@@ -153,6 +156,27 @@ void PTaskManager::slotRemoveDesktop()
         info.setNumberOfDesktops(info.numberOfDesktops() - 1);
     }
 }
+
+
+void PTaskManager::setOnlyOnActivity(QString wd, QString activity)
+{
+    Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
+
+    QByteArray joined = activity.toAscii();
+    char *data = joined.data();
+
+    XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
+                PropModeReplace, (unsigned char *)data, joined.size());
+}
+
+void PTaskManager::setOnAllActivities(QString wd)
+{
+    Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
+
+    XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
+                    PropModeReplace, (const unsigned char *)"ALL", 3);
+}
+
 #endif
 
 

@@ -9,31 +9,43 @@ ListView{
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
-        var obj = model.get(ind);
+        if(ind>-1){
+            var obj = model.get(ind);
 
-        if (val === "oneDesktop"){
-            taskManager.setOnAllDesktops(obj.code,false);
+            if (val === "oneDesktop"){
 
-            model.setProperty(ind,"onAllDesktops",false);
-            model.setProperty(ind,"onAllActivities",false);
-        }
-        else if (val === "allDesktops"){
-            taskManager.setOnAllDesktops(obj.code,true);
-            model.setProperty(ind,"onAllDesktops",true);
-            model.setProperty(ind,"onAllActivities",false);
-        }
-        else if (val === "allActivities"){
-          //  taskManager.setOnAllDesktops(obj.code,true);
-            model.setProperty(ind,"onAllDesktops",false);
-            model.setProperty(ind,"onAllActivities",true);
-        }
+                var fActivity;
 
-        allActT.changedChildState();
+                if (obj.activities === undefined)
+                    fActivity = mainView.currentActivity;
+                else
+                    fActivity = obj.activities;
+
+                taskManager.setOnlyOnActivity(obj.code,fActivity);
+                taskManager.setOnAllDesktops(obj.code,false);
+
+                model.setProperty(ind,"onAllDesktops",false);
+                model.setProperty(ind,"onAllActivities",false);
+            }
+            else if (val === "allDesktops"){
+                taskManager.setOnAllDesktops(obj.code,true);
+                model.setProperty(ind,"onAllDesktops",true);
+                model.setProperty(ind,"onAllActivities",false);
+            }
+            else if (val === "allActivities"){
+                taskManager.setOnAllActivities(obj.code);
+                model.setProperty(ind,"onAllDesktops",false);
+                model.setProperty(ind,"onAllActivities",true);
+            }
+
+            allActT.changedChildState();
+        }
     }
 
     function setTaskActivity(cod, val){
         var ind = getIndexFor(cod);
         model.setProperty(ind,"activities",val);
+        taskManager.setOnlyOnActivity(cod,val);
     }
 
 
@@ -56,7 +68,7 @@ ListView{
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
-               return i;
+                return i;
         }
         return -1;
     }
@@ -66,7 +78,7 @@ ListView{
     {
         var fact;
         if (activit === undefined)
-            fact="";
+            fact=mainView.currentActivity;
         else
             fact=activit[0];
 

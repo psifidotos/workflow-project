@@ -8,6 +8,9 @@
 
 #include <Plasma/DataEngine>
 
+
+
+
 class PTaskManager : public QObject
 {
     Q_OBJECT
@@ -24,6 +27,9 @@ public:
 #ifdef Q_WS_X11
     Q_INVOKABLE void slotAddDesktop();
     Q_INVOKABLE void slotRemoveDesktop();
+    Q_INVOKABLE void setOnlyOnActivity(QString, QString);
+    Q_INVOKABLE void setOnAllActivities(QString);
+
 #endif
 
     void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
@@ -49,7 +55,10 @@ private:
     KWindowSystem *kwinSystem;
     
     QObject *qmlTaskEngine;
-  //  Plasma::DataEngine *plasmaTaskEngine;
+
+//#ifdef Q_WS_X11
+//    Atom activitiesAtom;
+//#endif
 
 };
 
