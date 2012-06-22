@@ -21,6 +21,10 @@ public:
     Q_INVOKABLE void activateTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
     Q_INVOKABLE QString getDesktopName(int n);
+#ifdef Q_WS_X11
+    Q_INVOKABLE void slotAddDesktop();
+    Q_INVOKABLE void slotRemoveDesktop();
+#endif
 
     void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
 
@@ -29,6 +33,7 @@ signals:
     void taskRemovedIn(QVariant);
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void currentDesktopChanged(QVariant);
+    void numberOfDesktopsChanged(QVariant);
 
 public slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
@@ -36,6 +41,8 @@ public slots:
   void taskRemoved(::TaskManager::Task *);
   void taskUpdated(::TaskManager::TaskChanges changes);
   void desktopChanged(int);
+  void changeNumberOfDesktops(int);
+
 
 private:
     TaskManager::TaskManager *taskMainM;

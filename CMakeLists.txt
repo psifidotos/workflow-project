@@ -25,8 +25,11 @@ kde4_add_kcfg_files(workflow_SRCS GENERATE_MOC workflowsettings.kcfgc)
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})
 
 target_link_libraries(plasma_applet_workflow
-                      plasma ${KDE4_PLASMA_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTDECLARATIVE_LIBRARY}
+                      plasma ${KDE4_PLASMA_LIBS}
+                      ${KDE4_KDEUI_LIBS}
+                      ${QT_QTDECLARATIVE_LIBRARY}
                       ${KDE4_KFILE_LIBS}
+                      ${KACTIVITIES_LIBRARY}
                       taskmanager)
 
 

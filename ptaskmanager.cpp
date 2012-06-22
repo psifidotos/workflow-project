@@ -4,6 +4,9 @@
 #include <KDebug>
 #include <KWindowSystem>
 
+#include <QX11Info>
+#include <NETRootInfo>
+
 #include <taskmanager/task.h>
 
 
@@ -42,6 +45,9 @@ void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     connect(this, SIGNAL(currentDesktopChanged(QVariant)),
             qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
 
+    connect(this, SIGNAL(numberOfDesktopsChanged(QVariant)),
+            qmlTaskEngine, SLOT(setMaxDesktops(QVariant)));
+
     QMetaObject::invokeMethod(qmlTaskEngine, "currentDesktopChanged",
                               Q_ARG(QVariant, taskMainM->currentDesktop()));
 
@@ -55,10 +61,15 @@ void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
-
+    connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
 
 }
 ///////////
+void PTaskManager::changeNumberOfDesktops(int v)
+{
+    emit numberOfDesktopsChanged(QVariant(v));
+}
+
 
 void PTaskManager::desktopChanged (int desktop){
     emit currentDesktopChanged(QVariant(desktop));
@@ -126,6 +137,24 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
         break;
     }
 }
+
+#ifdef Q_WS_X11
+void PTaskManager::slotAddDesktop()
+{
+    NETRootInfo info(QX11Info::display(), NET::NumberOfDesktops);
+    info.setNumberOfDesktops(info.numberOfDesktops() + 1);
+}
+
+void PTaskManager::slotRemoveDesktop()
+{
+    NETRootInfo info(QX11Info::display(), NET::NumberOfDesktops);
+    int desktops = info.numberOfDesktops();
+    if (desktops > 1) {
+        info.setNumberOfDesktops(info.numberOfDesktops() - 1);
+    }
+}
+#endif
+
 
 ///INVOKES
 QString PTaskManager::getDesktopName(int n)

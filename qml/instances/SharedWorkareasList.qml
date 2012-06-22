@@ -69,6 +69,23 @@ ListView{
 
         workMod.remove(desktop-1);
 
+        if((maxWorkareas() < mainView.maxDesktops) &&
+           (mainView.maxDesktops > 2))
+            taskManager.slotRemoveDesktop();
+
+    }
+
+    function maxWorkareas()
+    {
+        var max = 0;
+        for (var i=0; i<model.count; i++)
+        {
+            var workMod = model.get(i);
+            if (workMod.workareas.count>max)
+                max = workMod.workareas.count;
+        }
+
+        return max;
     }
 
     function addWorkarea(actCode){
@@ -77,6 +94,10 @@ ListView{
         var workMod = actOb.workareas;
 
         var counts = workMod.count;
+
+        if(counts === mainView.maxDesktops)
+            taskManager.slotAddDesktop();
+
         var lastobj = workMod.get(counts-1);
 
         workMod.append( {  "elemTitle": "New Workarea",
@@ -85,6 +106,8 @@ ListView{
                            "gridRow":lastobj.gridRow+1,
                            "gridColumn":lastobj.gridColumn,
                            "elemTempOnDragging":false} );
+
+
 
     }
 
