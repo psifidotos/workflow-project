@@ -20,6 +20,7 @@ public:
     Q_INVOKABLE void closeTask(QString id);
     Q_INVOKABLE void activateTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
+    Q_INVOKABLE QString getDesktopName(int n);
 
     void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
 
@@ -27,13 +28,14 @@ signals:
     void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void taskRemovedIn(QVariant);
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
-    //void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
+    void currentDesktopChanged(QVariant);
 
 public slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
   void taskAdded(::TaskManager::Task *);
   void taskRemoved(::TaskManager::Task *);
   void taskUpdated(::TaskManager::TaskChanges changes);
+  void desktopChanged(int);
 
 private:
     TaskManager::TaskManager *taskMainM;

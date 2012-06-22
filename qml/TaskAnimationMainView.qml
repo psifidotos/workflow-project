@@ -61,6 +61,8 @@ QIconItem{
 
             var activityCode = elem.activities;
             var desktopPos = elem.desktop + 1;//desktops count from 0?
+            if (desktopPos === 0)
+                desktopPos = mainView.currentDesktop;
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
 
@@ -84,6 +86,8 @@ QIconItem{
             }
             else{
                 var col2 = allWorkareas.getActivityColumn(activityCode);
+
+                console.debug("Desktop:"+desktopPos);
 
                 var work = col2.getWorkarea(desktopPos);
 

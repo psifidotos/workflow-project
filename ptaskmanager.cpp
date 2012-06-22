@@ -39,6 +39,14 @@ void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
+    connect(this, SIGNAL(currentDesktopChanged(QVariant)),
+            qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
+
+    QMetaObject::invokeMethod(qmlTaskEngine, "currentDesktopChanged",
+                              Q_ARG(QVariant, taskMainM->currentDesktop()));
+
+    QMetaObject::invokeMethod(qmlTaskEngine, "setMaxDesktops",
+                              Q_ARG(QVariant, kwinSystem->numberOfDesktops()));
 
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
@@ -46,44 +54,15 @@ void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     // activity addition and removal
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
+    connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
+
+
 }
 ///////////
 
-/*
-void PTaskManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
-    //if (!m_activities.contains(source))
-    //return;
-    QVariant returnedValue;
-
-    QMetaObject::invokeMethod(qmlTaskEngine, "getIndexFor",
-                              Q_RETURN_ARG(QVariant, returnedValue),
-                              Q_ARG(QVariant, source));
-
-    if(returnedValue.toInt() == -1)
-    {
-
-        emit taskAddedIn(QVariant(source),
-                         data["onAllDesktops"],
-                         data["onAllActivities"],
-                         data["classClass"],
-                         data["name"],
-                         data["icon"],
-                         QVariant(false),
-                         data["desktop"],
-                         data["activities"]);
-*/
-//   qDebug()<<source;
-// }
-/*   else
-    {
-        emit activityUpdatedIn(QVariant(source),
-                               QVariant(data["Name"].toString()),
-                               QVariant(data["Icon"].toString()),
-                               QVariant(data["State"].toString()),
-                               QVariant(data["Current"].toBool()));
-    }*/
-
-//}
+void PTaskManager::desktopChanged (int desktop){
+    emit currentDesktopChanged(QVariant(desktop));
+}
 
 void PTaskManager::taskAdded(::TaskManager::Task *task)
 {
@@ -113,14 +92,7 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
      //                         Q_ARG(QVariant, wId));
 
     emit taskRemovedIn(QVariant(wId));
-    /*                     QVariant(task->isOnAllDesktops()),
-                     QVariant(task->isOnAllActivities()),
-                     QVariant(task->classClass()),
-                     QVariant(task->name()),
-                     QVariant(task->icon()),
-                     QVariant(false),
-                     QVariant(task->desktop()),
-                     QVariant(task->activities()));*/
+
     disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
 
@@ -156,6 +128,10 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
 }
 
 ///INVOKES
+QString PTaskManager::getDesktopName(int n)
+{
+    return kwinSystem->desktopName(n);
+}
 
 void PTaskManager::setOnDesktop(QString id, int desk)
 {

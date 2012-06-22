@@ -20,11 +20,11 @@ ListView{
         else if (val === "allDesktops"){
             taskManager.setOnAllDesktops(obj.code,true);
             model.setProperty(ind,"onAllDesktops",true);
-            //model.setProperty(ind,"onAllActivities",false);
+            model.setProperty(ind,"onAllActivities",false);
         }
         else if (val === "allActivities"){
-            taskManager.setOnAllDesktops(obj.code,true);
-          //  model.setProperty(ind,"onAllDesktops",true);
+          //  taskManager.setOnAllDesktops(obj.code,true);
+            model.setProperty(ind,"onAllDesktops",false);
             model.setProperty(ind,"onAllActivities",true);
         }
 
@@ -119,6 +119,15 @@ ListView{
 
     function setCurrentDesktop(desk){
         taskManager.setCurrentDesktop(desk);
+        mainView.currentDesktop = desk;
+    }
+
+    function currentDesktopChanged(v){
+        mainView.currentDesktop = v;
+    }
+
+    function setMaxDesktops(v){
+        mainView.maxDesktops = v;
     }
 
     function setCurrentTask(cod){

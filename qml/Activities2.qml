@@ -41,7 +41,8 @@ Rectangle {
 
 
     property string currentActivity
-    property int currentDesktop: 2
+    property int currentDesktop
+    property int maxDesktops
 
     Behavior on scaleMeter{
         NumberAnimation {
@@ -161,6 +162,7 @@ Rectangle {
     function setAnimations(v){
         //
     }
+
 
     /*--------------------Dialogs ---------------- */
     Rectangle{

@@ -177,7 +177,7 @@ Component{
 
         function clickedWorkarea(){
 
-            mainView.currentDesktop = gridRow
+            //mainView.currentDesktop = mainWorkArea.desktop
             /*
             instanceOfActivitiesList.setCurrent(actCode) ;
             workAreaButtons.state="hide";
