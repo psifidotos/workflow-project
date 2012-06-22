@@ -24,21 +24,23 @@ public:
     void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
 
 signals:
-    void taskAddedIn(QVariant source,QVariant onalld,QVariant onalla,QVariant classc,QVariant nam,
-                     QVariant icn,QVariant  indrag,QVariant  desk,QVariant  activit);
+    void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
+    void taskRemovedIn(QVariant);
+    void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     //void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
 
 public slots:
-  void dataUpdated(QString source, Plasma::DataEngine::Data data);
-  void taskAdded(QString id);
-  void taskRemoved(QString id);
+ //void dataUpdated(QString source, Plasma::DataEngine::Data data);
+  void taskAdded(::TaskManager::Task *);
+  void taskRemoved(::TaskManager::Task *);
+  void taskUpdated(::TaskManager::TaskChanges changes);
 
 private:
     TaskManager::TaskManager *taskMainM;
     KWindowSystem *kwinSystem;
     
     QObject *qmlTaskEngine;
-    Plasma::DataEngine *plasmaTaskEngine;
+  //  Plasma::DataEngine *plasmaTaskEngine;
 
 };
 

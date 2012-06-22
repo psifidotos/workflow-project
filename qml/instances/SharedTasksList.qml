@@ -83,15 +83,37 @@ ListView{
         allActT.changedChildState();
     }
 
-    function removeTaskIn(cod){
+    function taskRemovedIn(cod){
         var ind = getIndexFor(cod);
         if (ind>-1)
             model.remove(ind);
     }
 
+    function taskUpdatedIn(source,onalld,onalla,classc,nam, icn, desk, activit)
+    {
+        var fact;
+        if (activit === undefined)
+            fact="";
+        else
+            fact=activit[0];
+
+        var ind = getIndexFor(source);
+        if (ind>-1){
+            model.setProperty(ind,"onAllDesktops",onalld);
+            model.setProperty(ind,"onAllActivities",onalla);
+            model.setProperty(ind,"classClass",classc);
+            model.setProperty(ind,"name",nam);
+            model.setProperty(ind,"Icon",icn);
+            model.setProperty(ind,"desktop",desk);
+            model.setProperty(ind,"activities",fact);
+        }
+
+        allActT.changedChildState();
+    }
+
 
     function removeTask(cod){
-        removeTaskIn(cod);
+        taskRemovedIn(cod);
         taskManager.closeTask(cod);
     }
 

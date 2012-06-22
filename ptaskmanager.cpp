@@ -22,31 +22,34 @@ PTaskManager::PTaskManager(QObject *parent) :
 
 
 PTaskManager::~PTaskManager(){
-    foreach (const QString source, plasmaTaskEngine->sources())
-        plasmaTaskEngine->disconnectSource(source, this);
+    //  foreach (const QString source, plasmaTaskEngine->sources())
+    //     plasmaTaskEngine->disconnectSource(source, this);
 }
 
 void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
 {
     qmlTaskEngine = obj;
-    plasmaTaskEngine = engin;
 
     connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlTaskEngine,SLOT(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
-    //   connect(this, SIGNAL(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
-    //          qmlActEngine,SLOT(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
+    connect(this, SIGNAL(taskRemovedIn(QVariant)),
+            qmlTaskEngine,SLOT(taskRemovedIn(QVariant)));
 
-    foreach (const QString source, plasmaTaskEngine->sources())
+    connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
+            qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
+
+
+    foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
 
     // activity addition and removal
-    connect(plasmaTaskEngine, SIGNAL(sourceAdded(QString)), this, SLOT(taskAdded(QString)));
-    connect(plasmaTaskEngine, SIGNAL(sourceRemoved(QString)), this, SLOT(taskRemoved(QString)));
+    connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
+    connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
 }
 ///////////
 
-
+/*
 void PTaskManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
     //if (!m_activities.contains(source))
     //return;
@@ -68,10 +71,10 @@ void PTaskManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
                          QVariant(false),
                          data["desktop"],
                          data["activities"]);
-
-        qDebug()<<source;
-    }
-    /*   else
+*/
+//   qDebug()<<source;
+// }
+/*   else
     {
         emit activityUpdatedIn(QVariant(source),
                                QVariant(data["Name"].toString()),
@@ -80,25 +83,77 @@ void PTaskManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
                                QVariant(data["Current"].toBool()));
     }*/
 
+//}
+
+void PTaskManager::taskAdded(::TaskManager::Task *task)
+{
+    QString wId;
+    wId.setNum(task->window());
+
+    qDebug()<<"WinAdded:"<<wId;
+    emit taskAddedIn(QVariant(wId),
+                     QVariant(task->isOnAllDesktops()),
+                     QVariant(task->isOnAllActivities()),
+                     QVariant(task->classClass()),
+                     QVariant(task->name()),
+                     QVariant(task->icon()),
+                     QVariant(false),
+                     QVariant(task->desktop()),
+                     QVariant(task->activities()));
+
+    connect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
 
-void PTaskManager::taskAdded(QString id) {
+void PTaskManager::taskRemoved(::TaskManager::Task *task) {
 
-    plasmaTaskEngine->connectSource(id, this);
+    QString wId;
+    wId.setNum(task->window());
 
+   // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
+     //                         Q_ARG(QVariant, wId));
+
+    emit taskRemovedIn(QVariant(wId));
+    /*                     QVariant(task->isOnAllDesktops()),
+                     QVariant(task->isOnAllActivities()),
+                     QVariant(task->classClass()),
+                     QVariant(task->name()),
+                     QVariant(task->icon()),
+                     QVariant(false),
+                     QVariant(task->desktop()),
+                     QVariant(task->activities()));*/
+    disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
 
-void PTaskManager::taskRemoved(QString id) {
+void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
+    ::TaskManager::Task *task = qobject_cast< ::TaskManager::Task * >(sender());
 
-    QVariant returnedValue;
+    if (!task) {
+        return;
+    }
+    QString wId;
+    wId.setNum(task->window());
 
-    QMetaObject::invokeMethod(qmlTaskEngine, "removeTaskIn",
-                              Q_ARG(QVariant, id));
+    // only a subset of task information is exported
+    switch (changes) {
+    case TaskManager::EverythingChanged:
+    case TaskManager::IconChanged:
+    case TaskManager::NameChanged:
+    case TaskManager::DesktopChanged:
+    case TaskManager::ActivitiesChanged:
+        emit taskUpdatedIn(QVariant(wId),
+                           QVariant(task->isOnAllDesktops()),
+                           QVariant(task->isOnAllActivities()),
+                           QVariant(task->classClass()),
+                           QVariant(task->name()),
+                           QVariant(task->icon()),
+                           QVariant(task->desktop()),
+                           QVariant(task->activities()));
 
-    plasmaTaskEngine->disconnectSource(id, this);
-
+        break;
+    default:
+        break;
+    }
 }
-
 
 ///INVOKES
 
