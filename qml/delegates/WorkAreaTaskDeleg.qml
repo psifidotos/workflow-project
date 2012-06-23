@@ -218,7 +218,7 @@ Component{
 
         function onClicked(mouse) {
            // mainWorkArea.clickedWorkarea();
-            instanceOfTasksList.setCurrentTask(taskDeleg1.ccode);
+            instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
 
         }
 

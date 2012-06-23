@@ -296,7 +296,7 @@ Component{
         }
 
         function getWorkarea(war){ //desktop counts from 1
-            return workalist.children[0].children[war-1];
+            return workalist.children[0].children[war+1];
         }
 
         function getWorkareaSize(){

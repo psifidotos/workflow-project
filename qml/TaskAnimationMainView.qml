@@ -61,14 +61,16 @@ QIconItem{
 
             var activityCode
 
-            if(elem.activities === undefined)
+            if((elem.activities === undefined) ||
+               (elem.activities === "") )
                 activityCode = mainView.currentActivity;
             else
                 activityCode = elem.activities;
 
-            var desktopPos = elem.desktop + 1;//desktops count from 0?
-            if (desktopPos === 0)
-                desktopPos = mainView.currentDesktop;
+            console.debug("Element Desktop:"+elem.desktop);
+            var desktopPos = elem.desktop - 1;//desktops count from 0?
+            if (desktopPos < 0)
+                desktopPos = mainView.currentDesktop - 1;
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
 

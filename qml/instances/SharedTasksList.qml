@@ -156,4 +156,11 @@ ListView{
         workflowManager.hidePopupDialog();
     }
 
+    //in order to change to right workarea when a window is inAllDesktops
+    function setCurrentTaskInWorkarea(activ,desk,cod)
+    {
+        instanceOfActivitiesList.setCurrentActivityAndDesktop(activ,desk);
+        setCurrentTask(cod);
+    }
+
 }

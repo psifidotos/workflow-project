@@ -95,6 +95,9 @@ ListView{
             setCState(source,stat);
             setCurrentIns(source,cur);
 
+            //check if I have to change desktop also
+            //this happens when the user chooses a workarea which
+            //is in different activity
             if(goToDesktop > -1){
                 instanceOfTasksList.setCurrentDesktop(goToDesktop);
                 goToDesktop = -1;

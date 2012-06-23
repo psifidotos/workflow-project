@@ -177,29 +177,7 @@ Component{
 
         function clickedWorkarea(){
 
-            //mainView.currentDesktop = mainWorkArea.desktop
-            /*
-            instanceOfActivitiesList.setCurrent(actCode) ;
-            workAreaButtons.state="hide";
-
-            var x1 = borderRectangle.x;
-            var y1 = borderRectangle.y;
-            var w1 = borderRectangle.width;
-            var h1 = borderRectangle.height;
-
-            var mapXY = borderRectangle.mapToItem(mainView,x1,y1);
-
-            wkFull.setInitPosition(mapXY,w1,h1,elemImg,elemTitle);
-
-            wkFull.changeState();
-*/
-
             instanceOfActivitiesList.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-           // if(mainWorkArea.actCode !== mainView.currentActivity)
-            //    instanceOfActivitiesList.setCurrent(actCode);
-            //if(mainWorkArea.desktop !== mainView.currentDesktop)
-             //   instanceOfTasksList.setCurrentDesktop(mainWorkArea.desktop);
-
 
         }
 
