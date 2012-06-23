@@ -5,9 +5,9 @@
 #include <KWindowSystem>
 
 #ifdef Q_WS_X11
-    #include <QX11Info>
-    #include <NETRootInfo>
-    #include <X11/Xlib.h>
+#include <QX11Info>
+#include <NETRootInfo>
+#include <X11/Xlib.h>
 #endif
 
 #include <taskmanager/task.h>
@@ -42,8 +42,8 @@ void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     connect(this, SIGNAL(taskRemovedIn(QVariant)),
             qmlTaskEngine,SLOT(taskRemovedIn(QVariant)));
 
-    connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
+    connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
+            qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
     connect(this, SIGNAL(currentDesktopChanged(QVariant)),
             qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
@@ -102,8 +102,8 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
     QString wId;
     wId.setNum(task->window());
 
-   // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
-     //                         Q_ARG(QVariant, wId));
+    // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
+    //                         Q_ARG(QVariant, wId));
 
     emit taskRemovedIn(QVariant(wId));
 
@@ -120,25 +120,36 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     wId.setNum(task->window());
 
     // only a subset of task information is exported
+    QString typeOfMessage;
     switch (changes) {
     case TaskManager::EverythingChanged:
+        typeOfMessage = "everything";
+        break;
     case TaskManager::IconChanged:
+        typeOfMessage = "icon";
+        break;
     case TaskManager::NameChanged:
+        typeOfMessage = "name";
+        break;
     case TaskManager::DesktopChanged:
+        typeOfMessage = "desktop";
+        break;
     case TaskManager::ActivitiesChanged:
-        emit taskUpdatedIn(QVariant(wId),
-                           QVariant(task->isOnAllDesktops()),
-                           QVariant(task->isOnAllActivities()),
-                           QVariant(task->classClass()),
-                           QVariant(task->name()),
-                           QVariant(task->icon()),
-                           QVariant(task->desktop()),
-                           QVariant(task->activities()));
-
+        typeOfMessage = "activities";
         break;
     default:
         break;
     }
+    emit taskUpdatedIn(QVariant(wId),
+                       QVariant(task->isOnAllDesktops()),
+                       QVariant(task->isOnAllActivities()),
+                       QVariant(task->classClass()),
+                       QVariant(task->name()),
+                       QVariant(task->icon()),
+                       QVariant(task->desktop()),
+                       QVariant(task->activities()),
+                       QVariant(typeOfMessage));
+
 }
 
 #ifdef Q_WS_X11
@@ -166,7 +177,7 @@ void PTaskManager::setOnlyOnActivity(QString wd, QString activity)
     char *data = joined.data();
 
     XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
-                PropModeReplace, (unsigned char *)data, joined.size());
+                    PropModeReplace, (unsigned char *)data, joined.size());
 }
 
 void PTaskManager::setOnAllActivities(QString wd)

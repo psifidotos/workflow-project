@@ -11,6 +11,7 @@ Component{
         id: taskDeleg2
 
         property bool mustBeShown: ( (onAllActivities === true )
+                     //               &&(onAllDesktops === true)
                                    && (isPressed === false) )
 
         width: mustBeShown ? allActRect.taskWidth+spacing : 0

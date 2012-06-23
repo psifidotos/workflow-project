@@ -228,6 +228,7 @@ Rectangle{
         }
         else if (mainDraggingItem.lastSelection === 1){
             instanceOfWorkAreasList.addWorkarea(mainDraggingItem.drActiv);
+
             var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
 
             if(mainDraggingItem.intIsShaded === false)
@@ -238,7 +239,7 @@ Rectangle{
             }
 
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
-            instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works-1);
+            instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works);
 
             var co14 = mainView.mapToItem(mainView,iX1,iY1);
             var toCol4 = mainView.mapToItem(mainView,mouse.x,mouse.y);
@@ -254,6 +255,7 @@ Rectangle{
         else if (mainDraggingItem.lastSelection === 2){
 
             instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
+            instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
 
             var co13 = mainView.mapToItem(mainView,iX1,iY1);
             mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,

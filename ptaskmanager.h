@@ -37,7 +37,7 @@ public:
 signals:
     void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void taskRemovedIn(QVariant);
-    void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
+    void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void currentDesktopChanged(QVariant);
     void numberOfDesktopsChanged(QVariant);
 

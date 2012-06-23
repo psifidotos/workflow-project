@@ -55,6 +55,7 @@ Item{
                 mainIconHeight: 1.55 * mainIconWidth
             }
         }
+
     ]
 
     MouseArea {
@@ -86,12 +87,12 @@ Item{
     }
 
     function nextState(){
-        if (winStateItem.state == "one")
+        if (winStateItem.state === "one")
             winStateItem.state = "allDesktops";
-        else if (winStateItem.state == "allDesktops")
+        else if (winStateItem.state === "allDesktops")
      //       winStateItem.state = "one";
             winStateItem.state = "everywhere";
-        else if (winStateItem.state == "everywhere")
+        else if (winStateItem.state === "everywhere")
             winStateItem.state = "one";
     }
 

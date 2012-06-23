@@ -20,30 +20,39 @@ ListView{
         if(ind>-1){
             var obj = model.get(ind);
 
+            var fActivity;
+
+            if ((obj.activities === undefined)||
+                    (obj.activities === ""))
+                fActivity = mainView.currentActivity;
+            else
+                fActivity = obj.activities;
+
+            console.debug("setTaskState:"+cod+"-"+val);
             if (val === "oneDesktop"){
+                if ((obj.desktop === undefined) ||
+                        (obj.desktop < 1))
+                    setTaskDesktop(cod,mainView.currentDesktop)
 
-                var fActivity;
-
-                if (obj.activities === undefined)
-                    fActivity = mainView.currentActivity;
-                else
-                    fActivity = obj.activities;
+                model.setProperty(ind,"onAllDesktops",false);
+                model.setProperty(ind,"onAllActivities",false);
 
                 taskManager.setOnlyOnActivity(obj.code,fActivity);
                 taskManager.setOnAllDesktops(obj.code,false);
-
-                model.setProperty(ind,"onAllDesktops",false);
-                model.setProperty(ind,"onAllActivities",false);
             }
             else if (val === "allDesktops"){
-                taskManager.setOnAllDesktops(obj.code,true);
                 model.setProperty(ind,"onAllDesktops",true);
                 model.setProperty(ind,"onAllActivities",false);
+
+                taskManager.setOnAllDesktops(obj.code,true);
+                taskManager.setOnlyOnActivity(obj.code,fActivity);
             }
             else if (val === "allActivities"){
-                taskManager.setOnAllActivities(obj.code);
-                model.setProperty(ind,"onAllDesktops",false);
+                model.setProperty(ind,"onAllDesktops",true);
                 model.setProperty(ind,"onAllActivities",true);
+
+                taskManager.setOnAllActivities(obj.code);
+                taskManager.setOnAllDesktops(obj.code,true);
             }
 
             allActT.changedChildState();
@@ -71,7 +80,7 @@ ListView{
     }
 
 
-    function getIndexFor(cod){        
+    function getIndexFor(cod){
         for(var i=0; i<model.count; i++){
             var obj = model.get(i);
             if (obj.code === cod)
@@ -105,12 +114,12 @@ ListView{
     function taskRemovedIn(cod){
         var ind = getIndexFor(cod);
         if (ind>-1){
-        //    printModel();
+            //    printModel();
             model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
         }
     }
 
-    function taskUpdatedIn(source,onalld,onalla,classc,nam, icn, desk, activit)
+    function taskUpdatedIn(source,onalld,onalla,classc,nam, icn, desk, activit,mtype)
     {
         var fact;
         if (activit === undefined)
@@ -120,13 +129,30 @@ ListView{
 
         var ind = getIndexFor(source);
         if (ind>-1){
-            model.setProperty(ind,"onAllDesktops",onalld);
-            model.setProperty(ind,"onAllActivities",onalla);
-            model.setProperty(ind,"classClass",classc);
-            model.setProperty(ind,"name",nam);
-            model.setProperty(ind,"Icon",icn);
-            model.setProperty(ind,"desktop",desk);
-            model.setProperty(ind,"activities",fact);
+            if (mtype==="everything"){
+                model.setProperty(ind,"onAllDesktops",onalld);
+                model.setProperty(ind,"onAllActivities",onalla);
+                model.setProperty(ind,"classClass",classc);
+                model.setProperty(ind,"name",nam);
+                model.setProperty(ind,"Icon",icn);
+                model.setProperty(ind,"desktop",desk);
+                model.setProperty(ind,"activities",fact);
+            }
+            else if(mtype ==="desktop" ){
+                model.setProperty(ind,"onAllDesktops",onalld);
+                model.setProperty(ind,"desktop",desk);
+            }
+            else if(mtype ==="activities" ){
+                model.setProperty(ind,"onAllActivities",onalla);
+                model.setProperty(ind,"activities",fact);
+            }
+            else if(mtype ==="name" ){
+                model.setProperty(ind,"name",nam);
+            }
+            else if(mtype ==="icon" ){
+                model.setProperty(ind,"Icon",icn);
+            }
+
         }
 
         allActT.changedChildState();
@@ -140,7 +166,7 @@ ListView{
 
     function setCurrentDesktop(desk){
         taskManager.setCurrentDesktop(desk);
-       // mainView.currentDesktop = desk;
+        // mainView.currentDesktop = desk;
     }
 
     function currentDesktopChanged(v){

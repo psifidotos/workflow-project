@@ -115,7 +115,6 @@ QIconItem{
 
             var elem = instanceOfTasksList.model.get(pos);
             taskAnimation.icon = elem.Icon
-            console.debug("icon:"+elem.Icon);
 
             var newPosElem=lst; // if no child found
 

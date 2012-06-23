@@ -109,6 +109,7 @@ Item{
             var elem = allActTaskL.model.get(i);
 
             if (elem.onAllActivities === true)
+//                &&(elem.onAllDesktops === true))
                 counter++;
         }
 
