@@ -2,7 +2,6 @@
 install(FILES 
 	      Activities2.qml
 	      ActivityAnimationMainView.qml
-	      AddWorkAreaButton.qml
 	      AllActivitiesTasks.qml
 	      BtnIconAnimatMainView.qml
 	      DraggingInterface.qml

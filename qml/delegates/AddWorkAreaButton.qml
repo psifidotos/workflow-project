@@ -7,13 +7,13 @@ Rectangle{
     height:40
     color: fromColor
     property color fromColor:"#00c9c9c9"
-    property color toColor:"#ffc9c9c9"
+    property color toColor:"#ccfafafa"
     property color borderFromColor:"#00686868"
     property color borderToColor:"#ff686868"
 
     border.color: borderFromColor
-    border.width: 1
-    radius: 6
+    border.width: 2
+    radius: 4
     z:6
 
     Rectangle{
@@ -25,7 +25,7 @@ Rectangle{
 
         Image {
             id:addButtonImage
-            source:"Images/addWorkAreaBtn.png"
+            source:"../Images/addWorkAreaBtn.png"
             width:parent.width
             height:parent.height
 
