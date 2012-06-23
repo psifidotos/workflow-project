@@ -194,8 +194,13 @@ Component{
             wkFull.changeState();
 */
 
-            instanceOfActivitiesList.setCurrent(actCode);
-            instanceOfTasksList.setCurrentDesktop(mainWorkArea.desktop);
+            instanceOfActivitiesList.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
+           // if(mainWorkArea.actCode !== mainView.currentActivity)
+            //    instanceOfActivitiesList.setCurrent(actCode);
+            //if(mainWorkArea.desktop !== mainView.currentDesktop)
+             //   instanceOfTasksList.setCurrentDesktop(mainWorkArea.desktop);
+
+
         }
 
 

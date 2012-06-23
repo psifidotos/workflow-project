@@ -2,18 +2,22 @@
 import QtQuick 1.1
 
 ListModel {
-    /*
+
+    //This is a ghost element in order to fix bug
+    //when removing the first element or when
+    //removing the first and only element....
     ListElement {
-        code:"123"
+        code:"DontShow"
         onAllDesktops:false
         onAllActivities:false
-        classClass: "Firefox"
-        name:"Αρχική Σελίδα..."
-        Icon:"Images/icons/activity3.png"
+        classClass: "DontShow"
+        name:"DontShow"
+        Icon:"DontShow"
         inDragging:false
-        desktop:2
-        activities:"b0b"
+        desktop:1
+        activities:"DontShow"
     }
+    /*
     ListElement {
         code:"234"
         onAllDesktops:true

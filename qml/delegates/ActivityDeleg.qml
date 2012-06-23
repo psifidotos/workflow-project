@@ -264,7 +264,7 @@ Component{
 
             ParallelAnimation{
                 NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
             }
 
 

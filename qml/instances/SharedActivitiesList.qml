@@ -15,6 +15,10 @@ ListView{
 
     property int vbYes:3
 
+    //variable to use in asychronous change an activity,
+    //first go to an activity and then change desktop
+    property int goToDesktop:-1
+
 
     function printModel(){
         console.debug("---- Activities Model -----");
@@ -90,13 +94,20 @@ ListView{
             model.setProperty(ind,"Icon",icon);
             setCState(source,stat);
             setCurrentIns(source,cur);
+
+            if(goToDesktop > -1){
+                instanceOfTasksList.setCurrentDesktop(goToDesktop);
+                goToDesktop = -1;
+            }
         }
 
     }
 
     function activityRemovedIn(cod){
         var p = getIndexFor(cod);
-        if (p>-1){
+        if (p>-1){            
+
+            //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
             model.remove(p);
 
             instanceOfWorkAreasList.removeActivity(cod);
@@ -165,10 +176,22 @@ ListView{
     }
 
     function setCurrent(cod){
-
         activityManager.setCurrent(cod);
 
         instanceOfWorkAreasList.setCurrent(cod);
+    }
+
+    function setCurrentActivityAndDesktop(activit, desk)
+    {
+        if (activit !== mainView.currentActivity)
+        {
+            goToDesktop = desk;
+            setCurrent(activit);
+        }
+        else
+        {
+            instanceOfTasksList.setCurrentDesktop(desk);
+        }
     }
 
     function getIndexFor(cod){

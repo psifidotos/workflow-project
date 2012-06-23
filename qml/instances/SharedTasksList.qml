@@ -6,6 +6,14 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 ListView{
     model: TasksList{}
 
+    function printModel(){
+        console.debug("---- Tasks Model -----");
+        for(var i=0; i<model.count; i++){
+            var obj = model.get(i);
+            console.debug(obj.code + " - " + obj.name + " - " +obj.Icon + " - " +obj.desktop + " - " +obj.activities);
+        }
+        console.debug("----  -----");
+    }
 
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
@@ -63,9 +71,8 @@ ListView{
     }
 
 
-    function getIndexFor(cod){
-
-        for(var i=0; i<model.count; ++i){
+    function getIndexFor(cod){        
+        for(var i=0; i<model.count; i++){
             var obj = model.get(i);
             if (obj.code === cod)
                 return i;
@@ -97,8 +104,10 @@ ListView{
 
     function taskRemovedIn(cod){
         var ind = getIndexFor(cod);
-        if (ind>-1)
-            model.remove(ind);
+        if (ind>-1){
+        //    printModel();
+            model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
+        }
     }
 
     function taskUpdatedIn(source,onalld,onalla,classc,nam, icn, desk, activit)
@@ -131,7 +140,7 @@ ListView{
 
     function setCurrentDesktop(desk){
         taskManager.setCurrentDesktop(desk);
-        mainView.currentDesktop = desk;
+       // mainView.currentDesktop = desk;
     }
 
     function currentDesktopChanged(v){

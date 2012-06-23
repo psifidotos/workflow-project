@@ -53,7 +53,11 @@ ListView{
     function removeActivity(cod){
         var ind = getIndexFor(cod);
 
-        model.remove(ind);
+        if (ind>-1){
+            //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
+            model.remove(ind);
+        }
+
     }
 
     function removeWorkArea(actCode,desktop)
@@ -70,7 +74,7 @@ ListView{
         workMod.remove(desktop-1);
 
         if((maxWorkareas() < mainView.maxDesktops) &&
-           (mainView.maxDesktops > 2))
+                (mainView.maxDesktops > 2))
             taskManager.slotRemoveDesktop();
 
     }
