@@ -13,13 +13,12 @@ Component{
         property string ccode:code
         property string tCState: CState
 
-        opacity: CState === neededState ? 1 : 0.2
+        opacity: CState === neededState ? 1 : 0
 
         property int defWidth: CState === neededState ? mainView.workareaWidth : 0
 
         width: defWidth
         height: mainView.workareaWidth / 2
-
 
         Behavior on opacity{
             NumberAnimation {
@@ -125,7 +124,7 @@ Component{
 
             opacity: CState===neededState ? 1:0
 
-            enableEditing: mainView.lockActivities === true ? false:true
+            enableEditing: !mainView.lockActivities
 
             actCode: mainActivity.ccode
 

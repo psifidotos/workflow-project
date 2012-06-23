@@ -10,7 +10,7 @@ Item{
 
     property bool firstrun: true
 
-    property bool enableEditing: true
+    property bool enableEditing
 
     property string acceptedText : ""
 
@@ -101,7 +101,7 @@ Item{
         font.family: "Helvetica"
         font.bold: true
         font.italic: true
-        font.pointSize: 5+(mainView.scaleMeter/10)
+        font.pointSize: 6 + (mainView.scaleMeter/12)
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom
@@ -110,6 +110,8 @@ Item{
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
         focus:true
+        readOnly: dTextItem.enableEditing ? false:true
+
 
         property color origColor: "#f0f0f0"
         property color activColor: "#444444"
@@ -183,7 +185,7 @@ Item{
         width:0.4*dTextItem.height
         height:dTextItem.height / 2
         source:"../Images/buttons/listPencil.png"
-        opacity: 1
+        opacity: 0
         smooth:true
 
         Behavior on opacity{
@@ -202,7 +204,7 @@ Item{
                     dTextItem.entered();
             }
             onExited:{
-                if(dTextItem.enableEditing  === true)
+                if(dTextItem.enableEditing === true)
                     dTextItem.exited();
             }
 
@@ -217,7 +219,8 @@ Item{
     states: [
         State {
             name: "active"
-            when: mainText.activeFocus
+            when: ((mainText.activeFocus) &&
+                   (dTextItem.enableEditing))
             PropertyChanges{
                 target:backImage
                 opacity:1
@@ -264,7 +267,7 @@ Item{
 
 
     function entered(){
-        if(dTextItem.state=="inactive")
+        if(dTextItem.state==="inactive")
             pencilImg.opacity = 1;
     }
 
@@ -273,6 +276,7 @@ Item{
     }
 
     function clicked(mouse){
+
         dTextItem.firstrun = false;
 
         mainText.forceActiveFocus();

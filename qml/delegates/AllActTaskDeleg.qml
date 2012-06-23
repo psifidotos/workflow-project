@@ -138,7 +138,7 @@ Component{
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true
-                font.pointSize: 4+(mainView.scaleMeter/12)
+                font.pointSize: 6+(mainView.scaleMeter/18)
                 color:"#333333"
             }
 

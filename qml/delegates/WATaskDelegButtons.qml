@@ -11,7 +11,7 @@ Item {
     state: "hide"
 
     property string status:"nothover"
-    property int buttonsSize: 1.7*taskTitleRec.height
+    property int buttonsSize: 1.55*taskTitleRec.height
     property int buttonsSpace: -buttonsSize/8
 
     property alias opacityClose: closeBtn.opacity

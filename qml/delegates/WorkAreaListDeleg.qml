@@ -156,7 +156,7 @@ Component{
             anchors.top : taskOrFTitleL.bottom
             anchors.left: taskOrFTitleL.left
 
-            property int fontSiz: 4+ mainView.scaleMeter / 12
+            property int fontSiz: 5 + mainView.scaleMeter / 12
             property int windsHeight:3 * fontSiz
 
             //for scrolling in vertical

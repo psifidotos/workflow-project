@@ -87,7 +87,7 @@ Component{
             font.family: "Helvetica"
             font.bold: true
             font.italic: true
-            font.pointSize: 3+(mainView.scaleMeter/10)
+            font.pointSize: 5+(mainView.scaleMeter/15)
 
             color:"#4d4b4b"
             opacity:parent.defOpacity

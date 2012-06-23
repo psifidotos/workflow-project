@@ -91,7 +91,7 @@ Item{
 
         font.family: "Helvetica"
         font.italic: true
-        font.pointSize: 5+(mainView.scaleMeter/10)
+        font.pointSize: 6+(mainView.scaleMeter/12)
 
         color: origColor
 

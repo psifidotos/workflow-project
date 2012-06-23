@@ -58,7 +58,7 @@ Component{
             smooth:true
 
 
-            width:1.5*taskTitleRec.height
+            width:1.1*taskTitleRec.height
             height:width
             y:0.1 * taskDeleg1.height
 
@@ -125,7 +125,7 @@ Component{
                 font.family: "Helvetica"
                 font.italic: false
                 font.bold: true
-                font.pointSize: 3+(mainView.scaleMeter) / 12
+                font.pointSize: 4+(mainView.scaleMeter) / 12
                 color: taskDeleg1.taskTitleColorD
 
                 Behavior on color{
