@@ -3,6 +3,9 @@ import QtQuick 1.1
 
 import "ui"
 
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1
+
 Rectangle{
     id:oxygenTitle
     anchors.top:parent.top
@@ -11,6 +14,37 @@ Rectangle{
     height: workareaY/3
 
     Image{
+        source:"Images/buttons/titleLight.png"
+        clip:true
+        width:parent.width
+        height:parent.height
+        smooth:true
+        fillMode:Image.PreserveAspectCrop
+    }
+
+
+    Rectangle{
+        id:mainRect
+        anchors.top: oxygenTitle.bottom
+        width:oxygenTitle.width
+        height:oxygenTitle.height/2
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#aa0f0f0f" }
+            GradientStop { position: 1.0; color: "#00797979" }
+        }
+    }
+
+    Text{
+        anchors.top:oxygenTitle.top
+        anchors.horizontalCenter: oxygenTitle.horizontalCenter
+        text:""
+        font.family: "Helvetica"
+        font.italic: true
+        font.pointSize: 5+(mainView.scaleMeter) /10
+        color:"#777777"
+    }
+
+    /*  Image{
         source:"Images/buttons/titleLight.png"
         clip:true
         width:parent.width
@@ -134,6 +168,80 @@ Rectangle{
                 shWinBtn.onClicked();
             }
 
+        }
+    }
+*/
+
+    Rectangle{
+        x:lockerToolBtn.x+3
+        y:lockerToolBtn.y
+        radius:4
+        width:lockerToolBtn.width-6
+        height:lockerToolBtn.height-2
+        border.width: 2
+        border.color: "#cccccc"
+        color:"#00ffffff"
+        opacity:1
+    }
+
+    PlasmaComponents.ToolButton{
+        id:lockerToolBtn
+        x: 0.7 * oxygenTitle.height
+        y:-4
+        //iconSource:"plasma"
+        //iconSource: QUrl("Images/buttons/plasma")
+        Image{
+            source:"Images/buttons/plasma_ui/lockedIcon.png"
+            anchors.centerIn: parent
+            width:0.62*parent.height
+            height:0.66*parent.height
+        }
+
+        width: 1.6 * oxygenTitle.height
+        height:1.1 * oxygenTitle.height
+
+        checkable:true
+        checked:mainView.lockActivities
+
+
+        onCheckedChanged:{
+            mainView.lockActivities = checked;
+        }
+    }
+
+    Rectangle{
+        x:windowsToolBtn.x+3
+        y:windowsToolBtn.y
+        radius:4
+        width:windowsToolBtn.width-6
+        height:windowsToolBtn.height-2
+        border.width: 2
+        border.color: "#cccccc"
+        color:"#00ffffff"
+        opacity:1
+    }
+
+    PlasmaComponents.ToolButton{
+        id:windowsToolBtn
+        x:lockerToolBtn.x+1.1*lockerToolBtn.width
+        y:-4
+        //iconSource:"plasma"
+        //iconSource: QUrl("Images/buttons/plasma")
+        Image{
+            source:"Images/buttons/windowsicon.png"
+            anchors.centerIn: parent
+            width:0.77*parent.height
+            height:0.62*parent.height
+        }
+
+        width: lockerToolBtn.width
+        height: lockerToolBtn.height
+
+        checkable:true
+        checked:mainView.showWinds
+
+        onCheckedChanged:{
+            mainView.showWinds = checked;
         }
     }
 

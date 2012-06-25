@@ -229,7 +229,7 @@ Component{
             PropertyAction { target: workList; property: "width"; value: 0 }
             PropertyAction { target: workList; property: "opacity"; value: 0 }
 
-            NumberAnimation { target: workList; property: "width"; to: workList.bWidth; duration: 400; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workList; property: "width"; to: workList.bWidth; duration: 500; easing.type: Easing.InOutQuad }
             NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
         }
 
@@ -237,7 +237,7 @@ Component{
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
             ParallelAnimation{
-                NumberAnimation { target: workList; property: "width"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: workList; property: "width"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
                 NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
             }
 

@@ -17,9 +17,12 @@ install(FILES
 	      nowindowsicon.png
 	      player_play.png
 	      player_stop.png
+	      selectedBlue.png
+	      selectedGrey.png	      
 	      titleLight.png
 	      titleShadow.png
 	      window_duplicate.png
+	      windowsicon.png
 	      withwindowsicon.png
 	      withwindowsminus.png
 	      workarea_delete.png

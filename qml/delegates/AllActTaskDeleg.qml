@@ -247,7 +247,7 @@ Component{
             var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
 
             mDragInt.enableDragging(nCor,
-                                    imageTask2.source,
+                                    imageTask2.icon,
                                     taskDeleg2.ccode,
                                     taskDeleg2.cActCode,
                                     taskDeleg2.cDesktop,

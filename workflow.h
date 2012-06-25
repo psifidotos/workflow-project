@@ -56,13 +56,14 @@ public:
     void initExtenderItem(Plasma::ExtenderItem *item);
 
     Q_INVOKABLE void loadConfigurationFiles();
+    Q_INVOKABLE void loadWorkareas();
     ///Properties
-
     Q_INVOKABLE void setZoomFactor(int zoom);
     Q_INVOKABLE void setShowWindows(bool show);
     Q_INVOKABLE void setLockActivities(bool lock);
     Q_INVOKABLE void setAnimations(bool anim);
     Q_INVOKABLE void hidePopupDialog();
+    Q_INVOKABLE QStringList getWorkAreaNames(QString);
 
 public slots:
     void geomChanged();
@@ -73,10 +74,11 @@ private:
     int m_zoomFactor;
     bool m_animations;
 
+    QHash <QString,QStringList *> storedWorkareas;
+
     QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
 
-    Plasma::Label  *lbl_text;
     Plasma::DeclarativeWidget *declarativeWidget;
 
     KConfigGroup appConfig;
@@ -86,9 +88,8 @@ private:
 
     QObject *mainQML;
 
-
-
     void saveConfigurationFiles();
+    void saveWorkareas();
 };
 
 // This is the command that links your applet to the .desktop file

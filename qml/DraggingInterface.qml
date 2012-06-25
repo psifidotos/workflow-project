@@ -30,140 +30,6 @@ Rectangle{
     property int lastSelection
 
 
-    Rectangle{
-        id:selectionRect
-
-        color:"#00ffffff"
-        border.width: 2
-        border.color:redBorder
-
-        opacity:0;
-        radius:8;
-        property int padding:2
-
-        state:"blue"
-
-        property color redBorder: "#ffc0bbbb"
-        property color greenBorder: "#ffc0bbbb"
-        property color blueBorder: "#ffc0bbbb"
-
-        property string imageRed: "Images/textures/redTexture.png"
-        property string imageGreen: "Images/textures/greenTexture.png"
-        property string imageBlue: "Images/textures/blueTexture.png"
-
-        property alias redImgOpac: redImage.opacity
-        property alias greenImgOpac: greenImage.opacity
-        property alias blueImgOpac: blueImage.opacity
-
-        Image{
-            id:redImage
-            property int padding:2
-            width: selectionRect.width - 2*selectionRect.padding
-            height: selectionRect.height - 2*selectionRect.padding
-            anchors.centerIn: parent
-            source: selectionRect.imageRed
-            fillMode: Image.Tile
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 300;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-        }
-
-        Image{
-            id:greenImage
-
-            width: selectionRect.width - 2*selectionRect.padding
-            height: selectionRect.height - 2*selectionRect.padding
-            anchors.centerIn: parent
-            source: selectionRect.imageGreen
-            fillMode: Image.Tile
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 300;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-        }
-
-        Image{
-            id:blueImage
-            property int padding:2
-            width: selectionRect.width - 2*selectionRect.padding
-            height: selectionRect.height - 2*selectionRect.padding
-            anchors.centerIn: parent
-            source: selectionRect.imageBlue
-            fillMode: Image.Tile
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 300;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-        }
-
-        Behavior on x{
-            NumberAnimation {
-                duration: 300;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        Behavior on y{
-            NumberAnimation {
-                duration: 300;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        Behavior on width{
-            NumberAnimation {
-                duration: 300;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        Behavior on height{
-            NumberAnimation {
-                duration: 300;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        states: [
-            State {
-                name: "red"
-                PropertyChanges {
-                    target: selectionRect
-                    redImgOpac: 1
-                    greenImgOpac: 0
-                    blueImgOpac: 0
-                }
-            },
-            State {
-                name:"green"
-                PropertyChanges {
-                    target: selectionRect
-                    redImgOpac: 0
-                    greenImgOpac: 1
-                    blueImgOpac: 0
-                }
-            },
-            State {
-                name:"blue"
-                PropertyChanges {
-                    target: selectionRect
-                    redImgOpac: 0
-                    greenImgOpac: 0
-                    blueImgOpac: 1
-                }
-            }
-        ]
-    }
 
     QIconItem{
         id:iconImg
@@ -196,12 +62,19 @@ Rectangle{
         mainDraggingItem.enabled = false;
         mainDraggingItem.z = -1;
         allWorkareas.flickableV = true;
+        selectionImage.opacity = 0;
+
+        //It creates a confusion when releasing
+        //must be fixed with a flag initialiazing properly
+    //    mainDraggingItem.drActiv = "";
+    //    mainDraggingItem.drDesktop = -1;
     }
 
     function onMReleased(mouse, viewXY){
 
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
+
 
         if (mainDraggingItem.lastSelection === 0){
             if ( (mainDraggingItem.intActId !== mainDraggingItem.drActiv) ||
@@ -313,14 +186,8 @@ Rectangle{
                                     var bordRect = workAreaD.getBorderRectangle();
                                     var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
 
-                                    selectionRect.state = "blue";
-
-                                    selectionRect.x = fixBCoord.x-4;
-                                    selectionRect.y = fixBCoord.y-4;
-
-                                    selectionRect.width = workAreaD.width;
-                                    selectionRect.height = 1.1 * workAreaD.height;
-                                    selectionRect.opacity = 1;
+                                    selectionImage.setLocation(fixBCoord.x-4,fixBCoord.y-4,0.95*workAreaD.width,0.98*workAreaD.height);
+                                    selectionImage.opacity = 1;
 
                                     mainDraggingItem.drActiv = workAreaD.actCode;
                                     mainDraggingItem.drDesktop = workAreaD.desktop;
@@ -335,22 +202,16 @@ Rectangle{
                             var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
 
                             if((mainDraggingItem.drActiv!== activityCode) ||
-                               (mainDraggingItem.drDesktop!==desktopsNum) ||
-                               (selectionRect.state = "red")){
+                               (mainDraggingItem.drDesktop!==desktopsNum+1)){
 
                                 var fixBCoord2 = addArea.mapToItem(mainDraggingItem,addArea.x, addArea.y);
 
-                                selectionRect.state = "red";
+                                selectionImage.setLocation(fixBCoord2.x,fixBCoord2.y-5,addArea.width,1.3 * addArea.height);
+                                selectionImage.opacity = 1;
 
-                                selectionRect.x = fixBCoord2.x;
-                                selectionRect.y = fixBCoord2.y;
-
-                                selectionRect.width = addArea.width;
-                                selectionRect.height = 1.1 * addArea.height;
-                                selectionRect.opacity = 1;
 
                                 mainDraggingItem.drActiv = activityCode;
-                                mainDraggingItem.drDesktop = desktopsNum;
+                                mainDraggingItem.drDesktop = desktopsNum+1;
                                 mainDraggingItem.lastSelection = 1;                               
 
                             }
@@ -368,14 +229,8 @@ Rectangle{
 
             var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
 
-            selectionRect.state = "green";
-
-            selectionRect.x = fixBCoord3.x;
-            selectionRect.y = fixBCoord3.y;
-
-            selectionRect.width = allTaskPO.width;
-            selectionRect.height = 1.1 * allTaskPO.height;
-            selectionRect.opacity = 1;
+            selectionImage.setLocation(fixBCoord3.x-15,fixBCoord3.y-4,1.1*allTaskPO.width,1.3 * allTaskPO.height);
+            selectionImage.opacity = 1;
 
             mainDraggingItem.lastSelection = 2;
         }

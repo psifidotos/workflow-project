@@ -73,6 +73,35 @@ Rectangle {
         height:mainView.height
 
         property string typeId: "centralArea"
+        BorderImage {
+            id:selectionImage
+            source: "Images/buttons/selectedBlue.png"
+
+            // property int tempMeter: mainView.scaleMeter/5;
+
+            border.left: 50; border.top: 50;
+            border.right: 60; border.bottom: 50;
+            horizontalTileMode: BorderImage.Repeat
+            verticalTileMode: BorderImage.Repeat
+
+            z:5
+
+            opacity:0
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 500;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            function setLocation(x1,y1,w1,h1){
+                x= x1-25;
+                y= y1-25;
+                width=w1+55;
+                height=h1+50;
+            }
+        }
 
 
         WorkAreasAllLists{
@@ -100,7 +129,7 @@ Rectangle {
 
         AllActivitiesTasks{
             id:allActT
-            z:4
+            z:7
         }
 
 
@@ -163,105 +192,142 @@ Rectangle {
         //
     }
 
+    /*   PlasmaComponents.ToolBar{
+        width:parent.width
+        height:60
+        y:100
+        z:140
+    }*/
+
+    //  PlasmaComponents.ToolBarLayout{
+
+    //  }
+
+
+
 
     /*--------------------Dialogs ---------------- */
-    Rectangle{
+    BorderImage {
         id:removeDialog
-        //     visualParent:mainView
+        source: "Images/buttons/selectedGrey.png"
 
-        anchors.centerIn: mainView
-        property string activityCode
-        property string activityName
+        // property int tempMeter: mainView.scaleMeter/5;
 
-        property real defOpacity:0.5
-        color:"#d5333333"
-        border.color: "#aaaaaa"
-        border.width: 2
-        radius:4
+        border.left: 70; border.top: 70;
+        border.right: 80; border.bottom: 70;
+        horizontalTileMode: BorderImage.Repeat
+        verticalTileMode: BorderImage.Repeat
 
         visible:false
 
-        width:mainTextInf.width+100
-        height:infIcon.height+90
+        anchors.centerIn: mainView
 
-        //Title
-        Text{
-            id:titleMesg
-            color:"#ffffff"
-            text: i18n("Remove Activity")+"..."
-            width:parent.width
-            horizontalAlignment:Text.AlignHCenter
-            anchors.top:parent.top
-            anchors.topMargin: 5
-        }
+        property string activityCode
+        property string activityName
+
+        width:dialogInsideRect.width+105
+        height:dialogInsideRect.height+105
 
         Rectangle{
-            anchors.top:titleMesg.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            width:0.93*parent.width
-            color:"#ffffff"
-            opacity:0.3
-            height:1
-            /*                gradient: Gradient {
+            id:dialogInsideRect
+            //     visualParent:mainView
+
+
+           // x:65
+        //    y:60
+            anchors.centerIn: parent
+
+            property real defOpacity:0.5
+
+            color:"#d5333333"
+            border.color: "#aaaaaa"
+            border.width: 2
+            radius:15
+
+            width:mainTextInf.width+100
+            height:infIcon.height+90
+
+            //Title
+            Text{
+                id:titleMesg
+                color:"#ffffff"
+                text: i18n("Remove Activity")+"..."
+                width:parent.width
+                horizontalAlignment:Text.AlignHCenter
+                anchors.top:parent.top
+                anchors.topMargin: 5
+            }
+
+            Rectangle{
+                anchors.top:titleMesg.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:0.93*parent.width
+                color:"#ffffff"
+                opacity:0.3
+                height:1
+                /*                gradient: Gradient {
                 GradientStop {position: 0; color: "#00ffffff"}
                 GradientStop {position: 0.5; color: "#ffffffff"}
                 GradientStop {position: 1; color: "#00ffffff"}
             }*/
-        }
-
-        //Main Area
-        QIconItem{
-            id:infIcon
-            anchors.top:titleMesg.bottom
-            anchors.topMargin:10
-            icon:QIcon("messagebox_info")
-            width:70
-            height:70
-        }
-        Text{
-            id:mainTextInf
-            anchors.left: infIcon.right
-            anchors.verticalCenter: infIcon.verticalCenter
-            color:"#ffffff"
-            text:"Are you sure you want to remove activity <b>"+removeDialog.activityName+"</b> ?"
-        }
-
-        //Buttons
-
-        Item{
-            anchors.top: infIcon.bottom
-            anchors.topMargin:10
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            height:30
-            width:parent.width
-            PlasmaComponents.Button{
-                id:button1
-                anchors.right: button2.left
-                anchors.rightMargin: 10
-                anchors.bottom: parent.bottom
-                width:100
-                text:i18n("Yes")
-                iconSource:"dialog-apply"
-
-                onClicked:{
-                    activityManager.remove(removeDialog.activityCode);
-                    instanceOfActivitiesList.activityRemovedIn(removeDialog.activityCode);
-                    removeDialog.close();
-                }
             }
-            PlasmaComponents.Button{
-                id:button2
+
+            //Main Area
+            QIconItem{
+                id:infIcon
+                anchors.top:titleMesg.bottom
+                anchors.topMargin:10
+                icon:QIcon("messagebox_info")
+                width:70
+                height:70
+            }
+            Text{
+                id:mainTextInf
+                anchors.left: infIcon.right
+                anchors.verticalCenter: infIcon.verticalCenter
+                color:"#ffffff"
+                text:"Are you sure you want to remove activity <b>"+removeDialog.activityName+"</b> ?"
+            }
+
+            //Buttons
+
+            Item{
+                anchors.top: infIcon.bottom
+                anchors.topMargin:10
                 anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                width:100
-                text:i18n("No")
-                iconSource:"editdelete"
+                anchors.rightMargin: 10
+                height:30
+                width:parent.width
+                PlasmaComponents.Button{
+                    id:button1
+                    anchors.right: button2.left
+                    anchors.rightMargin: 10
+                    anchors.bottom: parent.bottom
+                    width:100
+                    text:i18n("Yes")
+                    iconSource:"dialog-apply"
 
-                onClicked:{
-                    removeDialog.close();
+                    onClicked:{
+                        activityManager.remove(removeDialog.activityCode);
+                        instanceOfActivitiesList.activityRemovedIn(removeDialog.activityCode);
+                        removeDialog.close();
+                    }
+                }
+                PlasmaComponents.Button{
+                    id:button2
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    width:100
+                    text:i18n("No")
+                    iconSource:"editdelete"
+
+                    onClicked:{
+                        removeDialog.close();
+                    }
                 }
             }
+
+
         }
         function open(){
             removeDialog.visible = true;
@@ -269,7 +335,6 @@ Rectangle {
         function close(){
             removeDialog.visible = false;
         }
-
     }
 }
 

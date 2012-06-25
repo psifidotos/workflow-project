@@ -50,7 +50,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     setPopupIcon("preferences-activities");
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPassivePopup(true);
-   // setHasConfigurationInterface(true);
+    // setHasConfigurationInterface(true);
 
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
@@ -181,6 +181,17 @@ void WorkFlow::geomChanged()
 
 ////INVOKES
 
+QStringList WorkFlow::getWorkAreaNames(QString id)
+{
+    QStringList *ret = storedWorkareas[id];
+
+    QStringList ret2;
+    for(int i=0; i<ret->size(); i++)
+        ret2.append(ret->value(i));
+
+    return ret2;
+}
+
 ////Properties
 
 
@@ -204,7 +215,61 @@ void WorkFlow::setAnimations(bool anim)
     m_animations = anim;
 }
 
+
+
 //////// Methods
+void WorkFlow::loadWorkareas()
+{
+    storedWorkareas.clear();
+
+    QStringList acts = WorkFlowSettings::activities();
+    QStringList lengths = WorkFlowSettings::noOfWorkareas();
+    QStringList wnames = WorkFlowSettings::workareasNames();
+
+    for(int i=0; i<acts.size(); i++){
+        QString activit = acts[i];
+
+        int intpos = 0;
+        for(int j=0; j<i; j++)
+            intpos += lengths[j].toInt();
+
+        QStringList *foundWorkAreas = new QStringList();
+
+        for(int k=0; k<lengths[i].toInt(); k++)
+            foundWorkAreas->append(wnames[intpos+k]);
+
+        storedWorkareas[activit] = foundWorkAreas;
+
+    }
+}
+
+void WorkFlow::saveWorkareas()
+{
+
+    QHashIterator<QString, QStringList *> i(storedWorkareas);
+    QStringList writeActivities;
+    QStringList writeSizes;
+    QStringList writeWorkareas;
+
+    while (i.hasNext()) {
+        i.next();
+        QStringList *curWorks = i.value();
+        writeActivities.append(i.key());
+        writeSizes.append(QString(curWorks->size()));
+
+        for(int j=0; j<curWorks->size(); j++){
+            writeWorkareas.append(curWorks->value(j));
+        }
+    }
+
+    WorkFlowSettings::setActivities(writeActivities);
+    WorkFlowSettings::setNoOfWorkareas(writeSizes);
+    WorkFlowSettings::setWorkareasNames(writeWorkareas);
+    WorkFlowSettings::self()->writeConfig();
+
+}
+
+
 void WorkFlow::loadConfigurationFiles()
 {
     bool lockAc = appConfig.readEntry("LockActivities", true);
@@ -227,6 +292,7 @@ void WorkFlow::loadConfigurationFiles()
     setAnimations(anim);
     QMetaObject::invokeMethod(mainQML, "setAnimations",
                               Q_ARG(QVariant, anim));
+
 
 }
 
