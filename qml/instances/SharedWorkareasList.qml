@@ -24,6 +24,15 @@ ListView{
 
     }
 
+    function setWorkareaTitle(actCode, desktop, title){
+        var ind = getIndexFor(actCode);
+        var actOb = model.get(ind);
+        var workMod = actOb.workareas;
+
+        workMod.setProperty(desktop-1,"elemTitle",title);
+        workflowManager.renameWorkarea(actCode,desktop,title);
+    }
+
     function setCurrentIns(cod,cur){
 
         var ind = getIndexFor(cod);
@@ -72,6 +81,7 @@ ListView{
         }
 
         workMod.remove(desktop-1);
+        workflowManager.removeWorkarea(actCode,desktop);
 
         if((maxWorkareas() < mainView.maxDesktops) &&
                 (mainView.maxDesktops > 2))
@@ -104,16 +114,17 @@ ListView{
 
         var lastobj = workMod.get(counts-1);
 
-        workMod.append( {  "elemTitle": "New Workarea",
-                           "elemImg":lastobj.elemImg,
-                           "elemShowAdd":false,
-                           "gridRow":lastobj.gridRow+1,
-                           "gridColumn":lastobj.gridColumn,
-                           "elemTempOnDragging":false} );
+        var ndesk = taskManager.getDesktopName(counts+1);
 
+        workMod.append( {  "elemTitle": ndesk,
+                           "gridRow":lastobj.gridRow+1
+                       } );
 
+        workflowManager.addWorkArea(actCode,ndesk);
 
     }
+
+
 
     function cloneActivity(cod,ncod){
         var ind = getIndexFor(cod);
@@ -123,11 +134,8 @@ ListView{
                          "CState":"Running",
                          "elemImg":ob.elemImg,
                          "workareas":[{
-                                 "gridRow":0,
-                                 "gridColumn":0,
-                                 "elemTitle":"New Workarea",
-                                 "elemShowAdd":false,
-                                 "elemTempOnDragging": false
+                                 "gridRow":1,
+                                 "elemTitle":"New Workarea"
                              }]
                      });
 
@@ -146,6 +154,62 @@ ListView{
 
     function addNewActivity(cod, stat){
 
+        var deskone = taskManager.getDesktopName(1);
+
+        model.append( {  "code": cod,
+                         "CState":stat,
+                         "Current":false,
+                         "elemImg":getNextDefWallpaper(),
+                         "workareas":[{
+                                 "gridRow":1,
+                                 "elemTitle":deskone
+                             }]
+                     });
+
+        workflowManager.addEmptyActivity(cod);
+        workflowManager.addWorkArea(cod,deskone);
+
+    }
+
+    function addWorkareaOnLoading(actCode, title){
+        var ind = getIndexFor(actCode);
+        var actOb = model.get(ind);
+        var workMod = actOb.workareas;
+
+        var counts = workMod.count;
+
+        if(counts === mainView.maxDesktops)
+            taskManager.slotAddDesktop();
+
+        var lastobj = workMod.get(counts-1);
+
+        workMod.append( {  "elemTitle": title,
+                           "gridRow":lastobj.gridRow+1
+                       } );
+    }
+
+    function addActivityOnLoading(cod, stat, cur, names){
+
+        //    var deskone = taskManager.getDesktopName(1);
+
+        model.append( {  "code": cod,
+                         "CState":stat,
+                         "Current":false,
+                         "elemImg":getNextDefWallpaper(),
+                         "workareas":[{
+                                 "gridRow":1,
+                                 "elemTitle":names[0]
+                             }]
+                     });
+
+        for(var j=1; j<names.length; j++)
+            addWorkareaOnLoading(cod,names[j]);
+
+        setCState(cod,stat);
+
+    }
+
+    function getNextDefWallpaper(){
         var newwall;
         if (addednew % 4 === 0)
             newwall = "../Images/backgrounds/emptydesk1.png";
@@ -156,22 +220,9 @@ ListView{
         else if (addednew % 4 === 3)
             newwall = "../Images/backgrounds/emptydesk4.png";
 
-
         addednew++;
 
-        model.append( {  "code": cod,
-                         "CState":stat,
-                         "Current":false,
-                         "elemImg":newwall,
-                         "workareas":[{
-                                 "gridRow":1,
-                                 "gridColumn":0,
-                                 "elemTitle":"New Workarea",
-                                 "elemShowAdd":false,
-                                 "elemTempOnDragging": false
-                             }]
-                     });
-
+        return newwall;
     }
 
 

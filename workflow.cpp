@@ -64,6 +64,18 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 WorkFlow::~WorkFlow()
 {
     saveConfigurationFiles();
+    saveWorkareas();
+
+    //clear workareas QHash
+    QHashIterator<QString, QStringList *> i(storedWorkareas);
+    while (i.hasNext()) {
+        i.next();
+        QStringList *curWorks = i.value();
+        curWorks->clear();
+        delete curWorks;
+    }
+    storedWorkareas.clear();
+    //
 
     delete actManager;
     delete taskManager;
@@ -134,6 +146,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
             QObject *qmlTaskEng = rootObject->findChild<QObject*>("instTasksEngine");
             mainQML = rootObject;
 
+            loadWorkareas();
 
             if(!rootObject)
                 qDebug() << "root was not found...";
@@ -185,12 +198,88 @@ QStringList WorkFlow::getWorkAreaNames(QString id)
 {
     QStringList *ret = storedWorkareas[id];
 
-    QStringList ret2;
-    for(int i=0; i<ret->size(); i++)
-        ret2.append(ret->value(i));
 
+    QStringList ret2;
+    if(ret){
+        for(int i=0; i<ret->size(); i++)
+            ret2.append(ret->value(i));
+    }
     return ret2;
 }
+
+void WorkFlow::addWorkArea(QString id, QString name)
+{
+    QStringList *ret = storedWorkareas[id];
+
+    if (ret)
+        ret->append(name);
+}
+
+void WorkFlow::addEmptyActivity(QString id)
+{
+    QStringList *newLst = new QStringList();
+    storedWorkareas[id] = newLst;
+}
+
+void WorkFlow::removeActivity(QString id)
+{
+    if (storedWorkareas.contains(id)){
+        QStringList *ret = storedWorkareas[id];
+        ret->clear();
+
+        storedWorkareas.remove(id);
+        delete ret;
+    }
+}
+
+void WorkFlow::renameWorkarea(QString id, int desktop, QString name)
+{
+    QStringList *ret = storedWorkareas[id];
+
+    if (ret)
+        ret->replace(desktop-1,name);
+}
+
+void WorkFlow::removeWorkarea(QString id, int desktop)
+{
+    QStringList *ret = storedWorkareas[id];
+
+    if (ret)
+        ret->removeAt(desktop-1);
+}
+
+bool WorkFlow::activityExists(QString id)
+{
+    return storedWorkareas.contains(id);
+}
+
+
+void WorkFlow::saveWorkareas()
+{
+
+    QHashIterator<QString, QStringList *> i(storedWorkareas);
+    QStringList writeActivities;
+    QStringList writeSizes;
+    QStringList writeWorkareas;
+
+    while (i.hasNext()) {
+        i.next();
+        QStringList *curWorks = i.value();
+        writeActivities.append(i.key());
+        writeSizes.append(QString::number(curWorks->size()));
+
+        for(int j=0; j<curWorks->size(); j++){
+            writeWorkareas.append(curWorks->value(j));
+        }
+    }
+
+    WorkFlowSettings::setActivities(writeActivities);
+    WorkFlowSettings::setNoOfWorkareas(writeSizes);
+    WorkFlowSettings::setWorkareasNames(writeWorkareas);
+    WorkFlowSettings::self()->writeConfig();
+
+}
+
 
 ////Properties
 
@@ -243,31 +332,7 @@ void WorkFlow::loadWorkareas()
     }
 }
 
-void WorkFlow::saveWorkareas()
-{
 
-    QHashIterator<QString, QStringList *> i(storedWorkareas);
-    QStringList writeActivities;
-    QStringList writeSizes;
-    QStringList writeWorkareas;
-
-    while (i.hasNext()) {
-        i.next();
-        QStringList *curWorks = i.value();
-        writeActivities.append(i.key());
-        writeSizes.append(QString(curWorks->size()));
-
-        for(int j=0; j<curWorks->size(); j++){
-            writeWorkareas.append(curWorks->value(j));
-        }
-    }
-
-    WorkFlowSettings::setActivities(writeActivities);
-    WorkFlowSettings::setNoOfWorkareas(writeSizes);
-    WorkFlowSettings::setWorkareasNames(writeWorkareas);
-    WorkFlowSettings::self()->writeConfig();
-
-}
 
 
 void WorkFlow::loadConfigurationFiles()
@@ -292,7 +357,6 @@ void WorkFlow::loadConfigurationFiles()
     setAnimations(anim);
     QMetaObject::invokeMethod(mainQML, "setAnimations",
                               Q_ARG(QVariant, anim));
-
 
 }
 

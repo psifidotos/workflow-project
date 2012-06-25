@@ -15,11 +15,12 @@ Component{
         property string ccode: code
         property string cState: CState
 
+        property bool shown: CState === neededState
 
-        opacity: CState === neededState ? 1 : 0
+        opacity: shown ? 1 : 0
 
         width: stoppedActivitiesList.width
-        height: CState === neededState ? basicHeight : 0
+        height: shown ? basicHeight : 0
 
         property real basicHeight:0.66*mainView.workareaHeight
         property real defOpacity :0.65

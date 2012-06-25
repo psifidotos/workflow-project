@@ -267,6 +267,9 @@ Item{
     function textAccepted(){
         dTextIItem.acceptedText = dTextIItem.text;
         dTextIItem.state = "inactive";
+
+        instanceOfWorkAreasList.setWorkareaTitle(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
+
         mainView.forceActiveFocus();
     }
 

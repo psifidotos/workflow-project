@@ -51,14 +51,28 @@ ListView{
                          "Icon":icon,
                          "CState":stat} );
 
-        instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
+        if(mainView.maxDesktops === 0)
+            mainView.maxDesktops = taskManager.getMaxDesktops();
+
+        //workflowManager.addEmptyActivity(source);
+        if(workflowManager.activityExists(source)){
+            var nms = workflowManager.getWorkAreaNames(source);
+
+            instanceOfWorkAreasList.addActivityOnLoading(source,stat,cur,nms);
+        }
+        else{
+            instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
+
+            for(var j=1; j<mainView.maxDesktops; ++j){
+                instanceOfWorkAreasList.addWorkarea(source);
+            }
+
+        }
+
+        //////
 
         if (cur)
             mainView.currentActivity = source;
-
-        for(var j=0; j<3; ++j){
-            instanceOfWorkAreasList.addWorkarea(source);
-        }
 
         setCState(source,stat);
 
@@ -112,6 +126,8 @@ ListView{
 
             //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
             model.remove(p);
+
+            workflowManager.removeActivity(cod);
 
             instanceOfWorkAreasList.removeActivity(cod);
             allWorkareas.updateShowActivities();

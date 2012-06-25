@@ -39,7 +39,6 @@ Rectangle {
     onLockActivitiesChanged: workflowManager.setLockActivities(lockActivities);
 
 
-
     property string currentActivity
     property int currentDesktop
     property int maxDesktops
@@ -192,19 +191,18 @@ Rectangle {
         //
     }
 
-    /*   PlasmaComponents.ToolBar{
-        width:parent.width
-        height:60
-        y:100
-        z:140
+/*
+    Rectangle {
+        width: 20; height: 20; z:75; x:0; y:0
+        color:"#ffffff"
+
+        MouseArea {
+            anchors.fill: parent;
+            onClicked: {
+                workflowManager.saveWorkareas();
+            }
+        }
     }*/
-
-    //  PlasmaComponents.ToolBarLayout{
-
-    //  }
-
-
-
 
     /*--------------------Dialogs ---------------- */
     BorderImage {

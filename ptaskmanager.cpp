@@ -191,10 +191,15 @@ void PTaskManager::setOnAllActivities(QString wd)
 #endif
 
 
+int PTaskManager::getMaxDesktops()
+{
+    return taskMainM->numberOfDesktops();
+}
+
 ///INVOKES
 QString PTaskManager::getDesktopName(int n)
 {
-    return kwinSystem->desktopName(n);
+    return taskMainM->desktopName(n);
 }
 
 void PTaskManager::setOnDesktop(QString id, int desk)
