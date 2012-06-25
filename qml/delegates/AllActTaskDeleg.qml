@@ -129,8 +129,6 @@ Component{
             Text{
                 id:taskTitle2
 
-                clip:true
-
                 anchors.horizontalCenter: parent.horizontalCenter
 
 
@@ -140,6 +138,9 @@ Component{
                 font.bold: true
                 font.pointSize: 6+(mainView.scaleMeter/18)
                 color:"#333333"
+
+                elide:Text.ElideRight
+                width:parent.width
             }
 
             MouseArea {

@@ -23,7 +23,7 @@ Rectangle {
             easing.type: Easing.InOutQuad;
         }
     }
-
+/*
     Text{
         text:"Stopped Activities"
         width:stopActBack.width
@@ -37,7 +37,7 @@ Rectangle {
         font.family: "Helvetica"
         font.bold: true
         font.pointSize: 6+(mainView.scaleMeter) /10
-    }
+    }*/
 
     ListView {
         id: stoppedActivitiesList

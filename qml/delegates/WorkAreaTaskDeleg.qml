@@ -127,6 +127,8 @@ Component{
                 font.bold: true
                 font.pointSize: 4+(mainView.scaleMeter) / 12
                 color: taskDeleg1.taskTitleColorD
+                elide: Text.ElideRight
+                width: parent.width
 
                 Behavior on color{
                     ColorAnimation {

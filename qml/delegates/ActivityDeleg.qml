@@ -35,63 +35,69 @@ Component{
         }
 
         QIconItem{
-          id:activityIcon
-          rotation:-20
-          opacity: CState===neededState ? 1:0
+            id:activityIcon
+            rotation:-20
+            opacity: CState===neededState ? 1:0
 
-          //source: "../" + Icon
-          icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
-          x:mainView.scaleMeter/10
-          y:mainView.scaleMeter/3
-       //   width: mainActivity.tCState === neededState ? 5+mainView.scaleMeter : 0
-          width: 5+mainView.scaleMeter
-          height:width
-          smooth:true
+            //source: "../" + Icon
+            icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
+            x:mainView.scaleMeter/10
+            y:mainView.scaleMeter/3
+            //   width: mainActivity.tCState === neededState ? 5+mainView.scaleMeter : 0
+            width: 5+mainView.scaleMeter
+            height:width
+            smooth:true
 
-          //for the animation to be precise
-          property int toRX:x - width/2
-          property int toRY:y - height/2
+            //for the animation to be precise
+            property int toRX:x - width/2
+            property int toRY:y - height/2
 
-          Behavior on rotation{
-              NumberAnimation {
-                  duration: 200;
-                  easing.type: Easing.InOutQuad;
-              }
-          }
+            Behavior on rotation{
+                NumberAnimation {
+                    duration: 200;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
 
-          MouseArea {
-              anchors.fill: parent
-              hoverEnabled: true
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
 
-              onEntered: {
-                  if (mainView.lockActivities === false){
-                      activityBtnsI.state="show";
-                      stopActLocked.state="hide";
-                      fadeIcon.opacity = 0;
-                      activityIcon.rotation = 0;
-                  }
-                  else
-                      stopActLocked.state="show";
+                onEntered: {
+                    if(activityName.state === "inactive"){
+                        if (mainView.lockActivities === false){
+                            activityBtnsI.state="show";
+                            stopActLocked.state="hide";
+                            fadeIcon.opacity = 0;
+                            activityIcon.rotation = 0;
+                        }
+                        else
+                            stopActLocked.state="show";
+                    }
+                    else{
+                        activityBtnsI.state="hide";
+                        stopActLocked.state="hide";
+                    }
 
-              }
+                }
 
-              onExited: {
-                  if (mainView.lockActivities === false){
-                      activityBtnsI.state="hide";
-                      stopActLocked.state="hide";
-                      fadeIcon.opacity = 1;
-                      activityIcon.rotation = -20;
-                  }
-                  else
-                      stopActLocked.state="hide";
+                onExited: {
+                    if (mainView.lockActivities === false){
+                        activityBtnsI.state="hide";
+                        stopActLocked.state="hide";
+                        fadeIcon.opacity = 1;
+                        activityIcon.rotation = -20;
+                    }
+                    else
+                        stopActLocked.state="hide";
 
-              }
-              onClicked: {
-                  if (mainView.lockActivities === false)
-                      instanceOfActivitiesList.setIcon(ccode);
-              }
+                }
+                onClicked: {
+                    if (mainView.lockActivities === false)
+                        instanceOfActivitiesList.setIcon(ccode);
+                }
 
-          }
+            }
 
         }
 
@@ -144,13 +150,19 @@ Component{
                 hoverEnabled: true
 
                 onEntered: {
-                    if (mainView.lockActivities === false){
-                        activityBtnsI.state="show";
-                        stopActLocked.state="hide";
-                        activityName.entered();
+                    if(activityName.state === "inactive"){
+                        if (mainView.lockActivities === false){
+                            activityBtnsI.state="show";
+                            stopActLocked.state="hide";
+                            activityName.entered();
+                        }
+                        else
+                            stopActLocked.state="show";
                     }
-                    else
-                        stopActLocked.state="show";
+                    else{
+                        activityBtnsI.state="hide";
+                        stopActLocked.state="hide";
+                    }
 
                 }
 
@@ -184,69 +196,69 @@ Component{
         }
 
         QIconItem{
-          id:stopActLocked
-          opacity:1
-          icon: QIcon("player_stop")
-          anchors.top: parent.top
-          anchors.right: parent.right
-         // x:mainView.scaleMeter/10
-         // y:mainView.scaleMeter/3
-          width:5+0.8*mainView.scaleMeter
-          height:width
-          state: "hide"
+            id:stopActLocked
+            opacity:1
+            icon: QIcon("player_stop")
+            anchors.top: parent.top
+            anchors.right: parent.right
+            // x:mainView.scaleMeter/10
+            // y:mainView.scaleMeter/3
+            width:5+0.8*mainView.scaleMeter
+            height:width
+            state: "hide"
 
-          Behavior on opacity{
-              NumberAnimation {
-                  duration: 400;
-                  easing.type: Easing.InOutQuad;
-              }
-          }
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 400;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
 
-          Behavior on scale{
-              NumberAnimation {
-                  duration: 400;
-                  easing.type: Easing.InOutQuad;
-              }
-          }
+            Behavior on scale{
+                NumberAnimation {
+                    duration: 400;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
 
-          MouseArea {
-              anchors.fill: parent
-              hoverEnabled: true
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
 
-              onEntered: {
-                  stopActLocked.state="show";
-                  stopActLocked.scale=1.2;
-              }
+                onEntered: {
+                    stopActLocked.state="show";
+                    stopActLocked.scale=1.2;
+                }
 
-              onExited: {
-                  stopActLocked.state="hide";
-                  stopActLocked.scale=1;
-              }
+                onExited: {
+                    stopActLocked.state="hide";
+                    stopActLocked.scale=1;
+                }
 
-              onClicked: {
-                  activityBtnsI.clickedStopped();
-              }
+                onClicked: {
+                    activityBtnsI.clickedStopped();
+                }
 
-          }
+            }
 
-          states: [
-              State {
-                  name: "show"
-                  PropertyChanges {
-                      target: stopActLocked
-                      opacity: allwlists.activitiesShown > 1 ? 1 : 0
-                  }
-              },
-              State {
-                  name:"hide"
-                  PropertyChanges {
-                      target: stopActLocked
-                      opacity:0
-                  }
+            states: [
+                State {
+                    name: "show"
+                    PropertyChanges {
+                        target: stopActLocked
+                        opacity: allwlists.activitiesShown > 1 ? 1 : 0
+                    }
+                },
+                State {
+                    name:"hide"
+                    PropertyChanges {
+                        target: stopActLocked
+                        opacity:0
+                    }
 
-              }
+                }
 
-          ]
+            ]
         }
 
 

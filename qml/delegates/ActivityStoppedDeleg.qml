@@ -96,6 +96,8 @@ Component{
             anchors.top: activityIcon.bottom
 
             horizontalAlignment: Text.AlignRight
+            maximumLineCount:2
+            elide: Text.ElideRight
 
             Behavior on opacity{
                 NumberAnimation {

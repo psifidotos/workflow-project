@@ -13,6 +13,8 @@ Item{
     property string acceptedText : ""
 
 
+
+
     BorderImage{
         id:backIImage
 
@@ -79,6 +81,21 @@ Item{
         }
     }
 
+    Text{
+        id:mainTextLabel
+
+        text:mainIText.text
+        width:mainIText.width
+        height:mainIText.height
+        font.family: mainIText.font.family
+        font.italic: mainIText.font.italic
+        font.pointSize: mainIText.font.pointSize
+        color:mainIText.color
+        elide:Text.ElideRight
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
 
     TextInput {
@@ -100,7 +117,7 @@ Item{
         anchors.verticalCenter: parent.verticalCenter
         //anchors.centerIn: parent
         focus:true
-
+        opacity:mainTextLabel.opacity === 0 ? 1 : 0.001
 
         property color origColor: "#323232"
         property color activColor: "#444444"
@@ -133,6 +150,7 @@ Item{
 
             return mainIText.positionAt(mappedMouse.x, mappedMouse.y);
         }
+
         MouseArea{
             anchors.fill: parent
             hoverEnabled: true
@@ -261,6 +279,8 @@ Item{
         mainIText.forceActiveFocus();
         pencilI.opacity = 0;
 
+        mainTextLabel.opacity = 0;
+
         dTextIItem.acceptedText = dTextIItem.text
     }
 
@@ -271,6 +291,8 @@ Item{
         instanceOfWorkAreasList.setWorkareaTitle(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
 
         mainView.forceActiveFocus();
+
+        mainTextLabel.opacity = 1;
     }
 
 }

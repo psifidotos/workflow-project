@@ -1,5 +1,5 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
-import QtQuick 1.0
+import QtQuick 1.1
 
 Item{
 
@@ -88,6 +88,32 @@ Item{
         }
     }
 
+    Text{
+        id:mainTextLabel2
+
+        text:mainText.text
+
+        width:0.8*mainText.width
+        height:mainText.height
+
+        font.family: mainText.font.family
+        font.bold: mainText.font.bold
+        font.italic: mainText.font.italic
+        font.pointSize: mainText.font.pointSize + 2
+        color:mainText.color
+
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+        verticalAlignment: mainText.verticalAlignment
+
+
+        wrapMode: Text.WordWrap
+        maximumLineCount: 2
+        elide:Text.ElideRight
+    }
+
+
     TextEdit {
         id:mainText
         property int space:0;
@@ -101,10 +127,12 @@ Item{
         font.family: "Helvetica"
         font.bold: true
         font.italic: true
-        font.pointSize: 6 + (mainView.scaleMeter/12)
+        font.pointSize: 4 + (mainView.scaleMeter/12)
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom
+
+        opacity:mainTextLabel2.opacity === 0 ? 1 : 0.001
 
         anchors.left: parent.left
         anchors.leftMargin: 10
@@ -286,6 +314,8 @@ Item{
         pencilImg.opacity = 0;
 
         dTextItem.acceptedText = dTextItem.text
+        mainTextLabel2.opacity = 0;
+        activityBtnsI.state="hide";
     }
 
     function textAccepted(){
@@ -293,12 +323,14 @@ Item{
         dTextItem.state = "inactive";
         mainView.forceActiveFocus();
         instanceOfActivitiesList.setName(dTextItem.actCode,dTextItem.acceptedText);
+        mainTextLabel2.opacity = 1;
     }
 
     function textNotAccepted(){
         //dTextItem.acceptedText = dTextItem.text;
         dTextItem.state = "inactive";
         mainView.forceActiveFocus();
+        mainTextLabel2.opacity = 1;
     }
 
 }

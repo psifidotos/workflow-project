@@ -83,6 +83,8 @@ Component{
                 font.italic: true
                 font.pointSize: orphansList.fontSiz
 
+                elide:Text.ElideRight
+
                 Behavior on color{
                     ColorAnimation {
                         duration: 500
