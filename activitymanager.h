@@ -5,6 +5,8 @@
 
 #include <Plasma/DataEngine>
 
+#include <KStandardDirs>
+
 
 class ActivityManager : public QObject
 {
@@ -51,6 +53,8 @@ private:
 
     QObject *qmlActEngine;
     Plasma::DataEngine *plasmaActEngine;
+
+    KStandardDirs kStdDrs;
 
 };
 

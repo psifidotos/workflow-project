@@ -175,6 +175,17 @@ ListView{
 
     function setMaxDesktops(v){
         mainView.maxDesktops = v;
+
+        //it is called consequently for example to go from 2VDs to 4 VDs, it is going
+        //2-3-4 from the relevant signals
+
+        var mxs = instanceOfWorkAreasList.maxWorkareas();
+        if (mxs>v)
+            taskManager.slotAddDesktop();
+        else if(mxs<v)
+            taskManager.slotRemoveDesktop();
+
+
     }
 
     function setCurrentTask(cod){
