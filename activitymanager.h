@@ -44,6 +44,9 @@ public slots:
 
 private:
     void setIcon(QString id, QString name) const;
+    QString getWallpaperForRunning(QString source) const;
+    QString getWallpaperForStopped(QString source) const;
+    QString getWallpaperFromFile(QString source,QString file) const;
 
 
     QObject *qmlActEngine;

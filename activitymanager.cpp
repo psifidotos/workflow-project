@@ -51,10 +51,9 @@ void ActivityManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
     //connect(plasmaActEngine, SIGNAL(sourceRemoved(QString)), qmlActEngine, SLOT(activityRemovedIn(QVariant(QString))));
 }
 
-
-QString  ActivityManager::getWallpaper(QString source) const
+QString ActivityManager::getWallpaperFromFile(QString source, QString file) const
 {
-    QString fpath = QDir::home().filePath(".kde4/share/config/plasma-desktop-appletsrc");
+    QString fpath = QDir::home().filePath(file);
 
     KConfig config( fpath, KConfig::SimpleConfig );
     KConfigGroup conGps = config.group("Containments");
@@ -94,6 +93,27 @@ QString  ActivityManager::getWallpaper(QString source) const
         iterat++;
     }
     return "";
+
+}
+
+QString ActivityManager::getWallpaper(QString source) const
+{
+    QString res = getWallpaperForStopped(source);
+    if (res=="")
+        res = getWallpaperForRunning(source);
+
+    return res;
+}
+
+QString  ActivityManager::getWallpaperForRunning(QString source) const
+{
+    return getWallpaperFromFile(source,QString(".kde4/share/config/plasma-desktop-appletsrc"));
+}
+
+QString  ActivityManager::getWallpaperForStopped(QString source) const
+{
+    QString actPath(".kde4/share/apps/plasma-desktop/activities/"+source);
+    return getWallpaperFromFile(source,actPath);
 }
 
 QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)

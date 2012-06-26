@@ -117,12 +117,12 @@ Rectangle {
 
         MainAddActivityButton{
             id: mAddActivityBtn
-            z:4
+            z:7
         }
 
         TitleMainView{
             id:oxygenT
-            z:4
+            z:8
         }
 
 

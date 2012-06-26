@@ -143,7 +143,7 @@ ListView{
         setCState(cod,"Stopped");
         instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
-
+/*
     Timer {
         id:wallPapTimer
         property string cd
@@ -151,19 +151,19 @@ ListView{
         onTriggered: {
             updateWallpaper(cd);
         }
-    }
+    }*/
 
     function updateWallpaper(cod){
         var pt = activityManager.getWallpaper(cod);
         if (pt !== "")
             instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
-
+/*
     function updateWallpaperInt(cod,inter){
         wallPapTimer.cd = cod;
         wallPapTimer.interval = inter;
         wallPapTimer.start();
-    }
+    }*/
 
     function startActivity(cod){
 
@@ -172,7 +172,8 @@ ListView{
         setCState(cod,"Running");
         instanceOfWorkAreasList.setCState(cod,"Running");
 
-        updateWallpaperInt(cod,1000);
+        //updateWallpaperInt(cod,1000);
+        updateWallpaper(cod);
 
         //        var pt = activityManager.getWallpaper(cod);
         //       instanceOfWorkAreasList.setWallpaper(cod,pt);

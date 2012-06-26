@@ -29,6 +29,8 @@ Rectangle{
     //2 - over everywhere tasks
     property int lastSelection
 
+    property bool firsttime
+
 
 
     QIconItem{
@@ -54,6 +56,10 @@ Rectangle{
         mainDraggingItem.intIsEverywhere = everywhere;
         mainDraggingItem.intIsShaded = shaded;
 
+        mainDraggingItem.lastSelection = -1;
+        //just for the first check
+        mainDraggingItem.firsttime=true;
+
         onPstChanged(ms);
     }
 
@@ -63,6 +69,10 @@ Rectangle{
         mainDraggingItem.z = -1;
         allWorkareas.flickableV = true;
         selectionImage.opacity = 0;
+
+        selectionImage.setLocation(-1,-1,1,1);
+
+        mainDraggingItem.lastSelection = -1;
 
         //It creates a confusion when releasing
         //must be fixed with a flag initialiazing properly
@@ -144,7 +154,7 @@ Rectangle{
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
-        var fixCC = mapToItem(centralArea,mouse.x,mouse.y);
+        var fixCC = mainView.mapToItem(centralArea,mouse.x,mouse.y);
 
         if(mainDraggingItem.checkTypeId(centralArea.childAt(fixCC.x,fixCC.y),"workareasMainView")){
             var mainCentralItem = centralArea.childAt(fixCC.x,fixCC.y);
@@ -170,7 +180,6 @@ Rectangle{
 
                         var fixC4 = mapToItem(listViewTot,mouse.x,mouse.y);
 
-
                         if(mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"workalistForActivity")){
                             var onlyWorkArList = listViewTot.childAt(fixC4.x,fixC4.y).children[0];
 
@@ -181,7 +190,7 @@ Rectangle{
 
                                 if((mainDraggingItem.drActiv!==workAreaD.actCode)||
                                    (mainDraggingItem.drDesktop!==workAreaD.desktop) ||
-                                   (selectionRect.state !== "blue")){
+                                   (mainDraggingItem.firsttime === true)){
 
                                     var bordRect = workAreaD.getBorderRectangle();
                                     var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
@@ -193,6 +202,7 @@ Rectangle{
                                     mainDraggingItem.drDesktop = workAreaD.desktop;
 
                                     mainDraggingItem.lastSelection = 0;
+                                    mainDraggingItem.firsttime = false;
                                 }
 
 
@@ -202,7 +212,8 @@ Rectangle{
                             var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
 
                             if((mainDraggingItem.drActiv!== activityCode) ||
-                               (mainDraggingItem.drDesktop!==desktopsNum+1)){
+                               (mainDraggingItem.drDesktop!==desktopsNum+1) ||
+                               (mainDraggingItem.firsttime === true)){
 
                                 var fixBCoord2 = addArea.mapToItem(mainDraggingItem,addArea.x, addArea.y);
 
@@ -212,7 +223,9 @@ Rectangle{
 
                                 mainDraggingItem.drActiv = activityCode;
                                 mainDraggingItem.drDesktop = desktopsNum+1;
-                                mainDraggingItem.lastSelection = 1;                               
+
+                                mainDraggingItem.lastSelection = 1;
+                                mainDraggingItem.firsttime = false;
 
                             }
 
@@ -229,11 +242,14 @@ Rectangle{
 
             var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
 
-            selectionImage.setLocation(fixBCoord3.x-15,fixBCoord3.y-4,1.1*allTaskPO.width,1.3 * allTaskPO.height);
+            selectionImage.setLocation(fixBCoord3.x-15,fixBCoord3.y-4,1.08*allTaskPO.width,1.3 * allTaskPO.height);
             selectionImage.opacity = 1;
 
             mainDraggingItem.lastSelection = 2;
+            mainDraggingItem.firsttime = false;
         }
+
+
 
 
     }
