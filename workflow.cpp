@@ -160,7 +160,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                 qDebug() << "root was not found...";
             else{
                 if(qmlActEng)
-                    actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
+                    actManager->setQMlObject(qmlActEng);
                 if(qmlTaskEng)
                     taskManager->setQMlObject(qmlTaskEng);
             }

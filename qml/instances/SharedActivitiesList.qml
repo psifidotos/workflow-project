@@ -31,13 +31,15 @@ ListView{
 
     function setCState(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"CState",val);
+        if (ind>-1){
+            model.setProperty(ind,"CState",val);
 
-        instanceOfWorkAreasList.setCState(cod,val);
+            instanceOfWorkAreasList.setCState(cod,val);
 
 
-        allWorkareas.updateShowActivities();
-        stoppedPanel.changedChildState();
+            allWorkareas.updateShowActivities();
+            stoppedPanel.changedChildState();
+        }
     }
 
     function activityAddedIn(source,title,icon,stat,cur)
@@ -195,6 +197,19 @@ ListView{
             return "";
     }
 
+    function setCurrentSignal(cod){
+        for(var i=0; i<model.count; ++i){
+            model.setProperty(i,"Current",false);
+        }
+
+        var ind = getIndexFor(cod);
+        model.setProperty(ind,"Current",true);
+
+        mainView.currentActivity = cod;
+
+        instanceOfWorkAreasList.setCurrent(cod);
+    }
+
     function setCurrent(cod){
         activityManager.setCurrent(cod);
 
@@ -225,7 +240,7 @@ ListView{
     }
 
     function cloneActivity(cod){
-
+/*
         var p = getIndexFor(cod);
         var ob = model.get(p);
 
@@ -243,7 +258,7 @@ ListView{
                      );
         instanceOfWorkAreasList.cloneActivity(cod,nId);
 
-        allWorkareas.updateShowActivities();
+        allWorkareas.updateShowActivities();*/
     }
 
     function removeActivity(cod){
@@ -257,13 +272,8 @@ ListView{
 
 
     function addNewActivity(){
-        var nId = getNextId();
-        var res = activityManager.add("---","New Activity");
+        var res = activityManager.add(i18n("New Activity"));
     }
 
-    function getNextId(){
-        newActivityCounter++;
-        return "dY"+newActivityCounter;
-    }
 
 }

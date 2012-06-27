@@ -3,10 +3,15 @@
 
 #include <QObject>
 
-#include <Plasma/DataEngine>
-
 #include <KStandardDirs>
 
+#include <KActivities/Controller>
+
+namespace KActivities
+{
+    class Controller;
+    class Info;
+}
 
 class ActivityManager : public QObject
 {
@@ -21,9 +26,9 @@ public:
 //  Q_INVOKABLE void downloadActivityScripts();
 
     Q_INVOKABLE QString getWallpaper(QString source) const;
-    Q_INVOKABLE QString chooseIcon(QString) const;
+    Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
-    Q_INVOKABLE void add(QString id, QString name);
+    Q_INVOKABLE QString add(QString name);
     Q_INVOKABLE void clone(QString id, QString name);
     Q_INVOKABLE void setCurrent(QString id);
     Q_INVOKABLE void stop(QString id);
@@ -32,7 +37,7 @@ public:
     Q_INVOKABLE void remove(QString id);
     Q_INVOKABLE int askForDelete(QString activityName);
 
-    void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
+    void setQMlObject(QObject *obj);
 
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
@@ -40,19 +45,23 @@ signals:
 
 
 public slots:
-  void dataUpdated(QString source, Plasma::DataEngine::Data data);
+ // void dataUpdated(QString source, Plasma::DataEngine::Data data);
   void activityAdded(QString id);
   void activityRemoved(QString id);
+  void activityDataChanged();
+  void activityStateChanged();
+  void currentActivityChanged(const QString &id);
 
 private:
-    void setIcon(QString id, QString name) const;
+    void setIcon(QString id, QString name);
     QString getWallpaperForRunning(QString source) const;
     QString getWallpaperForStopped(QString source) const;
     QString getWallpaperFromFile(QString source,QString file) const;
 
 
     QObject *qmlActEngine;
-    Plasma::DataEngine *plasmaActEngine;
+    KActivities::Controller *m_activitiesCtrl;
+    QString activityForDelete;
 
     KStandardDirs kStdDrs;
 

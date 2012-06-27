@@ -1,55 +1,54 @@
 #include "activitymanager.h"
 
-#include <QDeclarativeEngine>
-#include <QDBusInterface>
 #include <QDir>
-
-#include <Plasma/Service>
-#include <Plasma/ServiceJob>
-#include <Plasma/Applet>
-#include <Plasma/DataEngineManager>
-#include <Plasma/DataEngine>
+#include <QDebug>
 
 
 #include <KIconDialog>
 #include <KIcon>
 #include <KWindowSystem>
 #include <KConfigGroup>
+#include <KConfig>
 #include <KMessageBox>
 #include <KStandardDirs>
 
+
+#include <KActivities/Controller>
+#include <KActivities/Info>
 
 
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent)
 {
+    m_activitiesCtrl = new KActivities::Controller(this);
 }
 
 ActivityManager::~ActivityManager()
 {
-    foreach (const QString source, plasmaActEngine->sources())
-        plasmaActEngine->disconnectSource(source, this);
+
+    delete m_activitiesCtrl;
 }
 
-void ActivityManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
+void ActivityManager::setQMlObject(QObject *obj)
 {
-    qmlActEngine = obj;
-    plasmaActEngine = engin;
+    qmlActEngine = obj;    
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
 
     connect(this, SIGNAL(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
-    // connect data sources
 
-    foreach (const QString source, plasmaActEngine->sources())
-        activityAdded(source);
 
-    // activity addition and removal
-    connect(plasmaActEngine, SIGNAL(sourceAdded(QString)), this, SLOT(activityAdded(QString)));
-    connect(plasmaActEngine, SIGNAL(sourceRemoved(QString)), this, SLOT(activityRemoved(QString)));
-    //connect(plasmaActEngine, SIGNAL(sourceRemoved(QString)), qmlActEngine, SLOT(activityRemovedIn(QVariant(QString))));
+    QStringList activities = m_activitiesCtrl->listActivities();
+
+    foreach (const QString &id, activities) {
+        activityAdded(id);
+    }
+
+    connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
+    connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
+    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
 }
 
 QString ActivityManager::getWallpaperFromFile(QString source, QString file) const
@@ -117,8 +116,6 @@ QString  ActivityManager::getWallpaperForRunning(QString source) const
 
 QString  ActivityManager::getWallpaperForStopped(QString source) const
 {
-
-
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+source;
 
     //QString actPath(".kde4/share/apps/plasma-desktop/activities/"+source);
@@ -131,44 +128,39 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
-void ActivityManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
-    //if (!m_activities.contains(source))
-    //return;
-    QVariant returnedValue;
-
-    QMetaObject::invokeMethod(qmlActEngine, "getIndexFor",
-                              Q_RETURN_ARG(QVariant, returnedValue),
-                              Q_ARG(QVariant, source));
-
-    if(returnedValue.toInt() == -1)
-    {
-
-        emit activityAddedIn(QVariant(source),
-                             QVariant(data["Name"].toString()),
-                             QVariant(data["Icon"].toString()),
-                             QVariant(data["State"].toString()),
-                             QVariant(data["Current"].toBool()));
-
-        QString walp = this->getWallpaper(source);
-      //  qDebug()<<source<<"-"<<walp;
-    }
-    else
-    {
-        emit activityUpdatedIn(QVariant(source),
-                               QVariant(data["Name"].toString()),
-                               QVariant(data["Icon"].toString()),
-                               QVariant(data["State"].toString()),
-                               QVariant(data["Current"].toBool()));
-    }
-
-}
 
 void ActivityManager::activityAdded(QString id) {
 
-    if (id == "Status")
-        return;
+    KActivities::Info *activity = new KActivities::Info(id, this);
 
-    plasmaActEngine->connectSource(id, this);
+
+    QString state;
+    switch (activity->state()) {
+        case KActivities::Info::Running:
+            state = "Running";
+            break;
+        case KActivities::Info::Starting:
+            state = "Starting";
+            break;
+        case KActivities::Info::Stopping:
+            state = "Stopping";
+            break;
+        case KActivities::Info::Stopped:
+            state = "Stopped";
+            break;
+        case KActivities::Info::Invalid:
+        default:
+            state = "Invalid";
+    }
+
+    emit activityAddedIn(QVariant(id),
+                         QVariant(activity->name()),
+                         QVariant(activity->icon()),
+                         QVariant(state),
+                         QVariant(m_activitiesCtrl->currentActivity() == id));
+
+    connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));
+    connect(activity, SIGNAL(stateChanged(KActivities::Info::State)), this, SLOT(activityStateChanged()));
 
 }
 
@@ -177,22 +169,98 @@ void ActivityManager::activityRemoved(QString id) {
     QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
                               Q_ARG(QVariant, id));
 
-    plasmaActEngine->disconnectSource(id, this);
-
 }
 
-
-
-void ActivityManager::setIcon(QString id, QString name) const
+void ActivityManager::activityDataChanged()
 {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    KConfigGroup op = service->operationDescription("setIcon");
-    op.writeEntry("Icon", name);
-    Plasma::ServiceJob *job = service->startOperationCall(op);
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+    KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
+    if (!activity) {
+        return;
+    }
+
+    QString state;
+    switch (activity->state()) {
+        case KActivities::Info::Running:
+            state = "Running";
+            break;
+        case KActivities::Info::Starting:
+            state = "Starting";
+            break;
+        case KActivities::Info::Stopping:
+            state = "Stopping";
+            break;
+        case KActivities::Info::Stopped:
+            state = "Stopped";
+            break;
+        case KActivities::Info::Invalid:
+        default:
+            state = "Invalid";
+    }
+
+
+
+    emit activityUpdatedIn(QVariant(activity->id()),
+                           QVariant(activity->name()),
+                           QVariant(activity->icon()),
+                           QVariant(state),
+                           QVariant(m_activitiesCtrl->currentActivity() == activity->id()));
 }
 
-QString ActivityManager::chooseIcon(QString id) const
+void ActivityManager::activityStateChanged()
+{
+    KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
+    const QString id = activity->id();
+    if (!activity) {
+        return;
+    }
+    QString state;
+    switch (activity->state()) {
+        case KActivities::Info::Running:
+            state = "Running";
+            break;
+        case KActivities::Info::Starting:
+            state = "Starting";
+            break;
+        case KActivities::Info::Stopping:
+            state = "Stopping";
+            break;
+        case KActivities::Info::Stopped:
+            state = "Stopped";
+            break;
+        case KActivities::Info::Invalid:
+        default:
+            state = "Invalid";
+    }
+
+    //qDebug() <<activity->id()<< "-" << state;
+
+    QMetaObject::invokeMethod(qmlActEngine, "setCState",
+                              Q_ARG(QVariant, id),
+                              Q_ARG(QVariant, state));
+
+    if((activity->id()==activityForDelete)&&
+            (state=="Stopped")){
+        m_activitiesCtrl->removeActivity(activity->id());
+        activityForDelete = "";
+    }
+}
+
+void ActivityManager::currentActivityChanged(const QString &id)
+{
+    QMetaObject::invokeMethod(qmlActEngine, "setCurrentSignal",
+                              Q_ARG(QVariant, id));
+}
+
+
+
+/////////SLOTS
+
+void ActivityManager::setIcon(QString id, QString name)
+{
+    m_activitiesCtrl->setActivityIcon(id,name);
+}
+
+QString ActivityManager::chooseIcon(QString id)
 {
     KIconDialog *dialog = new KIconDialog;
     dialog->setup(KIconLoader::Desktop);
@@ -204,7 +272,7 @@ QString ActivityManager::chooseIcon(QString id) const
     dialog->deleteLater();
 
     if (icon != "")
-        ActivityManager::setIcon(id,icon);
+        setIcon(id,icon);
 
     return icon;
 }
@@ -218,62 +286,34 @@ int ActivityManager::askForDelete(QString activityName)
     return responce;
 }
 
-void ActivityManager::add(QString id, QString name) {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    KConfigGroup op = service->operationDescription("add");
-    op.writeEntry("Name", name);
-    Plasma::ServiceJob *job = service->startOperationCall(op);
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+QString ActivityManager::add(QString name) {
+   return m_activitiesCtrl->addActivity(name);
 }
 
 void ActivityManager::clone(QString id, QString name) {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    KConfigGroup op = service->operationDescription("add");
-    op.writeEntry("Name", name);
-    Plasma::ServiceJob *job = service->startOperationCall(op);
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+
 }
 
 void ActivityManager::setCurrent(QString id) {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    Plasma::ServiceJob *job = service->startOperationCall(service->operationDescription("setCurrent"));
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+    m_activitiesCtrl->setCurrentActivity(id);
 }
 
 void ActivityManager::stop(QString id) {
-    // TODO: when activity is stopped, take a screenshot and use that icon
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    Plasma::ServiceJob *job = service->startOperationCall(service->operationDescription("stop"));
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+    m_activitiesCtrl->stopActivity(id);
 }
 
 void ActivityManager::start(QString id) {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    Plasma::ServiceJob *job = service->startOperationCall(service->operationDescription("start"));
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+
+    m_activitiesCtrl->startActivity(id);
 }
 
 void ActivityManager::setName(QString id, QString name) {
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    KConfigGroup op = service->operationDescription("setName");
-    op.writeEntry("Name", name);
-    Plasma::ServiceJob *job = service->startOperationCall(op);
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+    m_activitiesCtrl->setActivityName(id,name);
 }
 
 void ActivityManager::remove(QString id) {
-    ActivityManager::stop(id);
-
-    Plasma::Service *service = plasmaActEngine->serviceForSource(id);
-    KConfigGroup op = service->operationDescription("remove");
-    op.writeEntry("Id", id);
-    Plasma::ServiceJob *job = service->startOperationCall(op);
-    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
-
-    //KActivities::Consumer *m_C = new KActivities::Consumer(this);
-    //m_C->removeActivity(id);
-    //  KActivities::Controller().removeActivity(id);
-
+    m_activitiesCtrl->stopActivity(id);
+    activityForDelete = id;
 }
 
 
