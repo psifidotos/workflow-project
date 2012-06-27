@@ -33,7 +33,7 @@ public:
     Q_INVOKABLE void setOnAllActivities(QString);
 #endif
 
-    void setQMlObject(QObject *obj,Plasma::DataEngine *engin);
+    void setQMlObject(QObject *obj);
 
 
 signals:

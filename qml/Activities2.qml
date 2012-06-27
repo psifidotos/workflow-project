@@ -16,7 +16,6 @@ Rectangle {
     id:mainView
     objectName: "instMainView"
 
-    width: 1024;  height: 700
 
     color: "#dcdcdc"
 
@@ -38,6 +37,8 @@ Rectangle {
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: workflowManager.setLockActivities(lockActivities);
 
+    signal minimumWidthChanged;
+    signal minimumHeightChanged;
 
     property string currentActivity
     property int currentDesktop
@@ -176,15 +177,15 @@ Rectangle {
     /*-------------------Loading values-------------------*/
     function setShowWindows(v){
         mainView.showWinds = v;
-        console.debug("ShowW:"+v);
+  //      console.debug("ShowW:"+v);
     }
     function setLockActivities(v){
         mainView.lockActivities = v;
-        console.debug("LockA:"+ v);
+   //     console.debug("LockA:"+ v);
     }
     function setZoomSlider(v){
         zoomSlider.value = v;
-        console.debug("Zoom:"+v);
+    //    console.debug("Zoom:"+v);
     }
 
     function setAnimations(v){
@@ -202,6 +203,17 @@ Rectangle {
                 workflowManager.saveWorkareas();
             }
         }
+    }*/
+
+/*
+    onMinimumWidthChanged:{
+        if(mainView.minimumWidth>mainView.width)
+            mainView.width = mainView.minimumWidth
+    }
+
+    onMinimumHeightChanged:{
+        if(mainView.minimumHeight>mainView.height)
+            mainView.height = mainView.minimumHeight
     }*/
 
     /*--------------------Dialogs ---------------- */

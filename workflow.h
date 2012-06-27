@@ -79,7 +79,7 @@ public:
 
 
 public slots:
-    void geomChanged();
+   // void geomChanged();
 
 private:
     bool m_lockActivities;

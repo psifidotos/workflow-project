@@ -87,7 +87,11 @@ void WorkFlow::init(){
 
     extender()->setEmptyExtenderMessage(i18n("No Activities..."));
 
-    //extender()->setMaximumHeight(300);
+    extender()->setMinimumWidth(500);
+    extender()->setMinimumHeight(300);
+ //   extender()->setMaximumWidth(1500);
+  //  extender()->setMaximumHeight(1200);
+
     if (extender()->item("WorkFlow") == 0) {
 
         Plasma::ExtenderItem *item = new Plasma::ExtenderItem(extender());
@@ -97,12 +101,14 @@ void WorkFlow::init(){
         item->setName("WorkFlow");
         item->setTitle("WorkFlow");
 
-        QString wD = appConfig.readEntry("PopupWidth", "550");
-        QString hD = appConfig.readEntry("PopupHeight", "300");
-        //item->resize(wD.toFloat(),hD.toFloat());
-        extender()->resize(wD.toFloat(),hD.toFloat());
+   //     QString dW = appConfig.readEntry("DialogWidth","750");
+     //   QString dH = appConfig.readEntry("DialogHeight","400");
+//
+     //   qDebug() << dW<<"-"<<dH;
     }
 
+   // extender()->setPreferredWidth(1000);
+  //  extender()->setPreferredHeight(700);
 
 }
 
@@ -112,11 +118,13 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     appConfig = config();
 
-    QString wD = appConfig.readEntry("PopupWidth", "550");
-    QString hD = appConfig.readEntry("PopupHeight", "300");
+ //   QString wD = appConfig.readEntry("PopupWidth", "800");
+ //   QString hD = appConfig.readEntry("PopupHeight", "600");
 
-    m_mainWidget->setPreferredSize(wD.toFloat(), hD.toFloat());
-    //m_mainWidget->setMinimumSize(200,200);
+  //  m_mainWidget->setPreferredSize(wD.toFloat(), hD.toFloat());
+  //  m_mainWidget->setPreferredWidth(750);
+  //  m_mainWidget->setPreferredHeight(400);
+  //  m_mainWidget->setMinimumSize(750, 400);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -154,7 +162,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                 if(qmlActEng)
                     actManager->setQMlObject(qmlActEng, dataEngine("org.kde.activities"));
                 if(qmlTaskEng)
-                    taskManager->setQMlObject(qmlTaskEng, dataEngine("tasks"));
+                    taskManager->setQMlObject(qmlTaskEng);
             }
 
             loadConfigurationFiles();
@@ -166,9 +174,9 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     item->setWidget(m_mainWidget);
 
 
-    connect(item,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
+  //  connect(item,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
 
-    m_mainWidget->resize(wD.toFloat(),hD.toFloat());
+    //m_mainWidget->resize(wD.toFloat(),hD.toFloat());
 }
 ///SLOTS
 
@@ -176,7 +184,7 @@ void WorkFlow::hidePopupDialog()
 {
     this->hidePopup();
 }
-
+/*
 void WorkFlow::geomChanged()
 {
     QRectF rf = m_mainWidget->geometry();
@@ -186,11 +194,11 @@ void WorkFlow::geomChanged()
 
     emit configNeedsSaving();
 
-    /*
+
     WorkFlowSettings::setWidth(rf.width());
     WorkFlowSettings::setHeight(rf.height());
-    WorkFlowSettings::self()->writeConfig();*/
-}
+    WorkFlowSettings::self()->writeConfig();
+}*/
 
 ////INVOKES
 

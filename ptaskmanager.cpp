@@ -32,7 +32,7 @@ PTaskManager::~PTaskManager(){
     //     plasmaTaskEngine->disconnectSource(source, this);
 }
 
-void PTaskManager::setQMlObject(QObject *obj, Plasma::DataEngine *engin)
+void PTaskManager::setQMlObject(QObject *obj)
 {
     qmlTaskEngine = obj;
 
@@ -83,7 +83,7 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
     QString wId;
     wId.setNum(task->window());
 
-    qDebug()<<"WinAdded:"<<wId;
+  //  qDebug()<<"WinAdded:"<<wId;
     emit taskAddedIn(QVariant(wId),
                      QVariant(task->isOnAllDesktops()),
                      QVariant(task->isOnAllActivities()),

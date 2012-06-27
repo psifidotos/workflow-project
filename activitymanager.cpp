@@ -82,7 +82,7 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file) cons
                 if (!files.isEmpty())
                     foundF = tmD.absoluteFilePath(files.at(0));
 
-                qDebug()<<files.at(0);
+      //          qDebug()<<files.at(0);
             }
 
             if (QFile::exists(foundF))
@@ -150,7 +150,7 @@ void ActivityManager::dataUpdated(QString source, Plasma::DataEngine::Data data)
                              QVariant(data["Current"].toBool()));
 
         QString walp = this->getWallpaper(source);
-        qDebug()<<source<<"-"<<walp;
+      //  qDebug()<<source<<"-"<<walp;
     }
     else
     {

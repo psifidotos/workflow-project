@@ -4,7 +4,7 @@ Comment=Activities and WorkAreas in QML
 Icon=preferences-activities
 Type=Service
 
-X-KDE-ServiceTypes=Plasma/Applet
+X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet
 X-KDE-Library=plasma_applet_workflow
 X-KDE-PluginInfo-Author=Michail Vourlakos
 X-KDE-PluginInfo-Email=admin@opentoolsandspace.org
