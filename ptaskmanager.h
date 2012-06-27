@@ -6,11 +6,6 @@
 #include <taskmanager/taskmanager.h>
 #include <KWindowSystem>
 
-#include <Plasma/DataEngine>
-
-
-
-
 class PTaskManager : public QObject
 {
     Q_OBJECT
@@ -31,6 +26,7 @@ public:
     Q_INVOKABLE void slotRemoveDesktop();
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
+    Q_INVOKABLE QPixmap windowPreview(QString window, int size);
 #endif
 
     void setQMlObject(QObject *obj);
@@ -50,6 +46,7 @@ public slots:
   void taskUpdated(::TaskManager::TaskChanges changes);
   void desktopChanged(int);
   void changeNumberOfDesktops(int);
+
 
 
 private:

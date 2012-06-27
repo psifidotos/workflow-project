@@ -47,10 +47,21 @@ Component{
                 easing.type: Easing.InOutQuad;
             }
         }
-
+/*
+        Timer {
+            id:previewTimer
+            property string cd
+            interval: 1000; running: false; repeat:true
+            onTriggered: {
+                if (taskDeleg2.mustBeShown === true)
+                    imageTask2.pixmap = taskManager.windowPreview(taskDeleg2.ccode,imageTask2.height);
+            }
+        }*/
         QIconItem{
+    //    QPixmapItem{
             id:imageTask2
             icon: Icon
+          //  pixmap:taskManager.windowPreview(ccode,height);
             smooth:true
 
             height:width
@@ -64,6 +75,10 @@ Component{
             property int toRY:y
 
             width:(3* allActTaskL.height / 5)
+
+        //    Component.onCompleted: {
+         //       previewTimer.start();
+         //   }
 
             MouseArea {
                 id:imageMouseArea2
@@ -98,6 +113,7 @@ Component{
         }
 
         QIconItem{
+    //    QPixmapItem{
             id:imageTask2Ref
             icon: Icon
 

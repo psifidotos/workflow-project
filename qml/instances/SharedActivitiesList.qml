@@ -114,10 +114,6 @@ ListView{
             //check if I have to change desktop also
             //this happens when the user chooses a workarea which
             //is in different activity
-            if(goToDesktop > -1){
-                instanceOfTasksList.setCurrentDesktop(goToDesktop);
-                goToDesktop = -1;
-            }
         }
 
     }
@@ -208,6 +204,11 @@ ListView{
         mainView.currentActivity = cod;
 
         instanceOfWorkAreasList.setCurrent(cod);
+
+        if(goToDesktop > -1){
+            instanceOfTasksList.setCurrentDesktop(goToDesktop);
+            goToDesktop = -1;
+        }
     }
 
     function setCurrent(cod){

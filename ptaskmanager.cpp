@@ -8,6 +8,8 @@
 #include <QX11Info>
 #include <NETRootInfo>
 #include <X11/Xlib.h>
+#include <fixx11h.h>
+
 #endif
 
 #include <taskmanager/task.h>
@@ -186,6 +188,18 @@ void PTaskManager::setOnAllActivities(QString wd)
 
     XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
                     PropModeReplace, (const unsigned char *)"ALL", 3);
+}
+
+QPixmap PTaskManager::windowPreview(QString win, int size)
+{
+    WId window = win.toULong();
+
+    QPixmap thumbnail;
+
+  //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
+  //  return tsk->pixmap();
+
+    return thumbnail;
 }
 
 #endif
