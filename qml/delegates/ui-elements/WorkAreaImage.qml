@@ -3,7 +3,8 @@ import QtQuick 1.0
 BorderImage {
 
    id:workBordImage
-   source: ((mainWorkArea.actCode === mainView.currentActivity) && (mainWorkArea.desktop === mainView.currentDesktop)) ? "../Images/activeActivitiesBorderImage.png" : "../Images/activitiesBorderImage.png"
+   source: ((mainWorkArea.actCode === mainView.currentActivity) && (mainWorkArea.desktop === mainView.currentDesktop)) ?
+                                             "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
    property alias mainImgP: mainImg.source
 
   // property int tempMeter: mainView.scaleMeter/5;
@@ -31,7 +32,7 @@ BorderImage {
            }
 
            Image {
-             source: "../Images/backgrounds/screenglass.png"
+             source: "../../Images/backgrounds/screenglass.png"
              opacity:0.6          
              width:parent.width
              height:parent.height

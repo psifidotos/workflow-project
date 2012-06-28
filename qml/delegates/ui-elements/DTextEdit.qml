@@ -20,7 +20,7 @@ Item{
         id:backImage
 
         opacity:0
-        source:"../Images/buttons/editBox2.png"
+        source:"../../Images/buttons/editBox2.png"
 
         border.left: 15; border.top: 15;
         border.right: 40; border.bottom: 15;
@@ -30,8 +30,8 @@ Item{
         width:parent.width
         height:parent.height
 
-        property string initSource:"../Images/buttons/editBox2.png"
-        property string hoverSource:"../Images/buttons/editBoxHover2.png"
+        property string initSource:"../../Images/buttons/editBox2.png"
+        property string hoverSource:"../../Images/buttons/editBoxHover2.png"
 
         Behavior on opacity{
             NumberAnimation {
@@ -58,8 +58,8 @@ Item{
                 height: 0.75*width
                 smooth:true
 
-                property string initTick:"../Images/buttons/darkTick.png"
-                property string hoverTick:"../Images/buttons/lightTick.png"
+                property string initTick:"../../Images/buttons/darkTick.png"
+                property string hoverTick:"../../Images/buttons/lightTick.png"
             }
 
             MouseArea{
@@ -212,7 +212,7 @@ Item{
 
         width:0.4*dTextItem.height
         height:dTextItem.height / 2
-        source:"../Images/buttons/listPencil.png"
+        source:"../../Images/buttons/listPencil.png"
         opacity: 0
         smooth:true
 

@@ -29,8 +29,8 @@ Item{
         width:parent.width
         height:parent.height
 
-        property string initSource:"../Images/buttons/editBox2.png"
-        property string hoverSource:"../Images/buttons/editBoxHover2.png"
+        property string initSource:"../../Images/buttons/editBox2.png"
+        property string hoverSource:"../../Images/buttons/editBoxHover2.png"
 
         Behavior on opacity{
             NumberAnimation {
@@ -56,8 +56,8 @@ Item{
                 height: 0.75*width
                 smooth:true
 
-                property string initTick:"../Images/buttons/darkTick.png"
-                property string hoverTick:"../Images/buttons/lightTick.png"
+                property string initTick:"../../Images/buttons/darkTick.png"
+                property string hoverTick:"../../Images/buttons/lightTick.png"
             }
 
             MouseArea{
@@ -184,7 +184,7 @@ Item{
         anchors.right: dTextIItem.right
         width: 0.6 * dTextIItem.height
         height:0.66 * dTextIItem.height
-        source:"../Images/buttons/darkPencil.png"
+        source:"../../Images/buttons/darkPencil.png"
         opacity: 0
         smooth:true
 

@@ -3,6 +3,10 @@
 
 #include <KDebug>
 #include <KWindowSystem>
+#include <KTempDir>
+#include <KStandardDirs>
+
+#include <QProcess>
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -26,6 +30,8 @@ PTaskManager::PTaskManager(QObject *parent) :
     taskMainM = TaskManager::TaskManager::self();
 
     kwinSystem = KWindowSystem::KWindowSystem::self();
+
+    m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasmoid-workflow"));
 }
 
 
@@ -85,7 +91,7 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
     QString wId;
     wId.setNum(task->window());
 
-  //  qDebug()<<"WinAdded:"<<wId;
+    //  qDebug()<<"WinAdded:"<<wId;
     emit taskAddedIn(QVariant(wId),
                      QVariant(task->isOnAllDesktops()),
                      QVariant(task->isOnAllActivities()),
@@ -194,12 +200,34 @@ QPixmap PTaskManager::windowPreview(QString win, int size)
 {
     WId window = win.toULong();
 
-    QPixmap thumbnail;
+    QPixmap thumbnail = QPixmap::grabWindow(window);
 
-  //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
-  //  return tsk->pixmap();
+    //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
+    //  return tsk->pixmap();
 
+    qDebug()<<"-32-"<<m_tempdir->name();
     return thumbnail;
+}
+
+QString PTaskManager::windowScreenshot(QString win, int chng)
+{
+    QString program = "import";
+    QStringList arguments;
+    arguments << "-window" << win;
+    arguments << "-silent";
+
+    QString ver;
+    if (chng == 1)
+        ver="a";
+    else
+        ver="b";
+    QString filePath(m_tempdir->name()+win+ver+".jpg");
+    arguments << filePath;
+
+    QProcess *myProcess = new QProcess(this);
+    myProcess->start(program, arguments);
+
+    return filePath;
 }
 
 #endif

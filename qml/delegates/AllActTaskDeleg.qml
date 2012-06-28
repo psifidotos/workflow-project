@@ -1,6 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import ".."
+import "ui-elements"
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
@@ -53,20 +54,34 @@ Component{
             property string cd
             interval: 1000; running: false; repeat:true
             onTriggered: {
-                if (taskDeleg2.mustBeShown === true)
-                    imageTask2.pixmap = taskManager.windowPreview(taskDeleg2.ccode,imageTask2.height);
+                if (taskDeleg2.mustBeShown === true){
+                    //imageTask2.pixmap = taskManager.windowPreview(taskDeleg2.ccode,imageTask2.height);
+                    var reslt = taskManager.windowScreenshot(taskDeleg2.ccode,imageTask2.changer);
+
+                    imageTask2.source = reslt;
+                    imageTask2.changer = imageTask2.changer + 1;
+
+                    if  (imageTask2.changer % 2 === 0)
+                        imageTask2.changer = 2;
+                    else
+                        imageTask2.changer = 1;
+
+                }
             }
         }*/
-        QIconItem{
-    //    QPixmapItem{
+       QIconItem{
+       // QPixmapItem{
+      //  Image{
             id:imageTask2
             icon: Icon
           //  pixmap:taskManager.windowPreview(ccode,height);
             smooth:true
+          //  cache:false
 
             height:width
 
             anchors.horizontalCenter: parent.horizontalCenter
+            property int changer:1
 
             y:-height/5
 
@@ -76,9 +91,9 @@ Component{
 
             width:(3* allActTaskL.height / 5)
 
-        //    Component.onCompleted: {
-         //       previewTimer.start();
-         //   }
+     //       Component.onCompleted: {
+     //           previewTimer.start();
+      //      }
 
             MouseArea {
                 id:imageMouseArea2
@@ -113,9 +128,11 @@ Component{
         }
 
         QIconItem{
-    //    QPixmapItem{
+     //   QPixmapItem{
+      //   Image{
             id:imageTask2Ref
             icon: Icon
+         //   source:imageTask2.source
 
             width:imageTask2.width
             height:width

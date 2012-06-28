@@ -2,6 +2,7 @@
 import QtQuick 1.1
 import ".."
 import "../ui"
+import "ui-elements"
 
 Component{
 

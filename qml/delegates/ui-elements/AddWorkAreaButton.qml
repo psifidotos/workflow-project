@@ -25,7 +25,7 @@ Rectangle{
 
         Image {
             id:addButtonImage
-            source:"../Images/addWorkAreaBtn.png"
+            source:"../../Images/addWorkAreaBtn.png"
             width:parent.width
             height:parent.height
 

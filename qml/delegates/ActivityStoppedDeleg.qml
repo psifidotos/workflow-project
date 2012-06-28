@@ -5,6 +5,7 @@ import org.kde.qtextracomponents 0.1
 
 
 import ".."
+import "ui-elements"
 
 Component{
 

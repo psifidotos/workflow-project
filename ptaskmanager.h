@@ -5,6 +5,7 @@
 
 #include <taskmanager/taskmanager.h>
 #include <KWindowSystem>
+#include <KTempDir>
 
 class PTaskManager : public QObject
 {
@@ -27,6 +28,7 @@ public:
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
     Q_INVOKABLE QPixmap windowPreview(QString window, int size);
+    Q_INVOKABLE QString windowScreenshot(QString win, int size);
 #endif
 
     void setQMlObject(QObject *obj);
@@ -54,6 +56,8 @@ private:
     KWindowSystem *kwinSystem;
     
     QObject *qmlTaskEngine;
+
+    KTempDir *m_tempdir;
 
 //#ifdef Q_WS_X11
 //    Atom activitiesAtom;

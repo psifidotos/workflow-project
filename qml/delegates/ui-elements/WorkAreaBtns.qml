@@ -1,7 +1,5 @@
 import QtQuick 1.0
 
-import "../ui"
-
 Item{
     id: workAreaButtons
     width:buttonsSize
@@ -82,7 +80,7 @@ Item{
 
     Image{
         id:duplicateWorkareaBtn
-        source: "../Images/buttons/window_duplicate.png"
+        source: "../../Images/buttons/window_duplicate.png"
         width: buttonsSize
         height: buttonsSize
         x:0

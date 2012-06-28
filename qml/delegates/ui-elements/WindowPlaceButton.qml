@@ -14,8 +14,8 @@ Item{
 
         width:parent.width
 
-        imgShadow:"../Images/buttons/plasma_ui/greyShadow.png"
-        imgShadowHov: "../Images/buttons/plasma_ui/blueShadow.png"
+        imgShadow:"../../Images/buttons/plasma_ui/greyShadow.png"
+        imgShadowHov: "../../Images/buttons/plasma_ui/blueShadow.png"
 
     }
 
@@ -27,8 +27,8 @@ Item{
             when:(!allDesks) && (!allActiv)
             PropertyChanges {
                 target: winStateBtn
-                imgIcon:"../Images/buttons/plasma_ui/allDesktops.png"
-                imgIconHov:"../Images/buttons/plasma_ui/allDesktopsHov.png"
+                imgIcon:"../../Images/buttons/plasma_ui/allDesktops.png"
+                imgIconHov:"../../Images/buttons/plasma_ui/allDesktopsHov.png"
                 mainIconWidth: 0.15 * winStateItem.width
                 mainIconHeight: 3.4 * mainIconWidth
             }
@@ -38,8 +38,8 @@ Item{
             when: allActiv
             PropertyChanges {
                 target: winStateBtn
-                imgIcon:"../Images/buttons/plasma_ui/oneDesktop.png"
-                imgIconHov:"../Images/buttons/plasma_ui/oneDesktopHov.png"
+                imgIcon:"../../Images/buttons/plasma_ui/oneDesktop.png"
+                imgIconHov:"../../Images/buttons/plasma_ui/oneDesktopHov.png"
                 mainIconWidth: 0.45 * winStateItem.width
                 mainIconHeight: 0.85 * mainIconWidth
             }
@@ -49,8 +49,8 @@ Item{
             when: allDesks
             PropertyChanges {
                 target: winStateBtn
-                imgIcon:"../Images/buttons/plasma_ui/everywhereW.png"
-                imgIconHov:"../Images/buttons/plasma_ui/everywhereWHov.png"
+                imgIcon:"../../Images/buttons/plasma_ui/everywhereW.png"
+                imgIconHov:"../../Images/buttons/plasma_ui/everywhereWHov.png"
                 mainIconWidth: 0.35 * winStateItem.width
                 mainIconHeight: 1.55 * mainIconWidth
             }
