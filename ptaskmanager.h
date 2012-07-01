@@ -7,6 +7,7 @@
 #include <KWindowSystem>
 #include <KTempDir>
 
+
 class PTaskManager : public QObject
 {
     Q_OBJECT
@@ -28,10 +29,21 @@ public:
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
     Q_INVOKABLE QPixmap windowPreview(QString window, int size);
-    Q_INVOKABLE QString windowScreenshot(QString win, int size);
+    Q_INVOKABLE QPixmap windowScreenshot(QString win, int size);
+    Q_INVOKABLE float windowScreenshotRatio(QString win);
+
+    Q_INVOKABLE void setWindowPreview(QString win,int x, int y, int width, int height);
+    Q_INVOKABLE void removeWindowPreview(QString win);
+
+    Q_INVOKABLE void showWindowsPreviews();
+    Q_INVOKABLE void hideWindowsPreviews();
 #endif
 
+    void setMainWindowId(WId win);
     void setQMlObject(QObject *obj);
+
+    void setTopXY(int,int);
+
 
 
 signals:
@@ -40,6 +52,7 @@ signals:
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void currentDesktopChanged(QVariant);
     void numberOfDesktopsChanged(QVariant);
+    void setMainWindowId();
 
 public slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
@@ -59,9 +72,16 @@ private:
 
     KTempDir *m_tempdir;
 
-//#ifdef Q_WS_X11
-//    Atom activitiesAtom;
-//#endif
+    QList<QRect> previewsRects;
+    QList<WId> previewsIds;
+
+    WId m_mainWindowId;
+
+    int topX;
+    int topY;
+
+    int indexOfPreview(WId window);
+    void hideDashboard();
 
 };
 

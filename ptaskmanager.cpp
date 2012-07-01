@@ -5,6 +5,7 @@
 #include <KWindowSystem>
 #include <KTempDir>
 #include <KStandardDirs>
+#include <QDBusInterface>
 
 #include <QProcess>
 
@@ -19,13 +20,13 @@
 #include <taskmanager/task.h>
 
 
-#include <Plasma/Service>
-#include <Plasma/ServiceJob>
-#include <Plasma/DataEngine>
+
+#include <Plasma/WindowEffects>
 
 
 PTaskManager::PTaskManager(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_mainWindowId(0)
 {
     taskMainM = TaskManager::TaskManager::self();
 
@@ -38,6 +39,7 @@ PTaskManager::PTaskManager(QObject *parent) :
 PTaskManager::~PTaskManager(){
     //  foreach (const QString source, plasmaTaskEngine->sources())
     //     plasmaTaskEngine->disconnectSource(source, this);
+    hideWindowsPreviews();
 }
 
 void PTaskManager::setQMlObject(QObject *obj)
@@ -76,6 +78,12 @@ void PTaskManager::setQMlObject(QObject *obj)
 
 }
 ///////////
+void PTaskManager::hideDashboard()
+{
+    QDBusInterface remoteApp( "org.kde.plasma-desktop", "/App" );
+    remoteApp.call( "showDashboard", false );
+}
+
 void PTaskManager::changeNumberOfDesktops(int v)
 {
     emit numberOfDesktopsChanged(QVariant(v));
@@ -92,12 +100,14 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
     wId.setNum(task->window());
 
     //  qDebug()<<"WinAdded:"<<wId;
+    QPixmap tempIcn = task->icon(256,256,true);
+
     emit taskAddedIn(QVariant(wId),
                      QVariant(task->isOnAllDesktops()),
                      QVariant(task->isOnAllActivities()),
                      QVariant(task->classClass()),
                      QVariant(task->name()),
-                     QVariant(task->icon()),
+                     QVariant(QIcon(tempIcn)),
                      QVariant(false),
                      QVariant(task->desktop()),
                      QVariant(task->activities()));
@@ -148,12 +158,13 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     default:
         break;
     }
+    QPixmap tempIcn = task->icon(256,256,true);
     emit taskUpdatedIn(QVariant(wId),
                        QVariant(task->isOnAllDesktops()),
                        QVariant(task->isOnAllActivities()),
                        QVariant(task->classClass()),
                        QVariant(task->name()),
-                       QVariant(task->icon()),
+                       QVariant(QIcon(tempIcn)),
                        QVariant(task->desktop()),
                        QVariant(task->activities()),
                        QVariant(typeOfMessage));
@@ -209,29 +220,120 @@ QPixmap PTaskManager::windowPreview(QString win, int size)
     return thumbnail;
 }
 
-QString PTaskManager::windowScreenshot(QString win, int chng)
+QPixmap PTaskManager::windowScreenshot(QString win, int chng)
 {
     QString program = "import";
     QStringList arguments;
     arguments << "-window" << win;
     arguments << "-silent";
 
-    QString ver;
-    if (chng == 1)
-        ver="a";
-    else
-        ver="b";
-    QString filePath(m_tempdir->name()+win+ver+".jpg");
+    QString filePath(m_tempdir->name()+win+".png");
     arguments << filePath;
 
     QProcess *myProcess = new QProcess(this);
     myProcess->start(program, arguments);
 
-    return filePath;
+    QPixmap retPix = QPixmap(filePath);
+
+    return retPix;
+}
+
+float PTaskManager::windowScreenshotRatio(QString win)
+{
+
+
+    QString filePath(m_tempdir->name()+win+".png");
+
+    QPixmap retPix = QPixmap(filePath);
+
+    float res = (float)retPix.width() / retPix.height();
+
+    if (!retPix.isNull())
+        return res;
+    else
+        return 0;
+
 }
 
 #endif
 
+
+void PTaskManager::setTopXY(int x1,int y1)
+{
+    qDebug()<<"SDFSDF"<<x1<<"-"<<y1;
+    topX = x1;
+    topY = y1;
+}
+
+void PTaskManager::showWindowsPreviews()
+{
+
+//    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
+//    qDebug() << m_mainWindowId;
+    Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+}
+
+void PTaskManager::hideWindowsPreviews()
+{
+    previewsIds.clear();
+    previewsRects.clear();
+    showWindowsPreviews();
+}
+
+void PTaskManager::setMainWindowId(WId win)
+{
+    m_mainWindowId = win;
+}
+
+
+int PTaskManager::indexOfPreview(WId window)
+{
+
+    for (int i=0; i<previewsIds.size(); i++)
+        if ( previewsIds.at(i) == window )
+            return i;
+
+    return -1;
+}
+
+void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int height)
+{
+   // if (m_mainWindowId == 0)
+        emit setMainWindowId();
+
+    //int xEr = topX + 12;
+    //int yEr = topY + 75;
+    int xEr = topX+10;
+    int yEr = topY+50;
+
+    QRect prSize(x+xEr,y+yEr,width,height);
+  //   QRect prSize(x,y,width,height);
+    WId winId = win.toULong();
+
+    int pos = indexOfPreview(winId);
+
+    if (pos>-1)
+        previewsRects[pos] = prSize;
+    else{
+        previewsRects << prSize;
+        previewsIds << winId;
+    }
+
+    showWindowsPreviews();
+}
+
+void PTaskManager::removeWindowPreview(QString win)
+{
+    WId winId = win.toULong();
+
+    int pos = indexOfPreview(winId);
+    if (pos>-1){
+        previewsRects.removeAt(pos);
+        previewsIds.removeAt(pos);
+    }
+
+    showWindowsPreviews();
+}
 
 int PTaskManager::getMaxDesktops()
 {
@@ -267,11 +369,13 @@ void PTaskManager::activateTask(QString id)
     TaskManager::Task *t = taskMainM->findTask(id.toULong());
     //   t->restore();
     t->activate();
+    hideDashboard();
 }
 
 void PTaskManager::setCurrentDesktop(int desk)
 {
     kwinSystem->setCurrentDesktop(desk);
+    hideDashboard();
 }
 
 

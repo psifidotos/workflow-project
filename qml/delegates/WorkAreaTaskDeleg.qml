@@ -54,9 +54,11 @@ Component{
         }
 
         QIconItem{
+      //  QPixmapItem{
             id:imageTask
 
-            icon:  Icon
+            icon:Icon
+          //  pixmap:Icon
             smooth:true
 
 

@@ -27,6 +27,7 @@
 #include <Plasma/Label>
 #include <Plasma/PopupApplet>
 #include <plasma/widgets/declarativewidget.h>
+#include <Plasma/ExtenderItem>
 
 #include <QGraphicsLinearLayout>
 
@@ -76,10 +77,9 @@ public:
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
 
 
-
-
 public slots:
-   // void geomChanged();
+    void geomChanged();
+    void setMainWindowId();
 
 private:
     bool m_lockActivities;
@@ -100,6 +100,8 @@ private:
     PTaskManager *taskManager;
 
     QObject *mainQML;
+
+    Plasma::ExtenderItem *item;
 
     void saveConfigurationFiles();
 

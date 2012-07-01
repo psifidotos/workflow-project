@@ -28,8 +28,12 @@ ListView{
             else
                 fActivity = obj.activities;
 
+
+
             console.debug("setTaskState:"+cod+"-"+val);
             if (val === "oneDesktop"){
+                taskManager.setOnAllDesktops(obj.code,false);
+
                 if ((obj.desktop === undefined) ||
                         (obj.desktop < 1))
                     setTaskDesktop(cod,mainView.currentDesktop)
@@ -37,8 +41,9 @@ ListView{
                 model.setProperty(ind,"onAllDesktops",false);
                 model.setProperty(ind,"onAllActivities",false);
 
-                taskManager.setOnlyOnActivity(obj.code,fActivity);
-                taskManager.setOnAllDesktops(obj.code,false);
+                setTaskActivity(obj.code,fActivity);
+                //taskManager.setOnlyOnActivity(obj.code,fActivity);
+
             }
             else if (val === "allDesktops"){
                 model.setProperty(ind,"onAllDesktops",true);
@@ -61,17 +66,21 @@ ListView{
 
     function setTaskActivity(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"activities",val);
-        taskManager.setOnlyOnActivity(cod,val);
+        var obj = model.get(ind);
+        if(obj.activities !== val){
+            model.setProperty(ind,"activities",val);
+            taskManager.setOnlyOnActivity(cod,val);
+        }
     }
 
 
     function setTaskDesktop(cod, val){
         var ind = getIndexFor(cod);
         var obj = model.get(ind);
-        model.setProperty(ind,"desktop",val);
-
-        taskManager.setOnDesktop(obj.code,val);
+        if(obj.desktop !== val){
+            model.setProperty(ind,"desktop",val);
+            taskManager.setOnDesktop(obj.code,val);
+        }
     }
 
     function setTaskInDragging(cod, val){
@@ -79,6 +88,15 @@ ListView{
         model.setProperty(ind,"inDragging",val);
     }
 
+
+    function getIndexForWorkflowWindow(){
+        for(var i=0; i<model.count; i++){
+            var obj = model.get(i);
+            if (obj.name === "Workflow")
+                return obj.code;
+        }
+        return -1;
+    }
 
     function getIndexFor(cod){
         for(var i=0; i<model.count; i++){
@@ -107,6 +125,11 @@ ListView{
                          "inDragging":indrag,
                          "desktop":desk,
                          "activities":fact} );
+
+        if(onalla === true){
+            taskManager.setOnAllDesktops(source,true);
+        }
+
 
         allActT.changedChildState();
     }
@@ -137,6 +160,10 @@ ListView{
                 model.setProperty(ind,"Icon",icn);
                 model.setProperty(ind,"desktop",desk);
                 model.setProperty(ind,"activities",fact);
+
+                if(onalla === true){
+                    taskManager.setOnAllDesktops(source,true);
+                }
             }
             else if(mtype ==="desktop" ){
                 model.setProperty(ind,"onAllDesktops",onalld);
@@ -145,6 +172,10 @@ ListView{
             else if(mtype ==="activities" ){
                 model.setProperty(ind,"onAllActivities",onalla);
                 model.setProperty(ind,"activities",fact);
+
+                if(onalla === true){
+                    taskManager.setOnAllDesktops(source,true);
+                }
             }
             else if(mtype ==="name" ){
                 model.setProperty(ind,"name",nam);

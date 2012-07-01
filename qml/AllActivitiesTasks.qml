@@ -71,11 +71,12 @@ Item{
         anchors.top: allActRectShad.bottom
         //y:allActRectShad.height/2
         width:parent.width
-        height:50
+        height:0.4*workareaY
         color:"#ebebeb"
 
 
-        property int taskWidth: 0.75 * mainView.workareaWidth
+        //property int taskWidth: 0.75 * mainView.workareaWidth
+        property int taskWidth: 1 * mainView.workareaWidth
 
 
         ListView{

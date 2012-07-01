@@ -9,8 +9,7 @@ Item {
 
     state: "hide"
 
-    x:imageTask2.x+0.75*imageTask2.width
-    y:imageTask2.y-0.6*buttonsSize
+
 
     property string status:"nothover"
 
@@ -23,7 +22,7 @@ Item {
     property alias opacityWSt:  placeStateBtn.opacity
     property alias yWSt:  placeStateBtn.y
 
-    property int buttonsSize: 0.35*imageTask2.width
+    property int buttonsSize
     property int buttonsSpace: -buttonsSize/8
 
 

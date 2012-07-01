@@ -44,6 +44,8 @@ Rectangle {
     property int currentDesktop
     property int maxDesktops
 
+    property bool enablePreviews:false
+
     Behavior on scaleMeter{
         NumberAnimation {
             duration: 100;
@@ -192,7 +194,7 @@ Rectangle {
         //
     }
 
-/*
+
     Rectangle {
         width: 20; height: 20; z:75; x:0; y:0
         color:"#ffffff"
@@ -200,10 +202,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent;
             onClicked: {
-                workflowManager.saveWorkareas();
+                mainView.enablePreviews = !mainView.enablePreviews
+
+                if(mainView.enablePreviews === true){
+              //      var mId = instanceOfTasksList.getIndexForWorkflowWindow();
+                  //  console.debug(mId);
+                //    taskManager.setMainWindowId(mId);
+                    taskManager.showWindowsPreviews();
+                }
             }
         }
-    }*/
+    }
+
+    Rectangle{
+        id:testerRec
+        color:"blue"
+        width:5
+        height:5
+    }
 
 /*
     onMinimumWidthChanged:{

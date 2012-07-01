@@ -27,7 +27,9 @@
 #include <QDeclarativeContext>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
+#include <QGraphicsView>
 #include <QRectF>
+#include <QString>
 
 
 
@@ -89,12 +91,13 @@ void WorkFlow::init(){
 
     extender()->setMinimumWidth(500);
     extender()->setMinimumHeight(300);
+
  //   extender()->setMaximumWidth(1500);
   //  extender()->setMaximumHeight(1200);
 
     if (extender()->item("WorkFlow") == 0) {
 
-        Plasma::ExtenderItem *item = new Plasma::ExtenderItem(extender());
+        item = new Plasma::ExtenderItem(extender());
 
         initExtenderItem(item);
 
@@ -161,10 +164,13 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
             else{
                 if(qmlActEng)
                     actManager->setQMlObject(qmlActEng);
-                if(qmlTaskEng)
+                if(qmlTaskEng){
                     taskManager->setQMlObject(qmlTaskEng);
-            }
+                  //  qDebug()<<view()->window()->winId();
 
+                }
+            }
+            //qDebug()<<this->view()->winId();
             loadConfigurationFiles();
         }
     }
@@ -174,7 +180,8 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     item->setWidget(m_mainWidget);
 
 
-  //  connect(item,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
+    connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
+    connect(taskManager,SIGNAL(setMainWindowId()),this,SLOT(setMainWindowId()));
 
     //m_mainWidget->resize(wD.toFloat(),hD.toFloat());
 }
@@ -182,13 +189,29 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
 void WorkFlow::hidePopupDialog()
 {
+
     this->hidePopup();
 }
-/*
+
+void WorkFlow::setMainWindowId()
+{
+    //taskManager->setMainWindowId(view()->window()->winId());
+    QRectF rf = this->geometry();
+    taskManager->setTopXY(rf.x(),rf.y());
+
+    taskManager->setMainWindowId(view()->winId());
+   // taskManager->setMainWindowId(item->widget()->window()->winId());
+}
+
 void WorkFlow::geomChanged()
 {
-    QRectF rf = m_mainWidget->geometry();
 
+    QRectF rf = this->geometry();
+    taskManager->setTopXY(rf.x(),rf.y());
+
+
+    //qDebug() << QString::number(pf.x(),'g',1)<<"-"<<QString::number(pf.y(),'g',1);
+/*
     appConfig.writeEntry("PopupWidth",rf.width());
     appConfig.writeEntry("PopupHeight",rf.height());
 
@@ -197,8 +220,8 @@ void WorkFlow::geomChanged()
 
     WorkFlowSettings::setWidth(rf.width());
     WorkFlowSettings::setHeight(rf.height());
-    WorkFlowSettings::self()->writeConfig();
-}*/
+    WorkFlowSettings::self()->writeConfig();*/
+}
 
 ////INVOKES
 
@@ -221,12 +244,16 @@ void WorkFlow::addWorkArea(QString id, QString name)
 
     if (ret)
         ret->append(name);
+
+    QRectF rf = this->geometry();
+    taskManager->setTopXY(rf.x(),rf.y());
 }
 
 void WorkFlow::addEmptyActivity(QString id)
 {
     QStringList *newLst = new QStringList();
     storedWorkareas[id] = newLst;
+   // qDebug()<< this->extender()->winId();
 }
 
 void WorkFlow::removeActivity(QString id)
@@ -300,6 +327,9 @@ void WorkFlow::setZoomFactor(int zoom)
 void WorkFlow::setShowWindows(bool show)
 {
     m_showWindows = show;
+    if (!show){
+        taskManager->hideWindowsPreviews();
+    }
 }
 
 void WorkFlow::setLockActivities(bool lock)
