@@ -42,7 +42,7 @@ Component{
         property string currentNoHovered: showPreviewsFound === true ? "nohovered2":"nohovered1"
 
         property int defPreviewWidth:2.8*defWidth
-        property int defHovPreviewWidth:4.4*defWidth
+        property int defHovPreviewWidth:8*defWidth
 
         state: "nohovered1"
 
@@ -175,7 +175,7 @@ Component{
 
         Rectangle{
             id:previewRect
-            color:"#05666666"
+            color:"#15666666"
 
            // anchors.horizontalCenter: parent.horizontalCenter
 
@@ -390,7 +390,7 @@ Component{
                     opacity:showPreviewsFound===false ? 0:1
                     width:previewRect.ratio>=1 ? taskDeleg2.defHovPreviewWidth : previewRect.ratio*taskDeleg2.defHovPreviewWidth
                     height:previewRect.ratio<1 ? taskDeleg2.defHovPreviewWidth : previewRect.revRatio*taskDeleg2.defHovPreviewWidth
-                    y: showPreviewsFound===false ? 0 : (0.6*taskDeleg2.defHovPreviewWidth - height)
+                    y: showPreviewsFound===false ? 0 : (0.5*taskDeleg2.defHovPreviewWidth - height)
                     x: showPreviewsFound===false ? 0 : (taskDeleg2.width - taskDeleg2.defHovPreviewWidth)/2
                 }
 

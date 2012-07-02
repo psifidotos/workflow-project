@@ -259,8 +259,7 @@ float PTaskManager::windowScreenshotRatio(QString win)
 
 
 void PTaskManager::setTopXY(int x1,int y1)
-{
-    qDebug()<<"SDFSDF"<<x1<<"-"<<y1;
+{    
     topX = x1;
     topY = y1;
 }
@@ -268,8 +267,8 @@ void PTaskManager::setTopXY(int x1,int y1)
 void PTaskManager::showWindowsPreviews()
 {
 
-//    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
-//    qDebug() << m_mainWindowId;
+    //    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
+    //    qDebug() << m_mainWindowId;
     Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
 }
 
@@ -298,8 +297,8 @@ int PTaskManager::indexOfPreview(WId window)
 
 void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int height)
 {
-   // if (m_mainWindowId == 0)
-        emit setMainWindowId();
+    // if (m_mainWindowId == 0)
+    emit setMainWindowId();
 
     //int xEr = topX + 12;
     //int yEr = topY + 75;
@@ -307,16 +306,24 @@ void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int hei
     int yEr = topY+50;
 
     QRect prSize(x+xEr,y+yEr,width,height);
-  //   QRect prSize(x,y,width,height);
+    //   QRect prSize(x,y,width,height);
     WId winId = win.toULong();
 
     int pos = indexOfPreview(winId);
 
-    if (pos>-1)
+    if (pos>-1){
         previewsRects[pos] = prSize;
+
+        if(pos>0){
+            previewsRects.move(pos,0);
+            previewsIds.move(pos,0);
+        }
+    }
     else{
-        previewsRects << prSize;
-        previewsIds << winId;
+        previewsRects.insert(0, prSize);
+        previewsIds.insert(0, winId);
+        //   previewsRects << prSize;
+        //  previewsIds << winId;
     }
 
     showWindowsPreviews();
