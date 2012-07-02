@@ -94,6 +94,10 @@ void PTaskManager::desktopChanged (int desktop){
     emit currentDesktopChanged(QVariant(desktop));
 }
 
+WId PTaskManager::getMainWindowId(){
+    return m_mainWindowId;
+}
+
 void PTaskManager::taskAdded(::TaskManager::Task *task)
 {
     QString wId;
@@ -281,7 +285,10 @@ void PTaskManager::hideWindowsPreviews()
 
 void PTaskManager::setMainWindowId(WId win)
 {
-    m_mainWindowId = win;
+    if(m_mainWindowId != win){
+        m_mainWindowId = win;
+        showWindowsPreviews();
+    }
 }
 
 
@@ -297,13 +304,10 @@ int PTaskManager::indexOfPreview(WId window)
 
 void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int height)
 {
-    // if (m_mainWindowId == 0)
-    emit setMainWindowId();
-
     //int xEr = topX + 12;
     //int yEr = topY + 75;
-    int xEr = topX+10;
-    int yEr = topY+50;
+    int xEr = topX+13;
+    int yEr = topY+40;
 
     QRect prSize(x+xEr,y+yEr,width,height);
     //   QRect prSize(x,y,width,height);

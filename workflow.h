@@ -29,6 +29,7 @@
 #include <plasma/widgets/declarativewidget.h>
 #include <Plasma/ExtenderItem>
 
+
 #include <QGraphicsLinearLayout>
 
 #include <KGlobal>
@@ -76,10 +77,14 @@ public:
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
 
-
 public slots:
     void geomChanged();
     void setMainWindowId();
+    void statusChanged(Plasma::ItemStatus);
+    void releasedVisualFocus();
+    void activated();
+    void showedEvent(QShowEvent *evt);
+    void activeWindowChanged(WId);
 
 private:
     bool m_lockActivities;

@@ -43,8 +43,7 @@ public:
     void setQMlObject(QObject *obj);
 
     void setTopXY(int,int);
-
-
+    WId getMainWindowId();
 
 signals:
     void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
@@ -52,7 +51,7 @@ signals:
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void currentDesktopChanged(QVariant);
     void numberOfDesktopsChanged(QVariant);
-    void setMainWindowId();
+
 
 public slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
@@ -61,6 +60,7 @@ public slots:
   void taskUpdated(::TaskManager::TaskChanges changes);
   void desktopChanged(int);
   void changeNumberOfDesktops(int);
+
 
 
 

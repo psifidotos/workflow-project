@@ -23,6 +23,7 @@
 #include <KGlobalSettings>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <KWindowSystem>
 
 #include <QDeclarativeContext>
 #include <QDeclarativeEngine>
@@ -36,9 +37,6 @@
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
-#include <Plasma/Corona>
-#include <Plasma/Containment>
-#include <Plasma/Wallpaper>
 
 #include "workflowsettings.h"
 
@@ -92,8 +90,8 @@ void WorkFlow::init(){
     extender()->setMinimumWidth(500);
     extender()->setMinimumHeight(300);
 
- //   extender()->setMaximumWidth(1500);
-  //  extender()->setMaximumHeight(1200);
+    //   extender()->setMaximumWidth(1500);
+    //  extender()->setMaximumHeight(1200);
 
     if (extender()->item("WorkFlow") == 0) {
 
@@ -104,14 +102,16 @@ void WorkFlow::init(){
         item->setName("WorkFlow");
         item->setTitle("WorkFlow");
 
-   //     QString dW = appConfig.readEntry("DialogWidth","750");
-     //   QString dH = appConfig.readEntry("DialogHeight","400");
-//
-     //   qDebug() << dW<<"-"<<dH;
+        //     QString dW = appConfig.readEntry("DialogWidth","750");
+        //   QString dH = appConfig.readEntry("DialogHeight","400");
+        //
+        //   qDebug() << dW<<"-"<<dH;
+
+
     }
 
-   // extender()->setPreferredWidth(1000);
-  //  extender()->setPreferredHeight(700);
+    // extender()->setPreferredWidth(1000);
+    //  extender()->setPreferredHeight(700);
 
 }
 
@@ -121,13 +121,13 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     appConfig = config();
 
- //   QString wD = appConfig.readEntry("PopupWidth", "800");
- //   QString hD = appConfig.readEntry("PopupHeight", "600");
+    //   QString wD = appConfig.readEntry("PopupWidth", "800");
+    //   QString hD = appConfig.readEntry("PopupHeight", "600");
 
-  //  m_mainWidget->setPreferredSize(wD.toFloat(), hD.toFloat());
-  //  m_mainWidget->setPreferredWidth(750);
-  //  m_mainWidget->setPreferredHeight(400);
-  //  m_mainWidget->setMinimumSize(750, 400);
+    //  m_mainWidget->setPreferredSize(wD.toFloat(), hD.toFloat());
+    //  m_mainWidget->setPreferredWidth(750);
+    //  m_mainWidget->setPreferredHeight(400);
+    //  m_mainWidget->setMinimumSize(750, 400);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -166,7 +166,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                     actManager->setQMlObject(qmlActEng);
                 if(qmlTaskEng){
                     taskManager->setQMlObject(qmlTaskEng);
-                  //  qDebug()<<view()->window()->winId();
+                    //  qDebug()<<view()->window()->winId();
 
                 }
             }
@@ -179,9 +179,12 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     item->setWidget(m_mainWidget);
 
-
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
-    connect(taskManager,SIGNAL(setMainWindowId()),this,SLOT(setMainWindowId()));
+    connect(this,SIGNAL(newStatus(Plasma::ItemStatus)),this,SLOT(statusChanged(Plasma::ItemStatus)));
+    connect(this,SIGNAL(releaseVisualFocus()),this,SLOT(releasedVisualFocus()));
+    connect(this,SIGNAL(activate()),this,SLOT(activated()));
+
+    connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
     //m_mainWidget->resize(wD.toFloat(),hD.toFloat());
 }
@@ -189,38 +192,54 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
 void WorkFlow::hidePopupDialog()
 {
-
     this->hidePopup();
 }
 
 void WorkFlow::setMainWindowId()
 {
+
     //taskManager->setMainWindowId(view()->window()->winId());
     QRectF rf = this->geometry();
     taskManager->setTopXY(rf.x(),rf.y());
 
     taskManager->setMainWindowId(view()->winId());
-   // taskManager->setMainWindowId(item->widget()->window()->winId());
+    // taskManager->setMainWindowId(item->widget()->window()->winId());
 }
 
 void WorkFlow::geomChanged()
 {
-
     QRectF rf = this->geometry();
     taskManager->setTopXY(rf.x(),rf.y());
+}
+
+void WorkFlow::statusChanged(Plasma::ItemStatus status)
+{
+    qDebug() << "Plasmoid status:" << status;
+}
+
+void WorkFlow::showedEvent(QShowEvent *evt)
+{
+    qDebug() << "Plasmoid status:" << evt->type();
+}
+
+void WorkFlow::releasedVisualFocus()
+{
+    qDebug() << "Released Visual Focus...";
+}
+
+void WorkFlow::activated()
+{
+    qDebug() << "Plasmoid activated...";
+}
 
 
-    //qDebug() << QString::number(pf.x(),'g',1)<<"-"<<QString::number(pf.y(),'g',1);
-/*
-    appConfig.writeEntry("PopupWidth",rf.width());
-    appConfig.writeEntry("PopupHeight",rf.height());
+void WorkFlow::activeWindowChanged(WId w)
+{
+    if( view() ){
+        if(view()->winId() != taskManager->getMainWindowId())
+            this->setMainWindowId();
+    }
 
-    emit configNeedsSaving();
-
-
-    WorkFlowSettings::setWidth(rf.width());
-    WorkFlowSettings::setHeight(rf.height());
-    WorkFlowSettings::self()->writeConfig();*/
 }
 
 ////INVOKES
@@ -253,7 +272,7 @@ void WorkFlow::addEmptyActivity(QString id)
 {
     QStringList *newLst = new QStringList();
     storedWorkareas[id] = newLst;
-   // qDebug()<< this->extender()->winId();
+    // qDebug()<< this->extender()->winId();
 }
 
 void WorkFlow::removeActivity(QString id)
