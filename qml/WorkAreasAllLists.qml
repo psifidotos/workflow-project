@@ -150,7 +150,28 @@ Item{
 
     }//Flickable scrolling
 
+    //Scrollbars
+    // Attach scrollbars to the right and bottom edges of the view.
+    ScrollBar {
+        id: verticalScrollBar
+        width: 12; height: view.height-12
+        anchors.right: view.right
+        opacity: 0
+        orientation: Qt.Vertical
+        position: view.visibleArea.yPosition
+        pageSize: view.visibleArea.heightRatio
+    }
 
+    ScrollBar {
+        id: horizontalScrollBar
+        width: view.width-12; height: 12
+        anchors.bottom: view.bottom
+        opacity: 0
+        orientation: Qt.Horizontal
+        position: view.visibleArea.xPosition
+        pageSize: view.visibleArea.widthRatio
+    }
+    /*
     PlasmaComponents.ScrollBar {
         id: verticalScrollBar
         width: 16; height: view.height-16
@@ -167,7 +188,7 @@ Item{
         opacity: 0
         orientation: Qt.Horizontal
         flickableItem:view
-    }
+    }*/
 
     //return activities listview
     function getList(){
