@@ -43,7 +43,7 @@ Rectangle {
     property string currentActivity
     property int currentDesktop
     property int maxDesktops
-    property bool isOnDashBoard:false;
+    property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
 
     property bool enablePreviews:false
 
@@ -157,6 +157,32 @@ Rectangle {
             }
 
         }
+/*
+        PlasmaComponents.Slider {
+            id:zoomSlider
+            y:mainView.height - height - 5
+            x:stoppedPanel.x - width - 5
+            maximumValue: 65
+            minimumValue: 32
+            value:50
+            width:125
+            z:10
+            enabled:true
+
+            onValueChanged: workflowManager.setZoomFactor(value);
+
+        //    property bool updateValueWhileDragging:true
+        //    property real handleSize:20
+
+            Image{
+                x:-0.4*width
+                y:-0.2*height
+                width:30
+                height:1.5*width
+                source:"Images/buttons/magnifyingglass.png"
+            }
+
+        }*/
 
         WorkAreaFull{
             id:wkFull

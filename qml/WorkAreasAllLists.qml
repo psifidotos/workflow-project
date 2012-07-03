@@ -1,7 +1,10 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
-
 import "delegates"
+
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1
 
 Item{
 
@@ -111,9 +114,9 @@ Item{
 
                 orientation: ListView.Horizontal
                 height: 1.2*workareaY
-               // width:mainView.width
+                // width:mainView.width
                 width: mainView.width<allareas.width ? allareas.width : mainView.width
-               // width:1.2*allareas.width
+                // width:1.2*allareas.width
 
                 // anchors.top: parent.top
                 //  anchors.left: parent.left
@@ -147,29 +150,24 @@ Item{
 
     }//Flickable scrolling
 
-    //Scrollbars
-    // Attach scrollbars to the right and bottom edges of the view.
-    ScrollBar {
+
+    PlasmaComponents.ScrollBar {
         id: verticalScrollBar
-        width: 12; height: view.height-12
+        width: 16; height: view.height-16
         anchors.right: view.right
         opacity: 0
         orientation: Qt.Vertical
-        position: view.visibleArea.yPosition
-        pageSize: view.visibleArea.heightRatio
+        flickableItem:view
     }
 
-    ScrollBar {
+    PlasmaComponents.ScrollBar {
         id: horizontalScrollBar
-        width: view.width-12; height: 12
+        width: view.width-16; height: 16
         anchors.bottom: view.bottom
         opacity: 0
         orientation: Qt.Horizontal
-        position: view.visibleArea.xPosition
-        pageSize: view.visibleArea.widthRatio
+        flickableItem:view
     }
-
-
 
     //return activities listview
     function getList(){
@@ -188,7 +186,7 @@ Item{
         }
 
         activitiesList.shownActivities = counter+1;
-     //   console.debug(counter);
+        //   console.debug(counter);
         //activitiesList.shownActivities = 8;
     }
 
