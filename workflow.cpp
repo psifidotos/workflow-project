@@ -204,8 +204,8 @@ void WorkFlow::setMainWindowId()
     QRectF rf = this->geometry();
     taskManager->setTopXY(rf.x(),rf.y());
 
-    taskManager->setMainWindowId(view()->winId());
-    // taskManager->setMainWindowId(item->widget()->window()->winId());
+    //taskManager->setMainWindowId(view()->winId());
+    taskManager->setMainWindowId(view()->effectiveWinId());
 }
 
 void WorkFlow::geomChanged()
@@ -238,7 +238,8 @@ void WorkFlow::activated()
 void WorkFlow::activeWindowChanged(WId w)
 {
     if( view() ){
-        if(view()->winId() != taskManager->getMainWindowId()){
+      //  if(view()->winId() != taskManager->getMainWindowId()){
+        if(view()->effectiveWinId() != taskManager->getMainWindowId()){
             this->setMainWindowId();
 
             if(this->containment()){

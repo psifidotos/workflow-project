@@ -5,6 +5,8 @@
 #include <KWindowSystem>
 #include <KTempDir>
 #include <KStandardDirs>
+#include <KIcon>
+#include <KIconLoader>
 #include <QDBusInterface>
 
 #include <QProcess>
@@ -261,6 +263,11 @@ float PTaskManager::windowScreenshotRatio(QString win)
 
 #endif
 
+QPixmap PTaskManager::disabledPixmapForIcon(const QIcon &ic)
+{
+    KIcon icon3(ic);
+    return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
+}
 
 void PTaskManager::setTopXY(int x1,int y1)
 {    

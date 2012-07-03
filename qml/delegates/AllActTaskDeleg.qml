@@ -175,7 +175,9 @@ Component{
 
         Rectangle{
             id:previewRect
-            color:"#15666666"
+            color:"#05666666"
+            border.width: 1
+            border.color: "#15555555"
 
            // anchors.horizontalCenter: parent.horizontalCenter
 
@@ -183,18 +185,23 @@ Component{
             property real ratio:1
             property real revRatio: ratio > 0 ? 1/ratio : 0
 
+
             QPixmapItem{
                 id:previewPix
 
+                //icon: Icon
                 smooth:true
+                pixmap:taskManager.disabledPixmapForIcon(Icon)
+
+
                 anchors.centerIn: parent
 
-                width:parent.width-2*bordSize
-                height:parent.height-2*bordSize
+                width:(parent.width) / 2
+                height:(parent.height) / 2
 
-                property int bordSize:2
 
-                visible:parent.opacity === 0 ? false:true
+
+                opacity:parent.opacity === 0 ? 0:0.3
 
             }
 
@@ -295,7 +302,7 @@ Component{
         AllTaskDelegButtons{
             id:allTasksBtns
 
-            x:showPreviewsFound===false ? imageTask2.x+0.9*imageTask2.width : previewRect.x + 1.02*previewRect.width
+            x:showPreviewsFound===false ? imageTask2.x+0.9*imageTask2.width : previewRect.x + previewRect.width
             y:showPreviewsFound===false ? imageTask2.y-0.6*buttonsSize : previewRect.y - 0.5*buttonsSize
             buttonsSize:0.8*taskDeleg2.defWidth
         }
@@ -664,8 +671,8 @@ Component{
                 taskManager.setWindowPreview(taskDeleg2.ccode,
                                              obj.x,
                                              obj.y,
-                                             previewRect.width,
-                                             previewRect.height);
+                                             previewRect.width-(2*previewRect.border.width),
+                                             previewRect.height-(2*previewRect.border.width));
 
           //      testerRec.x = obj.x;
           //      testerRec.y = obj.y;

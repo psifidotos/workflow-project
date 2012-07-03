@@ -22,6 +22,7 @@ public:
     Q_INVOKABLE void setCurrentDesktop(int desk);
     Q_INVOKABLE QString getDesktopName(int n);
     Q_INVOKABLE int getMaxDesktops();
+    Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
 
 #ifdef Q_WS_X11
     Q_INVOKABLE void slotAddDesktop();
