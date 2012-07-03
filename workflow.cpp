@@ -37,6 +37,7 @@
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
+#include <Plasma/Containment>
 
 #include "workflowsettings.h"
 
@@ -106,6 +107,7 @@ void WorkFlow::init(){
         //   QString dH = appConfig.readEntry("DialogHeight","400");
         //
         //   qDebug() << dW<<"-"<<dH;
+
 
 
     }
@@ -236,8 +238,19 @@ void WorkFlow::activated()
 void WorkFlow::activeWindowChanged(WId w)
 {
     if( view() ){
-        if(view()->winId() != taskManager->getMainWindowId())
+        if(view()->winId() != taskManager->getMainWindowId()){
             this->setMainWindowId();
+
+            if(this->containment()){
+                KConfigGroup kfg=this->containment()->config();
+                QString inDashboard = kfg.readEntry("plugin","---");
+
+                bool res = (inDashboard == "desktopDashboard");
+
+                QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
+                                          Q_ARG(QVariant, res));
+            }
+        }
     }
 
 }

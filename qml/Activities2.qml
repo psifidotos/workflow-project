@@ -43,6 +43,7 @@ Rectangle {
     property string currentActivity
     property int currentDesktop
     property int maxDesktops
+    property bool isOnDashBoard:false;
 
     property bool enablePreviews:false
 
@@ -194,10 +195,16 @@ Rectangle {
         //
     }
 
+    function setIsOnDashboard(v){
+       // should be enabled in the official release...
+       // mainView.isOnDashBoard = v;
+    }
+
 
     Rectangle {
         width: 20; height: 20; z:75; x:0; y:0
         color:"#ffffff"
+        visible: mainView.isOnDashBoard
 
         MouseArea {
             anchors.fill: parent;
@@ -217,8 +224,8 @@ Rectangle {
     Rectangle{
         id:testerRec
         color:"blue"
-        width:5
-        height:5
+        width:10
+        height:10
     }
 
 /*

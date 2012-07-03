@@ -288,6 +288,8 @@ void PTaskManager::setMainWindowId(WId win)
     if(m_mainWindowId != win){
         m_mainWindowId = win;
         showWindowsPreviews();
+
+
     }
 }
 
