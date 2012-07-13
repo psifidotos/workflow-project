@@ -6,6 +6,7 @@ import org.kde.qtextracomponents 0.1
 
 
 import "delegates"
+import "delegates/ui-elements"
 import "instances"
 
 import "ui"
@@ -226,6 +227,8 @@ Rectangle {
         mainView.isOnDashBoard = v;
     }
 
+
+
 /*
     Rectangle {
         width: 20; height: 20; z:75; x:0; y:0
@@ -264,6 +267,8 @@ Rectangle {
         if(mainView.minimumHeight>mainView.height)
             mainView.height = mainView.minimumHeight
     }*/
+
+
 
     /*--------------------Dialogs ---------------- */
     BorderImage {

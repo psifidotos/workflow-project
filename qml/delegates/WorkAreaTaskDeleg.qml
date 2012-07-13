@@ -211,9 +211,9 @@ Component{
 
         function onEntered() {
             if (taskDeleg1.isPressed === false){
-                taskDeleg1.state = "hovered"
-                workAreaButtons.state="show"
-                tasksBtns.state = "show"
+                taskDeleg1.state = "hovered";
+                mainWorkArea.showButtons();
+                tasksBtns.state = "show";
             }
         }
 
@@ -225,7 +225,7 @@ Component{
         function onClicked(mouse) {
            // mainWorkArea.clickedWorkarea();
             taskDeleg1.onExited();
-            workAreaButtons.state="hide";
+            mainWorkArea.hideButtons();
             instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
 
         }

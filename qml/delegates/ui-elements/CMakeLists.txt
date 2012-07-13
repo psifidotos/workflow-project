@@ -5,6 +5,7 @@ install(FILES
              CloseWindowButton.qml
              DTextEdit.qml
              DTextLine.qml
+             MoreButton.qml
              ToggleButton.qml
              WATaskDelegButtons.qml
 	     WindowButton.qml

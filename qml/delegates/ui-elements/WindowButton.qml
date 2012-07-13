@@ -6,12 +6,13 @@ import ".."
 Item{
     id:mainBtn
 
-    height:width
+    height:isCircle === true ? width : 5
 
     state:"simple"
 
     property string imgShadow
     property string imgShadowHov
+
     property string imgIcon
     property string imgIconHov
 
@@ -21,11 +22,18 @@ Item{
     property alias mainIconWidth: mainIcon.width
     property alias mainIconHeight: mainIcon.height
 
+    property bool isCircle: true
+
+    property alias borderColorC : mainBtnGrad.borderC
+    property alias borderColorPreC : mainBtnGrad.borderCPre
+    property alias borderColorHovC: mainBtnGrad.borderCHov
+
+
     Image{
         id:backShadow
         anchors.centerIn: parent
         width:parent.width
-        height:width
+        height:mainBtn.isCircle === true  ? width : parent.height
         smooth:true
     }
 
@@ -34,10 +42,10 @@ Item{
 
         id: mainBtnGrad
 
-        width: 0.7 * parent.width
+        width: mainBtn.isCircle === true ? 0.7 * parent.width : 0.75 * parent.width
 
-        height: width
-        radius:width/2
+        height: mainBtn.isCircle === true ? width : 0.7*parent.height
+        radius: mainBtn.isCircle === true ? width/2 : height/2
         //border.width: width/25 > 2 ? width/25:2
         border.width: 2
 
@@ -100,8 +108,8 @@ Item{
             x:0
             y:0
             anchors.centerIn: parent
-            width:0.6 * parent.width
-            height:width
+            width:mainBtn.isCircle === true ? 0.6 * parent.width : 10
+            height:mainBtn.isCircle === true ? width : 10
             smooth:true
         }
 

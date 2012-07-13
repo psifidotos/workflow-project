@@ -51,11 +51,11 @@ Component{
                         hoverEnabled: true
 
                         onEntered: {
-                            workAreaButtons.state="show";
+                            mainWorkArea.showButtons();
                         }
 
                         onExited: {
-                            workAreaButtons.state="hide";
+                            mainWorkArea.hideButtons();
                         }
 
                         onClicked: {
@@ -80,9 +80,13 @@ Component{
                 height:mainView.showWinds ? mainWorkArea.imageheight : 0
                 opacity:mainView.showWinds ? 1 : 0
 
-                clip:false
+                clip:true
                 spacing:0
                 interactive:false
+
+                property bool hasChildren:childrenRect.height > 1
+                property bool isClipped:childrenRect.height > height
+
 
 
                 model:instanceOfTasksList.model
@@ -124,6 +128,58 @@ Component{
                 text: elemTitle
                // acceptedText: elemTitle
             }
+
+            MoreButton{
+                id:workAreaMoreBtn
+                state:tasksSList.isClipped === true ? "more" : "simple"
+
+                width:0.22*borderRectangle.width
+                height:0.5*width
+
+                x:(0.5*borderRectangle.width)+borderRectangle.x - 0.5*width
+                y:borderRectangle.y+borderRectangle.height-height
+                opacity:0
+
+                visible:tasksSList.hasChildren === true
+
+
+                Behavior on opacity{
+                    NumberAnimation {
+                        duration: 500
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onClicked: {
+                        workAreaMoreBtn.onClicked();
+                    }
+
+                    onEntered: {
+                        workAreaMoreBtn.onEntered();
+                        mainWorkArea.showButtons();
+                    }
+
+                    onExited: {
+                        workAreaMoreBtn.onExited();
+                        mainWorkArea.hideButtons();
+                    }
+
+                    onReleased: {
+                        workAreaMoreBtn.onReleased();
+                    }
+
+                    onPressed: {
+                        workAreaMoreBtn.onPressed();
+                    }
+
+                }
+
+            }
+
 
             states: [
                 State {
@@ -185,6 +241,17 @@ Component{
 
         function getBorderRectangle(){
             return borderRectangle;
+        }
+
+        function showButtons(){
+            workAreaButtons.state="show";
+            workAreaMoreBtn.opacity = 1;
+
+        }
+
+        function hideButtons(){
+            workAreaButtons.state="hide";
+            workAreaMoreBtn.opacity = 0;
         }
 
 

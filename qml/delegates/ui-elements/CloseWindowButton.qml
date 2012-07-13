@@ -3,6 +3,8 @@ import QtQuick 1.1
 
 WindowButton{
     id: clsWinBtn
+    isCircle:true
+
     imgShadow:"../../Images/buttons/plasma_ui/greyShadow.png"
     imgShadowHov: "../../Images/buttons/plasma_ui/redShadow.png"
 

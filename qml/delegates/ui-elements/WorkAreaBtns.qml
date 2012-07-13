@@ -53,14 +53,14 @@ Item{
             onEntered: {
                 deleteWorkareaBtn.onEntered();
 
-                workAreaButtons.state = "show";
+                mainWorkArea.showButtons();
                 deleteWorkareaBtn.scale = workAreaButtons.curBtnScale;
             }
 
             onExited: {
                 deleteWorkareaBtn.onExited();
 
-                workAreaButtons.state = "hide";
+                mainWorkArea.hideButtons();
                 deleteWorkareaBtn.scale = 1;
             }
 
