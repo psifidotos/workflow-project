@@ -223,10 +223,10 @@ Rectangle {
 
     function setIsOnDashboard(v){
        // should be enabled in the official release...
-       // mainView.isOnDashBoard = v;
+        mainView.isOnDashBoard = v;
     }
 
-
+/*
     Rectangle {
         width: 20; height: 20; z:75; x:0; y:0
         color:"#ffffff"
@@ -254,7 +254,7 @@ Rectangle {
         height:10
     }
 
-/*
+
     onMinimumWidthChanged:{
         if(mainView.minimumWidth>mainView.width)
             mainView.width = mainView.minimumWidth

@@ -191,10 +191,12 @@ Rectangle{
         //iconSource:"plasma"
         //iconSource: QUrl("Images/buttons/plasma")
         Image{
-            source:"Images/buttons/plasma_ui/lockedIcon.png"
+            smooth:true
+            source:"Images/buttons/Padlock-gold.png"
             anchors.centerIn: parent
-            width:0.62*parent.height
-            height:0.66*parent.height
+            width:0.8*parent.height
+            height:0.7*parent.height
+
         }
 
         width: 1.6 * oxygenTitle.height
@@ -228,10 +230,12 @@ Rectangle{
         //iconSource:"plasma"
         //iconSource: QUrl("Images/buttons/plasma")
         Image{
-            source:"Images/buttons/windowsicon.png"
+            smooth:true
+            source:"Images/buttons/blueWindowsIcon.png"
             anchors.centerIn: parent
-            width:0.77*parent.height
-            height:0.62*parent.height
+            width:0.80*parent.height
+            height:0.68*parent.height
+
         }
 
         width: lockerToolBtn.width
@@ -242,6 +246,46 @@ Rectangle{
 
         onCheckedChanged:{
             mainView.showWinds = checked;
+        }
+    }
+
+    Rectangle{
+        x:effectsToolBtn.x+3
+        y:effectsToolBtn.y
+        radius:4
+        width:effectsToolBtn.width-6
+        height:effectsToolBtn.height-2
+        border.width: 2
+        border.color: "#cccccc"
+        color:"#00ffffff"
+        opacity:1
+        visible:mainView.isOnDashBoard
+    }
+
+    PlasmaComponents.ToolButton{
+        id:effectsToolBtn
+        x:windowsToolBtn.x+1.1*windowsToolBtn.width
+        y:-4
+        //iconSource:"plasma"
+        //iconSource: QUrl("Images/buttons/plasma")
+        Image{
+            smooth:true
+            source:"Images/buttons/tools_wizard.png"
+            anchors.centerIn: parent
+            width:0.80*parent.height
+            height:0.65*parent.height
+
+        }
+
+        width: lockerToolBtn.width
+        height: lockerToolBtn.height
+
+        checkable:true
+        checked:mainView.enablePreviews
+        visible:mainView.isOnDashBoard
+
+        onCheckedChanged:{
+            mainView.enablePreviews = checked;
         }
     }
 

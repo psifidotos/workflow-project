@@ -2,6 +2,7 @@ install(FILES
 	      activityIconFade.png
 	      addActivity1.png
 	      addActivity2.png
+	      blueWindowsIcon.png
 	      cloneActivity.png
 	      close_window.png
 	      darkPencil.png
@@ -17,10 +18,12 @@ install(FILES
 	      nowindowsicon.png
 	      player_play.png
 	      player_stop.png
+	      Padlock-gold.png
 	      selectedBlue.png
 	      selectedGrey.png	      
 	      titleLight.png
 	      titleShadow.png
+	      tools_wizard.png
 	      window_duplicate.png
 	      windowsicon.png
 	      withwindowsicon.png
