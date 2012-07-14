@@ -24,9 +24,11 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property int scaleMeter:zoomSlider.value
+    property int scaleMeter: zoomSlider.value
 
-    property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
+    //property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
+    property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimumValue)/(zoomSlider.maximumValue-zoomSlider.minimumValue))*0.6
+
     property int workareaHeight:(3.6 - zoomingHeightFactor)*scaleMeter
     property int workareaY:2*scaleMeter
 
@@ -48,9 +50,10 @@ Rectangle {
 
     property bool enablePreviews:false
 
+
     Behavior on scaleMeter{
         NumberAnimation {
-            duration: 100;
+            duration: 150;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -136,7 +139,7 @@ Rectangle {
             z:7
         }
 
-
+/*
         Slider {
             id:zoomSlider
             y:mainView.height - height - 5
@@ -157,8 +160,8 @@ Rectangle {
                 source:"Images/buttons/magnifyingglass.png"
             }
 
-        }
-/*
+        }*/
+
         PlasmaComponents.Slider {
             id:zoomSlider
             y:mainView.height - height - 5
@@ -166,14 +169,15 @@ Rectangle {
             maximumValue: 65
             minimumValue: 32
             value:50
+
             width:125
             z:10
-            enabled:true
+            //enabled:true
 
             onValueChanged: workflowManager.setZoomFactor(value);
 
-        //    property bool updateValueWhileDragging:true
-        //    property real handleSize:20
+            property bool updateValueWhileDragging:true
+            property real handleSize:20
 
             Image{
                 x:-0.4*width
@@ -183,7 +187,7 @@ Rectangle {
                 source:"Images/buttons/magnifyingglass.png"
             }
 
-        }*/
+        }
 
         WorkAreaFull{
             id:wkFull
@@ -403,6 +407,7 @@ Rectangle {
         }
     }
 }
+
 
 
 
