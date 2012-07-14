@@ -302,8 +302,11 @@ Component{
         AllTaskDelegButtons{
             id:allTasksBtns
 
-            x:showPreviewsFound===false ? imageTask2.x+0.9*imageTask2.width : previewRect.x + previewRect.width
-            y:showPreviewsFound===false ? imageTask2.y-0.6*buttonsSize : previewRect.y - 0.5*buttonsSize
+            property real offsety:0
+            property real offsetx:0
+
+            x:showPreviewsFound===false ? imageTask2.x+0.9*imageTask2.width : previewRect.x + previewRect.width - (offsetx*previewRect.width)
+            y:showPreviewsFound===false ? imageTask2.y-0.6*buttonsSize : previewRect.y - 0.5*buttonsSize + (offsety*previewRect.height)
             buttonsSize:0.8*taskDeleg2.defWidth
         }
 
@@ -618,6 +621,30 @@ Component{
         function onEntered() {
             if (taskDeleg2.isPressed === false){
                 taskDeleg2.state = "hovered";
+
+                if (showPreviewsFound ===  true){
+                    var ratioWin = taskManager.getWindowRatio(taskDeleg2.ccode);
+
+                    if (ratioWin<1){
+                        var offY = (1 - ratioWin)/2
+
+                        allTasksBtns.offsety = offY;
+                        allTasksBtns.offsetx = 0;
+                    }
+                    else if(ratioWin>1){
+                        var offX = (1-(1/ratioWin))/2;
+
+                        allTasksBtns.offsety = 0;
+                        allTasksBtns.offsetx = offX;
+                    }
+                    else{
+                        allTasksBtns.offsety = 0;
+                        allTasksBtns.offsetx = 0;
+                    }
+
+                }
+
+
                 allTasksBtns.state = "show";
             }
         }

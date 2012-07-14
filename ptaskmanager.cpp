@@ -21,8 +21,6 @@
 
 #include <taskmanager/task.h>
 
-
-
 #include <Plasma/WindowEffects>
 
 
@@ -301,6 +299,25 @@ void PTaskManager::setMainWindowId(WId win)
 }
 
 
+float PTaskManager::getWindowRatio(QString win)
+{
+    WId winId = win.toULong();
+
+    QList<WId> wList;
+    wList.append(winId);
+
+    QList<QSize> sList;
+    sList = Plasma::WindowEffects::windowSizes(wList);
+
+    if (sList.size()>0){
+        QSize wSz = sList.at(0);
+
+        return (float)(wSz.rheight())/(float)(wSz.rwidth());
+    }
+
+    return 0;
+}
+
 int PTaskManager::indexOfPreview(WId window)
 {
 
@@ -316,7 +333,7 @@ void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int hei
     //int xEr = topX + 12;
     //int yEr = topY + 75;
     int xEr = topX+13;
-    int yEr = topY+40;
+    int yEr = topY+42;
 
     QRect prSize(x+xEr,y+yEr,width,height);
     //   QRect prSize(x,y,width,height);

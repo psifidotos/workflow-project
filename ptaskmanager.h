@@ -38,6 +38,8 @@ public:
 
     Q_INVOKABLE void showWindowsPreviews();
     Q_INVOKABLE void hideWindowsPreviews();
+
+    Q_INVOKABLE float getWindowRatio(QString win);
 #endif
 
     void setMainWindowId(WId win);

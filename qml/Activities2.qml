@@ -223,8 +223,9 @@ Rectangle {
     }
 
     function setIsOnDashboard(v){
-       // should be enabled in the official release...
-        mainView.isOnDashBoard = v;
+       // BE CAREFUL:: should be enabled in the official release...
+
+       // mainView.isOnDashBoard = v;
     }
 
 
