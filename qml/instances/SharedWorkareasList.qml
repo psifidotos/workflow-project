@@ -81,6 +81,7 @@ ListView{
         }
 
         workMod.remove(desktop-1);
+
         workflowManager.removeWorkarea(actCode,desktop);
 
         if((maxWorkareas() < mainView.maxDesktops) &&

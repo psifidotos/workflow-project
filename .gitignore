@@ -1,4 +1,5 @@
 *~
 .f*
+.d*
 build/
 !build/install.sh

@@ -12,6 +12,8 @@ install(FILES
 	      editBoxHover2.png
 	      lightTick.png
 	      listPencil.png
+	      zoom_in.png
+	      zoom_out.png
 	      magnifyingglass.png
 	      mail_delete.png
 	      nowindowsadd.png

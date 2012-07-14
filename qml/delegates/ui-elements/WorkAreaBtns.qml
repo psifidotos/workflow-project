@@ -39,6 +39,7 @@ Item{
             onClicked: {
 
                 deleteWorkareaBtn.onClicked();
+
                 instanceOfWorkAreasList.removeWorkArea(mainWorkArea.actCode,mainWorkArea.desktop);                
 /*
                 for (var i=gridRow+1; i<mainWorkArea.ListView.view.model.count;i++)

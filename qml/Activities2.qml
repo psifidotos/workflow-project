@@ -164,8 +164,8 @@ Rectangle {
 
         PlasmaComponents.Slider {
             id:zoomSlider
-            y:mainView.height - height - 5
-            x:stoppedPanel.x - width - 5
+            y:mainView.height - height
+            x:stoppedPanel.x - width - 20
             maximumValue: 75
             minimumValue: 30
             value:50
@@ -173,21 +173,75 @@ Rectangle {
             width:125
             z:10
             //enabled:true
-
             onValueChanged: workflowManager.setZoomFactor(value);
 
-            property bool updateValueWhileDragging:true
-            property real handleSize:20
+         //   property bool updateValueWhileDragging:true
 
+/*
             Image{
-                x:-0.4*width
-                y:-0.2*height
-                width:30
+                id:magnifyingMainIcon
+                x:-0.6*width
+                //y: -0.2*height
+                width:22
                 height:1.5*width
                 source:"Images/buttons/magnifyingglass.png"
+                MouseArea{
+                    anchors.fill: parent
+
+                    onClicked:{
+                        zoomSlider.value=50;
+                    }
+                }
+
+            }*/
+            //QIconItem{
+            Image{
+                id:minusSliderImage
+                //x:magnifyingMainIcon.width / 2
+                x:-width/2
+                width:30
+                height:width
+                y:-5
+
+                //icon:QIcon("zoom_out")
+                source:"Images/buttons/zoom_out.png"
+                smooth:true
+                fillMode:Image.PreserveAspectFit
+
+                MouseArea{
+                    anchors.fill: parent
+
+                    onClicked:{
+                        zoomSlider.value--;
+                    }
+                }
+            }
+
+            //QIconItem{
+            Image{
+                id:plusSliderImage
+
+                x:zoomSlider.width-width/2
+                width:30
+                height:width
+                y:-5
+                //icon:QIcon("zoom_in")
+                source:"Images/buttons/zoom_in.png"
+                smooth:true
+                fillMode:Image.PreserveAspectFit
+
+                MouseArea{
+                    anchors.fill: parent
+
+                    onClicked:{
+                        zoomSlider.value++;
+                    }
+                }
             }
 
         }
+
+
 
         WorkAreaFull{
             id:wkFull

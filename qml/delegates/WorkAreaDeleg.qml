@@ -140,7 +140,7 @@ Component{
                 y:borderRectangle.y+borderRectangle.height-height
                 opacity:0
 
-                visible:tasksSList.hasChildren === true
+                visible:(tasksSList.hasChildren === true)&&(mainWorkArea.ListView.delayRemove===false)
 
 
                 Behavior on opacity{
@@ -194,10 +194,6 @@ Component{
 
             transitions: Transition { NumberAnimation { property: "scale"; duration: 150} }
 
-
-
-
-
         } //Column
 
         ListView.onAdd: ParallelAnimation {
@@ -212,15 +208,19 @@ Component{
 
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: true }
+            PropertyAction { target: workAreaButtons; property: "visible"; value: false }
+            PropertyAction { target: workAreaMoreBtn; property: "visible"; value: false }
+            PropertyAction { target: tasksSList; property: "visible"; value: false }
 
             ParallelAnimation{
                   NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
                   NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
                   NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  //NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                  //NumberAnimation { target: workAreaMoreBtn; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
                   NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                  //NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                  //NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             }
 
 
