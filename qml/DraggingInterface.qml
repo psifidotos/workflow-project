@@ -48,6 +48,8 @@ Rectangle{
         allWorkareas.flickableV = false;
 
         iconImg.icon = src;
+        iconImg.enabled = true;
+
         mainDraggingItem.intTaskId = taskI;
         mainDraggingItem.intActId = actI;
         mainDraggingItem.intDesktop = deskI;
@@ -55,6 +57,8 @@ Rectangle{
         mainDraggingItem.intY1 = coord1.y;
         mainDraggingItem.intIsEverywhere = everywhere;
         mainDraggingItem.intIsShaded = shaded;
+
+      //  iconImg.icon = instanceOfTasksList.getTasksIcon(taskI);
 
         mainDraggingItem.lastSelection = -1;
         //just for the first check

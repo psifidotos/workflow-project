@@ -107,6 +107,16 @@ ListView{
         return -1;
     }
 
+    function getTasksIcon(cod){
+        var ind = getIndexFor(cod);
+
+        if( ind>-1 ){
+            var obj = model.get(ind);
+            return obj.Icon;
+        }
+
+    }
+
 
     function taskAddedIn(source,onalld,onalla,classc,nam, icn, indrag, desk, activit)
     {

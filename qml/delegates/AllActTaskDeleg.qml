@@ -622,6 +622,8 @@ Component{
             if (taskDeleg2.isPressed === false){
                 taskDeleg2.state = "hovered";
 
+                //This is a way to change position to allTasksBtns
+                //according to window previews size
                 if (showPreviewsFound ===  true){
                     var ratioWin = taskManager.getWindowRatio(taskDeleg2.ccode);
 

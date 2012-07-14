@@ -192,6 +192,7 @@ Rectangle {
 
     }
 
+
     DraggingInterface{
         id:mDragInt
     }
