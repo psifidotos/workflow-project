@@ -186,19 +186,21 @@ Component{
             property real revRatio: ratio > 0 ? 1/ratio : 0
 
 
-            QPixmapItem{
+            //QPixmapItem{
+            QIconItem{
                 id:previewPix
 
                 //icon: Icon
                 smooth:true
-                pixmap:taskManager.disabledPixmapForIcon(Icon)
+                //pixmap:taskManager.disabledPixmapForIcon(Icon)
+                icon: Icon
+                enabled: false
 
 
                 anchors.centerIn: parent
 
                 width:(parent.width) / 2
                 height:(parent.height) / 2
-
 
 
                 opacity:parent.opacity === 0 ? 0:0.3

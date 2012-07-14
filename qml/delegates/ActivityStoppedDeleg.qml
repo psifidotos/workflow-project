@@ -45,14 +45,16 @@ Component{
             }
         }
 
-        QPixmapItem{
+       // QPixmapItem{
+        QIconItem{
             id:activityIcon
             rotation:-20
             opacity:parent.defOpacity
             smooth:true
-            pixmap: Icon == "" ? activityManager.disabledPixmapForIcon("plasma") : activityManager.disabledPixmapForIcon(Icon)
-            //  x:25
-            //  anchors.right: stpActivity.right
+            //pixmap: Icon == "" ? activityManager.disabledPixmapForIcon("plasma") : activityManager.disabledPixmapForIcon(Icon)
+            icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
+            enabled:false
+
             x:stpActivity.width/2
             width:5+mainView.scaleMeter
             height:width
