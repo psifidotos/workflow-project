@@ -50,13 +50,13 @@ Rectangle {
 
     property bool enablePreviews:false
 
-
+/*
     Behavior on scaleMeter{
         NumberAnimation {
             duration: 150;
             easing.type: Easing.InOutQuad;
         }
-    }
+    }*/
 
     SharedActivitiesList{
         id:instanceOfActivitiesList
@@ -166,8 +166,8 @@ Rectangle {
             id:zoomSlider
             y:mainView.height - height - 5
             x:stoppedPanel.x - width - 5
-            maximumValue: 65
-            minimumValue: 32
+            maximumValue: 75
+            minimumValue: 30
             value:50
 
             width:125
