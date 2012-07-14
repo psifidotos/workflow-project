@@ -133,7 +133,7 @@ Component{
                 id:workAreaMoreBtn
                 state:tasksSList.isClipped === true ? "more" : "simple"
 
-                width:0.22*borderRectangle.width
+                width:0.2*borderRectangle.width
                 height:0.5*width
 
                 x:(0.5*borderRectangle.width)+borderRectangle.x - 0.5*width

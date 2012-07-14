@@ -29,6 +29,10 @@ Item{
                 imgIcon:"../../Images/buttons/plasma_ui/moreGrey.png"
                 imgIconHov:"../../Images/buttons/plasma_ui/moreBlue.png"
 
+                borderColorC: "#00550000"
+                borderColorPreC: "#00880000"
+                borderColorHovC: "#00880000"
+
             }
         },
         State {
@@ -42,7 +46,7 @@ Item{
                 imgIconHov:"../../Images/buttons/plasma_ui/moreBlue.png"
 
                 borderColorC: "#00550000"
-             //   borderColorPreC: "#880000"
+                borderColorPreC: "#00880000"
                 borderColorHovC: "#00880000"
             }
         }

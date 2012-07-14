@@ -42,9 +42,9 @@ Item{
 
         id: mainBtnGrad
 
-        width: mainBtn.isCircle === true ? 0.7 * parent.width : 0.75 * parent.width
+        width: mainBtn.isCircle === true ? 0.7 * parent.width : 0.8 * parent.width
 
-        height: mainBtn.isCircle === true ? width : 0.7*parent.height
+        height: mainBtn.isCircle === true ? width : 0.75 * parent.height
         radius: mainBtn.isCircle === true ? width/2 : height/2
         //border.width: width/25 > 2 ? width/25:2
         border.width: 2
