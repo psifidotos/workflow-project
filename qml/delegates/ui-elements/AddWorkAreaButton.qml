@@ -35,10 +35,10 @@ Rectangle{
     }
 
     Behavior on color{
-        ColorAnimation { from: addWorkArea.color; duration: 500 }
+        ColorAnimation { from: addWorkArea.color; duration: 3*mainView.animationsStep }
     }
     Behavior on border.color{
-        ColorAnimation { from: addWorkArea.border.color; duration: 500 }
+        ColorAnimation { from: addWorkArea.border.color; duration: 3*mainView.animationsStep }
     }
 
 
@@ -47,16 +47,13 @@ Rectangle{
         hoverEnabled: true
 
         onEntered: {
-
             addWorkArea.color = addWorkArea.toColor;
             addWorkArea.border.color = addWorkArea.borderToColor;
-
         }
 
         onExited: {
             addWorkArea.color = addWorkArea.fromColor;
             addWorkArea.border.color = addWorkArea.borderFromColor;
-
         }
 
     }

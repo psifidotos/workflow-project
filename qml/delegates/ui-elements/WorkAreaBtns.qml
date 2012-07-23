@@ -27,7 +27,7 @@ Item{
 
         Behavior on scale{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -92,7 +92,7 @@ Item{
 
         Behavior on scale{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -142,20 +142,20 @@ Item{
 
         Transition {
             from:"hide"; to:"show"
-            reversible: true
+            reversible: false
 
             SequentialAnimation{
                 ParallelAnimation{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "deleteY";
-                        duration: 200;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityDel";
-                        duration: 200;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -163,13 +163,48 @@ Item{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "duplicateY";
-                        duration: 200;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityClone";
-                        duration: 200;
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+            }
+        },
+        Transition {
+            from:"show"; to:"hide"
+            reversible: false
+
+            SequentialAnimation{
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: workAreaButtons;
+                        property: "deleteY";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workAreaButtons;
+                        property: "opacityDel";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: workAreaButtons;
+                        property: "duplicateY";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workAreaButtons;
+                        property: "opacityClone";
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

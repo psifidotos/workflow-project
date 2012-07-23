@@ -34,8 +34,13 @@ Rectangle {
 
     property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
 
+
+
     property bool showWinds: true
     property bool lockActivities: false
+    property bool showAnimations: false
+    property int  animationsStep: showAnimations === true? 200:0
+    property bool enablePreviews:false
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: workflowManager.setLockActivities(lockActivities);
@@ -48,9 +53,9 @@ Rectangle {
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
 
-    property bool enablePreviews:false
 
-/*
+
+    /*
     Behavior on scaleMeter{
         NumberAnimation {
             duration: 150;
@@ -139,7 +144,7 @@ Rectangle {
             z:7
         }
 
-/*
+        /*
         Slider {
             id:zoomSlider
             y:mainView.height - height - 5
@@ -172,12 +177,18 @@ Rectangle {
 
             width:125
             z:10
-            //enabled:true
-            onValueChanged: workflowManager.setZoomFactor(value);
 
-         //   property bool updateValueWhileDragging:true
+            property bool firsttime:true
 
-/*
+            onValueChanged: firsttime === false ? workflowManager.setZoomFactor(value) : notFirstTime()
+
+            property bool updateValueWhileDragging:true
+
+            function notFirstTime(){
+                firsttime = false;
+            }
+
+            /*
             Image{
                 id:magnifyingMainIcon
                 x:-0.6*width
@@ -198,7 +209,7 @@ Rectangle {
             Image{
                 id:minusSliderImage
                 //x:magnifyingMainIcon.width / 2
-                x:-width/2
+                x:-width/1.5
                 width:30
                 height:width
                 y:-5
@@ -266,15 +277,15 @@ Rectangle {
     /*-------------------Loading values-------------------*/
     function setShowWindows(v){
         mainView.showWinds = v;
-  //      console.debug("ShowW:"+v);
+        //      console.debug("ShowW:"+v);
     }
     function setLockActivities(v){
         mainView.lockActivities = v;
-   //     console.debug("LockA:"+ v);
+        //     console.debug("LockA:"+ v);
     }
     function setZoomSlider(v){
         zoomSlider.value = v;
-    //    console.debug("Zoom:"+v);
+        //    console.debug("Zoom:"+v);
     }
 
     function setAnimations(v){
@@ -282,14 +293,14 @@ Rectangle {
     }
 
     function setIsOnDashboard(v){
-       // BE CAREFUL:: should be enabled in the official release...
+        // BE CAREFUL:: should be enabled in the official release...
 
-       // mainView.isOnDashBoard = v;
+        // mainView.isOnDashBoard = v;
     }
 
 
 
-/*
+    /*
     Rectangle {
         width: 20; height: 20; z:75; x:0; y:0
         color:"#ffffff"
@@ -320,7 +331,7 @@ Rectangle {
 
     onMinimumWidthChanged:{
         if(mainView.minimumWidth>mainView.width)
-            mainView.width = mainView.minimumWidth
+            main{View.width = mainView.minimumWidth
     }
 
     onMinimumHeightChanged:{
@@ -331,135 +342,10 @@ Rectangle {
 
 
     /*--------------------Dialogs ---------------- */
-    BorderImage {
+    RemoveDialogTmpl{
         id:removeDialog
-        source: "Images/buttons/selectedGrey.png"
-
-        // property int tempMeter: mainView.scaleMeter/5;
-
-        border.left: 70; border.top: 70;
-        border.right: 80; border.bottom: 70;
-        horizontalTileMode: BorderImage.Repeat
-        verticalTileMode: BorderImage.Repeat
-
-        visible:false
-
-        anchors.centerIn: mainView
-
-        property string activityCode
-        property string activityName
-
-        width:dialogInsideRect.width+105
-        height:dialogInsideRect.height+105
-
-        Rectangle{
-            id:dialogInsideRect
-            //     visualParent:mainView
-
-
-           // x:65
-        //    y:60
-            anchors.centerIn: parent
-
-            property real defOpacity:0.5
-
-            color:"#d5333333"
-            border.color: "#aaaaaa"
-            border.width: 2
-            radius:15
-
-            width:mainTextInf.width+100
-            height:infIcon.height+90
-
-            //Title
-            Text{
-                id:titleMesg
-                color:"#ffffff"
-                text: i18n("Remove Activity")+"..."
-                width:parent.width
-                horizontalAlignment:Text.AlignHCenter
-                anchors.top:parent.top
-                anchors.topMargin: 5
-            }
-
-            Rectangle{
-                anchors.top:titleMesg.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                width:0.93*parent.width
-                color:"#ffffff"
-                opacity:0.3
-                height:1
-                /*                gradient: Gradient {
-                GradientStop {position: 0; color: "#00ffffff"}
-                GradientStop {position: 0.5; color: "#ffffffff"}
-                GradientStop {position: 1; color: "#00ffffff"}
-            }*/
-            }
-
-            //Main Area
-            QIconItem{
-                id:infIcon
-                anchors.top:titleMesg.bottom
-                anchors.topMargin:10
-                icon:QIcon("messagebox_info")
-                width:70
-                height:70
-            }
-            Text{
-                id:mainTextInf
-                anchors.left: infIcon.right
-                anchors.verticalCenter: infIcon.verticalCenter
-                color:"#ffffff"
-                text:"Are you sure you want to remove activity <b>"+removeDialog.activityName+"</b> ?"
-            }
-
-            //Buttons
-
-            Item{
-                anchors.top: infIcon.bottom
-                anchors.topMargin:10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                height:30
-                width:parent.width
-                PlasmaComponents.Button{
-                    id:button1
-                    anchors.right: button2.left
-                    anchors.rightMargin: 10
-                    anchors.bottom: parent.bottom
-                    width:100
-                    text:i18n("Yes")
-                    iconSource:"dialog-apply"
-
-                    onClicked:{
-                        activityManager.remove(removeDialog.activityCode);
-                        instanceOfActivitiesList.activityRemovedIn(removeDialog.activityCode);
-                        removeDialog.close();
-                    }
-                }
-                PlasmaComponents.Button{
-                    id:button2
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    width:100
-                    text:i18n("No")
-                    iconSource:"editdelete"
-
-                    onClicked:{
-                        removeDialog.close();
-                    }
-                }
-            }
-
-
-        }
-        function open(){
-            removeDialog.visible = true;
-        }
-        function close(){
-            removeDialog.visible = false;
-        }
     }
+
 }
 
 

@@ -35,7 +35,7 @@ Item{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -146,21 +146,21 @@ Item{
 
         Behavior on color{
             ColorAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on width{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on height{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -218,7 +218,7 @@ Item{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

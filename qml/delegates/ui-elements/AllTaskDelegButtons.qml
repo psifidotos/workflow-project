@@ -160,22 +160,54 @@ Item {
 
         Transition {
             from:"hide"; to:"show"
-            reversible: true
+            reversible: false
+
             SequentialAnimation{
+
                 ParallelAnimation{
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityClose";
-                        duration: 300;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
+
                     }
+
                 }
 
                 ParallelAnimation{
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";
-                        duration: 300;
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+            }
+        },
+        Transition {
+            from:"show"; to:"hide"
+            reversible: false
+
+            SequentialAnimation{
+
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: buttonsArea;
+                        property: "opacityClose";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+
+                    }
+
+                }
+
+                ParallelAnimation{
+                    NumberAnimation {
+                        target: buttonsArea;
+                        property: "opacityWSt";
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

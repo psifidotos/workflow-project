@@ -31,13 +31,13 @@ Item{
         height: buttonsSize
         x:buttonsX
         y:buttonsY
-        opacity:0
+     //   opacity:0
         z:10
         smooth:true
 
         Behavior on scale{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -64,21 +64,23 @@ Item{
     }
 
 
-    QIconItem{
+    //QIconItem{
+    Image{
         id:duplicateActivityBtn        
-        icon:QIcon("reload")
+      //  icon:QIcon("reload")
+        source:"../../Images/buttons/cloneActivity.png"
         width: buttonsSize
         height: buttonsSize
         x:buttonsSize+buttonsSpace+buttonsX
         y:buttonsY
-        opacity:0
+    //    opacity:0
         smooth:true
 
         z:11
 
         Behavior on scale{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -100,7 +102,7 @@ Item{
             onClicked: {
                 //instanceOfActivitiesList.setCurrent(ccode);
                 //instanceOfActivitiesList.cloneActivity(ccode);
-                instanceOfActivitiesList.updateWallpaper(ccode);
+                //instanceOfActivitiesList.updateWallpaper(ccode);
             }
 
 
@@ -114,13 +116,13 @@ Item{
         height: buttonsSize
         x:2*buttonsSize+2*buttonsSpace+buttonsX
         y:buttonsY
-        opacity:0
+      //  opacity:0
         z:12
         smooth:true
 
         Behavior on scale{
             NumberAnimation {
-                duration: 200;
+                duration: mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -172,9 +174,13 @@ Item{
                   opacityDup: 0
                   opacityStop: 0
 
-                  xDel:0
+                  xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
+                  xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
+                  xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
+
+             /*     xDel:0
                   xDup:0
-                  xStop:0
+                  xStop:0*/
            }
         }
     ]
@@ -183,49 +189,99 @@ Item{
 
         Transition {
             from:"hide"; to:"show"
-            reversible: true
+            reversible: false
             SequentialAnimation{
                 ParallelAnimation{
-                    NumberAnimation {
+                /*    NumberAnimation {
                         target: activityButtons;
                         property: "xDel";
                         duration: 200;
                         easing.type: Easing.InOutQuad;
-                    }
+                    }*/
                     NumberAnimation {
                         target: activityButtons;
                         property: "opacityDel";
-                        duration: 200;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
 
                 ParallelAnimation{
-                    NumberAnimation {
+               /*     NumberAnimation {
                         target: activityButtons;
                         property: "xDup";
                         duration: 200;
                         easing.type: Easing.InOutQuad;
-                    }
+                    }*/
                     NumberAnimation {
                         target: activityButtons;
                         property: "opacityDup";
-                        duration: 200;
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
 
                 ParallelAnimation{
-                    NumberAnimation {
+               /*     NumberAnimation {
                         target: activityButtons;
                         property: "xStop";
                         duration: 200;
                         easing.type: Easing.InOutQuad;
-                    }
+                    }*/
                     NumberAnimation {
                         target: activityButtons;
                         property: "opacityStop";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+            }
+        },
+        Transition {
+            from:"show"; to:"hide"
+            reversible: false
+            SequentialAnimation{
+                ParallelAnimation{
+                /*    NumberAnimation {
+                        target: activityButtons;
+                        property: "xDel";
                         duration: 200;
+                        easing.type: Easing.InOutQuad;
+                    }*/
+                    NumberAnimation {
+                        target: activityButtons;
+                        property: "opacityDel";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                ParallelAnimation{
+               /*     NumberAnimation {
+                        target: activityButtons;
+                        property: "xDup";
+                        duration: 200;
+                        easing.type: Easing.InOutQuad;
+                    }*/
+                    NumberAnimation {
+                        target: activityButtons;
+                        property: "opacityDup";
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                ParallelAnimation{
+               /*     NumberAnimation {
+                        target: activityButtons;
+                        property: "xStop";
+                        duration: 200;
+                        easing.type: Easing.InOutQuad;
+                    }*/
+                    NumberAnimation {
+                        target: activityButtons;
+                        property: "opacityStop";
+                        duration: mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

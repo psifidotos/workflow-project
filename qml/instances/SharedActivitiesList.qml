@@ -205,10 +205,10 @@ ListView{
 
         instanceOfWorkAreasList.setCurrent(cod);
 
-        if(goToDesktop > -1){
-            instanceOfTasksList.setCurrentDesktop(goToDesktop);
-            goToDesktop = -1;
-        }
+      //  if(goToDesktop > -1){
+        //    instanceOfTasksList.setCurrentDesktop(goToDesktop);
+        //    goToDesktop = -1;
+      //  }
     }
 
     function setCurrent(cod){
@@ -219,15 +219,16 @@ ListView{
 
     function setCurrentActivityAndDesktop(activit, desk)
     {
-        if (activit !== mainView.currentActivity)
-        {
-            goToDesktop = desk;
+    //    if (activit !== mainView.currentActivity)
+      //  {
+      //      goToDesktop = desk;
             setCurrent(activit);
-        }
-        else
-        {
+     //   }
+     //   else
+     //   {
             instanceOfTasksList.setCurrentDesktop(desk);
-        }
+            instanceOfActivitiesList.updateWallpaper(activit);
+     //   }
     }
 
     function getIndexFor(cod){
