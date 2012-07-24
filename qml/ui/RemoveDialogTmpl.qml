@@ -26,7 +26,7 @@ DialogTemplate{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("messagebox_info")
+            icon:QIcon("messagebox_warning")
             width:70
             height:70
         }
@@ -35,7 +35,8 @@ DialogTemplate{
             anchors.left: infIcon.right
             anchors.verticalCenter: infIcon.verticalCenter
             color:"#ffffff"
-            text:"Are you sure you want to remove activity <b>"+rmvDialog.activityName+"</b> ?"
+            text:i18n("Are you sure you want to remove activity <b>")+rmvDialog.activityName+i18n("</b> ?")
+            font.family:mainView.defaultFont.family
         }
 
     }

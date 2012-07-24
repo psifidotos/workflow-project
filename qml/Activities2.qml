@@ -44,6 +44,8 @@ Rectangle {
 
     property bool enablePreviews:false
 
+    property variant defaultFont: theme.defaultFont
+
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
         workflowManager.setLockActivities(lockActivities);

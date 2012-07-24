@@ -126,7 +126,7 @@ Component{
                 //clip:true
 
                 text: name || 0 ? name : ""
-                font.family: "Helvetica"
+                font.family: mainView.defaultFont.family
                 font.italic: false
                 font.bold: true
                 font.pointSize: 4+(mainView.scaleMeter) / 12

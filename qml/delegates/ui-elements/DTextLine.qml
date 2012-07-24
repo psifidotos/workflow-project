@@ -1,6 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+
 Item{
 
     id:dTextIItem
@@ -106,7 +107,8 @@ Item{
 
         property int space:0;
 
-        font.family: "Helvetica"
+        //font.family: "Helvetica"
+        font.family: mainView.defaultFont.family
         font.italic: true
         font.pointSize: 6+(mainView.scaleMeter/12)
 

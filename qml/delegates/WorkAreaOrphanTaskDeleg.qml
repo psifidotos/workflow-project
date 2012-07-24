@@ -80,7 +80,7 @@ Component{
                 anchors.bottom: parent.bottom
                 x : 5
                 text:name || 0 ? name : ""
-                font.family: "Helvetica"
+                font.family: mainView.defaultFont.family
                 font.italic: true
                 font.pointSize: orphansList.fontSiz
 

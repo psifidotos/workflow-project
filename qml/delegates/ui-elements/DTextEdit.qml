@@ -124,7 +124,8 @@ Item{
 
         wrapMode: TextEdit.Wrap
 
-        font.family: "Helvetica"
+        font.family: mainView.defaultFont.family
+
         font.bold: true
         font.italic: true
         font.pointSize: 4 + (mainView.scaleMeter/12)

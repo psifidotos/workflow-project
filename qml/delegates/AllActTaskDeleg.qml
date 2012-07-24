@@ -275,7 +275,7 @@ Component{
 
 
                 text:name === undefined ? "" : name
-                font.family: "Helvetica"
+                font.family: mainView.defaultFont.family
                 font.italic: false
                 font.bold: true
                 font.pointSize: 6+(mainView.scaleMeter/18)

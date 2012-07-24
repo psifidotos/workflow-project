@@ -57,6 +57,7 @@ BorderImage {
             horizontalAlignment:Text.AlignHCenter
             anchors.top:parent.top
             anchors.topMargin: 5
+            font.family: mainView.defaultFont.family
         }
 
         Rectangle{

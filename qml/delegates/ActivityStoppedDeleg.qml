@@ -88,7 +88,7 @@ Component{
             width:0.9*stoppedActivitiesList.width
             wrapMode: TextEdit.Wrap
 
-            font.family: "Helvetica"
+            font.family: mainView.defaultFont.family
             font.bold: true
             font.italic: true
             font.pointSize: 5+(mainView.scaleMeter/15)
