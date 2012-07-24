@@ -1,6 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import "../delegates/ui-elements"
+
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
@@ -9,8 +11,6 @@ BorderImage {
     id:templDialog
     source: "../Images/buttons/selectedGrey.png"
 
-    // property int tempMeter: mainView.scaleMeter/5;
-
     border.left: 70; border.top: 70;
     border.right: 80; border.bottom: 70;
     horizontalTileMode: BorderImage.Repeat
@@ -18,10 +18,7 @@ BorderImage {
 
     visible:false
 
-    //TO MOVE IN OFFICIAL REMOVE DIALOG
-    //anchors.centerIn: mainView
-    //property string activityCode
-    //property string activityName
+    property bool showButtons:true
 
     width:insideWidth+105
     height:insideHeight+105
@@ -39,11 +36,7 @@ BorderImage {
 
     Rectangle{
         id:dialogInsideRect
-        //     visualParent:mainView
 
-
-       // x:65
-    //    y:60
         anchors.centerIn: parent
 
         property real defOpacity:0.5
@@ -94,6 +87,8 @@ BorderImage {
                 text:i18n("Yes")
                 iconSource:"dialog-apply"
 
+                visible:templDialog.showButtons === true ? true : false
+
                 onClicked:{
                     templDialog.clickedOk();
                     templDialog.close();
@@ -108,6 +103,8 @@ BorderImage {
                 text:i18n("No")
                 iconSource:"editdelete"
 
+                visible:templDialog.showButtons === true ? true : false
+
                 onClicked:{
                     templDialog.clickedCancel();
                     templDialog.close();
@@ -115,6 +112,48 @@ BorderImage {
             }
         }
 
+
+    }
+
+    CloseWindowButton{
+        id:closeBtnGlb
+
+        width: 38
+        height: width
+        anchors.right:parent.right
+        anchors.top:parent.top
+        anchors.rightMargin: 35
+        anchors.topMargin: 36
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                closeBtnGlb.onEntered();
+            }
+
+            onExited: {
+                closeBtnGlb.onExited();
+            }
+
+            onReleased: {
+                closeBtnGlb.onReleased();
+            }
+
+            onPressed: {
+                closeBtnGlb.onPressed();
+            }
+
+            onClicked: {
+                closeBtnGlb.onClicked();
+
+                templDialog.clickedCancel();
+                templDialog.close();
+            }
+
+
+        }
 
     }
 
