@@ -12,7 +12,10 @@ install(FILES
 	    moreBlue.png
 	    moreGrey.png
 	    moreRed.png
-	    oneDesktop.png
+            moreBlueVer.png
+            moreGreyVer.png
+            moreRedVer.png
+            oneDesktop.png
 	    oneDesktopHov.png
 	    redShadow.png
 	    redRectShadow.png

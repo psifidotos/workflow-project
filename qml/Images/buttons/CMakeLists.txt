@@ -10,6 +10,7 @@ install(FILES
 	      editBox.png
 	      editBox2.png
 	      editBoxHover2.png
+              greyRectShadow2.png
 	      lightTick.png
 	      listPencil.png
 	      zoom_in.png
