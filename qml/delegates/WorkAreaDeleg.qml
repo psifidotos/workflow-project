@@ -246,12 +246,20 @@ Component{
         function showButtons(){
             workAreaButtons.state="show";
             workAreaMoreBtn.opacity = 1;
-
+            workareasSignals.calledWorkArea(actCode,desktop);
         }
 
         function hideButtons(){
             workAreaButtons.state="hide";
             workAreaMoreBtn.opacity = 0;
+        }
+
+        Connections{
+            target:workareasSignals;
+            onEnteredWorkArea:{
+                if ((actCode !== a1)&&(desktop!== d1))
+                    hideButtons();
+            }
         }
 
 

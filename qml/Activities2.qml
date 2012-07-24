@@ -339,6 +339,23 @@ Rectangle {
             mainView.height = mainView.minimumHeight
     }*/
 
+    /*----------Central Controllers**********/
+
+    Item{
+        id:workareasSignals
+        signal enteredWorkArea(string a1,int d1);
+
+        property string act1: ""
+        property string desk1: ""
+
+        function calledWorkArea(a1, d1){
+            if ((act1 !== a1) || (d1 !== desk1)){
+                act1 = a1;
+                desk1 = d1;
+                enteredWorkArea(a1, d1);
+            }
+        }
+    }
 
 
     /*--------------------Dialogs ---------------- */
