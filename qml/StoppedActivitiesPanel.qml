@@ -2,6 +2,7 @@
 import QtQuick 1.1
 import "delegates"
 
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Rectangle {
     id: stopActBack
@@ -28,61 +29,134 @@ Rectangle {
         }
     }
 
+    Flickable{
+        id: stopActivitiesView
 
-    ListView {
-        id: stoppedActivitiesList
-        orientation: ListView.Vertical
-        // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
-        height: model.count * ((0.66*workareaHeight)+spacing)
-        width: stopActBack.width - spacing
+        width: stopActBack.width
+        height: stopActBack.height
 
-        //y:shownActivities===0 ? stopActBack.height : stopActBack.height-height-5
-        //y:stopActBack.height-height-5
-        // y:stopActBack.height-(shownActivities*0.66*mainView.workareaHeight)
-        y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
+        property int stoppedActivityHeight: 0.66*mainView.workareaHeight
 
-        //   anchors.top: stopActBack.top
+        contentWidth: stoppedActivitiesList.width
+        contentHeight: stoppedActivitiesList.shownActivities*stoppedActivityHeight
+
+        boundsBehavior: Flickable.StopAtBounds
+
         anchors.right: stopActBack.right
-        anchors.rightMargin: spacing
+       // anchors.rightMargin: spacing
 
-        // spacing: workareaHeight/12
+        ListView {
+            id: stoppedActivitiesList
+            orientation: ListView.Vertical
+            // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
+            height: model.count * ((0.66*workareaHeight)+spacing)
+            width: stopActBack.width - spacing
 
-        property int shownActivities: 4
+            //y:shownActivities===0 ? stopActBack.height : stopActBack.height-height-5
+            //y:stopActBack.height-height-5
+            // y:stopActBack.height-(shownActivities*0.66*mainView.workareaHeight)
+            y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
 
-        //interactive:false
-        model: instanceOfActivitiesList.model
+            //   anchors.top: stopActBack.top
+            //anchors.right: stopActBack.right
+            //anchors.rightMargin: spacing
+            anchors.right: parent.right
+           // anchors.rightMargin: spacing
 
-        delegate: ActivityStoppedDeleg{
-        }
+            // spacing: workareaHeight/12
 
-        Behavior on height{
-            NumberAnimation {
-                duration: 2*mainView.animationsStep2;
-                easing.type: Easing.InOutQuad;
+            property int shownActivities: 4
+
+            interactive:false
+            model: instanceOfActivitiesList.model
+
+            delegate: ActivityStoppedDeleg{
             }
-        }
 
-        Behavior on y{
-            NumberAnimation {
-                duration: 2*mainView.animationsStep2;
-                easing.type: Easing.InOutQuad;
+            Behavior on height{
+                NumberAnimation {
+                    duration: 2*mainView.animationsStep2;
+                    easing.type: Easing.InOutQuad;
+                }
             }
+
+            Behavior on y{
+                NumberAnimation {
+                    duration: 2*mainView.animationsStep2;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
         }
 
+        states: State {
+            name: "ShowBars"
+            when: stopActivitiesView.movingVertically
+            PropertyChanges { target: stopVerticalScrollBar; opacity: 1 }
+        }
+
+        transitions: Transition {
+            NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
+        }
     }
+
+    PlasmaComponents.ScrollBar {
+        id: stopVerticalScrollBar
+        width: 12;
+        //height: view.height-16
+        anchors.right: stopActivitiesView.right
+        opacity: 0
+        orientation: Qt.Vertical
+        flickableItem:stopActivitiesView
+    }
+
+    ///////Scrolling Indicators////////////
+
+
+    ///////////////////////////////////////
 
 
 
     Rectangle{
-        id:stpActShad
-        height: workareaWidth/30
-        width: stopActBack.height
-        //   anchors.right: stopActBack.left
-        rotation: 90
-        transformOrigin: Item.TopLeft
+        id:stpActRedShadTop
+        height: workareaWidth/10
+        width: stopActBack.width
+
+        opacity: stopActivitiesView.atYBeginning === true ?
+                 0 : 0.7
+
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#770f0f0f" }
-            GradientStop { position: 1.0; color: "#00797979" }
+            GradientStop { position: 0.0; color: "#ff8c0000" }
+            GradientStop { position: 1.0; color: "#008c0000" }
+        }
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+    }
+
+    Rectangle{
+        id:stpActRedShadBottom
+        height: workareaWidth/10
+        width: stopActBack.width
+        anchors.bottom: stopActBack.bottom
+
+        opacity: stopActivitiesView.atYEnd === true ?
+                 0 : 0.7
+
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#008c0000" }
+            GradientStop { position: 1.0; color: "#ff8c0000" }
+        }
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
         }
     }
 

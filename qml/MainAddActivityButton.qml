@@ -3,24 +3,27 @@ import QtQuick 1.1
 
 Rectangle{
     id: addActivityBtn
-    width: stoppedPanel.shownActivities > 0 ? stoppedPanel.width-1 : stoppedPanel.width /2
-    height: stoppedPanel.shownActivities > 0 ? allWorkareas.actImagHeight : allWorkareas.actImagHeight / 2
+
+    property bool showRedCross: ((stoppedPanel.shownActivities > 0)&&(stoppedPanel.doNotShow===false))
+
+    width: showRedCross===true ? stoppedPanel.width-1 : stoppedPanel.width /2
+    height: showRedCross===true ? allWorkareas.actImagHeight : allWorkareas.actImagHeight / 2
     x:mainView.width - width
 
     anchors.top: stoppedPanel.top
 
-    opacity:mainView.lockActivities ? 0 : 1
+    opacity: (mainView.lockActivities===true) ? 0 : 1
 
     property color openStpActiv1: "#ebebeb"
     property color openStpActiv2: "#bdbdbd"
     property color closStpActiv1: "#77333333"
     property color closStpActiv2: "#77333333"
 
-    property color currentColor1: stoppedPanel.shownActivities > 0 ? openStpActiv1 : closStpActiv1
-    property color currentColor2: stoppedPanel.shownActivities > 0 ? openStpActiv2 : closStpActiv2
+    property color currentColor1: showRedCross===true ? openStpActiv1 : closStpActiv1
+    property color currentColor2: showRedCross===true ? openStpActiv2 : closStpActiv2
 
-    border.color: stoppedPanel.shownActivities > 0 ? "#00000000" : allWorkareas.actImagBordColor
-    border.width: stoppedPanel.shownActivities > 0 ? 0 : 1
+    border.color: showRedCross===true ? "#00000000" : allWorkareas.actImagBordColor
+    border.width: showRedCross===true ? 0 : 1
 
 
 
@@ -69,9 +72,9 @@ Rectangle{
         id:plusIcon
         opacity:0.7
         anchors.centerIn: addActivityBtn
-        width:stoppedPanel.shownActivities > 0 ? addActivityBtn.width/5 : addActivityBtn.height/2
+        width: addActivityBtn.showRedCross===true ? addActivityBtn.width/5 : addActivityBtn.height/2
         height:width
-        source:stoppedPanel.shownActivities > 0 ? "Images/buttons/addActivity1.png" : "Images/buttons/addActivity2.png"
+        source:addActivityBtn.showRedCross===true ? "Images/buttons/addActivity1.png" : "Images/buttons/addActivity2.png"
 
         Behavior on opacity{
             NumberAnimation {
@@ -95,7 +98,7 @@ Rectangle{
         //y:actImag1.height
         width: addActivityBtn.width
         height: workareaY/6
-        opacity: stoppedPanel.shownActivities > 0 ? 1:0
+        opacity: addActivityBtn.showRedCross===true? 1:0
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#aa0f0f0f" }
             GradientStop { position: 1.0; color: "#00797979" }

@@ -38,9 +38,9 @@ Rectangle {
 
     property bool showWinds: true
     property bool lockActivities: false
-    property bool showAnimations: false
-    property int  animationsStep: showAnimations === true? 200:0
-    property int  animationsStep2: showAnimations === true? 200:0
+    property int showAnimations: 2
+    property int  animationsStep: showAnimations >= 1 ? 200:0
+    property int  animationsStep2: showAnimations >= 2 ? 200:0
 
     property bool enablePreviews:false
 
@@ -368,7 +368,7 @@ Rectangle {
 
         Timer{
             id:activitiesTimer
-            interval:400
+            interval:3*mainView.animationsStep
             repeat:false
             onTriggered: {
                 activitiesSignals.hideButtons();
