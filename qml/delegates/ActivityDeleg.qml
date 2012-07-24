@@ -23,14 +23,14 @@ Component{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 300;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on width{
             NumberAnimation {
-                duration: 300;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -269,16 +269,16 @@ Component{
             PropertyAction { target: mainActivity; property: "width"; value: 0 }
             PropertyAction { target: mainActivity; property: "opacity"; value: 0 }
 
-            NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 400; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
         }
 
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: true }
 
             ParallelAnimation{
-                NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 400; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
             }
 
 

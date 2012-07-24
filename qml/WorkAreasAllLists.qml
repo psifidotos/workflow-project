@@ -145,7 +145,7 @@ Item{
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 400 }
+            NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
         }
 
     }//Flickable scrolling

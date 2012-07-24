@@ -272,7 +272,25 @@ Component{
 
             Transition {
                 from:"hide"; to:"show"
-                reversible: true
+                reversible: false
+                ParallelAnimation{
+                        NumberAnimation {
+                            target: workList;
+                            property: "opacity";
+                            duration: 4*mainView.animationsStep2;
+                            easing.type: Easing.InOutQuad;
+                        }
+                        NumberAnimation {
+                            target: workList;
+                            property: "width";
+                            duration: 4*mainView.animationsStep2;
+                            easing.type: Easing.InOutQuad;
+                        }
+                    }
+                },
+            Transition {
+                from:"show"; to:"hide"
+                reversible: false
                 ParallelAnimation{
                         NumberAnimation {
                             target: workList;
