@@ -19,7 +19,7 @@ Component{
         property int defWidth: CState === neededState ? mainView.workareaWidth : 0
 
         width: defWidth
-        height: mainView.workareaWidth / 2
+        height: mainView.workareaWidth / 3
 
         Behavior on opacity{
             NumberAnimation {
@@ -126,8 +126,10 @@ Component{
 
             y: mainView.scaleMeter/15
             x: mainView.scaleMeter+10
-            width:40+2.7*mainView.scaleMeter
-            height:20+mainView.scaleMeter
+          //  width:40+2.7*mainView.scaleMeter
+          //  height:20+mainView.scaleMeter
+            width:mainActivity.width - activityIcon.width
+            height:mainActivity.height
 
             opacity: CState===neededState ? 1:0
 
