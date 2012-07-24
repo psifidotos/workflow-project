@@ -55,7 +55,7 @@ Component{
 
             Behavior on rotation{
                 NumberAnimation {
-                    duration: 200;
+                    duration: mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -210,14 +210,14 @@ Component{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on scale{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -292,6 +292,25 @@ Component{
                     return i;
             }
             return -1;
+        }
+
+        Connections{
+            target:activitiesSignals
+            onShowButtons:{
+                if(CState === neededState){
+                    if (mainView.lockActivities === false)
+                        activityBtnsI.state="show";
+                    else
+                        stopActLocked.state="show";
+                }
+            }
+
+            onHideButtons:{
+                if(CState === neededState){
+                    activityBtnsI.state="hide";
+                    stopActLocked.state="hide";
+                }
+            }
         }
 
     }

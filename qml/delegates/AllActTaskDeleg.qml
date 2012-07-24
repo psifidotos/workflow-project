@@ -73,14 +73,14 @@ Component{
 
         Behavior on width{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -179,7 +179,7 @@ Component{
             border.width: 1
             border.color: "#15555555"
 
-           // anchors.horizontalCenter: parent.horizontalCenter
+            // anchors.horizontalCenter: parent.horizontalCenter
 
             //should be 0 but I use 1 for the live previews
             property real ratio:1
@@ -414,210 +414,46 @@ Component{
 
             Transition {
                 from:"nohovered1"; to:"hovered"
-                reversible: true
-
-                ParallelAnimation{
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskDeleg2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "opacity"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "height"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
+                reversible: false
+                AllActTaskDelegAnimations{
                 }
-
             },
             Transition {
                 from:"nohovered2"; to:"hovered"
-                reversible: true
+                reversible: false
 
-                ParallelAnimation{
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskDeleg2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "opacity"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "height"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-
+                AllActTaskDelegAnimations{
                 }
-
             },
             Transition {
                 from:"nohovered1"; to:"nohovered2"
-                reversible: true
+                reversible: false
 
-                ParallelAnimation{
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: imageTask2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskDeleg2;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: taskTitleRec;
-                        property: "opacity"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "width"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "height"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "y"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-                    NumberAnimation {
-                        target: previewRect;
-                        property: "x"
-                        duration: 500;
-                        easing.type: Easing.InOutQuad;
-                    }
-
+                AllActTaskDelegAnimations{
                 }
+            },
+            Transition {
+                from:"hovered"; to:"nohovered1"
+                reversible: false
+                AllActTaskDelegAnimations{
+                }
+            },
+            Transition {
+                from:"hovered"; to:"nohovered2"
+                reversible: false
 
+                AllActTaskDelegAnimations{
+                }
+            },
+            Transition {
+                from:"nohovered2"; to:"nohovered1"
+                reversible: false
+
+                AllActTaskDelegAnimations{
+                }
             }
+
+
         ]
 
         function onEntered() {
@@ -705,8 +541,8 @@ Component{
                                              previewRect.width-(2*previewRect.border.width),
                                              previewRect.height-(2*previewRect.border.width));
 
-          //      testerRec.x = obj.x;
-          //      testerRec.y = obj.y;
+                //      testerRec.x = obj.x;
+                //      testerRec.y = obj.y;
             }
         }
 

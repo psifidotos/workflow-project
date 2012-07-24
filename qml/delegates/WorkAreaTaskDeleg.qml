@@ -41,14 +41,14 @@ Component{
 
         Behavior on height{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -115,7 +115,7 @@ Component{
 
             Behavior on color{
                 ColorAnimation {
-                    duration: 500
+                    duration: 3*mainView.animationsStep
                 }
             }
 
@@ -136,7 +136,7 @@ Component{
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 500
+                        duration: 3*mainView.animationsStep
                     }
                 }
             }

@@ -24,14 +24,14 @@ Item{
 
     property real curBtnScale:1.4
 
-     QIconItem{
+    QIconItem{
         id:stopActivityBtn
         icon: QIcon("player_stop")
         width: buttonsSize
         height: buttonsSize
         x:buttonsX
         y:buttonsY
-     //   opacity:0
+        //   opacity:0
         z:10
         smooth:true
 
@@ -66,14 +66,14 @@ Item{
 
     //QIconItem{
     Image{
-        id:duplicateActivityBtn        
-      //  icon:QIcon("reload")
+        id:duplicateActivityBtn
+        //  icon:QIcon("reload")
         source:"../../Images/buttons/cloneActivity.png"
         width: buttonsSize
         height: buttonsSize
         x:buttonsSize+buttonsSpace+buttonsX
         y:buttonsY
-    //    opacity:0
+        //    opacity:0
         smooth:true
 
         z:11
@@ -116,7 +116,7 @@ Item{
         height: buttonsSize
         x:2*buttonsSize+2*buttonsSpace+buttonsX
         y:buttonsY
-      //  opacity:0
+        //  opacity:0
         z:12
         smooth:true
 
@@ -165,23 +165,23 @@ Item{
                 xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
             }
         },
-       State {
-           name: "hide"
-           PropertyChanges {
-                  target: activityButtons
+        State {
+            name: "hide"
+            PropertyChanges {
+                target: activityButtons
 
-                  opacityDel: 0
-                  opacityDup: 0
-                  opacityStop: 0
+                opacityDel: 0
+                opacityDup: 0
+                opacityStop: 0
 
-                  xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
-                  xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
-                  xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
+                xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
+                xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
+                xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
 
-             /*     xDel:0
+                /*     xDel:0
                   xDup:0
                   xStop:0*/
-           }
+            }
         }
     ]
 
@@ -192,7 +192,7 @@ Item{
             reversible: false
             SequentialAnimation{
                 ParallelAnimation{
-                /*    NumberAnimation {
+                    /*    NumberAnimation {
                         target: activityButtons;
                         property: "xDel";
                         duration: 200;
@@ -207,7 +207,7 @@ Item{
                 }
 
                 ParallelAnimation{
-               /*     NumberAnimation {
+                    /*     NumberAnimation {
                         target: activityButtons;
                         property: "xDup";
                         duration: 200;
@@ -222,7 +222,7 @@ Item{
                 }
 
                 ParallelAnimation{
-               /*     NumberAnimation {
+                    /*     NumberAnimation {
                         target: activityButtons;
                         property: "xStop";
                         duration: 200;
@@ -242,7 +242,7 @@ Item{
             reversible: false
             SequentialAnimation{
                 ParallelAnimation{
-                /*    NumberAnimation {
+                    /*    NumberAnimation {
                         target: activityButtons;
                         property: "xDel";
                         duration: 200;
@@ -257,7 +257,7 @@ Item{
                 }
 
                 ParallelAnimation{
-               /*     NumberAnimation {
+                    /*     NumberAnimation {
                         target: activityButtons;
                         property: "xDup";
                         duration: 200;
@@ -272,7 +272,7 @@ Item{
                 }
 
                 ParallelAnimation{
-               /*     NumberAnimation {
+                    /*     NumberAnimation {
                         target: activityButtons;
                         property: "xStop";
                         duration: 200;
@@ -293,15 +293,17 @@ Item{
     function clickedStopped(){
         instanceOfActivitiesList.stopActivity(ccode);
 
-        var x1 = activityIcon.x;
-        var y1 = activityIcon.y;
+        if(mainView.animationsStep2!==0){
+            var x1 = activityIcon.x;
+            var y1 = activityIcon.y;
 
-        mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainView,x1, y1));
+            mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainView,x1, y1));
+        }
 
 
         //instanceOfActivitiesList.setCState(code,"Stopped");
 
- //       stoppedPanel.changedChildState();
+        //       stoppedPanel.changedChildState();
 
         //activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
 

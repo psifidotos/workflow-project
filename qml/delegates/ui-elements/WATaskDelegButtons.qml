@@ -108,10 +108,12 @@ Item {
                 placeStateBtn.informState();
 
                 if (placeStateBtn.state == "everywhere"){
-                    var x1 = imageTask.x;
-                    var y1 = imageTask.y;
+                    if(mainView.animationsStep2!==0){
+                        var x1 = imageTask.x;
+                        var y1 = imageTask.y;
 
-                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                    }
                 }
 
             }
@@ -138,22 +140,22 @@ Item {
                 target: buttonsArea
 
                 opacityClose: 1
-          //      xClose: width - buttonsSize
+                //      xClose: width - buttonsSize
                 opacityWSt: 1
-          //      xWSt: width - 2*buttonsSize - buttonsSpace
+                //      xWSt: width - 2*buttonsSize - buttonsSpace
             }
         },
-       State {
-           name: "hide"
-           PropertyChanges {
-               target: buttonsArea
+        State {
+            name: "hide"
+            PropertyChanges {
+                target: buttonsArea
 
-               opacityClose: 0
-            //   xClose: 0
-               opacityWSt: 0
-             //  xWSt: 0
+                opacityClose: 0
+                //   xClose: 0
+                opacityWSt: 0
+                //  xWSt: 0
 
-           }
+            }
         }
     ]
 

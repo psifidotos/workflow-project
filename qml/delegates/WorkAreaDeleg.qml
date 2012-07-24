@@ -4,25 +4,25 @@ import "ui-elements"
 
 Component{
 
- Item{
-     id: mainWorkArea
+    Item{
+        id: mainWorkArea
 
-     property alias normalStateArea_visible: normalStateWorkArea.visible
-     property alias workAreaName_visible: workAreaName.visible
-     property alias areaButtons_visible: workAreaButtons.visible
+        property alias normalStateArea_visible: normalStateWorkArea.visible
+        property alias workAreaName_visible: workAreaName.visible
+        property alias areaButtons_visible: workAreaButtons.visible
 
-     width: 1.4 * mainView.workareaHeight
-     height:mainView.workareaHeight
+        width: 1.4 * mainView.workareaHeight
+        height:mainView.workareaHeight
 
-     property string typeId : "workareaDeleg"
+        property string typeId : "workareaDeleg"
 
-     property string actCode: workList.ccode
-     property int desktop: gridRow
+        property string actCode: workList.ccode
+        property int desktop: gridRow
 
-     property int imagex:14
-     property int imagey:15
-     property int imagewidth:borderRectangle.width-2*imagex
-     property int imageheight:borderRectangle.height-2*imagey
+        property int imagex:14
+        property int imagey:15
+        property int imagewidth:borderRectangle.width-2*imagex
+        property int imageheight:borderRectangle.height-2*imagey
 
         Item{
             id:normalWorkArea
@@ -126,7 +126,7 @@ Component{
                 width: 50 + 3.3*mainView.scaleMeter
                 height: 20 + mainView.scaleMeter/2
                 text: elemTitle
-               // acceptedText: elemTitle
+                // acceptedText: elemTitle
             }
 
             MoreButton{
@@ -145,7 +145,7 @@ Component{
 
                 Behavior on opacity{
                     NumberAnimation {
-                        duration: 500
+                        duration: 3*mainView.animationsStep
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -213,14 +213,14 @@ Component{
             PropertyAction { target: tasksSList; property: "visible"; value: false }
 
             ParallelAnimation{
-                  NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  //NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
-                  //NumberAnimation { target: workAreaMoreBtn; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
-                  NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                  //NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
-                  //NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                //NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                //NumberAnimation { target: workAreaMoreBtn; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+                //NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
+                //NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             }
 
 
@@ -257,8 +257,10 @@ Component{
         Connections{
             target:workareasSignals;
             onEnteredWorkArea:{
-                if ((actCode !== a1)&&(desktop!== d1))
-                    hideButtons();
+                if(workList.tCState === workList.neededState){
+                    if ((actCode !== a1)&&(desktop!== d1))
+                        hideButtons();
+                }
             }
         }
 

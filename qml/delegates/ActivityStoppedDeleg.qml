@@ -33,19 +33,19 @@ Component{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on width{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
-       // QPixmapItem{
+        // QPixmapItem{
         QIconItem{
             id:activityIcon
             rotation:-20
@@ -67,14 +67,14 @@ Component{
 
             Behavior on rotation{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -104,7 +104,7 @@ Component{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -136,7 +136,7 @@ Component{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 400;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -162,12 +162,13 @@ Component{
 
                 instanceOfActivitiesList.startActivity(ccode);
 
-                var x1 = activityIcon.x;
-                var y1 = activityIcon.y;
+                if(mainView.animationsStep2!==0){
+                    var x1 = activityIcon.x;
+                    var y1 = activityIcon.y;
 
-                //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-                mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-
+                    //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+                    mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+                }
                 //instanceOfActivitiesList.setCState(ccode,"Running");
 
             }

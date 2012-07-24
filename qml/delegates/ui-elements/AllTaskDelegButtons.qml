@@ -114,10 +114,12 @@ Item {
                 placeStateBtn.informState();
 
                 if (placeStateBtn !== "everywhere"){
-                    var x1 = imageTask2.x;
-                    var y1 = imageTask2.y;
+                    if(mainView.animationsStep2!==0){
+                        var x1 = imageTask2.x;
+                        var y1 = imageTask2.y;
 
-                    mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
+                        mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
+                    }
                 }
             }
 
@@ -145,14 +147,14 @@ Item {
                 opacityWSt: 1
             }
         },
-       State {
-           name: "hide"
-           PropertyChanges {
-               target: buttonsArea
+        State {
+            name: "hide"
+            PropertyChanges {
+                target: buttonsArea
 
-               opacityClose: 0
-               opacityWSt: 0
-           }
+                opacityClose: 0
+                opacityWSt: 0
+            }
         }
     ]
 

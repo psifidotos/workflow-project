@@ -19,25 +19,11 @@ Rectangle {
 
     Behavior on x{
         NumberAnimation {
-            duration: 400;
+            duration: 2*mainView.animationsStep2;
             easing.type: Easing.InOutQuad;
         }
     }
-/*
-    Text{
-        text:"Stopped Activities"
-        width:stopActBack.width
-        x:-stopActBack.width/2 + workareaWidth/10
-        anchors.verticalCenter: stopActBack.verticalCenter
-       // anchors.left: stopActBack.left
-        rotation:-90
 
-        color:"#bcbbbb"
-
-        font.family: "Helvetica"
-        font.bold: true
-        font.pointSize: 6+(mainView.scaleMeter) /10
-    }*/
 
     ListView {
         id: stoppedActivitiesList
@@ -67,14 +53,14 @@ Rectangle {
 
         Behavior on height{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep2;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on y{
             NumberAnimation {
-                duration: 400;
+                duration: 2*mainView.animationsStep2;
                 easing.type: Easing.InOutQuad;
             }
         }

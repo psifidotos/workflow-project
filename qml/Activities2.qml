@@ -40,10 +40,15 @@ Rectangle {
     property bool lockActivities: false
     property bool showAnimations: false
     property int  animationsStep: showAnimations === true? 200:0
+    property int  animationsStep2: showAnimations === true? 200:0
+
     property bool enablePreviews:false
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
-    onLockActivitiesChanged: workflowManager.setLockActivities(lockActivities);
+    onLockActivitiesChanged: {
+        workflowManager.setLockActivities(lockActivities);
+        activitiesSignals.showActivitiesButtons();
+    }
 
     signal minimumWidthChanged;
     signal minimumHeightChanged;
@@ -52,7 +57,6 @@ Rectangle {
     property int currentDesktop
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
-
 
 
     /*
@@ -339,7 +343,7 @@ Rectangle {
             mainView.height = mainView.minimumHeight
     }*/
 
-    /*----------Central Controllers**********/
+    /*---------- Central Controllers For Signals **********/
 
     Item{
         id:workareasSignals
@@ -354,6 +358,26 @@ Rectangle {
                 desk1 = d1;
                 enteredWorkArea(a1, d1);
             }
+        }
+    }
+
+    Item{
+        id:activitiesSignals
+        signal showButtons
+        signal hideButtons
+
+        Timer{
+            id:activitiesTimer
+            interval:400
+            repeat:false
+            onTriggered: {
+                activitiesSignals.hideButtons();
+            }
+        }
+
+        function showActivitiesButtons(){
+            showButtons();
+            activitiesTimer.start();
         }
     }
 

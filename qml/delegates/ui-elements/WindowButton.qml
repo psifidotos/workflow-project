@@ -221,18 +221,22 @@ Item{
     }
 
     function onClicked(){
+
         mainBtn.state="pressed";
 
-        var x1 = mainIcon.x;
-        var y1 = mainIcon.y;
 
-        var crd = mainIcon.mapToItem(mainView,x1, y1);
+        if (mainView.animationsStep2 !== 0){
+            var x1 = mainIcon.x;
+            var y1 = mainIcon.y;
 
-        mainView.getDynLib().animateIcon(mainIcon.source,
-                                   mainIcon.height/mainIcon.width,
-                                   mainIcon.width,
-                                   crd);
+            var crd = mainIcon.mapToItem(mainView,x1, y1);
 
+            mainView.getDynLib().animateIcon(mainIcon.source,
+                                             mainIcon.height/mainIcon.width,
+                                             mainIcon.width,
+                                             crd);
+
+        }
         mainBtn.state="hovered";
 
     }

@@ -56,7 +56,7 @@ Component{
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -107,13 +107,13 @@ Component{
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
             Behavior on opacity{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -132,13 +132,13 @@ Component{
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
             Behavior on opacity{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -178,7 +178,7 @@ Component{
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 500;
+                    duration: 3*mainView.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -277,13 +277,13 @@ Component{
                         NumberAnimation {
                             target: workList;
                             property: "opacity";
-                            duration: 700;
+                            duration: 4*mainView.animationsStep2;
                             easing.type: Easing.InOutQuad;
                         }
                         NumberAnimation {
                             target: workList;
                             property: "width";
-                            duration: 700;
+                            duration: 4*mainView.animationsStep2;
                             easing.type: Easing.InOutQuad;
                         }
                     }
