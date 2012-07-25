@@ -111,6 +111,7 @@ Item{
         wrapMode: Text.WordWrap
         maximumLineCount: 2
         elide:Text.ElideRight
+
     }
 
 
@@ -139,7 +140,8 @@ Item{
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
         focus:true
-        readOnly: dTextItem.enableEditing ? false:true
+        readOnly: !dTextItem.enableEditing
+        enabled: dTextItem.enableEditing
 
 
         property color origColor: "#f0f0f0"
@@ -248,8 +250,8 @@ Item{
     states: [
         State {
             name: "active"
-            when: ((mainText.activeFocus) &&
-                   (dTextItem.enableEditing))
+            when: ((mainText.activeFocus===true) &&
+                   (dTextItem.enableEditing===true))
             PropertyChanges{
                 target:backImage
                 opacity:1
@@ -267,7 +269,7 @@ Item{
         },
         State{
             name: "inactive"
-            when: !mainText.activeFocus
+            when: mainText.activeFocus === false
             PropertyChanges{
                 target:backImage
                 opacity:0
@@ -294,7 +296,6 @@ Item{
 
     ]
 
-
     function entered(){
         if(dTextItem.state==="inactive")
             pencilImg.opacity = 1;
@@ -305,7 +306,6 @@ Item{
     }
 
     function clicked(mouse){
-
         dTextItem.firstrun = false;
 
         mainText.forceActiveFocus();

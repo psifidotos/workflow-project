@@ -129,7 +129,7 @@ Component{
           //  width:40+2.7*mainView.scaleMeter
           //  height:20+mainView.scaleMeter
             width:mainActivity.width - activityIcon.width
-            height:mainActivity.height
+            height:mainActivity.height - y
 
             opacity: CState===neededState ? 1:0
 
@@ -150,6 +150,7 @@ Component{
                 anchors.left: parent.left
                 height:parent.height
                 width:parent.width - 40
+
                 hoverEnabled: true
 
                 onEntered: {
