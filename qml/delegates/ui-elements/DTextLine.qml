@@ -110,7 +110,7 @@ Item{
         //font.family: "Helvetica"
         font.family: mainView.defaultFont.family
         font.italic: true
-        font.pointSize: 6+(mainView.scaleMeter/12)
+        font.pointSize: mainView.fixedFontSize+((mainView.scaleMeter/12)-3)
 
         color: origColor
 

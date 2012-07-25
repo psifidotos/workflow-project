@@ -95,14 +95,15 @@ Component{
 
             width:parent.width
             opacity: workList.showWindowsSection === true ? 1:0
-            height: workList.showWindowsSection === true ? 2.6*font.pointSize:0
+           // height: workList.showWindowsSection === true ? 2.6*font.pointSize:0
 
             //clip:true
 
-            text:"Orphaned Windows"
-            font.family: "Helvetica"
+            text:i18n("Orphaned Windows")
+            font.family: mainView.defaultFont.family
             font.italic: true
-            font.pointSize: 4+(mainView.scaleMeter/10)
+            font.bold: true
+            font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
             color: "#80808c";
 
             Behavior on height{
@@ -155,8 +156,8 @@ Component{
             anchors.top : taskOrFTitleL.bottom
             anchors.left: taskOrFTitleL.left
 
-            property int fontSiz: 5 + mainView.scaleMeter / 12
-            property int windsHeight:3 * fontSiz
+            property int fontSiz: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
+            property int windsHeight:2 * fontSiz
 
             //for scrolling in vertical
             opacity: workList.showWindowsSection === true ? 1 : 0

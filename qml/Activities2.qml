@@ -35,16 +35,21 @@ Rectangle {
     property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
 
 
-
+    //Applications properties/////
     property bool showWinds: true
     property bool lockActivities: false
-    property int showAnimations: 2
+    property bool enablePreviews: false
+
+    property int  showAnimations: 0
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 
-    property bool enablePreviews:false
-
     property variant defaultFont: theme.defaultFont
+
+    property real defaultFontSize: theme.defaultFont.pointSize
+    property real defaultFontRelativeness: 0
+    property real fixedFontSize: defaultFontSize + defaultFontRelativeness
+
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
@@ -55,6 +60,8 @@ Rectangle {
     signal minimumWidthChanged;
     signal minimumHeightChanged;
 
+
+    //Local properties//
     property string currentActivity
     property int currentDesktop
     property int maxDesktops

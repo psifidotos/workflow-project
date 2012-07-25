@@ -12,7 +12,7 @@ Rectangle {
     x:((stoppedActivitiesList.shownActivities > 0)&&(doNotShow === false)) ?
           mainView.width - width : mainView.width - 2
     y:oxygenT.height
-    width: 0.66*mainView.workareaWidth
+    width: 0.5*mainView.workareaWidth
     height: mainView.height - y
 
     color: "#ebebeb"
@@ -28,6 +28,8 @@ Rectangle {
             easing.type: Easing.InOutQuad;
         }
     }
+
+
 
     Flickable{
         id: stopActivitiesView
@@ -110,9 +112,22 @@ Rectangle {
         flickableItem:stopActivitiesView
     }
 
+    Rectangle{
+        id:stpActShad
+        height: workareaWidth/30
+        width: stopActBack.height
+     //   anchors.right: stopActBack.left
+        rotation: 90
+        transformOrigin: Item.TopLeft
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#770f0f0f" }
+            GradientStop { position: 1.0; color: "#00797979" }
+        }
+    }
+
+
+
     ///////Scrolling Indicators////////////
-
-
     ///////////////////////////////////////
 
 
@@ -123,11 +138,11 @@ Rectangle {
         width: stopActBack.width
 
         opacity: stopActivitiesView.atYBeginning === true ?
-                 0 : 0.7
+                 0 : 0.35
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#ff8c0000" }
-            GradientStop { position: 1.0; color: "#008c0000" }
+            GradientStop { position: 0.0; color: "#ff9c0000" }
+            GradientStop { position: 1.0; color: "#00ffffff" }
         }
 
         Behavior on opacity{
@@ -145,11 +160,11 @@ Rectangle {
         anchors.bottom: stopActBack.bottom
 
         opacity: stopActivitiesView.atYEnd === true ?
-                 0 : 0.7
+                 0 : 0.35
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#008c0000" }
-            GradientStop { position: 1.0; color: "#ff8c0000" }
+            GradientStop { position: 0.0; color: "#00ffffff" }
+            GradientStop { position: 1.0; color: "#ff9c0000" }
         }
 
         Behavior on opacity{
@@ -165,10 +180,11 @@ Rectangle {
     Image{
         source: "Images/buttons/greyRectShadow2.png"
         opacity:0.8
-        width:0.7*showStopPanelRec.width
-        height:1.7*showStopPanelRec.height
+        width:0.67*showStopPanelRec.width
+        height:1.55*showStopPanelRec.height
         anchors.right: parent.left
         anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -2
 
         MouseArea{
             anchors.fill: parent
@@ -209,7 +225,7 @@ Rectangle {
     Rectangle{
         id:showStopPanelRec
         width:40
-        height:30
+        height:35
         color:parent.color
         radius:4
 
@@ -221,9 +237,9 @@ Rectangle {
             id: stopMoreButton
             source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
                         "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
-            width:7
-            height:3.2*width
-            opacity:0.65
+            width:6
+            height:3.4*width
+            opacity:0.25
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.horizontalCenter
             anchors.rightMargin: 5

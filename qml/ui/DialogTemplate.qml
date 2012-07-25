@@ -58,6 +58,9 @@ BorderImage {
             anchors.top:parent.top
             anchors.topMargin: 5
             font.family: mainView.defaultFont.family
+            font.bold: true
+            font.italic: true
+            font.pointSize: mainView.fixedFontSize+1
         }
 
         Rectangle{

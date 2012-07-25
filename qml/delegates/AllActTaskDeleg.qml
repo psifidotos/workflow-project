@@ -278,7 +278,7 @@ Component{
                 font.family: mainView.defaultFont.family
                 font.italic: false
                 font.bold: true
-                font.pointSize: 6+(mainView.scaleMeter/18)
+                font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter/18)-2
                 color:"#333333"
 
                 elide:Text.ElideRight

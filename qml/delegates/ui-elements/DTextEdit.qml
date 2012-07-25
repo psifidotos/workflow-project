@@ -95,11 +95,12 @@ Item{
 
         width:0.8*mainText.width
         height:mainText.height
+        y:-mainText.space
 
         font.family: mainText.font.family
         font.bold: mainText.font.bold
         font.italic: mainText.font.italic
-        font.pointSize: mainText.font.pointSize + 2
+        font.pointSize: mainText.font.pointSize + 1
         color:mainText.color
 
         anchors.left: parent.left
@@ -129,7 +130,7 @@ Item{
 
         font.bold: true
         font.italic: true
-        font.pointSize: 4 + (mainView.scaleMeter/12)
+        font.pointSize: mainView.fixedFontSize + (mainView.scaleMeter/12-3)
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom

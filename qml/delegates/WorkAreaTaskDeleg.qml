@@ -35,7 +35,7 @@ Component{
 
         property color taskTitleRecColorD : onAllDesktops === false ? "#eee2e2e2" : "#f7f7f7";
         property color taskTitleRecColorH : "#ff00b110";
-        property color taskTitleColorD : "#222222";
+        property color taskTitleColorD : "#333333";
         property color taskTitleColorH : "#ffffff";
 
 
@@ -128,8 +128,8 @@ Component{
                 text: name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
                 font.italic: false
-                font.bold: true
-                font.pointSize: 4+(mainView.scaleMeter) / 12
+               // font.bold: true
+                font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
                 color: taskDeleg1.taskTitleColorD
                 elide: Text.ElideRight
                 width: parent.width

@@ -23,7 +23,8 @@ Component{
         width: stoppedActivitiesList.width
         height: shown ? basicHeight : 0
 
-        property real basicHeight:0.66*mainView.workareaHeight
+        property real basicHeight:0.62*mainView.workareaHeight
+
         property real defOpacity :0.65
 
         onCStateChanged:{
@@ -56,8 +57,10 @@ Component{
             enabled:false
 
             x:stpActivity.width/2
-            width:5+mainView.scaleMeter
+            width:5+0.9*mainView.scaleMeter
             height:width
+            anchors.right: parent.right
+            anchors.rightMargin: 10
 
 
             //for the animation to be precise
@@ -91,14 +94,17 @@ Component{
             font.family: mainView.defaultFont.family
             font.bold: true
             font.italic: true
-            font.pointSize: 5+(mainView.scaleMeter/15)
+            font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter/15-4)
 
             color:"#4d4b4b"
             opacity:parent.defOpacity
 
             anchors.top: activityIcon.bottom
+            anchors.topMargin: activityIcon.height/4
+
 
             horizontalAlignment: Text.AlignRight
+            verticalAlignment: Text.AlignBottom
             maximumLineCount:2
             elide: Text.ElideRight
 
@@ -111,10 +117,12 @@ Component{
         }
 
         Rectangle{
+            id:stpActivitySeparator
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
-            anchors.top:stpActivityName.bottom
-            anchors.topMargin: 15
+          //  anchors.top:stpActivityName.bottom
+          //  anchors.topMargin: 5
+            y:parent.basicHeight-height
 
             width:0.8 * stopActBack.width
             height:2

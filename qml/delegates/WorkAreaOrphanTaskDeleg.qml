@@ -77,7 +77,7 @@ Component{
                 width:parent.width - 5
                 clip:true
 
-                anchors.bottom: parent.bottom
+                anchors.verticalCenter: parent.verticalCenter
                 x : 5
                 text:name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
