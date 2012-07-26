@@ -94,7 +94,9 @@ Component{
             font.family: mainView.defaultFont.family
             font.bold: true
             font.italic: true
-            font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter/15-4)
+            font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/15-4
+
+
 
             color:"#4d4b4b"
             opacity:parent.defOpacity

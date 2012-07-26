@@ -22,7 +22,6 @@ Item{
     property string typeId : "workareasMainView"
 
 
-
     Flickable{
         id: view
 
@@ -49,17 +48,20 @@ Item{
         ListView{
             id:allareas
 
-            y:1.33 * mainView.workareaY
+            y:1.4 * mainView.workareaY
             width: activitiesList.shownActivities *  mainView.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
+            //height:mainView.height
+
             orientation: ListView.Horizontal
             //   spacing:60+3.5*mainView.scaleMeter
-            spacing:mainView.scaleMeter/10
+          //  spacing:mainView.scaleMeter/10
+            anchors.left: parent.left
             interactive:false
             property string typeId : "workareasFlickList1"
 
             property int maxWorkAreasHeight: 0
-            property int scrollingMargin: 30
+            property int scrollingMargin: 40
 
 
             //model:WorkAreasCompleteModel{}
@@ -121,7 +123,8 @@ Item{
                 // anchors.top: parent.top
                 //  anchors.left: parent.left
                 y: workareaY / 12
-                spacing: workareaY / 10
+                //spacing: workareaY / 10
+                //spacing:mainView.scaleMeter/20
                 interactive:false
 
                 model: instanceOfActivitiesList.model

@@ -2,7 +2,6 @@ import QtQuick 1.0
 
 Rectangle{
 
-    width:60+3*mainView.scaleMeter
 
     height:40
     color: fromColor

@@ -20,7 +20,6 @@ Rectangle {
 
     color: "#dcdcdc"
 
-    //  z:0
     clip:true
     anchors.fill: parent
 
@@ -29,10 +28,10 @@ Rectangle {
     //property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
     property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimumValue)/(zoomSlider.maximumValue-zoomSlider.minimumValue))*0.6
 
+    property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
     property int workareaHeight:(3.6 - zoomingHeightFactor)*scaleMeter
     property int workareaY:2*scaleMeter
 
-    property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
 
 
     //Applications properties/////
@@ -40,15 +39,18 @@ Rectangle {
     property bool lockActivities: false
     property bool enablePreviews: false
 
-    property int  showAnimations: 0
+    property int  showAnimations: 2
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 
     property variant defaultFont: theme.defaultFont
 
-    property real defaultFontSize: theme.defaultFont.pointSize
+    property real defaultFontSize:theme.defaultFont.pointSize
     property real defaultFontRelativeness: 0
     property real fixedFontSize: defaultFontSize + defaultFontRelativeness
+
+    //With using KWindowSystem workarea
+    property real screenRatio:0.75
 
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
@@ -102,8 +104,6 @@ Rectangle {
             id:selectionImage
             source: "Images/buttons/selectedBlue.png"
 
-            // property int tempMeter: mainView.scaleMeter/5;
-
             border.left: 50; border.top: 50;
             border.right: 60; border.bottom: 50;
             horizontalTileMode: BorderImage.Repeat
@@ -137,7 +137,7 @@ Rectangle {
 
         StoppedActivitiesPanel{
             id:stoppedPanel
-            z:4
+            z:6
         }
 
 

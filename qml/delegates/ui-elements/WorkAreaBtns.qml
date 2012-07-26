@@ -123,7 +123,7 @@ Item{
                 opacityDel: 1
             //    deleteY:buttonsSpace
                 opacityClone: 0
-                duplicateY: buttonsSize+2*buttonsSpace
+             //   duplicateY: buttonsSize+2*buttonsSpace
             }
         },
         State {
@@ -133,7 +133,7 @@ Item{
                 opacityDel: 0
           //      deleteY:normalStateWorkArea.height
                 opacityClone: 0
-                duplicateY:normalStateWorkArea.height
+           //     duplicateY:normalStateWorkArea.height
             }
         }
     ]

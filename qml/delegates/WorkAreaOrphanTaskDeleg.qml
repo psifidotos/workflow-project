@@ -82,7 +82,8 @@ Component{
                 text:name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
                 font.italic: true
-                font.pointSize: orphansList.fontSiz
+                font.pointSize: orphansList.fontSize
+
 
                 elide:Text.ElideRight
 

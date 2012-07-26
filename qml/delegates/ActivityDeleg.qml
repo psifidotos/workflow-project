@@ -35,6 +35,17 @@ Component{
             }
         }
 
+        Rectangle{
+            //x: 1 * parent.width
+            //anchors.right:parent.right
+            y:-activitiesList.y
+            width:parent.width
+            height:actImag1.height - 1
+            color:"#ff333333"
+
+            opacity:ccode === mainView.currentActivity ? 1 : 0
+        }
+
         QIconItem{
             id:activityIcon
             rotation:-20
@@ -86,7 +97,10 @@ Component{
                     if (mainView.lockActivities === false){
                         activityBtnsI.state="hide";
                         stopActLocked.state="hide";
-                        fadeIcon.opacity = 1;
+
+                        if(ccode!==mainView.currentActivity)
+                            fadeIcon.opacity = 1;
+
                         activityIcon.rotation = -20;
                     }
                     else
@@ -105,7 +119,7 @@ Component{
         Image{
             id:fadeIcon
             rotation:0
-            opacity: CState===neededState ? 1:0
+            opacity: ((CState===neededState)&&(ccode !== mainView.currentActivity)) ? 1:0
             source: "../Images/buttons/activityIconFade.png"
             x:0
             y:0
@@ -114,7 +128,7 @@ Component{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 200;
+                    duration:  mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -128,7 +142,7 @@ Component{
             x: mainView.scaleMeter+10
           //  width:40+2.7*mainView.scaleMeter
           //  height:20+mainView.scaleMeter
-            width:mainActivity.width - activityIcon.width
+            width:mainActivity.width - x
             height:mainActivity.height - y
 
             opacity: CState===neededState ? 1:0
@@ -265,6 +279,14 @@ Component{
             ]
         }
 
+        Rectangle{
+            //x: 1 * parent.width
+            anchors.right:parent.right
+            y:-activitiesList.y
+            width:1
+            height:actImag1.height - 1
+            color:"#15222222"
+        }
 
         ListView.onAdd: ParallelAnimation {
             PropertyAction { target: mainActivity; property: "width"; value: 0 }

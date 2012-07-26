@@ -44,7 +44,7 @@ Item {
             font.family: "Helvetica"
             font.bold: true
             font.italic: true
-            font.pointSize: 12+(mainView.scaleMeter/10)
+            font.pointSize: 12+mainView.scaleMeter/10
             anchors.bottom: workImg.bottom
             anchors.bottomMargin: 15
             anchors.left: workImg.left

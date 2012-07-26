@@ -8,13 +8,13 @@ Component{
         id: workList
 
         property string tCState : CState
-
-        property string neededState:"Running"
         property string ccode:code
+        property string neededState:"Running"
+
 
         property string eelemImg : elemImg
 
-        property int addedHeight:taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
+        property int addedHeight:addWorkArea.height + taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
 
         property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (mainView.showWinds === true)
 
@@ -23,10 +23,19 @@ Component{
         state: tCState === neededState ? "show" : "hide"
 
 
-        onHeightChanged: allareas.changedChildHeight();
+        property int workAreaImageHeight: mainView.screenRatio*bWidth
+        property int workAreaNameHeight:20 + mainView.scaleMeter/2
+        property int realWorkAreaNameHeight: 0.8*workAreaNameHeight
 
-        property int bWidth: 1.4 * mainView.workareaHeight
-        property int bHeight:  mainView.workareaHeight*workalist.model.count+(workalist.model.count-1)*workalist.spacing
+        property int bWidth: mainView.workareaWidth
+        property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight)*workalist.model.count
+
+
+        width: bWidth
+        height: bHeight+addedHeight
+
+
+        onHeightChanged: allareas.changedChildHeight();
 
         onAddedHeightChanged:{
             allareas.changedChildHeight();
@@ -40,16 +49,13 @@ Component{
             width: workList.tCState === workList.neededState ? workList.bWidth : 0
             property string typeId : "workalistForActivity"
 
-            x:10
             z:5
-
-            spacing:3+workareaY / 5
 
             interactive:false
 
             model:workareas
 
-
+            orientation:ListView.Vertical
 
             delegate:WorkAreaDeleg{
             }
@@ -68,12 +74,14 @@ Component{
 
             property string typeId : "addWorkArea"
 
-          //  anchors.top: workalist.bottom
-          //  anchors.topMargin: mainView.workareaHeight/5
-            //anchors.horizontalCenter: workList.horizontalCenter
-            y: workalist.height+mainView.workareaHeight/5
-          //  x: 1.2*(workList.width/2 - width/2)
-            x:0.35 * mainView.scaleMeter
+            anchors.top: workalist.bottom
+          //  anchors.topMargin: workList.workAreaImageHeight
+            anchors.horizontalCenter: workalist.horizontalCenter
+
+            width:0.9*parent.width
+
+            //y: workalist.height+mainView.workareaHeight/5
+            //x:0.35 * mainView.scaleMeter
 
             opacity: workList.tCState === workList.neededState ? 1 : 0
 
@@ -103,7 +111,7 @@ Component{
             font.family: mainView.defaultFont.family
             font.italic: true
             font.bold: true
-            font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
+            font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/9 - 4
             color: "#80808c";
 
             Behavior on height{
@@ -156,15 +164,14 @@ Component{
             anchors.top : taskOrFTitleL.bottom
             anchors.left: taskOrFTitleL.left
 
-            property int fontSiz: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
-            property int windsHeight:2 * fontSiz
+            property int fontSize: mainView.fixedFontSize+ mainView.scaleMeter/9 - 4
+            property int windsHeight:2 * fontSize
 
             //for scrolling in vertical
             opacity: workList.showWindowsSection === true ? 1 : 0
             property int rHeight: workList.showWindowsSection === true ? (shownOrphanWindows+2) * windsHeight : 0
 
             height: model.count * windsHeight
-
 
             property int shownOrphanWindows: 0
 
@@ -202,10 +209,12 @@ Component{
         }
 
         Rectangle{
-            x: 1.05 * parent.width
+            //x: 1 * parent.width
+            anchors.right:workalist.right
             width:1
             height:2*mainView.height
             color:"#25727272"
+
         }
 
 /*
@@ -226,12 +235,12 @@ Component{
 
 /*
         ListView.onAdd: ParallelAnimation {
-            PropertyAction { target: workList; property: "width"; value: 0 }
-            PropertyAction { target: workList; property: "opacity"; value: 0 }
+         //   PropertyAction { target: workList; property: "width"; value: 0 }
+         //   PropertyAction { target: workList; property: "opacity"; value: 0 }
 
             NumberAnimation { target: workList; property: "width"; to: workList.bWidth; duration: 500; easing.type: Easing.InOutQuad }
             NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
-        }
+        }*/
 
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
@@ -244,7 +253,7 @@ Component{
 
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
-        }*/
+        }
 
         states: [
             State {
@@ -253,8 +262,8 @@ Component{
                     target: workList
 
                     opacity: 1
-                    width: 1.4 * mainView.workareaHeight
-                    height: workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
+                    width: bWidth
+                //    height: workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
                 }
             },
            State {

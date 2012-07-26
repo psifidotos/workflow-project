@@ -205,7 +205,9 @@ Rectangle{
                                     var bordRect = workAreaD.getBorderRectangle();
                                     var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
 
-                                    selectionImage.setLocation(fixBCoord.x-4,fixBCoord.y-4,0.95*workAreaD.width,0.98*workAreaD.height);
+                                    //selectionImage.setLocation(fixBCoord.x-4,fixBCoord.y-4,0.95*workAreaD.width,0.98*workAreaD.height);
+                                    //selectionImage.setLocation(fixBCoord.x,fixBCoord.y,workAreaD.width,workAreaD.height);
+                                    selectionImage.setLocation(fixBCoord.x-2,fixBCoord.y-4,bordRect.width-2,bordRect.height+8);
                                     selectionImage.opacity = 1;
 
                                     mainDraggingItem.drActiv = workAreaD.actCode;
@@ -220,6 +222,7 @@ Rectangle{
                         }//workalistForActivity
                         else if (mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"addWorkArea")){
                             var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
+
 
                             if((mainDraggingItem.drActiv!== activityCode) ||
                                     (mainDraggingItem.drDesktop!==desktopsNum+1) ||
@@ -247,12 +250,16 @@ Rectangle{
 
         }
         else if(mainDraggingItem.checkTypeId(centralArea.childAt(fixCC.x,fixCC.y),"allActivitiesTasks")){
-            var allTaskPO = centralArea.childAt(fixCC.x,fixCC.y);
-            var allTaskP = centralArea.childAt(fixCC.x,fixCC.y).children[0];
+           // var allTaskPO = centralArea.childAt(fixCC.x,fixCC.y);
+            var allTaskPO = centralArea.childAt(fixCC.x,fixCC.y).children[2];
 
-            var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
+            //var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
+            var fixBCoord3 = allTaskPO.mapToItem(mainDraggingItem,allTaskPO.x, allTaskPO.y);
 
-            selectionImage.setLocation(fixBCoord3.x-15,fixBCoord3.y-4,1.08*allTaskPO.width,1.3 * allTaskPO.height);
+            var offX=13
+            var offY=15
+
+            selectionImage.setLocation(fixBCoord3.x-offX,fixBCoord3.y-offY, allTaskPO.width+1.4*offX, allTaskPO.height+1.8*offY);
             selectionImage.opacity = 1;
 
             mainDraggingItem.lastSelection = 2;
@@ -265,6 +272,7 @@ Rectangle{
     }
 
     function checkTypeId(obj,name){
+
         if (obj === null)
             return false;
         else if (obj.typeId === name)

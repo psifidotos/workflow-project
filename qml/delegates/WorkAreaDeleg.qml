@@ -7,12 +7,13 @@ Component{
     Item{
         id: mainWorkArea
 
-        property alias normalStateArea_visible: normalStateWorkArea.visible
         property alias workAreaName_visible: workAreaName.visible
         property alias areaButtons_visible: workAreaButtons.visible
 
-        width: 1.4 * mainView.workareaHeight
-        height:mainView.workareaHeight
+        width:mainView.workareaWidth - 0.2*mainView.scaleMeter
+        height: workList.workAreaImageHeight+workList.realWorkAreaNameHeight
+        x:0.1*mainView.scaleMeter
+
 
         property string typeId : "workareaDeleg"
 
@@ -21,55 +22,42 @@ Component{
 
         property int imagex:14
         property int imagey:15
-        property int imagewidth:borderRectangle.width-2*imagex
-        property int imageheight:borderRectangle.height-2*imagey
+
+        property int imagewidth:width - 2*imagex
+        property int imageheight:height - 2*imagey
 
         Item{
             id:normalWorkArea
 
-            x:mainView.scaleMeter/10; y:x;
-            width: mainWorkArea.width - (mainView.scaleMeter/5);
-            height: mainWorkArea.height + (0.6*mainView.scaleMeter);
+            width: mainWorkArea.width
+            height: workList.workAreaImageHeight
 
-            Behavior on x { enabled: normalWorkArea.state!="dragging"; NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
-            Behavior on y { enabled: normalWorkArea.state!="dragging"; NumberAnimation { duration: 400; easing.type: Easing.OutBack } }
+            WorkAreaImage{
+                id:borderRectangle
+                width:parent.width
+                height:parent.height
 
-            state:"s1"
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
 
+                    onEntered: {
+                        mainWorkArea.showButtons();
+                    }
 
-            Row{
-                id:normalStateWorkArea
-                spacing: 0
+                    onExited: {
+                        mainWorkArea.hideButtons();
+                    }
 
-                WorkAreaImage{
-                    id:borderRectangle
-                    width: normalWorkArea.width
-                    height: normalWorkArea.height -  (4*mainView.scaleMeter/5)
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-
-                        onEntered: {
-                            mainWorkArea.showButtons();
-                        }
-
-                        onExited: {
-                            mainWorkArea.hideButtons();
-                        }
-
-                        onClicked: {
-                            mainWorkArea.clickedWorkarea();
-                        }
+                    onClicked: {
+                        mainWorkArea.clickedWorkarea();
+                    }
 
 
-                    }//image mousearea
-                }
+                }//image mousearea
+            }
 
 
-
-
-            }//Row
             ListView{
 
                 id:tasksSList
@@ -77,7 +65,7 @@ Component{
                 x:mainWorkArea.imagex
                 y:mainWorkArea.imagey
                 width:mainWorkArea.imagewidth
-                height:mainView.showWinds ? mainWorkArea.imageheight : 0
+                height:mainView.showWinds ? workList.workAreaImageHeight-2*mainWorkArea.imagey : 0
                 opacity:mainView.showWinds ? 1 : 0
 
                 clip:true
@@ -87,24 +75,21 @@ Component{
                 property bool hasChildren:childrenRect.height > 1
                 property bool isClipped:childrenRect.height > height
 
-
-
                 model:instanceOfTasksList.model
+
                 delegate:WorkAreaTaskDeleg{
-
                 }
-
 
                 Behavior on opacity{
                     NumberAnimation {
-                        duration: 500
+                        duration: 3*mainView.animationsStep
                         easing.type: Easing.InOutQuad;
                     }
                 }
 
                 Behavior on height{
                     NumberAnimation {
-                        duration: 500
+                        duration: 3*mainView.animationsStep
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -122,9 +107,10 @@ Component{
 
             DTextLine{
                 id:workAreaName
-                y: normalStateWorkArea.height-7
-                width: 50 + 3.3*mainView.scaleMeter
-                height: 20 + mainView.scaleMeter/2
+                y: borderRectangle.height-5
+                //width: 50 + 3.3*mainView.scaleMeter
+                width: mainWorkArea.width
+                height: workList.workAreaNameHeight
                 text: elemTitle
                 // acceptedText: elemTitle
             }
@@ -180,21 +166,7 @@ Component{
 
             }
 
-
-            states: [
-                State {
-                    name: "s1"
-                    PropertyChanges {
-                        target: mainWorkArea
-                        normalStateArea_visible: true
-                        workAreaName_visible:true
-                    }
-                }
-            ]
-
-            transitions: Transition { NumberAnimation { property: "scale"; duration: 150} }
-
-        } //Column
+        } //normalWorkArea Item
 
         ListView.onAdd: ParallelAnimation {
             PropertyAction { target: mainWorkArea; property: "height"; value: 0 }
