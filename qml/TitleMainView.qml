@@ -203,7 +203,7 @@ Rectangle{
         height:1.1 * oxygenTitle.height
 
         checkable:true
-        checked:mainView.lockActivities
+      //  checked:mainView.lockActivities
 
 
         onCheckedChanged:{
@@ -242,10 +242,12 @@ Rectangle{
         height: lockerToolBtn.height
 
         checkable:true
-        checked:mainView.showWinds
+       // checked:mainView.showWinds
 
         onCheckedChanged:{
             mainView.showWinds = checked;
+            if(!checked)
+                effectsToolBtn.checked = false;
         }
     }
 
@@ -281,8 +283,8 @@ Rectangle{
         height: lockerToolBtn.height
 
         checkable:true
-        checked:mainView.enablePreviews
-        visible:mainView.isOnDashBoard
+        //checked: (mainView.enablePreviews&&())
+        enabled:((mainView.isOnDashBoard)&&(mainView.showWinds))
 
         onCheckedChanged:{
             mainView.enablePreviews = checked;

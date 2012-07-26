@@ -35,8 +35,8 @@ Rectangle {
 
 
     //Applications properties/////
-    property bool showWinds: true
     property bool lockActivities: false
+    property bool showWinds: true
     property bool enablePreviews: false
 
     property int  showAnimations: 2
@@ -183,7 +183,8 @@ Rectangle {
         PlasmaComponents.Slider {
             id:zoomSlider
             y:mainView.height - height
-            x:stoppedPanel.x - width - 20
+            //x:stoppedPanel.x - width - 20
+            x:mainView.width - width - 20
             maximumValue: 75
             minimumValue: 30
             value:50

@@ -100,7 +100,7 @@ Item{
         font.family: mainText.font.family
         font.bold: mainText.font.bold
         font.italic: mainText.font.italic
-        font.pointSize: mainText.font.pointSize + 1
+       font.pointSize: mainText.font.pointSize + 1
         color:mainText.color
 
         anchors.left: parent.left

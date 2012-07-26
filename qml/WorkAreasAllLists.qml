@@ -61,7 +61,7 @@ Item{
             property string typeId : "workareasFlickList1"
 
             property int maxWorkAreasHeight: 0
-            property int scrollingMargin: 40
+            property int scrollingMargin: ((mainView.enablePreviews)&&(mainView.showWinds))?150:40
 
 
             //model:WorkAreasCompleteModel{}

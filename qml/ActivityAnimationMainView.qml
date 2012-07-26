@@ -65,7 +65,7 @@ QIconItem{
             for(var i=0; i < rchild.children.length; ++i){
                 if (rchild.children[i].ccode === cod)
                 {
-                    newPosElem = rchild.children[i].children[0]; //the icon position
+                    newPosElem = rchild.children[i].children[1]; //the icon position
                 }
             }
 

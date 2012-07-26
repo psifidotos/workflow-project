@@ -46,6 +46,11 @@ Component{
             }
         }
 
+        Item{
+            ///Ghost Element in order for the activityIcon to be the
+            ///second children
+        }
+
         // QPixmapItem{
         QIconItem{
             id:activityIcon

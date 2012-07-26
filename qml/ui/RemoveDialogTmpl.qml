@@ -30,14 +30,16 @@ DialogTemplate{
             width:70
             height:70
         }
+
         Text{
             id:mainTextInf
             anchors.left: infIcon.right
             anchors.verticalCenter: infIcon.verticalCenter
             color:"#ffffff"
             text:i18n("Are you sure you want to remove activity <b>")+rmvDialog.activityName+i18n("</b> ?")
+
             font.family:mainView.defaultFont.family
-            font.pointSize: mainView.fixedFontSize
+            font.pointSize: mainView.fixedFontSize + 1
         }
 
     }

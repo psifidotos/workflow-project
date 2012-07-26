@@ -104,7 +104,6 @@ Item{
 
         property int space:0;
 
-        //font.family: "Helvetica"
         font.family: mainView.defaultFont.family
         font.italic: true
         font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/12-3

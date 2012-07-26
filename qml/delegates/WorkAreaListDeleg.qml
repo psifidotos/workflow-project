@@ -103,7 +103,7 @@ Component{
 
             width:parent.width
             opacity: workList.showWindowsSection === true ? 1:0
-           // height: workList.showWindowsSection === true ? 2.6*font.pointSize:0
+
 
             //clip:true
 

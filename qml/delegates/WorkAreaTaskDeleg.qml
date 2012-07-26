@@ -128,7 +128,6 @@ Component{
                 text: name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
                 font.italic: false
-               // font.bold: true
                 font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
                 color: taskDeleg1.taskTitleColorD
                 elide: Text.ElideRight

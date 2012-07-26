@@ -60,7 +60,7 @@ BorderImage {
             font.family: mainView.defaultFont.family
             font.bold: true
             font.italic: true
-            font.pointSize: mainView.fixedFontSize+1
+            //font.pointSize: mainView.fixedFontSize+1
         }
 
         Rectangle{
