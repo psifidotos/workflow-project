@@ -17,6 +17,9 @@ Component{
         opacity: CState === neededState ? 1 : 0
 
         property int defWidth: CState === neededState ? mainView.workareaWidth : 0
+        property color activeBackColor: "#ff444444"
+
+        property color actUsedColor: ccode===mainView.currentActivity? activeBackColor:actImag1.color
 
         width: defWidth
         height: mainView.workareaWidth / 3
@@ -36,12 +39,24 @@ Component{
         }
 
         Rectangle{
-            //x: 1 * parent.width
-            //anchors.right:parent.right
-            y:-activitiesList.y
-            width:parent.width
-            height:actImag1.height - 1
-            color:"#ff333333"
+            //y:-activitiesList.y
+            y:-activitiesList.y+actImag1.height-1
+            //width:parent.width
+            height:parent.width
+            width:actImag1.height
+            //height:actImag1.height - 1
+        //    color:mainActivity.activeBackColor
+
+            rotation: -90
+            transformOrigin: Item.TopLeft
+
+
+            gradient: Gradient {
+                GradientStop { position: 0; color:actImag1.color }
+                GradientStop { position: 0.03; color: mainActivity.activeBackColor }
+                GradientStop { position: 0.97; color: mainActivity.activeBackColor }
+                GradientStop { position: 1.0; color: actImag1.color }
+            }
 
             opacity:ccode === mainView.currentActivity ? 1 : 0
         }
@@ -98,7 +113,7 @@ Component{
                         activityBtnsI.state="hide";
                         stopActLocked.state="hide";
 
-                        if(ccode!==mainView.currentActivity)
+                   //     if(ccode!==mainView.currentActivity)
                             fadeIcon.opacity = 1;
 
                         activityIcon.rotation = -20;
@@ -116,15 +131,24 @@ Component{
 
         }
 
-        Image{
+        Rectangle{
             id:fadeIcon
-            rotation:0
-            opacity: ((CState===neededState)&&(ccode !== mainView.currentActivity)) ? 1:0
-            source: "../Images/buttons/activityIconFade.png"
-            x:0
-            y:0
+
+            opacity: CState===neededState ? 1:0
+
+            x:activityIcon.x+0.15*activityIcon.width
+            y:activityIcon.y
+            rotation: 90
+            transformOrigin: Item.Center
+
             width:1.2*activityIcon.width
-            height:activityIcon.height+activityIcon.y
+            height:0.8*activityIcon.height
+
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: mainActivity.actUsedColor }
+                GradientStop { position: 0.15; color: mainActivity.actUsedColor }
+                GradientStop { position: 1.0; color: "#00000000" }
+            }
 
             Behavior on opacity{
                 NumberAnimation {
@@ -140,8 +164,7 @@ Component{
 
             y: mainView.scaleMeter/15
             x: mainView.scaleMeter+10
-          //  width:40+2.7*mainView.scaleMeter
-          //  height:20+mainView.scaleMeter
+
             width:mainActivity.width - x
             height:mainActivity.height - y
 

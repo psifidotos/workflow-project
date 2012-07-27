@@ -13,6 +13,10 @@ Rectangle{
     color:"#dcdcdc"
     height: workareaY/3
 
+    property alias lockerChecked:lockerToolBtn.checked
+    property alias windowsChecked:windowsToolBtn.checked
+    property alias effectsChecked:effectsToolBtn.checked
+
     Image{
         source:"Images/buttons/titleLight.png"
         clip:true
@@ -290,5 +294,7 @@ Rectangle{
             mainView.enablePreviews = checked;
         }
     }
+
+
 
 }

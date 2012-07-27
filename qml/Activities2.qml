@@ -157,116 +157,10 @@ Rectangle {
             z:7
         }
 
-        /*
-        Slider {
+
+        ZoomSliderItem{
             id:zoomSlider
-            y:mainView.height - height - 5
-            x:stoppedPanel.x - width - 5
-            maximum: 65
-            minimum: 32
-            value:50
-            width:125
-            z:10
-
-            onValueChanged: workflowManager.setZoomFactor(value);
-
-            Image{
-                x:-0.4*width
-                y:-0.3*height
-                width:30
-                height:1.5*width
-                source:"Images/buttons/magnifyingglass.png"
-            }
-
-        }*/
-
-        PlasmaComponents.Slider {
-            id:zoomSlider
-            y:mainView.height - height
-            //x:stoppedPanel.x - width - 20
-            x:mainView.width - width - 20
-            maximumValue: 75
-            minimumValue: 30
-            value:50
-
-            width:125
-            z:10
-
-            property bool firsttime:true
-
-            onValueChanged: firsttime === false ? workflowManager.setZoomFactor(value) : notFirstTime()
-
-            property bool updateValueWhileDragging:true
-
-            function notFirstTime(){
-                firsttime = false;
-            }
-
-            /*
-            Image{
-                id:magnifyingMainIcon
-                x:-0.6*width
-                //y: -0.2*height
-                width:22
-                height:1.5*width
-                source:"Images/buttons/magnifyingglass.png"
-                MouseArea{
-                    anchors.fill: parent
-
-                    onClicked:{
-                        zoomSlider.value=50;
-                    }
-                }
-
-            }*/
-            //QIconItem{
-            Image{
-                id:minusSliderImage
-                //x:magnifyingMainIcon.width / 2
-                x:-width/1.5
-                width:30
-                height:width
-                y:-5
-
-                //icon:QIcon("zoom_out")
-                source:"Images/buttons/zoom_out.png"
-                smooth:true
-                fillMode:Image.PreserveAspectFit
-
-                MouseArea{
-                    anchors.fill: parent
-
-                    onClicked:{
-                        zoomSlider.value--;
-                    }
-                }
-            }
-
-            //QIconItem{
-            Image{
-                id:plusSliderImage
-
-                x:zoomSlider.width-width/2
-                width:30
-                height:width
-                y:-5
-                //icon:QIcon("zoom_in")
-                source:"Images/buttons/zoom_in.png"
-                smooth:true
-                fillMode:Image.PreserveAspectFit
-
-                MouseArea{
-                    anchors.fill: parent
-
-                    onClicked:{
-                        zoomSlider.value++;
-                    }
-                }
-            }
-
         }
-
-
 
         WorkAreaFull{
             id:wkFull
@@ -282,7 +176,12 @@ Rectangle {
 
 
     Component.onCompleted:{
+
         DynamAnim.createComponents();
+
+        oxygenT.lockerChecked = mainView.lockActivities
+        oxygenT.windowsChecked = mainView.showWinds
+        oxygenT.effectsChecked = mainView.enablePreviews
     }
 
     function getDynLib(){
@@ -291,11 +190,13 @@ Rectangle {
     /*-------------------Loading values-------------------*/
     function setShowWindows(v){
         mainView.showWinds = v;
+        oxygenT.windowsChecked = v;
         //      console.debug("ShowW:"+v);
     }
     function setLockActivities(v){
         mainView.lockActivities = v;
-        //     console.debug("LockA:"+ v);
+        oxygenT.lockerChecked = v;
+       //     console.debug("LockA:"+ v);
     }
     function setZoomSlider(v){
         zoomSlider.value = v;
@@ -315,34 +216,6 @@ Rectangle {
 
 
     /*
-    Rectangle {
-        width: 20; height: 20; z:75; x:0; y:0
-        color:"#ffffff"
-        visible: mainView.isOnDashBoard
-
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                mainView.enablePreviews = !mainView.enablePreviews
-
-                if(mainView.enablePreviews === true){
-              //      var mId = instanceOfTasksList.getIndexForWorkflowWindow();
-                  //  console.debug(mId);
-                //    taskManager.setMainWindowId(mId);
-                    taskManager.showWindowsPreviews();
-                }
-            }
-        }
-    }
-
-    Rectangle{
-        id:testerRec
-        color:"blue"
-        width:10
-        height:10
-    }
-
-
     onMinimumWidthChanged:{
         if(mainView.minimumWidth>mainView.width)
             main{View.width = mainView.minimumWidth
