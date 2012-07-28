@@ -39,7 +39,9 @@ Rectangle {
     property bool showWinds: true
     property bool enablePreviews: false
 
-    property int  showAnimations: 2
+    property bool effectsSystemEnabled: false
+
+    property int  showAnimations: 0
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 

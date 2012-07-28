@@ -97,7 +97,6 @@ Component{
 
             WorkAreaBtns{
                 id:workAreaButtons
-                //height: normalWorkArea.height -  (4*mainView.scaleMeter/5)
 
                 x:borderRectangle.width+borderRectangle.x - 0.85*width
                 y:-0.25*height
@@ -107,12 +106,11 @@ Component{
 
             DTextLine{
                 id:workAreaName
+
                 y: borderRectangle.height-5
-                //width: 50 + 3.3*mainView.scaleMeter
                 width: mainWorkArea.width
                 height: workList.workAreaNameHeight
                 text: elemTitle
-                // acceptedText: elemTitle
             }
 
             MoreButton{

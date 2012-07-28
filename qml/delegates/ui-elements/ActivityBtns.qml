@@ -31,7 +31,7 @@ Item{
         height: buttonsSize
         x:buttonsX
         y:buttonsY
-        //   opacity:0
+
         z:10
         smooth:true
 
@@ -63,17 +63,14 @@ Item{
         }
     }
 
-
-    //QIconItem{
     Image{
         id:duplicateActivityBtn
-        //  icon:QIcon("reload")
+
         source:"../../Images/buttons/cloneActivity.png"
         width: buttonsSize
         height: buttonsSize
         x:buttonsSize+buttonsSpace+buttonsX
         y:buttonsY
-        //    opacity:0
         smooth:true
 
         z:11
@@ -116,7 +113,7 @@ Item{
         height: buttonsSize
         x:2*buttonsSize+2*buttonsSpace+buttonsX
         y:buttonsY
-        //  opacity:0
+
         z:12
         smooth:true
 
@@ -178,9 +175,6 @@ Item{
                 xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
                 xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
 
-                /*     xDel:0
-                  xDup:0
-                  xStop:0*/
             }
         }
     ]
@@ -299,13 +293,6 @@ Item{
 
             mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainView,x1, y1));
         }
-
-
-        //instanceOfActivitiesList.setCState(code,"Stopped");
-
-        //       stoppedPanel.changedChildState();
-
-        //activityAnimate.animateActiveToStop(code,activityIcon.mapToItem(mainView,x1, y1));
 
     }
 }

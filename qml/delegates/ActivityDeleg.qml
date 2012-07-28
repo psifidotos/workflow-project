@@ -39,13 +39,11 @@ Component{
         }
 
         Rectangle{
-            //y:-activitiesList.y
+
             y:-activitiesList.y+actImag1.height-1
-            //width:parent.width
+
             height:parent.width
             width:actImag1.height
-            //height:actImag1.height - 1
-        //    color:mainActivity.activeBackColor
 
             rotation: -90
             transformOrigin: Item.TopLeft
@@ -66,11 +64,10 @@ Component{
             rotation:-20
             opacity: CState===neededState ? 1:0
 
-            //source: "../" + Icon
             icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
             x:mainView.scaleMeter/10
             y:mainView.scaleMeter/3
-            //   width: mainActivity.tCState === neededState ? 5+mainView.scaleMeter : 0
+
             width: 5+mainView.scaleMeter
             height:width
             smooth:true
@@ -113,8 +110,7 @@ Component{
                         activityBtnsI.state="hide";
                         stopActLocked.state="hide";
 
-                   //     if(ccode!==mainView.currentActivity)
-                            fadeIcon.opacity = 1;
+                        fadeIcon.opacity = 1;
 
                         activityIcon.rotation = -20;
                     }
@@ -162,11 +158,16 @@ Component{
             id:activityName
             text: Name
 
-            y: mainView.scaleMeter/15
-            x: mainView.scaleMeter+10
+            //y: mainView.scaleMeter/18
+            x: 0.7*mainView.scaleMeter+10
 
-            width:mainActivity.width - x
-            height:mainActivity.height - y
+            property int spacingWidth:0.7*mainView.scaleMeter+10
+
+            width:mainActivity.width - spacingWidth
+            //height:mainActivity.height - y
+            height:mainActivity.height
+            anchors.bottom: separatorLine.bottom
+            anchors.bottomMargin: 1
 
             opacity: CState===neededState ? 1:0
 
@@ -242,8 +243,7 @@ Component{
             icon: QIcon("player_stop")
             anchors.top: parent.top
             anchors.right: parent.right
-            // x:mainView.scaleMeter/10
-            // y:mainView.scaleMeter/3
+
             width:5+0.8*mainView.scaleMeter
             height:width
             state: "hide"
@@ -303,7 +303,8 @@ Component{
         }
 
         Rectangle{
-            //x: 1 * parent.width
+            id:separatorLine
+
             anchors.right:parent.right
             y:-activitiesList.y
             width:1

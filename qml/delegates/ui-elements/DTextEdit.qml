@@ -22,6 +22,8 @@ Item{
         opacity:0
         source:"../../Images/buttons/editBox2.png"
 
+        y:3
+
         border.left: 15; border.top: 15;
         border.right: 40; border.bottom: 15;
         horizontalTileMode: BorderImage.Repeat
@@ -93,23 +95,28 @@ Item{
 
         text:mainText.text
 
-        width:0.8*mainText.width
-        height:mainText.height
-        y:-mainText.space
+        width: dTextItem.width-15
+  //      height:mainText.height
+  //      y:-mainText.space
 
         font.family: mainText.font.family
         font.bold: mainText.font.bold
         font.italic: mainText.font.italic
-        font.pointSize: mainText.font.pointSize + 1
+        //font.pointSize:mainView.scaleMeter < 50 ?
+          //                 mainView.fixedFontSize - (4-mainView.scaleMeter/15):
+          //                 mainView.fixedFontSize + (mainView.scaleMeter/10)
+        font.pixelSize: (0.22+mainView.defaultFontRelativeness/20)*actImag1.height
         color:mainText.color
 
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: backImage.bottom
+        anchors.bottomMargin: 5
+        //anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: mainText.verticalAlignment
 
 
-        wrapMode: Text.WordWrap
+        wrapMode: Text.Wrap
         maximumLineCount: 2
         elide:Text.ElideRight
 
@@ -121,8 +128,8 @@ Item{
         property int space:0;
         //property int spaceN:
 
-        width:dTextItem.width -30 - space;
-        height: dTextItem.height - space;
+        width:dTextItem.width - 30 - space;
+     //   height: dTextItem.height - space;
 
         wrapMode: TextEdit.Wrap
 
@@ -130,7 +137,8 @@ Item{
 
         font.bold: true
         font.italic: true
-        font.pointSize: mainView.fixedFontSize + (mainView.scaleMeter/12-3)
+        //font.pointSize: mainTextLabel2.font.pointSize-1
+        font.pixelSize: 0.75*mainTextLabel2.font.pixelSize
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom
@@ -139,7 +147,10 @@ Item{
 
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: backImage.bottom
+        anchors.bottomMargin: 10
+
+
         focus:true
         readOnly: !dTextItem.enableEditing
         enabled: dTextItem.enableEditing

@@ -49,14 +49,10 @@ Component{
         onShowPreviewsChanged:{
 
             if (showPreviews === true){
-                //   previewTimer.repeat = true;
-                //   previewTimer.start();
                 taskDeleg2.state = "nohovered2";
                 taskDeleg2.updatePreview();
             }
             else{
-                //   previewTimer.repeat = false;
-                //  previewTimer.stop();
                 taskDeleg2.state = "nohovered1";
                 taskManager.removeWindowPreview(taskDeleg2.ccode);
             }
@@ -150,29 +146,6 @@ Component{
         }
 
 
-        ////Preview State///////////
-        Timer {
-            id:previewTimer
-            property string cd
-            interval: allActTaskL.shownTasks*2000; running: false; repeat:false
-
-            onTriggered: {
-                if (taskDeleg2.showPreviews === true){
-                    previewRect.ratio = taskManager.windowScreenshotRatio(taskDeleg2.ccode);
-
-                    var img = taskManager.windowScreenshot(taskDeleg2.ccode,imageTask2.height);
-
-                    //                    console.debug(previewRect.ratio);
-
-                    if (previewRect.ratio>0){
-                        previewPix.pixmap = img;
-                    }
-                }
-                else
-                    previewTimer.stop();
-            }
-        }
-
         Rectangle{
             id:previewRect
             color:"#05666666"
@@ -190,18 +163,15 @@ Component{
             QIconItem{
                 id:previewPix
 
-                //icon: Icon
                 smooth:true
-                //pixmap:taskManager.disabledPixmapForIcon(Icon)
+
                 icon: Icon
                 enabled: false
-
 
                 anchors.centerIn: parent
 
                 width:(parent.width) / 2
                 height:(parent.height) / 2
-
 
                 opacity:parent.opacity === 0 ? 0:0.3
 

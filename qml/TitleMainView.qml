@@ -17,15 +17,9 @@ Rectangle{
     property alias windowsChecked:windowsToolBtn.checked
     property alias effectsChecked:effectsToolBtn.checked
 
-    Image{
-        source:"Images/buttons/titleLight.png"
-        clip:true
-        width:parent.width
-        height:parent.height
-        smooth:true
-        fillMode:Image.PreserveAspectCrop
-    }
-
+    property int buttonWidth:1.6 * oxygenTitle.height
+    //property int buttonHeight:1.07 * oxygenTitle.height
+    property int buttonHeight:oxygenTitle.height + 3
 
     Rectangle{
         id:mainRect
@@ -37,6 +31,25 @@ Rectangle{
             GradientStop { position: 1.0; color: "#00797979" }
         }
     }
+
+    Rectangle{
+        y:parent.height
+
+        height:parent.width
+        width:parent.height
+
+        rotation: -90
+        transformOrigin: Item.TopLeft
+
+        gradient: Gradient {
+            GradientStop { position: 0.0; color:"#00ffffff" }
+            GradientStop { position: 0.15; color: "#ffffffff" }
+            GradientStop { position: 0.85; color: "#ffffffff" }
+            GradientStop { position: 1.0; color: "#00ffffff" }
+        }
+
+    }
+
 
     Text{
         anchors.top:oxygenTitle.top
@@ -48,253 +61,162 @@ Rectangle{
         color:"#777777"
     }
 
-    /*  Image{
-        source:"Images/buttons/titleLight.png"
-        clip:true
-        width:parent.width
-        height:parent.height
-        smooth:true
-        fillMode:Image.PreserveAspectCrop
-    }
 
+    Row{
+        x: 0.7 * oxygenTitle.height
+        y: -4
+        spacing:0.25 * oxygenTitle.height < 8 ? 8 : 0.25*oxygenTitle.height
 
-    Rectangle{
-        id:mainRect
-        anchors.top: oxygenTitle.bottom
-        width:oxygenTitle.width
-        height:oxygenTitle.height/2
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "#aa0f0f0f" }
-            GradientStop { position: 1.0; color: "#00797979" }
+        //First Button///////
+        Rectangle{
+            radius:4
+            width:oxygenTitle.buttonWidth-6
+            height:oxygenTitle.buttonHeight-2
+            border.width: 2
+            border.color: "#cccccc"
+            color:"#00ffffff"
+            opacity:1
+
+            PlasmaComponents.ToolButton{
+                id:lockerToolBtn
+                anchors.centerIn: parent
+
+                Image{
+                    smooth:true
+                    source:"Images/buttons/Padlock-gold.png"
+                    anchors.centerIn: parent
+                    width:0.8*parent.height
+                    height:0.7*parent.height
+                }
+
+                width: oxygenTitle.buttonWidth
+                height: oxygenTitle.buttonHeight
+
+                checkable:true
+                //  checked:mainView.lockActivities
+
+                onCheckedChanged:{
+                    mainView.lockActivities = checked;
+                }
+            }
+
         }
-    }
+
+        //Second Button///////////
+        Rectangle{
+            radius:4
+            width:oxygenTitle.buttonWidth-6
+            height:oxygenTitle.buttonHeight-2
+            border.width: 2
+            border.color: "#cccccc"
+            color:"#00ffffff"
+            opacity:1
+
+            PlasmaComponents.ToolButton{
+                id:windowsToolBtn
+                anchors.centerIn: parent
+
+                Image{
+                    smooth:true
+                    source:"Images/buttons/blueWindowsIcon.png"
+                    anchors.centerIn: parent
+                    width:0.80*parent.height
+                    height:0.68*parent.height
+
+                }
+
+                width: oxygenTitle.buttonWidth
+                height: oxygenTitle.buttonHeight
+
+                checkable:true
+                // checked:mainView.showWinds
+
+                onCheckedChanged:{
+                    mainView.showWinds = checked;
+                    if(!checked)
+                        effectsToolBtn.checked = false;
+                }
+            }
+
+        }
+
+        //Third Button
+        Rectangle{
+            radius:4
+            width:oxygenTitle.buttonWidth-6
+            height:oxygenTitle.buttonHeight-2
+            border.width: 2
+            border.color: "#cccccc"
+            color:"#00ffffff"
+            opacity:1
+
+            PlasmaComponents.ToolButton{
+                id:effectsToolBtn
+
+                anchors.centerIn: parent
+
+                Image{
+                    smooth:true
+                    source:"Images/buttons/tools_wizard.png"
+                    anchors.centerIn: parent
+                    width:0.80*parent.height
+                    height:0.65*parent.height
+
+                }
+
+                width: oxygenTitle.buttonWidth
+                height: oxygenTitle.buttonHeight
+
+                checkable:true
+                //checked: (mainView.enablePreviews&&())
+                enabled:((mainView.isOnDashBoard)&&
+                         (mainView.showWinds)&&
+                         (mainView.effectsSystemEnabled))
+
+                onCheckedChanged:{
+                    mainView.enablePreviews = checked;
+                }
+            }
+
+        }
+
+    }// End Of Left Set of Buttons // Row
 
     Text{
-        anchors.top:oxygenTitle.top
-        anchors.horizontalCenter: oxygenTitle.horizontalCenter
-        text:""
-        font.family: "Helvetica"
-        font.italic: true
-        font.pointSize: 5+(mainView.scaleMeter) /10
-        color:"#777777"
-    }
+        id:helpBtn
+        text:"?"
+        font.family: "Serif"
+        font.pixelSize: 0.75*oxygenTitle.height
 
+        color:"#444444"
+        opacity:defOpacity
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
 
-    ToggleButton{
-        id:lckBtn
-        x:parent.height/2
-        y:(oxygenTitle.height-height)/2
-
-        height: 0.91 * oxygenTitle.height
-        width: 0.95 * height
-
-        state: mainView.lockActivities ? "active" : "inactive"
-
-        mainIconWidthInactive: 0.95 * height
-        mainIconHeightInactive: 0.91 * oxygenTitle.height
-
-        mainIconWidthActive: 0.95 * height
-        mainIconHeightActive: 0.91 * oxygenTitle.height
-
-        imgIconActive: "../Images/buttons/plasma_ui/lockedIcon.png"
-        imgIconInActive: "../Images/buttons/plasma_ui/unlockedIcon.png"
+        property real defOpacity:0.6
 
         MouseArea {
             anchors.fill: parent
+
             hoverEnabled: true
 
             onEntered: {
-                lckBtn.onEntered();
+                helpBtn.opacity = 1;
+                helpBtn.font.bold = true;
             }
 
             onExited: {
-                lckBtn.onExited();
+                helpBtn.opacity = helpBtn.defOpacity;
+                helpBtn.font.bold = false;
             }
+
 
             onClicked: {
-                lckBtn.onClicked();
-                if (mainView.lockActivities === true)
-                    mainView.lockActivities = false;
-                else
-                    mainView.lockActivities = true;
             }
 
         }
+
     }
-
-    ToggleButton{
-        id:shWinBtn
-        x:lckBtn.x+1.5*lckBtn.width
-        y:(1.1*oxygenTitle.height-height)/2
-
-        width:1.6*height
-        height:0.85*oxygenTitle.height
-
-        mainIconWidthInactive: 1.6*height
-        mainIconHeightInactive: 0.85*oxygenTitle.height
-
-        mainIconWidthActive: 1.85*height
-        mainIconHeightActive: 0.75*oxygenTitle.height
-
-        imgIconActive: "../Images/buttons/withwindowsicon.png"
-        imgIconInActive: "../Images/buttons/nowindowsicon.png"
-
-        Component.onCompleted: {
-            if (mainView.showWinds)
-                shWinBtn.state = "active";
-            else
-                shWinBtn.state = "inactive";
-        }
-
-        Connections{
-            target:shWinBtn
-            onStatusChanged:{
-                if (shWinBtn.status == "active")
-                    mainView.showWinds = true;
-                else
-                    mainView.showWinds = false;
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                shWinBtn.onEntered();
-            }
-
-            onExited: {
-                shWinBtn.onExited();
-            }
-
-            onClicked: {
-                shWinBtn.onClicked();
-            }
-
-        }
-    }
-*/
-
-    Rectangle{
-        x:lockerToolBtn.x+3
-        y:lockerToolBtn.y
-        radius:4
-        width:lockerToolBtn.width-6
-        height:lockerToolBtn.height-2
-        border.width: 2
-        border.color: "#cccccc"
-        color:"#00ffffff"
-        opacity:1
-    }
-
-    PlasmaComponents.ToolButton{
-        id:lockerToolBtn
-        x: 0.7 * oxygenTitle.height
-        y:-4
-        //iconSource:"plasma"
-        //iconSource: QUrl("Images/buttons/plasma")
-        Image{
-            smooth:true
-            source:"Images/buttons/Padlock-gold.png"
-            anchors.centerIn: parent
-            width:0.8*parent.height
-            height:0.7*parent.height
-
-        }
-
-        width: 1.6 * oxygenTitle.height
-        height:1.1 * oxygenTitle.height
-
-        checkable:true
-      //  checked:mainView.lockActivities
-
-
-        onCheckedChanged:{
-            mainView.lockActivities = checked;
-        }
-    }
-
-    Rectangle{
-        x:windowsToolBtn.x+3
-        y:windowsToolBtn.y
-        radius:4
-        width:windowsToolBtn.width-6
-        height:windowsToolBtn.height-2
-        border.width: 2
-        border.color: "#cccccc"
-        color:"#00ffffff"
-        opacity:1
-    }
-
-    PlasmaComponents.ToolButton{
-        id:windowsToolBtn
-        x:lockerToolBtn.x+1.1*lockerToolBtn.width
-        y:-4
-        //iconSource:"plasma"
-        //iconSource: QUrl("Images/buttons/plasma")
-        Image{
-            smooth:true
-            source:"Images/buttons/blueWindowsIcon.png"
-            anchors.centerIn: parent
-            width:0.80*parent.height
-            height:0.68*parent.height
-
-        }
-
-        width: lockerToolBtn.width
-        height: lockerToolBtn.height
-
-        checkable:true
-       // checked:mainView.showWinds
-
-        onCheckedChanged:{
-            mainView.showWinds = checked;
-            if(!checked)
-                effectsToolBtn.checked = false;
-        }
-    }
-
-    Rectangle{
-        x:effectsToolBtn.x+3
-        y:effectsToolBtn.y
-        radius:4
-        width:effectsToolBtn.width-6
-        height:effectsToolBtn.height-2
-        border.width: 2
-        border.color: "#cccccc"
-        color:"#00ffffff"
-        opacity:1
-        visible:mainView.isOnDashBoard
-    }
-
-    PlasmaComponents.ToolButton{
-        id:effectsToolBtn
-        x:windowsToolBtn.x+1.1*windowsToolBtn.width
-        y:-4
-        //iconSource:"plasma"
-        //iconSource: QUrl("Images/buttons/plasma")
-        Image{
-            smooth:true
-            source:"Images/buttons/tools_wizard.png"
-            anchors.centerIn: parent
-            width:0.80*parent.height
-            height:0.65*parent.height
-
-        }
-
-        width: lockerToolBtn.width
-        height: lockerToolBtn.height
-
-        checkable:true
-        //checked: (mainView.enablePreviews&&())
-        enabled:((mainView.isOnDashBoard)&&(mainView.showWinds))
-
-        onCheckedChanged:{
-            mainView.enablePreviews = checked;
-        }
-    }
-
-
 
 }

@@ -17,14 +17,14 @@ Item{
 
     Behavior on x{
         NumberAnimation {
-            duration: 500;
+            duration: 3*mainView.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on width{
         NumberAnimation {
-            duration: 500;
+            duration: 3*mainView.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }

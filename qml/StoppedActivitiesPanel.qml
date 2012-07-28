@@ -45,7 +45,7 @@ Rectangle {
         boundsBehavior: Flickable.StopAtBounds
 
         anchors.right: stopActBack.right
-       // anchors.rightMargin: spacing
+
 
         ListView {
             id: stoppedActivitiesList
@@ -54,18 +54,9 @@ Rectangle {
             height: model.count * ((0.66*workareaHeight)+spacing)
             width: stopActBack.width - spacing
 
-            //y:shownActivities===0 ? stopActBack.height : stopActBack.height-height-5
-            //y:stopActBack.height-height-5
-            // y:stopActBack.height-(shownActivities*0.66*mainView.workareaHeight)
             y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
 
-            //   anchors.top: stopActBack.top
-            //anchors.right: stopActBack.right
-            //anchors.rightMargin: spacing
             anchors.right: parent.right
-           // anchors.rightMargin: spacing
-
-            // spacing: workareaHeight/12
 
             property int shownActivities: 4
 

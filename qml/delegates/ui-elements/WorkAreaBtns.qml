@@ -37,18 +37,9 @@ Item{
             hoverEnabled: true
 
             onClicked: {
-
                 deleteWorkareaBtn.onClicked();
 
                 instanceOfWorkAreasList.removeWorkArea(mainWorkArea.actCode,mainWorkArea.desktop);                
-/*
-                for (var i=gridRow+1; i<mainWorkArea.ListView.view.model.count;i++)
-                {
-                    var currentPos = mainWorkArea.ListView.view.model.get(i).gridRow;
-                    mainWorkArea.ListView.view.model.setProperty(i ,"gridRow",currentPos-1);
-                }
-
-                mainWorkArea.ListView.view.model.remove(gridRow);*/
             }
 
             onEntered: {
@@ -121,9 +112,7 @@ Item{
             PropertyChanges {
                 target: workAreaButtons
                 opacityDel: 1
-            //    deleteY:buttonsSpace
                 opacityClone: 0
-             //   duplicateY: buttonsSize+2*buttonsSpace
             }
         },
         State {
@@ -131,9 +120,7 @@ Item{
             PropertyChanges {
                 target: workAreaButtons
                 opacityDel: 0
-          //      deleteY:normalStateWorkArea.height
                 opacityClone: 0
-           //     duplicateY:normalStateWorkArea.height
             }
         }
     ]

@@ -9,13 +9,9 @@ Item {
 
     state: "hide"
 
-
-
     property string status:"nothover"
 
     signal changedStatus();
-
-    //y: -height/5
 
     property alias opacityClose: closeBtn.opacity
     property alias yClose: closeBtn.y

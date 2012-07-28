@@ -54,11 +54,9 @@ Component{
         }
 
         QIconItem{
-      //  QPixmapItem{
             id:imageTask
 
             icon:Icon
-          //  pixmap:Icon
             smooth:true
 
 
@@ -121,9 +119,6 @@ Component{
 
             Text{
                 id:taskTitle
-
-                //width:parent.width
-                //clip:true
 
                 text: name || 0 ? name : ""
                 font.family: mainView.defaultFont.family

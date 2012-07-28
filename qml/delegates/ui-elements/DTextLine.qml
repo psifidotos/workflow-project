@@ -84,7 +84,7 @@ Item{
 
         text:mainIText.text
         width:mainIText.width
-        height:mainIText.height
+   //     height:parent.height-10
         font.family: mainIText.font.family
         font.italic: mainIText.font.italic
         font.pointSize: mainIText.font.pointSize
@@ -92,7 +92,8 @@ Item{
         elide:Text.ElideRight
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 5
     }
 
 
@@ -100,9 +101,10 @@ Item{
         id:mainIText
 
         width:dTextIItem.width-30-space;
-        height: dTextIItem.height-space;
+     //   height: dTextIItem.height-vspace;
 
-        property int space:0;
+        property int space:0
+        property int vspace:15
 
         font.family: mainView.defaultFont.family
         font.italic: true
@@ -112,8 +114,8 @@ Item{
 
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-        //anchors.centerIn: parent
+        anchors.verticalCenter: backIImage.verticalCenter
+
         focus:true
         opacity:mainTextLabel.opacity === 0 ? 1 : 0.001
 

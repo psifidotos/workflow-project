@@ -5,23 +5,19 @@ BorderImage {
     id:workBordImage
     source: ((mainWorkArea.actCode === mainView.currentActivity) && (mainWorkArea.desktop === mainView.currentDesktop)) ?
                 "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
-    property alias mainImgP: mainImg.source
 
-    // property int tempMeter: mainView.scaleMeter/5;
+    property alias mainImgP: mainImg.source
 
     border.left: 10; border.top: 10;
     border.right: 14; border.bottom: 14;
     horizontalTileMode: BorderImage.Repeat
     verticalTileMode: BorderImage.Repeat
 
-
     Rectangle{
 
         id:workBordImageMainImage
         x:mainWorkArea.imagex
         y:mainWorkArea.imagey
-        //width:mainWorkArea.imagewidth
-        //height:mainWorkArea.imageheight
 
         width:parent.width-2*x
         height:parent.height-2*y

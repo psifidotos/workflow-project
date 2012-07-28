@@ -27,9 +27,10 @@ Component{
 
         property real defOpacity :0.65
 
+        /*
         onCStateChanged:{
             //stoppedPanel.changedChildState();
-        }
+        }*/
 
 
         Behavior on opacity{
@@ -51,13 +52,12 @@ Component{
             ///second children
         }
 
-        // QPixmapItem{
         QIconItem{
             id:activityIcon
             rotation:-20
             opacity:parent.defOpacity
             smooth:true
-            //pixmap: Icon == "" ? activityManager.disabledPixmapForIcon("plasma") : activityManager.disabledPixmapForIcon(Icon)
+
             icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
             enabled:false
 
@@ -127,8 +127,7 @@ Component{
             id:stpActivitySeparator
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
-          //  anchors.top:stpActivityName.bottom
-          //  anchors.topMargin: 5
+
             y:parent.basicHeight-height
 
             width:0.8 * stopActBack.width

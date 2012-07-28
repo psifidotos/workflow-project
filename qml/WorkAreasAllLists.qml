@@ -49,13 +49,13 @@ Item{
             id:allareas
 
             y:1.4 * mainView.workareaY
+
             width: activitiesList.shownActivities *  mainView.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
-            //height:mainView.height
+
 
             orientation: ListView.Horizontal
-            //   spacing:60+3.5*mainView.scaleMeter
-          //  spacing:mainView.scaleMeter/10
+
             anchors.left: parent.left
             interactive:false
             property string typeId : "workareasFlickList1"
@@ -63,8 +63,6 @@ Item{
             property int maxWorkAreasHeight: 0
             property int scrollingMargin: ((mainView.enablePreviews)&&(mainView.showWinds))?150:40
 
-
-            //model:WorkAreasCompleteModel{}
             model:instanceOfWorkAreasList.model
 
             delegate: WorkAreaListDeleg{
@@ -75,10 +73,14 @@ Item{
 
                 for (var i=0; i<allareas.children[0].children.length; ++i)
                 {
-                    var tempH = allareas.children[0].children[i].height +  allareas.children[0].children[i].addedHeight;
-                    //console.debug(tempL);
-                    if (tempH>max)
-                        max = tempH;
+                    var childList = allareas.children[0].children[i];
+
+                    if (childList.state === "show"){
+                        var tempH = childList.height +  childList.addedHeight;
+                        //console.debug(tempL);
+                        if (tempH>max)
+                            max = tempH;
+                    }
                 }
 
                 allareas.maxWorkAreasHeight = max;
@@ -92,7 +94,7 @@ Item{
         Rectangle{
             id:actImag1Shad
             anchors.top: actImag1.bottom
-            //y:actImag1.height
+
             width: mainView.width<allareas.width ? allareas.width : mainView.width
             height: workareaY/6
             gradient: Gradient {
@@ -116,15 +118,11 @@ Item{
 
                 orientation: ListView.Horizontal
                 height: 1.2*workareaY
-                // width:mainView.width
-                width: mainView.width<allareas.width ? allareas.width : mainView.width
-                // width:1.2*allareas.width
 
-                // anchors.top: parent.top
-                //  anchors.left: parent.left
+                width: mainView.width<allareas.width ? allareas.width : mainView.width
+
                 y: workareaY / 12
-                //spacing: workareaY / 10
-                //spacing:mainView.scaleMeter/20
+
                 interactive:false
 
                 model: instanceOfActivitiesList.model
@@ -178,8 +176,7 @@ Item{
 
     PlasmaComponents.ScrollBar {
         id: verticalScrollBar
-        width: 16;
-        //height: view.height-16
+        width: 12;
         anchors.right: view.right
         opacity: 0
         orientation: Qt.Vertical
@@ -188,8 +185,7 @@ Item{
 
     PlasmaComponents.ScrollBar {
         id: horizontalScrollBar
-        //width: view.width-16;
-        height: 16
+        height: 12
         anchors.bottom: view.bottom
         opacity: 0
         orientation: Qt.Horizontal
@@ -211,9 +207,9 @@ Item{
             if (elem.CState === "Running")
                 counter++;
         }
-
         activitiesList.shownActivities = counter+1;
-        //   console.debug(counter);
+
+        //console.debug("Get in:"+counter);
         //activitiesList.shownActivities = 8;
     }
 

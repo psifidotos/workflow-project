@@ -37,9 +37,9 @@ Component{
 
         onHeightChanged: allareas.changedChildHeight();
 
-        onAddedHeightChanged:{
-            allareas.changedChildHeight();
-        }
+        onAddedHeightChanged: allareas.changedChildHeight();
+
+        onStateChanged: allareas.changedChildHeight();
 
 
         ListView {
@@ -75,13 +75,9 @@ Component{
             property string typeId : "addWorkArea"
 
             anchors.top: workalist.bottom
-          //  anchors.topMargin: workList.workAreaImageHeight
             anchors.horizontalCenter: workalist.horizontalCenter
 
             width:0.9*parent.width
-
-            //y: workalist.height+mainView.workareaHeight/5
-            //x:0.35 * mainView.scaleMeter
 
             opacity: workList.tCState === workList.neededState ? 1 : 0
 
@@ -103,9 +99,6 @@ Component{
 
             width:parent.width
             opacity: workList.showWindowsSection === true ? 1:0
-
-
-            //clip:true
 
             text:i18n("Orphaned Windows")
             font.family: mainView.defaultFont.family
@@ -131,7 +124,7 @@ Component{
         Rectangle{
             id:taskOrFTitleL
             width: 0.9 * workList.bWidth
-            //y:taskOrFTitle.height
+
             anchors.top : taskOrFTitle.bottom
             anchors.left: taskOrFTitle.left
 
@@ -176,7 +169,7 @@ Component{
             property int shownOrphanWindows: 0
 
             interactive:false
-           // clip:true
+
 
             model:instanceOfTasksList.model
 
@@ -192,7 +185,7 @@ Component{
             }
 
             function changedOrphansWindows(){
-                var counter = 0;                
+                var counter = 0;
 
                 for (var i=0; i<orphansList.children[0].children.length; ++i)
                 {
@@ -200,7 +193,7 @@ Component{
 
                     if (chd.shown === true)
                         counter++;
-                }                
+                }
 
                 orphansList.shownOrphanWindows = counter;
 
@@ -217,39 +210,15 @@ Component{
 
         }
 
-/*
+        /*
         ListView.onAdd: ParallelAnimation {
-            PropertyAction { target: workList; property: "state"; value: "show" }
-        }
-
-        ListView.onRemove: SequentialAnimation {
-            PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
-
-            ParallelAnimation{
-                    PropertyAction { target: workList; property: "state"; value: "hide" }
-            }
-            // Make sure delayRemove is set back to false so that the item can be destroyed
-            PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
-        }
-*/
-
-/*
-        ListView.onAdd: ParallelAnimation {
-         //   PropertyAction { target: workList; property: "width"; value: 0 }
-         //   PropertyAction { target: workList; property: "opacity"; value: 0 }
-
-            NumberAnimation { target: workList; property: "width"; to: workList.bWidth; duration: 500; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 2*mainView.animationsStep2; easing.type: Easing.InOutQuad }
         }*/
 
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
-            ParallelAnimation{
-                NumberAnimation { target: workList; property: "width"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-                NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-            }
-
+            NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*mainView.animationsStep2; easing.type: Easing.InOutQuad }
 
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
@@ -263,18 +232,16 @@ Component{
 
                     opacity: 1
                     width: bWidth
-                //    height: workalist.height + workalist.spacing + addWorkArea.height + mainView.workareaHeight/5
                 }
             },
-           State {
-               name: "hide"
-               PropertyChanges {
-                   target: workList
+            State {
+                name: "hide"
+                PropertyChanges {
+                    target: workList
 
-                   opacity: 0
-                   width: 0
-                  // height: 0
-               }
+                    opacity: 0
+                    width: 0
+                }
             }
         ]
 
@@ -284,38 +251,38 @@ Component{
                 from:"hide"; to:"show"
                 reversible: false
                 ParallelAnimation{
-                        NumberAnimation {
-                            target: workList;
-                            property: "opacity";
-                            duration: 4*mainView.animationsStep2;
-                            easing.type: Easing.InOutQuad;
-                        }
-                        NumberAnimation {
-                            target: workList;
-                            property: "width";
-                            duration: 4*mainView.animationsStep2;
-                            easing.type: Easing.InOutQuad;
-                        }
+                    NumberAnimation {
+                        target: workList;
+                        property: "opacity";
+                        duration: 4*mainView.animationsStep2;
+                        easing.type: Easing.InOutQuad;
                     }
-                },
+                    NumberAnimation {
+                        target: workList;
+                        property: "width";
+                        duration: 4*mainView.animationsStep2;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+            },
             Transition {
                 from:"show"; to:"hide"
                 reversible: false
                 ParallelAnimation{
-                        NumberAnimation {
-                            target: workList;
-                            property: "opacity";
-                            duration: 4*mainView.animationsStep2;
-                            easing.type: Easing.InOutQuad;
-                        }
-                        NumberAnimation {
-                            target: workList;
-                            property: "width";
-                            duration: 4*mainView.animationsStep2;
-                            easing.type: Easing.InOutQuad;
-                        }
+                    NumberAnimation {
+                        target: workList;
+                        property: "opacity";
+                        duration: 4*mainView.animationsStep2;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workList;
+                        property: "width";
+                        duration: 4*mainView.animationsStep2;
+                        easing.type: Easing.InOutQuad;
                     }
                 }
+            }
         ]
 
         function getOrphanList(){
