@@ -16,6 +16,8 @@ Item{
 
     property string actCode: ""
 
+    property int nHeight
+
     BorderImage{
         id:backImage
 
@@ -96,6 +98,7 @@ Item{
         text:mainText.text
 
         width: dTextItem.width-15
+        height: dTextItem.nHeight
   //      height:mainText.height
   //      y:-mainText.space
 
@@ -129,6 +132,7 @@ Item{
         //property int spaceN:
 
         width:dTextItem.width - 30 - space;
+        height: dTextItem.nHeight
      //   height: dTextItem.height - space;
 
         wrapMode: TextEdit.Wrap

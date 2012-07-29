@@ -6,11 +6,12 @@ import org.kde.qtextracomponents 0.1
 import ".."
 import "ui-elements"
 
-Component{
+//Component{
 
     Item{
         id:mainActivity
         property string neededState:"Running"
+
         property string ccode:code
         property string tCState: CState
 
@@ -166,6 +167,8 @@ Component{
             width:mainActivity.width - spacingWidth
             //height:mainActivity.height - y
             height:mainActivity.height
+            nHeight:2*height
+
             anchors.bottom: separatorLine.bottom
             anchors.bottomMargin: 1
 
@@ -365,5 +368,5 @@ Component{
     }
 
 
-}
+//}
 

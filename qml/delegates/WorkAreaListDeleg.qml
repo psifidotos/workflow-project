@@ -3,7 +3,7 @@ import QtQuick 1.1
 import ".."
 import "ui-elements"
 
-Component{
+//Component{
     Item{
         id: workList
 
@@ -300,4 +300,4 @@ Component{
 
     }
 
-}
+//}

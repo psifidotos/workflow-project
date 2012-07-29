@@ -2,7 +2,7 @@ import QtQuick 1.0
 import ".."
 import "ui-elements"
 
-Component{
+//Component{
 
     Item{
         id: mainWorkArea
@@ -237,7 +237,7 @@ Component{
 
     }//Item
 
-}//Component
+//}//Component
 
 
 

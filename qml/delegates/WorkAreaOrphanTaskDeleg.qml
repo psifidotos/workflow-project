@@ -4,7 +4,7 @@ import ".."
 import "../ui"
 import "ui-elements"
 
-Component{
+//Component{
 
     Item{
         id: taskDelegOr1
@@ -181,4 +181,4 @@ Component{
 
     }
 
-}
+//}

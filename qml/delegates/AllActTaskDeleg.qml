@@ -6,7 +6,7 @@ import "ui-elements"
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
-Component{
+//Component{
 
     Item{
         id: taskDeleg2
@@ -518,4 +518,4 @@ Component{
 
     }
 
-}
+//}

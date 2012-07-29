@@ -7,7 +7,7 @@ import org.kde.qtextracomponents 0.1
 import ".."
 import "ui-elements"
 
-Component{
+//Component{
 
     Item{
         id: stpActivity
@@ -190,4 +190,4 @@ Component{
 
 
     }
-}
+//}
