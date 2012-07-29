@@ -11,9 +11,15 @@ import org.kde.qtextracomponents 0.1
     Item{
         id: taskDeleg2
 
-        property bool mustBeShown: ( (onAllActivities === true )
-                                    //               &&(onAllDesktops === true)
-                                    && (isPressed === false) )
+        //This delegate is used in two situations, 1.onAllActivities where the
+        //ListView contains all the tasks so the delegate must be shown for only
+        //the allActivities tasks,
+        //2.for tasks in spesific desktop and activity
+        property bool showAllActivities:true
+
+        property bool mustBeShown: showAllActivities === true ?
+                                       ( (onAllActivities === true )&&(isPressed === false) ):
+                                       true
 
         property bool showPreviews: ((mainView.enablePreviews === true)&&
                                      (mustBeShown === true))
@@ -23,26 +29,27 @@ import org.kde.qtextracomponents 0.1
 
         property bool showPreviewsFound: (showPreviews === true)
 
+        property int rWidth:100
+        property int rHeight:100
 
-        width: mustBeShown === true ? allActRect.taskWidth+spacing : 0
-        height: mustBeShown === true ? imageTask2.height+taskTitle2.height : 0
-
-        //   y:-height/3
+        width: mustBeShown === true ? rWidth : 0
+        height: mustBeShown === true ? rHeight : 0
 
         opacity: mustBeShown === true ? 1 : 0
 
-        property int spacing: 20
+        //property int spacing: 20
         property string ccode: code
         property string cActCode: activities === undefined ? mainView.currentActivity : activities
         property int cDesktop:desktop === undefined ? mainView.currentDesktop : desktop
         property bool isPressed:false
 
-
-        property int defWidth:(3* allActTaskL.height / 5)
         property string currentNoHovered: showPreviewsFound === true ? "nohovered2":"nohovered1"
 
-        property int defPreviewWidth:2.8*defWidth
-        property int defHovPreviewWidth:8*defWidth
+        property int defWidth:100
+        property int defPreviewWidth:100
+        property int defHovPreviewWidth:100
+
+        property int iconWidth:80
 
         state: "nohovered1"
 
@@ -90,7 +97,7 @@ import org.kde.qtextracomponents 0.1
             height:width
 
             //correcting the animation
-            property int toRX:x + (allActRect.taskWidth+spacing)/2
+            property int toRX:x + (taskDeleg2.defWidth)/2
             property int toRY:y
 
 
@@ -232,7 +239,7 @@ import org.kde.qtextracomponents 0.1
 
             anchors.horizontalCenter: parent.horizontalCenter
 
-            width:taskDeleg2.width - taskDeleg2.spacing
+            width:taskDeleg2.width
             height:taskTitle2.height
             color:"#00e2e2e2"
 
@@ -326,7 +333,7 @@ import org.kde.qtextracomponents 0.1
                     opacity:1
                     width:previewRect.ratio>=1 ? taskDeleg2.defPreviewWidth : previewRect.ratio*taskDeleg2.defPreviewWidth
                     height:previewRect.ratio<1 ? taskDeleg2.defPreviewWidth : previewRect.revRatio*taskDeleg2.defPreviewWidth
-                    //y:-2.3*taskDeleg2.defWidth / 2
+               //     y:-2.3*taskDeleg2.defWidth / 2
                     y:(taskDeleg2.defPreviewWidth - height)
                     x:(taskDeleg2.width - taskDeleg2.defPreviewWidth)/2
                 }

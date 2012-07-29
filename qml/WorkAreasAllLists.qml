@@ -113,11 +113,13 @@ Item{
             border.color: allwlists.actImagBordColor
             border.width:1
 
+
             ListView {
                 id: activitiesList
 
                 orientation: ListView.Horizontal
-                height: 1.2*workareaY
+                height:actImag1.height
+                //height: 1.2*workareaY
 
                 width: mainView.width<allareas.width ? allareas.width : mainView.width
 

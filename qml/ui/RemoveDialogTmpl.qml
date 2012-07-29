@@ -14,6 +14,7 @@ DialogTemplate{
     insideWidth: mainTextInf.width+100
     insideHeight: infIcon.height+90
     dialogTitle: i18n("Remove Activity")+"..."
+    isModal: true
 
     //Title
     Item{
@@ -45,7 +46,7 @@ DialogTemplate{
     }
 
     Connections {
-        target: removeDialog
+        target: rmvDialog
         onClickedOk:{
             activityManager.remove(rmvDialog.activityCode);
             instanceOfActivitiesList.activityRemovedIn(rmvDialog.activityCode);

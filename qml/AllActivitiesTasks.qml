@@ -83,6 +83,8 @@ Item{
             id:allActTaskL
 
             anchors.bottom: allActRect.bottom
+            anchors.left: allActRect.left
+
             width:model.count * allActRect.taskWidth
             height:mainView.workareaHeight / 2
 
@@ -92,8 +94,17 @@ Item{
             interactive:false
 
             property int shownTasks:0
+            spacing:5
 
             delegate: AllActTaskDeleg{
+                showAllActivities: true
+
+                rWidth: allActRect.taskWidth
+                rHeight: allActTaskL.height
+
+                defWidth:(3* allActTaskL.height / 5)
+                defPreviewWidth:2.8*defWidth
+                defHovPreviewWidth:8*defWidth
             }
         }
 

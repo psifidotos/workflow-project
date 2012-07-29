@@ -43,8 +43,8 @@ Rectangle{
 
         gradient: Gradient {
             GradientStop { position: 0.0; color:"#00ffffff" }
-            GradientStop { position: 0.15; color: "#ffffffff" }
-            GradientStop { position: 0.85; color: "#ffffffff" }
+            GradientStop { position: 0.35; color: "#ffffffff" }
+            GradientStop { position: 0.65; color: "#ffffffff" }
             GradientStop { position: 1.0; color: "#00ffffff" }
         }
 

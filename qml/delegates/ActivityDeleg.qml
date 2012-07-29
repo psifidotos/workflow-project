@@ -167,7 +167,7 @@ import "ui-elements"
             width:mainActivity.width - spacingWidth
             //height:mainActivity.height - y
             height:mainActivity.height
-            nHeight:2*height
+            nHeight:height-10
 
             anchors.bottom: separatorLine.bottom
             anchors.bottomMargin: 1
