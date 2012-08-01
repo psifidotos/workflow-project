@@ -156,7 +156,7 @@ DialogTemplate{
 
             property alias desktopInd: deskDialog.desktop
 
-            delegate: AllActTaskDeleg{
+            delegate: TaskPreviewDeleg{
                 showAllActivities: false
 
                 rWidth: desksTasksList.cellWidth

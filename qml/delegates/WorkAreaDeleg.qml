@@ -54,7 +54,37 @@ import "ui-elements"
                     }
 
 
+
                 }//image mousearea
+
+                Image{
+                    id:cornerImage
+                    source:"../Images/buttons/brownCorner.png"
+
+                    height:0.3*parent.height
+                    width:height
+
+                    property int offset: mainView.scaleMeter<65 ? 1 : 0
+                    y:parent.height-height-2-offset
+                    x:3+offset
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+                        onEntered: {
+                            cornerImage.source = "../Images/buttons/blueCorner.png"
+                        }
+
+                        onExited: {
+                           cornerImage.source = "../Images/buttons/brownCorner.png"
+                        }
+
+                        onClicked: {
+//                            mainWorkArea.clickedWorkarea();
+                        }
+                    }
+                }
             }
 
 

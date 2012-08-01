@@ -2,7 +2,9 @@ install(FILES
 	      activityIconFade.png
 	      addActivity1.png
 	      addActivity2.png
+              blueCorner.png
 	      blueWindowsIcon.png
+              brownCorner.png
 	      cloneActivity.png
 	      close_window.png
 	      darkPencil.png

@@ -459,7 +459,7 @@ Item{
         }
     }
 
-    AllTaskDelegButtons{
+    TaskPreviewButtons{
         id:allTasksBtns
 
         property real offsety:0
@@ -733,41 +733,41 @@ Item{
         Transition {
             from:taskDeleg2.state1; to:taskDeleg2.stateHov1
             reversible: false
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         },
         Transition {
             from:taskDeleg2.state2; to:taskDeleg2.stateHov1
             reversible: false
 
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         },
         Transition {
             from:taskDeleg2.stateHov1; to:taskDeleg2.state1
             reversible: false
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         },
         Transition {
             from:taskDeleg2.stateHov1; to:taskDeleg2.state2
             reversible: false
 
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         },
         Transition {
             from:taskDeleg2.state1; to:taskDeleg2.state2
             reversible: false
 
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         },
         Transition {
             from:taskDeleg2.state2; to:taskDeleg2.state1
             reversible: false
 
-            AllActTaskDelegAnimations{
+            TaskPreviewDelegAnimations{
             }
         }
 

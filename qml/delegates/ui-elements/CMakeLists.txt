@@ -1,7 +1,7 @@
 install(FILES 
              ActivityBtns.qml
              AddWorkAreaButton.qml
-             AllTaskDelegButtons.qml
+             TaskPreviewDelegButtons.qml
              CloseWindowButton.qml
              DTextEdit.qml
              DTextLine.qml

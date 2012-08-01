@@ -102,7 +102,7 @@ Item{
             property bool onlyState1: false
             //Not Used//
 
-            delegate: AllActTaskDeleg{
+            delegate: TaskPreviewDeleg{
                 showAllActivities: true
 
                 rWidth: allActRect.taskWidth

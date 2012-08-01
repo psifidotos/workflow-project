@@ -1,8 +1,8 @@
 install(FILES 
 	    ActivityDeleg.qml
 	    ActivityStoppedDeleg.qml    
-	    AllActTaskDeleg.qml
-            AllActTaskDelegAnimations.qml
+            TaskPreviewDeleg.qml
+            TaskPreviewDelegAnimations.qml
 	    WorkAreaDeleg.qml
 	    WorkAreaListDeleg.qml
 	    WorkAreaOrphanTaskDeleg.qml
