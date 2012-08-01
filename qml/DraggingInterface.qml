@@ -45,7 +45,7 @@ Rectangle{
     function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
 
         if(desktopDialog.visible === true)
-            desktopDialog.close();
+            desktopDialog.closeD();
 
         mainDraggingItem.opacity = 1;
         mainDraggingItem.z = 100;

@@ -279,6 +279,11 @@ DialogTemplate{
 
     }
 
+    function closeD(){
+        allWorkareas.flickableV = true;
+        deskDialog.close();
+    }
+
     function openD(act,desk){
         activityCode = act;
         desktop = desk;
@@ -296,6 +301,7 @@ DialogTemplate{
             desktopView.unForceState1();
 
         deskDialog.open();
+        allWorkareas.flickableV = false;
 
         allActT.forceState1();
     }

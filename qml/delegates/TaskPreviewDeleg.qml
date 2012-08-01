@@ -634,8 +634,8 @@ Item{
                 target:allTasksBtns
                 x:taskHoverRect.width - width-5
                 y:0
-                buttonsSize:0.9*taskDeleg2.defWidth
-            }
+                buttonsSize:0.5*taskDeleg2.height
+            }            
         },
         State {
             name: "listnohovered2"
@@ -721,7 +721,7 @@ Item{
                 target:allTasksBtns
                 x:showPreviewsFound===false ? taskHoverRect.width - width-5 : previewRect.x + previewRect.width - (offsetx*previewRect.width)
 
-                buttonsSize: showPreviewsFound===false ? 0.9*taskDeleg2.defWidth:0.2*taskDeleg2.defHovPreviewWidth
+                buttonsSize: showPreviewsFound===false ? 0.5*taskDeleg2.height:0.2*taskDeleg2.defHovPreviewWidth
                 y:showPreviewsFound===false ? 0 : previewRect.y -buttonsSize + previewRect.height/2
             }
         }

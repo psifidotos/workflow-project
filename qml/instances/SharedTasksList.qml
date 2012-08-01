@@ -4,8 +4,11 @@ import "../models"
 //import org.kde.plasma.core 0.1 as PlasmaCore
 
 Item{
+    id:sharedTasksListTempl
 
     property variant model: TasksList{}
+
+    signal tasksChanged();
 
     function printModel(){
         console.debug("---- Tasks Model -----");
@@ -79,6 +82,7 @@ Item{
             }
 
             allActT.changedChildState();
+            sharedTasksListTempl.tasksChanged();
         }
     }
 
@@ -161,6 +165,7 @@ Item{
 
 
         allActT.changedChildState();
+        sharedTasksListTempl.tasksChanged();
     }
 
     function taskRemovedIn(cod){
@@ -169,6 +174,7 @@ Item{
             //    printModel();
             model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
             instanceOfTasksDesktopList.removeTask(cod);
+            sharedTasksListTempl.tasksChanged();
         }
     }
 
@@ -217,6 +223,7 @@ Item{
         }
 
         allActT.changedChildState();
+        sharedTasksListTempl.tasksChanged();
     }
 
 

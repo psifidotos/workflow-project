@@ -41,7 +41,7 @@ Rectangle {
 
     property bool effectsSystemEnabled: true
 
-    property int  showAnimations: 2
+    property int  showAnimations: 0
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 

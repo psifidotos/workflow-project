@@ -182,14 +182,16 @@ Rectangle {
             hoverEnabled: true
             onEntered:{
                 stopMoreButton.source = "Images/buttons/plasma_ui/moreBlueVer.png"
+                stopMoreButton.hovered = true
             }
 
             onExited: {
-                if((stoppedActivitiesList.shownActivities>0)&&
-                        (stopActBack.doNotShow === true))
-                    stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
-                else
-                    stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
+            //    if((stoppedActivitiesList.shownActivities>0)&&
+            //            (stopActBack.doNotShow === true))
+            //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
+            //    else
+                stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
+                stopMoreButton.hovered = false
             }
 
             onClicked:{
@@ -226,11 +228,18 @@ Rectangle {
 
         Image{
             id: stopMoreButton
-            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
-                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
-            width:6
-            height:3.4*width
-            opacity:0.25
+//            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
+//                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
+            source: "Images/buttons/plasma_ui/moreGreyVer.png"
+            width:7
+            height:3.7*width
+            smooth:true
+
+            property bool hovered:false
+
+            opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
+                     (hovered===true)) ?
+                    1 : 0.4
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.horizontalCenter
             anchors.rightMargin: 5
