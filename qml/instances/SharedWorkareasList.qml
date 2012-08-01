@@ -3,9 +3,9 @@ import QtQuick 1.1
 import ".."
 import "../models"
 
-ListView{
+Item{
 
-    model: WorkAreasCompleteModel{}
+    property variant model: WorkAreasCompleteModel{}
 
     property int addednew:0
 
@@ -47,6 +47,17 @@ ListView{
                 return i;
         }
         return -1;
+    }
+
+    function getWorkareaName(cod,desk){
+        var ind=getIndexFor(cod);
+        if (ind>-1){
+            var workMod = model.get(ind).workareas;
+            if(desk <= workMod.count);
+                return workMod.get(desk-1).elemTitle;
+        }
+
+        return "";
     }
 
     function getActivitySize(cod){

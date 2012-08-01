@@ -98,6 +98,15 @@ Item{
             winStateItem.state = "one";
     }
 
+    function previousState(){
+        if (winStateItem.state === "one")
+            winStateItem.state = "everywhere";
+        else if (winStateItem.state === "allDesktops")
+            winStateItem.state = "one";
+        else if (winStateItem.state === "everywhere")
+            winStateItem.state = "allDesktops";
+    }
+
     function onEntered(){
         winStateBtn.onEntered();
     }

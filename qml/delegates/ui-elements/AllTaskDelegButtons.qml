@@ -77,11 +77,11 @@ Item {
         allActiv: onAllActivities || 0 ? true : false
 
         function informState(){
-            if (placeStateBtn.state == "one")
+            if (placeStateBtn.state === "one")
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"oneDesktop");
-            else if (placeStateBtn.state == "allDesktops")
+            else if (placeStateBtn.state === "allDesktops")
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allDesktops");
-            else if (placeStateBtn.state == "everywhere")
+            else if (placeStateBtn.state === "everywhere")
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allActivities");
         }
 
@@ -104,12 +104,33 @@ Item {
                 changedStatus();
             }
 
+            onPressAndHold:{
+                if (placeStateBtn.state === "allDesktops"){
+                    if(taskDeleg2.centralListView === desktopDialog.getDeskList()){
+                        instanceOfTasksList.setTaskDesktop(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
+                        placeStateBtn.previousState();
+                        placeStateBtn.informState();
+                    }
+                }
+
+            }
+
             onClicked: {
+                //Animation must start before changing state
+                if (placeStateBtn.state === "allDesktops"){
+                    if(mainView.animationsStep2!==0){
+                        var x3 = imageTask2.x;
+                        var y3 = imageTask2.y;
+
+                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
+                    }
+                }
+
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
 
-                if (placeStateBtn !== "everywhere"){
+                if (placeStateBtn.state !== "everywhere"){
                     if(mainView.animationsStep2!==0){
                         var x1 = imageTask2.x;
                         var y1 = imageTask2.y;

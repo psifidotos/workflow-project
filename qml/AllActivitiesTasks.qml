@@ -76,7 +76,7 @@ Item{
 
 
         //property int taskWidth: 0.75 * mainView.workareaWidth
-        property int taskWidth: 1 * mainView.workareaWidth
+        property int taskWidth: mainView.workareaWidth
 
 
         ListView{
@@ -96,6 +96,12 @@ Item{
             property int shownTasks:0
             spacing:5
 
+            //Not Used//
+            property int contentY // just to skip the warnings
+            property int delegHeight
+            property bool onlyState1: false
+            //Not Used//
+
             delegate: AllActTaskDeleg{
                 showAllActivities: true
 
@@ -105,6 +111,13 @@ Item{
                 defWidth:(3* allActTaskL.height / 5)
                 defPreviewWidth:2.8*defWidth
                 defHovPreviewWidth:8*defWidth
+
+                taskTitleTextDef: "#333333"
+
+                //Not Used//
+                scrollingView: allActTaskL // just to skip the warnings
+                centralListView: allActTaskL // just to skip the warnings
+                //Not Used//
             }
         }
 
@@ -130,6 +143,32 @@ Item{
 
     function getList(){
         return allActTaskL;
+    }
+
+
+
+    function forceState1(){
+        allActTaskL.onlyState1 = true;
+/*        for(var i=0; i<allActTaskL.children[0].children.length; i++){
+            var ch = allActTaskL.children[0].children[i];
+
+            if (ch.mustBeShown===true){
+                ch.forceState1 = true;
+            }
+        }*/
+
+    }
+
+    function unForceState1(){
+        allActTaskL.onlyState1 = false;
+/*        for(var i=0; i<allActTaskL.children[0].children.length; i++){
+            var ch = allActTaskL.children[0].children[i];
+
+            if (ch.mustBeShown===true){
+                ch.forceState1 = false;
+            }
+        }*/
+
     }
 
 }

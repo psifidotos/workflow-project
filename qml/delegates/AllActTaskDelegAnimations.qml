@@ -3,63 +3,132 @@ import QtQuick 1.1
 
 ParallelAnimation{
     NumberAnimation {
-        target: imageTask2;
+        target: taskDeleg2;
         property: "width"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
-        target: imageTask2;
-        property: "x"
-        duration: 3*mainView.animationsStep;
-        easing.type: Easing.InOutQuad;
-    }
-    NumberAnimation {
-        target: imageTask2;
-        property: "y"
-        duration: 3*mainView.animationsStep;
+        target: taskDeleg2;
+        property: "height"
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: taskDeleg2;
         property: "y"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: taskDeleg2;
+        property: "x"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+
+
+    NumberAnimation {
+        target: imageTask2;
+        property: "width"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: imageTask2;
+        property: "x"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: imageTask2;
+        property: "y"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+
+
+    NumberAnimation {
+        target: taskTitleRec;
+        property: "x"
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: taskTitleRec;
         property: "y"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: taskTitleRec;
         property: "opacity"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
+        target: taskTitleRec;
+        property: "width"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+
+    NumberAnimation {
         target: previewRect;
         property: "width"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: previewRect;
         property: "height"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: previewRect;
         property: "y"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
     NumberAnimation {
         target: previewRect;
         property: "x"
-        duration: 3*mainView.animationsStep;
+        duration: 2*mainView.animationsStep;
         easing.type: Easing.InOutQuad;
     }
+
+    NumberAnimation {
+        target: taskHoverRect;
+        property: "opacity"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+
+    NumberAnimation {
+        target: allTasksBtns;
+        property: "opacity"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: allTasksBtns;
+        property: "width"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: allTasksBtns;
+        property: "x"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+    NumberAnimation {
+        target: allTasksBtns;
+        property: "y"
+        duration: 2*mainView.animationsStep;
+        easing.type: Easing.InOutQuad;
+    }
+
+
 }

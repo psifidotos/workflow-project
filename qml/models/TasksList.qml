@@ -6,6 +6,7 @@ ListModel {
     //This is a ghost element in order to fix bug
     //when removing the first element or when
     //removing the first and only element....
+    /*
     ListElement {
         code:"DontShow"
         onAllDesktops:false
@@ -16,6 +17,6 @@ ListModel {
         inDragging:false
         desktop:1
         activities:"DontShow"
-    }
+    }*/
 
 }

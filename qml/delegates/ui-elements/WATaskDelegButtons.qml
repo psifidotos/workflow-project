@@ -75,11 +75,11 @@ Item {
 
         function informState(){
 
-            if (placeStateBtn.state == "one")
+            if (placeStateBtn.state === "one")
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"oneDesktop");
-            else if (placeStateBtn.state == "allDesktops")
+            else if (placeStateBtn.state === "allDesktops")
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allDesktops");
-            else if (placeStateBtn.state == "everywhere")
+            else if (placeStateBtn.state === "everywhere")
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allActivities");
         }
 
@@ -102,12 +102,21 @@ Item {
                 buttonsArea.changedStatus();
             }
 
+            onPressAndHold:{
+                if (placeStateBtn.state === "allDesktops"){
+                    instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
+                    placeStateBtn.previousState();
+                    placeStateBtn.informState();
+                }
+
+            }
+
             onClicked: {
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
 
-                if (placeStateBtn.state == "everywhere"){
+                if (placeStateBtn.state === "everywhere"){
                     if(mainView.animationsStep2!==0){
                         var x1 = imageTask.x;
                         var y1 = imageTask.y;

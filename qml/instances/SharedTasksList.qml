@@ -1,10 +1,11 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import "../models"
-import org.kde.plasma.core 0.1 as PlasmaCore
+//import org.kde.plasma.core 0.1 as PlasmaCore
 
-ListView{
-    model: TasksList{}
+Item{
+
+    property variant model: TasksList{}
 
     function printModel(){
         console.debug("---- Tasks Model -----");
@@ -32,7 +33,8 @@ ListView{
 
             console.debug("setTaskState:"+cod+"-"+val);
             if (val === "oneDesktop"){
-                taskManager.setOnAllDesktops(obj.code,false);
+                if (obj.onAllDesktops !== false )
+                    taskManager.setOnAllDesktops(obj.code,false);
 
                 if ((obj.desktop === undefined) ||
                         (obj.desktop < 1))
@@ -41,7 +43,8 @@ ListView{
                 model.setProperty(ind,"onAllDesktops",false);
                 model.setProperty(ind,"onAllActivities",false);
 
-                setTaskActivity(obj.code,fActivity);
+                if(obj.activities !== fActivity)
+                    setTaskActivity(obj.code,fActivity);
                 //taskManager.setOnlyOnActivity(obj.code,fActivity);
 
             }
@@ -53,11 +56,26 @@ ListView{
                 taskManager.setOnlyOnActivity(obj.code,fActivity);
             }
             else if (val === "allActivities"){
-                model.setProperty(ind,"onAllDesktops",true);
-                model.setProperty(ind,"onAllActivities",true);
+                var onalld = true;
+                var onalla = true;
 
-                taskManager.setOnAllActivities(obj.code);
-                taskManager.setOnAllDesktops(obj.code,true);
+                if(obj.onAllDesktops !== true)
+                    onalld=false;
+
+                if(obj.onAllActivities !== true)
+                    onalla=false;
+
+                if(onalld === false)
+                    model.setProperty(ind,"onAllDesktops",true);
+                if(onalla === false)
+                    model.setProperty(ind,"onAllActivities",true);
+
+                if(onalla === false)
+                    taskManager.setOnAllActivities(obj.code);
+                if(onalld === false)
+                    taskManager.setOnAllDesktops(obj.code,true);
+
+                instanceOfTasksDesktopList.removeTask(cod);
             }
 
             allActT.changedChildState();
@@ -85,7 +103,8 @@ ListView{
 
     function setTaskInDragging(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"inDragging",val);
+        if(ind > -1)
+            model.setProperty(ind,"inDragging",val);
     }
 
 
@@ -149,6 +168,7 @@ ListView{
         if (ind>-1){
             //    printModel();
             model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
+            instanceOfTasksDesktopList.removeTask(cod);
         }
     }
 

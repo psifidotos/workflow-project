@@ -140,6 +140,9 @@ import "ui-elements"
 
                     onClicked: {
                         workAreaMoreBtn.onClicked();
+
+                        //mainView.getDynLib().showDesktopDialog(actCode,desktop);
+                        desktopDialog.openD(actCode,desktop);
                     }
 
                     onEntered: {

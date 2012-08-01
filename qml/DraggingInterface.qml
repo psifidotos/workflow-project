@@ -43,6 +43,10 @@ Rectangle{
 
 
     function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
+
+        if(desktopDialog.visible === true)
+            desktopDialog.close();
+
         mainDraggingItem.opacity = 1;
         mainDraggingItem.z = 100;
         allWorkareas.flickableV = false;
@@ -88,7 +92,6 @@ Rectangle{
 
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
-
 
         if (mainDraggingItem.lastSelection === 0){
             if ( (mainDraggingItem.intActId !== mainDraggingItem.drActiv) ||

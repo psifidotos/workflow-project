@@ -23,6 +23,7 @@ QIconItem{
 
     function animateDesktopToEverywhere(cid, coord, anim){
         //ListView of running activities
+        console.debug("animateDesktopToEverywhere:"+coord.x+"-"+coord.y);
         animateTask(cid,coord,allActT.getList(),anim );
     }
 
@@ -51,7 +52,7 @@ QIconItem{
         //ListView of stopped activities
         //animateActivity(cod,coord,stoppedPanel.getList());
         var pos = instanceOfTasksList.getIndexFor(cid);
-        console.debug("animateEverywhereToActivity:"+pos);
+        console.debug("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
         if (pos>=0){
             taskAnimation.x = coord.x
             taskAnimation.y = coord.y
@@ -124,11 +125,15 @@ QIconItem{
 
                 if (rchild.children[i].ccode === cid)
                 {
-                    newPosElem = rchild.children[i].children[0]; //the icon position
+                    if (lst === allActT.getList())
+                        newPosElem = rchild.children[i].getIcon();
+                    else
+                        newPosElem = rchild.children[i].children[0]; //the icon position
                 }
             }
 
             var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
+
 
             taskAnimation.toX = fixPosElem.x;
             taskAnimation.toY = fixPosElem.y;

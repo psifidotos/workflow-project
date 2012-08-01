@@ -1,15 +1,13 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
-import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
-import org.kde.qtextracomponents 0.1
+
 
 import ".."
 import "../models"
 
-ListView{
+Item{
 
-    model: ActivitiesModel1{}
+    property variant model: ActivitiesModel1{}
 
     property int newActivityCounter:0
 
@@ -153,6 +151,7 @@ ListView{
 
     function updateWallpaper(cod){
         var pt = activityManager.getWallpaper(cod);
+
         if (pt !== "")
             instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
@@ -222,12 +221,13 @@ ListView{
     //    if (activit !== mainView.currentActivity)
       //  {
       //      goToDesktop = desk;
+            updateWallpaper(activit);
             setCurrent(activit);
      //   }
      //   else
      //   {
             instanceOfTasksList.setCurrentDesktop(desk);
-            instanceOfActivitiesList.updateWallpaper(activit);
+
      //   }
     }
 
@@ -239,6 +239,14 @@ ListView{
         }
 
         return -1;
+    }
+
+    function getActivityName(cod){
+        var ind=getIndexFor(cod);
+        if (ind>-1)
+            return model.get(ind).Name;
+
+        return "";
     }
 
     function cloneActivity(cod){

@@ -10,10 +10,17 @@ import org.kde.qtextracomponents 0.1
 Rectangle{
     id:templDialog
 
-    property alias insideWidth: dialogInsideRect.width
-    property alias insideHeight: dialogInsideRect.height
-    property alias insideX: dialogInsideRect.x
-    property alias insideY: dialogInsideRect.y
+
+    /*property alias insideWidth: dialogInsideRect.width
+    property alias insideHeight: dialogInsideRect.height*/
+
+    property int insideWidth: 200
+    property int insideHeight: 200
+    property int spaceX:5
+    property int spaceY:15
+
+    property int insideX: templMainDialog.x+dialogInsideRect.x + spaceX
+    property int insideY: templMainDialog.y+dialogInsideRect.y+titleMesg.height+spaceY
 
     property alias dialogTitle: titleMesg.text
 
@@ -53,10 +60,35 @@ Rectangle{
         horizontalTileMode: BorderImage.Repeat
         verticalTileMode: BorderImage.Repeat
 
-        width:templDialog.insideWidth+105
-        height:templDialog.insideHeight+105
+        width:templDialog.insideWidth+105+4*templDialog.spaceX
+        height:templDialog.insideHeight+105+titleMesg.height+2*templDialog.spaceY
+
         anchors.centerIn: parent
 
+        Behavior on width{
+            NumberAnimation {
+                duration: mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+        Behavior on height{
+            NumberAnimation {
+                duration: mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+        Behavior on x{
+            NumberAnimation {
+                duration: mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+        Behavior on y{
+            NumberAnimation {
+                duration: mainView.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
         Rectangle{
             id:dialogInsideRect
 
@@ -67,8 +99,21 @@ Rectangle{
             border.width: 2
             radius:15
 
-            x:105/2
-            y:105/2
+            width:parent.width - 105
+            height:parent.height - 105
+
+            anchors.centerIn: parent
+     //       width:templDialog.insideWidth - templDialog.spaceX
+      //      height:tempDialog.insideHeight - templDialog.spaceY
+            //width: parent.width+200
+            //height: parent.height+200
+            //width:300
+            //height:300
+            //property int inWidth
+            //property int inHeight
+
+            //x:105/2
+            //y:105/2
 
          //   width:mainTextInf.width+100
          //   height:infIcon.height+90

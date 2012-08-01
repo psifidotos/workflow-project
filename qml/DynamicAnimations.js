@@ -2,13 +2,27 @@ var activityAnimComp;
 var taskAnimComp;
 var btnAnimComp;
 var wallTimer;
+var desktopDialog;
 
+
+var removeDialog
 
 function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
     btnAnimComp = Qt.createComponent("BtnIconAnimatMainView.qml");
+    desktopDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
 }
+
+//Dialogs
+function showDesktopDialog(act,desk){
+    removeDialog = desktopDialog.createObject(mainView);
+
+    removeDialog.openD(act,desk);
+
+    //newObject.destroy(2000);
+}
+
 
 
 //Activities Animations
