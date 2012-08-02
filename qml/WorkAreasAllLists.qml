@@ -50,7 +50,8 @@ Item{
 
             y:1.4 * mainView.workareaY
 
-            width: activitiesList.shownActivities *  mainView.workareaWidth
+            //+1, for not creating a visual issue...
+            width: (activitiesList.shownActivities+1) *  (mainView.workareaWidth)
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
 
 
@@ -121,7 +122,8 @@ Item{
                 height:actImag1.height
                 //height: 1.2*workareaY
 
-                width: mainView.width<allareas.width ? allareas.width : mainView.width
+                //width: mainView.width<allareas.width ? allareas.width : mainView.width
+                width: allareas.width
 
                 y: workareaY / 12
 
@@ -209,7 +211,7 @@ Item{
             if (elem.CState === "Running")
                 counter++;
         }
-        activitiesList.shownActivities = counter+1;
+        activitiesList.shownActivities = counter;
 
         //console.debug("Get in:"+counter);
         //activitiesList.shownActivities = 8;

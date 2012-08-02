@@ -574,6 +574,7 @@ Item{
             PropertyChanges{
                 target:taskTitleRec
                 y:showPreviewsFound===false ? 1.03*(imageTask2.y+imageTask2.height) : 1.03*(imageTask2.y+imageTask2.height)
+
                 width:taskDeleg2.width
                 opacity:1
             }
@@ -582,7 +583,7 @@ Item{
                 width: showPreviewsFound===false ? 2.1 * taskDeleg2.defWidth : 1.4*taskTitleRec.height
                 opacity: 1
                 x: showPreviewsFound===false ? taskDeleg2.width/2 - width/2 : 0
-                y: showPreviewsFound===false ? 0 : 0.8*taskTitleRec.y
+                y: showPreviewsFound===false ? 0 : (taskDeleg2.defPreviewWidth)-height
             }
             PropertyChanges{
                 target:previewRect
