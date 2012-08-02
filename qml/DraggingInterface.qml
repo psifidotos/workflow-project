@@ -29,7 +29,7 @@ Rectangle{
     //2 - over everywhere tasks
     property int lastSelection
 
-    property bool firsttime
+    property bool firsttime:true
 
 
 
@@ -42,14 +42,27 @@ Rectangle{
     }
 
 
+    //Testing Purposes
+    Rectangle{
+        id:testRec
+        x:150
+        y:320
+        width:10
+        height:width
+        color:"blue"
+
+        visible:false
+    }
+
     function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
 
         if(desktopDialog.visible === true)
             desktopDialog.closeD();
 
+        allWorkareas.flickableV = false;
+
         mainDraggingItem.opacity = 1;
         mainDraggingItem.z = 100;
-        allWorkareas.flickableV = false;
 
         iconImg.icon = src;
         iconImg.enabled = true;
@@ -65,8 +78,8 @@ Rectangle{
         //  iconImg.icon = instanceOfTasksList.getTasksIcon(taskI);
 
         mainDraggingItem.lastSelection = -1;
-        //just for the first check
-        mainDraggingItem.firsttime=true;
+
+        mainDraggingItem.firsttime = false;
 
         onPstChanged(ms);
     }
@@ -167,17 +180,19 @@ Rectangle{
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
-        var fixCC = mainView.mapToItem(centralArea,mouse.x,mouse.y);
+        var fixCC = mapToItem(centralArea,mouse.x,mouse.y);
 
         if(mainDraggingItem.checkTypeId(centralArea.childAt(fixCC.x,fixCC.y),"workareasMainView")){
             var mainCentralItem = centralArea.childAt(fixCC.x,fixCC.y);
 
-            var fixCC2 = mapToItem(mainCentralItem,fixCC.x,fixCC.y);
+            //var fixCC2 = mapToItem(mainCentralItem,fixCC.x,fixCC.y);
+            var fixCC2 = mapToItem(mainCentralItem,mouse.x,mouse.y);
 
             if(mainDraggingItem.checkTypeId(mainCentralItem.childAt(fixCC2.x,fixCC2.y),"workareasFlick")){
 
                 var flickTrace = mainCentralItem.childAt(fixCC2.x,fixCC2.y).children[0];
 
+                //var fixC2 = mapToItem(flickTrace,mouse.x,mouse.y);
                 var fixC2 = mapToItem(flickTrace,mouse.x,mouse.y);
 
                 if(mainDraggingItem.checkTypeId(flickTrace.childAt(fixC2.x,fixC2.y),"workareasFlickList1")){
@@ -217,7 +232,8 @@ Rectangle{
                                     mainDraggingItem.drDesktop = workAreaD.desktop;
 
                                     mainDraggingItem.lastSelection = 0;
-                                    mainDraggingItem.firsttime = false;
+                        //            mainDraggingItem.firsttime = false;
+
                                 }
 
 
@@ -241,7 +257,7 @@ Rectangle{
                                 mainDraggingItem.drDesktop = desktopsNum+1;
 
                                 mainDraggingItem.lastSelection = 1;
-                                mainDraggingItem.firsttime = false;
+                      //          mainDraggingItem.firsttime = false;
 
                             }
 
@@ -266,7 +282,7 @@ Rectangle{
             selectionImage.opacity = 1;
 
             mainDraggingItem.lastSelection = 2;
-            mainDraggingItem.firsttime = false;
+         //   mainDraggingItem.firsttime = false;
         }
 
 
@@ -275,7 +291,7 @@ Rectangle{
     }
 
     function checkTypeId(obj,name){
-
+//console.debug(obj.typeId+"-"+name);
         if (obj === null)
             return false;
         else if (obj.typeId === name)

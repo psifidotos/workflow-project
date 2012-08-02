@@ -293,6 +293,10 @@ import "ui-elements"
             return workalist.children[0].children[war+1];
         }
 
+        function getAddWorkAreaButton(){
+            return addWorkArea;
+        }
+
         function getWorkareaSize(){
             return workalist.model.count;
         }

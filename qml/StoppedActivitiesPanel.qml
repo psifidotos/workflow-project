@@ -51,14 +51,15 @@ Rectangle {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
             // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
-            height: model.count * ((0.66*workareaHeight)+spacing)
+            height: shownActivities * ((0.62*mainView.workareaHeight)+spacing)
             width: stopActBack.width - spacing
 
-            y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
+            //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
+            y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 10
 
             anchors.right: parent.right
 
-            property int shownActivities: 4
+            property int shownActivities: 1
 
             interactive:false
             model: instanceOfActivitiesList.model
@@ -258,9 +259,10 @@ Rectangle {
             var elem = stoppedActivitiesList.model.get(i);
 
             if (elem.CState === "Stopped")
-                counter++;
+                  counter++;
         }
         stoppedActivitiesList.shownActivities = counter;
+        console.debug("Stopped Activitis:"+counter);
     }
 
     //return stopped activities listview

@@ -115,6 +115,11 @@ Rectangle {
             horizontalTileMode: BorderImage.Repeat
             verticalTileMode: BorderImage.Repeat
 
+            x:0
+            y:0
+            width:0
+            height:0
+
             z:5
 
             opacity:0
@@ -257,7 +262,7 @@ Rectangle {
 
         Timer{
             id:activitiesTimer
-            interval:3*mainView.animationsStep
+            interval:200+2*mainView.animationsStep
             repeat:false
             onTriggered: {
                 activitiesSignals.hideButtons();
@@ -269,6 +274,7 @@ Rectangle {
             activitiesTimer.start();
         }
     }
+
 
 
     /*--------------------Dialogs ---------------- */

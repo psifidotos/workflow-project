@@ -139,15 +139,7 @@ Item{
         setCState(cod,"Stopped");
         instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
-/*
-    Timer {
-        id:wallPapTimer
-        property string cd
-        interval: 750; running: false; repeat: false
-        onTriggered: {
-            updateWallpaper(cd);
-        }
-    }*/
+
 
     function updateWallpaper(cod){
         var pt = activityManager.getWallpaper(cod);
@@ -155,12 +147,7 @@ Item{
         if (pt !== "")
             instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
-/*
-    function updateWallpaperInt(cod,inter){
-        wallPapTimer.cd = cod;
-        wallPapTimer.interval = inter;
-        wallPapTimer.start();
-    }*/
+
 
     function startActivity(cod){
 
@@ -181,6 +168,16 @@ Item{
 
         //   var ind = getIndexFor(cod);
         //  model.setProperty(ind,"Name",title);
+    }
+
+    function getFirstRunningActivityId(){
+        for(var i=0; i<model.count; ++i){
+            var obj = model.get(i);
+            if (obj.CState === "Running")
+                return obj.code;
+        }
+
+        return "";
     }
 
     function getCState(cod){

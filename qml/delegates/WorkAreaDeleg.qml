@@ -317,9 +317,12 @@ Item{
 
     }
 
-
     function getBorderRectangle(){
         return borderRectangle;
+    }
+
+    function getWorkAreaName(){
+        return workAreaName;
     }
 
     function showButtons(){
