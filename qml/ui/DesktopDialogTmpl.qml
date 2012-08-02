@@ -28,6 +28,7 @@ DialogTemplate{
     property int cWidth: 0
     property int cHeight: 0
 
+    property bool disablePreviewsWasForced:false
     property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
@@ -152,6 +153,7 @@ DialogTemplate{
 
             property int delegHeight:150
 
+
             property bool onlyState1: false
 
             property alias desktopInd: deskDialog.desktop
@@ -177,11 +179,20 @@ DialogTemplate{
         }
 
         function forceState1(){
-            deskDialog.disablePreviews = true;
+            if(deskDialog.disablePreviews === false){
+                deskDialog.disablePreviews = true;
+                deskDialog.disablePreviewsWasForced = true;
+            }
+            else{
+                deskDialog.disablePreviewsWasForced = false;
+            }
+
         }
 
         function unForceState1(){
-            deskDialog.disablePreviews = false;
+            if(deskDialog.disablePreviewsWasForced === true){
+                deskDialog.disablePreviews = false;
+            }
         }
 
         states: State {
@@ -284,6 +295,11 @@ DialogTemplate{
         deskDialog.close();
     }
 
+    function emptyDialog(){
+        instanceOfTasksDesktopList.emptyList();
+        allActT.unForceState1();
+    }
+
     function openD(act,desk){
         activityCode = act;
         desktop = desk;
@@ -326,8 +342,9 @@ DialogTemplate{
         }
 
         onClickedCancel:{
-            instanceOfTasksDesktopList.emptyList();
-            allActT.unForceState1();
+            deskDialog.emptyDialog();
+            //instanceOfTasksDesktopList.emptyList();
+            //allActT.unForceState1();
             ///
         }
     }

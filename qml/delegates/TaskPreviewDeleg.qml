@@ -19,6 +19,7 @@ Item{
     property bool showAllActivities:true
 
     property bool forceState1:false
+    property bool forcedState1InDialog:false
 
     property bool inShownArea:true
 
@@ -845,8 +846,10 @@ Item{
                                 true,
                                 inDragging);
 
-        if(scrollingView === desktopDialog.getDeskView())
-            desktopView.forceState1();
+        if(scrollingView === desktopDialog.getDeskView()){
+                desktopView.forceState1();
+                taskDeleg2.forcedState1InDialog = true;
+        }
 
         instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,true);
 
@@ -863,12 +866,18 @@ Item{
         if (taskDeleg2.isPressed === true){
             mDragInt.onMReleased(mouse);
 
-            if (taskDeleg2.showAllActivities === false){
-                instanceOfTasksDesktopList.emptyList();
+            if(desktopDialog.getDeskList() === centralListView){
+                desktopDialog.emptyDialog();
+                if (taskDeleg2.forcedState1InDialog === true){
+                    desktopView.unForceState1();
+                    taskDeleg2.forcedState1InDialog=false;
+                }
             }
+
 
             instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,false);
             taskDeleg2.isPressed = false;
+
         }
     }
 
