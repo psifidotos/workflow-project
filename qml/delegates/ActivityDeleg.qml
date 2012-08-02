@@ -159,13 +159,9 @@ import "ui-elements"
             id:activityName
             text: Name
 
-            //y: mainView.scaleMeter/18
-            x: 0.7*mainView.scaleMeter+10
+            x:activityIcon.x+0.9*activityIcon.width
 
-            property int spacingWidth:0.7*mainView.scaleMeter+10
-
-            width:mainActivity.width - spacingWidth
-            //height:mainActivity.height - y
+            width:mainActivity.width - 1.05*activityIcon.width
             height:mainActivity.height
             nHeight:height-10
 
@@ -190,7 +186,7 @@ import "ui-elements"
             MouseArea {
                 anchors.left: parent.left
                 height:parent.height
-                width:parent.width - 40
+                width:activityName.state === "active" ? parent.width - 40 : parent.width
 
                 hoverEnabled: true
 

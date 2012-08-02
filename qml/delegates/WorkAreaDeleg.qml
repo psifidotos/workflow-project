@@ -141,7 +141,7 @@ Item{
             opacity: ((tasksSList.shownTasks>0)&&(mainView.showWinds===true)) ?
                        1 : 0
 
-            property color defTextColor:"#aa0a0a0a"
+            property color defTextColor:"#b90a0a0a"
             property color hovTextColor:"#b5f8f8f8"
 
             MouseArea {
