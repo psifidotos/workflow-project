@@ -118,7 +118,7 @@ Item{
 
     function activityRemovedIn(cod){
         var p = getIndexFor(cod);
-        if (p>-1){            
+        if (p>-1){
 
             //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
             model.remove(p);
@@ -133,6 +133,21 @@ Item{
 
 
     function stopActivity(cod){
+
+        if(cod=== mainView.currentActivity){
+            var nId = getFirstRunningIdAfter(cod);
+
+            var nextDesk = mainView.currentDesktop;
+
+            var actSize = instanceOfWorkAreasList.getActivitySize(nId);
+
+            console.debug(nextDesk+"-"+actSize);
+            if(nextDesk>instanceOfWorkAreasList.getActivitySize(nId)){
+                nextDesk = actSize;
+            }
+
+            setCurrentActivityAndDesktop(nId,nextDesk);
+        }
 
         activityManager.stop(cod);
 
@@ -180,6 +195,24 @@ Item{
         return "";
     }
 
+    function getFirstRunningIdAfter(cd){
+        var ind = getIndexFor(cd);
+        if(ind>-1){
+            for(var i=ind+1; i<model.count; ++i){
+                var obj = model.get(i);
+                if (obj.CState === "Running")
+                    return obj.code;
+            }
+            for(var j=0; j<ind; ++j){
+                var obj2 = model.get(j);
+                if (obj2.CState === "Running")
+                    return obj2.code;
+            }
+        }
+
+        return "";
+    }
+
     function getCState(cod){
         var ind = getIndexFor(cod);
 
@@ -201,10 +234,10 @@ Item{
 
         instanceOfWorkAreasList.setCurrent(cod);
 
-      //  if(goToDesktop > -1){
+        //  if(goToDesktop > -1){
         //    instanceOfTasksList.setCurrentDesktop(goToDesktop);
         //    goToDesktop = -1;
-      //  }
+        //  }
     }
 
     function setCurrent(cod){
@@ -215,17 +248,17 @@ Item{
 
     function setCurrentActivityAndDesktop(activit, desk)
     {
-    //    if (activit !== mainView.currentActivity)
-      //  {
-      //      goToDesktop = desk;
-            updateWallpaper(activit);
-            setCurrent(activit);
-     //   }
-     //   else
-     //   {
-            instanceOfTasksList.setCurrentDesktop(desk);
+        //    if (activit !== mainView.currentActivity)
+        //  {
+        //      goToDesktop = desk;
+        updateWallpaper(activit);
+        setCurrent(activit);
+        //   }
+        //   else
+        //   {
+        instanceOfTasksList.setCurrentDesktop(desk);
 
-     //   }
+        //   }
     }
 
     function getIndexFor(cod){
@@ -247,7 +280,7 @@ Item{
     }
 
     function cloneActivity(cod){
-/*
+        /*
         var p = getIndexFor(cod);
         var ob = model.get(p);
 

@@ -201,6 +201,7 @@ void WorkFlow::setMainWindowId()
 {
 
     //taskManager->setMainWindowId(view()->window()->winId());
+
     QRectF rf = this->geometry();
     taskManager->setTopXY(rf.x(),rf.y());
 

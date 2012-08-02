@@ -41,6 +41,9 @@ Rectangle {
 
     property bool effectsSystemEnabled: true
 
+    property int previewsOffsetX: 13
+    property int previewsOffsetY: 42
+
     property int  showAnimations: 0
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0

@@ -23,15 +23,17 @@ public:
     Q_INVOKABLE QString getDesktopName(int n);
     Q_INVOKABLE int getMaxDesktops();
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
+    Q_INVOKABLE void hideDashboard();
 
 #ifdef Q_WS_X11
+    //    Q_INVOKABLE QPixmap windowPreview(QString window, int size);
+    //    Q_INVOKABLE QPixmap windowScreenshot(QString win, int size);
+    //    Q_INVOKABLE float windowScreenshotRatio(QString win);
+
     Q_INVOKABLE void slotAddDesktop();
     Q_INVOKABLE void slotRemoveDesktop();
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
-    Q_INVOKABLE QPixmap windowPreview(QString window, int size);
-    Q_INVOKABLE QPixmap windowScreenshot(QString win, int size);
-    Q_INVOKABLE float windowScreenshotRatio(QString win);
 
     Q_INVOKABLE void setWindowPreview(QString win,int x, int y, int width, int height);
     Q_INVOKABLE void removeWindowPreview(QString win);
@@ -64,9 +66,6 @@ public slots:
   void desktopChanged(int);
   void changeNumberOfDesktops(int);
 
-
-
-
 private:
     TaskManager::TaskManager *taskMainM;
     KWindowSystem *kwinSystem;
@@ -84,7 +83,6 @@ private:
     int topY;
 
     int indexOfPreview(WId window);
-    void hideDashboard();
 
 };
 

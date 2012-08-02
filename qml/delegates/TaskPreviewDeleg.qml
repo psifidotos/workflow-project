@@ -880,8 +880,8 @@ Item{
             var obj = previewRect.mapToItem(mainView,x1,y1);
 
             taskManager.setWindowPreview(taskDeleg2.ccode,
-                                         obj.x,
-                                         obj.y,
+                                         obj.x+mainView.previewsOffsetX,
+                                         obj.y+mainView.previewsOffsetY,
                                          previewRect.width-(2*previewRect.border.width),
                                          previewRect.height-(2*previewRect.border.width));
         }

@@ -262,7 +262,7 @@ Rectangle {
                   counter++;
         }
         stoppedActivitiesList.shownActivities = counter;
-        console.debug("Stopped Activitis:"+counter);
+        //console.debug("Stopped Activitis:"+counter);
     }
 
     //return stopped activities listview

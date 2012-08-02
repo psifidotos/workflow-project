@@ -277,14 +277,7 @@ QString ActivityManager::chooseIcon(QString id)
     return icon;
 }
 
-int ActivityManager::askForDelete(QString activityName)
-{
-    QString question("Do you yeally want to delete activity ");
-    question.append(activityName);
-    question.append(" ?");
-    int responce =  KMessageBox::questionYesNo(0,question,"Delete Activity");
-    return responce;
-}
+
 
 QString ActivityManager::add(QString name) {
    return m_activitiesCtrl->addActivity(name);
@@ -316,5 +309,17 @@ void ActivityManager::remove(QString id) {
     activityForDelete = id;
 }
 
+/*
 
+ int ActivityManager::askForDelete(QString activityName)
+{
+    QString question("Do you yeally want to delete activity ");
+    question.append(activityName);
+    question.append(" ?");
+    int responce =  KMessageBox::questionYesNo(0,question,"Delete Activity");
+    return responce;
+}
+
+
+*/
 #include "activitymanager.moc"

@@ -16,7 +16,6 @@
 #include <NETRootInfo>
 #include <X11/Xlib.h>
 #include <fixx11h.h>
-
 #endif
 
 #include <taskmanager/task.h>
@@ -211,53 +210,6 @@ void PTaskManager::setOnAllActivities(QString wd)
                     PropModeReplace, (const unsigned char *)"ALL", 3);
 }
 
-QPixmap PTaskManager::windowPreview(QString win, int size)
-{
-    WId window = win.toULong();
-
-    QPixmap thumbnail = QPixmap::grabWindow(window);
-
-    //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
-    //  return tsk->pixmap();
-
-    qDebug()<<"-32-"<<m_tempdir->name();
-    return thumbnail;
-}
-
-QPixmap PTaskManager::windowScreenshot(QString win, int chng)
-{
-    QString program = "import";
-    QStringList arguments;
-    arguments << "-window" << win;
-    arguments << "-silent";
-
-    QString filePath(m_tempdir->name()+win+".png");
-    arguments << filePath;
-
-    QProcess *myProcess = new QProcess(this);
-    myProcess->start(program, arguments);
-
-    QPixmap retPix = QPixmap(filePath);
-
-    return retPix;
-}
-
-float PTaskManager::windowScreenshotRatio(QString win)
-{
-
-
-    QString filePath(m_tempdir->name()+win+".png");
-
-    QPixmap retPix = QPixmap(filePath);
-
-    float res = (float)retPix.width() / retPix.height();
-
-    if (!retPix.isNull())
-        return res;
-    else
-        return 0;
-
-}
 
 #endif
 
@@ -268,10 +220,11 @@ QPixmap PTaskManager::disabledPixmapForIcon(const QIcon &ic)
 }
 
 void PTaskManager::setTopXY(int x1,int y1)
-{    
+{
     topX = x1;
     topY = y1;
 }
+
 
 void PTaskManager::showWindowsPreviews()
 {
@@ -332,11 +285,12 @@ void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int hei
 {
     //int xEr = topX + 12;
     //int yEr = topY + 75;
-    int xEr = topX+13;
-    int yEr = topY+42;
+  //  int xEr = topX+13;
+  //  int yEr = topY+42;
 
-    QRect prSize(x+xEr,y+yEr,width,height);
+    //QRect prSize(x+xEr,y+yEr,width,height);
     //   QRect prSize(x,y,width,height);
+    QRect prSize(topX+x,topY+y,width,height);
     WId winId = win.toULong();
 
     int pos = indexOfPreview(winId);
@@ -412,9 +366,61 @@ void PTaskManager::activateTask(QString id)
 void PTaskManager::setCurrentDesktop(int desk)
 {
     kwinSystem->setCurrentDesktop(desk);
-    hideDashboard();
 }
 
+
+/*
+
+QPixmap PTaskManager::windowPreview(QString win, int size)
+{
+    WId window = win.toULong();
+
+    QPixmap thumbnail = QPixmap::grabWindow(window);
+
+    //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
+    //  return tsk->pixmap();
+
+    qDebug()<<"-32-"<<m_tempdir->name();
+    return thumbnail;
+}
+
+QPixmap PTaskManager::windowScreenshot(QString win, int chng)
+{
+    QString program = "import";
+    QStringList arguments;
+    arguments << "-window" << win;
+    arguments << "-silent";
+
+    QString filePath(m_tempdir->name()+win+".png");
+    arguments << filePath;
+
+    QProcess *myProcess = new QProcess(this);
+    myProcess->start(program, arguments);
+
+    QPixmap retPix = QPixmap(filePath);
+
+    return retPix;
+}
+
+float PTaskManager::windowScreenshotRatio(QString win)
+{
+
+
+    QString filePath(m_tempdir->name()+win+".png");
+
+    QPixmap retPix = QPixmap(filePath);
+
+    float res = (float)retPix.width() / retPix.height();
+
+    if (!retPix.isNull())
+        return res;
+    else
+        return 0;
+
+}
+
+
+*/
 
 
 #include "ptaskmanager.moc"
