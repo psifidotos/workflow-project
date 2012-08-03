@@ -106,7 +106,7 @@ Item {
 
             onPressAndHold:{
                 if (placeStateBtn.state === "allDesktops"){
-                    if(taskDeleg2.centralListView === desktopDialog.getDeskList()){
+                    if(taskDeleg2.centralListView === desktopDialog.getTasksList()){
                         instanceOfTasksList.setTaskDesktop(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
                         placeStateBtn.previousState();
                         placeStateBtn.informState();

@@ -142,7 +142,7 @@ Item{
                        1 : 0
 
             property color defTextColor:"#b90a0a0a"
-            property color hovTextColor:"#b5f8f8f8"
+            property color hovTextColor:"#f4f8f8f8"
 
             MouseArea {
                 width:0.8*parent.width

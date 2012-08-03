@@ -213,6 +213,7 @@ Rectangle{
 
 
             onClicked: {
+                calibrationDialog.openD();
             }
 
         }

@@ -39,7 +39,6 @@ DialogTemplate{
     }
 
 
-
     Image{
         id:disablePreviewsBtn
         smooth:true
@@ -155,6 +154,7 @@ DialogTemplate{
 
 
             property bool onlyState1: false
+            property string selectedWin:""
 
             property alias desktopInd: deskDialog.desktop
 
@@ -170,6 +170,7 @@ DialogTemplate{
                 defHovPreviewWidth: 1.4*defPreviewWidth
 
                 taskTitleTextDef: "#ffffff"
+                taskTitleTextHov: "#ffffff"
 
                 scrollingView: desktopView
                 centralListView: desksTasksList
@@ -209,7 +210,7 @@ DialogTemplate{
     PlasmaComponents.ScrollBar {
         id: desktopVerticalScrollBar
         width: 12;
-        height: desktopView.insideHeight
+      //  height: desktopView.insideHeight
         anchors.right: desktopView.right
         opacity: 0
         orientation: Qt.Vertical
@@ -320,13 +321,15 @@ DialogTemplate{
         allWorkareas.flickableV = false;
 
         allActT.forceState1();
+
     }
+
 
     function getDeskView(){
         return desktopView;
     }
 
-    function getDeskList(){
+    function getTasksList(){
         return desksTasksList;
     }
 

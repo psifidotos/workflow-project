@@ -100,6 +100,7 @@ Item{
             property int contentY // just to skip the warnings
             property int delegHeight
             property bool onlyState1: false
+            property string selectedWin:""
             //Not Used//
 
             delegate: TaskPreviewDeleg{
@@ -110,9 +111,10 @@ Item{
 
                 defWidth:(3* allActTaskL.height / 5)
                 defPreviewWidth:2.8*defWidth
-                defHovPreviewWidth:8*defWidth
+                defHovPreviewWidth:6*defWidth
 
                 taskTitleTextDef: "#333333"
+                taskTitleTextHov: "#333333"
 
                 //Not Used//
                 scrollingView: allActTaskL // just to skip the warnings
@@ -145,7 +147,9 @@ Item{
         return allActTaskL;
     }
 
-
+    function getTasksList(){
+        return allActTaskL;
+    }
 
     function forceState1(){
         allActTaskL.onlyState1 = true;

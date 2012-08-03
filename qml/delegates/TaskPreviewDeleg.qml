@@ -37,6 +37,8 @@ Item{
 
     property bool showPreviewsFound: (showPreviews === true)
 
+
+
     property int rWidth:100
     property int rHeight:100
 
@@ -52,8 +54,13 @@ Item{
 
     property string currentNoHovered: showPreviewsFound === true ? state2 : state1
 
+    property string selectedWin: ""
+    property bool isSelected: selectedWin === ccode
+
+
     property color taskTitleTextDef
     property color taskTitleTextHov
+    property color taskTitleTextSel:"#afc6ff"
 
     property int defWidth:100
     property int defPreviewWidth:100
@@ -140,6 +147,24 @@ Item{
             updatePreview();
         }
 
+
+        onXChanged:{
+            if(state === state2)
+                updatePreview();
+        }
+        onYChanged:{
+            if(state === state2)
+                updatePreview();
+        }
+        onWidthChanged:{
+            if(state === state2)
+                updatePreview();
+        }
+        onHeightChanged:{
+            if(state === state2)
+                updatePreview();
+        }
+
     }
 
     Connections{
@@ -148,19 +173,32 @@ Item{
         onOnlyState1Changed:{
             taskDeleg2.forceState1 = centralListView.onlyState1;
         }
+        onSelectedWinChanged:{
+            if(centralListView === calibrationDialog.getTasksList())
+                taskDeleg2.selectedWin = centralListView.selectedWin;
+        }
     }
+
 
     Component.onCompleted: {
         taskDeleg2.forceState1 = centralListView.onlyState1;
+
+        if(centralListView === calibrationDialog.getTasksList())
+            taskDeleg2.selectedWin = centralListView.selectedWin;
+
         taskDeleg2.updatePreview();
     }
 
 
-    /*ListView.onAdd: {
-        taskDeleg2.forceState1 = centralListView.onlyState1;
+    ListView.onAdd: {
         if (showPreviews === true)
             taskDeleg2.updatePreview();
-    }*/
+    }
+
+    GridView.onAdd: {
+        if (showPreviews === true)
+            taskDeleg2.updatePreview();
+    }
 
 
     ListView.onRemove:{
@@ -209,7 +247,7 @@ Item{
         width:parent.width-2*border.width
         height:parent.height
         radius:5
-        color:"#30ffffff"
+        color:taskDeleg2.isSelected === false ? "#30ffffff" : "#a2222222"
         border.width: 1
         border.color: "#aaffffff"
 
@@ -420,10 +458,10 @@ Item{
 
             text:name === undefined ? "" : name
             font.family: mainView.defaultFont.family
-            font.italic: false
+            font.italic: taskDeleg2.isSelected === true ? true : false
             font.bold: true
             font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter/18)-2
-            color:taskDeleg2.taskTitleTextDef
+
 
             elide:Text.ElideRight
             width:parent.width
@@ -506,9 +544,14 @@ Item{
             PropertyChanges{
                 target:taskTitleRec
                 y: 1.03*(imageTask2.y+imageTask2.height)
-                opacity:0.3
+                opacity: 0.3
                 width:taskDeleg2.width
             }
+            PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+            }
+
             PropertyChanges{
                 target:taskHoverRect
                 opacity:0
@@ -554,6 +597,10 @@ Item{
                 width:taskDeleg2.width
             }
             PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+            }
+            PropertyChanges{
                 target:taskHoverRect
                 opacity:0
             }
@@ -577,6 +624,10 @@ Item{
 
                 width:taskDeleg2.width
                 opacity:1
+            }
+            PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
             }
             PropertyChanges{
                 target:imageTask2
@@ -614,6 +665,8 @@ Item{
                 opacity:0
                 width:5
                 height:5
+                x:taskDeleg2.width/2
+                y:taskDeleg2.height/2
             }
             PropertyChanges{
                 target:imageTask2
@@ -626,30 +679,34 @@ Item{
                 y: (((taskDeleg2.height - imageTask2.height) / 2)+imageTask2.height-height)
                 x: (imageTask2.x+imageTask2.width)
                 width: taskDeleg2.width - imageTask2.width - 10
-                opacity:0.7
+                opacity:taskDeleg2.isSelected === false ? 0.7 : 1
+            }
+            PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
             }
             PropertyChanges{
                 target:taskHoverRect
-                opacity:0
+                opacity:taskDeleg2.isSelected===false? 0 : 1
             }
             PropertyChanges{
                 target:allTasksBtns
                 x:taskHoverRect.width - width-5
                 y:0
                 buttonsSize:0.5*taskDeleg2.height
-            }            
+            }
         },
         State {
             name: "listnohovered2"
             PropertyChanges{
                 target:previewRect
 
-                opacity:1
+                opacity:0.001
 
                 width:taskDeleg2.defPreviewWidth
                 height:taskDeleg2.defPreviewWidth
 
-               // y:(taskDeleg2.defPreviewWidth - height)
+                // y:(taskDeleg2.defPreviewWidth - height)
                 y:0
                 x:(taskDeleg2.width - taskDeleg2.defPreviewWidth)/2
 
@@ -661,7 +718,7 @@ Item{
                 target:imageTask2
                 width: 1.4*taskTitleRec.height
                 x:0
-           //     y: previewRect.y+previewRect.height-height
+                //     y: previewRect.y+previewRect.height-height
                 y:taskTitleRec.y-height
                 opacity:0.8
             }
@@ -670,6 +727,10 @@ Item{
                 y: previewRect.y+previewRect.height
                 opacity:0.7
                 width:taskDeleg2.width
+            }
+            PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -697,7 +758,7 @@ Item{
                 color: lightColor
                 border.color: lightBorder
 
-                opacity:showPreviewsFound===false ? 0 : 1
+                opacity:showPreviewsFound===false ? 0 : 0.001
             }
             PropertyChanges{
                 target:imageTask2
@@ -714,6 +775,10 @@ Item{
                 x: showPreviewsFound===false ? (imageTask2.x+imageTask2.width) : 0
                 width: showPreviewsFound===false ? taskDeleg2.width - imageTask2.width - 10 : taskDeleg2.width
                 opacity: showPreviewsFound===false ? 1 : 1
+            }
+            PropertyChanges{
+                target:taskTitle2
+                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -805,8 +870,9 @@ Item{
 
             }
 
-
-            allTasksBtns.state = "show";
+            if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+                    (taskDeleg2.centralListView === allActT.getTasksList()) )
+                        allTasksBtns.state = "show";
         }
     }
 
@@ -816,69 +882,83 @@ Item{
     }
 
     function onClicked(mouse) {
-        instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
+        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+                (taskDeleg2.centralListView === allActT.getTasksList()) )
+                    instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
+        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
+            calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
     }
 
     function onPressAndHold(mouse,obj) {
-        taskDeleg2.isPressed = true;
-        taskDeleg2.state =  taskDeleg2.currentNoHovered;
+        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+                (taskDeleg2.centralListView === allActT.getTasksList()) ){
 
-        if (taskDeleg2.showAllActivities === false){
+            taskDeleg2.isPressed = true;
+            taskDeleg2.state =  taskDeleg2.currentNoHovered;
 
-            var nC = taskDeleg2.mapToItem(mainView,0,0);
+            if (taskDeleg2.showAllActivities === false){
 
-            taskDeleg2.parent=mainView;
-            taskDeleg2.x = nC.x;
-            taskDeleg2.y = nC.y;
-        }
+                var nC = taskDeleg2.mapToItem(mainView,0,0);
 
-        allTasksBtns.state = "hide";
+                taskDeleg2.parent=mainView;
+                taskDeleg2.x = nC.x;
+                taskDeleg2.y = nC.y;
+            }
 
-        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            allTasksBtns.state = "hide";
 
-        var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
+            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
 
-        mDragInt.enableDragging(nCor,
-                                imageTask2.icon,
-                                taskDeleg2.ccode,
-                                taskDeleg2.cActCode,
-                                taskDeleg2.cDesktop,
-                                coord1,
-                                true,
-                                inDragging);
+            var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
 
-        if(scrollingView === desktopDialog.getDeskView()){
+            mDragInt.enableDragging(nCor,
+                                    imageTask2.icon,
+                                    taskDeleg2.ccode,
+                                    taskDeleg2.cActCode,
+                                    taskDeleg2.cDesktop,
+                                    coord1,
+                                    true,
+                                    inDragging);
+
+            if(scrollingView === desktopDialog.getDeskView()){
                 desktopView.forceState1();
                 taskDeleg2.forcedState1InDialog = true;
-        }
+            }
 
-        instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,true);
+            instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,true);
+        }
 
     }
 
     function onPositionChanged(mouse,obj) {
-        if (taskDeleg2.isPressed === true){
-            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-            mDragInt.onPstChanged(nCor);
+        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+            if (taskDeleg2.isPressed === true){
+                var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+                mDragInt.onPstChanged(nCor);
+            }
         }
     }
 
     function onReleased(mouse) {
-        if (taskDeleg2.isPressed === true){
-            mDragInt.onMReleased(mouse);
+        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+            if (taskDeleg2.isPressed === true){
+                mDragInt.onMReleased(mouse);
 
-            if(desktopDialog.getDeskList() === centralListView){
-                desktopDialog.emptyDialog();
-                if (taskDeleg2.forcedState1InDialog === true){
-                    desktopView.unForceState1();
-                    taskDeleg2.forcedState1InDialog=false;
+                if(desktopDialog.getTasksList() === centralListView){
+                    desktopDialog.emptyDialog();
+                    if (taskDeleg2.forcedState1InDialog === true){
+                        desktopView.unForceState1();
+                        taskDeleg2.forcedState1InDialog=false;
+                    }
                 }
+
+
+                instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,false);
+                taskDeleg2.isPressed = false;
+
             }
-
-
-            instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,false);
-            taskDeleg2.isPressed = false;
-
         }
     }
 
@@ -897,8 +977,11 @@ Item{
         }
 
         if((taskDeleg2.inShownArea === false)||
-                (taskDeleg2.showPreviews===false))
-            taskManager.removeWindowPreview(taskDeleg2.ccode);
+                (taskDeleg2.showPreviews===false)){
+
+            if (calibrationDialog.getTasksList() !== centralListView)
+                taskManager.removeWindowPreview(taskDeleg2.ccode);
+        }
     }
 
 
