@@ -149,6 +149,8 @@ Item{
         else
             fact=activit[0];
 
+//        console.debug(source+"-"+onalld+"-"+onalla+"-"+classc+"-"+nam+"-"+icn+"-"+indrag+"-"+desk+"-"+fact );
+
         model.append( {  "code": source,
                          "onAllDesktops":onalld,
                          "onAllActivities":onalla,
@@ -175,6 +177,7 @@ Item{
             model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
             instanceOfTasksDesktopList.removeTask(cod);
             sharedTasksListTempl.tasksChanged();
+            allActT.changedChildState();
         }
     }
 
@@ -228,7 +231,7 @@ Item{
 
 
     function removeTask(cod){
-        taskRemovedIn(cod);
+    //    taskRemovedIn(cod);
         taskManager.closeTask(cod);
     }
 
