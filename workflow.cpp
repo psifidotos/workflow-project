@@ -32,8 +32,6 @@
 #include <QRectF>
 #include <QString>
 
-
-
 #include <Plasma/Extender>
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
@@ -58,8 +56,17 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_zoomFactor = 50;
     m_showWindows = true;
-    m_animations = true;
     m_lockActivities = false;
+    m_animations = 1;
+
+
+    m_windowsPreviews=false;
+    m_windowsPreviewsOffsetX=0;
+    m_windowsPreviewsOffsetY=0;
+    m_fontRelevance=0;
+    m_showStoppedActivities=true;
+    m_firstRunLiveTour=false;
+    m_firstRunCalibrationPreviews=false;
 }
 
 WorkFlow::~WorkFlow()
@@ -371,12 +378,39 @@ void WorkFlow::setLockActivities(bool lock)
     m_lockActivities = lock;
 }
 
-void WorkFlow::setAnimations(bool anim)
+void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
 }
 
 
+void WorkFlow::setWindowsPreviews(bool b){
+    m_windowsPreviews = b;
+}
+
+void WorkFlow::setWindowsPreviewsOffsetX(int x){
+    m_windowsPreviewsOffsetX = x;
+}
+
+void WorkFlow::setWindowsPreviewsOffsetY(int y){
+    m_windowsPreviewsOffsetY = y;
+}
+
+void WorkFlow::setFontRelevance(bool fr){
+    m_fontRelevance = fr;
+}
+
+void WorkFlow::setShowStoppedActivities(bool s){
+    m_showStoppedActivities = s;
+}
+
+void WorkFlow::setFirstRunLiveTour(bool f){
+    m_firstRunLiveTour = f;
+}
+
+void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
+    m_firstRunCalibrationPreviews = cal;
+}
 
 //////// Methods
 void WorkFlow::loadWorkareas()
@@ -412,7 +446,15 @@ void WorkFlow::loadConfigurationFiles()
     bool lockAc = appConfig.readEntry("LockActivities", true);
     bool showW = appConfig.readEntry("ShowWindows", true);
     int zoomF = appConfig.readEntry("ZoomFactor", 50);
-    bool anim = appConfig.readEntry("Animations", true);
+    int anim = appConfig.readEntry("Animations", true);
+    bool winPreviews = appConfig.readEntry("WindowPreviews", false);;
+    int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);;;
+    int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);;;
+    int fontRel = appConfig.readEntry("FontRelevance", 0);;;
+    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);;;
+    bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);;;
+    bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);;;
+
 
     setLockActivities(lockAc);
     QMetaObject::invokeMethod(mainQML, "setLockActivities",
@@ -430,6 +472,35 @@ void WorkFlow::loadConfigurationFiles()
     QMetaObject::invokeMethod(mainQML, "setAnimations",
                               Q_ARG(QVariant, anim));
 
+    setWindowsPreviews(winPreviews);
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews",
+                              Q_ARG(QVariant, winPreviews));
+
+    setWindowsPreviewsOffsetX(winPrevOffX);
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX",
+                              Q_ARG(QVariant, winPrevOffX));
+
+    setWindowsPreviewsOffsetY(winPrevOffY);
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY",
+                              Q_ARG(QVariant, winPrevOffY));
+
+    setFontRelevance(fontRel);
+    QMetaObject::invokeMethod(mainQML, "setFontRelevance",
+                              Q_ARG(QVariant, fontRel));
+
+    setShowStoppedActivities(showStopAct);
+    QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities",
+                              Q_ARG(QVariant, showStopAct));
+
+    setFirstRunLiveTour(firRunLiveTour);
+    QMetaObject::invokeMethod(mainQML, "setFirstRunLiveTour",
+                              Q_ARG(QVariant, firRunLiveTour));
+
+    setFirstRunCalibrationPreviews(firRunCalibrationPrev);
+    QMetaObject::invokeMethod(mainQML, "setFirstRunCalibrationPreviews",
+                              Q_ARG(QVariant, firRunCalibrationPrev));
+
+
 }
 
 void WorkFlow::saveConfigurationFiles()
@@ -438,6 +509,14 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("ShowWindows",m_showWindows);
     appConfig.writeEntry("ZoomFactor",m_zoomFactor);
     appConfig.writeEntry("Animations",m_animations);
+
+    appConfig.writeEntry("WindowPreviews",m_windowsPreviews);
+    appConfig.writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
+    appConfig.writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
+    appConfig.writeEntry("FontRelevance",m_fontRelevance);
+    appConfig.writeEntry("ShowStoppedPanel",m_showStoppedActivities);
+    appConfig.writeEntry("FirstRunTour",m_firstRunLiveTour);
+    appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
 
     emit configNeedsSaving();
 }

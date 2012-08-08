@@ -271,4 +271,8 @@ Item{
         setCurrentTask(cod);
     }
 
+    function setEffectsSystemStatus(stat){
+        mainView.setEffectsSystem(stat);
+    }
+
 }

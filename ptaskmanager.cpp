@@ -8,6 +8,7 @@
 #include <KIcon>
 #include <KIconLoader>
 #include <QDBusInterface>
+#include <QDBusConnection>
 
 #include <QProcess>
 
@@ -66,14 +67,29 @@ void PTaskManager::setQMlObject(QObject *obj)
     QMetaObject::invokeMethod(qmlTaskEngine, "setMaxDesktops",
                               Q_ARG(QVariant, kwinSystem->numberOfDesktops()));
 
+    QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
+                              Q_ARG(QVariant, kwinSystem->compositingActive()));
+
+
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
 
-    // activity addition and removal
+
+
+
+    // task addition and removal
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
     connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
+
+   // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
+    //connect(kwinSystem,SIGNAL(compositingChanged(bool)),
+    //        this, SLOT(compositingChanged(bool)));
+  //  connect(kwinApp,SIGNAL(compositingToggled(bool)),
+   //         this, SLOT(compositingChanged(bool)));
+
+    QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde..KWin" ,"compositingToggled", this, SLOT(MySlot(uint)));
 
 }
 ///////////
@@ -171,6 +187,14 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
                        QVariant(task->desktop()),
                        QVariant(task->activities()),
                        QVariant(typeOfMessage));
+
+}
+
+void PTaskManager::compositingChanged(bool b){
+    QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
+                              Q_ARG(QVariant, b));
+
+    qDebug()<<b;
 
 }
 

@@ -33,8 +33,6 @@ Rectangle {
     property int workareaHeight:(3.6 - zoomingHeightFactor)*scaleMeter
     property int workareaY:2*scaleMeter
 
-
-
     //Applications properties/////
     property bool lockActivities: false
     property bool showWinds: true
@@ -49,6 +47,8 @@ Rectangle {
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 
+    property alias hideStoppedPanel: stoppedPanel.doNotShow
+
     property variant defaultFont: theme.defaultFont
 
     property real defaultFontSize:theme.defaultFont.pointSize
@@ -58,12 +58,24 @@ Rectangle {
     //With using KWindowSystem workarea
     property real screenRatio:0.75
 
+    property bool firstRunTour:false
+    property bool firstRunCalibration:false
+
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
         workflowManager.setLockActivities(lockActivities);
         activitiesSignals.showActivitiesButtons();
     }
+    onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
+    onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
+    onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
+    onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
+    onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
+    onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
+    onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
+    onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
+
 
     signal minimumWidthChanged;
     signal minimumHeightChanged;
@@ -219,6 +231,7 @@ Rectangle {
     }
 
     function setAnimations(v){
+        mainView.showAnimations = v;
         //
     }
 
@@ -228,7 +241,37 @@ Rectangle {
         // mainView.isOnDashBoard = v;
     }
 
+    function setWindowsPreviews(b){
+        mainView.enablePreviews = b;
+    }
 
+    function setWindowsPreviewsOffsetX(x){
+        mainView.previewsOffsetX = x;
+    }
+
+    function setWindowsPreviewsOffsetY(y){
+        mainView.previewsOffsetY = y;
+    }
+
+    function setFontRelevance(fr){
+        mainView.defaultFontRelativeness = fr;
+    }
+
+    function setShowStoppedActivities(s){
+        mainView.hideStoppedPanel = !s;
+    }
+
+    function setFirstRunLiveTour(f){
+        mainView.firstRunTour = f;
+    }
+
+    function setFirstRunCalibrationPreviews(cal){
+        mainView.firstRunCalibration = cal;
+    }
+
+    function setEffectsSystem(ef){
+        mainView.effectsSystemEnabled = ef;
+    }
 
     /*
     onMinimumWidthChanged:{

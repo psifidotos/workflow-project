@@ -63,8 +63,17 @@ public:
     Q_INVOKABLE void setZoomFactor(int zoom);
     Q_INVOKABLE void setShowWindows(bool show);
     Q_INVOKABLE void setLockActivities(bool lock);
-    Q_INVOKABLE void setAnimations(bool anim);
+    Q_INVOKABLE void setAnimations(int anim);
     Q_INVOKABLE void hidePopupDialog();
+
+    Q_INVOKABLE void setWindowsPreviews(bool b);
+    Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
+    Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
+    Q_INVOKABLE void setFontRelevance(bool fr);
+    Q_INVOKABLE void setShowStoppedActivities(bool s);
+    Q_INVOKABLE void setFirstRunLiveTour(bool f);
+    Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
+
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -89,8 +98,18 @@ public slots:
 private:
     bool m_lockActivities;
     bool m_showWindows;
-    int m_zoomFactor;
-    bool m_animations;
+    int m_zoomFactor;//New properties
+    int m_animations;
+    bool m_windowsPreviews;
+    int m_windowsPreviewsOffsetX;
+    int m_windowsPreviewsOffsetY;
+    int m_fontRelevance;
+    bool m_showStoppedActivities;
+    bool m_firstRunLiveTour;
+    bool m_firstRunCalibrationPreviews;
+
+
+
 
     QHash <QString,QStringList *> storedWorkareas;
 
