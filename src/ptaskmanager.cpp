@@ -70,18 +70,19 @@ void PTaskManager::setQMlObject(QObject *obj)
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
                               Q_ARG(QVariant, kwinSystem->compositingActive()));
 
+    this->workAreaChanged();
+
 
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
-
-
-
 
     // task addition and removal
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
+
     connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
+    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
 
    // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
     //connect(kwinSystem,SIGNAL(compositingChanged(bool)),
@@ -194,7 +195,17 @@ void PTaskManager::compositingChanged(bool b){
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
                               Q_ARG(QVariant, b));
 
-    qDebug()<<b;
+    qDebug()<<"Composition Effects:"<<b;
+
+}
+
+void PTaskManager::workAreaChanged(){
+    QRect screenRect = kwinSystem->workArea();
+    float ratio = (float)screenRect.height()/(float)screenRect.width();
+    QMetaObject::invokeMethod(qmlTaskEngine, "setScreenRatio",
+                              Q_ARG(QVariant, ratio));
+
+ //   qDebug()<<ratio;
 
 }
 

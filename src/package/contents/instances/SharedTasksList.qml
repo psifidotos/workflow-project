@@ -275,4 +275,8 @@ Item{
         mainView.setEffectsSystem(stat);
     }
 
+
+    function setScreenRatio(sc){
+        mainView.setScreenRatio(sc);
+    }
 }

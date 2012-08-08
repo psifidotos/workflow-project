@@ -273,6 +273,10 @@ Rectangle {
         mainView.effectsSystemEnabled = ef;
     }
 
+    function setScreenRatio(sc){
+        mainView.screenRatio = sc;
+    }
+
     /*
     onMinimumWidthChanged:{
         if(mainView.minimumWidth>mainView.width)
