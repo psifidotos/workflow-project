@@ -188,11 +188,11 @@ Rectangle {
         ZoomSliderItem{
             id:zoomSlider
         }
-
+/*
         WorkAreaFull{
             id:wkFull
             z:11
-        }
+        }*/
 
     }
 
