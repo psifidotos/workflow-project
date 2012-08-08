@@ -19,11 +19,11 @@ include_directories(
 
 
 # We add our source code here
-set(workflow_SRCS workflow.cpp activitymanager.cpp ptaskmanager.cpp)
+set(workflow_SRCS src/workflow.cpp src/activitymanager.cpp src/ptaskmanager.cpp)
  
 # Now make sure all files get to the right place
 
-kde4_add_kcfg_files(workflow_SRCS GENERATE_MOC workflowsettings.kcfgc)
+kde4_add_kcfg_files(workflow_SRCS GENERATE_MOC src/workflowsettings.kcfgc)
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})
 
 target_link_libraries(plasma_applet_workflow
@@ -42,7 +42,7 @@ install(TARGETS plasma_applet_workflow
 install(FILES plasma-applet-workflow.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
 
-install(FILES workflow.kcfg
+install(FILES src/workflow.kcfg
         DESTINATION ${KCFG_INSTALL_DIR})
 
-add_subdirectory(qml)
+add_subdirectory(src/package/contents)
