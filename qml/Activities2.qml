@@ -8,6 +8,7 @@ import org.kde.qtextracomponents 0.1
 import "delegates"
 import "delegates/ui-elements"
 import "instances"
+import "helptour"
 
 import "ui"
 
@@ -280,6 +281,8 @@ Rectangle {
 
 
 
+
+
     /*--------------------Dialogs ---------------- */
     RemoveDialogTmpl{
         id:removeDialog
@@ -291,6 +294,10 @@ Rectangle {
 
     CalibrationDialogTmpl{
         id:calibrationDialog
+    }
+
+    TourDialog{
+        id:liveTourDialog
     }
 }
 

@@ -34,7 +34,7 @@ install(FILES
 	      withwindowsicon.png
 	      withwindowsminus.png
 	      workarea_delete.png
-        DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid/qml/Images/buttons)
+        DESTINATION ${KDE4_DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml/Images/buttons)
 
 add_subdirectory(plasma_ui)
         

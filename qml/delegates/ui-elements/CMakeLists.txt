@@ -12,5 +12,5 @@ install(FILES
 	     WindowPlaceButton.qml
              WorkAreaBtns.qml
              WorkAreaImage.qml
-DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid/qml/delegates/ui-elements/)
+DESTINATION ${KDE4_DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml/delegates/ui-elements/)
         

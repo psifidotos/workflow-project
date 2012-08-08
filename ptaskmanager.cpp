@@ -31,7 +31,7 @@ PTaskManager::PTaskManager(QObject *parent) :
 
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
-    m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasmoid-workflow"));
+    m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasma-applet-workflow"));
 }
 
 

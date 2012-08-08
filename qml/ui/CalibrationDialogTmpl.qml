@@ -113,10 +113,10 @@ DialogTemplate{
                 when: calibrView.contentHeight > calibrView.height
                 PropertyChanges { target: calibsVerticalScrollBar; opacity: 1 }
             }
-
+/*
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-            }
+            }*/
 
         }
 

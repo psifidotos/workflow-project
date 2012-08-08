@@ -213,7 +213,8 @@ Rectangle{
 
 
             onClicked: {
-                calibrationDialog.openD();
+                //calibrationDialog.openD();
+                liveTourDialog.opacity = 1;
             }
 
         }

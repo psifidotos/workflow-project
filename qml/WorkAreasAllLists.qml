@@ -148,10 +148,10 @@ Item{
             PropertyChanges { target: verticalScrollBar; opacity: 1 }
             PropertyChanges { target: horizontalScrollBar; opacity: 1 }
         }
-
+/*
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-        }
+        }*/
 
     }//Flickable scrolling
 

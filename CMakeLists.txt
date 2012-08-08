@@ -1,5 +1,5 @@
 # Project Needs a name ofcourse
-project(plasma-workflowplasmoid)
+project(plasma-applet-workflow)
  
 # Find the required Libaries
 find_package(KDE4 REQUIRED)

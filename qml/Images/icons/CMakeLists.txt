@@ -6,6 +6,6 @@ install(FILES
 	    dolphin.png
 	    file_manager.png
 	    plasma.png
-        DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid/qml/Images/icons)
+        DESTINATION ${KDE4_DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml/Images/icons)
      
         

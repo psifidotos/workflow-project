@@ -138,7 +138,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     KStandardDirs *sd =    KGlobal::dirs();
 
-    QString path =  sd->findResource("data","plasma-workflowplasmoid/qml/Activities2.qml");
+    QString path =  sd->findResource("data","plasma-applet-workflow/qml/Activities2.qml");
 
     declarativeWidget = new Plasma::DeclarativeWidget();
     //  declarativeWidget->setInitializationDelayed(true);

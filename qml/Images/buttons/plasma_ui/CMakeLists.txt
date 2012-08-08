@@ -21,6 +21,6 @@ install(FILES
 	    redRectShadow.png
 	    unlockedIcon.png
 	    greyRectShadow.png
-        DESTINATION ${KDE4_DATA_INSTALL_DIR}/plasma-workflowplasmoid/qml/Images/buttons/plasma_ui)
+        DESTINATION ${KDE4_DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml/Images/buttons/plasma_ui)
 
         

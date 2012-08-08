@@ -201,10 +201,10 @@ DialogTemplate{
             when: desktopView.contentHeight > desktopView.height
             PropertyChanges { target: desktopVerticalScrollBar; opacity: 1 }
         }
-
+/*
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-        }
+        }*/
     }
 
     PlasmaComponents.ScrollBar {
