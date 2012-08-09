@@ -10,7 +10,7 @@ Rectangle {
     width:mainView.width
     height:mainView.height
 
-    color: "#b2333333"
+    color: "#ca151515"
 
     opacity:0
 

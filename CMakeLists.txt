@@ -22,7 +22,7 @@ include_directories(
 set(workflow_SRCS src/workflow.cpp src/activitymanager.cpp src/ptaskmanager.cpp)
  
 # Now make sure all files get to the right place
-
+kde4_add_ui_files(workflow_SRCS src/config.ui)
 kde4_add_kcfg_files(workflow_SRCS GENERATE_MOC src/workflowsettings.kcfgc)
 kde4_add_plugin(plasma_applet_workflow ${workflow_SRCS})
 

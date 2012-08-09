@@ -39,11 +39,13 @@
 #include "activitymanager.h"
 #include "ptaskmanager.h"
 
-
 namespace Plasma {
-class ExtenderItem;
-};
+    class ExtenderItem;
+}
 
+namespace Ui {
+    class Config;
+}
 
 // Define our plasma Applet
 class WorkFlow : public Plasma::PopupApplet
@@ -94,6 +96,11 @@ public slots:
     void activated();
     void showedEvent(QShowEvent *evt);
     void activeWindowChanged(WId);
+    void setAnimationsSlot(int);
+    void saveConfigurationFiles();
+
+private slots:
+    void createConfigurationInterface(KConfigDialog *parent);
 
 private:
     bool m_lockActivities;
@@ -108,7 +115,7 @@ private:
     bool m_firstRunLiveTour;
     bool m_firstRunCalibrationPreviews;
 
-
+    Ui::Config *m_config;
 
 
     QHash <QString,QStringList *> storedWorkareas;
@@ -127,7 +134,7 @@ private:
 
     Plasma::ExtenderItem *item;
 
-    void saveConfigurationFiles();
+
 
 };
 

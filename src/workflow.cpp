@@ -19,9 +19,13 @@
 
 #include "workflow.h"
 
+#include "ui_config.h"
+#include "workflowsettings.h"
+
 #include <KDebug>
 #include <KGlobalSettings>
 #include <KConfigGroup>
+#include <KConfigDialog>
 #include <KSharedConfig>
 #include <KWindowSystem>
 
@@ -37,8 +41,6 @@
 #include <Plasma/ToolTipManager>
 #include <Plasma/Containment>
 
-#include "workflowsettings.h"
-
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -49,7 +51,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     setPopupIcon("preferences-activities");
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPassivePopup(true);
-    // setHasConfigurationInterface(true);
+    setHasConfigurationInterface(true);
 
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
@@ -381,6 +383,8 @@ void WorkFlow::setLockActivities(bool lock)
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
+    QMetaObject::invokeMethod(mainQML, "setAnimations",
+                              Q_ARG(QVariant, anim));
 }
 
 
@@ -469,8 +473,7 @@ void WorkFlow::loadConfigurationFiles()
                               Q_ARG(QVariant, zoomF));
 
     setAnimations(anim);
-    QMetaObject::invokeMethod(mainQML, "setAnimations",
-                              Q_ARG(QVariant, anim));
+
 
     setWindowsPreviews(winPreviews);
     QMetaObject::invokeMethod(mainQML, "setWindowsPreviews",
@@ -519,6 +522,31 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
 
     emit configNeedsSaving();
+}
+
+void WorkFlow::setAnimationsSlot(int val){
+    this->setAnimations(val);
+}
+
+void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
+{
+
+    if (!m_config) {
+        m_config = new Ui::Config;
+    }
+
+    QWidget *widget = new QWidget(parent);
+    m_config->setupUi(widget);
+
+    //parent->addPage(widget, i18n("General"), "configure", QString(), false);
+    parent->addPage(widget, i18n("General"), icon(), QString(), false);
+
+    m_config->animationsLevelSlider->setValue(m_animations);
+
+    connect(m_config->animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
+
+    connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
+    connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
 }
 
 
