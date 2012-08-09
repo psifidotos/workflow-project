@@ -7,7 +7,7 @@ Rectangle {
 
     //property int defRotation
 
- //   property bool moveForward:false
+    //   property bool moveForward:false
     property bool isVertical:false
     property int lengthEnd
 
@@ -23,11 +23,9 @@ Rectangle {
     states: [
         State {
             name: "forward"
-   //         when: moveForward === true
         },
         State {
             name: "backward"
-      //      when: moveForward === false
         }
     ]
 
@@ -38,6 +36,14 @@ Rectangle {
             SequentialAnimation{
                 id:playRectAnimation1
                 property int animationDur:750
+
+                NumberAnimation {
+                    target: mRect
+                    property: "opacity"
+                    duration: 0;
+                    easing.type: Easing.InOutQuad;
+                    to: 1
+                }
 
                 NumberAnimation {
                     target: mRect
@@ -77,18 +83,18 @@ Rectangle {
                     easing.type: Easing.InOutQuad;
                     to: 2
                 }
+
+                NumberAnimation {
+                    target: mRect
+                    property: "opacity"
+                    duration: 0;
+                    easing.type: Easing.InOutQuad;
+                    to: 0
+                }
+
             }
         }
     ]
-/*
-    MouseArea{
-        anchors.fill: parent
-        hoverEnabled: true
-        onEntered:{
-            mRect.moveForward = !mRect.moveForward
-        }
-
-    }*/
 
     function startAnimation(){
         mRect.state="forward";

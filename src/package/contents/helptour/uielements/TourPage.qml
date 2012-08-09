@@ -11,9 +11,10 @@ Item{
     function startAnimation(){
         if(children.length>0){
 
-            for(var i=0; i<children[0].children.length; i++){
-                var chd = children[0].children[i];
-                if(chd.objectNameType === "AnimatedParagraph")
+            for(var i=0; i<children.length; i++){
+                var chd = children[i];
+                if( (chd.objectNameType === "AnimatedParagraph") ||
+                    (chd.objectNameType === "AnimatedText") )
                     chd.startAnimation();
                 else
                     chd.opacity = 1;
@@ -24,9 +25,10 @@ Item{
     function resetAnimation(){
         if(children.length>0){
 
-            for(var i=0; i<children[0].children.length; i++){
-                var chd = children[0].children[i];
-                if(chd.objectNameType === "AnimatedParagraph")
+            for(var i=0; i<children.length; i++){
+                var chd = children[i];
+                if( (chd.objectNameType === "AnimatedParagraph") ||
+                    (chd.objectNameType === "AnimatedText") )
                     chd.resetAnimation();
                 else
                     chd.opacity = 0;

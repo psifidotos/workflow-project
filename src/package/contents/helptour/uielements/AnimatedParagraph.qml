@@ -16,13 +16,24 @@ Item {
     property alias fullText: mainPar.fullText
     property alias texts: numbPar.texts
 
+    property alias fontBold: mainPar.font.bold
+    property alias fontItalic: mainPar.font.italic
+    property alias fontFamily: mainPar.font.family
+    property alias fontColor: mainPar.color
+    property alias fontPixelSize: mainPar.font.pixelSize
+    property alias wrapMode: mainPar.wrapMode
+    property alias textOnlyOpacity: mainPar.onlyOpacity
+
+    property alias lineLength:lineAnim.lengthEnd
+
+
     property int lineSpace: 5
 
     AnimatedLine{
         id:lineAnim
         width:0
         height:0
-        lengthEnd:1.1*parent.width
+        lengthEnd: 100
         startRotation: 0
     }
 

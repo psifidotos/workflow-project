@@ -5,11 +5,12 @@ import "uielements"
 
 Rectangle {
 
+    id:mainTourWin
 
     width:mainView.width
     height:mainView.height
 
-    color: "#aa333333"
+    color: "#b2333333"
 
     opacity:0
 
@@ -37,6 +38,7 @@ Rectangle {
             width:0.1*mainView.width
             elide:Text.ElideRight
             font.family: mainView.defaultFont.family
+            font.pixelSize: 0.02*mainTourWin.height
 
             text:(index+1)+". "+Title;
             color:"#ffffff"
@@ -54,17 +56,7 @@ Rectangle {
         color:"#88f7f7f7"
     }
 
-    TourPage{
-        anchors.left: titlesColumn.right
-        width:0.9*mainView.width
-        height: mainView.height
-        pageTitle: "Introduction"
 
-        Text{
-            text:"Helllo world!.........."
-            color:"#ffffff"
-        }
-    }
 
     Component.onCompleted: {
         if(children.length>0){
@@ -75,53 +67,25 @@ Rectangle {
                     titlesColumn.model.append(
                                 {"Title": chd.pageTitle}
                                 );
+
+                    chd.resetAnimation();
                 }
             }
         }
     }
 
+    TourPage1{
+        id:tourPage1
 
-    /*
-    NumberedList{
-        id:nmList
-        x:250
-        y:200
-        width:150
-        texts:["asdfasdf","asdfasdf232323asdf","asdfasdf234","asdfasdf2323"]
+        anchors.left: titlesColumn.right
+        width:0.9*mainView.width
+        height: mainView.height
     }
 
-    AnimatedLine{
-        height:3
-        width:1
-
-        x:100
-        y:300
 
 
-        lengthEnd:150
-
-        transformOrigin: Item.BottomLeft
-
-        moveForward: true
-
-        startRotation:90
-        endRotation: 0
 
 
-        z:35
-
-        onMoveForwardChanged: {
-            if (moveForward === true){
-                nmList.startAnimation();
-            }
-            else{
-                nmList.resetAnimation();
-
-            }
-
-        }
-    }*/
-    /*
     Rectangle{
         color:"blue"
         x:10
@@ -132,10 +96,7 @@ Rectangle {
         MouseArea{
             anchors.fill: parent
             onClicked:{
-                animP1.startAnimation();
-                animP2.startAnimation();
-                animP3.startAnimation();
-                animP4.startAnimation();
+                tourPage1.startAnimation();
             }
         }
     }
@@ -150,82 +111,9 @@ Rectangle {
         MouseArea{
             anchors.fill: parent
             onClicked:{
-                animP1.resetAnimation();
-                animP2.resetAnimation();
-                animP3.resetAnimation();
-                animP4.resetAnimation();
+                tourPage1.resetAnimation();
             }
         }
     }
-    AnimatedParagraph{
-        id:animP1
-        x:100
-        y:300
 
-        width:300
-
-        linePlace:"LEFT"
-        lineForward:true
-
-        fullText:"<b>Activities</b><br/>Activities are believed that according to researchers there is a situation in which you dont know when..."
-        texts:["Hello World 1 ...",
-            "This is second line...",
-            "Fantastic state..."
-        ]
-
-    }
-
-    AnimatedParagraph{
-        id:animP2
-        x:200
-        y:300
-
-        width:300
-
-        linePlace:"TOP"
-        lineForward:true
-
-        fullText:"<b>Activities</b><br/>Activities are believed that according to researchers there is a situation in which you dont know when..."
-        texts:["Hello World 1 ...",
-            "This is second line...",
-            "Fantastic state..."
-        ]
-
-    }
-
-    AnimatedParagraph{
-        id:animP3
-        x:300
-        y:300
-
-        width:300
-
-        linePlace:"BOTTOM"
-        lineForward:true
-
-        fullText:"<b>Activities</b><br/>Activities are believed that according to researchers there is a situation in which you dont know when..."
-        texts:["Hello World 1 ...",
-            "This is second line...",
-            "Fantastic state..."
-        ]
-
-    }
-
-    AnimatedParagraph{
-        id:animP4
-        x:400
-        y:300
-
-        width:300
-
-        linePlace:"RIGHT"
-        lineForward:true
-
-        fullText:"<b>Activities</b><bt/>Activities are believed that according to researchers there is a situation in which you dont know when..."
-        texts:["Hello World 1 ...",
-            "This is second line...",
-            "Fantastic state..."
-        ]
-
-    }*/
 }

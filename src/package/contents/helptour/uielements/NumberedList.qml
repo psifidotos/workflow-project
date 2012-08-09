@@ -5,7 +5,7 @@ import QtQuick 1.1
 Column{
 
     id:numList
-    property variant texts
+    property variant texts:[]
     spacing:5
 
     opacity:0
