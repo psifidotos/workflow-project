@@ -113,7 +113,7 @@ DialogTemplate{
                 when: calibrView.contentHeight > calibrView.height
                 PropertyChanges { target: calibsVerticalScrollBar; opacity: 1 }
             }
-/*
+            /*
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
             }*/
@@ -279,7 +279,10 @@ DialogTemplate{
                         xValueText.val = value;
                     }
 
+                    //For hiding the Warnings in KDe4.8
                     property bool updateValueWhileDragging:true
+                    property bool animated:true
+
                 }
                 QIconItem{
                     icon:"zoom-in"
@@ -356,7 +359,10 @@ DialogTemplate{
                         yValueText.val = value;
                     }
 
+                    //For hiding the Warnings in KDe4.8
                     property bool updateValueWhileDragging:true
+                    property bool animated:true
+
                 }
 
                 QIconItem{

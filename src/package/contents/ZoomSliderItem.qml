@@ -44,7 +44,9 @@ PlasmaComponents.Slider {
 
     onValueChanged: firsttime === false ? workflowManager.setZoomFactor(value) : notFirstTime()
 
+    //For hiding the Warnings in KDe4.8
     property bool updateValueWhileDragging:true
+    property bool animated:true
 
     function notFirstTime(){
         firsttime = false;
