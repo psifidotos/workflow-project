@@ -84,6 +84,7 @@ Item{
             delegate:WorkAreaTaskDeleg{
             }
 
+
             Behavior on opacity{
                 NumberAnimation {
                     duration: 3*mainView.animationsStep

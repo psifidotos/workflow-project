@@ -174,7 +174,6 @@ import "ui-elements"
             model:instanceOfTasksList.model
 
             delegate:WorkAreaOrphanTaskDeleg{
-
             }
 
             Behavior on height{

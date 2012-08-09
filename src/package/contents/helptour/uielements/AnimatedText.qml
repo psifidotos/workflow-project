@@ -4,7 +4,7 @@ import QtQuick 1.1
 Text {
     Timer{
         id:txtTimer
-        interval:100
+        interval:20
         repeat:true
         onTriggered: {
             parent.stepAnimation();
@@ -14,6 +14,10 @@ Text {
     property string fullText
 
     property int stpCounter;
+
+    font.family: "Helvetica"
+    color:"#f5f5f5"
+    wrapMode:Text.WordWrap
 
     function stepAnimation(){
         if (stpCounter >= fullText.length-1){
@@ -28,6 +32,12 @@ Text {
 
     function startAnimation(){
         txtTimer.start();
+    }
+
+    function resetAnimation(){
+        txtTimer.stop();
+        stpCounter=0;
+        text="";
     }
 
 }

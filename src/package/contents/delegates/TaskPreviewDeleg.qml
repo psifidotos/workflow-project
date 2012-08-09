@@ -12,10 +12,13 @@ import org.kde.qtextracomponents 0.1
 Item{
     id: taskDeleg2
 
-    //This delegate is used in two situations, 1.onAllActivities where the
-    //ListView contains all the tasks so the delegate must be shown for only
-    //the allActivities tasks,
-    //2.for tasks in spesific desktop and activity
+    // This delegate is used in two situations,
+    //
+    // 1.onAllActivities where the ListView contains all the tasks
+    //  so the delegate must be shown for only the allActivities tasks,
+    //
+    // 2.for tasks in spesific desktop and activity
+
     property bool showAllActivities:true
 
     property bool forceState1:false

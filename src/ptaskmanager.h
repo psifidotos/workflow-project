@@ -84,6 +84,8 @@ private:
     int topX;
     int topY;
 
+    bool clearedPreviewsList;
+
     int indexOfPreview(WId window);
 
 };

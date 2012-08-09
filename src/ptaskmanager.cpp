@@ -33,6 +33,8 @@ PTaskManager::PTaskManager(QObject *parent) :
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
     m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasma-applet-workflow"));
+
+    clearedPreviewsList = true;
 }
 
 
@@ -266,7 +268,16 @@ void PTaskManager::showWindowsPreviews()
 
     //    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
     //    qDebug() << m_mainWindowId;
-    Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+    if (previewsIds.size()>0) {
+        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+        clearedPreviewsList = false;
+    }
+
+    if ((previewsIds.size() == 0)&&(clearedPreviewsList == false)) {
+        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+        clearedPreviewsList = true;
+    }
+
 }
 
 void PTaskManager::hideWindowsPreviews()
@@ -353,6 +364,7 @@ void PTaskManager::removeWindowPreview(QString win)
     WId winId = win.toULong();
 
     int pos = indexOfPreview(winId);
+
     if (pos>-1){
         previewsRects.removeAt(pos);
         previewsIds.removeAt(pos);
