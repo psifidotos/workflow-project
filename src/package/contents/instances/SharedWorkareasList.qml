@@ -77,9 +77,11 @@ Item{
 
         if((p1>-1)&&(p2>-1)){
             var sz1 = model.get(p1).workareas.count;
-            //            for(var i=0; i<sz1-1; i++)
-            //                removeWorkArea(to,1);
+            //for(var i=0; i<sz1-1; i++)
+             //   removeWorkArea(to,1);
 
+            //in order ot stay the computations without
+            //issues
             var sz2 = model.get(p2).workareas.count;
             for(var j=0; j<sz2; j++){
                 var ob2 = model.get(p2).workareas.get(j);
@@ -118,9 +120,15 @@ Item{
 
         workflowManager.removeWorkarea(actCode,desktop);
 
-        if((maxWorkareas() < mainView.maxDesktops) &&
-                (mainView.maxDesktops > 2))
-            taskManager.slotRemoveDesktop();
+
+        //Not in cloning
+        if((instanceOfActivitiesList.fromCloneActivity === "") &&
+                (instanceOfActivitiesList.toCloneActivity === "")){
+
+            if((maxWorkareas() < mainView.maxDesktops) &&
+                    (mainView.maxDesktops > 2))
+                taskManager.slotRemoveDesktop();
+        }
 
     }
 
@@ -143,8 +151,13 @@ Item{
 
         var counts = workMod.count;
 
-        if(counts === mainView.maxDesktops)
-            taskManager.slotAddDesktop();
+        //Not in cloning
+        if((instanceOfActivitiesList.fromCloneActivity === "") &&
+                (instanceOfActivitiesList.toCloneActivity === "")){
+
+            if(counts === mainView.maxDesktops)
+                taskManager.slotAddDesktop();
+        }
 
         workMod.append( {  "elemTitle": val,
                            "gridRow":counts+1

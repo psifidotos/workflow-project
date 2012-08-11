@@ -162,9 +162,20 @@ Rectangle{
                     width:0.80*parent.height
                     height:0.65*parent.height
 
+                    Image{
+                        smooth:true
+                        height:0.3*parent.height
+                        width:1.42*height
 
+                        x:-width/3
+                        y:parent.height- 0.6*height
 
+                        source:"Images/buttons/downIndicator.png"
+
+                        opacity:0.6
+                    }
                 }
+
                 MouseArea{
                     anchors.fill:parent
                     onClicked:{
@@ -189,6 +200,7 @@ Rectangle{
                 onCheckedChanged:{
                     mainView.enablePreviews = checked;
                 }
+
             }
 
         }

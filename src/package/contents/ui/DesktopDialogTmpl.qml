@@ -12,8 +12,8 @@ DialogTemplate{
     id:deskDialog
     anchors.centerIn: mainView
 
-    property string activityCode
-    property int desktop
+    property string activityCode:""
+    property int desktop:-1
 
     insideWidth: columns*cWidth
     insideHeight: (shownRows)*cHeight
@@ -304,11 +304,17 @@ DialogTemplate{
     function closeD(){
         allWorkareas.flickableV = true;
         deskDialog.close();
+
+        activityCode = "";
+        desktop = -1;
     }
 
     function emptyDialog(){
         instanceOfTasksDesktopList.emptyList();
         allActT.unForceState1();
+
+        activityCode = "";
+        desktop = -1;
     }
 
     function openD(act,desk){

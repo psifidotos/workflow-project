@@ -20,6 +20,7 @@ Item{
     property string fromCloneActivity:""
     property string toCloneActivity:""
     property bool fromActivityWasCurrent:false
+    property bool previewsWereEnabled:false
 
 
     function printModel(){
@@ -47,6 +48,12 @@ Item{
         fromCloneActivity = "";
         toCloneActivity = "";
         busyIndicatorDialog.resetAnimation();
+
+        if(previewsWereEnabled === true)
+            mainView.enablePreviews = true;
+        else
+            mainView.enablePreviews = false;
+
     }
 
 
@@ -71,7 +78,7 @@ Item{
                     (val === "Stopped")){
                 activityManager.initCloningPhase02(cod);
                 //activityManager.loadCloneActivitySettings(fromCloneActivity);
-        //        startActivity(fromCloneActivity);
+                //        startActivity(fromCloneActivity);
 
             }
 
@@ -86,8 +93,8 @@ Item{
             if( (cod === toCloneActivity) &&
                     (val === "Stopped")){
                 activityManager.initCloningPhase04(cod);
-//                activityManager.storeCloneActivitySettings(cod);
-         /*       updateWallpaper(cod);
+                //                activityManager.storeCloneActivitySettings(cod);
+                /*       updateWallpaper(cod);
                 startActivity(cod);
 
                 if(fromActivityWasCurrent === true){
@@ -373,6 +380,13 @@ Item{
 
         if(fromCloneActivity === mainView.currentActivity)
             fromActivityWasCurrent = true;
+
+        if(mainView.enablePreviews === true){
+            previewsWereEnabled = true;
+            mainView.enablePreviews = false;
+        }
+        else
+            previewsWereEnabled = false;
 
         busyIndicatorDialog.startAnimation();
         addNewActivity();
