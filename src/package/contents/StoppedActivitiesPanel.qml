@@ -94,6 +94,19 @@ Rectangle {
         }
     }
 
+
+
+    ScrollBar {
+        id: stopVerticalScrollBar;
+        width: 11; height: stopActivitiesView.height
+        anchors.right: stopActivitiesView.right
+        opacity: 0
+        orientation: Qt.Vertical
+        position: stopActivitiesView.visibleArea.yPosition
+        pageSize: stopActivitiesView.visibleArea.heightRatio
+    }
+
+    /*
     PlasmaComponents.ScrollBar {
         id: stopVerticalScrollBar
         width: 12;
@@ -102,13 +115,13 @@ Rectangle {
         opacity: 0
         orientation: Qt.Vertical
         flickableItem:stopActivitiesView
-    }
+    }*/
 
     Rectangle{
         id:stpActShad
         height: workareaWidth/30
         width: stopActBack.height
-     //   anchors.right: stopActBack.left
+        //   anchors.right: stopActBack.left
         rotation: 90
         transformOrigin: Item.TopLeft
         gradient: Gradient {
@@ -130,7 +143,7 @@ Rectangle {
         width: stopActBack.width
 
         opacity: stopActivitiesView.atYBeginning === true ?
-                 0 : 0.35
+                     0 : 0.35
 
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#ff9c0000" }
@@ -152,7 +165,7 @@ Rectangle {
         anchors.bottom: stopActBack.bottom
 
         opacity: stopActivitiesView.atYEnd === true ?
-                 0 : 0.35
+                     0 : 0.35
 
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#00ffffff" }
@@ -187,10 +200,10 @@ Rectangle {
             }
 
             onExited: {
-            //    if((stoppedActivitiesList.shownActivities>0)&&
-            //            (stopActBack.doNotShow === true))
-            //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
-            //    else
+                //    if((stoppedActivitiesList.shownActivities>0)&&
+                //            (stopActBack.doNotShow === true))
+                //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
+                //    else
                 stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
                 stopMoreButton.hovered = false
             }
@@ -229,8 +242,8 @@ Rectangle {
 
         Image{
             id: stopMoreButton
-//            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
-//                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
+            //            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
+            //                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
             source: "Images/buttons/plasma_ui/moreGreyVer.png"
             width:7
             height:3.7*width
@@ -240,7 +253,7 @@ Rectangle {
 
             opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
                      (hovered===true)) ?
-                    1 : 0.4
+                        1 : 0.4
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.horizontalCenter
             anchors.rightMargin: 5
@@ -259,7 +272,7 @@ Rectangle {
             var elem = stoppedActivitiesList.model.get(i);
 
             if (elem.CState === "Stopped")
-                  counter++;
+                counter++;
         }
         stoppedActivitiesList.shownActivities = counter;
         //console.debug("Stopped Activitis:"+counter);

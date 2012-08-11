@@ -112,7 +112,6 @@ DialogTemplate{
         boundsBehavior: Flickable.StopAtBounds
         clip:true
 
-
         Row{
             //width:parent.width
             //height:parent.height
@@ -199,15 +198,26 @@ DialogTemplate{
         states: State {
             name: "ShowBars"
             when: desktopView.contentHeight > desktopView.height
-            PropertyChanges { target: desktopVerticalScrollBar; opacity: 1 }
+            PropertyChanges { target: desktopVerticalScrollBar; opacity: 0.7 }
         }
-/*
+
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-        }*/
+        }
     }
 
-    PlasmaComponents.ScrollBar {
+    ScrollBar {
+        id: desktopVerticalScrollBar
+        width: 9; height: desktopView.height
+        anchors.top: desktopView.top
+        anchors.left: desktopView.right
+        opacity: 0
+        orientation: Qt.Vertical
+        position: desktopView.visibleArea.yPosition
+        pageSize: desktopView.visibleArea.heightRatio
+    }
+
+    /*PlasmaComponents.ScrollBar {
         id: desktopVerticalScrollBar
         width: 12;
       //  height: desktopView.insideHeight
@@ -215,7 +225,7 @@ DialogTemplate{
         opacity: 0
         orientation: Qt.Vertical
         flickableItem: desktopView
-    }
+    }*/
 
     function initInterface(){
         var counter = desksTasksList.model.count

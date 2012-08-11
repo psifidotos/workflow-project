@@ -111,7 +111,7 @@ DialogTemplate{
             states: State {
                 name: "ShowBars"
                 when: calibrView.contentHeight > calibrView.height
-                PropertyChanges { target: calibsVerticalScrollBar; opacity: 1 }
+                PropertyChanges { target: calibsVerticalScrollBar; opacity: 0.8 }
             }
             /*
             transitions: Transition {
@@ -132,6 +132,18 @@ DialogTemplate{
         }
 
 
+        ScrollBar {
+            id: calibsVerticalScrollBar
+            width: 8; height: calibrView.height
+            anchors.top: calibrView.top
+            anchors.left: calibrView.right
+            opacity: 0
+            orientation: Qt.Vertical
+            position: calibrView.visibleArea.yPosition
+            pageSize: calibrView.visibleArea.heightRatio
+        }
+
+        /*
         PlasmaComponents.ScrollBar {
             id: calibsVerticalScrollBar
             width: 8
@@ -140,7 +152,7 @@ DialogTemplate{
             opacity: 0
             orientation: Qt.Vertical
             flickableItem: calibrView
-        }
+        }*/
 
         Rectangle{
             width:1

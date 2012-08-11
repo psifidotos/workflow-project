@@ -162,6 +162,19 @@ Rectangle{
                     width:0.80*parent.height
                     height:0.65*parent.height
 
+
+
+                }
+                MouseArea{
+                    anchors.fill:parent
+                    onClicked:{
+                        effectsToolBtn.checked = !effectsToolBtn.checked;
+                    }
+
+                    onPressAndHold: {
+                        if(effectsToolBtn.checked)
+                            calibrationDialog.openD();
+                    }
                 }
 
                 width: oxygenTitle.buttonWidth

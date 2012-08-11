@@ -148,19 +148,19 @@ Item{
             PropertyChanges { target: verticalScrollBar; opacity: 1 }
             PropertyChanges { target: horizontalScrollBar; opacity: 1 }
         }
-/*
+
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-        }*/
+        }
 
     }//Flickable scrolling
 
     //Scrollbars
     // Attach scrollbars to the right and bottom edges of the view.
-    /*
+
     ScrollBar {
         id: verticalScrollBar
-        width: 12; height: view.height-12
+        width: 11; height: view.height
         anchors.right: view.right
         opacity: 0
         orientation: Qt.Vertical
@@ -170,14 +170,14 @@ Item{
 
     ScrollBar {
         id: horizontalScrollBar
-        width: view.width-12; height: 12
+        width: view.width; height: 11
         anchors.bottom: view.bottom
         opacity: 0
         orientation: Qt.Horizontal
         position: view.visibleArea.xPosition
         pageSize: view.visibleArea.widthRatio
-    }*/
-
+    }
+/*
     PlasmaComponents.ScrollBar {
         id: verticalScrollBar
         width: 12;
@@ -194,7 +194,7 @@ Item{
         opacity: 0
         orientation: Qt.Horizontal
         flickableItem:view
-    }
+    }*/
 
     //return activities listview
     function getList(){
