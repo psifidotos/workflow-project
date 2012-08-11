@@ -31,6 +31,25 @@ Item{
         console.debug("----  -----");
     }
 
+    function initPhase02Completed(){
+        startActivity(fromCloneActivity);
+    }
+
+    function initPhase04Completed(){
+        updateWallpaper(toCloneActivity);
+        startActivity(toCloneActivity);
+
+        if(fromActivityWasCurrent === true){
+            setCurrentActivityAndDesktop(fromCloneActivity,mainView.currentDesktop);
+            fromActivityWasCurrent = false;
+        }
+
+        fromCloneActivity = "";
+        toCloneActivity = "";
+        busyIndicatorDialog.resetAnimation();
+    }
+
+
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         if (ind>-1){
@@ -50,8 +69,9 @@ Item{
             //This is Phase02 of Cloning
             if( (cod === fromCloneActivity) &&
                     (val === "Stopped")){
-                activityManager.loadCloneActivitySettings(fromCloneActivity);
-                startActivity(fromCloneActivity);
+                activityManager.initCloningPhase02(cod);
+                //activityManager.loadCloneActivitySettings(fromCloneActivity);
+        //        startActivity(fromCloneActivity);
 
             }
 
@@ -65,9 +85,9 @@ Item{
             //This is Phase04 of Cloning
             if( (cod === toCloneActivity) &&
                     (val === "Stopped")){
-
-                activityManager.storeCloneActivitySettings(cod);
-                updateWallpaper(cod);
+                activityManager.initCloningPhase04(cod);
+//                activityManager.storeCloneActivitySettings(cod);
+         /*       updateWallpaper(cod);
                 startActivity(cod);
 
                 if(fromActivityWasCurrent === true){
@@ -77,7 +97,7 @@ Item{
 
                 fromCloneActivity = "";
                 toCloneActivity = "";
-                busyIndicatorDialog.resetAnimation();
+                busyIndicatorDialog.resetAnimation();*/
             }
         }
     }

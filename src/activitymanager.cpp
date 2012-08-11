@@ -24,6 +24,8 @@ ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
+    m_timer = new QTimer(this);
+    m_timerPhase = 0;
 }
 
 ActivityManager::~ActivityManager()
@@ -52,6 +54,8 @@ void ActivityManager::setQMlObject(QObject *obj)
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
     connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
+
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
 
 QString ActivityManager::getWallpaperFromFile(QString source, QString file) const
@@ -131,6 +135,66 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
+void ActivityManager::timerTrigerred(){
+    QString cacheFile;
+
+    if(m_timerPhase == 2)
+        cacheFile = fromCloneActivityId;
+    else if (m_timerPhase == 4)
+        cacheFile = toCloneActivityId;
+
+    if((m_timerPhase==2)||(m_timerPhase==4)){
+        QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+cacheFile;
+
+        QString line;
+
+        QFile file(fPath);
+        QTextStream stream ( &file );
+
+        if (!file.open(QIODevice::ReadWrite)){
+            qDebug() << "Error file found for "<<cacheFile;
+            //return -1;
+        }
+
+        line = stream.readLine();
+
+        if(!line.isNull()){
+            m_timer->stop();
+
+            file.close();
+
+            if(m_timerPhase == 2)
+                loadCloneActivitySettings();
+            else if (m_timerPhase == 4)
+                storeCloneActivitySettings();
+
+            m_timerPhase = 0;
+            m_timer->stop();
+        }
+        else{
+            file.close();
+        }
+
+    }
+    else
+        m_timer->stop();
+
+}
+
+void ActivityManager::initCloningPhase02(QString id)
+{
+    fromCloneActivityId = id;
+    m_timerPhase = 2;
+    m_timer->start(200);
+}
+
+void ActivityManager::initCloningPhase04(QString id)
+{
+    toCloneActivityId = id;
+    m_timerPhase = 4;
+    m_timer->start(200);
+}
+
 QString ActivityManager::getContainmentId(QString txt) const
 {
     QString findText1 = "[Containments][";
@@ -144,8 +208,8 @@ QString ActivityManager::getContainmentId(QString txt) const
 }
 
 
-int ActivityManager::loadCloneActivitySettings(QString id){
-    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+id;
+int ActivityManager::loadCloneActivitySettings(){
+    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+fromCloneActivityId;
 
     QString line;
 
@@ -156,38 +220,41 @@ int ActivityManager::loadCloneActivitySettings(QString id){
     //This is done until the stopped activities properties to be written
     //This function must be called only for Stopped Activities
 
-    while (line.isNull()){
-        if (!file.open(QIODevice::ReadWrite)){
-            qDebug() << "Error file found...";
-            return -1;
-        }
-
-        line = stream.readLine();
-
-        if(line.isNull())
-            file.close();
+    //   while (line.isNull()){
+    if (!file.open(QIODevice::ReadWrite)){
+        qDebug() << "Error file found...";
+        return -1;
     }
+
+    line = stream.readLine();
+
+    //    if(line.isNull())
+    //         file.close();
+    //  }
     //This is done until the stopped activities properties to be written
 
     while (!line.isNull()) {
         fromCloneActivityText.append(line+'\n');
         line = stream.readLine();
-  //  qDebug() << "----- " <<line;
+        //  qDebug() << "----- " <<line;
     }
 
     file.close();
 
-  //  qDebug() << fromCloneActivityText;
+    //  qDebug() << fromCloneActivityText;
 
-    fromCloneActivityId = id;
+    //fromCloneActivityId = id;
     fromCloneContainmentId = getContainmentId(fromCloneActivityText);
+
+    QMetaObject::invokeMethod(qmlActEngine, "initPhase02Completed");
 
     return 0;
 }
 
 
-int ActivityManager::storeCloneActivitySettings(QString id){
-    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+id;
+
+int ActivityManager::storeCloneActivitySettings(){
+    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+toCloneActivityId;
 
     QString line;
 
@@ -198,18 +265,18 @@ int ActivityManager::storeCloneActivitySettings(QString id){
     fContent.clear();
     //This is done until the stopped activities properties to be written
     //This function must be called only for Stopped Activities
-    while (line.isNull()){
+    //    while (line.isNull()){
 
-        if (!file.open(QIODevice::ReadWrite)){
-            qDebug() << "Error file found...";
-            return -1;
-        }
-
-        line = stream.readLine();
-
-        if(line.isNull())
-            file.close();
+    if (!file.open(QIODevice::ReadWrite)){
+        qDebug() << "Error file found...";
+        return -1;
     }
+
+    line = stream.readLine();
+
+    //        if(line.isNull())
+    //           file.close();
+    //   }
     //This is done until the stopped activities properties to be written
 
     while (!line.isNull()) {
@@ -231,7 +298,7 @@ int ActivityManager::storeCloneActivitySettings(QString id){
     QString writeToFileRes = fromCloneActivityText.replace(fromStr,toStr);
 
     QString fromStr2("activityId="+fromCloneActivityId);
-    QString toStr2("activityId="+id);
+    QString toStr2("activityId="+toCloneActivityId);
 
     writeToFileRes = writeToFileRes.replace(fromStr2,toStr2);
 
@@ -251,6 +318,8 @@ int ActivityManager::storeCloneActivitySettings(QString id){
     stream << writeToFileRes;
 
     file.close();
+
+    QMetaObject::invokeMethod(qmlActEngine, "initPhase04Completed");
 
     return 0;
 }

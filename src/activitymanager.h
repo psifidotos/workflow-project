@@ -3,9 +3,12 @@
 
 #include <QObject>
 
-#include <KStandardDirs>
 
+
+#include <KStandardDirs>
 #include <KActivities/Controller>
+
+#include <QTimer>
 
 namespace KActivities
 {
@@ -38,8 +41,8 @@ public:
     Q_INVOKABLE void setIcon(QString id, QString name);
 
     //are used in cloning
-    Q_INVOKABLE int loadCloneActivitySettings(QString id);
-    Q_INVOKABLE int storeCloneActivitySettings(QString id);
+    Q_INVOKABLE void initCloningPhase02(QString id);
+    Q_INVOKABLE void initCloningPhase04(QString id);
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
     void setQMlObject(QObject *obj);
@@ -57,13 +60,18 @@ public slots:
   void activityStateChanged();
   void currentActivityChanged(const QString &id);
 
-private:
+private slots:
+  void timerTrigerred();
 
+private:
     QString getWallpaperForRunning(QString source) const;
     QString getWallpaperForStopped(QString source) const;
     QString getWallpaperFromFile(QString source,QString file) const;
 
     QString getContainmentId(QString txt) const;
+
+    int loadCloneActivitySettings();
+    int storeCloneActivitySettings();
 
     QObject *qmlActEngine;
     KActivities::Controller *m_activitiesCtrl;
@@ -76,6 +84,11 @@ private:
     QString fromCloneContainmentId;
 
     QString toCloneContainmentId;
+    QString toCloneActivityId;
+
+    int m_timerPhase;
+
+    QTimer *m_timer;
 
 };
 

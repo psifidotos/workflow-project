@@ -676,6 +676,7 @@ Item{
                 width: taskDeleg2.defWidth
                 x:10
                 y:(taskDeleg2.height - height) / 2
+                opacity:1
             }
             PropertyChanges{
                 target:taskTitleRec
@@ -690,7 +691,7 @@ Item{
             }
             PropertyChanges{
                 target:taskHoverRect
-                opacity:taskDeleg2.isSelected===false? 0 : 1
+                opacity:taskDeleg2.isSelected===false? 0.001 : 1
             }
             PropertyChanges{
                 target:allTasksBtns
@@ -723,7 +724,7 @@ Item{
                 x:0
                 //     y: previewRect.y+previewRect.height-height
                 y:taskTitleRec.y-height
-                opacity:0.8
+                opacity:1
             }
             PropertyChanges{
                 target:taskTitleRec
@@ -768,7 +769,7 @@ Item{
                 width: showPreviewsFound===false ? 1.4*taskDeleg2.defWidth : 1.4*taskTitleRec.height
                 x:showPreviewsFound===false ? 10 : 0
                 y:showPreviewsFound===false ? (taskDeleg2.height - height) / 2 : taskTitleRec.y-height
-                opacity: 0.8
+                opacity: 1
             }
 
             PropertyChanges{
