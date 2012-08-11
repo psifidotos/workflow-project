@@ -348,6 +348,11 @@ Rectangle {
     TourDialog{
         id:liveTourDialog
     }
+
+    BusyIndicatorDialogTmpl{
+        opacity:1
+        id:busyIndicatorDialog
+    }
 }
 
 

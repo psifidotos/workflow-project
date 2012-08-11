@@ -77,6 +77,7 @@ Item{
 
                 fromCloneActivity = "";
                 toCloneActivity = "";
+                busyIndicatorDialog.resetAnimation();
             }
         }
     }
@@ -353,6 +354,7 @@ Item{
         if(fromCloneActivity === mainView.currentActivity)
             fromActivityWasCurrent = true;
 
+        busyIndicatorDialog.startAnimation();
         addNewActivity();
 
     }
