@@ -97,10 +97,7 @@ Item{
             }
 
             onClicked: {
-                instanceOfActivitiesList.cloneActivity(ccode);
-                //instanceOfActivitiesList.setCurrent(ccode);
-                //instanceOfActivitiesList.cloneActivity(ccode);
-                //instanceOfActivitiesList.updateWallpaper(ccode);
+                instanceOfActivitiesList.cloneActivityDialog(ccode);
             }
 
 
@@ -140,7 +137,7 @@ Item{
             }
 
             onClicked: {
-                instanceOfActivitiesList.removeActivity(ccode);
+                instanceOfActivitiesList.removeActivityDialog(ccode);
             }
 
         }

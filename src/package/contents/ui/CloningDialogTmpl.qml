@@ -6,28 +6,28 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
 DialogTemplate{
-    id:rmvDialog
+    id:clonDialog
     anchors.centerIn: mainView
     property string activityCode
     property string activityName
 
     insideWidth: mainTextInf.width+100
     insideHeight: infIcon.height+40
-    dialogTitle: i18n("Remove Activity")+"..."
+    dialogTitle: i18n("Clone Activity")+"..."
     isModal: true
 
     //Title
     Item{
         anchors.centerIn:parent
-        width: rmvDialog.insideWidth
-        height:rmvDialog.insideHeight
+        width: clonDialog.insideWidth
+        height:clonDialog.insideHeight
 
         //Main Area
         QIconItem{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("messagebox_warning")
+            icon:QIcon("messagebox_info")
             width:70
             height:70
         }
@@ -37,7 +37,7 @@ DialogTemplate{
             anchors.left: infIcon.right
             anchors.verticalCenter: infIcon.verticalCenter
             color:"#ffffff"
-            text:i18n("Are you sure you want to remove activity")+" <b>"+rmvDialog.activityName+"</b> "+i18n("?")
+            text:i18n("Are you sure you want to clone activity")+" <b>"+clonDialog.activityName+"</b> "+i18n("?")
 
             font.family:mainView.defaultFont.family
             font.pointSize: mainView.fixedFontSize + 1
@@ -46,11 +46,9 @@ DialogTemplate{
     }
 
     Connections {
-        target: rmvDialog
+        target: clonDialog
         onClickedOk:{
-       //     activityManager.remove(rmvDialog.activityCode);
-       //     instanceOfActivitiesList.activityRemovedIn(rmvDialog.activityCode);
-            instanceOfActivitiesList.removeActivity(activityCode);
+            instanceOfActivitiesList.cloneActivity(activityCode);
         }
 
         onClickedCancel:{

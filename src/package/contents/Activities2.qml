@@ -337,6 +337,10 @@ Rectangle {
         id:removeDialog
     }
 
+    CloningDialogTmpl{
+        id:cloneDialog
+    }
+
     DesktopDialogTmpl{
         id:desktopDialog
     }

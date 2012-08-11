@@ -393,7 +393,21 @@ Item{
 
     }
 
+    function cloneActivityDialog(cod){
+        var p = getIndexFor(cod);
+        var ob = model.get(p);
+
+        cloneDialog.activityName = ob.Name;
+        cloneDialog.activityCode = cod;
+        cloneDialog.open();
+    }
+
+
     function removeActivity(cod){
+        activityManager.remove(cod);
+    }
+
+    function removeActivityDialog(cod){
         var p = getIndexFor(cod);
         var ob = model.get(p);
 
