@@ -2,6 +2,9 @@
 
 #include <QDir>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QIODevice>
 
 
 #include <KIconDialog>
@@ -31,7 +34,7 @@ ActivityManager::~ActivityManager()
 
 void ActivityManager::setQMlObject(QObject *obj)
 {
-    qmlActEngine = obj;    
+    qmlActEngine = obj;
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -68,7 +71,7 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file) cons
 
         if(tempG.readPathEntry("activityId",QString("null")) == source){
 
-       //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
+            //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
             KConfigGroup gWall = tempG.group("Wallpaper").group("image");
 
             found = true;
@@ -81,7 +84,7 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file) cons
                 if (!files.isEmpty())
                     foundF = tmD.absoluteFilePath(files.at(0));
 
-      //          qDebug()<<files.at(0);
+                //          qDebug()<<files.at(0);
             }
 
             if (QFile::exists(foundF))
@@ -128,6 +131,131 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
+QString ActivityManager::getContainmentId(QString txt) const
+{
+    QString findText1 = "[Containments][";
+    QString findText2 = "]";
+
+    int p1 = txt.indexOf(findText1)+findText1.length();
+    int p2 = txt.indexOf(findText2,p1);
+
+    QString res(txt.mid(p1,p2-p1));
+    return res;
+}
+
+
+int ActivityManager::loadCloneActivitySettings(QString id){
+    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+id;
+
+    QString line;
+
+    QFile file(fPath);
+    QTextStream stream ( &file );
+
+    fromCloneActivityText.clear();
+    //This is done until the stopped activities properties to be written
+    //This function must be called only for Stopped Activities
+
+    while (line.isNull()){
+        if (!file.open(QIODevice::ReadWrite)){
+            qDebug() << "Error file found...";
+            return -1;
+        }
+
+        line = stream.readLine();
+
+        if(line.isNull())
+            file.close();
+    }
+    //This is done until the stopped activities properties to be written
+
+    while (!line.isNull()) {
+        fromCloneActivityText.append(line+'\n');
+        line = stream.readLine();
+  //  qDebug() << "----- " <<line;
+    }
+
+    file.close();
+
+  //  qDebug() << fromCloneActivityText;
+
+    fromCloneActivityId = id;
+    fromCloneContainmentId = getContainmentId(fromCloneActivityText);
+
+    return 0;
+}
+
+
+int ActivityManager::storeCloneActivitySettings(QString id){
+    QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+id;
+
+    QString line;
+
+    QFile file(fPath);
+    QTextStream stream ( &file );
+
+    QString fContent;
+    fContent.clear();
+    //This is done until the stopped activities properties to be written
+    //This function must be called only for Stopped Activities
+    while (line.isNull()){
+
+        if (!file.open(QIODevice::ReadWrite)){
+            qDebug() << "Error file found...";
+            return -1;
+        }
+
+        line = stream.readLine();
+
+        if(line.isNull())
+            file.close();
+    }
+    //This is done until the stopped activities properties to be written
+
+    while (!line.isNull()) {
+        fContent.append(line+'\n');
+        line = stream.readLine();
+    }
+
+    file.close();
+
+    //qDebug() << fContent;
+
+    toCloneContainmentId = getContainmentId(fContent);
+
+    //qDebug() << "-----------To:"<<toCloneActivityId;
+
+    QString fromStr(QString("[Containments][")+fromCloneContainmentId+"]");
+    QString toStr(QString("[Containments][")+toCloneContainmentId+"]");
+
+    QString writeToFileRes = fromCloneActivityText.replace(fromStr,toStr);
+
+    QString fromStr2("activityId="+fromCloneActivityId);
+    QString toStr2("activityId="+id);
+
+    writeToFileRes = writeToFileRes.replace(fromStr2,toStr2);
+
+    //qDebug() << writeToFileRes;
+
+    if (!file.open(QIODevice::WriteOnly)){
+        qDebug() << "Error file found...";
+        return -1;
+    }
+
+    /* Check it opened OK */
+    if(!file.isOpen()){
+        qDebug() << "- Error, unable to open" << fPath << "for output";
+        return -1;
+    }
+
+    stream << writeToFileRes;
+
+    file.close();
+
+    return 0;
+}
+
+
 
 void ActivityManager::activityAdded(QString id) {
 
@@ -136,21 +264,21 @@ void ActivityManager::activityAdded(QString id) {
 
     QString state;
     switch (activity->state()) {
-        case KActivities::Info::Running:
-            state = "Running";
-            break;
-        case KActivities::Info::Starting:
-            state = "Starting";
-            break;
-        case KActivities::Info::Stopping:
-            state = "Stopping";
-            break;
-        case KActivities::Info::Stopped:
-            state = "Stopped";
-            break;
-        case KActivities::Info::Invalid:
-        default:
-            state = "Invalid";
+    case KActivities::Info::Running:
+        state = "Running";
+        break;
+    case KActivities::Info::Starting:
+        state = "Starting";
+        break;
+    case KActivities::Info::Stopping:
+        state = "Stopping";
+        break;
+    case KActivities::Info::Stopped:
+        state = "Stopped";
+        break;
+    case KActivities::Info::Invalid:
+    default:
+        state = "Invalid";
     }
 
     emit activityAddedIn(QVariant(id),
@@ -180,21 +308,21 @@ void ActivityManager::activityDataChanged()
 
     QString state;
     switch (activity->state()) {
-        case KActivities::Info::Running:
-            state = "Running";
-            break;
-        case KActivities::Info::Starting:
-            state = "Starting";
-            break;
-        case KActivities::Info::Stopping:
-            state = "Stopping";
-            break;
-        case KActivities::Info::Stopped:
-            state = "Stopped";
-            break;
-        case KActivities::Info::Invalid:
-        default:
-            state = "Invalid";
+    case KActivities::Info::Running:
+        state = "Running";
+        break;
+    case KActivities::Info::Starting:
+        state = "Starting";
+        break;
+    case KActivities::Info::Stopping:
+        state = "Stopping";
+        break;
+    case KActivities::Info::Stopped:
+        state = "Stopped";
+        break;
+    case KActivities::Info::Invalid:
+    default:
+        state = "Invalid";
     }
 
 
@@ -215,21 +343,21 @@ void ActivityManager::activityStateChanged()
     }
     QString state;
     switch (activity->state()) {
-        case KActivities::Info::Running:
-            state = "Running";
-            break;
-        case KActivities::Info::Starting:
-            state = "Starting";
-            break;
-        case KActivities::Info::Stopping:
-            state = "Stopping";
-            break;
-        case KActivities::Info::Stopped:
-            state = "Stopped";
-            break;
-        case KActivities::Info::Invalid:
-        default:
-            state = "Invalid";
+    case KActivities::Info::Running:
+        state = "Running";
+        break;
+    case KActivities::Info::Starting:
+        state = "Starting";
+        break;
+    case KActivities::Info::Stopping:
+        state = "Stopping";
+        break;
+    case KActivities::Info::Stopped:
+        state = "Stopped";
+        break;
+    case KActivities::Info::Invalid:
+    default:
+        state = "Invalid";
     }
 
     //qDebug() <<activity->id()<< "-" << state;
@@ -280,7 +408,7 @@ QString ActivityManager::chooseIcon(QString id)
 
 
 QString ActivityManager::add(QString name) {
-   return m_activitiesCtrl->addActivity(name);
+    return m_activitiesCtrl->addActivity(name);
 }
 
 void ActivityManager::clone(QString id, QString name) {

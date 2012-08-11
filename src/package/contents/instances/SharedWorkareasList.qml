@@ -54,7 +54,7 @@ Item{
         if (ind>-1){
             var workMod = model.get(ind).workareas;
             if(desk <= workMod.count);
-                return workMod.get(desk-1).elemTitle;
+            return workMod.get(desk-1).elemTitle;
         }
 
         return "";
@@ -68,6 +68,29 @@ Item{
         }
 
         return -1;
+    }
+
+    function copyWorkareas(from, to){
+
+        var p1 = getIndexFor(to);
+        var p2 = getIndexFor(from);
+
+        if((p1>-1)&&(p2>-1)){
+            var sz1 = model.get(p1).workareas.count;
+            //            for(var i=0; i<sz1-1; i++)
+            //                removeWorkArea(to,1);
+
+            var sz2 = model.get(p2).workareas.count;
+            for(var j=0; j<sz2; j++){
+                var ob2 = model.get(p2).workareas.get(j);
+                addWorkareaWithName(to,ob2.elemTitle);
+                if(j<sz1)
+                    removeWorkArea(to,1);
+            }
+
+            for(var i=sz2; i<sz1; i++)
+                removeWorkArea(to,1);
+        }
     }
 
     function removeActivity(cod){
@@ -114,8 +137,33 @@ Item{
         return max;
     }
 
+    function addWorkareaWithName(actCode, val){
+        var ind = getIndexFor(actCode);
+        var workMod = model.get(ind).workareas;
+
+        var counts = workMod.count;
+
+        if(counts === mainView.maxDesktops)
+            taskManager.slotAddDesktop();
+
+        workMod.append( {  "elemTitle": val,
+                           "gridRow":counts+1
+                       } );
+
+        workflowManager.addWorkArea(actCode,val);
+
+    }
+
     function addWorkarea(actCode){
         var ind = getIndexFor(actCode);
+        var workMod = model.get(ind).workareas;
+
+        var counts = workMod.count;
+        var ndesk = taskManager.getDesktopName(counts+1);
+
+        addWorkareaWithName(actCode,ndesk);
+
+        /*        var ind = getIndexFor(actCode);
         var actOb = model.get(ind);
         var workMod = actOb.workareas;
 
@@ -124,16 +172,17 @@ Item{
         if(counts === mainView.maxDesktops)
             taskManager.slotAddDesktop();
 
-        var lastobj = workMod.get(counts-1);
+     //   var lastobj = workMod.get(counts-1);
 
         var ndesk = taskManager.getDesktopName(counts+1);
 
         workMod.append( {  "elemTitle": ndesk,
-                           "gridRow":lastobj.gridRow+1
+                           "gridRow":counts+1
+       //                    "gridRow":lastobj.gridRow+1
                        } );
 
         workflowManager.addWorkArea(actCode,ndesk);
-
+*/
     }
 
 

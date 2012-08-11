@@ -121,7 +121,7 @@ import "ui-elements"
                 }
                 onClicked: {
                     if (mainView.lockActivities === false)
-                        instanceOfActivitiesList.setIcon(ccode);
+                        instanceOfActivitiesList.chooseIcon(ccode);
                 }
 
             }

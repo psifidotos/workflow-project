@@ -17,6 +17,10 @@ Item{
     //first go to an activity and then change desktop
     property int goToDesktop:-1
 
+    property string fromCloneActivity:""
+    property string toCloneActivity:""
+    property bool fromActivityWasCurrent:false
+
 
     function printModel(){
         console.debug("---- Activities Model -----");
@@ -30,13 +34,50 @@ Item{
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         if (ind>-1){
-            model.setProperty(ind,"CState",val);
 
-            instanceOfWorkAreasList.setCState(cod,val);
+            if( (fromCloneActivity === "") &&
+                    (toCloneActivity === "")){
+                model.setProperty(ind,"CState",val);
+
+                instanceOfWorkAreasList.setCState(cod,val);
 
 
-            allWorkareas.updateShowActivities();
-            stoppedPanel.changedChildState();
+                allWorkareas.updateShowActivities();
+                stoppedPanel.changedChildState();
+            }
+
+
+            //This is Phase02 of Cloning
+            if( (cod === fromCloneActivity) &&
+                    (val === "Stopped")){
+                activityManager.loadCloneActivitySettings(fromCloneActivity);
+                startActivity(fromCloneActivity);
+
+            }
+
+            //This is Phase03 of Cloning
+            if( (cod === fromCloneActivity) &&
+                    (val === "Running")){
+                stopActivity(toCloneActivity);
+            }
+
+
+            //This is Phase04 of Cloning
+            if( (cod === toCloneActivity) &&
+                    (val === "Stopped")){
+
+                activityManager.storeCloneActivitySettings(cod);
+                updateWallpaper(cod);
+                startActivity(cod);
+
+                if(fromActivityWasCurrent === true){
+                    setCurrentActivityAndDesktop(fromCloneActivity,mainView.currentDesktop);
+                    fromActivityWasCurrent = false;
+                }
+
+                fromCloneActivity = "";
+                toCloneActivity = "";
+            }
         }
     }
 
@@ -80,9 +121,22 @@ Item{
         // var pt = activityManager.getWallpaper(source);
         //      instanceOfWorkAreasList.setWallpaper(source,pt);
         updateWallpaper(source);
+
+        //Phase-01 Of Cloning
+        if(fromCloneActivity !== ""){
+            toCloneActivity = source;
+            copyActivityBasicSettings(fromCloneActivity,toCloneActivity);
+            setCurrentActivityAndDesktop(source,mainView.currentDesktop);
+            stopActivity(fromCloneActivity);
+        }
     }
 
-    function setIcon(cod){
+    function setIcon(cod, val){
+        activityManager.setIcon(cod, val);
+    }
+
+
+    function chooseIcon(cod){
         activityManager.chooseIcon(cod);
     }
 
@@ -108,10 +162,6 @@ Item{
             model.setProperty(ind,"Icon",icon);
             setCState(source,stat);
             setCurrentIns(source,cur);
-
-            //check if I have to change desktop also
-            //this happens when the user chooses a workarea which
-            //is in different activity
         }
 
     }
@@ -131,6 +181,20 @@ Item{
 
     }
 
+    //It is used from the cloning process in order to copy
+    //Name and Icon
+    function copyActivityBasicSettings(from,to){
+        var p = getIndexFor(from);
+        if (p>-1){
+            var nm = model.get(p).Name;
+            var ic = model.get(p).Icon;
+
+            setName(to,i18n("Copy of")+" "+nm);
+            setIcon(to,ic);
+
+            instanceOfWorkAreasList.copyWorkareas(from,to);
+        }
+    }
 
     function stopActivity(cod){
 
@@ -139,20 +203,20 @@ Item{
 
             var nextDesk = mainView.currentDesktop;
 
-            var actSize = instanceOfWorkAreasList.getActivitySize(nId);
+            //            var actSize = instanceOfWorkAreasList.getActivitySize(nId);
 
-            console.debug(nextDesk+"-"+actSize);
-            if(nextDesk>instanceOfWorkAreasList.getActivitySize(nId)){
-                nextDesk = actSize;
-            }
+            //            console.debug(nextDesk+"-"+actSize);
+            //          if(nextDesk>instanceOfWorkAreasList.getActivitySize(nId)){
+            //            nextDesk = actSize;
+            //      }
 
             setCurrentActivityAndDesktop(nId,nextDesk);
         }
 
         activityManager.stop(cod);
 
-        setCState(cod,"Stopped");
-        instanceOfWorkAreasList.setCState(cod,"Stopped");
+        //    setCState(cod,"Stopped");
+        //    instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
 
@@ -248,17 +312,20 @@ Item{
 
     function setCurrentActivityAndDesktop(activit, desk)
     {
-        //    if (activit !== mainView.currentActivity)
-        //  {
-        //      goToDesktop = desk;
         updateWallpaper(activit);
         setCurrent(activit);
-        //   }
-        //   else
-        //   {
-        instanceOfTasksList.setCurrentDesktop(desk);
 
-        //   }
+        var nextDesk = desk;
+
+        var actSize = instanceOfWorkAreasList.getActivitySize(activit);
+
+        // console.debug(nextDesk+"-"+actSize);
+
+        if(desk>instanceOfWorkAreasList.getActivitySize(activit))
+            nextDesk = actSize;
+
+        instanceOfTasksList.setCurrentDesktop(nextDesk);
+
     }
 
     function getIndexFor(cod){
@@ -280,25 +347,14 @@ Item{
     }
 
     function cloneActivity(cod){
-        /*
-        var p = getIndexFor(cod);
-        var ob = model.get(p);
 
-        activityManager.clone(cod,"New Activity",ob.Icon);
+        fromCloneActivity = cod;
 
+        if(fromCloneActivity === mainView.currentActivity)
+            fromActivityWasCurrent = true;
 
-        var nId = getNextId();
+        addNewActivity();
 
-        model.insert(p+1,
-                     {"code": nId,
-                         "Current":false,
-                         "Name":"New Activity",
-                         "Icon":ob.Icon,
-                         "CState":"Running"}
-                     );
-        instanceOfWorkAreasList.cloneActivity(cod,nId);
-
-        allWorkareas.updateShowActivities();*/
     }
 
     function removeActivity(cod){

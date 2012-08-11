@@ -26,7 +26,6 @@ public:
 //  Q_INVOKABLE void downloadActivityScripts();
 
     Q_INVOKABLE QString getWallpaper(QString source) const;
-    Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
     Q_INVOKABLE QString add(QString name);
     Q_INVOKABLE void clone(QString id, QString name);
@@ -35,6 +34,12 @@ public:
     Q_INVOKABLE void start(QString id);
     Q_INVOKABLE void setName(QString id, QString name);
     Q_INVOKABLE void remove(QString id);
+    Q_INVOKABLE QString chooseIcon(QString);
+    Q_INVOKABLE void setIcon(QString id, QString name);
+
+    //are used in cloning
+    Q_INVOKABLE int loadCloneActivitySettings(QString id);
+    Q_INVOKABLE int storeCloneActivitySettings(QString id);
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
     void setQMlObject(QObject *obj);
@@ -53,17 +58,24 @@ public slots:
   void currentActivityChanged(const QString &id);
 
 private:
-    void setIcon(QString id, QString name);
+
     QString getWallpaperForRunning(QString source) const;
     QString getWallpaperForStopped(QString source) const;
     QString getWallpaperFromFile(QString source,QString file) const;
 
+    QString getContainmentId(QString txt) const;
 
     QObject *qmlActEngine;
     KActivities::Controller *m_activitiesCtrl;
     QString activityForDelete;
 
     KStandardDirs kStdDrs;
+
+    QString fromCloneActivityText;
+    QString fromCloneActivityId;
+    QString fromCloneContainmentId;
+
+    QString toCloneContainmentId;
 
 };
 

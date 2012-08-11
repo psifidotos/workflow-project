@@ -68,7 +68,9 @@ PlasmaComponents.Slider {
         fillMode:Image.PreserveAspectFit
 
         MouseArea{
-            anchors.fill: parent
+            width:0.6*parent.width
+            height:parent.height
+            anchors.left: parent.left
 
             onClicked:{
                 zoomSliderIt.value--;
@@ -90,7 +92,9 @@ PlasmaComponents.Slider {
         fillMode:Image.PreserveAspectFit
 
         MouseArea{
-            anchors.fill: parent
+            width:0.8*parent.width
+            height:parent.height
+            anchors.right: parent.right
 
             onClicked:{
                 zoomSliderIt.value++;
