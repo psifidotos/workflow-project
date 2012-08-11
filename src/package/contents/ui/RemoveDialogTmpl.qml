@@ -12,7 +12,7 @@ DialogTemplate{
     property string activityName
 
     insideWidth: mainTextInf.width+100
-    insideHeight: infIcon.height+90
+    insideHeight: infIcon.height+40
     dialogTitle: i18n("Remove Activity")+"..."
     isModal: true
 

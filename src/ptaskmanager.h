@@ -88,6 +88,8 @@ private:
 
     int indexOfPreview(WId window);
 
+    void removeTaskFromPreviewsLists(WId window);
+
 };
 
 #endif // PTASKMANAGER_H

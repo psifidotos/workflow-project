@@ -142,6 +142,7 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
     QString wId;
     wId.setNum(task->window());
 
+    removeTaskFromPreviewsLists(task->window());
     // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
     //                         Q_ARG(QVariant, wId));
 
@@ -359,16 +360,20 @@ void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int hei
     showWindowsPreviews();
 }
 
-void PTaskManager::removeWindowPreview(QString win)
-{
-    WId winId = win.toULong();
-
-    int pos = indexOfPreview(winId);
+void PTaskManager::removeTaskFromPreviewsLists(WId window){
+    int pos = indexOfPreview(window);
 
     if (pos>-1){
         previewsRects.removeAt(pos);
         previewsIds.removeAt(pos);
     }
+}
+
+void PTaskManager::removeWindowPreview(QString win)
+{
+    WId winId = win.toULong();
+
+    removeTaskFromPreviewsLists(winId);
 
     showWindowsPreviews();
 }
