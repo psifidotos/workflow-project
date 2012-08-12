@@ -12,6 +12,8 @@ DialogTemplate{
     id:deskDialog
     anchors.centerIn: mainView
 
+    property string dialogType:"DesktopDialog"
+
     property string activityCode:""
     property int desktop:-1
 
@@ -158,6 +160,9 @@ DialogTemplate{
             property alias desktopInd: deskDialog.desktop
 
             delegate: TaskPreviewDeleg{
+
+                dialogType:deskDialog.dialogType
+
                 showAllActivities: false
 
                 rWidth: desksTasksList.cellWidth
@@ -356,15 +361,12 @@ DialogTemplate{
     Connections {
         target: deskDialog
         onClickedOk:{
-            /*
-            */
+            completed();
         }
 
         onClickedCancel:{
             deskDialog.emptyDialog();
-            //instanceOfTasksDesktopList.emptyList();
-            //allActT.unForceState1();
-            ///
+            completed();
         }
     }
 }

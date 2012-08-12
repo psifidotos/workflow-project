@@ -14,6 +14,8 @@ Rectangle {
 
     opacity:0
 
+    signal completed();
+
     Behavior on opacity{
         NumberAnimation {
             duration: 2*mainView.animationsStep;
@@ -25,7 +27,7 @@ Rectangle {
     MouseArea{
         anchors.fill: parent
         hoverEnabled: true
-        onClicked:parent.opacity = 0;
+        onClicked:completed();
     }
 
     ListView{
@@ -114,6 +116,14 @@ Rectangle {
                 tourPage1.resetAnimation();
             }
         }
+    }
+
+    function startAnimation(){
+        opacity = 1;
+    }
+
+    function resetAnimation(){
+        opacity = 0;
     }
 
 }

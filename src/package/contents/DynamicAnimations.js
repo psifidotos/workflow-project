@@ -1,28 +1,112 @@
 var activityAnimComp;
 var taskAnimComp;
 var btnAnimComp;
-var wallTimer;
-var desktopDialog;
 
-
-var removeDialog
 
 function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
     btnAnimComp = Qt.createComponent("BtnIconAnimatMainView.qml");
-    desktopDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
+    deskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
+
+    rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 }
 
 //Dialogs
-function showDesktopDialog(act,desk){
-    removeDialog = desktopDialog.createObject(mainView);
 
-    removeDialog.openD(act,desk);
+///////////////Remove Dialog/////////////////
+function showRemoveDialog(actId,actName){
+    var rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 
-    //newObject.destroy(2000);
+    mainView.removeDialog = rmvDialog.createObject(mainView);
+
+    mainView.removeDialog.activityCode = actId;
+    mainView.removeDialog.activityName = actName;
+
+    mainView.removeDialog.open();
 }
 
+
+function deleteRemoveDialog(){
+    mainView.removeDialog.destroy();
+}
+
+
+///////////////Clone Dialog/////////////////
+function showCloneDialog(actId,actName){
+    var clnDialog = Qt.createComponent("ui/CloningDialogTmpl.qml");
+
+    mainView.cloningDialog = clnDialog.createObject(mainView);
+
+    mainView.cloningDialog.activityCode = actId;
+    mainView.cloningDialog.activityName = actName;
+
+    mainView.cloningDialog.open();
+}
+
+
+function deleteCloneDialog(){
+    mainView.cloningDialog.destroy();
+}
+
+///////////////Calibration Dialog/////////////////
+function showCalibrationDialog(){
+    var clbDialog = Qt.createComponent("ui/CalibrationDialogTmpl.qml");
+
+    mainView.calibrationDialog = clbDialog.createObject(mainView);
+
+    mainView.calibrationDialog.openD();
+}
+
+
+function deleteCalibrationDialog(){
+    mainView.calibrationDialog.destroy();
+}
+
+///////////////Desktop Dialog/////////////////
+function showDesktopDialog(actId,desk){
+    var dskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
+
+    mainView.desktopDialog = dskDialog.createObject(mainView);
+
+    mainView.desktopDialog.openD(actId,desk);
+}
+
+
+function deleteDesktopDialog(){
+    mainView.desktopDialog.destroy();
+}
+
+
+///////////////BusyIndicator Dialog/////////////////
+function showBusyIndicatorDialog(){
+    var bsDialog = Qt.createComponent("ui/BusyIndicatorDialogTmpl.qml");
+
+    mainView.busyIndicatorDialog = bsDialog.createObject(mainView);
+
+    mainView.busyIndicatorDialog.startAnimation();
+}
+
+
+function deleteBusyIndicatorDialog(){
+    mainView.busyIndicatorDialog.destroy();
+}
+
+
+///////////////LiveTour Dialog/////////////////
+function showLiveTourDialog(){
+    var lvDialog = Qt.createComponent("helptour/TourDialog.qml");
+
+    mainView.liveTourDialog = lvDialog.createObject(mainView);
+
+    mainView.liveTourDialog.startAnimation();
+}
+
+
+function deleteLiveTourDialog(){
+    mainView.liveTourDialog.resetAnimation();
+    mainView.liveTourDialog.destroy(2*mainView.animationsStep);
+}
 
 
 //Activities Animations

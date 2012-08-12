@@ -8,9 +8,9 @@ import org.kde.qtextracomponents 0.1
 import "delegates"
 import "delegates/ui-elements"
 import "instances"
-import "helptour"
+//import "helptour"
 
-import "ui"
+//import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
 
@@ -88,7 +88,6 @@ Rectangle {
     property int currentDesktop
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
-
 
     /*
     Behavior on scaleMeter{
@@ -240,7 +239,7 @@ Rectangle {
     function setIsOnDashboard(v){
         // BE CAREFUL:: should be enabled in the official release...
 
-        mainView.isOnDashBoard = v;
+       // mainView.isOnDashBoard = v;
     }
 
     function setWindowsPreviews(b){
@@ -333,9 +332,13 @@ Rectangle {
 
 
     /*--------------------Dialogs ---------------- */
-    RemoveDialogTmpl{
-        id:removeDialog
-    }
+
+
+
+    /*
+//    RemoveDialogTmpl{
+ //       id:removeDialog
+ //   }
 
     CloningDialogTmpl{
         id:cloneDialog
@@ -351,12 +354,64 @@ Rectangle {
 
     TourDialog{
         id:liveTourDialog
+    }*/
+
+//    BusyIndicatorDialogTmpl{
+    //    opacity:1
+    //    id:busyIndicatorDialog
+  //  }
+
+    //Just to ignore the warnings
+    signal completed;
+    property variant removeDialog:mainView;
+    property variant cloningDialog:mainView;
+    property variant desktopDialog:mainView;
+    property variant calibrationDialog:mainView;
+    property variant busyIndicatorDialog:mainView;
+
+    property variant liveTourDialog:mainView;
+
+  /************* Deleteing Dialogs  ***********************/
+    Connections{
+        target:removeDialog
+        onCompleted:{
+            console.debug("Delete Remove...");
+            mainView.getDynLib().deleteRemoveDialog();
+        }
     }
 
-    BusyIndicatorDialogTmpl{
-        opacity:1
-        id:busyIndicatorDialog
+    Connections{
+        target:cloningDialog
+        onCompleted:{
+            console.debug("Delete Cloning...");
+            mainView.getDynLib().deleteCloneDialog();
+        }
     }
+
+    Connections{
+        target:desktopDialog
+        onCompleted:{
+            console.debug("Delete Desktop Dialog...");
+            mainView.getDynLib().deleteDesktopDialog();
+        }
+    }
+
+    Connections{
+        target:calibrationDialog
+        onCompleted:{
+            console.debug("Delete Calibration Dialog...");
+            mainView.getDynLib().deleteCalibrationDialog();
+        }
+    }
+
+    Connections{
+        target:liveTourDialog
+        onCompleted:{
+            console.debug("Delete Livetour Dialog...");
+            mainView.getDynLib().deleteLiveTourDialog();
+        }
+    }
+
 }
 
 

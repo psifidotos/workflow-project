@@ -56,8 +56,8 @@ Rectangle{
 
     function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
 
-        if(desktopDialog.visible === true)
-            desktopDialog.closeD();
+        //if(desktopDialog !== mainView)
+         //   desktopDialog.closeD();
 
         allWorkareas.flickableV = false;
 

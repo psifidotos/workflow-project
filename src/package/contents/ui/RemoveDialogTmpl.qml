@@ -51,9 +51,11 @@ DialogTemplate{
        //     activityManager.remove(rmvDialog.activityCode);
        //     instanceOfActivitiesList.activityRemovedIn(rmvDialog.activityCode);
             instanceOfActivitiesList.removeActivity(activityCode);
+            completed();
         }
 
         onClickedCancel:{
+            completed();
             ///
         }
     }

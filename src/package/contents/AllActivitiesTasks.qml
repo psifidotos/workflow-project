@@ -105,6 +105,7 @@ Item{
 
             delegate: TaskPreviewDeleg{
                 showAllActivities: true
+                dialogType: allActTasksPanel.typeId
 
                 rWidth: allActRect.taskWidth
                 rHeight: allActTaskL.height

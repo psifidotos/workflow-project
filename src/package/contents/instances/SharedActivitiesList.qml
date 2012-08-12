@@ -47,7 +47,8 @@ Item{
 
         fromCloneActivity = "";
         toCloneActivity = "";
-        busyIndicatorDialog.resetAnimation();
+        //busyIndicatorDialog.resetAnimation();
+        mainView.getDynLib().deleteBusyIndicatorDialog();
 
         if(previewsWereEnabled === true)
             mainView.enablePreviews = true;
@@ -388,7 +389,8 @@ Item{
         else
             previewsWereEnabled = false;
 
-        busyIndicatorDialog.startAnimation();
+        //busyIndicatorDialog.startAnimation();
+        mainView.getDynLib().showBusyIndicatorDialog();
         addNewActivity();
 
     }
@@ -397,9 +399,11 @@ Item{
         var p = getIndexFor(cod);
         var ob = model.get(p);
 
-        cloneDialog.activityName = ob.Name;
-        cloneDialog.activityCode = cod;
-        cloneDialog.open();
+     //   cloneDialog.activityName = ob.Name;
+     //   cloneDialog.activityCode = cod;
+     //   cloneDialog.open();
+
+        mainView.getDynLib().showCloneDialog(cod,ob.Name);
     }
 
 
@@ -408,12 +412,16 @@ Item{
     }
 
     function removeActivityDialog(cod){
+
+
         var p = getIndexFor(cod);
         var ob = model.get(p);
 
-        removeDialog.activityName = ob.Name;
-        removeDialog.activityCode = cod;
-        removeDialog.open();
+        //removeDialog.activityName = ob.Name;
+        //removeDialog.activityCode = cod;
+
+        mainView.getDynLib().showRemoveDialog(cod,ob.Name);
+        //removeDialog.open();
     }
 
 

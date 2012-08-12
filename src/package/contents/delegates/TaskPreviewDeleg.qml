@@ -21,6 +21,13 @@ Item{
 
     property bool showAllActivities:true
 
+
+
+    property variant dTypes:["allActivitiesTasks",
+        "DesktopDialog",
+        "CalibrationDialog"]
+    property string dialogType: dTypes[0]
+
     property bool forceState1:false
     property bool forcedState1InDialog:false
 
@@ -186,7 +193,8 @@ Item{
     Component.onCompleted: {
         taskDeleg2.forceState1 = centralListView.onlyState1;
 
-        if(centralListView === calibrationDialog.getTasksList())
+        //if(centralListView === calibrationDialog.getTasksList())
+        if(dialogType === dTypes[2])
             taskDeleg2.selectedWin = centralListView.selectedWin;
 
         taskDeleg2.updatePreview();
@@ -874,9 +882,10 @@ Item{
 
             }
 
-            if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-                    (taskDeleg2.centralListView === allActT.getTasksList()) )
-                        allTasksBtns.state = "show";
+            //if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+            //        (taskDeleg2.centralListView === allActT.getTasksList()) )
+            if(dialogType !== dTypes[2])
+                allTasksBtns.state = "show";
         }
     }
 
@@ -886,17 +895,21 @@ Item{
     }
 
     function onClicked(mouse) {
-        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-                (taskDeleg2.centralListView === allActT.getTasksList()) )
-                    instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
-        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
+        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+        //                (taskDeleg2.centralListView === allActT.getTasksList()) )
+        if((dialogType === dTypes[0]) ||
+                (dialogType === dTypes[1]))
+            instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
+        //        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
+        else if (dialogType === dTypes[2])
             calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
     }
 
     function onPressAndHold(mouse,obj) {
-        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-                (taskDeleg2.centralListView === allActT.getTasksList()) ){
-
+        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+        //                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+        if((dialogType === dTypes[0]) ||
+                (dialogType === dTypes[1]))  {
             taskDeleg2.isPressed = true;
             taskDeleg2.state =  taskDeleg2.currentNoHovered;
 
@@ -924,9 +937,11 @@ Item{
                                     true,
                                     inDragging);
 
-            if(scrollingView === desktopDialog.getDeskView()){
+            //if(scrollingView === desktopDialog.getDeskView()){
+            if (dialogType === dTypes[1]){
                 desktopView.forceState1();
                 taskDeleg2.forcedState1InDialog = true;
+                desktopDialog.closeD();
             }
 
             instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,true);
@@ -935,8 +950,9 @@ Item{
     }
 
     function onPositionChanged(mouse,obj) {
-        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+        //               (taskDeleg2.centralListView === allActT.getTasksList()) )
+        if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
                 var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
                 mDragInt.onPstChanged(nCor);
@@ -945,17 +961,20 @@ Item{
     }
 
     function onReleased(mouse) {
-        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
+        //                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+        if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
                 mDragInt.onMReleased(mouse);
 
-                if(desktopDialog.getTasksList() === centralListView){
+                //if(desktopDialog.getTasksList() === centralListView){
+                if (dialogType === dTypes[1]){
                     desktopDialog.emptyDialog();
                     if (taskDeleg2.forcedState1InDialog === true){
                         desktopView.unForceState1();
                         taskDeleg2.forcedState1InDialog=false;
                     }
+                    desktopDialog.completed();
                 }
 
 
@@ -983,7 +1002,9 @@ Item{
         if((taskDeleg2.inShownArea === false)||
                 (taskDeleg2.showPreviews===false)){
 
-            if (calibrationDialog.getTasksList() !== centralListView)
+            //  if (calibrationDialog.getTasksList() !== centralListView)
+            //if(dialogType !== dTypes[2])
+            if(!isSelected)
                 taskManager.removeWindowPreview(taskDeleg2.ccode);
         }
     }

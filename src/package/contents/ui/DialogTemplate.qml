@@ -30,6 +30,7 @@ Rectangle{
 
     signal clickedOk
     signal clickedCancel
+    signal completed
 
     property bool isModal:true
 

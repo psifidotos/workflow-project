@@ -183,8 +183,10 @@ Rectangle{
                     }
 
                     onPressAndHold: {
-                        if(effectsToolBtn.checked)
-                            calibrationDialog.openD();
+                        if(!effectsToolBtn.checked)
+                            effectsToolBtn.checked = true;
+
+                        mainView.getDynLib().showCalibrationDialog();
                     }
                 }
 
@@ -239,7 +241,8 @@ Rectangle{
 
             onClicked: {
                 //calibrationDialog.openD();
-                liveTourDialog.opacity = 1;
+                //liveTourDialog.opacity = 1;
+                mainView.getDynLib().showLiveTourDialog();
             }
 
         }

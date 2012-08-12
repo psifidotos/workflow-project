@@ -49,9 +49,11 @@ DialogTemplate{
         target: clonDialog
         onClickedOk:{
             instanceOfActivitiesList.cloneActivity(activityCode);
+            completed();
         }
 
         onClickedCancel:{
+            completed();
             ///
         }
     }

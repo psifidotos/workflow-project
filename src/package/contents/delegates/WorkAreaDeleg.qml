@@ -165,7 +165,8 @@ Item{
                 }
 
                 onClicked: {
-                    desktopDialog.openD(actCode,desktop);
+                    //desktopDialog.openD(actCode,desktop);
+                    mainView.getDynLib().showDesktopDialog(actCode,desktop);
                 }
             }
 

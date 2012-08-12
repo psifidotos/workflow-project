@@ -21,6 +21,9 @@ DialogTemplate{
 
     dialogTitle: i18n("Previews Calibration Dialog")
 
+
+    property string dialogType:"CalibrationDialog"
+
     Item{
         id:leftColumn
         width:0.4*calibDialog.insideWidth
@@ -89,6 +92,7 @@ DialogTemplate{
 
                 delegate: TaskPreviewDeleg{
                     showAllActivities: false
+                    dialogType:calibDialog.dialogType
 
                     rWidth: calibsTasksList.cellWidth
                     rHeight: calibsTasksList.cellHeight
@@ -436,12 +440,13 @@ DialogTemplate{
 
         if (calibsTasksList.model.count>0){
             var obj = calibsTasksList.model.get(0);
-            calibsTasksList.selectedWin = obj.code;
+            setSelectedWindow(obj.code);
         }
     }
 
     function updatePreview(){
         if (calibsTasksList.selectedWin !== ""){
+
             var x1 = 0;
             var y1 = 0;
             var obj = tasksPreviewRect.mapToItem(mainView,x1,y1);
@@ -457,9 +462,11 @@ DialogTemplate{
     Connections {
         target: calibDialog
         onClickedOk:{
-            mainView.previewsOffsetX = xOffsetSlider.value;
-            mainView.previewsOffsetY = yOffsetSlider.value;
+            mainView.previewsOffsetX = xValueText.val
+            mainView.previewsOffsetY = yValueText.val
             calibDialog.clickedCancel();
+
+            completed();
         }
 
         onClickedCancel:{
@@ -468,9 +475,7 @@ DialogTemplate{
             allWorkareas.flickableV = true;
             allActT.unForceState1();
 
-            //instanceOfTasksDesktopList.emptyList();
-            //allActT.unForceState1();
-            ///
+            completed();
         }
     }
 
