@@ -102,6 +102,12 @@ void PTaskManager::hideDashboard()
     remoteApp.call( "showDashboard", false );
 }
 
+void PTaskManager::showDashboard()
+{
+    QDBusInterface remoteApp( "org.kde.plasma-desktop", "/App" );
+    remoteApp.call( "showDashboard", true );
+}
+
 void PTaskManager::changeNumberOfDesktops(int v)
 {
     emit numberOfDesktopsChanged(QVariant(v));

@@ -24,6 +24,7 @@ public:
     Q_INVOKABLE int getMaxDesktops();
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
     Q_INVOKABLE void hideDashboard();
+    Q_INVOKABLE void showDashboard();
 
 #ifdef Q_WS_X11
     //    Q_INVOKABLE QPixmap windowPreview(QString window, int size);

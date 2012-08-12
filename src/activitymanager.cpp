@@ -459,17 +459,23 @@ void ActivityManager::setIcon(QString id, QString name)
 
 QString ActivityManager::chooseIcon(QString id)
 {
-    KIconDialog *dialog = new KIconDialog;
+    KIconDialog *dialog = new KIconDialog();
+    dialog->setModal(true);
     dialog->setup(KIconLoader::Desktop);
     dialog->setProperty("DoNotCloseController", true);
     KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
     dialog->showDialog();
     KWindowSystem::forceActiveWindow(dialog->winId());
+
+    emit showedIconDialog();
+
     QString icon = dialog->openDialog();
     dialog->deleteLater();
 
     if (icon != "")
         setIcon(id,icon);
+
+    emit answeredIconDialog();
 
     return icon;
 }
@@ -480,9 +486,10 @@ QString ActivityManager::add(QString name) {
     return m_activitiesCtrl->addActivity(name);
 }
 
+/*
 void ActivityManager::clone(QString id, QString name) {
 
-}
+}*/
 
 void ActivityManager::setCurrent(QString id) {
     m_activitiesCtrl->setCurrentActivity(id);

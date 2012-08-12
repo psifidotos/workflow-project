@@ -69,6 +69,9 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_showStoppedActivities=true;
     m_firstRunLiveTour=false;
     m_firstRunCalibrationPreviews=false;
+    m_hideOnClick = false;
+
+    m_isOnDashboard = false;
 }
 
 WorkFlow::~WorkFlow()
@@ -173,8 +176,11 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
             if(!rootObject)
                 qDebug() << "root was not found...";
             else{
-                if(qmlActEng)
+                if(qmlActEng){
                     actManager->setQMlObject(qmlActEng);
+                    connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
+                    connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
+                }
                 if(qmlTaskEng){
                     taskManager->setQMlObject(qmlTaskEng);
                     //  qDebug()<<view()->window()->winId();
@@ -244,7 +250,9 @@ void WorkFlow::activated()
     qDebug() << "Plasmoid activated...";
 }
 
-
+//This slot is just to check the id for the dashboard
+//there are circumstances where this id changes very often,
+//this id is used for the window previews
 void WorkFlow::activeWindowChanged(WId w)
 {
     if( view() ){
@@ -256,10 +264,11 @@ void WorkFlow::activeWindowChanged(WId w)
                 KConfigGroup kfg=this->containment()->config();
                 QString inDashboard = kfg.readEntry("plugin","---");
 
-                bool res = (inDashboard == "desktopDashboard");
+                m_isOnDashboard = (inDashboard == "desktopDashboard");
 
                 QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
-                                          Q_ARG(QVariant, res));
+                                          Q_ARG(QVariant, m_isOnDashboard));
+
             }
         }
     }
@@ -387,6 +396,34 @@ void WorkFlow::setAnimations(int anim)
                               Q_ARG(QVariant, anim));
 }
 
+void WorkFlow::setHideOnClick(bool h)
+{
+    m_hideOnClick = h;
+    setPassivePopup(!h);
+}
+
+void WorkFlow::workAreaWasClicked()
+{
+    if(m_hideOnClick)
+        this->hidePopup();
+}
+
+void WorkFlow::configDialogFinished()
+{
+    if(m_isOnDashboard)
+        taskManager->showDashboard();
+}
+
+void WorkFlow::showingIconsDialog()
+{
+    this->hidePopup();
+}
+
+void WorkFlow::answeredIconDialog()
+{
+    this->showPopup();
+}
+
 
 void WorkFlow::setWindowsPreviews(bool b){
     m_windowsPreviews = b;
@@ -451,13 +488,14 @@ void WorkFlow::loadConfigurationFiles()
     bool showW = appConfig.readEntry("ShowWindows", true);
     int zoomF = appConfig.readEntry("ZoomFactor", 50);
     int anim = appConfig.readEntry("Animations", true);
-    bool winPreviews = appConfig.readEntry("WindowPreviews", false);;
-    int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);;;
-    int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);;;
-    int fontRel = appConfig.readEntry("FontRelevance", 0);;;
-    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);;;
-    bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);;;
-    bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);;;
+    bool winPreviews = appConfig.readEntry("WindowPreviews", false);
+    int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
+    int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
+    int fontRel = appConfig.readEntry("FontRelevance", 0);
+    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);
+    bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
+    bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
+    bool hideOnClick = appConfig.readEntry("HideOnClick", false);
 
 
     setLockActivities(lockAc);
@@ -503,6 +541,8 @@ void WorkFlow::loadConfigurationFiles()
     QMetaObject::invokeMethod(mainQML, "setFirstRunCalibrationPreviews",
                               Q_ARG(QVariant, firRunCalibrationPrev));
 
+    setHideOnClick(hideOnClick);
+
 
 }
 
@@ -520,12 +560,22 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("ShowStoppedPanel",m_showStoppedActivities);
     appConfig.writeEntry("FirstRunTour",m_firstRunLiveTour);
     appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
+    appConfig.writeEntry("HideOnClick",m_hideOnClick);
 
     emit configNeedsSaving();
 }
 
 void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
+}
+
+
+void WorkFlow::setHideOnClickSlot(int h)
+{
+    if (h == Qt::Unchecked)
+        this->setHideOnClick(false);
+    else if (h == Qt::Checked)
+        this->setHideOnClick(true);
 }
 
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
@@ -542,11 +592,22 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
 
     m_config->animationsLevelSlider->setValue(m_animations);
+    m_config->hideOnClickCheckBox->setChecked(m_hideOnClick);
 
     connect(m_config->animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
+    connect(m_config->hideOnClickCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setHideOnClickSlot(int)));
+
+
+    if(m_isOnDashboard)
+        m_config->hideOnClickCheckBox->setEnabled(false);
+
 
     connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
+    connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
+
+
+    parent->setModal(true);
 }
 
 

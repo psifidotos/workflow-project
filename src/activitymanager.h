@@ -31,7 +31,7 @@ public:
     Q_INVOKABLE QString getWallpaper(QString source) const;
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
     Q_INVOKABLE QString add(QString name);
-    Q_INVOKABLE void clone(QString id, QString name);
+//    Q_INVOKABLE void clone(QString id, QString name);
     Q_INVOKABLE void setCurrent(QString id);
     Q_INVOKABLE void stop(QString id);
     Q_INVOKABLE void start(QString id);
@@ -45,11 +45,13 @@ public:
     Q_INVOKABLE void initCloningPhase04(QString id);
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
-    void setQMlObject(QObject *obj);
+    void setQMlObject(QObject *);
 
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
+    void showedIconDialog();
+    void answeredIconDialog();
 
 
 public slots:
@@ -74,6 +76,7 @@ private:
     int storeCloneActivitySettings();
 
     QObject *qmlActEngine;
+
     KActivities::Controller *m_activitiesCtrl;
     QString activityForDelete;
 

@@ -66,6 +66,7 @@ public:
     Q_INVOKABLE void setShowWindows(bool show);
     Q_INVOKABLE void setLockActivities(bool lock);
     Q_INVOKABLE void setAnimations(int anim);
+    Q_INVOKABLE void setHideOnClick(bool);
     Q_INVOKABLE void hidePopupDialog();
 
     Q_INVOKABLE void setWindowsPreviews(bool b);
@@ -76,6 +77,7 @@ public:
     Q_INVOKABLE void setFirstRunLiveTour(bool f);
     Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
+    Q_INVOKABLE void workAreaWasClicked();
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -97,6 +99,12 @@ public slots:
     void showedEvent(QShowEvent *evt);
     void activeWindowChanged(WId);
     void setAnimationsSlot(int);
+    void setHideOnClickSlot(int);
+
+    void showingIconsDialog();
+    void answeredIconDialog();
+    void configDialogFinished();
+
     void saveConfigurationFiles();
 
 private slots:
@@ -114,6 +122,9 @@ private:
     bool m_showStoppedActivities;
     bool m_firstRunLiveTour;
     bool m_firstRunCalibrationPreviews;
+
+    bool m_hideOnClick;
+    bool m_isOnDashboard;
 
     Ui::Config *m_config;
 
