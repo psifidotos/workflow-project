@@ -125,7 +125,7 @@ Item{
                 //width: mainView.width<allareas.width ? allareas.width : mainView.width
                 width: allareas.width
 
-                y: workareaY / 12
+           //     y: workareaY / 12
 
                 interactive:false
 

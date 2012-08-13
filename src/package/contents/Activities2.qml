@@ -314,7 +314,7 @@ Rectangle {
 
         Timer{
             id:activitiesTimer
-            interval:200+2*mainView.animationsStep
+            interval:200+mainView.animationsStep
             repeat:false
             onTriggered: {
                 activitiesSignals.hideButtons();

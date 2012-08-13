@@ -7,174 +7,381 @@ import org.kde.qtextracomponents 0.1
 Item{
     id: activityButtons
 
-    property int buttonsSize:mainView.scaleMeter / 2
+    property int buttonsSize:0.5 * mainView.scaleMeter
     property int buttonsSpace:mainView.scaleMeter / 10
-    property int buttonsX:mainView.scaleMeter / 3.5
-    property int buttonsY:mainView.scaleMeter / 10
+    //   property int buttonsX:mainView.scaleMeter / 3.5
+    // property int buttonsY:mainView.scaleMeter / 10
 
-    property alias opacityDel : deleteActivityBtn.opacity
-    property alias opacityDup : duplicateActivityBtn.opacity
-    property alias opacityStop : stopActivityBtn.opacity
+    //    property alias opacityDel : deleteActivityBtn.opacity
+    //    property alias opacityDup : duplicateActivityBtn.opacity
+    //    property alias opacityStop : stopActivityBtn.opacity
+    //    property alias opacityAddWidget : addWidgetsBtn.opacity
 
-    property alias xDel : deleteActivityBtn.x
-    property alias xDup : duplicateActivityBtn.x
-    property alias xStop : stopActivityBtn.x
+
+
 
     state: "hide"
 
-    property real curBtnScale:1.4
+    property real curBtnScale:1.3
 
-    QIconItem{
-        id:stopActivityBtn
-        icon: QIcon("player_stop")
-        width: buttonsSize
-        height: buttonsSize
-        x:buttonsX
-        y:buttonsY
 
-        z:10
-        smooth:true
+    Rectangle{
+        id:fRect
+        width:1.5*addWidgetsBtn.width
+        height:1.5*addWidgetsBtn.height
+        radius:3
 
-        Behavior on scale{
-            NumberAnimation {
-                duration: mainView.animationsStep;
-                easing.type: Easing.InOutQuad;
-            }
-        }
+        x:buttonsSize/2
+        anchors.top: parent.top
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
+        border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
+        border.width:  1
+        color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
 
-            onEntered: {
-                activityButtons.state = "show";
-                stopActivityBtn.scale = curBtnScale;
-            }
 
-            onExited: {
-                activityButtons.state = "hide";
-                stopActivityBtn.scale = 1;
-            }
+        QIconItem{
+            id:addWidgetsBtn
+            icon: QIcon("add")
+            width: buttonsSize
+            height: buttonsSize
+            anchors.centerIn: parent
 
-            onClicked: {
-                activityButtons.clickedStopped();
+
+            smooth:true
+
+            Behavior on scale{
+                NumberAnimation {
+                    duration: mainView.animationsStep;
+                    easing.type: Easing.InOutQuad;
+                }
             }
 
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    activityButtons.state = "show";
+                    addWidgetsBtn.scale = curBtnScale;
+                }
+
+                onExited: {
+                    activityButtons.state = "hide";
+                    addWidgetsBtn.scale = 1;
+                }
+
+                onClicked: {
+
+                }
+
+            }
         }
     }
 
-    Image{
-        id:duplicateActivityBtn
+    Rectangle{
+        id:sRect
 
-        source:"../../Images/buttons/cloneActivity.png"
-        width: buttonsSize
-        height: buttonsSize
-        x:buttonsSize+buttonsSpace+buttonsX
-        y:buttonsY
-        smooth:true
+        radius:3
 
-        z:11
+        anchors.right: parent.right
+        anchors.rightMargin:0.5*buttonsSize
+        anchors.top: parent.top
 
-        Behavior on scale{
-            NumberAnimation {
-                duration: mainView.animationsStep;
-                easing.type: Easing.InOutQuad;
+        border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
+        border.width:  1
+        color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
+
+
+        Row{
+            id:rightActions
+            spacing:buttonsSpace
+            anchors.centerIn: parent
+
+            QIconItem{
+                id:stopActivityBtn
+                icon: QIcon("player_stop")
+                width: buttonsSize
+                height: buttonsSize
+
+                smooth:true
+
+                Behavior on scale{
+                    NumberAnimation {
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        activityButtons.state = "show";
+                        stopActivityBtn.scale = curBtnScale;
+                    }
+
+                    onExited: {
+                        activityButtons.state = "hide";
+                        stopActivityBtn.scale = 1;
+                    }
+
+                    onClicked: {
+                        activityButtons.clickedStopped();
+                    }
+
+                }
+            }
+
+            // Image{
+            QIconItem{
+                id:duplicateActivityBtn
+
+                //   source:"../../Images/buttons/cloneActivity.png"
+
+                icon:QIcon("tab-duplicate")
+                width: buttonsSize
+                height: buttonsSize
+                smooth:true
+
+                Behavior on scale{
+                    NumberAnimation {
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        activityButtons.state = "show";
+                        duplicateActivityBtn.scale = curBtnScale;
+                    }
+
+                    onExited: {
+                        activityButtons.state = "hide";
+                        duplicateActivityBtn.scale = 1;
+                    }
+
+                    onClicked: {
+                        instanceOfActivitiesList.cloneActivityDialog(ccode);
+                    }
+
+
+                }
+            }
+
+            QIconItem{
+                id:deleteActivityBtn
+                icon: QIcon("editdelete")
+                width: buttonsSize
+                height: buttonsSize
+                //     x:2*buttonsSize+2*buttonsSpace+buttonsX
+                //    y:buttonsY
+
+                smooth:true
+
+                Behavior on scale{
+                    NumberAnimation {
+                        duration: mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        activityButtons.state = "show";
+                        deleteActivityBtn.scale = curBtnScale;
+                    }
+
+                    onExited: {
+                        activityButtons.state = "hide";
+                        deleteActivityBtn.scale = 1;
+                    }
+
+                    onClicked: {
+                        instanceOfActivitiesList.removeActivityDialog(ccode);
+                    }
+
+                }
+
             }
         }
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
+        QIconItem{
+            id:stopActLockedBtn
+            opacity:1
+            icon: QIcon("player_stop")
+            anchors.centerIn: parent
 
-            onEntered: {
-                activityButtons.state = "show";
-                duplicateActivityBtn.scale = curBtnScale;
+
+            width:1.2*buttonsSize
+            height:width
+
+
+            Behavior on scale{
+                NumberAnimation {
+                    duration: 2*mainView.animationsStep;
+                    easing.type: Easing.InOutQuad;
+                }
             }
 
-            onExited: {
-                activityButtons.state = "hide";
-                duplicateActivityBtn.scale = 1;
-            }
-
-            onClicked: {
-                instanceOfActivitiesList.cloneActivityDialog(ccode);
-            }
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
 
 
-        }
-    }
+                onEntered: {
+                    activityButtons.state = "show";
+                    stopActLockedBtn.scale = curBtnScale;
+                }
 
-    QIconItem{
-        id:deleteActivityBtn
-        icon: QIcon("editdelete")
-        width: buttonsSize
-        height: buttonsSize
-        x:2*buttonsSize+2*buttonsSpace+buttonsX
-        y:buttonsY
+                onExited: {
+                    activityButtons.state = "hide";
+                    stopActLockedBtn.scale = 1;
+                }
 
-        z:12
-        smooth:true
+                onClicked: {
+                    activityButtons.clickedStopped();
+                }
 
-        Behavior on scale{
-            NumberAnimation {
-                duration: mainView.animationsStep;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                activityButtons.state = "show";
-                deleteActivityBtn.scale = curBtnScale;
-            }
-
-            onExited: {
-                activityButtons.state = "hide";
-                deleteActivityBtn.scale = 1;
-            }
-
-            onClicked: {
-                instanceOfActivitiesList.removeActivityDialog(ccode);
             }
 
         }
-
     }
 
     states: [
         State {
             name: "show"
 
+            PropertyChanges{
+                target:activityButtons
+                opacity: 1
+            }
+
+            PropertyChanges{
+                target:deleteActivityBtn
+                opacity: ((allwlists.activitiesShown>1)&&(!mainView.lockActivities)) ? 1 : 0
+            }
+
+            PropertyChanges{
+                target:duplicateActivityBtn
+                opacity: ((!mainView.lockActivities)||(allwlists.activitiesShown===1)) ? 1 : 0
+            }
+
+            PropertyChanges{
+                target:stopActivityBtn
+                opacity: ((allwlists.activitiesShown>1)&&(!mainView.lockActivities)) ? 1 : 0
+            }
+            PropertyChanges{
+                target:addWidgetsBtn
+                opacity: (!mainView.lockActivities) ? 1 :0
+            }
+
             PropertyChanges {
-                target: activityButtons
+                target: stopActLockedBtn
+                opacity:((mainView.lockActivities)&&(allwlists.activitiesShown>1)) ? 1 : 0
+            }
 
-                opacityDel: allwlists.activitiesShown > 1 ? 1 : 0
-                opacityDup: 1
-                opacityStop: allwlists.activitiesShown > 1 ? 1 : 0
+            PropertyChanges {
+                target:fRect
+                opacity:(!mainView.lockActivities) ? 1:0
+            }
 
-                xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
-                xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
-                xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
+            PropertyChanges {
+                target:sRect
+                opacity:1
+                width:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.4*stopActLockedBtn.width : 1.25*rightActions.width
+                height:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.3*stopActLockedBtn.height : 1.5*rightActions.height
             }
         },
         State {
             name: "hide"
-            PropertyChanges {
-                target: activityButtons
 
-                opacityDel: 0
-                opacityDup: 0
-                opacityStop: 0
 
-                xDel:parent.width - buttonsSize - buttonsSpace - buttonsX - 43
-                xDup:parent.width - 2*buttonsSize - 2*buttonsSpace - buttonsX - 43
-                xStop:parent.width - 3*buttonsSize - 3*buttonsSpace - buttonsX - 43
-
+            PropertyChanges{
+                target:activityButtons
+                opacity: 0
             }
+
+            PropertyChanges{
+                target:deleteActivityBtn
+                opacity: ((allwlists.activitiesShown>1)&&(!mainView.lockActivities)) ? 1 : 0
+            }
+
+            PropertyChanges{
+                target:duplicateActivityBtn
+                opacity: ((!mainView.lockActivities)||(allwlists.activitiesShown===1)) ? 1 : 0
+            }
+
+            PropertyChanges{
+                target:stopActivityBtn
+                opacity: ((allwlists.activitiesShown>1)&&(!mainView.lockActivities)) ? 1 : 0
+            }
+            PropertyChanges{
+                target:addWidgetsBtn
+                opacity: (!mainView.lockActivities) ? 1 :0
+            }
+
+            PropertyChanges {
+                target: stopActLockedBtn
+                opacity:((mainView.lockActivities)&&(allwlists.activitiesShown>1)) ? 1 : 0
+            }
+
+            PropertyChanges {
+                target:fRect
+                opacity:(!mainView.lockActivities) ? 1:0
+            }
+
+            PropertyChanges {
+                target:sRect
+                opacity:1
+                width:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.4*stopActLockedBtn.width : 1.25*rightActions.width
+                height:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.3*stopActLockedBtn.height : 1.5*rightActions.height
+            }
+/*
+            PropertyChanges{
+                target:deleteActivityBtn
+                opacity: 0
+            }
+            PropertyChanges{
+                target:duplicateActivityBtn
+                opacity: 0
+            }
+
+            PropertyChanges{
+                target:stopActivityBtn
+                opacity: 0
+            }
+            PropertyChanges{
+                target:addWidgetsBtn
+                opacity: 0
+            }
+
+            PropertyChanges {
+                target: stopActLockedBtn
+                opacity: 0
+            }
+
+            PropertyChanges {
+                target:fRect
+                opacity:0
+            }
+
+            PropertyChanges {
+                target:sRect
+                opacity:0
+                width:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.4*stopActLockedBtn.width : 1.25*rightActions.width
+                height:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.3*stopActLockedBtn.height : 1.5*rightActions.height
+            }*/
         }
+
+
     ]
 
     transitions: [
@@ -182,100 +389,25 @@ Item{
         Transition {
             from:"hide"; to:"show"
             reversible: false
-            SequentialAnimation{
-                ParallelAnimation{
-                    /*    NumberAnimation {
-                        target: activityButtons;
-                        property: "xDel";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityDel";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
-                }
+            ParallelAnimation{
 
-                ParallelAnimation{
-                    /*     NumberAnimation {
-                        target: activityButtons;
-                        property: "xDup";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityDup";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
-                }
-
-                ParallelAnimation{
-                    /*     NumberAnimation {
-                        target: activityButtons;
-                        property: "xStop";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityStop";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
+                NumberAnimation {
+                    target: activityButtons;
+                    property: "opacity";
+                    duration: mainView.animationsStep;
+                    easing.type: Easing.InOutQuad;
                 }
             }
         },
         Transition {
             from:"show"; to:"hide"
             reversible: false
-            SequentialAnimation{
-                ParallelAnimation{
-                    /*    NumberAnimation {
-                        target: activityButtons;
-                        property: "xDel";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityDel";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
-                }
-
-                ParallelAnimation{
-                    /*     NumberAnimation {
-                        target: activityButtons;
-                        property: "xDup";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityDup";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
-                }
-
-                ParallelAnimation{
-                    /*     NumberAnimation {
-                        target: activityButtons;
-                        property: "xStop";
-                        duration: 200;
-                        easing.type: Easing.InOutQuad;
-                    }*/
-                    NumberAnimation {
-                        target: activityButtons;
-                        property: "opacityStop";
-                        duration: mainView.animationsStep;
-                        easing.type: Easing.InOutQuad;
-                    }
+            ParallelAnimation{
+                NumberAnimation {
+                    target: activityButtons;
+                    property: "opacity";
+                    duration: mainView.animationsStep;
+                    easing.type: Easing.InOutQuad;
                 }
             }
         }
