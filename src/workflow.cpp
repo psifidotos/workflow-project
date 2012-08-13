@@ -32,6 +32,7 @@
 #include <QDeclarativeContext>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
+#include <QDesktopWidget>
 #include <QGraphicsView>
 #include <QRectF>
 #include <QString>
@@ -40,6 +41,7 @@
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
 #include <Plasma/Containment>
+#include <Plasma/Corona>
 
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
@@ -72,6 +74,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
+
+    m_desktopWidget = qApp->desktop();
 }
 
 WorkFlow::~WorkFlow()
@@ -196,10 +200,13 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     item->setWidget(m_mainWidget);
 
+    screensSizeChanged(-1); //set Screen Ratio
+
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
     connect(this,SIGNAL(newStatus(Plasma::ItemStatus)),this,SLOT(statusChanged(Plasma::ItemStatus)));
     connect(this,SIGNAL(releaseVisualFocus()),this,SLOT(releasedVisualFocus()));
     connect(this,SIGNAL(activate()),this,SLOT(activated()));
+    connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
 
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
@@ -256,7 +263,7 @@ void WorkFlow::activated()
 void WorkFlow::activeWindowChanged(WId w)
 {
     if( view() ){
-      //  if(view()->winId() != taskManager->getMainWindowId()){
+        //  if(view()->winId() != taskManager->getMainWindowId()){
         if(view()->effectiveWinId() != taskManager->getMainWindowId()){
             this->setMainWindowId();
 
@@ -408,6 +415,58 @@ void WorkFlow::workAreaWasClicked()
         this->hidePopup();
 }
 
+void WorkFlow::showWidgetsExplorer()
+{
+    qDebug() << containment()->corona()->containments().size();
+
+    for(int j=0; j<containment()->corona()->containments().size(); j++){
+        Plasma::Containment *tC = containment()->corona()->containments().at(j);
+
+
+        qDebug()<< j << ": - " << tC->id()<<" - "<<tC->config().readEntry("activityId","")<<"-"<<tC->config().readEntry("plugin","");
+
+        if (tC->view()) {
+            for (int i = 0; i < tC->view()->metaObject()->methodCount(); i++) {
+                qDebug() << QLatin1String(tC->view()->metaObject()->method(i).signature());
+            }
+
+            qDebug()<< j << ": - " << tC->id()<<" - "<<tC->config().readEntry("activityId","")<<"-"<<tC->config().readEntry("plugin","");
+            qDebug()<<"------------------------------";
+        }
+    }
+
+    for(int j=0; j<containment()->corona()->actions().size(); j++){
+        qDebug() << containment()->corona()->actions().at(j)->text();
+    }
+
+    containment()->corona()->actions().at(0)->trigger();
+    qDebug()<<containment()->corona()->actions().at(0)->data().toInt();
+    qDebug()<<containment()->corona()->actions().at(0)->isChecked();
+    qDebug()<<containment()->corona()->actions().at(0)->isEnabled();
+    qDebug()<<containment()->corona()->actions().at(0)->softKeyRole();
+    qDebug()<<containment()->corona()->actions().at(0)->shortcut().toString();
+    qDebug()<<containment()->corona()->actions().at(0)->statusTip();
+    qDebug()<<containment()->corona()->actions().at(0)->toolTip();
+    qDebug()<<containment()->corona()->actions().at(0)->whatsThis();
+
+    //containment()->corona()->action("unlock widgets")->trigger();
+
+    //containment()->view()->metaObject()->invokeMethod(containment()->view(),
+
+
+    //   this->containment()->corona()->actions().at(0)->trigger();
+    //   this->containment()->setToolBoxOpen(true);
+}
+
+void WorkFlow::screensSizeChanged(int s)
+{
+    QRect screenRect = m_desktopWidget->availableGeometry(s);
+    float ratio = (float)screenRect.height()/(float)screenRect.width();
+    QMetaObject::invokeMethod(mainQML, "setScreenRatio",
+                              Q_ARG(QVariant, ratio));
+
+}
+
 void WorkFlow::configDialogFinished()
 {
     if(m_isOnDashboard)
@@ -478,8 +537,6 @@ void WorkFlow::loadWorkareas()
 
     }
 }
-
-
 
 
 void WorkFlow::loadConfigurationFiles()
@@ -581,31 +638,30 @@ void WorkFlow::setHideOnClickSlot(int h)
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
 
-    if (!m_config) {
-        m_config = new Ui::Config;
-    }
+    //if (!m_config) {
+    //   m_config = new Ui::Config;
+    //}
 
     QWidget *widget = new QWidget(parent);
-    m_config->setupUi(widget);
+    m_config.setupUi(widget);
 
     //parent->addPage(widget, i18n("General"), "configure", QString(), false);
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
 
-    m_config->animationsLevelSlider->setValue(m_animations);
-    m_config->hideOnClickCheckBox->setChecked(m_hideOnClick);
+    m_config.animationsLevelSlider->setValue(m_animations);
+    m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
 
-    connect(m_config->animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
-    connect(m_config->hideOnClickCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setHideOnClickSlot(int)));
+    connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
 
+    if(!m_isOnDashboard)
+        connect(m_config.hideOnClickCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setHideOnClickSlot(int)));
 
     if(m_isOnDashboard)
-        m_config->hideOnClickCheckBox->setEnabled(false);
-
+        m_config.hideOnClickCheckBox->setEnabled(false);
 
     connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
-
 
     parent->setModal(true);
 }

@@ -412,6 +412,18 @@ Rectangle {
         }
     }
 
+    Rectangle{
+        width:20
+        height:20
+        color:"blue"
+        MouseArea{
+            anchors.fill: parent
+            onClicked:{
+                workflowManager.showWidgetsExplorer();
+            }
+        }
+    }
+
 }
 
 

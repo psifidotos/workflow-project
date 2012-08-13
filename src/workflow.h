@@ -38,6 +38,9 @@
 
 #include "activitymanager.h"
 #include "ptaskmanager.h"
+#include "ui_config.h"
+
+class QDesktopWidget;
 
 namespace Plasma {
     class ExtenderItem;
@@ -78,6 +81,7 @@ public:
     Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
     Q_INVOKABLE void workAreaWasClicked();
+    Q_INVOKABLE void showWidgetsExplorer();
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -100,6 +104,9 @@ public slots:
     void activeWindowChanged(WId);
     void setAnimationsSlot(int);
     void setHideOnClickSlot(int);
+
+    void screensSizeChanged(int);
+
 
     void showingIconsDialog();
     void answeredIconDialog();
@@ -126,8 +133,8 @@ private:
     bool m_hideOnClick;
     bool m_isOnDashboard;
 
-    Ui::Config *m_config;
-
+    Ui::Config m_config;
+    QDesktopWidget *m_desktopWidget;
 
     QHash <QString,QStringList *> storedWorkareas;
 

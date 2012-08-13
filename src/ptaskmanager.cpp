@@ -10,7 +10,7 @@
 #include <QDBusInterface>
 #include <QDBusConnection>
 
-#include <QProcess>
+#include <QDesktopWidget>
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -35,6 +35,7 @@ PTaskManager::PTaskManager(QObject *parent) :
     m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasma-applet-workflow"));
 
     clearedPreviewsList = true;
+
 }
 
 
@@ -72,7 +73,7 @@ void PTaskManager::setQMlObject(QObject *obj)
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
                               Q_ARG(QVariant, kwinSystem->compositingActive()));
 
-    this->workAreaChanged();
+    //this->workAreaChanged();
 
 
     foreach (TaskManager::Task *source, taskMainM->tasks())
@@ -84,7 +85,8 @@ void PTaskManager::setQMlObject(QObject *obj)
     connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
 
     connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
-    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
+
+    //    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
 
    // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
     //connect(kwinSystem,SIGNAL(compositingChanged(bool)),
@@ -208,6 +210,7 @@ void PTaskManager::compositingChanged(bool b){
 
 }
 
+/*
 void PTaskManager::workAreaChanged(){
     QRect screenRect = kwinSystem->workArea();
     float ratio = (float)screenRect.height()/(float)screenRect.width();
@@ -216,7 +219,7 @@ void PTaskManager::workAreaChanged(){
 
  //   qDebug()<<ratio;
 
-}
+}*/
 
 #ifdef Q_WS_X11
 void PTaskManager::slotAddDesktop()
