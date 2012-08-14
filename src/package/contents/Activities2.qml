@@ -63,6 +63,8 @@ Rectangle {
     property bool firstRunTour:false
     property bool firstRunCalibration:false
 
+    property int themePos:0
+
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
@@ -113,6 +115,10 @@ Rectangle {
 
     SharedTasksDesktopList{
         id:instanceOfTasksDesktopList
+    }
+
+    SharedThemeList{
+        id:instanceOfThemeList
     }
 
     Item{
@@ -219,27 +225,25 @@ Rectangle {
     function setShowWindows(v){
         mainView.showWinds = v;
         oxygenT.windowsChecked = v;
-        //      console.debug("ShowW:"+v);
     }
     function setLockActivities(v){
         mainView.lockActivities = v;
-        oxygenT.lockerChecked = v;
-       //     console.debug("LockA:"+ v);
+        oxygenT.lockerChecked = v;       
     }
     function setZoomSlider(v){
         zoomSlider.value = v;
-        //    console.debug("Zoom:"+v);
     }
 
     function setAnimations(v){
         mainView.showAnimations = v;
-        //
     }
 
     function setIsOnDashboard(v){
+        //
         // BE CAREFUL:: should be enabled in the official release...
+        //
 
-        mainView.isOnDashBoard = v;
+       // mainView.isOnDashBoard = v;
     }
 
     function setWindowsPreviews(b){

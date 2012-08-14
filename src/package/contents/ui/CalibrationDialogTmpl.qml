@@ -268,7 +268,7 @@ DialogTemplate{
 
                 QIconItem{
 
-                    icon:"zoom-out"
+                    icon:instanceOfThemeList.icons.MinusValue
                     width:xOffsetSlider.height
                     height:width
                     opacity: xValueText.val > xOffsetSlider.minimumValue ? 1 : 0.5
@@ -301,7 +301,7 @@ DialogTemplate{
 
                 }
                 QIconItem{
-                    icon:"zoom-in"
+                    icon:instanceOfThemeList.icons.AddValue
                     width:xOffsetSlider.height
                     height:width
                     opacity: xValueText.val < xOffsetSlider.maximumValue ? 1 : 0.5
@@ -347,7 +347,7 @@ DialogTemplate{
                 spacing:5
 
                 QIconItem{
-                    icon:"zoom-out"
+                    icon:instanceOfThemeList.icons.MinusValue
                     width:yOffsetSlider.height
                     height:width
 
@@ -382,7 +382,7 @@ DialogTemplate{
                 }
 
                 QIconItem{
-                    icon:"zoom-in"
+                    icon:instanceOfThemeList.icons.AddValue
                     width:yOffsetSlider.height
                     height:width
 

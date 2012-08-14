@@ -27,7 +27,7 @@ DialogTemplate{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("emblem-important")
+            icon:instanceOfThemeList.icons.DialogImportant
             width:70
             height:70
         }

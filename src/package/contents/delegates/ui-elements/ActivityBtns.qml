@@ -97,7 +97,7 @@ Item{
 
             QIconItem{
                 id:stopActivityBtn
-                icon: QIcon("media-playback-pause")
+                icon: instanceOfThemeList.icons.PauseActivity
                 width: buttonsSize
                 height: buttonsSize
 
@@ -137,7 +137,7 @@ Item{
 
                 //   source:"../../Images/buttons/cloneActivity.png"
 
-                icon:QIcon("tab-duplicate")
+                icon:instanceOfThemeList.icons.CloneActivity
                 width: buttonsSize
                 height: buttonsSize
                 smooth:true
@@ -173,7 +173,7 @@ Item{
 
             QIconItem{
                 id:deleteActivityBtn
-                icon: QIcon("edit-delete")
+                icon: instanceOfThemeList.icons.DeleteActivity
                 width: buttonsSize
                 height: buttonsSize
                 //     x:2*buttonsSize+2*buttonsSpace+buttonsX
@@ -214,7 +214,7 @@ Item{
         QIconItem{
             id:stopActLockedBtn
             opacity:1
-            icon: QIcon("media-playback-pause")
+            icon: instanceOfThemeList.icons.PauseActivity
             anchors.centerIn: parent
 
 

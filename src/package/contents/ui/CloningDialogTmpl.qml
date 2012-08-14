@@ -27,7 +27,7 @@ DialogTemplate{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("dialog-information")
+            icon:instanceOfThemeList.icons.DialogInformation
             width:70
             height:70
         }
