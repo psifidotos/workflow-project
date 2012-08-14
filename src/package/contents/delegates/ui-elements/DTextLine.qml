@@ -16,7 +16,6 @@ Item{
     BorderImage{
         id:backIImage
 
-        opacity:0
         source: initSource
 
         border.left: 15; border.top: 15;
@@ -42,6 +41,7 @@ Item{
             width: 40
             height: parent.height
             anchors.right: parent.right
+            z:9
 
             Image{
                 id:tickIImage;
@@ -77,6 +77,24 @@ Item{
                 }
             }
         }
+
+        MouseArea{
+            anchors.fill: parent
+            hoverEnabled: true
+            z:4
+
+            onEntered:{
+                dTextIItem.entered();
+            }
+            onExited:{
+                dTextIItem.exited();
+            }
+
+            onClicked: {
+                dTextIItem.clicked(mouse);
+            }
+        }
+
     }
 
     Text{
@@ -87,7 +105,9 @@ Item{
    //     height:parent.height-10
         font.family: mainIText.font.family
         font.italic: mainIText.font.italic
-        font.pointSize: mainIText.font.pointSize
+        //font.pointSize: mainIText.font.pointSize
+        font.pixelSize: mainIText.font.pixelSize
+
         color:mainIText.color
         elide:Text.ElideRight
         anchors.left: parent.left
@@ -108,7 +128,8 @@ Item{
 
         font.family: mainView.defaultFont.family
         font.italic: true
-        font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/12-3
+
+        font.pixelSize: (0.4+mainView.defFontRelStep)*parent.height
 
         color: origColor
 
@@ -118,6 +139,7 @@ Item{
 
         focus:true
         opacity:mainTextLabel.opacity === 0 ? 1 : 0.001
+
 
         property color origColor: "#323232"
         property color activColor: "#444444"
@@ -272,6 +294,7 @@ Item{
     }
 
     function clicked(mouse){
+
         dTextIItem.firstrun = false;
 
         var pos = mainIText.characterPositionAt(mouse);

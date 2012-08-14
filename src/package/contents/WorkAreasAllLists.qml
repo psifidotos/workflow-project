@@ -119,7 +119,8 @@ Item{
                 id: activitiesList
 
                 orientation: ListView.Horizontal
-                height:actImag1.height
+                height:parent.height
+            //    height:actImag1.height
                 //height: 1.2*workareaY
 
                 //width: mainView.width<allareas.width ? allareas.width : mainView.width

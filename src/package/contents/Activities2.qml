@@ -55,6 +55,7 @@ Rectangle {
 
     property real defaultFontSize:theme.defaultFont.pointSize
     property real defaultFontRelativeness: 0
+    property real defFontRelStep: mainView.defaultFontRelativeness/20
     property real fixedFontSize: defaultFontSize + defaultFontRelativeness
 
     //With using KWindowSystem workarea
@@ -277,8 +278,6 @@ Rectangle {
 
     function setCurrentTheme(th){
         mainView.themePos = instanceOfThemeList.getIndexFor(th);
-
-        console.debug(th+"-"+mainView.themePos);
     }
 
 

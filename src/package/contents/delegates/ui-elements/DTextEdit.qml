@@ -97,7 +97,7 @@ Item{
 
         text:mainText.text
 
-        width: dTextItem.width-15
+        width: dTextItem.width-10
         height: dTextItem.nHeight
   //      height:mainText.height
   //      y:-mainText.space
@@ -105,14 +105,12 @@ Item{
         font.family: mainText.font.family
         font.bold: mainText.font.bold
         font.italic: mainText.font.italic
-        //font.pointSize:mainView.scaleMeter < 50 ?
-          //                 mainView.fixedFontSize - (4-mainView.scaleMeter/15):
-          //                 mainView.fixedFontSize + (mainView.scaleMeter/10)
-        font.pixelSize: (0.22+mainView.defaultFontRelativeness/20)*actImag1.height
+
+        font.pixelSize: (0.22+mainView.defFontRelStep)*actImag1.height
         color:mainText.color
 
         anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors.leftMargin: 5
         anchors.bottom: backImage.bottom
         anchors.bottomMargin: 5
         //anchors.verticalCenter: parent.verticalCenter
@@ -125,34 +123,35 @@ Item{
 
     }
 
-
     TextEdit {
         id:mainText
         property int space:0;
         //property int spaceN:
 
-        width:dTextItem.width - 30 - space;
+     //   width:dTextItem.width - 30 - space;
+        width:dTextItem.width - 35;
+
         height: dTextItem.nHeight
      //   height: dTextItem.height - space;
 
         wrapMode: TextEdit.Wrap
 
         font.family: mainView.defaultFont.family
-
         font.bold: true
         font.italic: true
         //font.pointSize: mainTextLabel2.font.pointSize-1
-        font.pixelSize: 0.75*mainTextLabel2.font.pixelSize
+        font.pixelSize: 0.9*mainTextLabel2.font.pixelSize
 
         color: origColor
         verticalAlignment: TextEdit.AlignBottom
 
-        opacity:mainTextLabel2.opacity === 0 ? 1 : 0.001
+        opacity:mainTextLabel2.opacity === 0 ? 1 : 0
+        visible:mainTextLabel2.opacity === 0 ? 1 : 0
 
         anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors.leftMargin: 5
         anchors.bottom: backImage.bottom
-        anchors.bottomMargin: 10
+        anchors.bottomMargin: 5
 
 
         focus:true
@@ -315,6 +314,7 @@ Item{
     function entered(){
         if(dTextItem.state==="inactive")
             pencilImg.opacity = 1;
+
     }
 
     function exited(){

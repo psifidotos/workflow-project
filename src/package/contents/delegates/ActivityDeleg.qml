@@ -191,6 +191,7 @@ Item{
             }
         }
 
+
         MouseArea {
             anchors.left: parent.left
             height:parent.height
@@ -204,7 +205,7 @@ Item{
                     activityBtnsI.state="show";
 
                     if (mainView.lockActivities === false)
-                    activityName.entered();
+                        activityName.entered();
 
                 }
                 else
