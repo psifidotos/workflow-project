@@ -424,6 +424,16 @@ void PTaskManager::activateTask(QString id)
     hideDashboard();
 }
 
+void PTaskManager::minimizeTask(QString id)
+{
+    TaskManager::Task *t = taskMainM->findTask(id.toULong());
+    if(!t->isMinimized())
+        t->setIconified(true);
+    qDebug()<<t->name();
+
+
+}
+
 void PTaskManager::setCurrentDesktop(int desk)
 {
     kwinSystem->setCurrentDesktop(desk);

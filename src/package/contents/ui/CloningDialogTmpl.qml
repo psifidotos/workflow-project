@@ -27,7 +27,7 @@ DialogTemplate{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("messagebox_info")
+            icon:QIcon("dialog-information")
             width:70
             height:70
         }

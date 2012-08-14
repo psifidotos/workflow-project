@@ -44,6 +44,7 @@ class QDesktopWidget;
 
 namespace Plasma {
     class ExtenderItem;
+    class Containment;
 }
 
 namespace Ui {
@@ -80,8 +81,6 @@ public:
     Q_INVOKABLE void setFirstRunLiveTour(bool f);
     Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
-    Q_INVOKABLE void workAreaWasClicked();
-    Q_INVOKABLE void showWidgetsExplorer();
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -93,6 +92,14 @@ public:
     Q_INVOKABLE bool activityExists(QString id);
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
+
+    Q_INVOKABLE void workAreaWasClicked();
+
+    //Interact with Corona() and Desktops Containments()
+
+    Q_INVOKABLE void unlockWidgets();
+    Q_INVOKABLE void showWidgetsExplorer(QString);
+
 
 public slots:
     void geomChanged();
@@ -133,27 +140,33 @@ private:
     bool m_hideOnClick;
     bool m_isOnDashboard;
 
-    Ui::Config m_config;
-    QDesktopWidget *m_desktopWidget;
-
-    QHash <QString,QStringList *> storedWorkareas;
-
     QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
-
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    KConfigGroup appConfig;
+    Plasma::ExtenderItem *item;
+    QDesktopWidget *m_desktopWidget;
 
     ActivityManager *actManager;
     PTaskManager *taskManager;
 
     QObject *mainQML;
 
-    Plasma::ExtenderItem *item;
+
+    Ui::Config m_config;
 
 
+    QHash <QString,QStringList *> storedWorkareas;
 
+    KConfigGroup appConfig;
+
+    //This is an indicator for the corona() actions in order to check
+    //if widgets are already unlocked.
+    QString m_unlockWidgetsText;
+
+
+    ////////////
+    Plasma::Containment *getContainment(QString actId);
 };
 
 // This is the command that links your applet to the .desktop file

@@ -238,7 +238,7 @@ Item{
             when: !mainIText.activeFocus
             PropertyChanges{
                 target:backIImage
-                opacity:0
+                opacity:0.001
             }
             PropertyChanges{
                 target:mainIText

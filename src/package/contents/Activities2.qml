@@ -239,7 +239,7 @@ Rectangle {
     function setIsOnDashboard(v){
         // BE CAREFUL:: should be enabled in the official release...
 
-       // mainView.isOnDashBoard = v;
+        mainView.isOnDashBoard = v;
     }
 
     function setWindowsPreviews(b){
@@ -411,7 +411,7 @@ Rectangle {
             mainView.getDynLib().deleteLiveTourDialog();
         }
     }
-
+/*
     Rectangle{
         width:20
         height:20
@@ -419,10 +419,10 @@ Rectangle {
         MouseArea{
             anchors.fill: parent
             onClicked:{
-                workflowManager.showWidgetsExplorer();
+                workflowManager.showWidgetsExplorer("234234234");
             }
         }
-    }
+    }*/
 
 }
 

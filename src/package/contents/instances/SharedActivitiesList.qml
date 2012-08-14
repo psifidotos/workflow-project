@@ -21,6 +21,7 @@ Item{
     property string toCloneActivity:""
     property bool fromActivityWasCurrent:false
     property bool previewsWereEnabled:false
+    property bool widgetsExplorerAwaitingActivity:false
 
 
     function printModel(){
@@ -327,6 +328,12 @@ Item{
 
         instanceOfWorkAreasList.setCurrent(cod);
 
+
+        if(widgetsExplorerAwaitingActivity){
+            workflowManager.showWidgetsExplorer(cod);
+            widgetsExplorerAwaitingActivity = false;
+        }
+
         //  if(goToDesktop > -1){
         //    instanceOfTasksList.setCurrentDesktop(goToDesktop);
         //    goToDesktop = -1;
@@ -354,6 +361,19 @@ Item{
             nextDesk = actSize;
 
         instanceOfTasksList.setCurrentDesktop(nextDesk);
+
+        return nextDesk;
+
+    }
+
+    function showWidgetsExplorer(act){
+        if(mainView.isOnDashBoard)
+            taskManager.hideDashboard();
+
+        widgetsExplorerAwaitingActivity = true;
+        var nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
+        instanceOfTasksList.minimizeWindowsIn(act, nDesktop);
+        workflowManager.unlockWidgets();
 
     }
 
@@ -428,6 +448,7 @@ Item{
     function addNewActivity(){
         var res = activityManager.add(i18n("New Activity"));
     }
+
 
 
 }

@@ -27,7 +27,7 @@ DialogTemplate{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:QIcon("messagebox_warning")
+            icon:QIcon("emblem-important")
             width:70
             height:70
         }

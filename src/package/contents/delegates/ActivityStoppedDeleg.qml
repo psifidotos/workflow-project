@@ -139,7 +139,7 @@ import "ui-elements"
         QIconItem{
             id:playActivity
             opacity:0
-            icon: QIcon("player_play")
+            icon: QIcon("media-playback-start")
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
             anchors.top: stpActivity.top

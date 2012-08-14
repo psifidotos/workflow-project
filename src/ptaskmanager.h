@@ -19,6 +19,7 @@ public:
     Q_INVOKABLE void setOnAllDesktops(QString id, bool b);
     Q_INVOKABLE void closeTask(QString id);
     Q_INVOKABLE void activateTask(QString id);
+    Q_INVOKABLE void minimizeTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
     Q_INVOKABLE QString getDesktopName(int n);
     Q_INVOKABLE int getMaxDesktops();

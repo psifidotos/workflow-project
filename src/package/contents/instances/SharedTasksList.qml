@@ -259,6 +259,16 @@ Item{
 
     }
 
+    function minimizeWindowsIn(actId,desk){
+        for(var i=0; i<model.count; i++){
+            var obj = model.get(i);
+            if( (obj.onAllActivities) ||
+                ((obj.activities === actId)&&(obj.onAllDesktops)) ||
+                ((obj.activities === actId)&&(obj.desktop === desk)) )
+                  taskManager.minimizeTask(obj.code);
+        }
+    }
+
     function setCurrentTask(cod){
         taskManager.activateTask(cod);
         workflowManager.hidePopupDialog();

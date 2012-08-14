@@ -74,6 +74,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
+    m_unlockWidgetsText = "";
 
     m_desktopWidget = qApp->desktop();
 }
@@ -415,47 +416,80 @@ void WorkFlow::workAreaWasClicked()
         this->hidePopup();
 }
 
-void WorkFlow::showWidgetsExplorer()
+
+void WorkFlow::unlockWidgets()
 {
-    qDebug() << containment()->corona()->containments().size();
+    if(containment())
+        if(containment()->corona())
+            if(containment()->corona()->actions().at(0)){
+                QAction *unlockAction = containment()->corona()->actions().at(0);
 
-    for(int j=0; j<containment()->corona()->containments().size(); j++){
-        Plasma::Containment *tC = containment()->corona()->containments().at(j);
+                //Just checking the text size usually the word unlock is a bigger text
+                if(m_unlockWidgetsText == ""){
+
+                    QString str1(unlockAction->text());
+                    unlockAction->trigger();
+                    QString str2(unlockAction->text());
 
 
-        qDebug()<< j << ": - " << tC->id()<<" - "<<tC->config().readEntry("activityId","")<<"-"<<tC->config().readEntry("plugin","");
 
-        if (tC->view()) {
-            for (int i = 0; i < tC->view()->metaObject()->methodCount(); i++) {
-                qDebug() << QLatin1String(tC->view()->metaObject()->method(i).signature());
+
+                    if(str1.size() > str2.size())
+                        m_unlockWidgetsText = str1;
+                    else
+                        m_unlockWidgetsText = str2;
+                }
+
+                if(m_unlockWidgetsText == unlockAction->text())
+                    unlockAction->trigger();
+                //else the widgets are already unlocked
             }
 
-            qDebug()<< j << ": - " << tC->id()<<" - "<<tC->config().readEntry("activityId","")<<"-"<<tC->config().readEntry("plugin","");
-            qDebug()<<"------------------------------";
+}
+
+Plasma::Containment *WorkFlow::getContainment(QString actId)
+{
+    if(containment())
+        if(containment()->corona()){
+            for(int j=0; j<containment()->corona()->containments().size(); j++){
+                Plasma::Containment *tC = containment()->corona()->containments().at(j);
+
+        //        qDebug()<<"Step1...";
+                if (tC->containmentType() == Plasma::Containment::DesktopContainment){
+         //           qDebug()<<"Step2...";
+                    if((tC->config().readEntry("activityId","") == actId)&&
+                            (tC->config().readEntry("plugin","") != "desktopDashboard")){
+             //           qDebug()<<"Step3...";
+                        if (tC->view())
+                            return tC;
+                    }
+
+
+                }
+
+            }
         }
+
+    return 0;
+}
+
+
+
+
+void WorkFlow::showWidgetsExplorer(QString actId)
+{
+    Plasma::Containment *currentContainment = getContainment(actId);
+    if(currentContainment){
+    //    qDebug()<<"Step4...";
+        currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
+                                                               "showWidgetExplorer");
+
+        if(m_isOnDashboard)
+            taskManager->hideDashboard();
+        else
+            hidePopupDialog();
     }
 
-    for(int j=0; j<containment()->corona()->actions().size(); j++){
-        qDebug() << containment()->corona()->actions().at(j)->text();
-    }
-
-    containment()->corona()->actions().at(0)->trigger();
-    qDebug()<<containment()->corona()->actions().at(0)->data().toInt();
-    qDebug()<<containment()->corona()->actions().at(0)->isChecked();
-    qDebug()<<containment()->corona()->actions().at(0)->isEnabled();
-    qDebug()<<containment()->corona()->actions().at(0)->softKeyRole();
-    qDebug()<<containment()->corona()->actions().at(0)->shortcut().toString();
-    qDebug()<<containment()->corona()->actions().at(0)->statusTip();
-    qDebug()<<containment()->corona()->actions().at(0)->toolTip();
-    qDebug()<<containment()->corona()->actions().at(0)->whatsThis();
-
-    //containment()->corona()->action("unlock widgets")->trigger();
-
-    //containment()->view()->metaObject()->invokeMethod(containment()->view(),
-
-
-    //   this->containment()->corona()->actions().at(0)->trigger();
-    //   this->containment()->setToolBoxOpen(true);
 }
 
 void WorkFlow::screensSizeChanged(int s)

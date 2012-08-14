@@ -18,8 +18,6 @@ Item{
     //    property alias opacityAddWidget : addWidgetsBtn.opacity
 
 
-
-
     state: "hide"
 
     property real curBtnScale:1.3
@@ -41,7 +39,7 @@ Item{
 
         QIconItem{
             id:addWidgetsBtn
-            icon: QIcon("add")
+            icon: QIcon("list-add")
             width: buttonsSize
             height: buttonsSize
             anchors.centerIn: parent
@@ -71,7 +69,7 @@ Item{
                 }
 
                 onClicked: {
-
+                    instanceOfActivitiesList.showWidgetsExplorer(ccode);
                 }
 
             }
@@ -99,7 +97,7 @@ Item{
 
             QIconItem{
                 id:stopActivityBtn
-                icon: QIcon("player_stop")
+                icon: QIcon("media-playback-pause")
                 width: buttonsSize
                 height: buttonsSize
 
@@ -175,7 +173,7 @@ Item{
 
             QIconItem{
                 id:deleteActivityBtn
-                icon: QIcon("editdelete")
+                icon: QIcon("edit-delete")
                 width: buttonsSize
                 height: buttonsSize
                 //     x:2*buttonsSize+2*buttonsSpace+buttonsX
@@ -216,7 +214,7 @@ Item{
         QIconItem{
             id:stopActLockedBtn
             opacity:1
-            icon: QIcon("player_stop")
+            icon: QIcon("media-playback-pause")
             anchors.centerIn: parent
 
 
@@ -344,41 +342,7 @@ Item{
                 width:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.4*stopActLockedBtn.width : 1.25*rightActions.width
                 height:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.3*stopActLockedBtn.height : 1.5*rightActions.height
             }
-/*
-            PropertyChanges{
-                target:deleteActivityBtn
-                opacity: 0
-            }
-            PropertyChanges{
-                target:duplicateActivityBtn
-                opacity: 0
-            }
 
-            PropertyChanges{
-                target:stopActivityBtn
-                opacity: 0
-            }
-            PropertyChanges{
-                target:addWidgetsBtn
-                opacity: 0
-            }
-
-            PropertyChanges {
-                target: stopActLockedBtn
-                opacity: 0
-            }
-
-            PropertyChanges {
-                target:fRect
-                opacity:0
-            }
-
-            PropertyChanges {
-                target:sRect
-                opacity:0
-                width:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.4*stopActLockedBtn.width : 1.25*rightActions.width
-                height:((mainView.lockActivities)||(allwlists.activitiesShown===1))? 1.3*stopActLockedBtn.height : 1.5*rightActions.height
-            }*/
         }
 
 

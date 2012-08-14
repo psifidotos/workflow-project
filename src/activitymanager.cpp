@@ -76,25 +76,27 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file) cons
         if(tempG.readPathEntry("activityId",QString("null")) == source){
 
             //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
-            KConfigGroup gWall = tempG.group("Wallpaper").group("image");
+            if(tempG.readEntry("lastScreen",-1)==0){
+                KConfigGroup gWall = tempG.group("Wallpaper").group("image");
 
-            found = true;
-            QString foundF = gWall.readPathEntry("wallpaper",QString("null"));
-            QDir tmD(foundF+"/contents/images");
-            if (tmD.exists()){
-                QStringList files;
-                files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
+                found = true;
+                QString foundF = gWall.readPathEntry("wallpaper",QString("null"));
+                QDir tmD(foundF+"/contents/images");
+                if (tmD.exists()){
+                    QStringList files;
+                    files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
 
-                if (!files.isEmpty())
-                    foundF = tmD.absoluteFilePath(files.at(0));
+                    if (!files.isEmpty())
+                        foundF = tmD.absoluteFilePath(files.at(0));
 
-                //          qDebug()<<files.at(0);
+                    //          qDebug()<<files.at(0);
+                }
+
+                if (QFile::exists(foundF))
+                    return foundF;
             }
-
-            if (QFile::exists(foundF))
-                return foundF;
-            else
-                return "";
+            //     else
+            //       return "";
         }
 
 
