@@ -91,13 +91,6 @@ Rectangle {
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
 
-    /*
-    Behavior on scaleMeter{
-        NumberAnimation {
-            duration: 150;
-            easing.type: Easing.InOutQuad;
-        }
-    }*/
 
     SharedActivitiesList{
         id:instanceOfActivitiesList
@@ -280,6 +273,20 @@ Rectangle {
 
     function setScreenRatio(sc){
         mainView.screenRatio = sc;
+    }
+
+    function setCurrentTheme(th){
+        mainView.themePos = instanceOfThemeList.getIndexFor(th);
+
+        console.debug(th+"-"+mainView.themePos);
+    }
+
+
+
+
+    function loadThemes() {
+        for(var i=0; i<instanceOfThemeList.model.count; ++i)
+            workflowManager.addTheme(instanceOfThemeList.model.get(i).name);
     }
 
     /*

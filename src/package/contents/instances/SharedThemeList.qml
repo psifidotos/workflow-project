@@ -14,4 +14,15 @@ Item{
    // function getIcons(){
     //    return model.get(mainView.themePos).icons.get(0);
    // }
+
+    function getIndexFor(nam){
+        for(var i=0; i<model.count; ++i){
+            var obj = model.get(i);
+            if (obj.name === nam)
+                return i;
+        }
+
+        return 0;
+    }
+
 }

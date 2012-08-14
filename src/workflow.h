@@ -81,6 +81,8 @@ public:
     Q_INVOKABLE void setFirstRunLiveTour(bool f);
     Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
+    Q_INVOKABLE void addTheme(QString);
+
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -102,18 +104,18 @@ public:
 
 
 public slots:
+    void setCurrentTheme(QString);
+
     void geomChanged();
     void setMainWindowId();
-    void statusChanged(Plasma::ItemStatus);
-    void releasedVisualFocus();
-    void activated();
-    void showedEvent(QShowEvent *evt);
+
     void activeWindowChanged(WId);
     void setAnimationsSlot(int);
     void setHideOnClickSlot(int);
 
     void screensSizeChanged(int);
 
+    void themeSelectionChanged(QString);
 
     void showingIconsDialog();
     void answeredIconDialog();
@@ -140,6 +142,8 @@ private:
     bool m_hideOnClick;
     bool m_isOnDashboard;
 
+    QString m_currentTheme;
+
     QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
@@ -157,6 +161,8 @@ private:
 
 
     QHash <QString,QStringList *> storedWorkareas;
+
+    QList <QString> loadedThemes;
 
     KConfigGroup appConfig;
 

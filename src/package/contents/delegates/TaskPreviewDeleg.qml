@@ -392,7 +392,7 @@ Item{
             width:(parent.width) / 2
             height:(parent.height) / 2
 
-            opacity:parent.opacity === 0 ? 0:0.3
+            opacity:parent.opacity === 0 ? 0:0.6
 
         }
 

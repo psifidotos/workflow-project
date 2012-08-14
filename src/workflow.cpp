@@ -188,11 +188,11 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                 }
                 if(qmlTaskEng){
                     taskManager->setQMlObject(qmlTaskEng);
-                    //  qDebug()<<view()->window()->winId();
-
                 }
             }
-            //qDebug()<<this->view()->winId();
+
+            QMetaObject::invokeMethod(mainQML, "loadThemes");
+
             loadConfigurationFiles();
         }
     }
@@ -204,9 +204,6 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     screensSizeChanged(-1); //set Screen Ratio
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
-    connect(this,SIGNAL(newStatus(Plasma::ItemStatus)),this,SLOT(statusChanged(Plasma::ItemStatus)));
-    connect(this,SIGNAL(releaseVisualFocus()),this,SLOT(releasedVisualFocus()));
-    connect(this,SIGNAL(activate()),this,SLOT(activated()));
     connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
 
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
@@ -236,26 +233,6 @@ void WorkFlow::geomChanged()
 {
     QRectF rf = this->geometry();
     taskManager->setTopXY(rf.x(),rf.y());
-}
-
-void WorkFlow::statusChanged(Plasma::ItemStatus status)
-{
-    qDebug() << "Plasmoid status:" << status;
-}
-
-void WorkFlow::showedEvent(QShowEvent *evt)
-{
-    qDebug() << "Plasmoid status:" << evt->type();
-}
-
-void WorkFlow::releasedVisualFocus()
-{
-    qDebug() << "Released Visual Focus...";
-}
-
-void WorkFlow::activated()
-{
-    qDebug() << "Plasmoid activated...";
 }
 
 //This slot is just to check the id for the dashboard
@@ -546,6 +523,22 @@ void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
     m_firstRunCalibrationPreviews = cal;
 }
 
+void WorkFlow::setCurrentTheme(QString theme)
+{
+    m_currentTheme = theme;
+    QMetaObject::invokeMethod(mainQML, "setCurrentTheme",
+                              Q_ARG(QVariant, theme));
+}
+
+void WorkFlow::addTheme(QString theme)
+{
+    loadedThemes.append(theme);
+}
+
+void WorkFlow::themeSelectionChanged(QString th){
+    setCurrentTheme(th);
+}
+
 //////// Methods
 void WorkFlow::loadWorkareas()
 {
@@ -588,6 +581,7 @@ void WorkFlow::loadConfigurationFiles()
     bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
 
+    QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
 
     setLockActivities(lockAc);
     QMetaObject::invokeMethod(mainQML, "setLockActivities",
@@ -635,6 +629,8 @@ void WorkFlow::loadConfigurationFiles()
     setHideOnClick(hideOnClick);
 
 
+    setCurrentTheme(curTheme);
+
 }
 
 void WorkFlow::saveConfigurationFiles()
@@ -652,6 +648,8 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("FirstRunTour",m_firstRunLiveTour);
     appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
     appConfig.writeEntry("HideOnClick",m_hideOnClick);
+
+    appConfig.writeEntry("CurrentTheme",m_currentTheme);
 
     emit configNeedsSaving();
 }
@@ -672,18 +670,20 @@ void WorkFlow::setHideOnClickSlot(int h)
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
 
-    //if (!m_config) {
-    //   m_config = new Ui::Config;
-    //}
 
     QWidget *widget = new QWidget(parent);
+
     m_config.setupUi(widget);
 
-    //parent->addPage(widget, i18n("General"), "configure", QString(), false);
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
 
     m_config.animationsLevelSlider->setValue(m_animations);
     m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
+
+    for(int i=0; i<loadedThemes.count(); i++)
+        m_config.themesCmb->addItem(loadedThemes.at(i));
+
+    m_config.themesCmb->setCurrentIndex(loadedThemes.indexOf(m_currentTheme));
 
     connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
 
@@ -693,9 +693,12 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     if(m_isOnDashboard)
         m_config.hideOnClickCheckBox->setEnabled(false);
 
+    connect(m_config.themesCmb, SIGNAL(currentIndexChanged (QString)), this, SLOT(themeSelectionChanged(QString)));
+
     connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
+
 
     parent->setModal(true);
 }
