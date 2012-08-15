@@ -64,6 +64,8 @@ import "ui-elements"
             x:stpActivity.width/2
             width:5+0.9*mainView.scaleMeter
             height:width
+            anchors.top:parent.top
+            anchors.topMargin:5
             anchors.right: parent.right
             anchors.rightMargin: 10
 
@@ -99,15 +101,15 @@ import "ui-elements"
             font.family: mainView.defaultFont.family
             font.bold: true
             font.italic: true
-            font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/15-4
 
+            font.pixelSize: (0.13+mainView.defFontRelStep)*parent.height
 
 
             color:"#4d4b4b"
             opacity:parent.defOpacity
 
             anchors.top: activityIcon.bottom
-            anchors.topMargin: activityIcon.height/4
+            anchors.topMargin: activityIcon.height/8
 
 
             horizontalAlignment: Text.AlignRight

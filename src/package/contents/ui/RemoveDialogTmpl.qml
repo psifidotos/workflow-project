@@ -40,7 +40,7 @@ DialogTemplate{
             text:i18n("Are you sure you want to remove activity")+" <b>"+rmvDialog.activityName+"</b> "+i18n("?")
 
             font.family:mainView.defaultFont.family
-            font.pointSize: mainView.fixedFontSize + 1
+            font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
         }
 
     }

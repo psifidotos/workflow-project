@@ -139,7 +139,7 @@ Item{
         font.family: mainView.defaultFont.family
         font.bold: true
         font.italic: true
-        //font.pointSize: mainTextLabel2.font.pointSize-1
+
         font.pixelSize: 0.9*mainTextLabel2.font.pixelSize
 
         color: origColor

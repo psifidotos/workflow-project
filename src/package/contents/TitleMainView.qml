@@ -57,7 +57,7 @@ Rectangle{
         text:"   "
         font.family: "Helvetica"
         font.italic: true
-        font.pointSize: 5+mainView.scaleMeter/10
+
         color:"#777777"
     }
 

@@ -82,6 +82,7 @@ Item{
             property int shownTasks:0
 
             delegate:WorkAreaTaskDeleg{
+                rHeight:tasksSList.height/6
             }
 
 

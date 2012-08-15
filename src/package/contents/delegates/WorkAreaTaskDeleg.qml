@@ -23,11 +23,13 @@ import org.kde.qtextracomponents 0.1
 
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
-        height: shown ? 1.1 * imageTask.height : 0
+        //height: shown ? 1.1 * imageTask.height : 0
+        height: shown ? rHeight : 0
         opacity: shown ? 1 : 0
 
         property string ccode: code
         property bool isPressed:false
+        property int rHeight:10
 
 
         property alias taskTitleRecColor : taskTitleRec.color
@@ -105,7 +107,8 @@ import org.kde.qtextracomponents 0.1
             anchors.left: imageTask.right
             anchors.bottom: imageTask.bottom
             width:taskDeleg1.width
-            height:taskTitle.height
+            height:0.9*parent.height
+
             color: taskDeleg1.taskTitleRecColorD
             radius:height/3
             y:0.1 * taskDeleg1.height
@@ -123,7 +126,10 @@ import org.kde.qtextracomponents 0.1
                 text: name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
                 font.italic: false
-                font.pointSize: mainView.fixedFontSize+(mainView.scaleMeter) / 9 - 4
+
+                anchors.verticalCenter: parent.verticalCenter
+
+                font.pixelSize: (0.8+mainView.defFontRelStep)*parent.height
                 color: taskDeleg1.taskTitleColorD
                 elide: Text.ElideRight
                 width: parent.width

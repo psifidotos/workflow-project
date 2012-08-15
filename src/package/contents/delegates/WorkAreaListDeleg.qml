@@ -104,7 +104,8 @@ import "ui-elements"
             font.family: mainView.defaultFont.family
             font.italic: true
             font.bold: true
-            font.pointSize: mainView.fixedFontSize+mainView.scaleMeter/9 - 4
+            font.pixelSize: (0.095+mainView.defFontRelStep)*(mainView.workareaHeight)
+
             color: "#80808c";
 
             Behavior on height{
@@ -157,7 +158,7 @@ import "ui-elements"
             anchors.top : taskOrFTitleL.bottom
             anchors.left: taskOrFTitleL.left
 
-            property int fontSize: mainView.fixedFontSize+ mainView.scaleMeter/9 - 4
+            property int fontSize:(0.095+mainView.defFontRelStep)*(mainView.workareaHeight)
             property int windsHeight:2 * fontSize
 
             //for scrolling in vertical

@@ -130,7 +130,8 @@ Rectangle{
                 font.family: mainView.defaultFont.family
                 font.bold: true
                 font.italic: true
-                font.pointSize: mainView.fixedFontSize+1
+
+                font.pixelSize: (0.3+mainView.defFontRelStep)*templMainDialog.border.top
             }
 
             Rectangle{

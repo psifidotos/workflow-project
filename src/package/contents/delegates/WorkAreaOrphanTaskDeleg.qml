@@ -82,7 +82,7 @@ import "ui-elements"
                 text:name || 0 ? name : ""
                 font.family: mainView.defaultFont.family
                 font.italic: true
-                font.pointSize: orphansList.fontSize
+                font.pixelSize: orphansList.fontSize
 
 
                 elide:Text.ElideRight

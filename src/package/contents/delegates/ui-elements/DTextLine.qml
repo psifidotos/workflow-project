@@ -105,7 +105,7 @@ Item{
    //     height:parent.height-10
         font.family: mainIText.font.family
         font.italic: mainIText.font.italic
-        //font.pointSize: mainIText.font.pointSize
+
         font.pixelSize: mainIText.font.pixelSize
 
         color:mainIText.color
