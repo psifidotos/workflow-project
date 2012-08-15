@@ -97,7 +97,7 @@ Item{
 
         text:mainText.text
 
-        width: dTextItem.width-10
+        width: dTextItem.width-5
         height: dTextItem.nHeight
   //      height:mainText.height
   //      y:-mainText.space
@@ -110,9 +110,9 @@ Item{
         color:mainText.color
 
         anchors.left: parent.left
-        anchors.leftMargin: 5
+        anchors.leftMargin: 8
         anchors.bottom: backImage.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 8
         //anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: mainText.verticalAlignment
 
@@ -129,9 +129,9 @@ Item{
         //property int spaceN:
 
      //   width:dTextItem.width - 30 - space;
-        width:dTextItem.width - 35;
+        width:dTextItem.width - 36;
 
-        height: dTextItem.nHeight
+        height: dTextItem.nHeight - 30;
      //   height: dTextItem.height - space;
 
         wrapMode: TextEdit.Wrap
@@ -149,9 +149,9 @@ Item{
         visible:mainTextLabel2.opacity === 0 ? 1 : 0
 
         anchors.left: parent.left
-        anchors.leftMargin: 5
+        anchors.leftMargin: 8
         anchors.bottom: backImage.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 8
 
 
         focus:true
@@ -303,7 +303,7 @@ Item{
                     if (dTextItem.firstrun)
                         dTextItem.acceptedText = dTextItem.text
                     else
-                        dTextItem.text = dTextItem.acceptedText
+                        textNotAccepted();
                 }
             }
 
@@ -345,10 +345,12 @@ Item{
 
     function textNotAccepted(){
         //dTextItem.acceptedText = dTextItem.text;
+        dTextItem.text = dTextItem.acceptedText;
         dTextItem.state = "inactive";
         mainView.forceActiveFocus();
         mainTextLabel2.opacity = 1;
     }
+
 
 }
 

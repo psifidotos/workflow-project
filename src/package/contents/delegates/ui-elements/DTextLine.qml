@@ -101,7 +101,7 @@ Item{
         id:mainTextLabel
 
         text:mainIText.text
-        width:mainIText.width
+        width:mainIText.width+17
    //     height:parent.height-10
         font.family: mainIText.font.family
         font.italic: mainIText.font.italic
@@ -114,13 +114,14 @@ Item{
         anchors.leftMargin: 10
         anchors.top: parent.top
         anchors.topMargin: 5
+
     }
 
 
     TextInput {
         id:mainIText
 
-        width:dTextIItem.width-30-space;
+        width:dTextIItem.width - 45
      //   height: dTextIItem.height-vspace;
 
         property int space:0
@@ -247,7 +248,7 @@ Item{
             PropertyChanges{
                 target:mainIText
                 color:mainIText.activColor
-                space:17
+               // space:17
             }
             PropertyChanges{
                 target:pencilI
@@ -257,7 +258,7 @@ Item{
         },
         State{
             name: "inactive"
-            when: !mainIText.activeFocus
+            when: (mainIText.activeFocus === false)
             PropertyChanges{
                 target:backIImage
                 opacity:0.001
@@ -276,7 +277,8 @@ Item{
                     if (dTextIItem.firstrun)
                         dTextIItem.acceptedText = dTextIItem.text
                     else
-                        dTextIItem.text = dTextIItem.acceptedText
+                        textUnaccepted();
+
                 }
             }
 
@@ -314,6 +316,14 @@ Item{
         instanceOfWorkAreasList.setWorkareaTitle(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
 
         mainView.forceActiveFocus();
+
+        mainTextLabel.opacity = 1;
+    }
+
+
+    function textUnaccepted(){
+        dTextIItem.text = dTextIItem.acceptedText
+        dTextIItem.state = "inactive";
 
         mainTextLabel.opacity = 1;
     }
