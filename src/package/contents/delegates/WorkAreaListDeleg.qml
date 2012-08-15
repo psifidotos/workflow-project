@@ -159,7 +159,7 @@ import "ui-elements"
             anchors.left: taskOrFTitleL.left
 
             property int fontSize:(0.095+mainView.defFontRelStep)*(mainView.workareaHeight)
-            property int windsHeight:2 * fontSize
+            property int windsHeight:1.4 * fontSize
 
             //for scrolling in vertical
             opacity: workList.showWindowsSection === true ? 1 : 0

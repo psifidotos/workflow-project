@@ -338,38 +338,16 @@ Rectangle {
     }
 
 
-
+/*
+    PlasmaCore.ToolTip{
+        target:parent
+        mainText:i18n("Close")
+        subText:i18n("Close....")
+    }*/
 
 
     /*--------------------Dialogs ---------------- */
 
-
-
-    /*
-//    RemoveDialogTmpl{
- //       id:removeDialog
- //   }
-
-    CloningDialogTmpl{
-        id:cloneDialog
-    }
-
-    DesktopDialogTmpl{
-        id:desktopDialog
-    }
-
-    CalibrationDialogTmpl{
-        id:calibrationDialog
-    }
-
-    TourDialog{
-        id:liveTourDialog
-    }*/
-
-//    BusyIndicatorDialogTmpl{
-    //    opacity:1
-    //    id:busyIndicatorDialog
-  //  }
 
     //Just to ignore the warnings
     signal completed;

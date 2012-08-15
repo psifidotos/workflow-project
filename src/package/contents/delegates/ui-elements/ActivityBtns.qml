@@ -39,11 +39,10 @@ Item{
 
         QIconItem{
             id:addWidgetsBtn
-            icon: QIcon("list-add")
+            icon: instanceOfThemeList.icons.AddWidget
             width: buttonsSize
             height: buttonsSize
             anchors.centerIn: parent
-
 
             smooth:true
 

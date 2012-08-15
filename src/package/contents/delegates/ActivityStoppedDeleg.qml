@@ -25,7 +25,8 @@ import "ui-elements"
 
         property real basicHeight:0.62*mainView.workareaHeight
 
-        property real defOpacity :0.65
+        property real defOpacity  : 0.6
+        property real defOpacity2 : 0.6
 
         /*
         onCStateChanged:{
@@ -65,7 +66,7 @@ import "ui-elements"
             width:5+0.9*mainView.scaleMeter
             height:width
             anchors.top:parent.top
-            anchors.topMargin:5
+            anchors.topMargin:10
             anchors.right: parent.right
             anchors.rightMargin: 10
 
@@ -77,7 +78,7 @@ import "ui-elements"
 
             Behavior on rotation{
                 NumberAnimation {
-                    duration: 2*2*mainView.animationsStep;
+                    duration: 2*mainView.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -95,7 +96,7 @@ import "ui-elements"
             id:stpActivityName
             text:Name
 
-            width:0.9*stoppedActivitiesList.width
+            width:0.99*stoppedActivitiesList.width-5
             wrapMode: TextEdit.Wrap
 
             font.family: mainView.defaultFont.family
@@ -104,12 +105,15 @@ import "ui-elements"
 
             font.pixelSize: (0.13+mainView.defFontRelStep)*parent.height
 
+            opacity:stpActivity.defOpacity2
 
             color:"#4d4b4b"
-            opacity:parent.defOpacity
 
             anchors.top: activityIcon.bottom
             anchors.topMargin: activityIcon.height/8
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+
 
 
             horizontalAlignment: Text.AlignRight
@@ -163,14 +167,17 @@ import "ui-elements"
             hoverEnabled: true
 
             onEntered: {
+                activityIcon.enabled = true;
                 activityIcon.opacity = 1
                 stpActivityName.opacity = 1
                 playActivity.opacity = 1
+
             }
 
             onExited: {
+                activityIcon.enabled = false;
                 activityIcon.opacity = stpActivity.defOpacity
-                stpActivityName.opacity = stpActivity.defOpacity
+                stpActivityName.opacity = stpActivity.defOpacity2
                 playActivity.opacity = 0
             }
 

@@ -559,7 +559,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: (0.17+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
             }
 
             PropertyChanges{
@@ -609,7 +609,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: (0.17+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -639,7 +639,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
-                font.pixelSize: (0.17+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
             }
             PropertyChanges{
                 target:imageTask2
@@ -697,7 +697,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: (0.28+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -745,7 +745,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: (0.09+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max((0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -794,7 +794,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
-                font.pixelSize: showPreviewsFound===false ? (0.28+mainView.defFontRelStep)*taskDeleg2.height : (0.09+mainView.defFontRelStep)*taskDeleg2.height
+                font.pixelSize: Math.max(showPreviewsFound===false ? (0.28+mainView.defFontRelStep)*taskDeleg2.height : (0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
                 target:taskHoverRect

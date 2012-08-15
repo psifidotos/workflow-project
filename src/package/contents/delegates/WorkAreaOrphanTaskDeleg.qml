@@ -23,7 +23,7 @@ import "ui-elements"
 
         property string ccode:code
 
-        property int buttonsSize: 1.1 * height
+        property int buttonsSize: 1.2 * height
 
         property color taskTitleColorD : taskOrFTitle.color;
         property color taskTitleColorH : "#ffffff";

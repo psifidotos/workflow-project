@@ -2,6 +2,7 @@ import QtQuick 1.0
 import ".."
 import "ui-elements"
 
+import org.kde.plasma.core 0.1 as PlasmaCore
 //Component{
 
 Item{
@@ -82,7 +83,7 @@ Item{
             property int shownTasks:0
 
             delegate:WorkAreaTaskDeleg{
-                rHeight:tasksSList.height/6
+                rHeight:Math.max(tasksSList.height/6,18)
             }
 
 

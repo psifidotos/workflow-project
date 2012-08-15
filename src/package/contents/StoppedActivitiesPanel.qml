@@ -30,6 +30,101 @@ Rectangle {
     }
 
 
+    ///Left Shadow for Stopped Activiies Panel
+    Rectangle{
+        id:stpActShad
+        height: workareaWidth/30
+        width: stopActBack.height
+        //   anchors.right: stopActBack.left
+        rotation: 90
+        transformOrigin: Item.TopLeft
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#770f0f0f" }
+            GradientStop { position: 1.0; color: "#00797979" }
+        }
+    }
+
+    ////////////Show/Hide Button////////////////
+    Image{
+        source: "Images/buttons/greyRectShadow2.png"
+        opacity:0.8
+        width:0.67*showStopPanelRec.width
+        height:1.55*showStopPanelRec.height
+        anchors.right: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -2
+
+        MouseArea{
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered:{
+                stopMoreButton.source = "Images/buttons/plasma_ui/moreBlueVer.png"
+                stopMoreButton.hovered = true
+            }
+
+            onExited: {
+                //    if((stoppedActivitiesList.shownActivities>0)&&
+                //            (stopActBack.doNotShow === true))
+                //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
+                //    else
+                stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
+                stopMoreButton.hovered = false
+            }
+
+            onClicked:{
+
+                if (mainView.animationsStep2 !== 0){
+                    var x1 = stopMoreButton.x;
+                    var y1 = stopMoreButton.y;
+
+                    var crd = stopMoreButton.mapToItem(mainView,x1, y1);
+
+                    mainView.getDynLib().animateIcon(stopMoreButton.source,
+                                                     stopMoreButton.height/stopMoreButton.width,
+                                                     stopMoreButton.width,
+                                                     crd);
+
+                }
+
+                stopActBack.doNotShow = (!stopActBack.doNotShow);
+
+            }
+        }
+    }
+
+    Rectangle{
+        id:showStopPanelRec
+        width:40
+        height:35
+        color:parent.color
+        radius:4
+
+
+        anchors.horizontalCenter: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+        Image{
+            id: stopMoreButton
+            //            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
+            //                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
+            source: "Images/buttons/plasma_ui/moreGreyVer.png"
+            width:7
+            height:4.03*width
+            smooth:true
+
+            property bool hovered:false
+
+            opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
+                     (hovered===true)) ?
+                        1 : 0.4
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.horizontalCenter
+            anchors.rightMargin: 5
+
+        }
+    }
+
+    ////////////End of Show/Hide Button////////////////
 
     Flickable{
         id: stopActivitiesView
@@ -117,18 +212,7 @@ Rectangle {
         flickableItem:stopActivitiesView
     }*/
 
-    Rectangle{
-        id:stpActShad
-        height: workareaWidth/30
-        width: stopActBack.height
-        //   anchors.right: stopActBack.left
-        rotation: 90
-        transformOrigin: Item.TopLeft
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "#770f0f0f" }
-            GradientStop { position: 1.0; color: "#00797979" }
-        }
-    }
+
 
 
 
@@ -181,87 +265,7 @@ Rectangle {
     }
 
 
-    ////////////Show/Hide Button////////////////
-    Image{
-        source: "Images/buttons/greyRectShadow2.png"
-        opacity:0.8
-        width:0.67*showStopPanelRec.width
-        height:1.55*showStopPanelRec.height
-        anchors.right: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -2
 
-        MouseArea{
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered:{
-                stopMoreButton.source = "Images/buttons/plasma_ui/moreBlueVer.png"
-                stopMoreButton.hovered = true
-            }
-
-            onExited: {
-                //    if((stoppedActivitiesList.shownActivities>0)&&
-                //            (stopActBack.doNotShow === true))
-                //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
-                //    else
-                stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
-                stopMoreButton.hovered = false
-            }
-
-            onClicked:{
-
-                if (mainView.animationsStep2 !== 0){
-                    var x1 = stopMoreButton.x;
-                    var y1 = stopMoreButton.y;
-
-                    var crd = stopMoreButton.mapToItem(mainView,x1, y1);
-
-                    mainView.getDynLib().animateIcon(stopMoreButton.source,
-                                                     stopMoreButton.height/stopMoreButton.width,
-                                                     stopMoreButton.width,
-                                                     crd);
-
-                }
-
-                stopActBack.doNotShow = (!stopActBack.doNotShow);
-
-            }
-        }
-    }
-
-    Rectangle{
-        id:showStopPanelRec
-        width:40
-        height:35
-        color:parent.color
-        radius:4
-
-
-        anchors.horizontalCenter: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-
-        Image{
-            id: stopMoreButton
-            //            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
-            //                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
-            source: "Images/buttons/plasma_ui/moreGreyVer.png"
-            width:7
-            height:3.7*width
-            smooth:true
-
-            property bool hovered:false
-
-            opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
-                     (hovered===true)) ?
-                        1 : 0.4
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.horizontalCenter
-            anchors.rightMargin: 5
-
-        }
-    }
-
-    ////////////End of Show/Hide Button////////////////
 
 
     function changedChildState(){

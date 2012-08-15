@@ -101,4 +101,5 @@ PlasmaComponents.Slider {
             }
         }
     }
+
 }
