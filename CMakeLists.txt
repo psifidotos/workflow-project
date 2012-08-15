@@ -1,5 +1,5 @@
 # Project Needs a name ofcourse
-project(plasma-applet-workflow)
+project(plasma_applet_workflow)
  
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
@@ -39,7 +39,7 @@ target_link_libraries(plasma_applet_workflow
 install(TARGETS plasma_applet_workflow
         DESTINATION ${PLUGIN_INSTALL_DIR})
  
-install(FILES plasma-applet-workflow.desktop
+install(FILES plasma_applet_workflow.desktop
         DESTINATION ${SERVICES_INSTALL_DIR})
 
 install(FILES src/workflow.kcfg

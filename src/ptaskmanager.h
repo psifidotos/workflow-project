@@ -76,8 +76,6 @@ private:
     
     QObject *qmlTaskEngine;
 
-    KTempDir *m_tempdir;
-
     QList<QRect> previewsRects;
     QList<WId> previewsIds;
 

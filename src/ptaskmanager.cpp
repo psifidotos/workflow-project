@@ -32,8 +32,6 @@ PTaskManager::PTaskManager(QObject *parent) :
 
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
-    m_tempdir = new KTempDir(KStandardDirs::locateLocal("tmp", "plasma-applet-workflow"));
-
     clearedPreviewsList = true;
 
 }

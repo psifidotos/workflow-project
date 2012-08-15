@@ -38,7 +38,7 @@ echo "*    Cache refresh...     *"
 echo 
 
 
-#kbuildsycoca4
+kbuildsycoca4
 
 echo
 echo "------ Installed -------------------------------"
@@ -46,8 +46,8 @@ echo "------ Installed -------------------------------"
 
 
 
-   echo
-   echo "*     Done. Place the plasmoid to your workplace!   *"
-   echo 
+echo
+echo "*     Done. Place the plasmoid to your workplace!   *"
+echo 
 
  

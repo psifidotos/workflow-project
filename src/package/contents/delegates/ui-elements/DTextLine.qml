@@ -129,7 +129,7 @@ Item{
         font.family: mainView.defaultFont.family
         font.italic: true
 
-        font.pixelSize: (0.4+mainView.defFontRelStep)*parent.height
+        font.pixelSize: (0.35+mainView.defFontRelStep)*parent.height
 
         color: origColor
 
