@@ -8,7 +8,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
-DialogTemplate{
+DialogTemplate2{
     id:calibDialog
 
     anchors.centerIn: mainView
@@ -151,7 +151,7 @@ DialogTemplate{
             pageSize: calibrView.visibleArea.heightRatio
         }
 
-        /*
+     /*
         PlasmaComponents.ScrollBar {
             id: calibsVerticalScrollBar
             width: 8
@@ -193,8 +193,8 @@ DialogTemplate{
 
             Rectangle{
                 id:tasksPreviewRect
-                width:0.5 * parent.width
-                height: width
+                width: height
+                height: 0.9 * parent.height
 
                 anchors.centerIn: parent
 

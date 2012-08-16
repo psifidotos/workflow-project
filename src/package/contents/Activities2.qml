@@ -399,6 +399,7 @@ Rectangle {
             mainView.getDynLib().deleteLiveTourDialog();
         }
     }
+
 /*
     Rectangle{
         width:20
@@ -407,10 +408,40 @@ Rectangle {
         MouseArea{
             anchors.fill: parent
             onClicked:{
-                workflowManager.showWidgetsExplorer("234234234");
+                if(testingD.status === PlasmaComponents.DialogStatus.Open)
+                    testingD.close();
+                else
+                    testingD.open();
             }
         }
+    }
+
+    Dialog{
+        id:testingD
+        width:400
+        height:500
+
+        anchors.centerIn: parent
+
+        title:[Text{text:"Testing...."
+                color:"white"}]
+
+        content:[Text{
+            text:"ASDFasdfasdfasdfasdfasdf"
+            color:"white"
+            width:200
+            height:100
+        }]
+        //visualParent:mainView
+
+    }
+*/
+    /*
+    DesktopDialogTmpl{
+        width:200
+        height:200
     }*/
+
 
 }
 

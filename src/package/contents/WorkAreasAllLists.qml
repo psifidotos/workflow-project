@@ -178,6 +178,7 @@ Item{
         position: view.visibleArea.xPosition
         pageSize: view.visibleArea.widthRatio
     }
+
 /*
     PlasmaComponents.ScrollBar {
         id: verticalScrollBar

@@ -8,7 +8,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
-DialogTemplate{
+DialogTemplate2{
     id:deskDialog
     anchors.centerIn: mainView
 
@@ -47,10 +47,10 @@ DialogTemplate{
         source:"../Images/buttons/tools_wizard.png"
         width:15
         height:width
-        x:deskDialog.insideX + 20
-        y:deskDialog.insideY - 28
+        x:deskDialog.spaceX + 15
+        y:deskDialog.spaceY - 22
 
-        opacity:disablePreviews === true ? 0.5 : 1
+        opacity:disablePreviews === true ? 0.65 : 1
 
         visible: mainView.enablePreviews
 
@@ -106,7 +106,7 @@ DialogTemplate{
         y:deskDialog.insideY
 
         width:insideWidth
-        height:insideHeight
+        height:(shownRows+0.5)*cHeight
 
         contentWidth: desksTasksList.width-40
         contentHeight: desksTasksList.height
@@ -234,7 +234,8 @@ DialogTemplate{
 
     function initInterface(){
         var counter = desksTasksList.model.count
-
+        var w=mainView.width
+        var h=mainView.height
 
         if (counter === 0){
             deskDialog.close();
@@ -256,12 +257,12 @@ DialogTemplate{
                 }
 
                 if (deskDialog.columns === 1){
-                    deskDialog.cWidth = 0.6 * deskDialog.width
-                    deskDialog.cHeight = 0.08 * deskDialog.height
+                    deskDialog.cWidth = 0.6 * w;
+                    deskDialog.cHeight = 0.08 * h;
                 }
                 else{
-                    deskDialog.cWidth = 0.33 * deskDialog.width
-                    deskDialog.cHeight = 0.08 * deskDialog.height
+                    deskDialog.cWidth = 0.33 * w;
+                    deskDialog.cHeight = 0.08 * h;
                 }
 
             }
@@ -282,24 +283,24 @@ DialogTemplate{
 
 
                 if(deskDialog.columns === 1){
-                    deskDialog.cWidth = 0.5 * deskDialog.width
+                    deskDialog.cWidth = 0.5 * w;
                 }
                 else if(deskDialog.columns === 2){
-                    deskDialog.cWidth = 0.4 * deskDialog.width
+                    deskDialog.cWidth = 0.4 * w;
                 }
                 else if(deskDialog.columns === 3){
-                    deskDialog.cWidth = 0.3 * deskDialog.width
+                    deskDialog.cWidth = 0.3 * w;
                 }
 
                 if(deskDialog.shownRows === 1){
                     //deskDialog.cHeight = 4*mainView.scaleMeter
-                    deskDialog.cHeight = 0.45*deskDialog.height
+                    deskDialog.cHeight = 0.45*h;
                 }
                 else if(deskDialog.shownRows === 2){
-                    deskDialog.cHeight = 0.27*deskDialog.height
+                    deskDialog.cHeight = 0.27*h;
                 }
                 else if(deskDialog.shownRows === 3){
-                    deskDialog.cHeight = 0.27*deskDialog.height
+                    deskDialog.cHeight = 0.27*h;
                 }
             }
         }
@@ -366,6 +367,7 @@ DialogTemplate{
 
         onClickedCancel:{
             deskDialog.emptyDialog();
+            deskDialog.closeD();
             completed();
         }
     }
