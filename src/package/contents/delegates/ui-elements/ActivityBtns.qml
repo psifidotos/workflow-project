@@ -3,6 +3,7 @@ import QtQuick 1.1
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
+import "../../"
 
 Item{
     id: activityButtons
@@ -54,6 +55,7 @@ Item{
             }
 
             MouseArea {
+                id:addWidgetsBtnMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
@@ -72,6 +74,14 @@ Item{
                 }
 
             }
+        }
+
+        DToolTip{
+            title:i18n("Add Plasmoids")
+            mainText: i18n("Add Plasmoids to your Activity in order to customize it more.")
+            target:addWidgetsBtnMouseArea
+           // masterMouseArea:addWidgetsMouseArea
+            icon:instanceOfThemeList.icons.AddWidget
         }
     }
 
@@ -110,6 +120,7 @@ Item{
                 }
 
                 MouseArea {
+                    id:stopActivityBtnMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
 
@@ -128,6 +139,14 @@ Item{
                     }
 
                 }
+            }
+
+            DToolTip{
+                title:i18n("Stop Activity")
+                mainText: i18n("You can stop an Activity and place it on the right panel")
+                target:stopActivityBtnMouseArea
+                //masterMouseArea:stopActivityBtnMouseArea
+                icon:instanceOfThemeList.icons.PauseActivity
             }
 
             // Image{
@@ -149,6 +168,7 @@ Item{
                 }
 
                 MouseArea {
+                    id:duplicateActivityBtnMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
 
@@ -170,6 +190,14 @@ Item{
                 }
             }
 
+            DToolTip{
+                title:i18n("Clone Activity")
+                mainText: i18n("You can clone an Activity.")
+                target:duplicateActivityBtnMouseArea
+                //masterMouseArea:duplicateActivityBtnMouseArea
+                icon:instanceOfThemeList.icons.CloneActivity
+            }
+
             QIconItem{
                 id:deleteActivityBtn
                 icon: instanceOfThemeList.icons.DeleteActivity
@@ -188,6 +216,7 @@ Item{
                 }
 
                 MouseArea {
+                    id:deleteActivityBtnMouseArea
                     anchors.fill: parent
                     hoverEnabled: true
 
@@ -205,6 +234,14 @@ Item{
                         instanceOfActivitiesList.removeActivityDialog(ccode);
                     }
 
+                }
+
+                DToolTip{
+                    title:i18n("Delete Activity")
+                    mainText: i18n("You can delete an Activity. Be careful, this action can not be undone.")
+                    target:deleteActivityBtnMouseArea
+                    //masterMouseArea:deleteActivityBtnMouseArea
+                    icon:instanceOfThemeList.icons.DeleteActivity
                 }
 
             }
@@ -229,6 +266,7 @@ Item{
             }
 
             MouseArea {
+                id:stopActLockedBtnMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
@@ -249,6 +287,14 @@ Item{
 
             }
 
+        }
+
+        DToolTip{
+            title:i18n("Stop Activity")
+            mainText: i18n("You can stop an Activity and place it on the right panel")
+            target:stopActLockedBtnMouseArea
+            //masterMouseArea:stopActLockedBtnMouseArea
+            icon:instanceOfThemeList.icons.PauseActivity
         }
     }
 

@@ -1,7 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-
+import "../../"
 Item {
     id: buttonsArea
     width: buttonsSize
@@ -30,6 +30,7 @@ Item {
         y:0
 
         MouseArea {
+            id:closeBtnMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
@@ -64,6 +65,13 @@ Item {
 
         }
 
+        DToolTip{
+            title:i18n("Close Window")
+            mainText: i18n("You can close this window if you want to.")
+            target:closeBtnMouseArea
+            //icon:instanceOfThemeList.icons.RunActivity
+        }
+
     }
 
     WindowPlaceButton{
@@ -86,6 +94,7 @@ Item {
         }
 
         MouseArea {
+            id:placeStateBtnMouseArea
             anchors.fill: parent
             hoverEnabled: true
             z:4
@@ -149,6 +158,13 @@ Item {
             }
 
 
+        }
+
+        DToolTip{
+            title:i18n("Change Window State")
+            mainText: i18n("You can change this window's state, there are three states available:<br/>1.Show only on that Workarea<br/>2.Show on every WorkArea in that Activity<br/>3.Show on all WorkAreas.")
+            target:placeStateBtnMouseArea
+            //icon:instanceOfThemeList.icons.RunActivity
         }
 
     }

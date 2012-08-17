@@ -1,6 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import"../.."
 
 Item{
 
@@ -12,6 +13,17 @@ Item{
     property bool firstrun:true
 
     property string acceptedText : ""
+
+    property string toolTipTitle:i18n("Edit WorkArea")
+    property string toolTipText: i18n("You can edit the Workarea name in order to personalize more your work.")
+
+
+    DToolTip{
+        id:toolTip
+        title:dTextIItem.toolTipTitle
+        mainText:dTextIItem.toolTipText
+        target:borderImageMouseArea
+    }
 
     BorderImage{
         id:backIImage
@@ -59,26 +71,30 @@ Item{
             }
 
             MouseArea{
+                id:tick2MouseArea
                 anchors.fill: parent
                 hoverEnabled: true
 
                 onEntered:{
                     backIImage.source = backIImage.hoverSource;
-                    tickIImage.source = tickIImage.hoverTick
-
+                    tickIImage.source = tickIImage.hoverTick;
+                    toolTip.showToolTip();
                 }
                 onExited:{
                     backIImage.source = backIImage.initSource;
                     tickIImage.source = tickIImage.initTick;
+                    toolTip.hideToolTip();
                 }
 
                 onClicked: {
                     dTextIItem.textAccepted();
                 }
             }
+
         }
 
         MouseArea{
+            id:borderImageMouseArea
             anchors.fill: parent
             hoverEnabled: true
             z:4
@@ -175,14 +191,17 @@ Item{
         }
 
         MouseArea{
+            id:mouseAr3
             anchors.fill: parent
             hoverEnabled: true
 
             onEntered:{
                 dTextIItem.entered();
+                toolTip.showToolTip();
             }
             onExited:{
                 dTextIItem.exited();
+                toolTip.hideToolTip();
             }
 
             onClicked: {
@@ -219,11 +238,12 @@ Item{
         }
 
         MouseArea{
+            id:mouseAr4
             anchors.fill: parent
             hoverEnabled: true
 
             onEntered:{
-                dTextIItem.entered();
+                dTextIItem.entered();                
             }
             onExited:{
                 dTextIItem.exited();
@@ -233,6 +253,7 @@ Item{
                 dTextIItem.clicked(mouse);
             }
         }
+
     }
 
 
@@ -288,7 +309,7 @@ Item{
 
     function entered(){
         if(dTextIItem.state=="inactive")
-            pencilI.opacity = 1;
+            pencilI.opacity = 1;        
     }
 
     function exited(){

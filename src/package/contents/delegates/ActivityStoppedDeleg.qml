@@ -148,7 +148,7 @@ import "ui-elements"
             icon: instanceOfThemeList.icons.RunActivity
 
             anchors.horizontalCenter: stpActivity.horizontalCenter
-            anchors.top: stpActivity.top
+            anchors.verticalCenter: activityIcon.verticalCenter
 
             width: stpActivity.width/2
             height: width
@@ -163,6 +163,7 @@ import "ui-elements"
         }
 
         MouseArea{
+            id:stopActivityMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
@@ -195,6 +196,13 @@ import "ui-elements"
                 //instanceOfActivitiesList.setCState(ccode,"Running");
 
             }
+        }
+
+        DToolTip{
+            title:i18n("Restore Activity")
+            mainText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
+            target:stopActivityMouseArea
+            icon:instanceOfThemeList.icons.RunActivity
         }
 
 

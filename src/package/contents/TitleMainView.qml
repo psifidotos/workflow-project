@@ -82,6 +82,7 @@ Rectangle{
                 anchors.centerIn: parent
 
                 Image{
+                    id:lockerImg
                     smooth:true
                     source:"Images/buttons/Padlock-gold.png"
                     anchors.centerIn: parent
@@ -98,6 +99,23 @@ Rectangle{
                 onCheckedChanged:{
                     mainView.lockActivities = checked;
                 }
+
+                MouseArea{
+                    id:lockerToolBtnMouseArea
+                    anchors.fill:parent
+
+                    onClicked:{
+                        lockerToolBtn.checked = !lockerToolBtn.checked;
+                    }
+                }
+            }
+
+
+            DToolTip{
+                title:i18n("Lock Activities")
+                mainText: i18n("You can lock your Activities if you want. In Locked state only Pause and Run actions are enabled.")
+                target:lockerToolBtnMouseArea
+                localIcon:lockerImg.source
             }
 
         }
@@ -117,6 +135,7 @@ Rectangle{
                 anchors.centerIn: parent
 
                 Image{
+                    id:windowsImg
                     smooth:true
                     source:"Images/buttons/blueWindowsIcon.png"
                     anchors.centerIn: parent
@@ -136,6 +155,22 @@ Rectangle{
                     if(!checked)
                         effectsToolBtn.checked = false;
                 }
+
+                MouseArea{
+                    id:windowsToolBtnMouseArea
+                    anchors.fill:parent
+
+                    onClicked:{
+                        windowsToolBtn.checked = !windowsToolBtn.checked;
+                    }
+                }
+            }
+
+            DToolTip{
+                title:i18n("Show/Hide Windows")
+                mainText: i18n("You can show or hide all the windows shown in order to enhance your workflow.")
+                target:windowsToolBtnMouseArea
+                localIcon:windowsImg.source
             }
 
         }
@@ -156,6 +191,7 @@ Rectangle{
                 anchors.centerIn: parent
 
                 Image{
+                    id:effectsImg
                     smooth:true
                     source:"Images/buttons/tools_wizard.png"
                     anchors.centerIn: parent
@@ -177,6 +213,7 @@ Rectangle{
                 }
 
                 MouseArea{
+                    id:effectsToolBtnMouseArea
                     anchors.fill:parent
                     onClicked:{
                         effectsToolBtn.checked = !effectsToolBtn.checked;
@@ -203,6 +240,13 @@ Rectangle{
                     mainView.enablePreviews = checked;
                 }
 
+            }
+
+            DToolTip{
+                title:i18n("Enable/Disable Previews")
+                mainText: i18n("You can enable/disable window previews when you the plasmoid in the Dashboard. By Pressing and Holding a Calibration Dialog is appearing.")
+                target:effectsToolBtnMouseArea
+                localIcon:effectsImg.source
             }
 
         }

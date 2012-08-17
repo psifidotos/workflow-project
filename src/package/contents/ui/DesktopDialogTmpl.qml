@@ -31,6 +31,7 @@ DialogTemplate2{
     property int cHeight: 0
 
     property bool disablePreviewsWasForced:false
+
     property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
@@ -106,7 +107,7 @@ DialogTemplate2{
         y:deskDialog.insideY
 
         width:insideWidth
-        height:(shownRows+0.5)*cHeight
+        height:(shownRows)*cHeight
 
         contentWidth: desksTasksList.width-40
         contentHeight: desksTasksList.height
@@ -120,7 +121,7 @@ DialogTemplate2{
             Repeater{
                 model:deskDialog.columns-1
                 delegate:Item{
-                    width:deskDialog.cWidth-1
+                    width:deskDialog.cWidth-7
                     height:deskDialog.shownRows*deskDialog.cHeight
                     Rectangle{
                         width:1
@@ -165,7 +166,7 @@ DialogTemplate2{
 
                 showAllActivities: false
 
-                rWidth: desksTasksList.cellWidth
+                rWidth: desksTasksList.cellWidth-9
                 rHeight: desksTasksList.cellHeight
 
                 defWidth: 0.7*mainView.scaleMeter
@@ -210,7 +211,7 @@ DialogTemplate2{
             NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
         }
     }
-
+/*
     ScrollBar {
         id: desktopVerticalScrollBar
         width: 9; height: desktopView.height
@@ -220,9 +221,9 @@ DialogTemplate2{
         orientation: Qt.Vertical
         position: desktopView.visibleArea.yPosition
         pageSize: desktopView.visibleArea.heightRatio
-    }
+    }*/
 
-    /*PlasmaComponents.ScrollBar {
+    PlasmaComponents.ScrollBar {
         id: desktopVerticalScrollBar
         width: 12;
       //  height: desktopView.insideHeight
@@ -230,7 +231,7 @@ DialogTemplate2{
         opacity: 0
         orientation: Qt.Vertical
         flickableItem: desktopView
-    }*/
+    }
 
     function initInterface(){
         var counter = desksTasksList.model.count

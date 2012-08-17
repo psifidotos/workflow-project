@@ -2,7 +2,6 @@ var activityAnimComp;
 var taskAnimComp;
 var btnAnimComp;
 
-
 function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
@@ -68,8 +67,10 @@ function showDesktopDialog(actId,desk){
     var dskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
 
     mainView.desktopDialog = dskDialog.createObject(mainView);
+    mainView.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
 
     mainView.desktopDialog.openD(actId,desk);
+
 }
 
 

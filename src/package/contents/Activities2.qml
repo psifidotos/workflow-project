@@ -53,11 +53,14 @@ Rectangle {
 
     property variant defaultFont: theme.defaultFont
 
+    property color defaultFontColor:theme.textColor
     property real defaultFontSize:theme.defaultFont.pointSize
     property real defaultFontRelativeness: 0
     property real defFontRelStep: mainView.defaultFontRelativeness/20
     property real fixedFontSize: defaultFontSize + defaultFontRelativeness
 
+
+    property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
     //With using KWindowSystem workarea
     property real screenRatio:0.75
 
@@ -351,6 +354,8 @@ Rectangle {
 
     //Just to ignore the warnings
     signal completed;
+    property bool disablePreviews;
+
     property variant removeDialog:mainView;
     property variant cloningDialog:mainView;
     property variant desktopDialog:mainView;
@@ -381,6 +386,10 @@ Rectangle {
         onCompleted:{
             console.debug("Delete Desktop Dialog...");
             mainView.getDynLib().deleteDesktopDialog();
+        }
+
+        onDisablePreviewsChanged:{
+            mainView.disablePreviewsWasForcedInDesktopDialog = desktopDialog.disablePreviews;
         }
     }
 
@@ -441,6 +450,7 @@ Rectangle {
         width:200
         height:200
     }*/
+
 
 
 }

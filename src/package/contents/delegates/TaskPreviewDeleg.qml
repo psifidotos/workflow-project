@@ -143,16 +143,7 @@ Item{
     Connections{
         target:scrollingView
         onContentYChanged:{
-            var previewRelX = previewRect.mapToItem(centralListView,0,0).x;
-            var previewRelY = previewRect.mapToItem(centralListView,0,0).y;
-
-            var fixY = previewRelY - scrollingView.contentY;
-
-            if ((fixY>=0) &&
-                    ((fixY+previewRect.height) <= scrollingView.height))
-                taskDeleg2.inShownArea = true;
-            else
-                taskDeleg2.inShownArea = false;
+            countInScrollingArea();
 
             updatePreview();
         }
@@ -209,6 +200,7 @@ Item{
     GridView.onAdd: {
         if (showPreviews === true)
             taskDeleg2.updatePreview();
+
     }
 
 
@@ -392,7 +384,9 @@ Item{
             width:(parent.width) / 2
             height:(parent.height) / 2
 
-            opacity:parent.opacity === 0 ? 0:0.6
+            //opacity:parent.opacity === 0 ? 0:0.6
+      //      opacity:parent.opacity === 0 ? 0.6:0.6
+            opacity: 0.6
 
         }
 
@@ -715,7 +709,7 @@ Item{
             PropertyChanges{
                 target:previewRect
 
-                opacity:0.001
+                opacity:0.6
 
                 width:taskDeleg2.defPreviewWidth
                 height:taskDeleg2.defPreviewWidth
@@ -724,8 +718,10 @@ Item{
                 y:0
                 x:(taskDeleg2.width - taskDeleg2.defPreviewWidth)/2
 
-                color: previewRect.lightColor
-                border.color: previewRect.lightBorder
+               // color: previewRect.lightColor
+               // border.color: previewRect.lightBorder
+                color:"#00000000"
+                border.color:"#00000000"
 
             }
             PropertyChanges{
@@ -770,10 +766,10 @@ Item{
                 y:showPreviewsFound===false ? height/2:(taskDeleg2.height-height)/2
                 x:showPreviewsFound===false ? width/2:(taskDeleg2.width-width)/2
 
-                color: lightColor
-                border.color: lightBorder
+                color: showPreviewsFound===false ? lightColor : "#00000000"
+                border.color: showPreviewsFound===false ? lightBorder : "#00000000"
 
-                opacity:showPreviewsFound===false ? 0 : 0.001
+                opacity:showPreviewsFound===false ? 0 : 0.6
             }
             PropertyChanges{
                 target:imageTask2
@@ -989,7 +985,12 @@ Item{
         }
     }
 
+
     function updatePreview(){
+
+        countInScrollingArea();
+
+
         if((taskDeleg2.showPreviews === true)&&
                 (taskDeleg2.inShownArea === true))  {
             var x1 = 0;
@@ -1013,6 +1014,28 @@ Item{
         }
     }
 
+
+    function countInScrollingArea(){
+
+        if((taskDeleg2.showPreviews === true)&&
+                (previewRect.width===taskDeleg2.defPreviewWidth)&&
+                (dialogType === dTypes[1])){
+
+            var previewRelX = previewRect.mapToItem(centralListView,0,0).x;
+            var previewRelY = previewRect.mapToItem(centralListView,0,0).y;
+
+            var fixY = previewRelY - scrollingView.contentY;
+
+            if ((fixY>=0) &&
+                    ((fixY+previewRect.height) <= scrollingView.height))
+                taskDeleg2.inShownArea = true;
+            else
+                taskDeleg2.inShownArea = false;
+        }
+        else
+            taskDeleg2.inShownArea = true;
+
+    }
 
     function getIcon(){
         return imageTask2;

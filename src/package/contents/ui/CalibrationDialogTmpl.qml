@@ -25,6 +25,7 @@ DialogTemplate2{
 
     property string dialogType:"CalibrationDialog"
 
+
     Item{
         id:leftColumn
         width:0.4*calibDialog.insideWidth
@@ -41,7 +42,7 @@ DialogTemplate2{
             font.bold: true
             font.italic: true
 
-            font.pixelSize: calibDialog.fontsSize
+            font.pixelSize: 0
 
             color: "#f4f4f4"
             width:parent.width - 10
@@ -71,7 +72,7 @@ DialogTemplate2{
                 model:instanceOfTasksList.model
 
                 x:3
-                width: calibrView.width-2
+                width: calibrView.width-14
                 height: model.count*cellHeight
 
                 cellWidth:width
@@ -121,12 +122,13 @@ DialogTemplate2{
                 when: calibrView.contentHeight > calibrView.height
                 PropertyChanges { target: calibsVerticalScrollBar; opacity: 0.8 }
             }
-            /*
+
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
-            }*/
+            }
 
         }
+
 
         Rectangle{
             width:calibrView.width
@@ -139,7 +141,7 @@ DialogTemplate2{
             color:"#00000000"
         }
 
-
+/*
         ScrollBar {
             id: calibsVerticalScrollBar
             width: 8; height: calibrView.height
@@ -150,17 +152,17 @@ DialogTemplate2{
             position: calibrView.visibleArea.yPosition
             pageSize: calibrView.visibleArea.heightRatio
         }
+*/
 
-     /*
         PlasmaComponents.ScrollBar {
             id: calibsVerticalScrollBar
-            width: 8
+            width: 12
             //height: calibrView.insideHeight
-            anchors.right: calibrView.right
+         //   anchors.right: calibrView.right
             opacity: 0
             orientation: Qt.Vertical
             flickableItem: calibrView
-        }*/
+        }
 
         Rectangle{
             width:1
@@ -178,6 +180,8 @@ DialogTemplate2{
 
 
     }
+
+
 
     Item{
         id:rightColumn
@@ -431,6 +435,8 @@ DialogTemplate2{
 
         }
     }
+
+
 
     function getTasksList(){
         return calibsTasksList

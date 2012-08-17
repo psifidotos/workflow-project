@@ -68,6 +68,7 @@ PlasmaComponents.Slider {
         fillMode:Image.PreserveAspectFit
 
         MouseArea{
+            id:zoomOutMouseArea
             width:0.6*parent.width
             height:parent.height
             anchors.left: parent.left
@@ -75,6 +76,13 @@ PlasmaComponents.Slider {
             onClicked:{
                 zoomSliderIt.value--;
             }
+        }
+
+        DToolTip{
+            title:i18n("Zoom Out")
+            mainText:i18n("You can zoom out your interface in order to gain more space.")
+            target:zoomOutMouseArea
+            localIcon:minusSliderImage.source
         }
     }
 
@@ -92,6 +100,7 @@ PlasmaComponents.Slider {
         fillMode:Image.PreserveAspectFit
 
         MouseArea{
+            id:zoomInMouseArea
             width:0.8*parent.width
             height:parent.height
             anchors.right: parent.right
@@ -99,6 +108,13 @@ PlasmaComponents.Slider {
             onClicked:{
                 zoomSliderIt.value++;
             }
+        }
+
+        DToolTip{
+            title:i18n("Zoom In")
+            mainText:i18n("You can zoom in your interface in order to focus more on items.")
+            target:zoomInMouseArea
+            localIcon:plusSliderImage.source
         }
     }
 

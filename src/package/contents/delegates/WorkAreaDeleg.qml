@@ -148,6 +148,7 @@ Item{
             property color hovTextColor:"#f8f8f8f8"
 
             MouseArea {
+                id:cornerImageMouseArea
                 width:0.8*parent.width
                 height:0.8*parent.height
                 //anchors.fill: parent
@@ -172,6 +173,13 @@ Item{
                 }
             }
 
+            DToolTip{
+                title:i18n("Show Windows")
+                mainText: i18n("You can see the windows from that spesific Workarea if you want. The counter shows their number.")
+                target:cornerImageMouseArea
+                //icon:instanceOfThemeList.icons.RunActivity
+            }
+
             Text{
                 id:shownTasksText
 
@@ -182,7 +190,7 @@ Item{
 
                 color: cornerImage.defTextColor
 
-                font.pixelSize: height
+                font.pixelSize: 0
                 font.italic:true
                 font.family: mainView.defaultFont.family
 

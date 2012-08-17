@@ -55,6 +55,7 @@ Rectangle {
         anchors.verticalCenterOffset: -2
 
         MouseArea{
+            id:showHideStoppedMouseArea
             anchors.fill: parent
             hoverEnabled: true
             onEntered:{
@@ -90,6 +91,13 @@ Rectangle {
 
             }
         }
+
+    }
+
+    DToolTip{
+        title:i18n("Show/Hide Stopped Activities")
+        mainText: i18n("Show or Hide the Stopped Activities in order to enhance your workflow.")
+        target:showHideStoppedMouseArea
     }
 
     Rectangle{

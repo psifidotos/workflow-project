@@ -106,6 +106,7 @@ Rectangle{
     }
 
     MouseArea {
+        id:addActivityMouseArea
         anchors.fill: parent
         hoverEnabled: true
 
@@ -123,6 +124,14 @@ Rectangle{
             instanceOfActivitiesList.addNewActivity();
         }
 
+    }
+
+
+    DToolTip{
+        title:i18n("Add Activity")
+        mainText: i18n("You can add an Activity if you want to with default settings.")
+        target:addActivityMouseArea
+        localIcon:plusIcon.source
     }
 }
 

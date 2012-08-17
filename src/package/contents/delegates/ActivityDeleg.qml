@@ -104,11 +104,13 @@ Item{
         }
 
         MouseArea {
+            id:activityIconMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
             onEntered: {
-                if(activityName.state === "inactive"){
+                if((activityName.state === "inactive")&&
+                   (!mainView.lockActivities)){
                     activityBtnsI.state="show";
 
                     fadeIcon.opacity = 0;
@@ -132,6 +134,14 @@ Item{
                     instanceOfActivitiesList.chooseIcon(ccode);
             }
 
+        }
+
+        DToolTip{
+            visible:!mainView.lockActivities
+            title:i18n("Change Activity Icon")
+            mainText: i18n("You can change your Activity Icon in order to recognize better your work.")
+            target:activityIconMouseArea
+            icon:Icon === "" ? "plasma" : Icon
         }
 
     }
@@ -193,6 +203,7 @@ Item{
 
 
         MouseArea {
+            id:editActivityNameMouseArea
             anchors.left: parent.left
             height:parent.height
             width:activityName.state === "active" ? parent.width - 40 : parent.width
@@ -234,7 +245,17 @@ Item{
 
         }
 
+        DToolTip{
+            visible:!mainView.lockActivities
+            title:i18n("Edit Activity Name")
+            mainText: i18n("You can edit the Activity Name in order to represent your work.")
+            target:editActivityNameMouseArea
+            //icon:instanceOfThemeList.icons.AddWidget
+        }
+
     }
+
+
 
     ActivityBtns{
         id:activityBtnsI

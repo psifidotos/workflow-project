@@ -1,5 +1,7 @@
 import QtQuick 1.0
 
+import "../../"
+
 Item{
     id: workAreaButtons
     width:buttonsSize
@@ -33,6 +35,7 @@ Item{
         }
 
         MouseArea {
+            id:deleteWorkareaBtnMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
@@ -64,6 +67,13 @@ Item{
                 deleteWorkareaBtn.onPressed();
             }
 
+        }
+
+        DToolTip{
+            title:i18n("Delete Workarea")
+            mainText: i18n("You can delete this WorkArea if you want to.")
+            target:deleteWorkareaBtnMouseArea
+            //icon:instanceOfThemeList.icons.RunActivity
         }
 
 

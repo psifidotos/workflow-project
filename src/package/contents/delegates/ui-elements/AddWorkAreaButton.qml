@@ -1,5 +1,7 @@
 import QtQuick 1.0
 
+import "../.."
+
 Rectangle{
 
 
@@ -42,6 +44,8 @@ Rectangle{
 
 
     MouseArea {
+        id:addWorkareaMouseArea
+
         anchors.fill: parent
         hoverEnabled: true
 
@@ -55,6 +59,13 @@ Rectangle{
             addWorkArea.border.color = addWorkArea.borderFromColor;
         }
 
+    }
+
+    DToolTip{
+        title:i18n("Add WorkArea")
+        mainText: i18n("You can add a Workarea in order to sub-organize better your work.")
+        target:addWorkareaMouseArea
+        localIcon:addButtonImage.source
     }
 
 }
