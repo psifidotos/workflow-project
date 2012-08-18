@@ -21,6 +21,7 @@ DialogTemplate2{
     insideHeight: (shownRows)*cHeight
 
     isModal: true
+    forceModality: false
     showButtons:false
 
     property int shownRows:0
@@ -174,8 +175,10 @@ DialogTemplate2{
                 defPreviewWidth: 0.8*desksTasksList.cellHeight
                 defHovPreviewWidth: 1.4*defPreviewWidth
 
-                taskTitleTextDef: "#ffffff"
-                taskTitleTextHov: "#ffffff"
+               // taskTitleTextDef: "#ffffff"
+               // taskTitleTextHov: "#ffffff"
+                taskTitleTextDef: defColor
+                taskTitleTextHov: defColor
 
                 scrollingView: desktopView
                 centralListView: desksTasksList

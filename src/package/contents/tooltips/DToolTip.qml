@@ -5,6 +5,7 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
+import ".."
 
 PlasmaCore.FrameSvgItem{
 
@@ -210,7 +211,7 @@ PlasmaCore.FrameSvgItem{
 
     Timer{
         id:toolTipTimer
-        interval: 350
+        interval: mainView.toolTipsDelay
         repeat: false
 
         onTriggered: {
@@ -227,7 +228,10 @@ PlasmaCore.FrameSvgItem{
 
 
             if (newC.y<maxY)
-                toolTip.y = newC.y+3;
+                if(newC.x<maxX)
+                    toolTip.y = newC.y+3;
+                else
+                    toolTip.y = newC2.y+3;
             else
                 toolTip.y = newC2.y-3-toolTip.height;
 
@@ -236,9 +240,11 @@ PlasmaCore.FrameSvgItem{
     }
 
     function showToolTip(){
-        if ((target !== tempMouseArea)&&
-            (!toolTipTimer.running)){
-            toolTipTimer.start();
+        if(mainView.toolTipsDelay>0){
+            if ((target !== tempMouseArea)&&
+                    (!toolTipTimer.running)){
+                toolTipTimer.start();
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 import QtQuick 1.0
-import ".."
+
+
 import "ui-elements"
+import "../tooltips"
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 //Component{

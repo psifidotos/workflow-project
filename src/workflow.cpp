@@ -530,6 +530,14 @@ void WorkFlow::setCurrentTheme(QString theme)
                               Q_ARG(QVariant, theme));
 }
 
+void WorkFlow::setToolTipsDelayChanged(int val)
+{
+    m_tipsDelay = val;
+    QMetaObject::invokeMethod(mainQML, "setToolTipsDelay",
+                              Q_ARG(QVariant, val));
+
+}
+
 void WorkFlow::addTheme(QString theme)
 {
     loadedThemes.append(theme);
@@ -582,6 +590,7 @@ void WorkFlow::loadConfigurationFiles()
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
 
     QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
+    int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
 
     setLockActivities(lockAc);
     QMetaObject::invokeMethod(mainQML, "setLockActivities",
@@ -631,6 +640,8 @@ void WorkFlow::loadConfigurationFiles()
 
     setCurrentTheme(curTheme);
 
+    setToolTipsDelayChanged(tipsDelay);
+
 }
 
 void WorkFlow::saveConfigurationFiles()
@@ -650,6 +661,8 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("HideOnClick",m_hideOnClick);
 
     appConfig.writeEntry("CurrentTheme",m_currentTheme);
+
+    appConfig.writeEntry("ToolTipsDelay",m_tipsDelay);
 
     emit configNeedsSaving();
 }
@@ -685,6 +698,8 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 
     m_config.themesCmb->setCurrentIndex(loadedThemes.indexOf(m_currentTheme));
 
+    m_config.tooltipsSpinBox->setValue(m_tipsDelay);
+
     connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
 
     if(!m_isOnDashboard)
@@ -694,6 +709,7 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
         m_config.hideOnClickCheckBox->setEnabled(false);
 
     connect(m_config.themesCmb, SIGNAL(currentIndexChanged (QString)), this, SLOT(themeSelectionChanged(QString)));
+    connect(m_config.tooltipsSpinBox, SIGNAL(valueChanged (int)), this, SLOT(setToolTipsDelayChanged(int)));
 
     connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));

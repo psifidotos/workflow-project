@@ -40,5 +40,23 @@ ListModel {
 
         ]
     }
+    ListElement{
+        name:"Faenza"
+        icons:[
+            ListElement{
+                AddWidget:"add"
+                PauseActivity:"media-playback-pause"
+                CloneActivity:"tab-duplicate"
+                DeleteActivity:"application-exit"
+                RunActivity:"media-playback-start"
+                DialogImportant:"emblem-important"
+                DialogInformation:"dialog-information"
+                DialogAccept:"dialog-ok-apply"
+                DialogCancel:"dialog-cancel"
+                AddValue:"media-skip-forward"
+                MinusValue:"media-skip-backward"
+            }
+        ]
+    }
 
 }

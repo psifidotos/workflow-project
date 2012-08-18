@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import ".."
+import "../tooltips"
 import "../delegates"
 
 import org.kde.plasma.core 0.1 as PlasmaCore
@@ -17,14 +18,15 @@ DialogTemplate2{
     insideHeight: 0.6*mainView.height
 
     isModal: true
+    forceModality: false
     showButtons:true
 
     dialogTitle: i18n("Previews Calibration Dialog")
 
+
     property int fontsSize: (0.034+mainView.defFontRelStep)*insideHeight
 
     property string dialogType:"CalibrationDialog"
-
 
     Item{
         id:leftColumn
@@ -44,7 +46,8 @@ DialogTemplate2{
 
             font.pixelSize: 0
 
-            color: "#f4f4f4"
+           // color: "#f4f4f4"
+            color:defColor
             width:parent.width - 10
 
             wrapMode:Text.Wrap
@@ -107,8 +110,10 @@ DialogTemplate2{
                     defPreviewWidth: 0.8*calibsTasksList.cellHeight
                     defHovPreviewWidth: 1.4*defPreviewWidth
 
-                    taskTitleTextDef: "#ffffff"
-                    taskTitleTextHov: "#ffffff"
+                    taskTitleTextDef: defColor
+                    taskTitleTextHov: defColor
+                    //taskTitleTextDef: "#ffffff"
+                    //taskTitleTextHov: "#ffffff"
 
                     scrollingView: calibrView
                     centralListView: calibsTasksList
@@ -138,6 +143,7 @@ DialogTemplate2{
 
             border.width: 1
             border.color: "#22f4f4f4"
+
             color:"#00000000"
         }
 
@@ -203,7 +209,8 @@ DialogTemplate2{
                 anchors.centerIn: parent
 
                 border.width: 1
-                border.color: "#f5f5f5"
+                //border.color: "#f5f5f5"
+                border.color: defColor
                 color:"#33000000"
 
                 Rectangle{
@@ -239,7 +246,8 @@ DialogTemplate2{
                 font.italic: true
                 font.pixelSize: calibDialog.fontsSize
 
-                color: "#f4f4f4"
+                //color: "#f4f4f4"
+                color:defColor
 
                 width:parent.width-10
 
@@ -266,7 +274,8 @@ DialogTemplate2{
                 font.family: mainView.defaultFont.family
                 font.bold: true
                 font.italic: true
-                color: "#f4f4f4"
+                //color: "#f4f4f4"
+                color:defColor
 
                 font.pixelSize: calibDialog.fontsSize
 
@@ -287,12 +296,20 @@ DialogTemplate2{
                     opacity: xValueText.val > xOffsetSlider.minimumValue ? 1 : 0.5
 
                     MouseArea{
+                        id:xMinMouseArea
                         anchors.fill: parent
 
                         onClicked:{
                             xValueText.val--;
                         }
                     }
+                }
+
+                DToolTip{
+                    title:i18n("Reduce X")
+                    mainText: i18n("You can reduce X offset for the window previews.")
+                    target:xMinMouseArea
+                    icon:instanceOfThemeList.icons.MinusValue
                 }
 
                 PlasmaComponents.Slider {
@@ -320,6 +337,7 @@ DialogTemplate2{
                     opacity: xValueText.val < xOffsetSlider.maximumValue ? 1 : 0.5
 
                     MouseArea{
+                        id:xAddMouseArea
                         anchors.fill: parent
 
                         onClicked:{
@@ -327,6 +345,13 @@ DialogTemplate2{
                         }
                     }
 
+                }
+
+                DToolTip{
+                    title:i18n("Increase X")
+                    mainText: i18n("You can increase X offset for the window previews.")
+                    target:xAddMouseArea
+                    icon:instanceOfThemeList.icons.AddValue
                 }
 
             }
@@ -350,7 +375,8 @@ DialogTemplate2{
                 font.italic: true
                 font.family: mainView.defaultFont.family
                 font.pixelSize: calibDialog.fontsSize
-                color: "#f4f4f4"
+                color:defColor
+                //color: "#f4f4f4"
 
             }
 
@@ -369,6 +395,7 @@ DialogTemplate2{
                     opacity: yValueText.val > yOffsetSlider.minimumValue ? 1 : 0.5
 
                     MouseArea{
+                        id:yMinMouseArea
                         anchors.fill: parent
 
                         onClicked:{
@@ -377,6 +404,14 @@ DialogTemplate2{
                     }
 
                 }
+
+                DToolTip{
+                    title:i18n("Reduce Y")
+                    mainText: i18n("You can reduce Y offset for the window previews.")
+                    target:yMinMouseArea
+                    icon:instanceOfThemeList.icons.MinusValue
+                }
+
                 PlasmaComponents.Slider {
                     id:yOffsetSlider
 
@@ -404,12 +439,20 @@ DialogTemplate2{
                     opacity: yValueText.val < yOffsetSlider.maximumValue ? 1 : 0.5
 
                     MouseArea{
+                        id:yAddMouseArea
                         anchors.fill: parent
 
                         onClicked:{
                             yValueText.val++;
                         }
                     }
+                }
+
+                DToolTip{
+                    title:i18n("Increase Y")
+                    mainText: i18n("You can increase Y offset for the window previews.")
+                    target:yAddMouseArea
+                    icon:instanceOfThemeList.icons.AddValue
                 }
 
             }
@@ -424,7 +467,8 @@ DialogTemplate2{
                 font.bold: true
                 font.italic: true
                 font.pixelSize: calibDialog.fontsSize
-                color: "#f4f4f4"
+                //color: "#f4f4f4"
+                color:defColor
 
                 width:parent.width-10
 

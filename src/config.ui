@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>250</height>
+    <width>430</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>420</width>
-    <height>250</height>
+    <width>430</width>
+    <height>340</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
   <widget class="QSlider" name="animationsLevelSlider">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>110</x>
      <y>100</y>
      <width>231</width>
      <height>23</height>
@@ -52,7 +52,7 @@
     <rect>
      <x>20</x>
      <y>80</y>
-     <width>241</width>
+     <width>291</width>
      <height>16</height>
     </rect>
    </property>
@@ -69,14 +69,14 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>60</x>
      <y>120</y>
      <width>111</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>No animations</string>
+    <string>None</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -85,7 +85,7 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>180</x>
      <y>120</y>
      <width>91</width>
      <height>16</height>
@@ -101,7 +101,7 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>290</x>
      <y>120</y>
      <width>91</width>
      <height>16</height>
@@ -141,7 +141,7 @@
     <rect>
      <x>60</x>
      <y>180</y>
-     <width>331</width>
+     <width>381</width>
      <height>21</height>
     </rect>
    </property>
@@ -170,7 +170,7 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>241</width>
+     <width>321</width>
      <height>16</height>
     </rect>
    </property>
@@ -182,6 +182,53 @@
    </property>
    <property name="text">
     <string>Icons Theme:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="tooltipsSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>250</y>
+     <width>91</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The delay for showing a tooltip. With 0 tooltips are disabled&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="suffix">
+    <string>ms</string>
+   </property>
+   <property name="prefix">
+    <string/>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
+   </property>
+   <property name="singleStep">
+    <number>50</number>
+   </property>
+   <property name="value">
+    <number>250</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>220</y>
+     <width>241</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tooltips Delay:</string>
    </property>
   </widget>
  </widget>

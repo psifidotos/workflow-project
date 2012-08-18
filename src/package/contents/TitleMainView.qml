@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import "ui"
+import "tooltips"
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1

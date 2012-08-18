@@ -36,7 +36,8 @@ DialogTemplate2{
             id:mainTextInf
             anchors.left: infIcon.right
             anchors.verticalCenter: infIcon.verticalCenter
-            color:"#ffffff"
+            //color:"#ffffff"
+            color:defColor
             text:i18n("Are you sure you want to clone activity")+" <b>"+clonDialog.activityName+"</b> "+i18n("?")
 
             font.family:mainView.defaultFont.family
@@ -58,3 +59,4 @@ DialogTemplate2{
         }
     }
 }
+

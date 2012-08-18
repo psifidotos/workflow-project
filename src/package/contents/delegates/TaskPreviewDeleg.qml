@@ -1,8 +1,10 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+
 import ".."
 import "ui-elements"
 import "../ui"
+
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
@@ -903,6 +905,10 @@ Item{
         //        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
         else if (dialogType === dTypes[2])
             calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
+
+
+        if(dialogType === dTypes[1])
+            desktopDialog.clickedCancel();
     }
 
     function onPressAndHold(mouse,obj) {

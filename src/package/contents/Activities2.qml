@@ -69,6 +69,8 @@ Rectangle {
 
     property int themePos:0
 
+    property int toolTipsDelay:300
+
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
@@ -283,7 +285,9 @@ Rectangle {
         mainView.themePos = instanceOfThemeList.getIndexFor(th);
     }
 
-
+    function setToolTipsDelay(dl){
+        mainView.toolTipsDelay = dl;
+    }
 
 
     function loadThemes() {
@@ -368,7 +372,7 @@ Rectangle {
     Connections{
         target:removeDialog
         onCompleted:{
-            console.debug("Delete Remove...");
+         //   console.debug("Delete Remove...");
             mainView.getDynLib().deleteRemoveDialog();
         }
     }
@@ -376,7 +380,7 @@ Rectangle {
     Connections{
         target:cloningDialog
         onCompleted:{
-            console.debug("Delete Cloning...");
+        //    console.debug("Delete Cloning...");
             mainView.getDynLib().deleteCloneDialog();
         }
     }
@@ -384,7 +388,7 @@ Rectangle {
     Connections{
         target:desktopDialog
         onCompleted:{
-            console.debug("Delete Desktop Dialog...");
+          //  console.debug("Delete Desktop Dialog...");
             mainView.getDynLib().deleteDesktopDialog();
         }
 
@@ -396,7 +400,7 @@ Rectangle {
     Connections{
         target:calibrationDialog
         onCompleted:{
-            console.debug("Delete Calibration Dialog...");
+          //  console.debug("Delete Calibration Dialog...");
             mainView.getDynLib().deleteCalibrationDialog();
         }
     }
@@ -404,7 +408,7 @@ Rectangle {
     Connections{
         target:liveTourDialog
         onCompleted:{
-            console.debug("Delete Livetour Dialog...");
+           // console.debug("Delete Livetour Dialog...");
             mainView.getDynLib().deleteLiveTourDialog();
         }
     }

@@ -2,11 +2,11 @@
 import QtQuick 1.1
 
 import ".."
-import "../.."
+import "../../tooltips"
 
 Item {
     id: buttonsArea
-    width: mainWorkArea.imagewidth
+    width: mainWorkArea.imagewidth-buttonsSize/4
     height: taskDeleg1.height
     state: "hide"
 
@@ -18,6 +18,8 @@ Item {
     property alias xClose: closeBtn.x
     property alias opacityWSt:  placeStateBtn.opacity
     property alias xWSt:  placeStateBtn.x
+
+    y:-buttonsSize/6
 
     signal changedStatus();
 
@@ -156,6 +158,7 @@ Item {
         }
 
     }
+
 
 
     states: [

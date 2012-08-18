@@ -117,9 +117,12 @@ public slots:
 
     void themeSelectionChanged(QString);
 
+    void setToolTipsDelayChanged(int);
+
     void showingIconsDialog();
     void answeredIconDialog();
     void configDialogFinished();
+
 
     void saveConfigurationFiles();
 
@@ -141,6 +144,7 @@ private:
 
     bool m_hideOnClick;
     bool m_isOnDashboard;
+    int m_tipsDelay;
 
     QString m_currentTheme;
 

@@ -1,6 +1,6 @@
 import QtQuick 1.0
 
-import "../../"
+import "../../tooltips"
 
 Item{
     id: workAreaButtons

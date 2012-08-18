@@ -21,6 +21,7 @@ function showRemoveDialog(actId,actName){
 
     mainView.removeDialog.activityCode = actId;
     mainView.removeDialog.activityName = actName;
+    mainView.removeDialog.defColor = mainView.defaultFontColor;
 
     mainView.removeDialog.open();
 }
@@ -39,6 +40,7 @@ function showCloneDialog(actId,actName){
 
     mainView.cloningDialog.activityCode = actId;
     mainView.cloningDialog.activityName = actName;
+    mainView.cloningDialog.defColor = mainView.defaultFontColor;
 
     mainView.cloningDialog.open();
 }
@@ -53,6 +55,7 @@ function showCalibrationDialog(){
     var clbDialog = Qt.createComponent("ui/CalibrationDialogTmpl.qml");
 
     mainView.calibrationDialog = clbDialog.createObject(mainView);
+    mainView.calibrationDialog.defColor = mainView.defaultFontColor;
 
     mainView.calibrationDialog.openD();
 }
@@ -68,6 +71,7 @@ function showDesktopDialog(actId,desk){
 
     mainView.desktopDialog = dskDialog.createObject(mainView);
     mainView.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
+    mainView.desktopDialog.defColor = mainView.defaultFontColor;
 
     mainView.desktopDialog.openD(actId,desk);
 

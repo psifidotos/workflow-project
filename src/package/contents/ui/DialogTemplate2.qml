@@ -28,6 +28,7 @@ PlasmaCore.FrameSvgItem{
     property int insideX: spaceX
     property int insideY: spaceY
 
+    property color defColor:"#ffffff"
 
     property alias dialogTitle: titleMesg.text
 
@@ -40,6 +41,7 @@ PlasmaCore.FrameSvgItem{
     signal completed
 
     property bool isModal:true
+    property bool forceModality:true
 
     // width:mainView.width
     //  height:mainView.height
@@ -58,12 +60,17 @@ PlasmaCore.FrameSvgItem{
     Rectangle{
         width:mainView.width
         height:mainView.height
-        color:"#33333333"
+        color:"#10333333"
         anchors.centerIn: parent
         MouseArea{
             anchors.fill: parent
             hoverEnabled: templDialog.isModal
             enabled:templDialog.isModal
+
+            onClicked:{
+                if(!forceModality)
+                    clickedCancel();
+            }
         }
     }
 
@@ -150,11 +157,13 @@ PlasmaCore.FrameSvgItem{
             //Title
             Text{
                 id:titleMesg
-                color:"#ffffff"
+                //color:"#ffffff"
+                color:defColor
+
                 width:parent.width
                 horizontalAlignment:Text.AlignHCenter
                 anchors.top:parent.top
-                anchors.topMargin: 5
+                anchors.topMargin: templDialog.margins.top
                 font.family: mainView.defaultFont.family
                 font.bold: true
                 font.italic: true
