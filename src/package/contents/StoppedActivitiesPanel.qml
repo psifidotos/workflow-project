@@ -144,7 +144,8 @@ Rectangle {
         property int stoppedActivityHeight: 0.66*mainView.workareaHeight
 
         contentWidth: stoppedActivitiesList.width
-        contentHeight: stoppedActivitiesList.shownActivities*stoppedActivityHeight
+        //contentHeight: stoppedActivitiesList.shownActivities*stoppedActivityHeight
+        contentHeight:stoppedActivitiesList.height
 
         boundsBehavior: Flickable.StopAtBounds
 
@@ -155,7 +156,7 @@ Rectangle {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
             // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
-            height: shownActivities * ((0.62*mainView.workareaHeight)+spacing)
+            height: shownActivities * ((0.62*mainView.workareaHeight)+spacing)+40
             width: stopActBack.width - spacing
 
             //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
