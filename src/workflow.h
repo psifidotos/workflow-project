@@ -97,12 +97,6 @@ public:
 
     Q_INVOKABLE void workAreaWasClicked();
 
-    //Interact with Corona() and Desktops Containments()
-
-    Q_INVOKABLE void unlockWidgets();
-    Q_INVOKABLE void showWidgetsExplorer(QString);
-
-
 public slots:
     void setCurrentTheme(QString);
 
@@ -170,13 +164,6 @@ private:
 
     KConfigGroup appConfig;
 
-    //This is an indicator for the corona() actions in order to check
-    //if widgets are already unlocked.
-    QString m_unlockWidgetsText;
-
-
-    ////////////
-    Plasma::Containment *getContainment(QString actId);
 };
 
 // This is the command that links your applet to the .desktop file

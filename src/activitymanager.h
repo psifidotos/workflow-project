@@ -16,6 +16,11 @@ namespace KActivities
     class Info;
 }
 
+namespace Plasma {
+    class Containment;
+    class Corona;
+}
+
 class ActivityManager : public QObject
 {
     Q_OBJECT
@@ -28,7 +33,7 @@ public:
 //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
 //  Q_INVOKABLE void downloadActivityScripts();
 
-    Q_INVOKABLE QString getWallpaper(QString source) const;
+    Q_INVOKABLE QString getWallpaper(QString source);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
     Q_INVOKABLE QString add(QString name);
 //    Q_INVOKABLE void clone(QString id, QString name);
@@ -45,14 +50,18 @@ public:
     Q_INVOKABLE void initCloningPhase04(QString id);
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
-    void setQMlObject(QObject *);
+    //Interact with Corona() and Desktops Containments()
+
+    Q_INVOKABLE void unlockWidgets();
+    Q_INVOKABLE void showWidgetsExplorer(QString);
+
+    void setQMlObject(QObject *,Plasma::Corona *);
 
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void showedIconDialog();
     void answeredIconDialog();
-
 
 public slots:
  // void dataUpdated(QString source, Plasma::DataEngine::Data data);
@@ -66,9 +75,10 @@ private slots:
   void timerTrigerred();
 
 private:
-    QString getWallpaperForRunning(QString source) const;
-    QString getWallpaperForStopped(QString source) const;
-    QString getWallpaperFromFile(QString source,QString file) const;
+    QString getWallpaperForRunning(QString source);
+    QString getWallpaperForStopped(QString source);
+    QString getWallpaperFromFile(QString source,QString file);
+    QString getWallpaperFromContainment(Plasma::Containment *actContainment);
 
     QString getContainmentId(QString txt) const;
 
@@ -89,10 +99,19 @@ private:
     QString toCloneContainmentId;
     QString toCloneActivityId;
 
+    Plasma::Corona *m_corona;
+
     int m_timerPhase;
 
     QTimer *m_timer;
 
+    //This is an indicator for the corona() actions in order to check
+    //if widgets are already unlocked.
+    QString m_unlockWidgetsText;
+
+
+    ////////////
+    Plasma::Containment *getContainment(QString actId);
 };
 
 #endif // ACTIVITYMANAGER_H

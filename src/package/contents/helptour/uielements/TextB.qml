@@ -4,7 +4,8 @@ import QtQuick 1.1
 Text {
 
     font.family: "Helvetica"
-    color:"#fafafa"
+    //color:"#fafafa"
+    color:defColor
     wrapMode: Text.WordWrap
 
 

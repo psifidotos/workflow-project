@@ -19,11 +19,12 @@ Item{
         text:parent.text1
 
         font.family: "Helvetica"
-        font.pixelSize: parent.lineHeight
+        font.pixelSize: 0
 
         width:parent.width - numCounter.width - 2
 
-        color:"#f5f5f5"
+        //color:"#f5f5f5"
+        color:defColor
     }
 
 }

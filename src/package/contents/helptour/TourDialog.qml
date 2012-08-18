@@ -2,17 +2,32 @@
 import QtQuick 1.1
 
 import "uielements"
+import "../ui/"
 
-Rectangle {
+DialogTemplate2 {
 
     id:mainTourWin
 
-    width:mainView.width
-    height:mainView.height
+    //width:mainView.width
+    //height:mainView.height
 
-    color: "#ca151515"
+    //color: "#ca151515"
+    anchors.centerIn: mainView
 
-    opacity:0
+
+    insideWidth: mainView.width-2*margins.left-2*margins.right
+    insideHeight: mainView.height-4*margins.top-3*margins.bottom
+
+    property int smallFont:0.018*insideHeight
+    property int mediumFont:0.02*insideHeight
+    property int bigFont:0.04*insideHeight
+    property int largeFont:0.07*insideHeight
+
+  //  dialogTitle: i18n("Help Tour")+"..."
+
+    isModal: true
+    forceModality: false
+    showButtons: false
 
     signal completed();
 
@@ -23,27 +38,30 @@ Rectangle {
         }
     }
 
-
+/*
     MouseArea{
         anchors.fill: parent
         hoverEnabled: true
         onClicked:completed();
-    }
+    }*/
 
     ListView{
         id:titlesColumn
-        y:0.3*parent.height
-        width:0.1*mainView.width
+        y:0.3*insideHeight
+        width:0.1*insideWidth
+        anchors.left:parent.left
+        anchors.leftMargin:6
         model:ListModel{}
 
-        delegate:Text{
-            width:0.1*mainView.width
+        delegate:TextB{
+            width:0.1*insideWidth
             elide:Text.ElideRight
-            font.family: mainView.defaultFont.family
-            font.pixelSize: 0.02*mainTourWin.height
+            //font.family: mainView.defaultFont.family
+            font.pixelSize: mediumFont
 
             text:(index+1)+". "+Title;
-            color:"#ffffff"
+            wrapMode: Text.WordWrap
+            //color:defColor
         }
 
     }
@@ -51,11 +69,12 @@ Rectangle {
 
     Rectangle{
         width:1
-        height:0.5*mainView.height
+        height:0.5*insideHeight
         anchors.left: titlesColumn.right
         anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
-        color:"#88f7f7f7"
+        color:defColor
+        opacity:0.7
     }
 
 
@@ -80,8 +99,10 @@ Rectangle {
         id:tourPage1
 
         anchors.left: titlesColumn.right
-        width:0.9*mainView.width
-        height: mainView.height
+        anchors.top:parent.top
+        anchors.topMargin:margins.top+10
+        width:0.9*insideWidth
+        height: insideHeight
     }
 
 
@@ -123,7 +144,12 @@ Rectangle {
     }
 
     function resetAnimation(){
-        opacity = 0;
+
+    }
+
+    function openD(){
+        open();
+        startAnimation();
     }
 
 }

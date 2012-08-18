@@ -12,7 +12,7 @@ TourPage{
         id:welcomeText1
         text:i18n("Welcome to")
         width:parent.width
-        font.pixelSize: 0.04*trPage1.height
+        font.pixelSize: bigFont
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         anchors.horizontalCenter: parent.horizontalCenter
@@ -23,7 +23,7 @@ TourPage{
         id:welcomeText2
         text:"WorkFlow Project"
         width:parent.width
-        font.pixelSize: 0.07*trPage1.height
+        font.pixelSize: largeFont
         font.bold: true
         font.italic: true
         horizontalAlignment: Text.AlignHCenter
@@ -31,17 +31,19 @@ TourPage{
         anchors.top:welcomeText1.bottom
         anchors.topMargin:5
     }
+
+    /*
     TextB{
         id:welcomeText3
         text:i18n("Plasmoid Version: ")+"<i>"+mainView.version+"</i>"
         width:parent.width
-        font.pixelSize: 0.03*trPage1.height
+        font.pixelSize: bigFont
         horizontalAlignment: Text.AlignHCenter
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:welcomeText2.bottom
         anchors.topMargin:5
-    }
+    }*/
 
 
     RectangleB{
@@ -51,7 +53,7 @@ TourPage{
         height:2
         width:0.8*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top:welcomeText3.bottom
+        anchors.top:welcomeText2.bottom
         anchors.topMargin:10
     }
 
@@ -62,7 +64,7 @@ TourPage{
         anchors.top:sepLine1.bottom
         anchors.topMargin:10
 
-        font.pixelSize: 0.02*trPage1.height
+        font.pixelSize: mediumFont
         font.bold: true
         fullText:i18n("The WorkFlow Project is an effort which tries to experiment with new technologies of KDE in answering the following question:")
     }
@@ -72,11 +74,11 @@ TourPage{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:animText1.bottom
         anchors.topMargin:15
-        font.pixelSize: 0.03*trPage1.height
+        font.pixelSize: bigFont
         font.bold: true
         font.italic:true
         horizontalAlignment: Text.AlignHCenter
-        fullText:i18n("What is the most efficient way to use my computer?")
+        fullText:i18n("\"What is the most efficient way to use my computer?\"")
     }
 
     AnimatedText{
@@ -85,7 +87,7 @@ TourPage{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:animText2.bottom
         anchors.topMargin:15
-        font.pixelSize: 0.02*trPage1.height
+        font.pixelSize: mediumFont
         font.bold: true
         fullText:i18n("The most recent answer from the KDE community is by using <b><i><big>Activities</big></i></b>...")
     }
@@ -99,11 +101,11 @@ TourPage{
         anchors.right: parent.horizontalCenter
         anchors.rightMargin: 5
 
-        font.pixelSize: 0.02*trPage1.height
+        font.pixelSize: mediumFont
         font.bold: true
         horizontalAlignment: Text.AlignRight
 
-        text:i18n("<big><u>Activity</u></big><br/><br/>Is a way to separate your work in different areas. Each activity can have different tools(widgets), windows, documents. In that way you can have a different Activity for your <i>"+i18n("Vacation Planning")+"</i>, your <i>"+i18n("University Studies")+"</i>, your <i>"+i18n("Chess Hobby")+"</i> etc.")
+        text:i18n("<big><u>Activity</u></big><br/><br/>Is a way to separate your work in different areas. Each activity can have different tools(plasmoids), windows, documents. In that way you can have a different Activity for your <i>"+i18n("Vacation Planning")+"</i>, your <i>"+i18n("University Studies")+"</i>, your <i>"+i18n("Chess Hobby")+"</i> etc.")
     }
 
     AnimatedParagraph{
@@ -119,7 +121,7 @@ TourPage{
         lineLength: 0.35*parent.height
 
         fontBold:true
-        fontPixelSize: 0.02*trPage1.height
+        fontPixelSize: mediumFont
 
         textOnlyOpacity:true
 
@@ -139,7 +141,7 @@ TourPage{
             font.bold: true
             font.italic:true
             elide:Text.ElideRight
-            font.pixelSize: 0.018*trPage1.height
+            font.pixelSize: smallFont
             text:i18n("Vacation Planning");
             horizontalAlignment: Text.AlignHCenter
         }
@@ -149,7 +151,7 @@ TourPage{
             font.bold: true
             font.italic:true
             elide:Text.ElideRight
-            font.pixelSize: 0.018*trPage1.height
+            font.pixelSize: smallFont
             text:i18n("University Studies");
             horizontalAlignment: Text.AlignHCenter
         }
@@ -159,13 +161,15 @@ TourPage{
             font.bold: true
             font.italic:true
             elide:Text.ElideRight
-            font.pixelSize: 0.018*trPage1.height
+            font.pixelSize: smallFont
             text:i18n("Chess Hobby");
             horizontalAlignment: Text.AlignHCenter
         }
 
     }
 
+
+    property real ratio:1.4
 
     RowB{
         anchors.top: activitiesTitles.bottom
@@ -177,19 +181,19 @@ TourPage{
         Image{
             id:activity1Image
             height:0.12*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
         }
 
         Image{
             height:0.12*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk1.png"
         }
 
         Image{
             height:0.12*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk3.png"
         }
 
@@ -207,7 +211,7 @@ TourPage{
         font.italic: true
         font.letterSpacing: 1
 
-        font.pixelSize: 0.018*trPage1.height
+        font.pixelSize: smallFont
         text:i18n("Vacation Planning");
     }
 
@@ -223,7 +227,7 @@ TourPage{
 
         Image{
             height:0.10*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
 
             TextB{
@@ -239,7 +243,7 @@ TourPage{
 
         Image{
             height:0.10*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
             TextB{
                 anchors.top:parent.bottom
@@ -254,7 +258,7 @@ TourPage{
 
         Image{
             height:0.10*trPage1.height
-            width:1.25*height
+            width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
             TextB{
                 anchors.top:parent.bottom

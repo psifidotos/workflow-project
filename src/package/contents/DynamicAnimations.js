@@ -104,7 +104,7 @@ function showLiveTourDialog(){
 
     mainView.liveTourDialog = lvDialog.createObject(mainView);
 
-    mainView.liveTourDialog.startAnimation();
+    mainView.liveTourDialog.open();
 }
 
 

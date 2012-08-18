@@ -4,7 +4,8 @@ import QtQuick 1.1
 Rectangle {
     property int num
 
-    color:"#f6f6f6"
+    //color:"#f6f6f6"
+    color:defColor
     radius: width/2
 
     height:width

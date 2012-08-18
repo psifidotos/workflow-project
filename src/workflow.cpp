@@ -74,7 +74,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
-    m_unlockWidgetsText = "";
 
     m_desktopWidget = qApp->desktop();
 }
@@ -182,7 +181,15 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                 qDebug() << "root was not found...";
             else{
                 if(qmlActEng){
-                    actManager->setQMlObject(qmlActEng);
+
+                    Plasma::Corona *tCorona=NULL;
+
+                    if(containment())
+                        if(containment()->corona())
+                            tCorona = containment()->corona();
+
+
+                    actManager->setQMlObject(qmlActEng, tCorona);
                     connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                     connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
                 }
@@ -393,81 +400,6 @@ void WorkFlow::workAreaWasClicked()
         this->hidePopup();
 }
 
-
-void WorkFlow::unlockWidgets()
-{
-    if(containment())
-        if(containment()->corona())
-            if(containment()->corona()->actions().at(0)){
-                QAction *unlockAction = containment()->corona()->actions().at(0);
-
-                //Just checking the text size usually the word unlock is a bigger text
-                if(m_unlockWidgetsText == ""){
-
-                    QString str1(unlockAction->text());
-                    unlockAction->trigger();
-                    QString str2(unlockAction->text());
-
-
-
-
-                    if(str1.size() > str2.size())
-                        m_unlockWidgetsText = str1;
-                    else
-                        m_unlockWidgetsText = str2;
-                }
-
-                if(m_unlockWidgetsText == unlockAction->text())
-                    unlockAction->trigger();
-                //else the widgets are already unlocked
-            }
-
-}
-
-Plasma::Containment *WorkFlow::getContainment(QString actId)
-{
-    if(containment())
-        if(containment()->corona()){
-            for(int j=0; j<containment()->corona()->containments().size(); j++){
-                Plasma::Containment *tC = containment()->corona()->containments().at(j);
-
-        //        qDebug()<<"Step1...";
-                if (tC->containmentType() == Plasma::Containment::DesktopContainment){
-         //           qDebug()<<"Step2...";
-                    if((tC->config().readEntry("activityId","") == actId)&&
-                            (tC->config().readEntry("plugin","") != "desktopDashboard")){
-             //           qDebug()<<"Step3...";
-                        if (tC->view())
-                            return tC;
-                    }
-
-
-                }
-
-            }
-        }
-
-    return 0;
-}
-
-
-
-
-void WorkFlow::showWidgetsExplorer(QString actId)
-{
-    Plasma::Containment *currentContainment = getContainment(actId);
-    if(currentContainment){
-    //    qDebug()<<"Step4...";
-        currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
-                                                               "showWidgetExplorer");
-
-        if(m_isOnDashboard)
-            taskManager->hideDashboard();
-        else
-            hidePopupDialog();
-    }
-
-}
 
 void WorkFlow::screensSizeChanged(int s)
 {

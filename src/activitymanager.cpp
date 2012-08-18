@@ -5,6 +5,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QIODevice>
+#include <QAction>
+#include <QGraphicsView>
 
 
 #include <KIconDialog>
@@ -19,13 +21,17 @@
 #include <KActivities/Controller>
 #include <KActivities/Info>
 
+#include <Plasma/Containment>
+#include <Plasma/Corona>
+
 
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
     m_timer = new QTimer(this);
-    m_timerPhase = 0;
+    m_timerPhase = 0;    
+    m_unlockWidgetsText = "";
 }
 
 ActivityManager::~ActivityManager()
@@ -34,9 +40,10 @@ ActivityManager::~ActivityManager()
     delete m_activitiesCtrl;
 }
 
-void ActivityManager::setQMlObject(QObject *obj)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor)
 {
     qmlActEngine = obj;
+    m_corona = cor;
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -58,7 +65,7 @@ void ActivityManager::setQMlObject(QObject *obj)
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
 
-QString ActivityManager::getWallpaperFromFile(QString source, QString file) const
+QString ActivityManager::getWallpaperFromFile(QString source, QString file)
 {
     //QString fpath = QDir::home().filePath(file);
     QString fpath = file;
@@ -106,16 +113,49 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file) cons
 
 }
 
-QString ActivityManager::getWallpaper(QString source) const
+QString ActivityManager::getWallpaperFromContainment(Plasma::Containment *actContainment)
 {
-    QString res = getWallpaperForStopped(source);
+    //QString fpath = QDir::home().filePath(file);
+
+    KConfigGroup gWall= actContainment->config().group("Wallpaper").group("image");
+
+    QString foundF = gWall.readEntry("wallpaper",QString("null"));
+    QDir tmD(foundF+"/contents/images");
+    if (tmD.exists()){
+        QStringList files;
+        files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
+
+        if (!files.isEmpty())
+            foundF = tmD.absoluteFilePath(files.at(0));
+    }
+
+    if (QFile::exists(foundF))
+        return foundF;
+    else
+        return "";
+}
+
+
+QString ActivityManager::getWallpaper(QString source)
+{
+    QString res = "";
+
+    Plasma::Containment *currentContainment = getContainment(source);
+    if(currentContainment){
+        res = getWallpaperFromContainment(currentContainment);
+        qDebug()<<"From Containment:"<<res;
+        if(res != "")
+            return res;
+    }
+
+    res = getWallpaperForStopped(source);
     if (res=="")
         res = getWallpaperForRunning(source);
 
     return res;
 }
 
-QString  ActivityManager::getWallpaperForRunning(QString source) const
+QString  ActivityManager::getWallpaperForRunning(QString source)
 {
     QString fPath =KStandardDirs::locate("config","plasma-desktop-appletsrc");
 
@@ -123,7 +163,7 @@ QString  ActivityManager::getWallpaperForRunning(QString source) const
     return getWallpaperFromFile(source,fPath);
 }
 
-QString  ActivityManager::getWallpaperForStopped(QString source) const
+QString  ActivityManager::getWallpaperForStopped(QString source)
 {
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+source;
 
@@ -528,4 +568,80 @@ void ActivityManager::remove(QString id) {
 
 
 */
+
+//All The Widgets Explorer Hacking///
+
+void ActivityManager::unlockWidgets()
+{
+    //if(containment())
+        if(m_corona)
+            if(m_corona->actions().at(0)){
+                QAction *unlockAction = m_corona->actions().at(0);
+
+                //Just checking the text size usually the word unlock is a bigger text
+                if(m_unlockWidgetsText == ""){
+
+                    QString str1(unlockAction->text());
+                    unlockAction->trigger();
+                    QString str2(unlockAction->text());
+
+                    if(str1.size() > str2.size())
+                        m_unlockWidgetsText = str1;
+                    else
+                        m_unlockWidgetsText = str2;
+                }
+
+                if(m_unlockWidgetsText == unlockAction->text())
+                    unlockAction->trigger();
+                //else the widgets are already unlocked
+            }
+
+}
+
+Plasma::Containment *ActivityManager::getContainment(QString actId)
+{
+    //if(containment())
+        if(m_corona){
+            for(int j=0; j<m_corona->containments().size(); j++){
+                Plasma::Containment *tC = m_corona->containments().at(j);
+
+        //        qDebug()<<"Step1...";
+                if (tC->containmentType() == Plasma::Containment::DesktopContainment){
+         //           qDebug()<<"Step2...";
+                    if((tC->config().readEntry("activityId","") == actId)&&
+                            (tC->config().readEntry("plugin","") != "desktopDashboard")){
+             //           qDebug()<<"Step3...";
+                        if (tC->view())
+                            return tC;
+                    }
+
+
+                }
+
+            }
+        }
+
+    return 0;
+}
+
+
+
+
+void ActivityManager::showWidgetsExplorer(QString actId)
+{
+    Plasma::Containment *currentContainment = getContainment(actId);
+    if(currentContainment){
+    //    qDebug()<<"Step4...";
+        currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
+                                                               "showWidgetExplorer");
+/*
+        if(m_isOnDashboard)
+            taskManager->hideDashboard();
+        else
+            hidePopupDialog();*/
+
+    }
+
+}
+
 #include "activitymanager.moc"

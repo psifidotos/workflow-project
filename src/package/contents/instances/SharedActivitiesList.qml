@@ -330,7 +330,7 @@ Item{
 
 
         if(widgetsExplorerAwaitingActivity){
-            workflowManager.showWidgetsExplorer(cod);
+            activityManager.showWidgetsExplorer(cod);
             widgetsExplorerAwaitingActivity = false;
         }
 
@@ -348,7 +348,7 @@ Item{
 
     function setCurrentActivityAndDesktop(activit, desk)
     {
-        updateWallpaper(activit);
+
         setCurrent(activit);
 
         var nextDesk = desk;
@@ -362,6 +362,7 @@ Item{
 
         instanceOfTasksList.setCurrentDesktop(nextDesk);
 
+        updateWallpaper(activit);
         return nextDesk;
 
     }
@@ -369,11 +370,13 @@ Item{
     function showWidgetsExplorer(act){
         if(mainView.isOnDashBoard)
             taskManager.hideDashboard();
+        else
+            workflowManager.hidePopupDialog();
 
         widgetsExplorerAwaitingActivity = true;
         var nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
         instanceOfTasksList.minimizeWindowsIn(act, nDesktop);
-        workflowManager.unlockWidgets();
+        activityManager.unlockWidgets();
 
     }
 
