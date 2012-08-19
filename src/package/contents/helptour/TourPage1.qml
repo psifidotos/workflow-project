@@ -8,24 +8,23 @@ TourPage{
     id:trPage1
     pageTitle: "Introduction"
 
-    TextB{
+    HeadingB{
         id:welcomeText1
         text:i18n("Welcome to")
-        width:parent.width
-        font.pixelSize: bigFont
-        font.bold: true
+        width:parent.width-40
+        pixelSize: bigFont
+        bold: true
         horizontalAlignment: Text.AlignHCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
         anchors.top:parent.top
         anchors.topMargin:5
     }
     TextB{
         id:welcomeText2
-        text:"WorkFlow Project"
+        text:"<b>Work<b><i>Flow</i> Project"
         width:parent.width
         font.pixelSize: largeFont
-        font.bold: true
-        font.italic: true
+
         horizontalAlignment: Text.AlignHCenter
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:welcomeText1.bottom
@@ -49,7 +48,7 @@ TourPage{
     RectangleB{
         id:sepLine1
         y:0.15*parent.height
-        color:"#f7f7f7"
+        color:defColor
         height:2
         width:0.8*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -66,7 +65,7 @@ TourPage{
 
         font.pixelSize: mediumFont
         font.bold: true
-        fullText:i18n("The WorkFlow Project is an effort which tries to experiment with new technologies of KDE in answering the following question:")
+        fullText:i18n("The <i>WorkFlow Project</i> is an effort which tries to experiment with new technologies of KDE in answering the following question:")
     }
     AnimatedText{
         id:animText2
@@ -79,9 +78,10 @@ TourPage{
         font.italic:true
         horizontalAlignment: Text.AlignHCenter
         fullText:i18n("\"What is the most efficient way to use my computer?\"")
+        color:"#e58e5b"
     }
 
-    AnimatedText{
+    TextB{
         id:animText3
         width:0.8*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
@@ -89,7 +89,7 @@ TourPage{
         anchors.topMargin:15
         font.pixelSize: mediumFont
         font.bold: true
-        fullText:i18n("The most recent answer from the KDE community is by using <b><i><big>Activities</big></i></b>...")
+        text:i18n("The most recent answer from the KDE community is by using <b><i><big><font color=\"#e58e5b\">Activities</font></big></i></b>...")
     }
 
     TextB{
@@ -105,7 +105,7 @@ TourPage{
         font.bold: true
         horizontalAlignment: Text.AlignRight
 
-        text:i18n("<big><u>Activity</u></big><br/><br/>Is a way to separate your work in different areas. Each activity can have different tools(plasmoids), windows, documents. In that way you can have a different Activity for your <i>"+i18n("Vacation Planning")+"</i>, your <i>"+i18n("University Studies")+"</i>, your <i>"+i18n("Chess Hobby")+"</i> etc.")
+        text:i18n("<big><u>Activity</u></big><br/><br/>Is a way to separate your work in different areas. Each activity can have different tools(plasmoids), windows, documents. In that way you can have a different Activity for your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font>, your <font color=\"#a1b6f7\"><i>\"University Studies\"</i></font>, your <font color=\"#a1b6f7\"><i>\"Chess Hobby\"</i></font> etc.")
     }
 
     AnimatedParagraph{
@@ -125,7 +125,7 @@ TourPage{
 
         textOnlyOpacity:true
 
-        fullText:"<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <i>Vacation Planning</i> can be separated in <i>"+i18n("Sightseeing information")+"</i>, <i>"+i18n("Hotels")+"</i>, <i>"+i18n("Restaurants")+"</i> etc."
+        fullText:"<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></font> WorkAreas etc."
     }
 
     RowB{
@@ -183,18 +183,39 @@ TourPage{
             height:0.12*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
         }
 
         Image{
             height:0.12*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk1.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
         }
 
         Image{
             height:0.12*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk3.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
         }
 
     }
@@ -229,6 +250,13 @@ TourPage{
             height:0.10*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
 
             TextB{
                 anchors.top:parent.bottom
@@ -245,6 +273,13 @@ TourPage{
             height:0.10*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
             TextB{
                 anchors.top:parent.bottom
                 width:parent.width
@@ -260,6 +295,13 @@ TourPage{
             height:0.10*trPage1.height
             width:ratio*height
             source:"../Images/backgrounds/emptydesk2.png"
+            Rectangle{
+                border.color: defColor
+                border.width: 1
+                color:"#00000000"
+                width:parent.width
+                height:parent.height
+            }
             TextB{
                 anchors.top:parent.bottom
                 width:parent.width

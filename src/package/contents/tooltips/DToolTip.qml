@@ -100,8 +100,7 @@ PlasmaCore.FrameSvgItem{
         elide:Text.ElideRight
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
-        font.pointSize: 11
-
+        font.pixelSize: 0.35*mainView.scaleMeter
         font.bold: true
         font.italic: true
     }
@@ -120,7 +119,7 @@ PlasmaCore.FrameSvgItem{
 
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
-        font.pointSize: 11
+        font.pixelSize: 0.35*mainView.scaleMeter
 
         font.bold: true
         font.italic: true
@@ -153,13 +152,16 @@ PlasmaCore.FrameSvgItem{
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
 
-        font.pointSize: 10
+        font.pixelSize: 0.33*mainView.scaleMeter
 
         property int findWidth: shadowMainTxt.width-parent.iconWidth-parent.margins.left-parent.margins.right
-        width: Math.max(findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
-                            findWidth + parent.margins.left :
-                            maxHorSizeNoMargins - parent.iconWidth - 3,
-                            shadowTitleTxt.width+parent.iconWidth)
+//        width: Math.max(findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
+  //                          findWidth + parent.margins.left :
+    //                        maxHorSizeNoMargins - parent.iconWidth - 3,
+      //                      shadowTitleTxt.width+parent.iconWidth)
+        width: findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
+                                  findWidth + parent.margins.left :
+                                  maxHorSizeNoMargins - parent.iconWidth - 3
 
         wrapMode:Text.WordWrap
 
@@ -176,7 +178,7 @@ PlasmaCore.FrameSvgItem{
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
 
-        font.pointSize: 10
+        font.pixelSize: 0.33*mainView.scaleMeter
 
         // width:toolTip.width
     }

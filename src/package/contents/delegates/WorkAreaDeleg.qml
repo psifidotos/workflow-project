@@ -103,6 +103,10 @@ Item{
                 }
             }
 
+            Component.onCompleted: {
+                countShownChildren();
+            }
+
             Connections{
                 target:instanceOfTasksList
                 onTasksChanged:{
@@ -146,7 +150,7 @@ Item{
             opacity: ((tasksSList.shownTasks>0)&&(mainView.showWinds===true)) ?
                        1 : 0
 
-            property color defTextColor:"#d90a0a0a"
+            property color defTextColor:"#d9FFF0B6"
             property color hovTextColor:"#f8f8f8f8"
 
             MouseArea {
@@ -192,9 +196,10 @@ Item{
 
                 color: cornerImage.defTextColor
 
-                font.pixelSize: 0
+                font.pixelSize: 0.4*cornerImage.width
                 font.italic:true
                 font.family: mainView.defaultFont.family
+
 
                 horizontalAlignment:Text.AlignHCenter
 

@@ -103,14 +103,14 @@ function showLiveTourDialog(){
     var lvDialog = Qt.createComponent("helptour/TourDialog.qml");
 
     mainView.liveTourDialog = lvDialog.createObject(mainView);
+    mainView.liveTourDialog.defColor = mainView.defaultFontColor;
 
-    mainView.liveTourDialog.open();
+    mainView.liveTourDialog.openD();
 }
 
 
 function deleteLiveTourDialog(){
-    mainView.liveTourDialog.resetAnimation();
-    mainView.liveTourDialog.destroy(2*mainView.animationsStep);
+    mainView.liveTourDialog.destroy();
 }
 
 

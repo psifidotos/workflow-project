@@ -10,6 +10,7 @@ Item{
     property bool allDesks
     property bool allActiv
 
+    property alias enabled:mouseAr.enabled
     WindowButton{
         id:winStateBtn
 
@@ -61,8 +62,10 @@ Item{
     ]
 
     MouseArea {
+        id:mouseAr
         anchors.fill: parent
         hoverEnabled: true
+        enabled: true
 
         onEntered: {
             winStateItem.onEntered();

@@ -3,7 +3,7 @@ import QtQuick 1.1
 
 Text {
 
-    font.family: "Helvetica"
+    font.family: "Sans"
     //color:"#fafafa"
     color:defColor
     wrapMode: Text.WordWrap

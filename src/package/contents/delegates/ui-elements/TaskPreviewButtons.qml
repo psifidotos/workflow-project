@@ -162,7 +162,7 @@ Item {
 
         DToolTip{
             title:i18n("Change Window State")
-            mainText: i18n("You can change this window's state, there are three states available:<br/>1.Show only on that Workarea<br/>2.Show on every WorkArea in that Activity<br/>3.Show on all WorkAreas.")
+            mainText: i18n("You can change the window's state, there are three states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
             target:placeStateBtnMouseArea
             //icon:instanceOfThemeList.icons.RunActivity
         }

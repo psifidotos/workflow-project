@@ -8,6 +8,8 @@ Rectangle {
     //property int defRotation
 
     //   property bool moveForward:false
+    property string objectNameType:"AnimatedLine"
+
     property bool isVertical:false
     property int lengthEnd
 
@@ -16,6 +18,7 @@ Rectangle {
     property int endRotation
     property int startRotation
 
+    color:defColor
 
     rotation:startRotation
     state:"backward"

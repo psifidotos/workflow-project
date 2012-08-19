@@ -142,8 +142,8 @@ Item{
             }
 
             DToolTip{
-                title:i18n("Stop Activity")
-                mainText: i18n("You can stop an Activity and place it on the right panel")
+                title:i18n("Pause Activity")
+                mainText: i18n("You can pause an Activity and place it on the right panel.This way the Activity will be always available to continue your work from where you stopped.")
                 target:stopActivityBtnMouseArea
                 //masterMouseArea:stopActivityBtnMouseArea
                 icon:instanceOfThemeList.icons.PauseActivity

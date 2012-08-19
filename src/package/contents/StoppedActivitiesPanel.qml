@@ -139,9 +139,9 @@ Rectangle {
         id: stopActivitiesView
 
         width: stopActBack.width
-        height: stopActBack.height
+        height: stopActBack.height - y
 
-        property int stoppedActivityHeight: 0.66*mainView.workareaHeight
+        property int stoppedActivityHeight: 0.62*mainView.workareaHeight
 
         contentWidth: stoppedActivitiesList.width
         //contentHeight: stoppedActivitiesList.shownActivities*stoppedActivityHeight
@@ -151,16 +151,15 @@ Rectangle {
 
         anchors.right: stopActBack.right
 
+        //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
+        y:mainView.lockActivities === false ? mAddActivityBtn.height : 0
 
         ListView {
             id: stoppedActivitiesList
             orientation: ListView.Vertical
             // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
-            height: shownActivities * ((0.62*mainView.workareaHeight)+spacing)+40
+            height: shownActivities * ((0.62*mainView.workareaHeight)+spacing) + 30
             width: stopActBack.width - spacing
-
-            //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
-            y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 10
 
             anchors.right: parent.right
 
@@ -203,7 +202,9 @@ Rectangle {
 
     ScrollBar {
         id: stopVerticalScrollBar;
-        width: 11; height: stopActivitiesView.height
+        width: 11;
+        height: stopActivitiesView.height
+        anchors.top:stopActivitiesView.top
         anchors.right: stopActivitiesView.right
         opacity: 0
         orientation: Qt.Vertical

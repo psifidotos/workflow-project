@@ -17,6 +17,9 @@ ListModel {
                 DialogCancel:"dialog-cancel"
                 AddValue:"list-add"
                 MinusValue:"list-remove"
+                Previous:"go-previous"
+                Next:"go-next"
+                Exit:"dialog-close"
             }
         ]
     }
@@ -35,6 +38,9 @@ ListModel {
                 DialogCancel:"editdelete"
                 AddValue:"list-add"
                 MinusValue:"kt-remove"
+                Previous:"go-previous"
+                Next:"go-next"
+                Exit:"dialog-close"
             }
 
 
@@ -55,6 +61,9 @@ ListModel {
                 DialogCancel:"dialog-cancel"
                 AddValue:"media-skip-forward"
                 MinusValue:"media-skip-backward"
+                Previous:"go-previous"
+                Next:"go-next"
+                Exit:"dialog-close"
             }
         ]
     }

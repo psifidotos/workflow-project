@@ -114,7 +114,7 @@ Rectangle{
 
             DToolTip{
                 title:i18n("Lock Activities")
-                mainText: i18n("You can lock your Activities if you want. In Locked state only Pause and Run actions are enabled.")
+                mainText: i18n("You can lock your Activities if you want. In Locked state only Pause and Restore actions are enabled.")
                 target:lockerToolBtnMouseArea
                 localIcon:lockerImg.source
             }
@@ -245,7 +245,7 @@ Rectangle{
 
             DToolTip{
                 title:i18n("Enable/Disable Previews")
-                mainText: i18n("You can enable/disable window previews when you the plasmoid in the Dashboard. By Pressing and Holding a Calibration Dialog is appearing.")
+                mainText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard. With <i>\"Pressing and Holding\"</i> a Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
                 localIcon:effectsImg.source
             }

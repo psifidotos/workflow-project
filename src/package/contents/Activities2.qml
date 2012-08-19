@@ -8,7 +8,7 @@ import org.kde.qtextracomponents 0.1
 import "delegates"
 import "delegates/ui-elements"
 import "instances"
-//import "helptour"
+import "helptour"
 
 //import "ui"
 
@@ -455,7 +455,6 @@ Rectangle {
         width:200
         height:200
     }*/
-
 
 
 }

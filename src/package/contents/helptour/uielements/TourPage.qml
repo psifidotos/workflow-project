@@ -14,7 +14,8 @@ Item{
             for(var i=0; i<children.length; i++){
                 var chd = children[i];
                 if( (chd.objectNameType === "AnimatedParagraph") ||
-                    (chd.objectNameType === "AnimatedText") )
+                    (chd.objectNameType === "AnimatedText") ||
+                    (chd.objectNameType === "AnimatedLine"))
                     chd.startAnimation();
                 else
                     chd.opacity = 1;
@@ -28,7 +29,8 @@ Item{
             for(var i=0; i<children.length; i++){
                 var chd = children[i];
                 if( (chd.objectNameType === "AnimatedParagraph") ||
-                    (chd.objectNameType === "AnimatedText") )
+                    (chd.objectNameType === "AnimatedText") ||
+                    (chd.objectNameType === "AnimatedLine"))
                     chd.resetAnimation();
                 else
                     chd.opacity = 0;
