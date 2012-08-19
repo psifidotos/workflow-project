@@ -43,6 +43,8 @@ function showCloneDialog(actId,actName){
     mainView.cloningDialog.defColor = mainView.defaultFontColor;
 
     mainView.cloningDialog.open();
+
+
 }
 
 
@@ -106,11 +108,14 @@ function showLiveTourDialog(){
     mainView.liveTourDialog.defColor = mainView.defaultFontColor;
 
     mainView.liveTourDialog.openD();
+
+    allActT.forceState1();
 }
 
 
 function deleteLiveTourDialog(){
     mainView.liveTourDialog.destroy();
+    allActT.unForceState1();
 }
 
 

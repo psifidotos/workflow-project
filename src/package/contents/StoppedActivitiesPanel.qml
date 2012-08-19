@@ -234,6 +234,8 @@ Rectangle {
 
     Rectangle{
         id:stpActRedShadTop
+        anchors.top:stopActivitiesView.top
+
         height: workareaWidth/10
         width: stopActBack.width
 
@@ -257,7 +259,7 @@ Rectangle {
         id:stpActRedShadBottom
         height: workareaWidth/10
         width: stopActBack.width
-        anchors.bottom: stopActBack.bottom
+        anchors.bottom: stopActivitiesView.bottom
 
         opacity: stopActivitiesView.atYEnd === true ?
                      0 : 0.35

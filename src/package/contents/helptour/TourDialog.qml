@@ -266,7 +266,7 @@ DialogTemplate2 {
         anchors.leftMargin: 0.1*insideWidth
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.margins.bottom+10
-        width:100
+        width:150
         text:i18n("Previous")
         iconSource:instanceOfThemeList.icons.Previous
 
@@ -282,7 +282,7 @@ DialogTemplate2 {
         anchors.rightMargin: 0.1*insideWidth
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.margins.bottom+10
-        width:100
+        width:150
         text:i18n("Next")
         iconSource:instanceOfThemeList.icons.Next
 
@@ -322,6 +322,17 @@ DialogTemplate2 {
     function openD(){
         page(0).startAnimation();
         open();
+    }
+
+    Connections {
+        target: mainTourWin
+        onClickedOk:{
+            completed();
+        }
+
+        onClickedCancel:{
+            completed();
+        }
     }
 
 }
