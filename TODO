@@ -1,0 +1,11 @@
+-- Order Activities
+-- Support more wallpapers plugins
+-- Group Tasks in Windows Dialog by type
+-- Support Activity Templates when adding an activity
+-- Moving WorkArea (behavior?)
+-- Data Engine for WorkAreas
+-- Support Activities Documents/Files(From KDe 4.9)
+-- Multiple screens support(it must be considered this use case which is
+   very interesting)
+-- Support unique actions for some windows, for example support MPRIS for
+   media players Amarok,VLC etc

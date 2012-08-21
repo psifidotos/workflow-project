@@ -45,6 +45,11 @@ install(FILES plasma_applet_workflow.desktop
 install(FILES src/workflow.kcfg
         DESTINATION ${KCFG_INSTALL_DIR})
 
-install(DIRECTORY src/package/contents/ DESTINATION ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml)
-
+install(DIRECTORY src/package/contents/ 
+        DESTINATION ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/qml
+        PATTERN ".directory" EXCLUDE
+        PATTERN ".fuse*" EXCLUDE
+        )
+        
+add_subdirectory(po)
 #add_subdirectory(src/package/contents)

@@ -143,7 +143,7 @@ QString ActivityManager::getWallpaper(QString source)
     Plasma::Containment *currentContainment = getContainment(source);
     if(currentContainment){
         res = getWallpaperFromContainment(currentContainment);
-        qDebug()<<"From Containment:"<<res;
+       // qDebug()<<"From Containment:"<<res;
         if(res != "")
             return res;
     }

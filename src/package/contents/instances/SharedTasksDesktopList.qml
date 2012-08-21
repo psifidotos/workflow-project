@@ -19,8 +19,9 @@ Item{
             var obj = instanceOfTasksList.model.get(i);
             if (obj.activities !== undefined){
                 if (obj.activities === activ){
-                    if ((obj.desktop === desk) ||
-                            (obj.onAllDesktops === true))
+                    if (((obj.desktop === desk) ||
+                            (obj.onAllDesktops === true))&&
+                            (obj.onAllActivities === false))
                         copyTaskFromMainList(i);
                 }
             }

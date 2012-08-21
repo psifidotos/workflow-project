@@ -20,6 +20,7 @@ DialogTemplate2{
     isModal: true
     forceModality: false
     showButtons:true
+    yesNoButtons:false
 
     dialogTitle: i18n("Previews Calibration Dialog")
 

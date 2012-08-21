@@ -23,7 +23,7 @@ else(NOT GETTEXT_MSGFMT_EXECUTABLE)
 			DEPENDS ${_poFile})
 
 		install(FILES ${_gmoFile}
-			DESTINATION share/locale/${_lang}/LC_MESSAGES/
+			DESTINATION /usr/share/locale/${_lang}/LC_MESSAGES/
 			RENAME ${catalogname}.mo)
 	endforeach(_poFile ${PO_FILES})
  

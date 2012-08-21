@@ -1,7 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
@@ -41,7 +40,8 @@ DialogTemplate2{
             text:i18n("Are you sure you want to clone activity")+" <b>"+clonDialog.activityName+"</b> "+i18n("?")
 
             font.family:mainView.defaultFont.family
-            font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
+            //font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
+            font.pointSize: mainView.defaultFontSize
         }
 
     }

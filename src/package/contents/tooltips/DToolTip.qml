@@ -22,7 +22,7 @@ PlasmaCore.FrameSvgItem{
     property int horSize:iconWidth+mainTxt.width+margins.left+margins.right
 
     //property int maxHorSize : Math.max(6*mainView.scaleMeter,shadowTitleTxt.width+iconImg.width+localIconImg.width+margins.left+margins.right)
-    property int maxHorSize : 7*mainView.scaleMeter
+    property int maxHorSize : 8*mainView.scaleMeter
     property int maxHorSizeNoMargins : (maxHorSize) - margins.left - margins.right
 
     property string icon:""
@@ -103,6 +103,9 @@ PlasmaCore.FrameSvgItem{
         font.pixelSize: 0.35*mainView.scaleMeter
         font.bold: true
         font.italic: true
+
+        wrapMode: Text.Wrap
+        maximumLineCount: 2
     }
 
     Text{
@@ -123,6 +126,9 @@ PlasmaCore.FrameSvgItem{
 
         font.bold: true
         font.italic: true
+
+        wrapMode: Text.Wrap
+        maximumLineCount: 2
     }
     /*
     Rectangle{

@@ -2,7 +2,7 @@
 
 BASEDIR="../src" # root of translatable sources
 PROJECT="plasma_applet_workflow" # project name
-BUGADDR="admin@workflow.sourceforge.net" # MSGID-Bugs
+BUGADDR="psifidotos@users.sf.net" # MSGID-Bugs
 WDIR="`pwd`" # working dir
 
 echo "Preparing rc files"

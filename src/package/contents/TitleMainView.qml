@@ -218,6 +218,11 @@ Rectangle{
                     anchors.fill:parent
                     onClicked:{
                         effectsToolBtn.checked = !effectsToolBtn.checked;
+                        if(effectsToolBtn.checked){
+                            if(mainView.firstRunCalibration === false){
+                                mainView.getDynLib().showFirstCalibrationDialog();
+                            }
+                        }
                     }
 
                     onPressAndHold: {
@@ -245,7 +250,7 @@ Rectangle{
 
             DToolTip{
                 title:i18n("Enable/Disable Previews")
-                mainText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard. With <i>\"Pressing and Holding\"</i> a Calibration Dialog is appearing.")
+                mainText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
                 localIcon:effectsImg.source
             }
@@ -269,6 +274,7 @@ Rectangle{
         property real defOpacity:0.6
 
         MouseArea {
+            id:helpBtnMouseArea
             anchors.fill: parent
 
             hoverEnabled: true
@@ -285,11 +291,17 @@ Rectangle{
 
 
             onClicked: {
-                //calibrationDialog.openD();
-                //liveTourDialog.opacity = 1;
-                mainView.getDynLib().showLiveTourDialog();
+                mainView.getDynLib().showAboutDialog();
             }
 
+        }
+
+
+        DToolTip{
+            title:i18n("About Dialog")
+            mainText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
+            target:helpBtnMouseArea
+            icon:instanceOfThemeList.icons.HelpTour
         }
 
     }

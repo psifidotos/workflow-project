@@ -10,7 +10,7 @@ import "delegates/ui-elements"
 import "instances"
 import "helptour"
 
-//import "ui"
+import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
 
@@ -194,11 +194,6 @@ Rectangle {
         ZoomSliderItem{
             id:zoomSlider
         }
-/*
-        WorkAreaFull{
-            id:wkFull
-            z:11
-        }*/
 
     }
 
@@ -267,6 +262,9 @@ Rectangle {
 
     function setFirstRunLiveTour(f){
         mainView.firstRunTour = f;
+        if(f===false){
+            getDynLib().showFirstHelpTourDialog();
+        }
     }
 
     function setFirstRunCalibrationPreviews(cal){
@@ -345,14 +343,6 @@ Rectangle {
     }
 
 
-/*
-    PlasmaCore.ToolTip{
-        target:parent
-        mainText:i18n("Close")
-        subText:i18n("Close....")
-    }*/
-
-
     /*--------------------Dialogs ---------------- */
 
 
@@ -360,13 +350,17 @@ Rectangle {
     signal completed;
     property bool disablePreviews;
 
-    property variant removeDialog:mainView;
-    property variant cloningDialog:mainView;
-    property variant desktopDialog:mainView;
-    property variant calibrationDialog:mainView;
-    property variant busyIndicatorDialog:mainView;
+    property variant removeDialog:mainView
+    property variant cloningDialog:mainView
+    property variant desktopDialog:mainView
+    property variant calibrationDialog:mainView
+    property variant busyIndicatorDialog:mainView
 
-    property variant liveTourDialog:mainView;
+    property variant liveTourDialog:mainView
+    property variant aboutDialog:mainView
+
+    property variant firstHelpTourDialog:mainView
+    property variant firstCalibrationDialog:mainView
 
   /************* Deleteing Dialogs  ***********************/
     Connections{
@@ -413,49 +407,36 @@ Rectangle {
         }
     }
 
+    Connections{
+        target:aboutDialog
+        onCompleted:{
+            mainView.getDynLib().deleteAboutDialog();
+        }
+    }
 
-/*
-    Rectangle{
-        width:20
-        height:20
-        color:"blue"
-        MouseArea{
-            anchors.fill: parent
-            onClicked:{
-                if(testingD.status === PlasmaComponents.DialogStatus.Open)
-                    testingD.close();
-                else
-                    testingD.open();
+    Connections{
+        target:firstHelpTourDialog
+        onCompleted:{
+            mainView.getDynLib().deleteFirstHelpTourDialog();
+            if(firstRunTour === false)
+                workflowManager.setFirstRunLiveTour(true);
+        }
+    }
+
+    Connections{
+        target:firstCalibrationDialog
+        onCompleted:{
+            mainView.getDynLib().deleteFirstCalibrationDialog();
+            if(firstRunCalibration === false){
+                workflowManager.setFirstRunCalibrationPreviews(true);
+                setFirstRunCalibrationPreviews(true);
             }
         }
     }
 
-    Dialog{
-        id:testingD
-        width:400
-        height:500
-
-        anchors.centerIn: parent
-
-        title:[Text{text:"Testing...."
-                color:"white"}]
-
-        content:[Text{
-            text:"ASDFasdfasdfasdfasdfasdf"
-            color:"white"
-            width:200
-            height:100
-        }]
-        //visualParent:mainView
+    TourDialog{
 
     }
-*/
-    /*
-    DesktopDialogTmpl{
-        width:200
-        height:200
-    }*/
-
 
 }
 

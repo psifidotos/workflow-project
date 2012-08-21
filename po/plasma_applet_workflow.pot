@@ -1,0 +1,712 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
+"POT-Creation-Date: 2012-08-21 12:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:141
+msgid "Change Activity Icon"
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:142
+msgid ""
+"You can change your Activity Icon in order to recognize better your work."
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:250
+msgid "Edit Activity Name"
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:251
+msgid "You can edit the Activity Name in order to represent your work."
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityStoppedDeleg.qml:201
+msgid "Restore Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityStoppedDeleg.qml:202
+msgid ""
+"You can restore an Activity in order to continue your work from where you "
+"had stopped."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:80
+msgid "Add Plasmoids"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:81
+msgid "Add Plasmoids to your Activity in order to customize it more."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:145
+msgid "Pause Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:146
+msgid ""
+"You can pause an Activity and place it on the right panel.This way the "
+"Activity will be always available to continue your work from where you "
+"stopped."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:194
+#: ../src/package/contents/ui/CloningDialogTmpl.qml:15
+msgid "Clone Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:195
+msgid "You can clone an Activity."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:240
+msgid "Delete Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:241
+msgid "You can delete an Activity. Be careful, this action can not be undone."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:293
+msgid "Stop Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/ActivityBtns.qml:294
+msgid "You can stop an Activity and place it on the right panel"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/AddWorkAreaButton.qml:65
+msgid "Add WorkArea"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/AddWorkAreaButton.qml:66
+msgid "You can add a Workarea in order to sub-organize better your work."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/DTextLine.qml:17
+msgid "Edit WorkArea"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/DTextLine.qml:18
+msgid "You can edit the Workarea name in order to personalize more your work."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:69
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:68
+msgid "Close Window"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:70
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:69
+msgid "You can close this window if you want to."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:164
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:154
+msgid "Change Window State"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:165
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:155
+msgid ""
+"You can change the window's state, there are three states available:<br/><br/"
+">1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All "
+"WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>"
+"\"Everywhere\"</b>, is shown on all WorkAreas."
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/WorkAreaBtns.qml:73
+msgid "Delete Workarea"
+msgstr ""
+
+#: ../src/package/contents/delegates/ui-elements/WorkAreaBtns.qml:74
+msgid "You can delete this WorkArea if you want to."
+msgstr ""
+
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:183
+msgid "Show Windows"
+msgstr ""
+
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:184
+msgid ""
+"You can see the windows from that spesific Workarea if you want. The counter "
+"shows their number."
+msgstr ""
+
+#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:105
+msgid "Orphaned Windows"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourDialog.qml:49
+msgid "WorkFlow Project - Tour Guide"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourDialog.qml:92
+msgid "Chapters"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourDialog.qml:271
+msgid "Previous"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourDialog.qml:287
+msgid "Next"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourDialog.qml:302
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:279
+msgid "Close"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:9
+msgid "Introduction"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:13
+msgid "Welcome to"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:54
+msgid ""
+"The <i>WorkFlow Project</i> is an effort which tries to experiment with new "
+"technologies of KDE in answering the following question:"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:66
+msgid "\"What is the most efficient way to use my computer?\""
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:78
+msgid ""
+"The most recent answer from the KDE community is by using <b><i><big><font "
+"color=\"#e58e5b\">Activities</font></big></i></b>..."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:94
+msgid ""
+"<big><u>Activity</u></big><br/><br/>Is a way to separate your work in "
+"different areas. Each activity can have different tools(plasmoids), windows, "
+"documents. In that way you can have a different Activity for your <font "
+"color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font>, your <font color="
+"\"#a1b6f7\"><i>\"University Studies\"</i></font>, your <font color="
+"\"#a1b6f7\"><i>\"Chess Hobby\"</i></font> etc."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:114
+msgid ""
+"<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-"
+"organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation "
+"Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>"
+"\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></"
+"font> WorkAreas etc."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:131
+#: ../src/package/contents/helptour/TourPage1.qml:222
+#: ../src/package/contents/helptour/TourPage2.qml:142
+#: ../src/package/contents/helptour/TourPage4.qml:146
+msgid "Vacation Planning"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:141
+#: ../src/package/contents/helptour/TourPage2.qml:248
+#: ../src/package/contents/helptour/TourPage4.qml:354
+msgid "University Studies"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:151
+#: ../src/package/contents/helptour/TourPage2.qml:109
+#: ../src/package/contents/helptour/TourPage4.qml:111
+msgid "Chess Hobby"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:254
+#: ../src/package/contents/helptour/TourPage2.qml:172
+#: ../src/package/contents/helptour/TourPage4.qml:201
+msgid "Sightseeing Information"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:276
+#: ../src/package/contents/helptour/TourPage2.qml:193
+#: ../src/package/contents/helptour/TourPage4.qml:274
+msgid "Hotels"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage1.qml:298
+#: ../src/package/contents/helptour/TourPage2.qml:214
+#: ../src/package/contents/helptour/TourPage4.qml:320
+msgid "Restaurants"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage2.qml:10
+msgid "Interface"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage2.qml:14
+msgid "Explaining the Interface"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage2.qml:36
+msgid ""
+"Let's see how the previous mentioned example could be represented in our "
+"WorkFlow.In the main area there are two running activities <font color="
+"\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> and <font color="
+"\"#a1b6f7\"><i>\"University Studies\"</i></font>.<br/> On the stopped"
+"(paused) activities area you can find the third Activity <font color="
+"\"#a1b6f7\"><i>\"Chess Hobby\"<i></font> which does not consume any "
+"resources but is always avaible to restore it.<br/><br/> The <font color="
+"\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> Activity is sub-organized "
+"into three <b>WorkAreas</b>:<br/>  <font color=\"#ea7b7b\"><i>\"Sightseeing "
+"information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i> </font> <br/"
+"><br/> and on the other hand Activity <font color=\"#a1b6f7\"><i>"
+"\"University Studies\"</i></font> contains two WorkAreas:<br/> <font color="
+"\"#ea7b7b\"><i>\"Computer Science\"</i></font> and <font color=\"#ea7b7b"
+"\"><i>\"Mathematics I\"</i></font>"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage2.qml:278
+#: ../src/package/contents/helptour/TourPage4.qml:439
+msgid "Computer Science"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage2.qml:299
+#: ../src/package/contents/helptour/TourPage4.qml:460
+msgid "Mathematics I"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:9
+msgid "Windows"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:13
+msgid "Windows in Activities"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:33
+msgid ""
+"Windows in Activities in order to correspond in a general and simple "
+"WorkFlow are enhanced and support three basic states."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:115
+msgid ""
+"1. In <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state the window will "
+"be available only in one specific WorkArea."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:130
+msgid ""
+"2. In <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state the "
+"window will be available in every WorkArea for specific Activity."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage3.qml:145
+msgid ""
+"3. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window "
+"will be available in every WorkArea and every Activity."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage4.qml:10
+msgid "Full Interface"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage4.qml:14
+msgid "The Complete Interface"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage4.qml:34
+msgid ""
+"Lets use our previous example of Activities and Workareas, but this time "
+"with Windows enabled.<br/> You can observe if you want the three Window "
+"states in the following example.<br/><br/>The Okular and Dolphin windows are "
+"in <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state.<br/>The Words "
+"window is in <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state. "
+"<br/>The Amarok window is in <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></"
+"font> state."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage4.qml:484
+msgid "Amarok - Sounds of KDe"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage5.qml:8
+msgid "Final Tips"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage5.qml:12
+msgid "Final Guidelines"
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage5.qml:33
+msgid ""
+"I hope this tour helped you understand a bit the concept of Activities and "
+"Workareas. For information about the various actions which will help you "
+"represent your unique WorkFlow, you can always focus on the various tooltips "
+"around.<br/>Dont forget that the plasmoid has also a Configuration Dialog "
+"which may be of good use."
+msgstr ""
+
+#: ../src/package/contents/helptour/TourPage5.qml:49
+msgid "Let's be creative...<br><br/>- End Of Tour -"
+msgstr ""
+
+#: ../src/package/contents/instances/SharedActivitiesList.qml:222
+msgid "Copy of"
+msgstr ""
+
+#: ../src/package/contents/instances/SharedActivitiesList.qml:452
+msgid "New Activity"
+msgstr ""
+
+#: ../src/package/contents/MainAddActivityButton.qml:133
+msgid "Add Activity"
+msgstr ""
+
+#: ../src/package/contents/MainAddActivityButton.qml:134
+msgid "You can add an Activity if you want to with default settings."
+msgstr ""
+
+#: ../src/package/contents/StoppedActivitiesPanel.qml:99
+msgid "Show/Hide Stopped Activities"
+msgstr ""
+
+#: ../src/package/contents/StoppedActivitiesPanel.qml:100
+msgid "Show or Hide the Stopped Activities in order to enhance your workflow."
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:116
+msgid "Lock Activities"
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:117
+msgid ""
+"You can lock your Activities if you want. In Locked state only Pause and "
+"Restore actions are enabled."
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:171
+msgid "Show/Hide Windows"
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:172
+msgid ""
+"You can show or hide all the windows shown in order to enhance your workflow."
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:252
+msgid "Enable/Disable Previews"
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:253
+msgid ""
+"You can enable/disable window previews only when you place the plasmoid in "
+"the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration "
+"Dialog is appearing."
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:301
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:16
+msgid "About Dialog"
+msgstr ""
+
+#: ../src/package/contents/TitleMainView.qml:302
+msgid ""
+"This dialog contains information about the application but you can also find "
+"\"Help Tour\" and \"Report Bug\" choices."
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:67
+msgid "Plasmoid Version:"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:87
+msgid "Author(s):"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:123
+msgid "Project Website:"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:172
+msgid "License:"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:239
+msgid "Translator(s):"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:293
+msgid "Report Bug<br/>Request Feature"
+msgstr ""
+
+#: ../src/package/contents/ui/AboutDialogTmpl.qml:308
+msgid "Help Tour"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:25
+msgid "Previews Calibration Dialog"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:55
+msgid ""
+"Step 1: Choose a Window from the following list to show its preview on the "
+"side Rectangle..."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:256
+msgid ""
+"Step 2: Use the sliders below to move the Preview Window into the center of "
+"the above Rectangle..."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:310
+msgid "Reduce X"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:311
+msgid "You can reduce X offset for the window previews."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:352
+msgid "Increase X"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:353
+msgid "You can increase X offset for the window previews."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:410
+msgid "Reduce Y"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:411
+msgid "You can reduce Y offset for the window previews."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:453
+msgid "Increase Y"
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:454
+msgid "You can increase Y offset for the window previews."
+msgstr ""
+
+#: ../src/package/contents/ui/CalibrationDialogTmpl.qml:477
+msgid "Step 3: Press Ok for confirmation..."
+msgstr ""
+
+#: ../src/package/contents/ui/CloningDialogTmpl.qml:40
+msgid "Are you sure you want to clone activity"
+msgstr ""
+
+#: ../src/package/contents/ui/CloningDialogTmpl.qml:40
+#: ../src/package/contents/ui/RemoveDialogTmpl.qml:41
+msgid "?"
+msgstr ""
+
+#: ../src/package/contents/ui/DialogTemplate2.qml:167
+#: ../src/package/contents/ui/DialogTemplate.qml:162
+msgid "Yes"
+msgstr ""
+
+#: ../src/package/contents/ui/DialogTemplate2.qml:167
+msgid "Ok"
+msgstr ""
+
+#: ../src/package/contents/ui/DialogTemplate2.qml:183
+#: ../src/package/contents/ui/DialogTemplate.qml:178
+msgid "No"
+msgstr ""
+
+#: ../src/package/contents/ui/DialogTemplate2.qml:183
+msgid "Cancel"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunCalibrationTmpl.qml:17
+msgid "First Activation for Window Previews"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunCalibrationTmpl.qml:53
+msgid ""
+"It is the first time you enable window previews,<br/>Do you want to "
+"configure them according to your plasma theme?"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunCalibrationTmpl.qml:65
+msgid ""
+"-This option is always available with \"Pressing and Holding\"<br/>the "
+"Windows Previews toolbutton-"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunHelpTourTmpl.qml:14
+msgid "First Run for Help Tour"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunHelpTourTmpl.qml:47
+msgid ""
+"It is the first time you use the application,<br/>Do you want to watch a "
+"Help Tour?"
+msgstr ""
+
+#: ../src/package/contents/ui/FirstRunHelpTourTmpl.qml:59
+msgid "-This option is always available from the About Dialog-"
+msgstr ""
+
+#: ../src/package/contents/ui/RemoveDialogTmpl.qml:16
+msgid "Remove Activity"
+msgstr ""
+
+#: ../src/package/contents/ui/RemoveDialogTmpl.qml:41
+msgid "Are you sure you want to remove activity"
+msgstr ""
+
+#: ../src/package/contents/ZoomSliderItem.qml:83
+msgid "Zoom Out"
+msgstr ""
+
+#: ../src/package/contents/ZoomSliderItem.qml:84
+msgid "You can zoom out your interface in order to gain more space."
+msgstr ""
+
+#: ../src/package/contents/ZoomSliderItem.qml:115
+msgid "Zoom In"
+msgstr ""
+
+#: ../src/package/contents/ZoomSliderItem.qml:116
+msgid "You can zoom in your interface in order to focus more on items."
+msgstr ""
+
+#: ../src/workflow.cpp:105
+msgid "No Activities..."
+msgstr ""
+
+#: ../src/workflow.cpp:623
+msgid "General"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:26
+#. i18n: ectx: property (windowTitle), widget (QWidget, Config)
+#: rc.cpp:3
+msgid "Form"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:66
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:6
+msgid "Animations Level:"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:79
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:9
+msgid "None"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:95
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:12
+msgid "Basic"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:111
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:15
+msgid "Full"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:133
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:18
+msgid "Behavior:"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:149
+#. i18n: ectx: property (toolTip), widget (QCheckBox, hideOnClickCheckBox)
+#: rc.cpp:21
+msgid ""
+"<html><head/><body><p>This option is available only when the plasmoid is in "
+"a panel</p></body></html>"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:152
+#. i18n: ectx: property (text), widget (QCheckBox, hideOnClickCheckBox)
+#: rc.cpp:24
+msgid "Hide PopUp when clicking a WorkArea"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:165
+#. i18n: ectx: property (toolTip), widget (QComboBox, themesCmb)
+#: rc.cpp:27
+msgid ""
+"<html><head/><body><p>Every theme demands the <span style=\" font-weight:600;"
+"\">original Icon theme</span> installed if you want good appearance with the "
+"application. In general these themes are just links for icons from the "
+"current KDE icon theme.</p></body></html>"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:184
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:30
+msgid "Icons Theme:"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:197
+#. i18n: ectx: property (toolTip), widget (QSpinBox, tooltipsSpinBox)
+#: rc.cpp:33
+msgid ""
+"<html><head/><body><p>The delay for showing a tooltip. With 0 tooltips are "
+"disabled</p></body></html>"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:200
+#. i18n: ectx: property (suffix), widget (QSpinBox, tooltipsSpinBox)
+#: rc.cpp:36
+msgid "ms"
+msgstr ""
+
+#. i18n: file: ../src/config.ui:231
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: rc.cpp:39
+msgid "Tooltips Delay:"
+msgstr ""
+
+#. i18n: file: ../src/workflow.kcfg:9
+#. i18n: ectx: label, entry (Activities), group (workflow)
+#: rc.cpp:42
+msgid "The various activities ids"
+msgstr ""
+
+#. i18n: file: ../src/workflow.kcfg:12
+#. i18n: ectx: label, entry (NoOfWorkareas), group (workflow)
+#: rc.cpp:45
+msgid "the number of workareas per activity"
+msgstr ""
+
+#. i18n: file: ../src/workflow.kcfg:15
+#. i18n: ectx: label, entry (WorkareasNames), group (workflow)
+#: rc.cpp:48
+msgid "the various workareas names per activity"
+msgstr ""
+
+#: rc.cpp:49
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: rc.cpp:50
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""

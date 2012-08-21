@@ -167,6 +167,6 @@ private:
 };
 
 // This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(WorkFlow,WorkFlow)
+K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 
 #endif

@@ -1,19 +1,27 @@
 [Desktop Entry]
-Name=Workflow
-Comment=Activities and WorkAreas in QML
+X-SuSE-translate=true
+Encoding=UTF-8
+
+Name=WorkFlow
+Name[el]=WorkFlow
+
+Comment=WorkFlow Plasmoid presents Activities and WorkAreas in QML as described from the WorkFlow Project.
+Comment[el]=To Συστατικό WorkFlow παρουσιάζει τις Δραστηριότητες και τις Επιφάνειες Εργασίας όπως περιγράφονται από το έργο WorkFlow.
+
 Icon=preferences-activities
 Type=Service
 
-X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet
+
 X-KDE-Library=plasma_applet_workflow
+
+X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet
 X-KDE-PluginInfo-Author=Michail Vourlakos
-X-KDE-PluginInfo-Email=admin@opentoolsandspace.org
-X-KDE-PluginInfo-Name=org.opentoolsandspace.workflow
-X-KDE-PluginInfo-Version=0.2.0
-X-KDE-PluginInfo-Website=http://www.opentoolsandspace.org/
+X-KDE-PluginInfo-Email=psifidotos@users.sf.net
+X-KDE-PluginInfo-Name=workflow
+X-KDE-PluginInfo-Version=0.1.97
+X-KDE-PluginInfo-Website=http://workflow.opentoolsandspace.org/
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
-X-Plasma-NotificationArea=true
 

@@ -20,16 +20,17 @@ DialogTemplate2 {
     insideWidth: mainView.width-2*margins.left-2*margins.right
     insideHeight: mainView.height-4*margins.top-3*margins.bottom
 
-    property int smallFont:0.018*insideHeight
-    property int mediumFont:0.02*insideHeight
-    property int bigFont:0.04*insideHeight
-    property int largeFont:0.07*insideHeight
+    property int smallFont:0.019*insideHeight
+    property int mediumFont:0.025*insideHeight
+    property int bigFont:0.035*insideHeight
+    property int largeFont:0.06*insideHeight
 
     //  dialogTitle: i18n("Help Tour")+"..."
 
     isModal: true
-    forceModality: false
+    forceModality: true
     showButtons: false
+    showTitleLine: false
 
     signal completed();
 
@@ -134,7 +135,7 @@ DialogTemplate2 {
 
                     elide:Text.ElideRight
 
-                    font.pixelSize: mediumFont
+                    font.pixelSize: smallFont
                     font.bold: (index!== currentPage) ? false:true
                     font.italic: (index!== currentPage) ? false:true
 

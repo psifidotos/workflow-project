@@ -20,6 +20,8 @@ ListModel {
                 Previous:"go-previous"
                 Next:"go-next"
                 Exit:"dialog-close"
+                HelpTour:"help-contents"
+                Bugs:"help-hint"
             }
         ]
     }
@@ -41,6 +43,8 @@ ListModel {
                 Previous:"go-previous"
                 Next:"go-next"
                 Exit:"dialog-close"
+                HelpTour:"help-contents"
+                Bugs:"help-hint"
             }
 
 
@@ -64,6 +68,8 @@ ListModel {
                 Previous:"go-previous"
                 Next:"go-next"
                 Exit:"dialog-close"
+                HelpTour:"help-contents"
+                Bugs:"help-hint"
             }
         ]
     }

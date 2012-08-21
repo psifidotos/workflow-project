@@ -6,12 +6,12 @@ import "uielements"
 TourPage{
 
     id:trPage1
-    pageTitle: "Introduction"
+    pageTitle: i18n("Introduction")
 
     HeadingB{
         id:welcomeText1
         text:i18n("Welcome to")
-        width:parent.width-40
+        width:parent.width
         pixelSize: bigFont
         bold: true
         horizontalAlignment: Text.AlignHCenter
@@ -31,20 +31,6 @@ TourPage{
         anchors.topMargin:5
     }
 
-    /*
-    TextB{
-        id:welcomeText3
-        text:i18n("Plasmoid Version: ")+"<i>"+mainView.version+"</i>"
-        width:parent.width
-        font.pixelSize: bigFont
-        horizontalAlignment: Text.AlignHCenter
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top:welcomeText2.bottom
-        anchors.topMargin:5
-    }*/
-
-
     RectangleB{
         id:sepLine1
         y:0.15*parent.height
@@ -58,7 +44,7 @@ TourPage{
 
     AnimatedText{
         id:animText1
-        width:0.8*parent.width
+        width:0.9*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:sepLine1.bottom
         anchors.topMargin:10
@@ -69,7 +55,7 @@ TourPage{
     }
     AnimatedText{
         id:animText2
-        width:0.8*parent.width
+        width:0.9*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:animText1.bottom
         anchors.topMargin:15
@@ -83,7 +69,7 @@ TourPage{
 
     TextB{
         id:animText3
-        width:0.8*parent.width
+        width:0.9*parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top:animText2.bottom
         anchors.topMargin:15
@@ -94,7 +80,7 @@ TourPage{
 
     TextB{
         id:activitiesSpec
-        width:0.3*parent.width
+        width:0.45*parent.width
 
         anchors.top:animText3.bottom
         anchors.topMargin:0.05*parent.height
@@ -125,45 +111,48 @@ TourPage{
 
         textOnlyOpacity:true
 
-        fullText:"<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></font> WorkAreas etc."
+        fullText:i18n("<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></font> WorkAreas etc.")
     }
 
     RowB{
         id:activitiesTitles
         anchors.top: activitiesSpec.bottom
-        anchors.topMargin:0.06*parent.height
+        anchors.topMargin:0.03*parent.height
         anchors.right: activitiesSpec.right
 
-        spacing:0.02*parent.width
+        spacing:0.03*parent.width
 
         TextB{
             width:activity1Image.width
             font.bold: true
             font.italic:true
-            elide:Text.ElideRight
+        //    elide:Text.ElideRight
             font.pixelSize: smallFont
             text:i18n("Vacation Planning");
             horizontalAlignment: Text.AlignHCenter
+
         }
 
         TextB{
             width:activity1Image.width
             font.bold: true
             font.italic:true
-            elide:Text.ElideRight
+        //    elide:Text.ElideRight
             font.pixelSize: smallFont
             text:i18n("University Studies");
             horizontalAlignment: Text.AlignHCenter
+
         }
 
         TextB{
             width:activity1Image.width
             font.bold: true
             font.italic:true
-            elide:Text.ElideRight
+         //   elide:Text.ElideRight
             font.pixelSize: smallFont
             text:i18n("Chess Hobby");
             horizontalAlignment: Text.AlignHCenter
+
         }
 
     }
@@ -176,7 +165,7 @@ TourPage{
         anchors.topMargin:2
         anchors.right: activitiesTitles.right
 
-        spacing:0.02*parent.width
+        spacing:0.03*parent.width
 
         Image{
             id:activity1Image
@@ -263,7 +252,7 @@ TourPage{
                 width:parent.width
                 font.bold: true
                 font.italic:true
-                elide:Text.ElideRight
+               // elide:Text.ElideRight
                 font.pixelSize: 0.015*trPage1.height
                 text:i18n("Sightseeing Information");
             }
@@ -285,7 +274,7 @@ TourPage{
                 width:parent.width
                 font.bold: true
                 font.italic:true
-                elide:Text.ElideRight
+              //  elide:Text.ElideRight
                 font.pixelSize: 0.015*trPage1.height
                 text:i18n("Hotels");
             }
@@ -307,7 +296,7 @@ TourPage{
                 width:parent.width
                 font.bold: true
                 font.italic:true
-                elide:Text.ElideRight
+               // elide:Text.ElideRight
                 font.pixelSize: 0.015*trPage1.height
                 text:i18n("Restaurants");
             }

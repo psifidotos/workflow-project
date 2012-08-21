@@ -7,7 +7,7 @@ import org.kde.qtextracomponents 0.1
 
 TourPage{
     id:trPage2
-    pageTitle: "Interface"
+    pageTitle: i18n("Interface")
 
     HeadingB{
         id:titleExplaination
@@ -26,7 +26,7 @@ TourPage{
         anchors.top:titleExplaination.bottom
         anchors.topMargin:15
 
-        width:0.8*parent.width
+        width:0.95*parent.width
 
         font.bold:true
         font.pixelSize: mediumFont
@@ -58,7 +58,8 @@ TourPage{
         y:actWorkTitle1.y+actWorkTitle1.height+3
 
         width:2
-        lengthEnd:0.5*insideWidth
+      //  lengthEnd:0.5*insideWidth
+        lengthEnd:actWorkTitle2.x+actWorkTitle2.width-actImag1.x+0.1*insideWidth
         isVertical:true
         color:defColor
         startRotation: 0
@@ -72,9 +73,12 @@ TourPage{
         id:separationLine3
 
         x:actWorkTitle1.x-0.1*insideWidth+(separationLine2.lengthEnd-lengthEnd)
+        //x:actWorkTitle1.x+0.1*insideWidth
         y:actWorkTitle1.y-0.05*insideHeight
 
         height:2
+      //  lengthEnd:0.1.insideHeight+workareasImages.height
+        //lengthEnd:actWorkTitle2.x+actWorkTitle2.width - (actWorkTitle1.x+actWorkTitle1.width/2) +
         lengthEnd:0.4*insideHeight
         isVertical:false
         color:defColor
@@ -114,6 +118,7 @@ TourPage{
     property real ratio:1.4
 
     QIconItem{
+        id:actImag1
         icon:QIcon("plasma")
         height:0.05*insideHeight
         width:height
@@ -127,8 +132,8 @@ TourPage{
     TextB{
         id:actWorkTitle1
 
-        property int margY:0.1*insideHeight
-        property int margX:0.3*parent.width
+        property int margY:0.04*insideHeight
+        property int margX:0.15*parent.width
 
         y: separationLine1.y+margY
         x: margX
@@ -220,13 +225,18 @@ TourPage{
     //Second Active Activity
 
     QIconItem{
+        id:act2Icon
         icon:QIcon("plasma")
         height:0.05*insideHeight
         width:height
+
+        property int margX:10
       //  enabled:false
         opacity:0.9
-        anchors.right: actWorkTitle2.left
-        anchors.rightMargin: 2
+        anchors.left: actWorkTitle1.right
+        anchors.leftMargin: margX
+//        anchors.right: actWorkTitle2.left
+ //       anchors.rightMargin: 2
         anchors.bottom: actWorkTitle2.bottom
     }
 
@@ -236,8 +246,8 @@ TourPage{
         property int margX:0.08*parent.width
 
         anchors.top:actWorkTitle1.top
-        anchors.left: actWorkTitle1.right
-        anchors.leftMargin: margX
+        anchors.left: act2Icon.right
+        anchors.leftMargin: 2
 
 
         font.bold: true

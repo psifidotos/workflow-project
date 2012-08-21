@@ -6,7 +6,7 @@ import "../delegates/ui-elements"
 
 TourPage{
     id:trPage3
-    pageTitle: "Windows"
+    pageTitle: i18n("Windows")
 
     HeadingB{
         id:titleExplaination

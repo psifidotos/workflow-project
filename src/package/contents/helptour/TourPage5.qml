@@ -5,7 +5,7 @@ import "uielements"
 
 TourPage{
     id:trPage5
-    pageTitle: "Summary"
+    pageTitle: i18n("Final Tips")
 
     HeadingB{
         id:titleExplaination

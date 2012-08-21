@@ -2,4 +2,6 @@
 .f*
 .d*
 build/
+spec/
+Announcements/
 !build/install.sh

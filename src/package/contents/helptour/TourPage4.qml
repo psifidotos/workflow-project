@@ -7,7 +7,7 @@ import org.kde.qtextracomponents 0.1
 
 TourPage{
     id:trPage4
-    pageTitle: "Full Interface"
+    pageTitle: i18n("Full Interface")
 
     HeadingB{
         id:titleExplaination
@@ -26,7 +26,7 @@ TourPage{
         anchors.top:titleExplaination.bottom
         anchors.topMargin:25
 
-        width:0.8*parent.width
+        width:0.95*parent.width
 
         font.bold:true
         font.pixelSize: mediumFont
@@ -61,7 +61,8 @@ TourPage{
         y:actWorkTitle1.y+actWorkTitle1.height+3
 
         width:2
-        lengthEnd:0.5*insideWidth
+        //lengthEnd:0.5*insideWidth
+        lengthEnd:actWorkTitle2.x+actWorkTitle2.width-actImag1.x+0.1*insideWidth
         isVertical:true
         color:defColor
         startRotation: 0
@@ -118,6 +119,7 @@ TourPage{
     property real ratio:1.4
 
     QIconItem{
+        id:actImag1
         icon:QIcon("plasma")
         height:0.05*insideHeight
         width:height
@@ -131,8 +133,8 @@ TourPage{
     TextB{
         id:actWorkTitle1
 
-        property int margY:0.1*insideHeight
-        property int margX:0.3*parent.width
+        property int margY:0.04*insideHeight
+        property int margX:0.15*parent.width
 
         y: separationLine1.y+margY
         x: margX
@@ -469,9 +471,9 @@ TourPage{
         height:0.05*insideHeight
         width:height
         opacity:0.9
-        anchors.right: workareasImages.left
+        anchors.horizontalCenter: separationLine2.left
         anchors.top: workareasImages.bottom
-        anchors.topMargin:0.05*insideHeight
+        //anchors.topMargin:0.05*insideHeight
     }
 
     TextB{
@@ -491,5 +493,6 @@ TourPage{
         color:defColor
         width:0.2*insideWidth
         height:2
+        opacity:0.6
     }
 }

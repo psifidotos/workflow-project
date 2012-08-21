@@ -1,0 +1,51 @@
+0.2.0
+=====
+-- this is the initial release
+
+-Actions for Activities
+-- Add Default Activity
+-- Stop Activity
+-- Restore Activity
+-- Remove Activity
+-- Rename Activity
+-- Change icon for Activity
+-- Clone Activity (this is not from generic library, maybe there are some missing
+   characteristics)
+-- Add plasmoids in any Activity (unlocks widgets and opens widgets explorer)
+-- Fetch background for Activity (it works only for single image backgrounds)
+-- Lock/Unlock Activities
+
+-Actions for Workareas
+-- Add Workarea
+-- Remove Workarea
+-- Rename Workarea
+-- Workareas use the current screens ratio
+-- Activating a Workarea
+
+-Actions for Windows
+-- Three states for every window(Single,All Workareas,Everywhere)
+-- Dragging window from WorkArea to Workarea
+-- Window Previews (supported only on the Dashboard)
+-- Enable/Disable Window Previews
+-- Window Previews Callibration Dialog (in order to set correctly the window center)
+-- Windows Dialog for specific WorkArea (previews are supported)
+-- Show/Hide Windows
+
+
+-Interface
+-- Zoom Support
+-- Three animations levels (No animations, Basic, Full)
+-- PopUp Plasmoid support, The plasmoid can be placed in panels
+-- Running and Stopped Activities are placed in different areas
+-- Stopped Activities can be hidden
+-- Scrolling support for most of the elements
+-- Everywhere windows show in a different place
+-- Configuration Dialog
+-- Help Tour for the project's goal
+-- About Dialog for the project
+-- PlasmaComponents support for most of the elements
+-- Icons themes support
+-- Tooltips support
+-- First Run Dialogs (for Help Tour and Windows Calibration)
+-- Internationalization support
+

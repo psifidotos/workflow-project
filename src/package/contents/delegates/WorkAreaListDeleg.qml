@@ -22,7 +22,8 @@ import "../tooltips"
 
         property string typeId : "workareasActItem"
 
-        state: tCState === neededState ? "show" : "hide"
+     //   state: tCState === neededState ? "show" : "hide"
+        state:"hide"
 
 
         property int workAreaImageHeight: mainView.screenRatio*bWidth
@@ -33,7 +34,7 @@ import "../tooltips"
         property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight)*workalist.model.count
 
 
-        width: bWidth
+    //    width: bWidth
         height: bHeight+addedHeight
 
 
@@ -48,7 +49,7 @@ import "../tooltips"
             id:workalist
 
             height:workList.bHeight
-            width: workList.tCState === workList.neededState ? workList.bWidth : 0
+         //   width: workList.tCState === workList.neededState ? workList.bWidth : 0
             property string typeId : "workalistForActivity"
 
             z:5
@@ -60,13 +61,6 @@ import "../tooltips"
             orientation:ListView.Vertical
 
             delegate:WorkAreaDeleg{
-            }
-
-            Behavior on height{
-                NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
-                    easing.type: Easing.InOutQuad;
-                }
             }
 
         }
@@ -212,15 +206,20 @@ import "../tooltips"
 
         }
 
-        /*
-        ListView.onAdd: ParallelAnimation {
-            NumberAnimation { target: workList; property: "opacity"; to: 1; duration: 2*mainView.animationsStep2; easing.type: Easing.InOutQuad }
+/*
+        ListView.onAdd:
+            NumberAnimation { target: workList;
+                property: "opacity";
+                to: 1;
+                duration: 2*mainView.animationsStep;
+                easing.type: Easing.InOutQuad
         }*/
+
 
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
-            NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*mainView.animationsStep2; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
 
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
@@ -229,21 +228,32 @@ import "../tooltips"
         states: [
             State {
                 name: "show"
+                when: tCState === neededState
                 PropertyChanges {
                     target: workList
-
+    //width: bWidth
                     opacity: 1
                     width: bWidth
+                }
+                PropertyChanges {
+                    target: workalist
+                    width: workList.bWidth
                 }
             },
             State {
                 name: "hide"
+                when: tCState !== neededState
                 PropertyChanges {
                     target: workList
 
                     opacity: 0
                     width: 0
                 }
+                PropertyChanges {
+                    target: workalist
+                    width: 0
+                }
+
             }
         ]
 
@@ -256,13 +266,25 @@ import "../tooltips"
                     NumberAnimation {
                         target: workList;
                         property: "opacity";
-                        duration: 4*mainView.animationsStep2;
+                        duration: 2*mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workList;
                         property: "width";
-                        duration: 4*mainView.animationsStep2;
+                        duration: 2*mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workalist;
+                        property: "opacity";
+                        duration: 2*mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workalist;
+                        property: "width";
+                        duration: 2*mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -274,13 +296,25 @@ import "../tooltips"
                     NumberAnimation {
                         target: workList;
                         property: "opacity";
-                        duration: 4*mainView.animationsStep2;
+                        duration: 2*mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workList;
                         property: "width";
-                        duration: 4*mainView.animationsStep2;
+                        duration: 2*mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workalist;
+                        property: "opacity";
+                        duration: 2*mainView.animationsStep;
+                        easing.type: Easing.InOutQuad;
+                    }
+                    NumberAnimation {
+                        target: workalist;
+                        property: "width";
+                        duration: 2*mainView.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

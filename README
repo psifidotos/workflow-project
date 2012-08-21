@@ -1,0 +1,25 @@
+About
+=====
+
+This is the plasmoid version derived from the WorkFlow project. The project is
+trying to enhance every user's unique workflow by combining existing technologies
+from Plasma. 
+
+
+Differences To Default KDe Workflow
+==========================
+
+-- WorkAreas use Virtual Desktops, in order to be consistency between them
+   Virtual Desktops are always that big as the maximum WorkAreas present from
+   Activities.
+   NOTICE: You can not add a Virtual Desktop when WorkAreas are running. You
+   can add the Workarea needed and Virtual Desktops will be updated.
+
+Installation
+============
+
+To build and install:
+
+1. untar the archive
+2. cd build
+3. sudo sh install.sh

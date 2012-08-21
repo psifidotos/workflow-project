@@ -35,6 +35,8 @@ PlasmaCore.FrameSvgItem{
     visible:false
 
     property bool showButtons:true
+    property bool showTitleLine:true
+    property bool yesNoButtons:true
 
     signal clickedOk
     signal clickedCancel
@@ -75,27 +77,13 @@ PlasmaCore.FrameSvgItem{
     }
 
     Item{
-        //imagePath:"widgets/background"
 
-        //  BorderImage {
         id:templMainDialog
-        //   source: "../Images/buttons/selectedGrey.png"
 
-        //   border.left: 70; border.top: 70;
-        //   border.right: 80; border.bottom: 70;
-        //   horizontalTileMode: BorderImage.Repeat
-        //   verticalTileMode: BorderImage.Repeat
-
-        // width:templDialog.insideWidth+105+4*templDialog.spaceX
-        //  height:templDialog.insideHeight+105+titleMesg.height+2*templDialog.spaceY
-        //        width:templDialog.insideWidth
-        //       height:templDialog.insideHeight
 
         width:templDialog.insideWidth+2*templDialog.spaceX
         height:templDialog.insideHeight+2*templDialog.spaceY
 
-
-        // anchors.centerIn: parent
 
         Behavior on width{
             NumberAnimation {
@@ -127,32 +115,11 @@ PlasmaCore.FrameSvgItem{
 
             property real defOpacity:0.5
 
-            //     color:"#d5333333"
-            //   border.color: "#aaaaaa"
-            //            border.width: 2
-            //           radius:15
-
-            //     width:parent.width - 105
-            //   height:parent.height - 105
             width:parent.width
             height:parent.height
 
 
             anchors.centerIn: parent
-            //       width:templDialog.insideWidth - templDialog.spaceX
-            //      height:tempDialog.insideHeight - templDialog.spaceY
-            //width: parent.width+200
-            //height: parent.height+200
-            //width:300
-            //height:300
-            //property int inWidth
-            //property int inHeight
-
-            //x:105/2
-            //y:105/2
-
-            //   width:mainTextInf.width+100
-            //   height:infIcon.height+90
 
             //Title
             Text{
@@ -175,9 +142,10 @@ PlasmaCore.FrameSvgItem{
                 anchors.top:titleMesg.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 width:0.95*parent.width
-                color:"#ffffff"
+                color:defColor
                 opacity:0.3
                 height:1
+                visible:templDialog.showTitleLine
             }
 
             //Buttons
@@ -196,7 +164,7 @@ PlasmaCore.FrameSvgItem{
                     anchors.rightMargin: 10
                     anchors.bottom: parent.bottom
                     width:100
-                    text:i18n("Yes")
+                    text:yesNoButtons === true ? i18n("Yes") : i18n("Ok")
                     iconSource:instanceOfThemeList.icons.DialogAccept
 
                     visible:templDialog.showButtons === true ? true : false
@@ -212,7 +180,7 @@ PlasmaCore.FrameSvgItem{
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
                     width:100
-                    text:i18n("No")
+                    text:yesNoButtons === true ? i18n("No") :i18n("Cancel")
                     iconSource:instanceOfThemeList.icons.DialogCancel
 
                     visible:templDialog.showButtons === true ? true : false

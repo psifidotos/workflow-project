@@ -6,9 +6,9 @@ function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
     btnAnimComp = Qt.createComponent("BtnIconAnimatMainView.qml");
-    deskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
+  //  deskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
 
-    rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
+  //  rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 }
 
 //Dialogs
@@ -118,7 +118,59 @@ function deleteLiveTourDialog(){
     allActT.unForceState1();
 }
 
+/////////////About Dialog//////////////////////
+function showAboutDialog(){
+    var abDialog = Qt.createComponent("ui/AboutDialogTmpl.qml");
 
+    mainView.aboutDialog = abDialog.createObject(mainView);
+    mainView.aboutDialog.defColor = mainView.defaultFontColor;
+
+    mainView.aboutDialog.openD();
+    allActT.forceState1();
+}
+
+
+function deleteAboutDialog(){
+    allActT.unForceState1();
+    mainView.aboutDialog.destroy();
+}
+
+/////////////First Run Help Tour Dialog//////////////////////
+function showFirstHelpTourDialog(){
+    var dialog = Qt.createComponent("ui/FirstRunHelpTourTmpl.qml");
+
+    mainView.firstHelpTourDialog = dialog.createObject(mainView);
+    mainView.firstHelpTourDialog.defColor = mainView.defaultFontColor;
+
+    mainView.firstHelpTourDialog.open();
+}
+
+
+function deleteFirstHelpTourDialog(){
+    mainView.firstHelpTourDialog.destroy();
+}
+
+
+/////////////First Run Calibration Dialog//////////////////////
+function showFirstCalibrationDialog(){
+    var dialog = Qt.createComponent("ui/FirstRunCalibrationTmpl.qml");
+
+    mainView.firstCalibrationDialog = dialog.createObject(mainView);
+    mainView.firstCalibrationDialog.defColor = mainView.defaultFontColor;
+
+    mainView.firstCalibrationDialog.open();
+}
+
+
+function deleteFirstCalibrationDialog(){
+    mainView.firstCalibrationDialog.destroy();
+}
+
+
+
+
+
+////////////////////////////////////
 //Activities Animations
 
 function animateStoppedToActive(cod, coord){
