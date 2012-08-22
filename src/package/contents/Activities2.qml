@@ -237,7 +237,7 @@ Rectangle {
         // BE CAREFUL:: should be enabled in the official release...
         //
 
-       // mainView.isOnDashBoard = v;
+        mainView.isOnDashBoard = v;
     }
 
     function setWindowsPreviews(b){

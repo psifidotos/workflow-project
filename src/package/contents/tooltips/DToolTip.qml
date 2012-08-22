@@ -19,11 +19,12 @@ PlasmaCore.FrameSvgItem{
     // property variant masterMouseArea:tempMouseArea //Could be removed when instanceof would be supported
 
 
-    property int horSize:iconWidth+mainTxt.width+margins.left+margins.right
+    property int insideMargin:0.15*mainView.scaleMeter
+    property int horSize:iconWidth+mainTxt.width+fullWidthMargins
 
     //property int maxHorSize : Math.max(6*mainView.scaleMeter,shadowTitleTxt.width+iconImg.width+localIconImg.width+margins.left+margins.right)
     property int maxHorSize : 8*mainView.scaleMeter
-    property int maxHorSizeNoMargins : (maxHorSize) - margins.left - margins.right
+    property int maxHorSizeNoMargins : (maxHorSize) - margins.left - margins.right -2*insideMargin
 
     property string icon:""
     property string localIcon:""
@@ -33,7 +34,9 @@ PlasmaCore.FrameSvgItem{
 
     width:horSize > maxHorSize ? maxHorSize : horSize
 
-    height:Math.max(margins.top+margins.bottom+titleTxt.height+5+mainTxt.height,iconWidth+margins.top+margins.bottom)
+    property int fullWidthMargins:margins.left+margins.right+2*insideMargin
+    property int fullHeightMargins:margins.top+margins.bottom+2*insideMargin
+    height:Math.max(fullHeightMargins+titleTxt.height+5+mainTxt.height,iconWidth+fullHeightMargins)
 
     opacity:0
 
@@ -66,9 +69,9 @@ PlasmaCore.FrameSvgItem{
         width:parent.iconWidth
         height:width
         anchors.top:parent.top
-        anchors.topMargin:parent.margins.top
+        anchors.topMargin:parent.margins.top+insideMargin
         anchors.left:parent.left
-        anchors.leftMargin: parent.margins.left
+        anchors.leftMargin: parent.margins.left+insideMargin
     }
 
     Image{
@@ -81,7 +84,7 @@ PlasmaCore.FrameSvgItem{
         anchors.top:parent.top
         anchors.topMargin:parent.margins.top
         anchors.left:parent.left
-        anchors.leftMargin: parent.margins.left
+        anchors.leftMargin: parent.margins.left+insideMargin
 
     }
 
@@ -89,7 +92,7 @@ PlasmaCore.FrameSvgItem{
         id:titleTxt
 
         anchors.top:parent.top
-        anchors.topMargin:parent.margins.top
+        anchors.topMargin:parent.margins.top+insideMargin
         anchors.left: iconImg.right
         anchors.leftMargin:3
 
@@ -100,7 +103,7 @@ PlasmaCore.FrameSvgItem{
         elide:Text.ElideRight
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
-        font.pixelSize: 0.35*mainView.scaleMeter
+        font.pixelSize: 0.34*mainView.scaleMeter
         font.bold: true
         font.italic: true
 
@@ -113,7 +116,7 @@ PlasmaCore.FrameSvgItem{
         opacity:0
 
         anchors.top:parent.top
-        anchors.topMargin:parent.margins.top
+        anchors.topMargin:parent.margins.top+insideMargin
         anchors.left: iconImg.right
         anchors.leftMargin:3
 
@@ -122,7 +125,7 @@ PlasmaCore.FrameSvgItem{
 
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
-        font.pixelSize: 0.35*mainView.scaleMeter
+        font.pixelSize: 0.34*mainView.scaleMeter
 
         font.bold: true
         font.italic: true
@@ -158,15 +161,15 @@ PlasmaCore.FrameSvgItem{
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
 
-        font.pixelSize: 0.33*mainView.scaleMeter
+        font.pixelSize: 0.32*mainView.scaleMeter
 
-        property int findWidth: shadowMainTxt.width-parent.iconWidth-parent.margins.left-parent.margins.right
+        property int findWidth: shadowMainTxt.width-parent.iconWidth-fullWidthMargins
 //        width: Math.max(findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
   //                          findWidth + parent.margins.left :
     //                        maxHorSizeNoMargins - parent.iconWidth - 3,
       //                      shadowTitleTxt.width+parent.iconWidth)
         width: findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
-                                  findWidth + parent.margins.left :
+                                  findWidth :
                                   maxHorSizeNoMargins - parent.iconWidth - 3
 
         wrapMode:Text.WordWrap
@@ -184,7 +187,7 @@ PlasmaCore.FrameSvgItem{
         color:mainView.defaultFontColor
         font.family:mainView.defaultFont.family
 
-        font.pixelSize: 0.33*mainView.scaleMeter
+        font.pixelSize: 0.32*mainView.scaleMeter
 
         // width:toolTip.width
     }

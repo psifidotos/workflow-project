@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-21 12:20+0300\n"
-"PO-Revision-Date: 2012-08-21 09:27+0000\n"
+"POT-Creation-Date: 2012-08-22 12:44+0300\n"
+"PO-Revision-Date: 2012-08-22 09:57+0000\n"
 "Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/WorkFlow_Project/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -147,7 +147,7 @@ msgid ""
 " shows their number."
 msgstr "Μπορείτε να δείτε τα παράθυρα της συγκεκριμένης Επιφάνειας Εργασίας εάν το θέλετε. Ο μετρητής εμφανίζει τον αριθμό τους."
 
-#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:105
+#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:99
 msgid "Orphaned Windows"
 msgstr "Ορφανά Παράθυρα"
 
@@ -216,39 +216,39 @@ msgid ""
 msgstr "<big><u>Επιφάνειες Εργασίας</u></big><br/><br/>Είναι ένας τρόπος να οργανώσουμε περισσότερο μία Δραστηριότητα. Για παράδειγμα ο <font color=\"#a1b6f7\"><i>\"Σχεδιασμός Διακοπών\"</i></font> μπορεί να χωριστεί στις Επιφάνειες Εργασίας <font color=\"#ea7b7b\"><i>\"Πληροφορίες αξιοθέατα\"</i>, <i>\"Ξενοδοχεία\"</i>, <i>\"Εστιατόρια\"</i></font> κτλ."
 
 #: ../src/package/contents/helptour/TourPage1.qml:131
-#: ../src/package/contents/helptour/TourPage1.qml:222
-#: ../src/package/contents/helptour/TourPage2.qml:142
-#: ../src/package/contents/helptour/TourPage4.qml:146
+#: ../src/package/contents/helptour/TourPage1.qml:225
+#: ../src/package/contents/helptour/TourPage2.qml:147
+#: ../src/package/contents/helptour/TourPage4.qml:148
 msgid "Vacation Planning"
 msgstr "Σχεδιασμός Διακοπών"
 
-#: ../src/package/contents/helptour/TourPage1.qml:141
-#: ../src/package/contents/helptour/TourPage2.qml:248
-#: ../src/package/contents/helptour/TourPage4.qml:354
+#: ../src/package/contents/helptour/TourPage1.qml:142
+#: ../src/package/contents/helptour/TourPage2.qml:258
+#: ../src/package/contents/helptour/TourPage4.qml:356
 msgid "University Studies"
 msgstr "Σπουδές Πανεπιστημίου"
 
-#: ../src/package/contents/helptour/TourPage1.qml:151
-#: ../src/package/contents/helptour/TourPage2.qml:109
-#: ../src/package/contents/helptour/TourPage4.qml:111
+#: ../src/package/contents/helptour/TourPage1.qml:153
+#: ../src/package/contents/helptour/TourPage2.qml:113
+#: ../src/package/contents/helptour/TourPage4.qml:112
 msgid "Chess Hobby"
 msgstr "Το Σκάκι Μου"
 
-#: ../src/package/contents/helptour/TourPage1.qml:254
-#: ../src/package/contents/helptour/TourPage2.qml:172
-#: ../src/package/contents/helptour/TourPage4.qml:201
+#: ../src/package/contents/helptour/TourPage1.qml:257
+#: ../src/package/contents/helptour/TourPage2.qml:177
+#: ../src/package/contents/helptour/TourPage4.qml:203
 msgid "Sightseeing Information"
 msgstr "Πληροφορίες Αξιοθέατα"
 
-#: ../src/package/contents/helptour/TourPage1.qml:276
-#: ../src/package/contents/helptour/TourPage2.qml:193
-#: ../src/package/contents/helptour/TourPage4.qml:274
+#: ../src/package/contents/helptour/TourPage1.qml:279
+#: ../src/package/contents/helptour/TourPage2.qml:198
+#: ../src/package/contents/helptour/TourPage4.qml:276
 msgid "Hotels"
 msgstr "Ξενοδοχεία"
 
-#: ../src/package/contents/helptour/TourPage1.qml:298
-#: ../src/package/contents/helptour/TourPage2.qml:214
-#: ../src/package/contents/helptour/TourPage4.qml:320
+#: ../src/package/contents/helptour/TourPage1.qml:301
+#: ../src/package/contents/helptour/TourPage2.qml:219
+#: ../src/package/contents/helptour/TourPage4.qml:322
 msgid "Restaurants"
 msgstr "Εστιατόρια"
 
@@ -278,13 +278,13 @@ msgid ""
 "and <font color=\"#ea7b7b\"><i>\"Mathematics I\"</i></font>"
 msgstr "Ας δούμε πως θα μπορούσε  το προηγούμενο παράδειγμα να αναπαρασταθεί στο WorkFlow. Στην κεντρική περιοχή υπάρχουν δύο ενεργές δραστηριότητες <font color=\"#a1b6f7\"><i>\"Σχεδιασμός Διακοπών\"</i></font> και <font color=\"#a1b6f7\"><i>\"Σπουδές Πανεπιστημίου\"</i></font>.<br/> Στις σταματημένες(ανενεργές) δραστηριότητες υπάρχει η τρίτη Δραστηριότητα <font color=\"#a1b6f7\"><i>\"Το Σκάκι Μου\"<i></font> που δεν καταναλώνει καθόλου πόρους αλλά είναι πάντα διαθέσιμο να το επαναφέρετε.<br/><br/> Η Δραστηριότητα <font color=\"#a1b6f7\"><i>\"Σχεδιασμός Διακοπών\"</i></font> υποδιαιρείται σε τρεις <b>Επιφάνειες Εργασίας</b>:<br/>  <font color=\"#ea7b7b\"><i>\"Πληροφορίες αξιοθέατα\"</i>, <i>\"Ξενοδοχεία\"</i>, <i>\"Εστιατόρια\"</i> </font> <br/><br/> ενώ η δεύτερη Δραστηριότητα <font color=\"#a1b6f7\"><i>\"Σπουδές Πανεπιστημίου\"</i></font> περιέχει δύο Επιφάνειες Εργασίας:<br/> <font color=\"#ea7b7b\"><i>\"Επιστήμη Υπολογιστών\"</i></font> και <font color=\"#ea7b7b\"><i>\"Μαθηματικά Ι\"</i></font>"
 
-#: ../src/package/contents/helptour/TourPage2.qml:278
-#: ../src/package/contents/helptour/TourPage4.qml:439
+#: ../src/package/contents/helptour/TourPage2.qml:288
+#: ../src/package/contents/helptour/TourPage4.qml:441
 msgid "Computer Science"
 msgstr "Επιστήμη Υπολογιστών"
 
-#: ../src/package/contents/helptour/TourPage2.qml:299
-#: ../src/package/contents/helptour/TourPage4.qml:460
+#: ../src/package/contents/helptour/TourPage2.qml:309
+#: ../src/package/contents/helptour/TourPage4.qml:462
 msgid "Mathematics I"
 msgstr "Μαθηματικά Ι"
 
@@ -339,7 +339,7 @@ msgid ""
 "color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state."
 msgstr "Ας χρησιμοποιήσουμε το προηγούμενο παράδειγμα των Δραστηριοτήτων και Επιφανειών Εργασίας, αλλά αυτή τη φορά με τα Παράθυρα να εμφανίζονται.<br/> Μπορείτε να παρατηρήσετε τις τρεις καταστάσεις των παραθύρων στο ακόλουθο παράδειγμα.<br/><br/>Τα παράθυρα του Okular και του Dolphin είναι σε<font color=\"#ea7b7b\"><i>\"Απλή\"</i></font> κατάσταση.<br/>Το παράθυρο Words είναι σε κατάσταση <font color=\"#ea7b7b\"><i>\"Όλες οι Επιφάνειες\"</i></font> . <br/>Το παράθυρο Amarok είναι σε κατάσταση <font color=\"#ea7b7b\"><i>\"Παντού\"</i></font> ."
 
-#: ../src/package/contents/helptour/TourPage4.qml:484
+#: ../src/package/contents/helptour/TourPage4.qml:486
 msgid "Amarok - Sounds of KDe"
 msgstr "Amarok - Ήχοι του KDe"
 
@@ -640,14 +640,15 @@ msgstr "Συμπεριφορά:"
 #: rc.cpp:21
 msgid ""
 "<html><head/><body><p>This option is available only when the plasmoid is in "
-"a panel</p></body></html>"
-msgstr "<html><head/><body><p>Αυτή η επιλογή είναι διαθέσιμη μόνο όταν το συστατικό είναι μέσα σε κάποιο πίνακα</p></body></html>"
+"a panel. You can hide the PopUp when you click on a "
+"WorkArea</p></body></html>"
+msgstr "<html><head/><body><p>Αυτή η επιλογή είναι διαθέσιμη μόνο όταν το συστατικό είναι μέσα σε κάποιο πίνακα. Μπορείτε έτσι να κρύψετε το αναδυόμενο παράθυρο όταν κάνετε κλικ σε μία Επιφάνεια Εργασίας\n</p></body></html>"
 
 #. i18n: file: ../src/config.ui:152
 #. i18n: ectx: property (text), widget (QCheckBox, hideOnClickCheckBox)
 #: rc.cpp:24
 msgid "Hide PopUp when clicking a WorkArea"
-msgstr "Απόκρυψη Αναδυόμενου παραθύρου όταν γίνεται κλικ σε Επιφάνεια Εργασίας"
+msgstr "Απόκρυψη Αναδυόμενου στο κλικ Επιφάνειας Εργασίας"
 
 #. i18n: file: ../src/config.ui:165
 #. i18n: ectx: property (toolTip), widget (QComboBox, themesCmb)

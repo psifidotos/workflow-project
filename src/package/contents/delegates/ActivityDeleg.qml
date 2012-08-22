@@ -313,6 +313,10 @@ Item{
         return -1;
     }
 
+    function getIcon(){
+        return activityIcon;
+    }
+
     Connections{
         target:activitiesSignals
         onShowButtons:{

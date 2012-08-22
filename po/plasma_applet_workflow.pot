@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-21 12:20+0300\n"
+"POT-Creation-Date: 2012-08-22 12:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,7 +146,7 @@ msgid ""
 "shows their number."
 msgstr ""
 
-#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:105
+#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:99
 msgid "Orphaned Windows"
 msgstr ""
 
@@ -215,39 +215,39 @@ msgid ""
 msgstr ""
 
 #: ../src/package/contents/helptour/TourPage1.qml:131
-#: ../src/package/contents/helptour/TourPage1.qml:222
-#: ../src/package/contents/helptour/TourPage2.qml:142
-#: ../src/package/contents/helptour/TourPage4.qml:146
+#: ../src/package/contents/helptour/TourPage1.qml:225
+#: ../src/package/contents/helptour/TourPage2.qml:147
+#: ../src/package/contents/helptour/TourPage4.qml:148
 msgid "Vacation Planning"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage1.qml:141
-#: ../src/package/contents/helptour/TourPage2.qml:248
-#: ../src/package/contents/helptour/TourPage4.qml:354
+#: ../src/package/contents/helptour/TourPage1.qml:142
+#: ../src/package/contents/helptour/TourPage2.qml:258
+#: ../src/package/contents/helptour/TourPage4.qml:356
 msgid "University Studies"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage1.qml:151
-#: ../src/package/contents/helptour/TourPage2.qml:109
-#: ../src/package/contents/helptour/TourPage4.qml:111
+#: ../src/package/contents/helptour/TourPage1.qml:153
+#: ../src/package/contents/helptour/TourPage2.qml:113
+#: ../src/package/contents/helptour/TourPage4.qml:112
 msgid "Chess Hobby"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage1.qml:254
-#: ../src/package/contents/helptour/TourPage2.qml:172
-#: ../src/package/contents/helptour/TourPage4.qml:201
+#: ../src/package/contents/helptour/TourPage1.qml:257
+#: ../src/package/contents/helptour/TourPage2.qml:177
+#: ../src/package/contents/helptour/TourPage4.qml:203
 msgid "Sightseeing Information"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage1.qml:276
-#: ../src/package/contents/helptour/TourPage2.qml:193
-#: ../src/package/contents/helptour/TourPage4.qml:274
+#: ../src/package/contents/helptour/TourPage1.qml:279
+#: ../src/package/contents/helptour/TourPage2.qml:198
+#: ../src/package/contents/helptour/TourPage4.qml:276
 msgid "Hotels"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage1.qml:298
-#: ../src/package/contents/helptour/TourPage2.qml:214
-#: ../src/package/contents/helptour/TourPage4.qml:320
+#: ../src/package/contents/helptour/TourPage1.qml:301
+#: ../src/package/contents/helptour/TourPage2.qml:219
+#: ../src/package/contents/helptour/TourPage4.qml:322
 msgid "Restaurants"
 msgstr ""
 
@@ -277,13 +277,13 @@ msgid ""
 "\"><i>\"Mathematics I\"</i></font>"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage2.qml:278
-#: ../src/package/contents/helptour/TourPage4.qml:439
+#: ../src/package/contents/helptour/TourPage2.qml:288
+#: ../src/package/contents/helptour/TourPage4.qml:441
 msgid "Computer Science"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage2.qml:299
-#: ../src/package/contents/helptour/TourPage4.qml:460
+#: ../src/package/contents/helptour/TourPage2.qml:309
+#: ../src/package/contents/helptour/TourPage4.qml:462
 msgid "Mathematics I"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgid ""
 "font> state."
 msgstr ""
 
-#: ../src/package/contents/helptour/TourPage4.qml:484
+#: ../src/package/contents/helptour/TourPage4.qml:486
 msgid "Amarok - Sounds of KDe"
 msgstr ""
 
@@ -638,7 +638,8 @@ msgstr ""
 #: rc.cpp:21
 msgid ""
 "<html><head/><body><p>This option is available only when the plasmoid is in "
-"a panel</p></body></html>"
+"a panel. You can hide the PopUp when you click on a WorkArea</p></body></"
+"html>"
 msgstr ""
 
 #. i18n: file: ../src/config.ui:152
