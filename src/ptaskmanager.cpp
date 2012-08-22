@@ -86,11 +86,11 @@ void PTaskManager::setQMlObject(QObject *obj)
 
     //    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
 
-   // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
+    // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
     //connect(kwinSystem,SIGNAL(compositingChanged(bool)),
     //        this, SLOT(compositingChanged(bool)));
-  //  connect(kwinApp,SIGNAL(compositingToggled(bool)),
-   //         this, SLOT(compositingChanged(bool)));
+    //  connect(kwinApp,SIGNAL(compositingToggled(bool)),
+    //         this, SLOT(compositingChanged(bool)));
 
     QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde..KWin" ,"compositingToggled", this, SLOT(MySlot(uint)));
 
@@ -167,36 +167,24 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     wId.setNum(task->window());
 
     // only a subset of task information is exported
-    QString typeOfMessage;
-    switch (changes) {
-    case TaskManager::EverythingChanged:
-        typeOfMessage = "everything";
-        break;
-    case TaskManager::IconChanged:
-        typeOfMessage = "icon";
-        break;
-    case TaskManager::NameChanged:
-        typeOfMessage = "name";
-        break;
-    case TaskManager::DesktopChanged:
-        typeOfMessage = "desktop";
-        break;
-    case TaskManager::ActivitiesChanged:
-        typeOfMessage = "activities";
-        break;
-    default:
-        break;
+    QString typeOfMessage="";
+
+
+    if((changes != TaskManager::TaskUnchanged) ||
+            (changes != TaskManager::GeometryChanged) ||
+            (changes != TaskManager::AttentionChanged)){
+        QPixmap tempIcn = task->icon(256,256,true);
+        emit taskUpdatedIn(QVariant(wId),
+                           QVariant(task->isOnAllDesktops()),
+                           QVariant(task->isOnAllActivities()),
+                           QVariant(task->classClass()),
+                           QVariant(task->name()),
+                           QVariant(QIcon(tempIcn)),
+                           QVariant(task->desktop()),
+                           QVariant(task->activities()),
+                           QVariant(typeOfMessage));
+
     }
-    QPixmap tempIcn = task->icon(256,256,true);
-    emit taskUpdatedIn(QVariant(wId),
-                       QVariant(task->isOnAllDesktops()),
-                       QVariant(task->isOnAllActivities()),
-                       QVariant(task->classClass()),
-                       QVariant(task->name()),
-                       QVariant(QIcon(tempIcn)),
-                       QVariant(task->desktop()),
-                       QVariant(task->activities()),
-                       QVariant(typeOfMessage));
 
 }
 
@@ -339,8 +327,8 @@ void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int hei
 {
     //int xEr = topX + 12;
     //int yEr = topY + 75;
-  //  int xEr = topX+13;
-  //  int yEr = topY+42;
+    //  int xEr = topX+13;
+    //  int yEr = topY+42;
 
     //QRect prSize(x+xEr,y+yEr,width,height);
     //   QRect prSize(x,y,width,height);

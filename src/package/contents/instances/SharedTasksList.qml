@@ -32,51 +32,26 @@ Item{
             else
                 fActivity = obj.activities;
 
-
-
             console.debug("setTaskState:"+cod+"-"+val);
+
             if (val === "oneDesktop"){
-                if (obj.onAllDesktops !== false )
-                    taskManager.setOnAllDesktops(obj.code,false);
+                //   if (obj.onAllDesktops !== false )
 
-                if ((obj.desktop === undefined) ||
-                        (obj.desktop < 1))
-                    setTaskDesktop(cod,mainView.currentDesktop)
-
-                model.setProperty(ind,"onAllDesktops",false);
-                model.setProperty(ind,"onAllActivities",false);
 
                 if(obj.activities !== fActivity)
                     setTaskActivity(obj.code,fActivity);
-                //taskManager.setOnlyOnActivity(obj.code,fActivity);
+
+                taskManager.setOnAllDesktops(obj.code,false);
 
             }
             else if (val === "allDesktops"){
-                model.setProperty(ind,"onAllDesktops",true);
-                model.setProperty(ind,"onAllActivities",false);
+                taskManager.setOnlyOnActivity(obj.code,fActivity);
 
                 taskManager.setOnAllDesktops(obj.code,true);
-                taskManager.setOnlyOnActivity(obj.code,fActivity);
             }
             else if (val === "allActivities"){
-                var onalld = true;
-                var onalla = true;
-
-                if(obj.onAllDesktops !== true)
-                    onalld=false;
-
-                if(obj.onAllActivities !== true)
-                    onalla=false;
-
-                if(onalld === false)
-                    model.setProperty(ind,"onAllDesktops",true);
-                if(onalla === false)
-                    model.setProperty(ind,"onAllActivities",true);
-
-                if(onalla === false)
-                    taskManager.setOnAllActivities(obj.code);
-                if(onalld === false)
-                    taskManager.setOnAllDesktops(obj.code,true);
+                taskManager.setOnAllDesktops(obj.code,true);
+                taskManager.setOnAllActivities(obj.code);
 
                 instanceOfTasksDesktopList.removeTask(cod);
             }
@@ -90,7 +65,7 @@ Item{
         var ind = getIndexFor(cod);
         var obj = model.get(ind);
         if(obj.activities !== val){
-            model.setProperty(ind,"activities",val);
+            //     model.setProperty(ind,"activities",val);
             taskManager.setOnlyOnActivity(cod,val);
         }
     }
@@ -100,7 +75,7 @@ Item{
         var ind = getIndexFor(cod);
         var obj = model.get(ind);
         if(obj.desktop !== val){
-            model.setProperty(ind,"desktop",val);
+            //          model.setProperty(ind,"desktop",val);
             taskManager.setOnDesktop(obj.code,val);
         }
     }
@@ -149,7 +124,7 @@ Item{
         else
             fact=activit[0];
 
-//        console.debug(source+"-"+onalld+"-"+onalla+"-"+classc+"-"+nam+"-"+icn+"-"+indrag+"-"+desk+"-"+fact );
+        //        console.debug(source+"-"+onalld+"-"+onalla+"-"+classc+"-"+nam+"-"+icn+"-"+indrag+"-"+desk+"-"+fact );
 
         model.append( {  "code": source,
                          "onAllDesktops":onalld,
@@ -190,38 +165,20 @@ Item{
             fact=activit[0];
 
         var ind = getIndexFor(source);
+
         if (ind>-1){
-            if (mtype==="everything"){
-                model.setProperty(ind,"onAllDesktops",onalld);
-                model.setProperty(ind,"onAllActivities",onalla);
-                model.setProperty(ind,"classClass",classc);
-                model.setProperty(ind,"name",nam);
-                model.setProperty(ind,"Icon",icn);
-                model.setProperty(ind,"desktop",desk);
-                model.setProperty(ind,"activities",fact);
 
-                if(onalla === true){
-                    taskManager.setOnAllDesktops(source,true);
-                }
-            }
-            else if(mtype ==="desktop" ){
-                model.setProperty(ind,"onAllDesktops",onalld);
-                model.setProperty(ind,"desktop",desk);
-            }
-            else if(mtype ==="activities" ){
-                model.setProperty(ind,"onAllActivities",onalla);
-                model.setProperty(ind,"activities",fact);
+            model.setProperty(ind,"onAllDesktops",onalld);
+            model.setProperty(ind,"onAllActivities",onalla);
+            model.setProperty(ind,"classClass",classc);
+            model.setProperty(ind,"name",nam);
+            model.setProperty(ind,"Icon",icn);
+            model.setProperty(ind,"desktop",desk);
+            model.setProperty(ind,"activities",fact);
 
-                if(onalla === true){
+            if(onalla === true)
+                if(onalld !== true)
                     taskManager.setOnAllDesktops(source,true);
-                }
-            }
-            else if(mtype ==="name" ){
-                model.setProperty(ind,"name",nam);
-            }
-            else if(mtype ==="icon" ){
-                model.setProperty(ind,"Icon",icn);
-            }
 
         }
 
@@ -231,7 +188,7 @@ Item{
 
 
     function removeTask(cod){
-    //    taskRemovedIn(cod);
+        //    taskRemovedIn(cod);
         taskManager.closeTask(cod);
     }
 
@@ -263,9 +220,9 @@ Item{
         for(var i=0; i<model.count; i++){
             var obj = model.get(i);
             if( (obj.onAllActivities) ||
-                ((obj.activities === actId)&&(obj.onAllDesktops)) ||
-                ((obj.activities === actId)&&(obj.desktop === desk)) )
-                  taskManager.minimizeTask(obj.code);
+                    ((obj.activities === actId)&&(obj.onAllDesktops)) ||
+                    ((obj.activities === actId)&&(obj.desktop === desk)) )
+                taskManager.minimizeTask(obj.code);
         }
     }
 
