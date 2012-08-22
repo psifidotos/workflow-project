@@ -23,6 +23,9 @@ Item{
     property bool previewsWereEnabled:false
     property bool widgetsExplorerAwaitingActivity:false
 
+    //When we add an activity must also active it in order to create all the necessary configuration
+    property string previousActiveActivity:""
+
 
     function printModel(){
         console.debug("---- Activities Model -----");
@@ -486,7 +489,11 @@ Item{
 
 
     function addNewActivity(){
+        previousActiveActivity = mainView.currentActivity;
         var res = activityManager.add(i18n("New Activity"));
+        setCurrent (res);
+        setCurrent (previousActiveActivity);
+        previousActiveActivity = "";
     }
 
 

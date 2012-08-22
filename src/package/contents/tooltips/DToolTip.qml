@@ -24,12 +24,13 @@ PlasmaCore.FrameSvgItem{
 
     //property int maxHorSize : Math.max(6*mainView.scaleMeter,shadowTitleTxt.width+iconImg.width+localIconImg.width+margins.left+margins.right)
     property int maxHorSize : 8*mainView.scaleMeter
+    property int minHorSize : 4*mainView.scaleMeter
     property int maxHorSizeNoMargins : (maxHorSize) - margins.left - margins.right -2*insideMargin
 
     property string icon:""
     property string localIcon:""
 
-    property int iconWidth: ((icon!=="")||(localIcon!=="")) ? maxHorSize/5 : 0
+    property int iconWidth: ((icon!=="")||(localIcon!=="")) ? maxHorSize/9 : 0
 
 
     width:horSize > maxHorSize ? maxHorSize : horSize
@@ -169,7 +170,7 @@ PlasmaCore.FrameSvgItem{
     //                        maxHorSizeNoMargins - parent.iconWidth - 3,
       //                      shadowTitleTxt.width+parent.iconWidth)
         width: findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
-                                  findWidth :
+                                  Math.max(findWidth,minHorSize) :
                                   maxHorSizeNoMargins - parent.iconWidth - 3
 
         wrapMode:Text.WordWrap

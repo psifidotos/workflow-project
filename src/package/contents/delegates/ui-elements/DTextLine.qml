@@ -86,6 +86,10 @@ Item{
                     toolTip.hideToolTip();
                 }
 
+                onPressAndHold: {
+                    toolTip.hideToolTip();
+                }
+
                 onClicked: {
                     dTextIItem.textAccepted();
                 }
@@ -201,6 +205,10 @@ Item{
             }
             onExited:{
                 dTextIItem.exited();
+                toolTip.hideToolTip();
+            }
+
+            onPressAndHold: {
                 toolTip.hideToolTip();
             }
 

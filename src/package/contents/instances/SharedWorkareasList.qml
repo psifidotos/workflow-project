@@ -26,11 +26,13 @@ Item{
 
     function setWorkareaTitle(actCode, desktop, title){
         var ind = getIndexFor(actCode);
-        var actOb = model.get(ind);
-        var workMod = actOb.workareas;
+        if(ind>-1){
+            var actOb = model.get(ind);
+            var workMod = actOb.workareas;
 
-        workMod.setProperty(desktop-1,"elemTitle",title);
-        workflowManager.renameWorkarea(actCode,desktop,title);
+            workMod.setProperty(desktop-1,"elemTitle",title);
+            workflowManager.renameWorkarea(actCode,desktop,title);
+        }
     }
 
     function setCurrentIns(cod,cur){
@@ -78,7 +80,7 @@ Item{
         if((p1>-1)&&(p2>-1)){
             var sz1 = model.get(p1).workareas.count;
             //for(var i=0; i<sz1-1; i++)
-             //   removeWorkArea(to,1);
+            //   removeWorkArea(to,1);
 
             //in order ot stay the computations without
             //issues
