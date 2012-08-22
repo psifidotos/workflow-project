@@ -9,7 +9,7 @@ import org.kde.qtextracomponents 0.1
 
 
 PlasmaCore.FrameSvgItem{
-    imagePath:"widgets/background"
+    imagePath:"opaque/dialogs/background"
     id:templDialog
 
 
@@ -31,6 +31,7 @@ PlasmaCore.FrameSvgItem{
     property color defColor:"#ffffff"
 
     property alias dialogTitle: titleMesg.text
+    property alias closeBtnSize: closeBtnGlb.width
 
     visible:false
 
@@ -203,7 +204,7 @@ PlasmaCore.FrameSvgItem{
         height:closeBtnGlb.height
         anchors.bottom: parent.top
         anchors.right: parent.right
-        anchors.rightMargin: 0.7*width
+        anchors.rightMargin: 0.5*width
 
     }
 
@@ -216,7 +217,7 @@ PlasmaCore.FrameSvgItem{
         //            y:-height/2
         //          x:parent.width+width/2
         anchors.top:positionHelper.top
-        anchors.topMargin: 0.7*height
+        anchors.topMargin: 0.45*height
         anchors.left: positionHelper.right
 
         // anchors.right: parent.right

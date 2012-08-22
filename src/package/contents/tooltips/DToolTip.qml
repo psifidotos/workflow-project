@@ -13,7 +13,7 @@ PlasmaCore.FrameSvgItem{
 
     parent:mainView
 
-    imagePath:"widgets/background"
+    imagePath:"widgets/tooltip"
 
     property variant target:tempMouseArea
     // property variant masterMouseArea:tempMouseArea //Could be removed when instanceof would be supported

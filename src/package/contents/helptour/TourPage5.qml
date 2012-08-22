@@ -37,8 +37,8 @@ TourPage{
     AnimatedText{
         id:theEnd
         y:0.6*insideHeight
-        anchors.right: parent.right
-        anchors.rightMargin: 0.2*insideWidth
+        anchors.right: titleExplaination.right
+        //anchors.rightMargin: 0.2*insideWidth
 
         font.bold:true
         font.italic: true

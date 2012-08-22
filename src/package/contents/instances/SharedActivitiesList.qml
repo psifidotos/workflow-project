@@ -332,6 +332,10 @@ Item{
         if(widgetsExplorerAwaitingActivity){
             activityManager.showWidgetsExplorer(cod);
             widgetsExplorerAwaitingActivity = false;
+
+            //Hide it after showing the widgets
+            if(!mainView.isOnDashBoard)
+                workflowManager.hidePopupDialog();
         }
 
         //  if(goToDesktop > -1){
@@ -367,16 +371,49 @@ Item{
 
     }
 
+    //This is only for Dashboard and on current Activity
+    Timer{
+        id:showWidgetsExplorerTimer
+        interval: 100
+        repeat: false
+
+        property string actCode:""
+        onTriggered: {
+            activityManager.showWidgetsExplorer(actCode);
+        }
+    }
+
+
     function showWidgetsExplorer(act){
         if(mainView.isOnDashBoard)
             taskManager.hideDashboard();
-        else
-            workflowManager.hidePopupDialog();
 
-        widgetsExplorerAwaitingActivity = true;
-        var nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
+        var nDesktop = mainView.currentDesktop;
+
+        var currentAct = (act === mainView.currentActivity);
+
+        if(currentAct)
+            if(!mainView.isOnDashBoard)
+                activityManager.showWidgetsExplorer(act);
+            else{
+                // This is only for Dashboard and on current Activity
+                // a workaround for the strange behavior showing
+                // explorer and hide it afterwards
+                showWidgetsExplorerTimer.actCode = act;
+                showWidgetsExplorerTimer.start();
+            }
+        else{
+            widgetsExplorerAwaitingActivity = true;
+            nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
+        }
+
         instanceOfTasksList.minimizeWindowsIn(act, nDesktop);
         activityManager.unlockWidgets();
+
+
+        //Hide it after showing the widgets
+        if((!mainView.isOnDashBoard)&&(currentAct))
+            workflowManager.hidePopupDialog();
 
     }
 

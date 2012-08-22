@@ -17,8 +17,9 @@ DialogTemplate2 {
     anchors.centerIn: mainView
 
 
-    insideWidth: mainView.width-2*margins.left-2*margins.right
-    insideHeight: mainView.height-4*margins.top-3*margins.bottom
+    //insideWidth: mainView.width-5*margins.left-5*margins.right
+    insideWidth: mainView.width-margins.left-margins.right-2*closeBtnSize
+    insideHeight: mainView.height-margins.top-margins.bottom-3*closeBtnSize
 
     property int smallFont:0.019*insideHeight
     property int mediumFont:0.025*insideHeight
