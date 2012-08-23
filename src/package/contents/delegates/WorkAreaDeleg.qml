@@ -13,27 +13,42 @@ Item{
     property alias workAreaName_visible: workAreaName.visible
     property alias areaButtons_visible: workAreaButtons.visible
 
-    width:mainView.workareaWidth - 0.2*mainView.scaleMeter
-    height: workList.workAreaImageHeight+workList.realWorkAreaNameHeight
-    x:0.1*mainView.scaleMeter
+    property int classicW:mainView.workareaWidth - 0.2*mainView.scaleMeter
+    property int classicH:workList.workAreaImageHeight+workList.realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent
 
+
+    width: isCurrentW === true?classicW+0.2*mainView.scaleMeter:classicW
+    height: classicH
+
+    x:isCurrentW !== true ? 0.1*mainView.scaleMeter:0
 
     property string typeId : "workareaDeleg"
 
     property string actCode: workList.ccode
     property int desktop: gridRow
 
-    property int imagex:14
+    property int imagex:15
     property int imagey:15
 
     property int imagewidth:width - 2*imagex
     property int imageheight:height - 2*imagey
 
+    property bool isCurrentW:((mainWorkArea.actCode === mainView.currentActivity) &&
+                              (mainWorkArea.desktop === mainView.currentDesktop))
+
+    //In order to fix the height because of increasing size for current workarea
+    onIsCurrentWChanged:{
+        if(isCurrentW)
+            y=y-workalist.addedHeightForCurrent/2
+        else
+            y=y+workalist.addedHeightForCurrent/2
+    }
+
     Item{
         id:normalWorkArea
 
         width: mainWorkArea.width
-        height: workList.workAreaImageHeight
+        height: isCurrentW ? workList.workAreaImageHeight+workalist.addedHeightForCurrent:workList.workAreaImageHeight
 
         WorkAreaImage{
             id:borderRectangle
@@ -67,9 +82,9 @@ Item{
 
             id:tasksSList
 
-            x:mainWorkArea.imagex
+            x:mainWorkArea.imagex+1
             y:mainWorkArea.imagey
-            width:mainWorkArea.imagewidth
+            width:mainWorkArea.imagewidth-1
             height:mainView.showWinds ? workList.workAreaImageHeight-2*mainWorkArea.imagey : 0
             opacity:mainView.showWinds ? 1 : 0
 
@@ -296,12 +311,10 @@ Item{
 
     ListView.onAdd: ParallelAnimation {
         PropertyAction { target: mainWorkArea; property: "height"; value: 0 }
-        PropertyAction { target: borderRectangle; property: "height"; value: 0 }
         PropertyAction { target: mainWorkArea; property: "opacity"; value: 0 }
 
-        NumberAnimation { target: mainWorkArea; property: "height"; to: mainView.workareaHeight; duration: 400; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: borderRectangle; property: "height"; to: mainView.workareaHeight; duration: 500; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: mainWorkArea; property: "opacity"; to: 1; duration: 500; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainWorkArea; property: "height"; to: classicH; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainWorkArea; property: "opacity"; to: 1; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
     }
 
     ListView.onRemove: SequentialAnimation {
@@ -311,12 +324,12 @@ Item{
         PropertyAction { target: tasksSList; property: "visible"; value: false }
 
         ParallelAnimation{
-            NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: workAreaMoreBtn; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 500; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
         }

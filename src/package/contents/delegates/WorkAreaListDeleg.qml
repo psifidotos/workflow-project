@@ -31,7 +31,7 @@ import "../tooltips"
         property int realWorkAreaNameHeight: 0.8*workAreaNameHeight
 
         property int bWidth: mainView.workareaWidth
-        property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight)*workalist.model.count
+        property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*workalist.model.count
 
 
     //    width: bWidth
@@ -51,6 +51,8 @@ import "../tooltips"
             height:workList.bHeight
          //   width: workList.tCState === workList.neededState ? workList.bWidth : 0
             property string typeId : "workalistForActivity"
+
+            property int addedHeightForCurrent:(mainView.screenRatio*0.2*mainView.scaleMeter)
 
             z:5
 
@@ -86,6 +88,7 @@ import "../tooltips"
             }
 
         }
+
 
         Text{
             id:taskOrFTitle

@@ -119,8 +119,8 @@ Rectangle{
                 }
 
 
-                instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
-                instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
+                instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+                instanceOfTasksList.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
 
                 if(mainView.animationsStep2!==0){
                     var co1 = mainView.mapToItem(mainView,iX1,iY1);

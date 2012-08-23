@@ -45,7 +45,7 @@ Rectangle {
     property int previewsOffsetX: 13
     property int previewsOffsetY: 42
 
-    property int  showAnimations: 2
+    property int  showAnimations: 1
     property int  animationsStep: showAnimations >= 1 ? 200:0
     property int  animationsStep2: showAnimations >= 2 ? 200:0
 
@@ -242,6 +242,7 @@ Rectangle {
 
     function setWindowsPreviews(b){
         mainView.enablePreviews = b;
+        oxygenT.effectsChecked = mainView.enablePreviews;
     }
 
     function setWindowsPreviewsOffsetX(x){

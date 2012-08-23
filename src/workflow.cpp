@@ -366,6 +366,7 @@ void WorkFlow::saveWorkareas()
 void WorkFlow::setZoomFactor(int zoom)
 {
     m_zoomFactor = zoom;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setShowWindows(bool show)
@@ -374,18 +375,20 @@ void WorkFlow::setShowWindows(bool show)
     if (!show){
         taskManager->hideWindowsPreviews();
     }
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setLockActivities(bool lock)
 {
     m_lockActivities = lock;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
     QMetaObject::invokeMethod(mainQML, "setAnimations",
-                              Q_ARG(QVariant, anim));
+                              Q_ARG(QVariant, anim));    
 }
 
 void WorkFlow::setHideOnClick(bool h)
@@ -429,14 +432,17 @@ void WorkFlow::answeredIconDialog()
 
 void WorkFlow::setWindowsPreviews(bool b){
     m_windowsPreviews = b;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setWindowsPreviewsOffsetX(int x){
     m_windowsPreviewsOffsetX = x;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setWindowsPreviewsOffsetY(int y){
     m_windowsPreviewsOffsetY = y;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setFontRelevance(bool fr){
@@ -445,14 +451,17 @@ void WorkFlow::setFontRelevance(bool fr){
 
 void WorkFlow::setShowStoppedActivities(bool s){
     m_showStoppedActivities = s;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setFirstRunLiveTour(bool f){
     m_firstRunLiveTour = f;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
     m_firstRunCalibrationPreviews = cal;
+    saveConfigurationFiles();
 }
 
 void WorkFlow::setCurrentTheme(QString theme)

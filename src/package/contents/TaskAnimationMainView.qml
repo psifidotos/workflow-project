@@ -74,7 +74,7 @@ QIconItem{
                 desktopPos = mainView.currentDesktop - 1;
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
-
+/*
             if (actCState === "Stopped"){
 
                 var toCoord = mainView.getDynLib().getActivityCoord(activityCode,stoppedPanel.getList());
@@ -93,7 +93,7 @@ QIconItem{
 
                 animateTask(cid,coord,col.getOrphanList(),anim);
             }
-            else{
+            else{*/
                 var col2 = allWorkareas.getActivityColumn(activityCode);
 
                 console.debug("Desktop:"+desktopPos);
@@ -102,7 +102,7 @@ QIconItem{
 
                 animateTask(cid,coord,work.getTasksList(),anim);
 
-            }
+//            }
 
         }
     }

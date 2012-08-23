@@ -62,21 +62,43 @@ Item{
     }
 
     function setTaskActivity(cod, val){
+        //     var ind = getIndexFor(cod);
+        //     var obj = model.get(ind);
+        //     if(obj.activities !== val){
+        //     model.setProperty(ind,"activities",val);
+        taskManager.setOnlyOnActivity(cod,val);
+        //   }
+    }
+
+    function setTaskActivityForAnimation(cod,val){
         var ind = getIndexFor(cod);
-        var obj = model.get(ind);
-        if(obj.activities !== val){
-            //     model.setProperty(ind,"activities",val);
-            taskManager.setOnlyOnActivity(cod,val);
+        if(ind>-1){
+            var obj = model.get(ind);
+            if(obj.activities !== val){
+                model.setProperty(ind,"activities",val);
+                taskManager.setOnlyOnActivity(cod,val);
+            }
         }
     }
 
 
     function setTaskDesktop(cod, val){
+        //        var ind = getIndexFor(cod);
+        //      var obj = model.get(ind);
+        //    if(obj.desktop !== val){
+        //          model.setProperty(ind,"desktop",val);
+        taskManager.setOnDesktop(obj.code,val);
+        //  }
+    }
+
+    function setTaskDesktopForAnimation(cod, val){
         var ind = getIndexFor(cod);
-        var obj = model.get(ind);
-        if(obj.desktop !== val){
-            //          model.setProperty(ind,"desktop",val);
-            taskManager.setOnDesktop(obj.code,val);
+        if(ind>-1){
+            var obj = model.get(ind);
+            if(obj.desktop !== val){
+                model.setProperty(ind,"desktop",val);
+                taskManager.setOnDesktop(obj.code,val);
+            }
         }
     }
 
