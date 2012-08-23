@@ -23,8 +23,10 @@ Item{
     property bool previewsWereEnabled:false
     property bool widgetsExplorerAwaitingActivity:false
 
-    //When we add an activity must also active it in order to create all the necessary configuration
+    //When we add a new activity a series of signal must be generated in order
+    //to have a success creation
     property string previousActiveActivity:""
+    property string mustActivateActivity:""
 
 
     function printModel(){
@@ -82,35 +84,35 @@ Item{
             if( (cod === fromCloneActivity) &&
                     (val === "Stopped")){
                 activityManager.initCloningPhase02(cod);
-                //activityManager.loadCloneActivitySettings(fromCloneActivity);
-                //        startActivity(fromCloneActivity);
-
             }
 
             //This is Phase03 of Cloning
             if( (cod === fromCloneActivity) &&
-                    (val === "Running")){
+                    (val === "Running"))
                 stopActivity(toCloneActivity);
-            }
-
 
             //This is Phase04 of Cloning
             if( (cod === toCloneActivity) &&
-                    (val === "Stopped")){
+                    (val === "Stopped"))
                 activityManager.initCloningPhase04(cod);
-                //                activityManager.storeCloneActivitySettings(cod);
-                /*       updateWallpaper(cod);
-                startActivity(cod);
 
-                if(fromActivityWasCurrent === true){
-                    setCurrentActivityAndDesktop(fromCloneActivity,mainView.currentDesktop);
-                    fromActivityWasCurrent = false;
-                }
 
-                fromCloneActivity = "";
-                toCloneActivity = "";
-                busyIndicatorDialog.resetAnimation();*/
+
+            //Phase 05 of loading Wallpaper of New Activity
+            if( (cod === mustActivateActivity) &&
+                    (val === "Stopped")&&
+                    (toCloneActivity === "")){
+                var act = mustActivateActivity;
+                var oldAct = previousActiveActivity;
+
+                mustActivateActivity = "";
+                previousActiveActivity = "";
+
+                console.debug("OK the end:"+mustActivateActivity+"-"+previousActiveActivity);
+                startActivity(act);
+
             }
+
         }
     }
 
@@ -128,7 +130,6 @@ Item{
         if(mainView.maxDesktops === 0)
             mainView.maxDesktops = taskManager.getMaxDesktops();
 
-        //workflowManager.addEmptyActivity(source);
         if(workflowManager.activityExists(source)){
             var nms = workflowManager.getWorkAreaNames(source);
 
@@ -150,9 +151,6 @@ Item{
 
         setCState(source,stat);
 
-        // updateWallpaper(source,1000);
-        // var pt = activityManager.getWallpaper(source);
-        //      instanceOfWorkAreasList.setWallpaper(source,pt);
         updateWallpaper(source);
 
         //Phase-01 Of Cloning
@@ -162,6 +160,13 @@ Item{
             setCurrentActivityAndDesktop(source,mainView.currentDesktop);
             stopActivity(fromCloneActivity);
         }
+
+
+        //Phase 02 of loading Wallpaper of New Activity
+
+        if( (source === mustActivateActivity) &&
+                (fromCloneActivity === "") )
+            setCurrentActivityAndDesktop(source,mainView.currentDesktop);
     }
 
     function setIcon(cod, val){
@@ -176,12 +181,15 @@ Item{
     function setCurrentIns(source,cur)
     {
         var ind = getIndexFor(source);
-        model.setProperty(ind,"Current",cur);
+        if(ind>-1){
+            model.setProperty(ind,"Current",cur);
 
-        if (cur)
-            mainView.currentActivity = source;
+            if (cur){
+                mainView.currentActivity = source;
+            }
 
-        instanceOfWorkAreasList.setCurrentIns(source,cur);
+            instanceOfWorkAreasList.setCurrentIns(source,cur);
+        }
     }
 
     function activityUpdatedIn(source,title,icon,stat,cur)
@@ -236,20 +244,11 @@ Item{
 
             var nextDesk = mainView.currentDesktop;
 
-            //            var actSize = instanceOfWorkAreasList.getActivitySize(nId);
-
-            //            console.debug(nextDesk+"-"+actSize);
-            //          if(nextDesk>instanceOfWorkAreasList.getActivitySize(nId)){
-            //            nextDesk = actSize;
-            //      }
-
             setCurrentActivityAndDesktop(nId,nextDesk);
         }
 
         activityManager.stop(cod);
 
-        //    setCState(cod,"Stopped");
-        //    instanceOfWorkAreasList.setCState(cod,"Stopped");
     }
 
 
@@ -265,21 +264,11 @@ Item{
 
         activityManager.start(cod);
 
-        setCState(cod,"Running");
-        instanceOfWorkAreasList.setCState(cod,"Running");
-
-        //updateWallpaperInt(cod,1000);
         updateWallpaper(cod);
-
-        //        var pt = activityManager.getWallpaper(cod);
-        //       instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
 
     function setName(cod,title){
         activityManager.setName(cod,title);
-
-        //   var ind = getIndexFor(cod);
-        //  model.setProperty(ind,"Name",title);
     }
 
     function getFirstRunningActivityId(){
@@ -320,37 +309,46 @@ Item{
     }
 
     function setCurrentSignal(cod){
-        for(var i=0; i<model.count; ++i){
-            model.setProperty(i,"Current",false);
-        }
-
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"Current",true);
+        if(ind>-1){
+            for(var i=0; i<model.count; ++i){
+                model.setProperty(i,"Current",false);
+            }
 
-        mainView.currentActivity = cod;
 
-        instanceOfWorkAreasList.setCurrent(cod);
+            model.setProperty(ind,"Current",true);
+
+            mainView.currentActivity = cod;
+
+            instanceOfWorkAreasList.setCurrent(cod);
+
+            updateWallpaper(cod);
 
 
-        if(widgetsExplorerAwaitingActivity){
-            activityManager.showWidgetsExplorer(cod);
-            widgetsExplorerAwaitingActivity = false;
+            if(widgetsExplorerAwaitingActivity){
+                activityManager.showWidgetsExplorer(cod);
+                widgetsExplorerAwaitingActivity = false;
 
-            //Hide it after showing the widgets
-            if(!mainView.isOnDashBoard)
-                workflowManager.hidePopupDialog();
+                //Hide it after showing the widgets
+                if(!mainView.isOnDashBoard)
+                    workflowManager.hidePopupDialog();
+            }
+
+            //Phase 03 Of updating the wallpaper of new activity
+            if((cod === mustActivateActivity)&&
+                    (fromCloneActivity === ""))
+                setCurrentActivityAndDesktop(previousActiveActivity,mainView.currentDesktop);
+
+            //Phase 04 Of updating the wallpaper of new activity
+            if((cod === previousActiveActivity)&&
+                    (fromCloneActivity === ""))
+                stopActivity(mustActivateActivity);
+
         }
-
-        //  if(goToDesktop > -1){
-        //    instanceOfTasksList.setCurrentDesktop(goToDesktop);
-        //    goToDesktop = -1;
-        //  }
     }
 
     function setCurrent(cod){
         activityManager.setCurrent(cod);
-
-        instanceOfWorkAreasList.setCurrent(cod);
     }
 
     function setCurrentActivityAndDesktop(activit, desk)
@@ -370,6 +368,7 @@ Item{
         instanceOfTasksList.setCurrentDesktop(nextDesk);
 
         updateWallpaper(activit);
+
         return nextDesk;
 
     }
@@ -452,21 +451,19 @@ Item{
         else
             previewsWereEnabled = false;
 
-        //busyIndicatorDialog.startAnimation();
         mainView.getDynLib().showBusyIndicatorDialog();
+
         addNewActivity();
 
     }
 
     function cloneActivityDialog(cod){
         var p = getIndexFor(cod);
-        var ob = model.get(p);
+        if(p>-1){
+            var ob = model.get(p);
 
-     //   cloneDialog.activityName = ob.Name;
-     //   cloneDialog.activityCode = cod;
-     //   cloneDialog.open();
-
-        mainView.getDynLib().showCloneDialog(cod,ob.Name);
+            mainView.getDynLib().showCloneDialog(cod,ob.Name);
+        }
     }
 
 
@@ -478,22 +475,39 @@ Item{
 
 
         var p = getIndexFor(cod);
-        var ob = model.get(p);
+        if(p>-1){
+            var ob = model.get(p);
 
-        //removeDialog.activityName = ob.Name;
-        //removeDialog.activityCode = cod;
-
-        mainView.getDynLib().showRemoveDialog(cod,ob.Name);
-        //removeDialog.open();
+            mainView.getDynLib().showRemoveDialog(cod,ob.Name);
+        }
     }
 
 
     function addNewActivity(){
-        previousActiveActivity = mainView.currentActivity;
+        if(fromCloneActivity === "")
+            previousActiveActivity = mainView.currentActivity;
+
         var res = activityManager.add(i18n("New Activity"));
-        setCurrent (res);
-        setCurrent (previousActiveActivity);
-        previousActiveActivity = "";
+
+        if(fromCloneActivity === "")
+            mustActivateActivity = res;
+
+        return res;
+
+
+        ////////SOS, DO NOT DELETE, IT CAN NOT CLONE THE EMPTY ACTIVITY(NEW ACTIVITY)
+        ///////IT CREATES AN ENTERNAL LOOP...................//////
+
+        //      setCurrentActivityAndDesktop(res,mainView.currentDesktop);
+        //       setCurrentActivityAndDesktop(previousActiveActivity,mainView.currentDesktop);
+
+        ///////////////////////////
+        ////////SOS, DO NOT DELETE, IT CAN NOT CLONE THE EMPTY ACTIVITY(NEW ACTIVITY)
+
+       //   previousActiveActivity = "";
+        //   mustActivateActivity = "";
+
+
     }
 
 

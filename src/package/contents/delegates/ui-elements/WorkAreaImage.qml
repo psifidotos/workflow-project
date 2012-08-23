@@ -3,7 +3,10 @@ import QtQuick 1.0
 BorderImage {
 
     id:workBordImage
-    source: ((mainWorkArea.actCode === mainView.currentActivity) && (mainWorkArea.desktop === mainView.currentDesktop)) ?
+
+    property bool isCurrentW:((mainWorkArea.actCode === mainView.currentActivity) &&
+                              (mainWorkArea.desktop === mainView.currentDesktop))
+    source: isCurrentW === true ?
                 "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
 
     property alias mainImgP: mainImg.source

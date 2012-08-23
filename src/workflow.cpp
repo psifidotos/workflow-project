@@ -403,7 +403,7 @@ void WorkFlow::workAreaWasClicked()
 
 void WorkFlow::screensSizeChanged(int s)
 {
-    QRect screenRect = m_desktopWidget->availableGeometry(s);
+    QRect screenRect = m_desktopWidget->screenGeometry(s);
     float ratio = (float)screenRect.height()/(float)screenRect.width();
     QMetaObject::invokeMethod(mainQML, "setScreenRatio",
                               Q_ARG(QVariant, ratio));

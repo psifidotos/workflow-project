@@ -32,6 +32,7 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_timer = new QTimer(this);
     m_timerPhase = 0;    
     m_unlockWidgetsText = "";
+
 }
 
 ActivityManager::~ActivityManager()
@@ -120,6 +121,7 @@ QString ActivityManager::getWallpaperFromContainment(Plasma::Containment *actCon
     KConfigGroup gWall= actContainment->config().group("Wallpaper").group("image");
 
     QString foundF = gWall.readEntry("wallpaper",QString("null"));
+    //qDebug() << "Wallpaper:"<<foundF ;
     QDir tmD(foundF+"/contents/images");
     if (tmD.exists()){
         QStringList files;
@@ -608,10 +610,13 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
         //        qDebug()<<"Step1...";
                 if (tC->containmentType() == Plasma::Containment::DesktopContainment){
          //           qDebug()<<"Step2...";
+           //         qDebug()<<"Activity:"<<tC->activity()<<" - "<<tC->config().readEntry("activityId","");
+
                     if((tC->config().readEntry("activityId","") == actId)&&
                             (tC->config().readEntry("plugin","") != "desktopDashboard")){
-             //           qDebug()<<"Step3...";
-                        if (tC->view())
+//                        qDebug()<<"Step3..." << actId;
+
+                   //     if (tC->view())
                             return tC;
                     }
 
@@ -630,7 +635,7 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
     Plasma::Containment *currentContainment = getContainment(actId);
-    if(currentContainment){
+    if(currentContainment->view()){
     //    qDebug()<<"Step4...";
         currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
                                                                "showWidgetExplorer");

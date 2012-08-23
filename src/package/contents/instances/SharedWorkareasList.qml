@@ -11,16 +11,21 @@ Item{
 
     function setCState(cod, val){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"CState",val);
+        if(ind>-1)
+            model.setProperty(ind,"CState",val);
     }
 
     function setCurrent(cod){
-        for(var i=0; i<model.count; ++i){
-            model.setProperty(i,"Current",false);
-        }
-
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"Current",true);
+
+        if(ind>-1){
+
+            for(var i=0; i<model.count; ++i){
+                model.setProperty(i,"Current",false);
+            }
+
+            model.setProperty(ind,"Current",true);
+        }
 
     }
 
@@ -38,7 +43,8 @@ Item{
     function setCurrentIns(cod,cur){
 
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"Current",cur);
+        if(ind>-1)
+            model.setProperty(ind,"Current",cur);
 
     }
 
@@ -110,26 +116,28 @@ Item{
     function removeWorkArea(actCode,desktop)
     {
         var ind = getIndexFor(actCode);
-        var actOb = model.get(ind);
-        var workMod = actOb.workareas;
+        if(ind>-1){
+            var actOb = model.get(ind);
+            var workMod = actOb.workareas;
 
-        for (var i=desktop-1; i<workMod.count; i++)
-        {
-            workMod.setProperty(i ,"gridRow",i);
-        }
+            for (var i=desktop-1; i<workMod.count; i++)
+            {
+                workMod.setProperty(i ,"gridRow",i);
+            }
 
-        workMod.remove(desktop-1);
+            workMod.remove(desktop-1);
 
-        workflowManager.removeWorkarea(actCode,desktop);
+            workflowManager.removeWorkarea(actCode,desktop);
 
 
-        //Not in cloning
-        if((instanceOfActivitiesList.fromCloneActivity === "") &&
-                (instanceOfActivitiesList.toCloneActivity === "")){
+            //Not in cloning
+            if((instanceOfActivitiesList.fromCloneActivity === "") &&
+                    (instanceOfActivitiesList.toCloneActivity === "")){
 
-            if((maxWorkareas() < mainView.maxDesktops) &&
-                    (mainView.maxDesktops > 2))
-                taskManager.slotRemoveDesktop();
+                if((maxWorkareas() < mainView.maxDesktops) &&
+                        (mainView.maxDesktops > 2))
+                    taskManager.slotRemoveDesktop();
+            }
         }
 
     }
@@ -149,34 +157,38 @@ Item{
 
     function addWorkareaWithName(actCode, val){
         var ind = getIndexFor(actCode);
-        var workMod = model.get(ind).workareas;
+        if(ind>-1){
+            var workMod = model.get(ind).workareas;
 
-        var counts = workMod.count;
+            var counts = workMod.count;
 
-        //Not in cloning
-        if((instanceOfActivitiesList.fromCloneActivity === "") &&
-                (instanceOfActivitiesList.toCloneActivity === "")){
+            //Not in cloning
+            if((instanceOfActivitiesList.fromCloneActivity === "") &&
+                    (instanceOfActivitiesList.toCloneActivity === "")){
 
-            if(counts === mainView.maxDesktops)
-                taskManager.slotAddDesktop();
+                if(counts === mainView.maxDesktops)
+                    taskManager.slotAddDesktop();
+            }
+
+            workMod.append( {  "elemTitle": val,
+                               "gridRow":counts+1
+                           } );
+
+            workflowManager.addWorkArea(actCode,val);
         }
-
-        workMod.append( {  "elemTitle": val,
-                           "gridRow":counts+1
-                       } );
-
-        workflowManager.addWorkArea(actCode,val);
 
     }
 
     function addWorkarea(actCode){
         var ind = getIndexFor(actCode);
-        var workMod = model.get(ind).workareas;
+        if(ind>-1){
+            var workMod = model.get(ind).workareas;
 
-        var counts = workMod.count;
-        var ndesk = taskManager.getDesktopName(counts+1);
+            var counts = workMod.count;
+            var ndesk = taskManager.getDesktopName(counts+1);
 
-        addWorkareaWithName(actCode,ndesk);
+            addWorkareaWithName(actCode,ndesk);
+        }
 
         /*        var ind = getIndexFor(actCode);
         var actOb = model.get(ind);
@@ -204,22 +216,25 @@ Item{
 
     function cloneActivity(cod,ncod){
         var ind = getIndexFor(cod);
-        var ob = model.get(ind);
+        if(ind>-1){
+            var ob = model.get(ind);
 
-        model.insert(ind+1, {"code": ncod,
-                         "CState":"Running",
-                         "elemImg":ob.elemImg,
-                         "workareas":[{
-                                 "gridRow":1,
-                                 "elemTitle":"New Workarea"
-                             }]
-                     });
+            model.insert(ind+1, {"code": ncod,
+                             "CState":"Running",
+                             "elemImg":ob.elemImg,
+                             "workareas":[{
+                                     "gridRow":1,
+                                     "elemTitle":"New Workarea"
+                                 }]
+                         });
+        }
 
     }
 
     function setWallpaper(cod,path){
         var ind = getIndexFor(cod);
-        model.setProperty(ind,"elemImg",path);
+        if(ind>-1)
+            model.setProperty(ind,"elemImg",path);
     }
 
     function addNewActivityF(cod, stat, cur){
@@ -249,19 +264,21 @@ Item{
 
     function addWorkareaOnLoading(actCode, title){
         var ind = getIndexFor(actCode);
-        var actOb = model.get(ind);
-        var workMod = actOb.workareas;
+        if(ind>-1){
+            var actOb = model.get(ind);
+            var workMod = actOb.workareas;
 
-        var counts = workMod.count;
+            var counts = workMod.count;
 
-        if(counts === mainView.maxDesktops)
-            taskManager.slotAddDesktop();
+            if(counts === mainView.maxDesktops)
+                taskManager.slotAddDesktop();
 
-        var lastobj = workMod.get(counts-1);
+            var lastobj = workMod.get(counts-1);
 
-        workMod.append( {  "elemTitle": title,
-                           "gridRow":lastobj.gridRow+1
-                       } );
+            workMod.append( {  "elemTitle": title,
+                               "gridRow":lastobj.gridRow+1
+                           } );
+        }
     }
 
     function addActivityOnLoading(cod, stat, cur, names){
