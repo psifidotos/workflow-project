@@ -433,6 +433,8 @@ void WorkFlow::answeredIconDialog()
 void WorkFlow::setWindowsPreviews(bool b){
     m_windowsPreviews = b;
     saveConfigurationFiles();
+    WId win;
+    activeWindowChanged(win);
 }
 
 void WorkFlow::setWindowsPreviewsOffsetX(int x){

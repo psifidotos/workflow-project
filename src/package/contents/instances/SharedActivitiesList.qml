@@ -376,7 +376,7 @@ Item{
     //This is only for Dashboard and on current Activity
     Timer{
         id:showWidgetsExplorerTimer
-        interval: 100
+        interval: 200
         repeat: false
 
         property string actCode:""
