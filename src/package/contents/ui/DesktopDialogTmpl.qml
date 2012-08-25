@@ -114,7 +114,7 @@ DialogTemplate2{
         contentHeight: desksTasksList.height
 
         boundsBehavior: Flickable.StopAtBounds
-        clip:true
+        clip:desksTasksList.model.count <= 9 ? false : true
 
         Row{
             //width:parent.width
@@ -172,8 +172,8 @@ DialogTemplate2{
 
                 defWidth: 0.7*mainView.scaleMeter
 
-                defPreviewWidth: 0.8*desksTasksList.cellHeight
-                defHovPreviewWidth: 1.4*defPreviewWidth
+                defPreviewWidth: 0.7*desksTasksList.cellHeight
+                defHovPreviewWidth: 1.3*defPreviewWidth
 
                // taskTitleTextDef: "#ffffff"
                // taskTitleTextHov: "#ffffff"
