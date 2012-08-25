@@ -129,10 +129,14 @@ Item{
                 fadeIcon.opacity = 1;
                 activityIcon.rotation = -20;
             }
+
             onClicked: {
                 if (mainView.lockActivities === false)
                     instanceOfActivitiesList.chooseIcon(ccode);
             }
+
+
+
 
         }
 
@@ -238,17 +242,23 @@ Item{
             }
 
             onClicked: {
+                instanceOfActivitiesList.setCurrent(ccode);
+            }
+
+            onDoubleClicked: {
                 if (mainView.lockActivities === false){
                     activityName.clicked(mouse);
                 }
             }
 
+
+
         }
 
         DToolTip{
-            visible:!mainView.lockActivities
-            title:i18n("Edit Activity Name")
-            mainText: i18n("You can edit the Activity Name in order to represent your work.")
+            //visible:!mainView.lockActivities
+            title:i18n("Activity Name")
+            mainText: i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work.")
             target:editActivityNameMouseArea
             //icon:instanceOfThemeList.icons.AddWidget
         }

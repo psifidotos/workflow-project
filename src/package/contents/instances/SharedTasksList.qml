@@ -83,11 +83,13 @@ Item{
 
 
     function setTaskDesktop(cod, val){
-        //        var ind = getIndexFor(cod);
-        //      var obj = model.get(ind);
-        //    if(obj.desktop !== val){
-        //          model.setProperty(ind,"desktop",val);
-        taskManager.setOnDesktop(obj.code,val);
+        var ind = getIndexFor(cod);
+        if(ind>-1){
+            var obj = model.get(ind);
+            //    if(obj.desktop !== val){
+            //          model.setProperty(ind,"desktop",val);
+            taskManager.setOnDesktop(obj.code,val);
+        }
         //  }
     }
 

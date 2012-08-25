@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-22 12:44+0300\n"
-"PO-Revision-Date: 2012-08-22 09:57+0000\n"
+"POT-Creation-Date: 2012-08-25 21:21+0300\n"
+"PO-Revision-Date: 2012-08-25 18:25+0000\n"
 "Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/WorkFlow_Project/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -18,22 +18,24 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:141
+#: ../src/package/contents/delegates/ActivityDeleg.qml:145
 msgid "Change Activity Icon"
 msgstr "Αλλαγή Εικονιδίου Δραστηριότητας"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:142
+#: ../src/package/contents/delegates/ActivityDeleg.qml:146
 msgid ""
 "You can change your Activity Icon in order to recognize better your work."
 msgstr "Μπορείτε να αλλάξετε το εικονίδιο της Δραστηριότητας για να ανταποκρίνεται καλύτερα στην εργασία σας."
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:250
-msgid "Edit Activity Name"
-msgstr "Επεξεργασία Ονόματος Δραστηριότητας"
+#: ../src/package/contents/delegates/ActivityDeleg.qml:260
+msgid "Activity Name"
+msgstr "Όνομα Δραστηριότητας"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:251
-msgid "You can edit the Activity Name in order to represent your work."
-msgstr "Μπορείτε να επεξεργαστείτε το Όνομα της Δραστηριότητας για να ανταποκρίνεται στην εργασία σας."
+#: ../src/package/contents/delegates/ActivityDeleg.qml:261
+msgid ""
+"You can enable this Activity by clicking or edit its name with double-"
+"clicking in order to represent your work."
+msgstr "Μπορείτε να ενεργοποιήσετε αυτή τη Δραστηριότητα κάνοντας κλικ ή να επεξεργαστείτε το όνομα της με διπλό κλικ έτσι ώστε να ανταποκρίνεται περισσότερο στην εργασίας σας."
 
 #: ../src/package/contents/delegates/ActivityStoppedDeleg.qml:201
 msgid "Restore Activity"
@@ -137,37 +139,37 @@ msgstr "Διαγραφή Επιφάνειας Εργασίας"
 msgid "You can delete this WorkArea if you want to."
 msgstr "Μπορείτε να διαγράψετε αυτή την Επιφάνεια Εργασίας εάν θέλετε."
 
-#: ../src/package/contents/delegates/WorkAreaDeleg.qml:183
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:198
 msgid "Show Windows"
 msgstr "Εμφάνιση Παραθύρων"
 
-#: ../src/package/contents/delegates/WorkAreaDeleg.qml:184
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:199
 msgid ""
 "You can see the windows from that spesific Workarea if you want. The counter"
 " shows their number."
 msgstr "Μπορείτε να δείτε τα παράθυρα της συγκεκριμένης Επιφάνειας Εργασίας εάν το θέλετε. Ο μετρητής εμφανίζει τον αριθμό τους."
 
-#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:99
+#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:102
 msgid "Orphaned Windows"
 msgstr "Ορφανά Παράθυρα"
 
-#: ../src/package/contents/helptour/TourDialog.qml:49
+#: ../src/package/contents/helptour/TourDialog.qml:50
 msgid "WorkFlow Project - Tour Guide"
 msgstr "WorkFlow Project - Οδηγός Χρήσης"
 
-#: ../src/package/contents/helptour/TourDialog.qml:92
+#: ../src/package/contents/helptour/TourDialog.qml:93
 msgid "Chapters"
 msgstr "Κεφάλαια"
 
-#: ../src/package/contents/helptour/TourDialog.qml:271
+#: ../src/package/contents/helptour/TourDialog.qml:272
 msgid "Previous"
 msgstr "Προηγούμενο"
 
-#: ../src/package/contents/helptour/TourDialog.qml:287
+#: ../src/package/contents/helptour/TourDialog.qml:288
 msgid "Next"
 msgstr "Επόμενο"
 
-#: ../src/package/contents/helptour/TourDialog.qml:302
+#: ../src/package/contents/helptour/TourDialog.qml:303
 #: ../src/package/contents/ui/AboutDialogTmpl.qml:279
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -364,11 +366,11 @@ msgstr "Ελπίζω αυτός ο οδηγός να σας βοήθησε να 
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr "Ας γίνουμε δημιουργικοί...<br><br/>- Τέλος Οδηγού -"
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:222
+#: ../src/package/contents/instances/SharedActivitiesList.qml:233
 msgid "Copy of"
 msgstr "Αντίγραφο του"
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:452
+#: ../src/package/contents/instances/SharedActivitiesList.qml:490
 msgid "New Activity"
 msgstr "Νέα Δραστηριότητα"
 
@@ -519,21 +521,21 @@ msgstr "Θέλετε σίγουρα να αντιγράψετε τη δραστ�
 msgid "?"
 msgstr ";"
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:167
+#: ../src/package/contents/ui/DialogTemplate2.qml:168
 #: ../src/package/contents/ui/DialogTemplate.qml:162
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:167
+#: ../src/package/contents/ui/DialogTemplate2.qml:168
 msgid "Ok"
 msgstr "Εντάξει"
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:183
+#: ../src/package/contents/ui/DialogTemplate2.qml:184
 #: ../src/package/contents/ui/DialogTemplate.qml:178
 msgid "No"
 msgstr "Όχι"
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:183
+#: ../src/package/contents/ui/DialogTemplate2.qml:184
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -595,7 +597,7 @@ msgstr "Μπορείτε να εστιάσετε περισσότερο το π�
 msgid "No Activities..."
 msgstr "Καμία Δραστηριότητα"
 
-#: ../src/workflow.cpp:623
+#: ../src/workflow.cpp:634
 msgid "General"
 msgstr "Γενικά"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-22 12:44+0300\n"
+"POT-Creation-Date: 2012-08-25 21:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,21 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:141
+#: ../src/package/contents/delegates/ActivityDeleg.qml:145
 msgid "Change Activity Icon"
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:142
+#: ../src/package/contents/delegates/ActivityDeleg.qml:146
 msgid ""
 "You can change your Activity Icon in order to recognize better your work."
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:250
-msgid "Edit Activity Name"
+#: ../src/package/contents/delegates/ActivityDeleg.qml:260
+msgid "Activity Name"
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:251
-msgid "You can edit the Activity Name in order to represent your work."
+#: ../src/package/contents/delegates/ActivityDeleg.qml:261
+msgid ""
+"You can enable this Activity by clicking or edit its name with double-"
+"clicking in order to represent your work."
 msgstr ""
 
 #: ../src/package/contents/delegates/ActivityStoppedDeleg.qml:201
@@ -136,37 +138,37 @@ msgstr ""
 msgid "You can delete this WorkArea if you want to."
 msgstr ""
 
-#: ../src/package/contents/delegates/WorkAreaDeleg.qml:183
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:198
 msgid "Show Windows"
 msgstr ""
 
-#: ../src/package/contents/delegates/WorkAreaDeleg.qml:184
+#: ../src/package/contents/delegates/WorkAreaDeleg.qml:199
 msgid ""
 "You can see the windows from that spesific Workarea if you want. The counter "
 "shows their number."
 msgstr ""
 
-#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:99
+#: ../src/package/contents/delegates/WorkAreaListDeleg.qml:102
 msgid "Orphaned Windows"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourDialog.qml:49
+#: ../src/package/contents/helptour/TourDialog.qml:50
 msgid "WorkFlow Project - Tour Guide"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourDialog.qml:92
+#: ../src/package/contents/helptour/TourDialog.qml:93
 msgid "Chapters"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourDialog.qml:271
+#: ../src/package/contents/helptour/TourDialog.qml:272
 msgid "Previous"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourDialog.qml:287
+#: ../src/package/contents/helptour/TourDialog.qml:288
 msgid "Next"
 msgstr ""
 
-#: ../src/package/contents/helptour/TourDialog.qml:302
+#: ../src/package/contents/helptour/TourDialog.qml:303
 #: ../src/package/contents/ui/AboutDialogTmpl.qml:279
 msgid "Close"
 msgstr ""
@@ -363,11 +365,11 @@ msgstr ""
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr ""
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:222
+#: ../src/package/contents/instances/SharedActivitiesList.qml:233
 msgid "Copy of"
 msgstr ""
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:452
+#: ../src/package/contents/instances/SharedActivitiesList.qml:490
 msgid "New Activity"
 msgstr ""
 
@@ -517,21 +519,21 @@ msgstr ""
 msgid "?"
 msgstr ""
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:167
+#: ../src/package/contents/ui/DialogTemplate2.qml:168
 #: ../src/package/contents/ui/DialogTemplate.qml:162
 msgid "Yes"
 msgstr ""
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:167
+#: ../src/package/contents/ui/DialogTemplate2.qml:168
 msgid "Ok"
 msgstr ""
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:183
+#: ../src/package/contents/ui/DialogTemplate2.qml:184
 #: ../src/package/contents/ui/DialogTemplate.qml:178
 msgid "No"
 msgstr ""
 
-#: ../src/package/contents/ui/DialogTemplate2.qml:183
+#: ../src/package/contents/ui/DialogTemplate2.qml:184
 msgid "Cancel"
 msgstr ""
 
@@ -593,7 +595,7 @@ msgstr ""
 msgid "No Activities..."
 msgstr ""
 
-#: ../src/workflow.cpp:623
+#: ../src/workflow.cpp:634
 msgid "General"
 msgstr ""
 
