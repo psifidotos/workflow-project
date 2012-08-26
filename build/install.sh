@@ -1,7 +1,7 @@
+#!/bin/bash
 #Author: Michail Vourlakos
 #Summary: Installation script for Workflow plasmoid
 #05 Aug 2012
-#!/bin/bash
 
 echo "--- This script was written and tested on openSuSe 12.1 ---"
 
