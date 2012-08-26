@@ -7,6 +7,7 @@
 
 #include <KStandardDirs>
 #include <KActivities/Controller>
+#include <KConfigGroup>
 
 #include <QTimer>
 
@@ -79,6 +80,7 @@ private:
     QString getWallpaperForStopped(QString source);
     QString getWallpaperFromFile(QString source,QString file);
     QString getWallpaperFromContainment(Plasma::Containment *actContainment);
+    QString getWallpaperForSingleImage(KConfigGroup &);
 
     QString getContainmentId(QString txt) const;
 
