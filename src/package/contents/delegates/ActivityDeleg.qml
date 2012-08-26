@@ -133,6 +133,8 @@ Item{
             onClicked: {
                 if (mainView.lockActivities === false)
                     instanceOfActivitiesList.chooseIcon(ccode);
+                else
+                    instanceOfActivitiesList.setCurrent(ccode);
             }
 
 
@@ -141,9 +143,12 @@ Item{
         }
 
         DToolTip{
-            visible:!mainView.lockActivities
-            title:i18n("Change Activity Icon")
-            mainText: i18n("You can change your Activity Icon in order to recognize better your work.")
+           // visible:!mainView.lockActivities
+            id:activityIconTooltip
+
+            title:mainView.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
+            mainText: mainView.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
+                                                          i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:activityIconMouseArea
             icon:Icon === "" ? "plasma" : Icon
         }
@@ -257,8 +262,10 @@ Item{
 
         DToolTip{
             //visible:!mainView.lockActivities
-            title:i18n("Activity Name")
-            mainText: i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work.")
+            id:activityTooltip
+            title:mainView.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
+            mainText: mainView.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
+                                                          i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
             //icon:instanceOfThemeList.icons.AddWidget
         }

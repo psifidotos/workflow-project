@@ -70,6 +70,7 @@ Item{
 
             if( (fromCloneActivity === "") &&
                     (toCloneActivity === "")){
+
                 model.setProperty(ind,"CState",val);
 
                 instanceOfWorkAreasList.setCState(cod,val);
@@ -348,6 +349,9 @@ Item{
     }
 
     function setCurrent(cod){
+        if(mainView.currentActivity === cod)
+            updateWallpaper(cod);
+
         activityManager.setCurrent(cod);
     }
 
@@ -367,7 +371,7 @@ Item{
 
         instanceOfTasksList.setCurrentDesktop(nextDesk);
 
-        updateWallpaper(activit);
+
 
         return nextDesk;
 
