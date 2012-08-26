@@ -66,6 +66,38 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor)
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
 
+
+QString ActivityManager::getWallpaperForSingleImage(KConfigGroup &conGrp){
+
+    KConfigGroup gWall = conGrp.group("Wallpaper").group("image");
+
+    QString foundF = gWall.readEntry("wallpaper",QString("null"));
+
+    QDir tmD = QDir(foundF+"/contents/images");
+
+    if(!tmD.exists()){
+        QString foundF2 = gWall.readEntry("slidepaths",QString(""));
+        tmD = QDir(foundF2+foundF+"/contents/images");
+    }
+
+    if (tmD.exists()){
+        QStringList files;
+        files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
+
+        if (!files.isEmpty())
+            foundF = tmD.absoluteFilePath(files.at(0));
+
+    }
+
+    if (QFile::exists(foundF))
+        return foundF;
+    else
+        return "";
+
+
+}
+
+
 QString ActivityManager::getWallpaperFromFile(QString source, QString file)
 {
     //QString fpath = QDir::home().filePath(file);
@@ -85,26 +117,14 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file)
 
             //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
             if(tempG.readEntry("lastScreen",-1)==0){
-                KConfigGroup gWall = tempG.group("Wallpaper").group("image");
-
                 found = true;
-                QString foundF = gWall.readPathEntry("wallpaper",QString("null"));
-                QDir tmD(foundF+"/contents/images");
-                if (tmD.exists()){
-                    QStringList files;
-                    files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
 
-                    if (!files.isEmpty())
-                        foundF = tmD.absoluteFilePath(files.at(0));
+                QString res1 = getWallpaperForSingleImage(tempG);
 
-                    //          qDebug()<<files.at(0);
-                }
-
-                if (QFile::exists(foundF))
-                    return foundF;
+                if (QFile::exists(res1))
+                    return res1;
             }
-            //     else
-            //       return "";
+
         }
 
 
@@ -117,22 +137,11 @@ QString ActivityManager::getWallpaperFromFile(QString source, QString file)
 QString ActivityManager::getWallpaperFromContainment(Plasma::Containment *actContainment)
 {
     //QString fpath = QDir::home().filePath(file);
+    KConfigGroup mainConf = actContainment->config();
+    QString res1 = getWallpaperForSingleImage(mainConf);
 
-    KConfigGroup gWall= actContainment->config().group("Wallpaper").group("image");
-
-    QString foundF = gWall.readEntry("wallpaper",QString("null"));
-    //qDebug() << "Wallpaper:"<<foundF ;
-    QDir tmD(foundF+"/contents/images");
-    if (tmD.exists()){
-        QStringList files;
-        files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
-
-        if (!files.isEmpty())
-            foundF = tmD.absoluteFilePath(files.at(0));
-    }
-
-    if (QFile::exists(foundF))
-        return foundF;
+    if (QFile::exists(res1))
+        return res1;
     else
         return "";
 }
@@ -145,15 +154,17 @@ QString ActivityManager::getWallpaper(QString source)
     Plasma::Containment *currentContainment = getContainment(source);
     if(currentContainment){
         res = getWallpaperFromContainment(currentContainment);
-       // qDebug()<<"From Containment:"<<res;
+    //    qDebug()<<"From Containment:"<<res;
         if(res != "")
             return res;
     }
 
     res = getWallpaperForStopped(source);
+    //qDebug()<<"From Stopped:"<<res;
     if (res=="")
         res = getWallpaperForRunning(source);
 
+    //qDebug()<<"From Running:"<<res;
     return res;
 }
 
