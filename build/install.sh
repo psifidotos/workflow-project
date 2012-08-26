@@ -2,52 +2,30 @@
 #Author: Michail Vourlakos
 #Summary: Installation script for Workflow plasmoid
 #05 Aug 2012
-
-echo "--- This script was written and tested on openSuSe 12.1 ---"
+#This script was written and tested on openSuSe 12.1
 
 echo
-
 echo "*     Configure...        *"
-
-echo 
+echo
 cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
 
 echo
-
 echo "*    Compile...           *"
-
-echo 
-
-
-
+echo
 make clean all
 
 echo
-
 echo "*    Install...            *"
-
-echo 
-
-
+echo
 sudo make install
 
 echo
-
 echo "*    Cache refresh...     *"
-
-echo 
-
-
+echo
 kbuildsycoca4
 
 echo
 echo "------ Installed -------------------------------"
-
-
-
-
 echo
 echo "*     Done. Place the plasmoid to your workplace!   *"
-echo 
-
- 
+echo
