@@ -12,7 +12,7 @@ DialogTemplate2{
     anchors.centerIn: mainView
 
     insideWidth: Math.max(mainTextInf.width,mainTextInf2.width)+110
-    insideHeight: infIcon.y+infIcon.height+mainTextInf2.height+10
+    insideHeight: 10+infIcon.height+mainTextInf2.height+10
 
     dialogTitle: i18n("First Activation for Window Previews")+"..."
 

@@ -10,7 +10,7 @@ import "delegates/ui-elements"
 import "instances"
 import "helptour"
 
-import "ui"
+//import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
 
@@ -70,6 +70,7 @@ Rectangle {
     property int themePos:0
 
     property int toolTipsDelay:300
+    property int pressAndHoldInterval:120
 
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
@@ -237,7 +238,7 @@ Rectangle {
         // BE CAREFUL:: should be enabled in the official release...
         //
 
-        //mainView.isOnDashBoard = v;
+        mainView.isOnDashBoard = v;
     }
 
     function setWindowsPreviews(b){
@@ -435,9 +436,8 @@ Rectangle {
         }
     }
 
-    TourDialog{
-
-    }
+//    TourDialog{
+    //}
 
 }
 

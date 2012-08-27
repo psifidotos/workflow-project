@@ -85,8 +85,11 @@ Item {
         allActiv: onAllActivities || 0 ? true : false
 
         function informState(){
-            if (placeStateBtn.state === "one")
+            if (placeStateBtn.state === "one"){
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"oneDesktop");
+                if(taskDeleg2.dialogType === taskDeleg2.dTypes[1])
+                    instanceOfTasksList.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
+            }
             else if (placeStateBtn.state === "allDesktops")
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allDesktops");
             else if (placeStateBtn.state === "everywhere")
@@ -114,31 +117,32 @@ Item {
             }
 
             onPressAndHold:{
-                if (placeStateBtn.state === "allDesktops"){
-                    if(taskDeleg2.centralListView === desktopDialog.getTasksList()){
-                        instanceOfTasksList.setTaskDesktop(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
-                        placeStateBtn.previousState();
-                        placeStateBtn.informState();
-                    }
-                }
+                //if (placeStateBtn.state === "allDesktops"){
+            //    toAllDesktopsAnimation();
+               // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
+
+                placeStateBtn.previousState();
+                placeStateBtn.informState();
+                //    }
+                //  }
+
+                toDesktopAnimation();
 
             }
 
             onClicked: {
                 //Animation must start before changing state
-                if (placeStateBtn.state === "allDesktops"){
-                    if(mainView.animationsStep2!==0){
-                        var x3 = imageTask2.x;
-                        var y3 = imageTask2.y;
-
-                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
-                    }
-                }
+                toAllDesktopsAnimation();
 
                 placeStateBtn.onClicked();
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
 
+                toDesktopAnimation();
+
+            }
+
+            function toDesktopAnimation(){
                 if (placeStateBtn.state !== "everywhere"){
                     if(mainView.animationsStep2!==0){
                         var x1 = imageTask2.x;
@@ -146,6 +150,18 @@ Item {
 
                         mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
                     }
+                }
+            }
+
+            function toAllDesktopsAnimation(){
+                if (placeStateBtn.state === "allDesktops"){
+                    if(mainView.animationsStep2!==0){
+                        var x3 = imageTask2.x;
+                        var y3 = imageTask2.y;
+
+                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
+                    }
+
                 }
             }
 

@@ -86,8 +86,10 @@ Item {
 
         function informState(){
 
-            if (placeStateBtn.state === "one")
+            if (placeStateBtn.state === "one"){
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"oneDesktop");
+                instanceOfTasksList.setTaskDesktopForAnimation(taskDeleg1.ccode,mainWorkArea.desktop-1)
+            }
             else if (placeStateBtn.state === "allDesktops")
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allDesktops");
             else if (placeStateBtn.state === "everywhere")
@@ -114,13 +116,11 @@ Item {
                 buttonsArea.changedStatus();
             }
 
-            onPressAndHold:{
-                if (placeStateBtn.state === "allDesktops"){
-                    instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
-                    placeStateBtn.previousState();
-                    placeStateBtn.informState();
-                }
-
+            onPressAndHold: {
+                placeStateBtn.previousState();
+                placeStateBtn.informState();
+                instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
+                toEveryWhereAnimation();
             }
 
             onClicked: {
@@ -128,15 +128,7 @@ Item {
                 placeStateBtn.nextState();
                 placeStateBtn.informState();
 
-                if (placeStateBtn.state === "everywhere"){
-                    if(mainView.animationsStep2!==0){
-                        var x1 = imageTask.x;
-                        var y1 = imageTask.y;
-
-                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
-                    }
-                }
-
+                toEveryWhereAnimation();
             }
 
             onReleased: {
@@ -145,6 +137,17 @@ Item {
 
             onPressed: {
                 placeStateBtn.onPressed();
+            }
+
+            function toEveryWhereAnimation(){
+                if (placeStateBtn.state === "everywhere"){
+                    if(mainView.animationsStep2!==0){
+                        var x1 = imageTask.x;
+                        var y1 = imageTask.y;
+
+                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                    }
+                }
             }
 
 

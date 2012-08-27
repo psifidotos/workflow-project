@@ -9,8 +9,6 @@ import "../ui"
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
-//Component{
-
 Item{
     id: taskDeleg2
 
@@ -22,8 +20,6 @@ Item{
     // 2.for tasks in spesific desktop and activity
 
     property bool showAllActivities:true
-
-
 
     property variant dTypes:["allActivitiesTasks",
         "DesktopDialog",
@@ -242,6 +238,62 @@ Item{
 
 
 
+    MouseArea {
+        id:hoverArea
+        anchors.fill: parent
+        hoverEnabled: true
+
+
+        Timer {
+            id:timer1
+            repeat:false
+            interval:mainView.pressAndHoldInterval
+
+            property bool ended:false
+            property int x1:0
+            property int y1:0
+
+            onTriggered:{
+                ended = true;
+                hoverArea.itWasPressed();
+            }
+
+        }
+
+        function itWasPressed(){
+            taskDeleg2.onPressed(timer1.x1,timer1.y1,hoverArea);
+        }
+
+        onEntered: {
+            taskDeleg2.onEntered();
+        }
+
+        onExited: {
+            taskDeleg2.onExited();
+        }
+
+        onClicked: {
+            taskDeleg2.onClicked(mouse);
+            timer1.stop();
+            timer1.ended = false;
+        }
+
+        onPressed:{
+            timer1.ended = false;
+            timer1.x1 = mouse.x;
+            timer1.y1 = mouse.y;
+            timer1.start();
+        }
+
+        onPositionChanged: {
+            if(timer1.ended)
+                taskDeleg2.onPositionChanged(mouse, hoverArea);
+        }
+
+        onReleased:{
+            taskDeleg2.onReleased(mouse);
+        }
+    }
 
     ////////////////////////////Main Elements//////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -255,36 +307,6 @@ Item{
         color:taskDeleg2.isSelected === false ? "#30ffffff" : "#a2222222"
         border.width: 1
         border.color: "#aaffffff"
-
-        MouseArea {
-            id:hoverRectMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                taskDeleg2.onEntered();
-            }
-
-            onExited: {
-                taskDeleg2.onExited();
-            }
-
-            onClicked: {
-                taskDeleg2.onClicked(mouse);
-            }
-
-            onPressAndHold:{
-                taskDeleg2.onPressAndHold(mouse, hoverRectMouseArea);
-            }
-
-            onPositionChanged: {
-                taskDeleg2.onPositionChanged(mouse, hoverRectMouseArea);
-            }
-
-            onReleased:{
-                taskDeleg2.onReleased(mouse);
-            }
-        }
     }
 
 
@@ -300,38 +322,7 @@ Item{
         property int toRX:taskDeleg2.rWidth/2
         property int toRY:y
 
-
         //  width:taskDeleg2.defWidth
-
-        MouseArea {
-            id:imageMouseArea2
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                taskDeleg2.onEntered();
-            }
-
-            onExited: {
-                taskDeleg2.onExited();
-            }
-
-            onClicked: {
-                taskDeleg2.onClicked(mouse);
-            }
-
-            onPressAndHold:{
-                taskDeleg2.onPressAndHold(mouse, imageMouseArea2);
-            }
-
-            onPositionChanged: {
-                taskDeleg2.onPositionChanged(mouse, imageMouseArea2);
-            }
-
-            onReleased:{
-                taskDeleg2.onReleased(mouse);
-            }
-        }
 
     }
 
@@ -408,9 +399,30 @@ Item{
 
 
         MouseArea {
-            id:imageMouseArea3
+            id:previewMouseArea
             anchors.fill: parent
             hoverEnabled: true
+
+            Timer {
+                id:timer2
+                repeat:false
+                interval:mainView.pressAndHoldInterval
+
+                property bool ended:false
+                property int x1:0
+                property int y1:0
+
+                onTriggered:{
+                    ended = true;
+                    previewMouseArea.itWasPressed();
+                }
+
+            }
+
+            function itWasPressed(){
+                taskDeleg2.onPressed(timer2.x2,timer2.y1,previewMouseArea);
+            }
+
 
             onEntered: {
                 taskDeleg2.onEntered();
@@ -422,18 +434,24 @@ Item{
 
             onClicked: {
                 taskDeleg2.onClicked(mouse);
+                timer2.stop();
+                timer2.ended = false;
             }
 
-            onPressAndHold:{
-                taskDeleg2.onPressAndHold(mouse, imageMouseArea3);
+            onPressed:{
+                timer2.ended = false;
+                timer2.x1 = mouse.x;
+                timer2.y1 = mouse.y;
+                timer2.start();
             }
 
             onPositionChanged: {
-                taskDeleg2.onPositionChanged(mouse, imageMouseArea3);
+                taskDeleg2.onPositionChanged(mouse, previewMouseArea);
             }
 
             onReleased:{
-                taskDeleg2.onReleased(mouse);
+                if(timer2.ended)
+                    taskDeleg2.onReleased(mouse);
             }
         }
     }
@@ -472,35 +490,6 @@ Item{
             width:parent.width
         }
 
-        MouseArea {
-            id:textTaskMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                taskDeleg2.onEntered();
-            }
-
-            onExited: {
-                taskDeleg2.onExited();
-            }
-
-            onClicked: {
-                taskDeleg2.onClicked(mouse);
-            }
-
-            onPressAndHold:{
-                taskDeleg2.onPressAndHold(mouse, textTaskMouseArea);
-            }
-
-            onPositionChanged: {
-                taskDeleg2.onPositionChanged(mouse, textTaskMouseArea);
-            }
-
-            onReleased:{
-                taskDeleg2.onReleased(mouse);
-            }
-        }
     }
 
     TaskPreviewButtons{
@@ -508,6 +497,8 @@ Item{
 
         property real offsety:0
         property real offsetx:0
+
+        z:5
 
 
     }
@@ -555,7 +546,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
 
             PropertyChanges{
@@ -605,7 +596,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -623,6 +614,10 @@ Item{
             PropertyChanges {
                 target: taskDeleg2
                 y:showPreviewsFound===false ? -0.4*imageTask2.height : -0.6*taskDeleg2.defPreviewWidth
+
+                height:showPreviewsFound===false ?taskDeleg2.rHeight+0.4*imageTask2.height:
+                                                  taskDeleg2.rHeight+0.6*taskDeleg2.defPreviewWidth
+
             }
 
             PropertyChanges{
@@ -635,7 +630,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.height,14)
+                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
                 target:imageTask2
@@ -911,7 +906,7 @@ Item{
             desktopDialog.clickedCancel();
     }
 
-    function onPressAndHold(mouse,obj) {
+    function onPressed(x1,y1,obj) {
         //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
         //                (taskDeleg2.centralListView === allActT.getTasksList()) ){
         if((dialogType === dTypes[0]) ||
@@ -930,7 +925,7 @@ Item{
 
             allTasksBtns.state = "hide";
 
-            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            var nCor = obj.mapToItem(mainView,x1,y1);
 
             var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
 
@@ -1049,4 +1044,3 @@ Item{
 
 }
 
-//}

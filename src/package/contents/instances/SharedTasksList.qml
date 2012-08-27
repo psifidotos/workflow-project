@@ -43,6 +43,7 @@ Item{
 
                 taskManager.setOnAllDesktops(obj.code,false);
 
+
             }
             else if (val === "allDesktops"){
                 taskManager.setOnlyOnActivity(obj.code,fActivity);
