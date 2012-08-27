@@ -69,35 +69,6 @@ import org.kde.qtextracomponents 0.1
             property int toRX:x
             property int toRY:y
 
-            MouseArea {
-                id: imageMouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onEntered: {
-                    taskDeleg1.onEntered();
-                }
-
-                onExited: {
-                    taskDeleg1.onExited();
-                }
-
-                onClicked: {
-                    taskDeleg1.onClicked(mouse);
-                }
-
-                onPressAndHold:{
-                    taskDeleg1.onPressAndHold(mouse,imageMouseArea);
-                }
-
-                onPositionChanged: {
-                    taskDeleg1.onPositionChanged(mouse,imageMouseArea);
-                }
-
-                onReleased:{
-                    taskDeleg1.onReleased(mouse, mstArea);
-                }
-            }
         }
 
 
@@ -140,41 +111,12 @@ import org.kde.qtextracomponents 0.1
                     }
                 }
             }
-            MouseArea {
-                id:mstArea
 
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onEntered: {
-                    taskDeleg1.onEntered();
-                }
-
-                onExited: {
-                    taskDeleg1.onExited();
-                }
-
-                onClicked: {
-                    taskDeleg1.onClicked(mouse);
-                }
-
-                onPressAndHold:{
-                    taskDeleg1.onPressAndHold(mouse,mstArea);
-                }
-
-                onPositionChanged: {
-                    taskDeleg1.onPositionChanged(mouse,mstArea);
-                }
-
-                onReleased:{
-                    taskDeleg1.onReleased(mouse, mstArea);
-                }
-
-            }
         }
 
         WATaskDelegButtons{
             id:tasksBtns
+            z:5
         }
 
         Connections {
@@ -186,6 +128,68 @@ import org.kde.qtextracomponents 0.1
                     taskDeleg1.state = "def";
             }
         }
+
+
+        MouseArea {
+            id:mstArea
+
+            anchors.fill: parent
+            hoverEnabled: true
+
+
+            Timer {
+                id:timer1
+                repeat:false
+                interval:mainView.pressAndHoldInterval
+
+                property bool ended:false
+                property int x1:0
+                property int y1:0
+
+                onTriggered:{
+                    ended = true;
+                    mstArea.itWasPressed();
+                }
+
+            }
+
+            function itWasPressed(){
+                taskDeleg1.onPressed(timer1.x1,timer1.y1,mstArea);
+            }
+
+            onEntered: {
+                taskDeleg1.onEntered();
+            }
+
+            onExited: {
+                taskDeleg1.onExited();
+            }
+
+            onClicked: {
+                taskDeleg1.onClicked(mouse);
+                timer1.stop();
+                timer1.ended = false;
+            }
+
+            onPressed:{
+                timer1.ended = false;
+                timer1.x1 = mouse.x;
+                timer1.y1 = mouse.y;
+                timer1.start();
+            }
+
+            onPositionChanged: {
+                taskDeleg1.onPositionChanged(mouse,mstArea);
+            }
+
+            onReleased:{
+                if(timer1.ended)
+                    taskDeleg1.onReleased(mouse, mstArea);
+
+            }
+
+        }
+
 
         states:[
             State {
@@ -230,13 +234,13 @@ import org.kde.qtextracomponents 0.1
 
         }
 
-        function onPressAndHold(mouse,obj) {
+        function onPressed(x1,y1,obj) {
             taskDeleg1.isPressed = true;
             taskDeleg1.state = "def";
             tasksBtns.state = "hide";
             workAreaButtons.state="hide";
 
-            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            var nCor = obj.mapToItem(mainView,x1,y1);
 
             var coord1 = imageTask.mapToItem(mainView,imageTask.x, imageTask.y);
 

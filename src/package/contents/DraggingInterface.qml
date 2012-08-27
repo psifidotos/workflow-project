@@ -79,7 +79,7 @@ Rectangle{
 
         mainDraggingItem.lastSelection = -1;
 
-        mainDraggingItem.firsttime = false;
+        mainDraggingItem.firsttime = true;
 
         onPstChanged(ms);
     }
@@ -232,7 +232,7 @@ Rectangle{
                                     mainDraggingItem.drDesktop = workAreaD.desktop;
 
                                     mainDraggingItem.lastSelection = 0;
-                        //            mainDraggingItem.firsttime = false;
+                                    mainDraggingItem.firsttime = false;
 
                                 }
 
