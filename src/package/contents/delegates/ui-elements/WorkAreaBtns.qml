@@ -18,7 +18,7 @@ Item{
     property int buttonsX:0.3 * mainView.scaleMeter
     property int buttonsY: mainView.scaleMeter/10
 
-    property real curBtnScale:1.4
+    property real curBtnScale:1.3
 
     CloseWindowButton{
         id:deleteWorkareaBtn

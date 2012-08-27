@@ -294,7 +294,7 @@ DialogTemplate2{
         iconSource:instanceOfThemeList.icons.Bugs
 
         onClicked:{
-            Qt.openUrlExternally("http://sourceforge.net/p/workflowproject/tickets/");
+            Qt.openUrlExternally("https://github.com/psifidotos/workflow-project/issues");
         }
     }
 

@@ -237,8 +237,8 @@ Item{
         WorkAreaBtns{
             id:workAreaButtons
 
-            x:borderRectangle.width+borderRectangle.x - 0.85*width
-            y:-0.25*height
+            x:borderRectangle.x + borderRectangle.width-7 - 0.5*width//7 is the half of border
+            y:5-0.5*height //5 is the half of border
             opacity: mainWorkArea.ListView.view.model.count>1 ? 1 : 0
         }
 
