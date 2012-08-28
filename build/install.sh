@@ -17,7 +17,12 @@ make all
 echo
 echo "*    Install...            *"
 echo
-sudo make install
+if test -f /etc/debian_version; then
+	echo "Enter root password"
+	su -c "make install"
+else
+	sudo make install
+fi
 
 echo
 echo "*    Cache refresh...     *"
