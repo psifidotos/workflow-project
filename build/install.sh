@@ -12,7 +12,7 @@ cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
 echo
 echo "*    Compile...           *"
 echo
-make clean all
+make all
 
 echo
 echo "*    Install...            *"
