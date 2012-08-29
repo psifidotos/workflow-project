@@ -300,6 +300,38 @@ Item{
         return "";
     }
 
+    function getFirstRunningIdBefore(cd){
+        var ind = getIndexFor(cd);
+        if(ind>-1){
+            for(var i=ind-1; i>=0; i--){
+                var obj = model.get(i);
+                if (obj.CState === "Running")
+                    return obj.code;
+            }
+            for(var j=model.count-1; j>ind; j--){
+                var obj2 = model.get(j);
+                if (obj2.CState === "Running")
+                    return obj2.code;
+            }
+        }
+
+        return "";
+    }
+
+    function slotSetCurrentNextActivity(){
+        var nId = getFirstRunningIdAfter(mainView.currentActivity);
+
+        if(nId !== "")
+            setCurrent(nId);
+    }
+
+    function slotSetCurrentPreviousActivity(){
+        var nId = getFirstRunningIdBefore(mainView.currentActivity);
+
+        if(nId !== "")
+            setCurrent(nId);
+    }
+
     function getCState(cod){
         var ind = getIndexFor(cod);
 

@@ -120,6 +120,9 @@ public slots:
 
     void saveConfigurationFiles();
 
+protected slots:
+  virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
+
 private slots:
     void createConfigurationInterface(KConfigDialog *parent);
 
@@ -165,8 +168,5 @@ private:
     KConfigGroup appConfig;
 
 };
-
-// This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 
 #endif

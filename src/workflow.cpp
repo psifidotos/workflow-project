@@ -34,6 +34,7 @@
 #include <QDeclarativeComponent>
 #include <QDesktopWidget>
 #include <QGraphicsView>
+#include <QGraphicsSceneWheelEvent>
 #include <QRectF>
 #include <QString>
 
@@ -663,6 +664,16 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 }
 
 
+void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
+{
+    if(e->delta() < 0)
+        actManager->setCurrentNextActivity();
+    else
+        actManager->setCurrentPreviousActivity();
+}
+
+// This is the command that links your applet to the .desktop file
+K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 
 #include "workflow.moc"
 

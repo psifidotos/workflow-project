@@ -57,6 +57,8 @@ public:
     Q_INVOKABLE void showWidgetsExplorer(QString);
 
     void setQMlObject(QObject *,Plasma::Corona *);
+    void setCurrentNextActivity();
+    void setCurrentPreviousActivity();
 
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);

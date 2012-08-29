@@ -504,8 +504,21 @@ void ActivityManager::currentActivityChanged(const QString &id)
 }
 
 
-
 /////////SLOTS
+void ActivityManager::setCurrentNextActivity()
+{
+    QMetaObject::invokeMethod(qmlActEngine, "slotSetCurrentNextActivity");
+}
+
+void ActivityManager::setCurrentPreviousActivity()
+{
+    QMetaObject::invokeMethod(qmlActEngine, "slotSetCurrentPreviousActivity");
+}
+
+
+
+
+////////////
 
 void ActivityManager::setIcon(QString id, QString name)
 {
