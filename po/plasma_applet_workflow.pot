@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-25 21:21+0300\n"
+"POT-Creation-Date: 2012-08-27 22:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:145
+#: ../src/package/contents/delegates/ActivityDeleg.qml:149
 msgid "Change Activity Icon"
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:146
+#: ../src/package/contents/delegates/ActivityDeleg.qml:149
+#: ../src/package/contents/delegates/ActivityDeleg.qml:266
+msgid "Activity"
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:150
 msgid ""
 "You can change your Activity Icon in order to recognize better your work."
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:260
+#: ../src/package/contents/delegates/ActivityDeleg.qml:151
+#: ../src/package/contents/delegates/ActivityDeleg.qml:268
+msgid "You can enable this Activity by clicking on the Activity name or icon"
+msgstr ""
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:266
 msgid "Activity Name"
 msgstr ""
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:261
+#: ../src/package/contents/delegates/ActivityDeleg.qml:267
 msgid ""
 "You can enable this Activity by clicking or edit its name with double-"
 "clicking in order to represent your work."
@@ -116,13 +126,13 @@ msgstr ""
 msgid "You can close this window if you want to."
 msgstr ""
 
-#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:164
-#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:154
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:180
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:157
 msgid "Change Window State"
 msgstr ""
 
-#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:165
-#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:155
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:181
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:158
 msgid ""
 "You can change the window's state, there are three states available:<br/><br/"
 ">1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All "
@@ -365,11 +375,11 @@ msgstr ""
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr ""
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:233
+#: ../src/package/contents/instances/SharedActivitiesList.qml:234
 msgid "Copy of"
 msgstr ""
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:490
+#: ../src/package/contents/instances/SharedActivitiesList.qml:494
 msgid "New Activity"
 msgstr ""
 

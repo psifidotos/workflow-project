@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2012-08-25 21:21+0300\n"
-"PO-Revision-Date: 2012-08-25 18:25+0000\n"
+"POT-Creation-Date: 2012-08-27 22:38+0300\n"
+"PO-Revision-Date: 2012-08-27 19:42+0000\n"
 "Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/WorkFlow_Project/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -18,20 +18,30 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:145
+#: ../src/package/contents/delegates/ActivityDeleg.qml:149
 msgid "Change Activity Icon"
 msgstr "Αλλαγή Εικονιδίου Δραστηριότητας"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:146
+#: ../src/package/contents/delegates/ActivityDeleg.qml:149
+#: ../src/package/contents/delegates/ActivityDeleg.qml:266
+msgid "Activity"
+msgstr "Δραστηριότητα"
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:150
 msgid ""
 "You can change your Activity Icon in order to recognize better your work."
 msgstr "Μπορείτε να αλλάξετε το εικονίδιο της Δραστηριότητας για να ανταποκρίνεται καλύτερα στην εργασία σας."
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:260
+#: ../src/package/contents/delegates/ActivityDeleg.qml:151
+#: ../src/package/contents/delegates/ActivityDeleg.qml:268
+msgid "You can enable this Activity by clicking on the Activity name or icon"
+msgstr "Μπορείτε να ενεργοποιήσετε αυτή τη Δραστηριότητα κάνοντας κλικ στο όνομα ή στο εικονίδιο."
+
+#: ../src/package/contents/delegates/ActivityDeleg.qml:266
 msgid "Activity Name"
 msgstr "Όνομα Δραστηριότητας"
 
-#: ../src/package/contents/delegates/ActivityDeleg.qml:261
+#: ../src/package/contents/delegates/ActivityDeleg.qml:267
 msgid ""
 "You can enable this Activity by clicking or edit its name with double-"
 "clicking in order to represent your work."
@@ -117,13 +127,13 @@ msgstr "Κλείσιμο Παραθύρου"
 msgid "You can close this window if you want to."
 msgstr "Μπορείτε να κλείσετε αυτό το παράθυρο εάν θέλετε."
 
-#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:164
-#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:154
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:180
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:157
 msgid "Change Window State"
 msgstr "Αλλαγή Κατάστασης Παραθύρου"
 
-#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:165
-#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:155
+#: ../src/package/contents/delegates/ui-elements/TaskPreviewButtons.qml:181
+#: ../src/package/contents/delegates/ui-elements/WATaskDelegButtons.qml:158
 msgid ""
 "You can change the window's state, there are three states "
 "available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that "
@@ -366,11 +376,11 @@ msgstr "Ελπίζω αυτός ο οδηγός να σας βοήθησε να 
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr "Ας γίνουμε δημιουργικοί...<br><br/>- Τέλος Οδηγού -"
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:233
+#: ../src/package/contents/instances/SharedActivitiesList.qml:234
 msgid "Copy of"
 msgstr "Αντίγραφο του"
 
-#: ../src/package/contents/instances/SharedActivitiesList.qml:490
+#: ../src/package/contents/instances/SharedActivitiesList.qml:494
 msgid "New Activity"
 msgstr "Νέα Δραστηριότητα"
 
