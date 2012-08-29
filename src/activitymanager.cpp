@@ -86,8 +86,14 @@ QString ActivityManager::getWallpaperForSingleImage(KConfigGroup &conGrp)
 
         if (QFile(foundF).exists())
             return foundF;
-        else
-            return "";
+        else{
+            QString foundF2 = tmD.absolutePath() + "/contents/screenshot.jpg";
+
+            if (QFile(foundF2).exists())
+                return foundF2;
+            else
+                return "";
+        }
     }
 }
 
