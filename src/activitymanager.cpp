@@ -30,7 +30,7 @@ ActivityManager::ActivityManager(QObject *parent) :
 {
     m_activitiesCtrl = new KActivities::Controller(this);
     m_timer = new QTimer(this);
-    m_timerPhase = 0;    
+    m_timerPhase = 0;
     m_unlockWidgetsText = "";
 
 }
@@ -67,34 +67,28 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor)
 }
 
 
-QString ActivityManager::getWallpaperForSingleImage(KConfigGroup &conGrp){
 
+QString ActivityManager::getWallpaperForSingleImage(KConfigGroup &conGrp)
+{
     KConfigGroup gWall = conGrp.group("Wallpaper").group("image");
 
-    QString foundF = gWall.readEntry("wallpaper",QString("null"));
+    QString foundF = gWall.readEntry("wallpaper", QString("null"));
 
-    QDir tmD = QDir(foundF+"/contents/images");
-
-    if(!tmD.exists()){
-        QString foundF2 = gWall.readEntry("slidepaths",QString(""));
-        tmD = QDir(foundF2+foundF+"/contents/images");
-    }
-
-    if (tmD.exists()){
-        QStringList files;
-        files = tmD.entryList(QDir::Files | QDir::NoSymLinks);
-
-        if (!files.isEmpty())
-            foundF = tmD.absoluteFilePath(files.at(0));
-
-    }
-
-    if (QFile::exists(foundF))
+    if (QFileInfo(foundF).isFile())
         return foundF;
-    else
-        return "";
+    else{
+        QDir tmD = QDir(foundF);
+        if (tmD.isRelative()){
+            QString foundF2 = gWall.readEntry("slidepaths",QString(""));
+            tmD = QDir(foundF2 + tmD.dirName());
+        }
+        foundF = tmD.absolutePath() + "/contents/screenshot.png";
 
-
+        if (QFile(foundF).exists())
+            return foundF;
+        else
+            return "";
+    }
 }
 
 
