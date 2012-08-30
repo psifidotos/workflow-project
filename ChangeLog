@@ -1,4 +1,9 @@
-0.2.0
+0.1.99
+=====
+-- Change Activities through the panel icon with scroll wheel
+-- Activate Activity by clicking just to its title
+
+0.1.98
 =====
 -- this is the initial release
 
@@ -14,6 +19,7 @@
 -- Add plasmoids in any Activity (unlocks widgets and opens widgets explorer)
 -- Fetch background for Activity (it works only for single image backgrounds)
 -- Lock/Unlock Activities
+
 
 -Actions for Workareas
 -- Add Workarea

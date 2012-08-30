@@ -9,12 +9,21 @@ from Plasma.
 Differences To Default KDe Workflow
 ==========================
 
--- WorkAreas use Virtual Desktops, in order to be consistency between them
+-- WorkAreas use Virtual Desktops, in order to be consistent between them,
    Virtual Desktops are always that big as the maximum WorkAreas present from
    Activities.
    NOTICE: You can not add a Virtual Desktop when WorkAreas are running. You
    can add the Workarea needed and Virtual Desktops will be updated.
 
+Requirements for Installation   
+==========================
+BuildRequires: kdebase4-workspace-devel >= 4.8
+BuildRequires: libkdecore4-devel >= 4.8
+BuildRequires: xorg-x11-libX11-devel
+BuildRequires: libkactivities-devel >= 4.8
+BuildRequires: libkde4-devel >= 4.8
+
+   
 Installation
 ============
 
