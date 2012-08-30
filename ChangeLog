@@ -2,6 +2,9 @@
 =====
 -- Change Activities through the panel icon with scroll wheel
 -- Activate Activity by clicking just to its title
+-- improved dragging Window responsiveness
+-- various fixes for loading Wallpaper for SingleImage plugin
+-- fixes for Debian installation
 
 0.1.98
 =====
