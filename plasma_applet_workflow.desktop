@@ -4,13 +4,14 @@ Encoding=UTF-8
 
 Name=WorkFlow
 Name[el]=WorkFlow
+Name[es]=WorkFlow
 
 Comment=WorkFlow Plasmoid presents Activities and WorkAreas in QML as described from the WorkFlow Project.
 Comment[el]=To Συστατικό WorkFlow παρουσιάζει τις Δραστηριότητες και τις Επιφάνειες Εργασίας όπως περιγράφονται από το έργο WorkFlow.
+Comment[es]=El plasmoide WorkFlow muestra las Actividades y Áreas de trabajo en QML como se describe en el proyecto WorkFlow.
 
 Icon=preferences-activities
 Type=Service
-
 
 X-KDE-Library=plasma_applet_workflow
 
