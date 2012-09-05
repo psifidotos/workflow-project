@@ -70,7 +70,7 @@ Rectangle {
     property int themePos:0
 
     property int toolTipsDelay:300
-    property int pressAndHoldInterval:120
+    property int pressAndHoldInterval:150
 
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);

@@ -286,12 +286,15 @@ Item{
         }
 
         onPositionChanged: {
-            if(timer1.ended)
-                taskDeleg2.onPositionChanged(mouse, hoverArea);
+            taskDeleg2.onPositionChanged(mouse, hoverArea);
+
+            if(!timer1.ended)
+                timer1.stop();
         }
 
         onReleased:{
-            taskDeleg2.onReleased(mouse);
+            if(timer1.ended)
+                taskDeleg2.onReleased(mouse);
         }
     }
 
@@ -447,6 +450,9 @@ Item{
 
             onPositionChanged: {
                 taskDeleg2.onPositionChanged(mouse, previewMouseArea);
+
+                if(!timer2.ended)
+                    timer2.stop();
             }
 
             onReleased:{

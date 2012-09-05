@@ -180,6 +180,9 @@ import org.kde.qtextracomponents 0.1
 
             onPositionChanged: {
                 taskDeleg1.onPositionChanged(mouse,mstArea);
+
+                if(!timer1.ended)
+                    timer1.stop();
             }
 
             onReleased:{
