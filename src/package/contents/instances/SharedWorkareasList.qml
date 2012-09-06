@@ -9,6 +9,8 @@ Item{
 
     property int addednew:0
 
+    property string activitysNewWorkAreaName:""
+
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         if(ind>-1)
@@ -166,8 +168,10 @@ Item{
             if((instanceOfActivitiesList.fromCloneActivity === "") &&
                     (instanceOfActivitiesList.toCloneActivity === "")){
 
-                if(counts === mainView.maxDesktops)
+                if(counts === mainView.maxDesktops){
                     taskManager.slotAddDesktop();
+                    activitysNewWorkAreaName = actCode;
+                }
             }
 
             workMod.append( {  "elemTitle": val,

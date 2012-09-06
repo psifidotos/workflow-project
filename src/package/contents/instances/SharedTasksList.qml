@@ -238,6 +238,12 @@ Item{
         else if(mxs<v)
             taskManager.slotRemoveDesktop();
 
+        //It is used when adding a Workarea in bigger length than the VDs
+        if(instanceOfWorkAreasList.activitysNewWorkAreaName !== ""){
+            var ndesk = taskManager.getDesktopName(v);
+            instanceOfWorkAreasList.setWorkareaTitle(instanceOfWorkAreasList.activitysNewWorkAreaName,v,ndesk);
+            instanceOfWorkAreasList.activitysNewWorkAreaName = "";
+        }
 
     }
 
