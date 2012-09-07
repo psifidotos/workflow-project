@@ -82,18 +82,17 @@ QString ActivityManager::getWallpaperForSingleImage(KConfigGroup &conGrp)
             QString foundF2 = gWall.readEntry("slidepaths",QString(""));
             tmD = QDir(foundF2 + tmD.dirName());
         }
-        foundF = tmD.absolutePath() + "/contents/screenshot.png";
 
-        if (QFile(foundF).exists())
-            return foundF;
-        else{
-            QString foundF2 = tmD.absolutePath() + "/contents/screenshot.jpg";
-
-            if (QFile(foundF2).exists())
-                return foundF2;
-            else
-                return "";
-        }
+        if (QFile(tmD.absolutePath() + "/contents/screenshot.png").exists())
+            return tmD.absolutePath() + "/contents/screenshot.png";
+        else if (QFile(tmD.absolutePath() + "/contents/screenshot.jpg").exists())
+            return tmD.absolutePath() + "/contents/screenshot.jpg";
+        else if (QFile(tmD.absolutePath() + "/screenshot.jpg").exists())
+            return tmD.absolutePath() + "/screenshot.jpg"; //SUSE default Wallpaper fix
+        else if (QFile(tmD.absolutePath() + "/screenshot.png").exists())
+            return tmD.absolutePath() + "/screenshot.png";
+        else
+            return "";
     }
 }
 
