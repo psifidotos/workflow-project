@@ -136,26 +136,10 @@ import org.kde.qtextracomponents 0.1
             anchors.fill: parent
             hoverEnabled: true
 
-
-            Timer {
-                id:timer1
-                repeat:false
-                interval:mainView.pressAndHoldInterval
-
-                property bool ended:false
-                property int x1:0
-                property int y1:0
-
-                onTriggered:{
-                    ended = true;
-                    mstArea.itWasPressed();
-                }
-
-            }
-
-            function itWasPressed(){
-                taskDeleg1.onPressed(timer1.x1,timer1.y1,mstArea);
-            }
+            property int px1:0
+            property int py1:0
+            property bool tempPressed:false
+            property int draggingSpace:2
 
             onEntered: {
                 taskDeleg1.onEntered();
@@ -166,31 +150,38 @@ import org.kde.qtextracomponents 0.1
             }
 
             onClicked: {
+                tempPressed = false;
                 taskDeleg1.onClicked(mouse);
-                timer1.stop();
-                timer1.ended = false;
             }
 
             onPressed:{
-                timer1.ended = false;
-                timer1.x1 = mouse.x;
-                timer1.y1 = mouse.y;
-                timer1.start();
+                px1 = mouse.x;
+                py1 = mouse.y;
+
+                tempPressed = true;
+            }
+
+            function outOfInnerLimits(ms){
+                if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
+                        (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
+                    return true;
+                else
+                    return false;
             }
 
             onPositionChanged: {
-                taskDeleg1.onPositionChanged(mouse,mstArea);
+                if(outOfInnerLimits(mouse)&&(tempPressed)){
+                    taskDeleg1.onPressed(mouse.x,mouse.y,mstArea);
+                    tempPressed = false;
+                }
 
-                if(!timer1.ended)
-                    timer1.stop();
+                if(taskDeleg1.isPressed)
+                    taskDeleg1.onPositionChanged(mouse,mstArea);
             }
 
             onReleased:{
-                if(timer1.ended)
-                    taskDeleg1.onReleased(mouse, mstArea);
-
+                taskDeleg1.onReleased(mouse, mstArea);
             }
-
         }
 
 

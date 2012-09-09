@@ -243,26 +243,11 @@ Item{
         anchors.fill: parent
         hoverEnabled: true
 
+        property int px1:0
+        property int py1:0
+        property bool tempPressed:false
+        property int draggingSpace:2
 
-        Timer {
-            id:timer1
-            repeat:false
-            interval:mainView.pressAndHoldInterval
-
-            property bool ended:false
-            property int x1:0
-            property int y1:0
-
-            onTriggered:{
-                ended = true;
-                hoverArea.itWasPressed();
-            }
-
-        }
-
-        function itWasPressed(){
-            taskDeleg2.onPressed(timer1.x1,timer1.y1,hoverArea);
-        }
 
         onEntered: {
             taskDeleg2.onEntered();
@@ -273,28 +258,37 @@ Item{
         }
 
         onClicked: {
+            tempPressed = false;
             taskDeleg2.onClicked(mouse);
-            timer1.stop();
-            timer1.ended = false;
         }
 
         onPressed:{
-            timer1.ended = false;
-            timer1.x1 = mouse.x;
-            timer1.y1 = mouse.y;
-            timer1.start();
+            px1 = mouse.x;
+            py1 = mouse.y;
+
+            tempPressed = true;
+        }
+
+        function outOfInnerLimits(ms){
+            if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
+                    (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
+                return true;
+            else
+                return false;
         }
 
         onPositionChanged: {
-            taskDeleg2.onPositionChanged(mouse, hoverArea);
+            if(outOfInnerLimits(mouse)&&(tempPressed)){
+                taskDeleg2.onPressed(mouse.x,mouse.y,hoverArea);
+                tempPressed = false;
+            }
 
-            if(!timer1.ended)
-                timer1.stop();
+            if(taskDeleg2.isPressed)
+                taskDeleg2.onPositionChanged(mouse,hoverArea);
         }
 
         onReleased:{
-            if(timer1.ended)
-                taskDeleg2.onReleased(mouse);
+            taskDeleg2.onReleased(mouse);
         }
     }
 
@@ -381,7 +375,7 @@ Item{
             height:(parent.height) / 2
 
             //opacity:parent.opacity === 0 ? 0:0.6
-      //      opacity:parent.opacity === 0 ? 0.6:0.6
+            //      opacity:parent.opacity === 0 ? 0.6:0.6
             opacity: 0.6
 
         }
@@ -406,26 +400,10 @@ Item{
             anchors.fill: parent
             hoverEnabled: true
 
-            Timer {
-                id:timer2
-                repeat:false
-                interval:mainView.pressAndHoldInterval
-
-                property bool ended:false
-                property int x1:0
-                property int y1:0
-
-                onTriggered:{
-                    ended = true;
-                    previewMouseArea.itWasPressed();
-                }
-
-            }
-
-            function itWasPressed(){
-                taskDeleg2.onPressed(timer2.x2,timer2.y1,previewMouseArea);
-            }
-
+            property int px1:0
+            property int py1:0
+            property bool tempPressed:false
+            property int draggingSpace:2
 
             onEntered: {
                 taskDeleg2.onEntered();
@@ -436,28 +414,37 @@ Item{
             }
 
             onClicked: {
+                tempPressed = false;
                 taskDeleg2.onClicked(mouse);
-                timer2.stop();
-                timer2.ended = false;
             }
 
             onPressed:{
-                timer2.ended = false;
-                timer2.x1 = mouse.x;
-                timer2.y1 = mouse.y;
-                timer2.start();
+                px1 = mouse.x;
+                py1 = mouse.y;
+
+                tempPressed = true;
+            }
+
+            function outOfInnerLimits(ms){
+                if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
+                        (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
+                    return true;
+                else
+                    return false;
             }
 
             onPositionChanged: {
-                taskDeleg2.onPositionChanged(mouse, previewMouseArea);
+                if(outOfInnerLimits(mouse)&&(tempPressed)){
+                    taskDeleg2.onPressed(mouse.x,mouse.y,previewMouseArea);
+                    tempPressed = false;
+                }
 
-                if(!timer2.ended)
-                    timer2.stop();
+                if(taskDeleg2.isPressed)
+                    taskDeleg1.onPositionChanged(mouse,previewMouseArea);
             }
 
             onReleased:{
-                if(timer2.ended)
-                    taskDeleg2.onReleased(mouse);
+                taskDeleg2.onReleased(mouse);
             }
         }
     }
@@ -622,7 +609,7 @@ Item{
                 y:showPreviewsFound===false ? -0.4*imageTask2.height : -0.6*taskDeleg2.defPreviewWidth
 
                 height:showPreviewsFound===false ?taskDeleg2.rHeight+0.4*imageTask2.height:
-                                                  taskDeleg2.rHeight+0.6*taskDeleg2.defPreviewWidth
+                                                   taskDeleg2.rHeight+0.6*taskDeleg2.defPreviewWidth
 
             }
 
@@ -721,8 +708,8 @@ Item{
                 y:0
                 x:(taskDeleg2.width - taskDeleg2.defPreviewWidth)/2
 
-               // color: previewRect.lightColor
-               // border.color: previewRect.lightBorder
+                // color: previewRect.lightColor
+                // border.color: previewRect.lightBorder
                 color:"#00000000"
                 border.color:"#00000000"
 
