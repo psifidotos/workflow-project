@@ -85,7 +85,9 @@ Item{
             anchors.bottom: allActRect.bottom
             anchors.left: allActRect.left
 
-            width:model.count * allActRect.taskWidth
+            //width:model.count * allActRect.taskWidth
+            //width:(shownTasks+1) * allActRect.taskWidth
+            width:allActRect.width
             height:mainView.workareaHeight / 2
 
             model:instanceOfTasksList.model

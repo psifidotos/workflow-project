@@ -440,7 +440,7 @@ Item{
                 }
 
                 if(taskDeleg2.isPressed)
-                    taskDeleg1.onPositionChanged(mouse,previewMouseArea);
+                    taskDeleg2.onPositionChanged(mouse,previewMouseArea);
             }
 
             onReleased:{

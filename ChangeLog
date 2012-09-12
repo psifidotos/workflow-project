@@ -1,3 +1,10 @@
+
+0.2.0
+=====
+-- fixed:workarea name when adding a new VD
+-- improved windows dragging (remake)
+-- load properly default openSUSE wallpaper
+
 0.1.99
 =====
 -- Change Activities through the panel icon with scroll wheel
