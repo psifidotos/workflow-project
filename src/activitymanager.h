@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-
-
 #include <KStandardDirs>
 #include <KActivities/Controller>
 #include <KConfigGroup>
@@ -78,11 +76,6 @@ private slots:
   void timerTrigerred();
 
 private:
-    QString getWallpaperForRunning(QString source);
-    QString getWallpaperForStopped(QString source);
-    QString getWallpaperFromFile(QString source,QString file);
-    QString getWallpaperFromContainment(Plasma::Containment *actContainment);
-    QString getWallpaperForSingleImage(KConfigGroup &);
 
     QString getContainmentId(QString txt) const;
 
