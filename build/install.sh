@@ -17,11 +17,11 @@ make all
 echo
 echo "*    Install...            *"
 echo
-if test -f /etc/debian_version; then
+if which sudo &>/dev/null; then
+	sudo make install
+else
 	echo "Enter root password"
 	su -c "make install"
-else
-	sudo make install
 fi
 
 echo
