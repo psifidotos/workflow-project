@@ -94,8 +94,11 @@ public:
     Q_INVOKABLE bool activityExists(QString id);
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
+    Q_INVOKABLE int activitySize(QString id);
 
     Q_INVOKABLE void workAreaWasClicked();
+
+    Q_INVOKABLE int setCurrentActivityAndDesktop(QString ,int );
 
 public slots:
     void setCurrentTheme(QString);

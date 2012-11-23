@@ -1,6 +1,10 @@
 #include "pluginfindwallpaper.h"
 
+#include <QFileInfo>
+#include <QDir>
+
 #include <KStandardDirs>
+
 #include <Plasma/Containment>
 
 PluginFindWallpaper::PluginFindWallpaper(Plasma::Containment *con) :

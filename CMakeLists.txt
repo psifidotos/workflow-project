@@ -19,8 +19,8 @@ include_directories(
 
 
 # We add our source code here
-set(workflow_SRCS src/workflow.cpp src/activitymanager.cpp src/ptaskmanager.cpp)
- 
+set(workflow_SRCS src/workflow.cpp src/activitymanager.cpp src/ptaskmanager.cpp  src/plugins/pluginfindwallpaper.cpp src/plugins/pluginshowwidgets.cpp)
+
 # Now make sure all files get to the right place
 kde4_add_ui_files(workflow_SRCS src/config.ui)
 kde4_add_kcfg_files(workflow_SRCS GENERATE_MOC src/workflowsettings.kcfgc)

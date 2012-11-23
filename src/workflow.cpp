@@ -190,7 +190,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
                             tCorona = containment()->corona();
 
 
-                    actManager->setQMlObject(qmlActEng, tCorona);
+                    actManager->setQMlObject(qmlActEng, tCorona, this);
                     connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                     connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
                 }
@@ -318,6 +318,15 @@ void WorkFlow::renameWorkarea(QString id, int desktop, QString name)
 
     if (ret)
         ret->replace(desktop-1,name);
+}
+
+int WorkFlow::activitySize(QString id)
+{
+    QStringList *ret = storedWorkareas[id];
+    if (ret)
+        return ret->size();
+    else
+        return 0;
 }
 
 void WorkFlow::removeWorkarea(QString id, int desktop)
@@ -670,6 +679,25 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
         actManager->setCurrentNextActivity();
     else
         actManager->setCurrentPreviousActivity();
+}
+
+
+int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
+{
+    actManager->setCurrent(actid);
+
+    int nextDesk = desk;
+
+    int actSize = this->activitySize(actid);
+
+    // console.debug(nextDesk+"-"+actSize);
+
+    if(desk>actSize)
+        nextDesk = actSize;
+
+    taskManager->setCurrentDesktop(nextDesk);
+
+    return nextDesk;
 }
 
 // This is the command that links your applet to the .desktop file

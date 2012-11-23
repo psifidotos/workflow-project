@@ -25,7 +25,8 @@
 #include <Plasma/Corona>
 
 ////Plugins/////
-#include "plugins/pluginfindwallpaper.cpp"
+#include "plugins/pluginfindwallpaper.h"
+#include "plugins/pluginshowwidgets.h"
 
 
 ActivityManager::ActivityManager(QObject *parent) :
@@ -42,12 +43,15 @@ ActivityManager::~ActivityManager()
 {
 
     delete m_activitiesCtrl;
+    delete m_plShowWidgets;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)
 {
     qmlActEngine = obj;
     m_corona = cor;
+    m_plasmoid = pmoid;
+    m_plShowWidgets = new PluginShowWidgets(pmoid, m_activitiesCtrl);
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -69,14 +73,6 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor)
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
 
-
-
-
-QString ActivityManager::getWallpaper(QString source)
-{
-    PluginFindWallpaper plg(getContainment(source));
-    return plg.getWallpaper(source);
-}
 
 
 QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
@@ -490,55 +486,18 @@ void ActivityManager::remove(QString id) {
 
 */
 
-//All The Widgets Explorer Hacking///
-
-void ActivityManager::unlockWidgets()
-{
-    //if(containment())
-        if(m_corona)
-            if(m_corona->actions().at(0)){
-                QAction *unlockAction = m_corona->actions().at(0);
-
-                //Just checking the text size usually the word unlock is a bigger text
-                if(m_unlockWidgetsText == ""){
-
-                    QString str1(unlockAction->text());
-                    unlockAction->trigger();
-                    QString str2(unlockAction->text());
-
-                    if(str1.size() > str2.size())
-                        m_unlockWidgetsText = str1;
-                    else
-                        m_unlockWidgetsText = str2;
-                }
-
-                if(m_unlockWidgetsText == unlockAction->text())
-                    unlockAction->trigger();
-                //else the widgets are already unlocked
-            }
-
-}
-
 Plasma::Containment *ActivityManager::getContainment(QString actId)
 {
-    //if(containment())
         if(m_corona){
             for(int j=0; j<m_corona->containments().size(); j++){
                 Plasma::Containment *tC = m_corona->containments().at(j);
 
-        //        qDebug()<<"Step1...";
                 if (tC->containmentType() == Plasma::Containment::DesktopContainment){
-         //           qDebug()<<"Step2...";
-           //         qDebug()<<"Activity:"<<tC->activity()<<" - "<<tC->config().readEntry("activityId","");
 
                     if((tC->config().readEntry("activityId","") == actId)&&
                             (tC->config().readEntry("plugin","") != "desktopDashboard")){
-//                        qDebug()<<"Step3..." << actId;
-
-                   //     if (tC->view())
                             return tC;
                     }
-
 
                 }
 
@@ -548,24 +507,15 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
     return 0;
 }
 
-
-
+QString ActivityManager::getWallpaper(QString source)
+{
+    PluginFindWallpaper plg(getContainment(source));
+    return plg.getWallpaper(source);
+}
 
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
-    Plasma::Containment *currentContainment = getContainment(actId);
-    if(currentContainment->view()){
-    //    qDebug()<<"Step4...";
-        currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
-                                                               "showWidgetExplorer");
-/*
-        if(m_isOnDashboard)
-            taskManager->hideDashboard();
-        else
-            hidePopupDialog();*/
-
-    }
-
+    m_plShowWidgets->execute(actId);
 }
 
 #include "activitymanager.moc"

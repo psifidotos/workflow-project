@@ -421,7 +421,7 @@ Item{
         }
     }
 
-
+/*
     function showWidgetsExplorer(act){
         if(mainView.isOnDashBoard)
             taskManager.hideDashboard();
@@ -453,6 +453,9 @@ Item{
         if((!mainView.isOnDashBoard)&&(currentAct))
             workflowManager.hidePopupDialog();
 
+    }*/
+    function showWidgetsExplorer(act){
+        activityManager.showWidgetsExplorer(act);
     }
 
     function getIndexFor(cod){

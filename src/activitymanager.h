@@ -9,6 +9,9 @@
 
 #include <QTimer>
 
+class WorkFlow;
+class PluginShowWidgets;
+
 namespace KActivities
 {
     class Controller;
@@ -51,10 +54,9 @@ public:
 
     //Interact with Corona() and Desktops Containments()
 
-    Q_INVOKABLE void unlockWidgets();
     Q_INVOKABLE void showWidgetsExplorer(QString);
 
-    void setQMlObject(QObject *,Plasma::Corona *);
+    void setQMlObject(QObject *,Plasma::Corona *, WorkFlow *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -105,7 +107,9 @@ private:
     //This is an indicator for the corona() actions in order to check
     //if widgets are already unlocked.
     QString m_unlockWidgetsText;
+    WorkFlow *m_plasmoid;
 
+    PluginShowWidgets *m_plShowWidgets;
 
     ////////////
     Plasma::Containment *getContainment(QString actId);
