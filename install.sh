@@ -4,6 +4,13 @@
 #05 Aug 2012
 #This script was written and tested on openSuSe 12.1
 
+if [[ -z "$BUILDDIR" ]] ; then
+    BUILDDIR="build"
+fi
+
+mkdir -p $BUILDDIR
+cd $BUILDDIR
+
 echo
 echo "*     Configure...        *"
 echo
