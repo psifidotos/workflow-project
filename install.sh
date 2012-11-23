@@ -8,18 +8,18 @@ if [[ -z "$BUILDDIR" ]] ; then
     BUILDDIR="build"
 fi
 
-mkdir -p $BUILDDIR
-cd $BUILDDIR
+mkdir -p $BUILDDIR || exit 1
+cd $BUILDDIR || exit 1
 
 echo
 echo "*     Configure...        *"
 echo
-cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` ..
+cmake -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix` .. || exit 1
 
 echo
 echo "*    Compile...           *"
 echo
-make all
+make all || exit 1
 
 echo
 echo "*    Install...            *"
