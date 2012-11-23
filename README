@@ -30,5 +30,4 @@ Installation
 To build and install:
 
 1. untar the archive
-2. cd build
-3. sudo sh install.sh
+2. sudo sh install.sh
