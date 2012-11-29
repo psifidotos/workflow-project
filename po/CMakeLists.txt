@@ -1,5 +1,5 @@
 find_program(GETTEXT_MSGFMT_EXECUTABLE msgfmt)
- 
+
 if(NOT GETTEXT_MSGFMT_EXECUTABLE)
 	message(
 "------
@@ -9,7 +9,7 @@ else(NOT GETTEXT_MSGFMT_EXECUTABLE)
 
 	set(catalogname plasma_applet_workflow)
 	add_custom_target(translations ALL)
-	
+
 	file(GLOB PO_FILES
 		*.po
 	)
@@ -23,8 +23,8 @@ else(NOT GETTEXT_MSGFMT_EXECUTABLE)
 			DEPENDS ${_poFile})
 
 		install(FILES ${_gmoFile}
-			DESTINATION /usr/share/locale/${_lang}/LC_MESSAGES/
+			DESTINATION ${CMAKE_INSTALL_PREFIX}/share/locale/${_lang}/LC_MESSAGES/
 			RENAME ${catalogname}.mo)
 	endforeach(_poFile ${PO_FILES})
- 
+
 endif(NOT GETTEXT_MSGFMT_EXECUTABLE)
