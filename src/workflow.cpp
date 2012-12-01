@@ -42,6 +42,8 @@
 #include <Plasma/ExtenderItem>
 #include <Plasma/ToolTipManager>
 #include <Plasma/Containment>
+#include <Plasma/PackageStructure>
+#include <Plasma/Package>
 #include <Plasma/Corona>
 
 
@@ -155,7 +157,12 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     KStandardDirs *sd =    KGlobal::dirs();
 
-    QString path =  sd->findResource("data","plasma_applet_workflow/qml/Activities2.qml");
+    Plasma::PackageStructure::Ptr structure = Plasma::Applet::packageStructure();
+    const QString workflowPath = KGlobal::dirs()->locate("data", structure->defaultPackageRoot() + "/workflow/");
+    Plasma::Package package(workflowPath, structure);
+    QString path = package.filePath("mainscript");
+
+    kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
     //  declarativeWidget->setInitializationDelayed(true);
@@ -398,7 +405,7 @@ void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
     QMetaObject::invokeMethod(mainQML, "setAnimations",
-                              Q_ARG(QVariant, anim));    
+                              Q_ARG(QVariant, anim));
 }
 
 void WorkFlow::setHideOnClick(bool h)
