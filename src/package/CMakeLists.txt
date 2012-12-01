@@ -5,7 +5,9 @@ configure_file(metadata.desktop.cmake
     ${metadata_dot_desktop} @ONLY)
 
 install(DIRECTORY contents
-    DESTINATION ${workflow_plasmoid_dir})
+    DESTINATION ${workflow_plasmoid_dir}
+    PATTERN ".*" EXCLUDE
+    PATTERN "*~" EXCLUDE)
 
 install(FILES ${metadata_dot_desktop}
     DESTINATION ${workflow_plasmoid_dir})
