@@ -1,4 +1,4 @@
-set(workflow_plasmoid_dir ${DATA_INSTALL_DIR}/plasma/plasmoids/org.kde.workflow)
+set(workflow_plasmoid_dir ${DATA_INSTALL_DIR}/plasma/plasmoids/workflow)
 set(metadata_dot_desktop ${CMAKE_CURRENT_BINARY_DIR}/metadata.desktop)
 
 configure_file(metadata.desktop.cmake

@@ -158,7 +158,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     KStandardDirs *sd =    KGlobal::dirs();
 
     Plasma::PackageStructure::Ptr structure = Plasma::Applet::packageStructure();
-    const QString workflowPath = KGlobal::dirs()->locate("data", structure->defaultPackageRoot() + "/org.kde.workflow/");
+    const QString workflowPath = KGlobal::dirs()->locate("data", structure->defaultPackageRoot() + "/workflow/");
     Plasma::Package package(workflowPath, structure);
     QString path = package.filePath("mainscript");
 
