@@ -1,7 +1,10 @@
 *~
-.f*
-.d*
+.*
+!.gitignore
+*.kdev4
+
 build/
+install/
 spec/
 Announcements/
-!build/install.sh
+
