@@ -155,8 +155,6 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
-    KStandardDirs *sd =    KGlobal::dirs();
-
     Plasma::PackageStructure::Ptr structure = Plasma::Applet::packageStructure();
     const QString workflowPath = KGlobal::dirs()->locate("data", structure->defaultPackageRoot() + "/workflow/");
     Plasma::Package package(workflowPath, structure);
