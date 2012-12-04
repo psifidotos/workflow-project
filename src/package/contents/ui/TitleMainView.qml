@@ -222,6 +222,10 @@ Rectangle{
                             if(mainView.firstRunCalibration === false){
                                 mainView.getDynLib().showFirstCalibrationDialog();
                             }
+
+                            if(taskManager.mainWindowIdisSet() === false){
+                                workflowManager.updatePopWindowWId();
+                            }
                         }
                     }
 
@@ -238,9 +242,9 @@ Rectangle{
 
                 checkable:true
                 //checked: (mainView.enablePreviews&&())
-                enabled:((mainView.isOnDashBoard)&&
-                         (mainView.showWinds)&&
-                         (mainView.effectsSystemEnabled))
+              //  enabled:((mainView.isOnDashBoard)&&
+                  enabled:((mainView.showWinds)&&
+                            (mainView.effectsSystemEnabled))
 
                 onCheckedChanged:{
                     mainView.enablePreviews = checked;

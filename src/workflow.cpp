@@ -46,6 +46,8 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
+#include <iostream>
+
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -66,6 +68,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_showWindows = true;
     m_lockActivities = false;
     m_animations = 1;
+    m_findPopupWid = false;
 
 
     m_windowsPreviews=false;
@@ -196,22 +199,60 @@ void WorkFlow::hidePopupDialog()
     this->hidePopup();
 }
 
+void WorkFlow::showPopupDialog()
+{
+    this->showPopup();
+}
+
 void WorkFlow::setMainWindowId()
 {
-
-    //taskManager->setMainWindowId(view()->window()->winId());
-
     QRectF rf = this->geometry();
-    taskManager->setTopXY(rf.x(),rf.y());
 
-    //taskManager->setMainWindowId(view()->winId());
+    if(m_isOnDashboard)
+        taskManager->setTopXY(rf.x(),rf.y());
+    else
+        taskManager->setTopXY(0,0);
+
     taskManager->setMainWindowId(view()->effectiveWinId());
 }
 
 void WorkFlow::geomChanged()
 {
     QRectF rf = this->geometry();
-    taskManager->setTopXY(rf.x(),rf.y());
+
+    if(m_isOnDashboard)
+        taskManager->setTopXY(rf.x(),rf.y());
+    else
+        taskManager->setTopXY(0,0);
+}
+
+
+void WorkFlow::updatePopWindowWId()
+{
+    if(taskManager->getMainWindowId() == 0){
+        WId lastWindow = 0;
+
+        QList<WId>::ConstIterator it;
+        //The first time the pop up is shown , then it is the last window
+        // in windows list in KWindowSystem
+        for ( it = KWindowSystem::windows().begin();
+              it != KWindowSystem::windows().end(); ++it ) {
+            if(KWindowSystem::hasWId(*it)){
+                lastWindow = *it;
+            }
+        }
+
+        m_findPopupWid = true;
+        taskManager->setMainWindowId(lastWindow);
+        taskManager->setTopXY(0,0);
+    }
+}
+
+void WorkFlow::popupEvent(bool show)
+{
+    if((!show)&&(!m_findPopupWid)){
+        updatePopWindowWId();
+    }
 }
 
 //This slot is just to check the id for the dashboard
@@ -221,19 +262,20 @@ void WorkFlow::activeWindowChanged(WId w)
 {
     if( view() ){
         //  if(view()->winId() != taskManager->getMainWindowId()){
-        if(view()->effectiveWinId() != taskManager->getMainWindowId()){
-            this->setMainWindowId();
 
-            if(this->containment()){
-                KConfigGroup kfg=this->containment()->config();
-                QString inDashboard = kfg.readEntry("plugin","---");
+        if(containment()){
+            KConfigGroup kfg=this->containment()->config();
+            QString inDashboard = kfg.readEntry("plugin","---");
 
-                m_isOnDashboard = (inDashboard == "desktopDashboard");
-                m_isOnDashboard = true;
+            m_isOnDashboard = (inDashboard == "desktopDashboard");
 
-                QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
-                                          Q_ARG(QVariant, m_isOnDashboard));
+            QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
+                                      Q_ARG(QVariant, m_isOnDashboard));
 
+            if(m_isOnDashboard){
+                if(view()->effectiveWinId() != taskManager->getMainWindowId()){
+                    this->setMainWindowId();
+                }
             }
         }
     }

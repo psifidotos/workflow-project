@@ -113,6 +113,11 @@ void PTaskManager::changeNumberOfDesktops(int v)
     emit numberOfDesktopsChanged(QVariant(v));
 }
 
+bool PTaskManager::mainWindowIdisSet()
+{
+    return (m_mainWindowId>0);
+}
+
 
 void PTaskManager::desktopChanged (int desktop){
     emit currentDesktopChanged(QVariant(desktop));

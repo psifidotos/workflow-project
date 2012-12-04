@@ -73,6 +73,7 @@ public:
     Q_INVOKABLE void setAnimations(int anim);
     Q_INVOKABLE void setHideOnClick(bool);
     Q_INVOKABLE void hidePopupDialog();
+    Q_INVOKABLE void showPopupDialog();
 
     Q_INVOKABLE void setWindowsPreviews(bool b);
     Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
@@ -84,6 +85,7 @@ public:
 
     Q_INVOKABLE void addTheme(QString);
 
+    Q_INVOKABLE void updatePopWindowWId();
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -100,6 +102,10 @@ public:
     Q_INVOKABLE void workAreaWasClicked();
 
     Q_INVOKABLE int setCurrentActivityAndDesktop(QString ,int );
+
+protected:
+
+    virtual void popupEvent(bool show);
 
 public slots:
     void setCurrentTheme(QString);
@@ -147,6 +153,7 @@ private:
     bool m_isOnDashboard;
     int m_tipsDelay;
 
+    bool m_findPopupWid;
     QString m_currentTheme;
 
     QGraphicsLinearLayout *mainLayout;
