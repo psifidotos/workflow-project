@@ -61,7 +61,8 @@ public:
     ~WorkFlow();
 
     virtual void init();
-    void initExtenderItem(Plasma::ExtenderItem *item);
+  //  void initExtenderItem(Plasma::ExtenderItem *item);
+    virtual QGraphicsWidget *graphicsWidget();
 
     Q_INVOKABLE void loadConfigurationFiles();
 

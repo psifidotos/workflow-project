@@ -53,10 +53,11 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     actManager(0),
     taskManager(0)
 {
-    setPopupIcon("preferences-activities");
+
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPassivePopup(true);
     setHasConfigurationInterface(true);
+    setPopupIcon("preferences-activities");
 
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
@@ -101,54 +102,19 @@ WorkFlow::~WorkFlow()
     delete taskManager;
 }
 
-void WorkFlow::init(){
-
-    Plasma::ToolTipManager::self()->registerWidget(this);
-
-    extender()->setEmptyExtenderMessage(i18n("No Activities..."));
-
-    extender()->setMinimumWidth(500);
-    extender()->setMinimumHeight(300);
-
-    //   extender()->setMaximumWidth(1500);
-    //  extender()->setMaximumHeight(1200);
-
-    if (extender()->item("WorkFlow") == 0) {
-
-        item = new Plasma::ExtenderItem(extender());
-
-        initExtenderItem(item);
-
-        item->setName("WorkFlow");
-        item->setTitle("WorkFlow");
-
-        //     QString dW = appConfig.readEntry("DialogWidth","750");
-        //   QString dH = appConfig.readEntry("DialogHeight","400");
-        //
-        //   qDebug() << dW<<"-"<<dH;
 
 
 
-    }
-
-    // extender()->setPreferredWidth(1000);
-    //  extender()->setPreferredHeight(700);
-
+QGraphicsWidget *WorkFlow::graphicsWidget()
+{
+    return m_mainWidget;
 }
 
-void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
+void WorkFlow::init(){
     m_mainWidget = new QGraphicsWidget(this);
 
     appConfig = config();
-
-    //   QString wD = appConfig.readEntry("PopupWidth", "800");
-    //   QString hD = appConfig.readEntry("PopupHeight", "600");
-
-    //  m_mainWidget->setPreferredSize(wD.toFloat(), hD.toFloat());
-    //  m_mainWidget->setPreferredWidth(750);
-    //  m_mainWidget->setPreferredHeight(400);
-    //  m_mainWidget->setMinimumSize(750, 400);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -212,7 +178,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     //the activitymanager class will be directly accessible from qml
 
-    item->setWidget(m_mainWidget);
+    //item->setWidget(m_mainWidget);
 
     screensSizeChanged(-1); //set Screen Ratio
 
@@ -221,7 +187,7 @@ void WorkFlow::initExtenderItem(Plasma::ExtenderItem *item) {
 
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
-    //m_mainWidget->resize(wD.toFloat(),hD.toFloat());
+    m_mainWidget->setMinimumSize(250,250);
 }
 ///SLOTS
 
@@ -263,6 +229,7 @@ void WorkFlow::activeWindowChanged(WId w)
                 QString inDashboard = kfg.readEntry("plugin","---");
 
                 m_isOnDashboard = (inDashboard == "desktopDashboard");
+                m_isOnDashboard = true;
 
                 QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
                                           Q_ARG(QVariant, m_isOnDashboard));
