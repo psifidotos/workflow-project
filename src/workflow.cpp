@@ -101,8 +101,10 @@ WorkFlow::~WorkFlow()
     storedWorkareas.clear();
     //
 
-    delete actManager;
-    delete taskManager;
+    if (actManager);
+        delete actManager;
+    if (taskManager)
+        delete taskManager;
 }
 
 
