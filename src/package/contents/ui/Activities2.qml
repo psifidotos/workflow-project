@@ -155,6 +155,20 @@ Rectangle {
         WorkAreasAllLists{
             id: allWorkareas
             z:4
+
+            /* Should use anchors, but they seem to break the flickable area */
+            //anchors.top: oxygenT.bottom
+            //anchors.bottom: mainView.bottom
+            //anchors.left: mainView.left
+            //anchors.right: mainView.right
+            y:oxygenT.height
+            width:mainView.width
+            height:mainView.height
+
+            workareaWidth: mainView.workareaWidth
+            workareaHeight: mainView.workareaHeight
+            scale: mainView.scaleMeter
+            animationsStep: mainView.animationsStep
         }
 
         StoppedActivitiesPanel{
@@ -206,7 +220,7 @@ Rectangle {
     }
     function setLockActivities(v){
         mainView.lockActivities = v;
-        oxygenT.lockerChecked = v;       
+        oxygenT.lockerChecked = v;
     }
     function setZoomSlider(v){
         zoomSlider.value = v;

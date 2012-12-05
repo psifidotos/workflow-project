@@ -7,29 +7,23 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
 Item{
-
     id: allwlists
-
+    property int scale: 50
     property alias actImagHeight: actImag1.height
     property color actImagBordColor: "#77ffffff"
-
     property alias activitiesShown:activitiesList.shownActivities
     property alias flickableV:view.interactive
-
-    width:mainView.width
-    height:mainView.height
-
     property string typeId : "workareasMainView"
+    property int workareaWidth: 0
+    property int workareaHeight: 0
+    property int animationsStep: 0
 
     Flickable{
         id: view
 
-        width:stoppedPanel.x
-        height:mainView.height
-
-        //anchors.fill: parent
+        anchors.fill: parent
         contentWidth: allareas.width
-        contentHeight: allareas.height + allActT.height
+        contentHeight: allareas.height
 
         boundsBehavior: Flickable.StopAtBounds
 
@@ -46,11 +40,10 @@ Item{
         ListView{
             id:allareas
 
-            y:1.4 * mainView.workareaY
-
+            y: 2.8 * allwlists.scale
             //+1, for not creating a visual issue...
-            width: (activitiesList.shownActivities+1) *  (mainView.workareaWidth)
-            height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
+            width: (activitiesList.shownActivities + 1) * allwlists.workareaWidth
+            height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height
 
             orientation: ListView.Horizontal
 
@@ -59,12 +52,10 @@ Item{
             property string typeId : "workareasFlickList1"
 
             property int maxWorkAreasHeight: 0
-            property int scrollingMargin: ((mainView.enablePreviews)&&(mainView.showWinds))?150:40
 
             model:instanceOfWorkAreasList.model
 
-            delegate: WorkAreaListDeleg{
-            }
+            delegate: WorkAreaListDeleg{}
 
             function changedChildHeight(){
                 var max=0;
@@ -92,8 +83,8 @@ Item{
             id:actImag1Shad
             anchors.top: actImag1.bottom
 
-            width: mainView.width<allareas.width ? allareas.width : mainView.width
-            height: workareaY/6
+            width: parent.width < allareas.width ? allareas.width : parent.width
+            height: allwlists.scale / 3
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "#aa0f0f0f" }
                 GradientStop { position: 1.0; color: "#00797979" }
@@ -102,10 +93,9 @@ Item{
 
         Rectangle {
             id: actImag1
-            y:oxygenT.height
-            width: mainView.width<allareas.width ? allareas.width : mainView.width
+            width: allwlists.width < allareas.width ? allareas.width : allwlists.width
 
-            height: 0.9*workareaY
+            height: 1.8 * allwlists.scale
             color: "#646464"
             border.color: allwlists.actImagBordColor
             border.width:1
@@ -146,7 +136,7 @@ Item{
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
+            NumberAnimation { properties: "opacity"; duration: 2 * allwlists.animationsStep }
         }
 
     }//Flickable scrolling
