@@ -71,14 +71,11 @@ Item{
                             max = tempH;
                     }
                 }
-
                 allareas.maxWorkAreasHeight = max;
             }
-
         }
 
         //Top Activities Banner
-
         Rectangle{
             id:actImag1Shad
             anchors.top: actImag1.bottom
@@ -105,27 +102,16 @@ Item{
 
                 orientation: ListView.Horizontal
                 height:parent.height
-            //    height:actImag1.height
-                //height: 1.2*workareaY
-
-                //width: mainView.width<allareas.width ? allareas.width : mainView.width
                 width: allareas.width
-
-           //     y: workareaY / 12
-
                 interactive:false
-
                 model: instanceOfActivitiesList.model
-                delegate: ActivityDeleg{
-                }
-
-                property int shownActivities;
+                delegate: ActivityDeleg{}
+                property int shownActivities: 0
 
                 Component.onCompleted: {
                     allwlists.updateShowActivities();
                 }
             }
-
         }
 
         states: State {
@@ -138,12 +124,10 @@ Item{
         transitions: Transition {
             NumberAnimation { properties: "opacity"; duration: 2 * allwlists.animationsStep }
         }
-
     }//Flickable scrolling
 
     //Scrollbars
     // Attach scrollbars to the right and bottom edges of the view.
-
     ScrollBar {
         id: verticalScrollBar
         width: 11; height: view.height
@@ -164,25 +148,6 @@ Item{
         pageSize: view.visibleArea.widthRatio
     }
 
-/*
-    PlasmaComponents.ScrollBar {
-        id: verticalScrollBar
-        width: 12;
-        anchors.right: view.right
-        opacity: 0
-        orientation: Qt.Vertical
-        flickableItem:view
-    }
-
-    PlasmaComponents.ScrollBar {
-        id: horizontalScrollBar
-        height: 12
-        anchors.bottom: view.bottom
-        opacity: 0
-        orientation: Qt.Horizontal
-        flickableItem:view
-    }*/
-
     //return activities listview
     function getList(){
         return activitiesList;
@@ -199,13 +164,9 @@ Item{
                 counter++;
         }
         activitiesList.shownActivities = counter;
-
-        //console.debug("Get in:"+counter);
-        //activitiesList.shownActivities = 8;
     }
 
     function getActivityColumn(cd){
-
         for (var i=0; i<allareas.children[0].children.length; ++i)
         {
             var elem = allareas.children[0].children[i];
@@ -213,6 +174,5 @@ Item{
             if (elem.ccode === cd)
                 return elem;
         }
-
     }
 }
