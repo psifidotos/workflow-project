@@ -73,7 +73,6 @@ QIconItem{
 
             fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
-
             fixPosElem.toX = fixPosElem.x;
 
             fixPosElem.toY = fixPosElem.y;
@@ -83,7 +82,6 @@ QIconItem{
         return fixPosElem;
 
     }
-
 
     ParallelAnimation{
         id:playActAnimation

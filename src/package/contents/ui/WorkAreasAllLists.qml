@@ -21,7 +21,6 @@ Item{
 
     property string typeId : "workareasMainView"
 
-
     Flickable{
         id: view
 
@@ -44,7 +43,6 @@ Item{
             property string typeId : "workareasFlickImage1"
         }
 
-
         ListView{
             id:allareas
 
@@ -53,7 +51,6 @@ Item{
             //+1, for not creating a visual issue...
             width: (activitiesList.shownActivities+1) *  (mainView.workareaWidth)
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height + scrollingMargin
-
 
             orientation: ListView.Horizontal
 
@@ -89,7 +86,6 @@ Item{
 
         }
 
-
         //Top Activities Banner
 
         Rectangle{
@@ -113,7 +109,6 @@ Item{
             color: "#646464"
             border.color: allwlists.actImagBordColor
             border.width:1
-
 
             ListView {
                 id: activitiesList

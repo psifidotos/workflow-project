@@ -4,7 +4,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
-
 import "delegates"
 import "delegates/ui-elements"
 import "instances"
@@ -17,7 +16,6 @@ import "DynamicAnimations.js" as DynamAnim
 Rectangle {
     id:mainView
     objectName: "instMainView"
-
 
     color: "#dcdcdc"
 
@@ -59,7 +57,6 @@ Rectangle {
     property real defFontRelStep: mainView.defaultFontRelativeness/20
     property real fixedFontSize: defaultFontSize + defaultFontRelativeness
 
-
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
     //With using KWindowSystem workarea
     property real screenRatio:0.75
@@ -71,7 +68,6 @@ Rectangle {
 
     property int toolTipsDelay:300
  //   property int pressAndHoldInterval:120
-
 
     onShowWindsChanged: workflowManager.setShowWindows(showWinds);
     onLockActivitiesChanged: {
@@ -87,17 +83,14 @@ Rectangle {
     onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
     onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
 
-
     signal minimumWidthChanged;
     signal minimumHeightChanged;
-
 
     //Local properties//
     property string currentActivity
     property int currentDesktop
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
-
 
     SharedActivitiesList{
         id:instanceOfActivitiesList
@@ -162,18 +155,15 @@ Rectangle {
             }
         }
 
-
         WorkAreasAllLists{
             id: allWorkareas
             z:4
         }
 
-
         StoppedActivitiesPanel{
             id:stoppedPanel
             z:6
         }
-
 
         MainAddActivityButton{
             id: mAddActivityBtn
@@ -185,12 +175,10 @@ Rectangle {
             z:8
         }
 
-
         AllActivitiesTasks{
             id:allActT
             z:7
         }
-
 
         ZoomSliderItem{
             id:zoomSlider
@@ -198,11 +186,9 @@ Rectangle {
 
     }
 
-
     DraggingInterface{
         id:mDragInt
     }
-
 
     Component.onCompleted:{
 
@@ -289,7 +275,6 @@ Rectangle {
         mainView.toolTipsDelay = dl;
     }
 
-
     function loadThemes() {
         for(var i=0; i<instanceOfThemeList.model.count; ++i)
             workflowManager.addTheme(instanceOfThemeList.model.get(i).name);
@@ -344,9 +329,7 @@ Rectangle {
         }
     }
 
-
     /*--------------------Dialogs ---------------- */
-
 
     //Just to ignore the warnings
     signal completed;
@@ -440,8 +423,4 @@ Rectangle {
     //}
 
 }
-
-
-
-
 

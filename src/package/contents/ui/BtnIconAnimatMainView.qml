@@ -24,7 +24,6 @@ Image{
         playIconAnimation.start();
     }
 
-
     ParallelAnimation{
         id:playIconAnimation
         property int animationDur:600
@@ -37,7 +36,6 @@ Image{
             to: 0;
         }
 
-
         NumberAnimation {
             target: btnIcon;
             property: "scale";
@@ -45,8 +43,6 @@ Image{
             easing.type: Easing.InOutQuad;
             to: 8;
         }
-
-
 
     }
 
