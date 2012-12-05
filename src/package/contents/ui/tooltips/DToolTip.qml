@@ -219,6 +219,9 @@ PlasmaCore.FrameSvgItem{
         onPressAndHold:{
             hideToolTip();
         }
+        onPressed:{
+            hideToolTip();
+        }
     }
 
     Timer{
