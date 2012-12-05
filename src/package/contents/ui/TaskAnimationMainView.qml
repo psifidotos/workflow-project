@@ -3,7 +3,6 @@ import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
-
 QIconItem{
     id:taskAnimation
     opacity:1
@@ -134,7 +133,6 @@ QIconItem{
 
             var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
 
-
             taskAnimation.toX = fixPosElem.x;
             taskAnimation.toY = fixPosElem.y;
 
@@ -206,7 +204,6 @@ QIconItem{
         id:playTaskAnimation2
         property int animationDur:750
 
-
         NumberAnimation {
             target: taskAnimation;
             property: "opacity";
@@ -228,7 +225,6 @@ QIconItem{
             easing.type: Easing.InOutQuad;
             to: 0.8
         }
-
 
         PropertyAnimation{
             target:taskAnimation

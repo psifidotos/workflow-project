@@ -41,9 +41,10 @@ ActivityManager::ActivityManager(QObject *parent) :
 
 ActivityManager::~ActivityManager()
 {
-
-    delete m_activitiesCtrl;
-    delete m_plShowWidgets;
+    if (m_activitiesCtrl)
+        delete m_activitiesCtrl;
+    if (m_plShowWidgets)
+        delete m_plShowWidgets;
 }
 
 void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)

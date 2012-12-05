@@ -26,11 +26,9 @@ function showRemoveDialog(actId,actName){
     mainView.removeDialog.open();
 }
 
-
 function deleteRemoveDialog(){
     mainView.removeDialog.destroy();
 }
-
 
 ///////////////Clone Dialog/////////////////
 function showCloneDialog(actId,actName){
@@ -44,9 +42,7 @@ function showCloneDialog(actId,actName){
 
     mainView.cloningDialog.open();
 
-
 }
-
 
 function deleteCloneDialog(){
     mainView.cloningDialog.destroy();
@@ -61,7 +57,6 @@ function showCalibrationDialog(){
 
     mainView.calibrationDialog.openD();
 }
-
 
 function deleteCalibrationDialog(){
     mainView.calibrationDialog.destroy();
@@ -79,11 +74,9 @@ function showDesktopDialog(actId,desk){
 
 }
 
-
 function deleteDesktopDialog(){
     mainView.desktopDialog.destroy();
 }
-
 
 ///////////////BusyIndicator Dialog/////////////////
 function showBusyIndicatorDialog(){
@@ -94,11 +87,9 @@ function showBusyIndicatorDialog(){
     mainView.busyIndicatorDialog.startAnimation();
 }
 
-
 function deleteBusyIndicatorDialog(){
     mainView.busyIndicatorDialog.destroy();
 }
-
 
 ///////////////LiveTour Dialog/////////////////
 function showLiveTourDialog(){
@@ -111,7 +102,6 @@ function showLiveTourDialog(){
 
     allActT.forceState1();
 }
-
 
 function deleteLiveTourDialog(){
     mainView.liveTourDialog.destroy();
@@ -129,7 +119,6 @@ function showAboutDialog(){
     allActT.forceState1();
 }
 
-
 function deleteAboutDialog(){
     allActT.unForceState1();
     mainView.aboutDialog.destroy();
@@ -145,11 +134,9 @@ function showFirstHelpTourDialog(){
     mainView.firstHelpTourDialog.open();
 }
 
-
 function deleteFirstHelpTourDialog(){
     mainView.firstHelpTourDialog.destroy();
 }
-
 
 /////////////First Run Calibration Dialog//////////////////////
 function showFirstCalibrationDialog(){
@@ -161,14 +148,9 @@ function showFirstCalibrationDialog(){
     mainView.firstCalibrationDialog.open();
 }
 
-
 function deleteFirstCalibrationDialog(){
     mainView.firstCalibrationDialog.destroy();
 }
-
-
-
-
 
 ////////////////////////////////////
 //Activities Animations
@@ -197,7 +179,6 @@ function getActivityCoord(cod,lst){
 
     return res;
 }
-
 
 //Tasks Animations
 

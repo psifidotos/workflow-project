@@ -62,7 +62,6 @@ Item{
             GradientStop { position: 1.0; color: "#aa0f0f0f" }
         }
 
-
     }
 
     Rectangle{
@@ -74,10 +73,8 @@ Item{
         height:0.4*workareaY
         color:"#ebebeb"
 
-
         //property int taskWidth: 0.75 * mainView.workareaWidth
         property int taskWidth: mainView.workareaWidth
-
 
         ListView{
             id:allActTaskL
@@ -127,7 +124,6 @@ Item{
         }
 
         Component.onCompleted: allActTasksPanel.changedChildState()
-
 
     }
 

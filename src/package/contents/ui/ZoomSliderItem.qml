@@ -53,7 +53,6 @@ PlasmaComponents.Slider {
         firsttime = false;
     }
 
-
     //QIconItem{
     Image{
         id:minusSliderImage

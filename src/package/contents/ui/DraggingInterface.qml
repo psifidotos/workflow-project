@@ -23,15 +23,12 @@ Rectangle{
     property string drActiv: ""
     property int drDesktop: -1
 
-
     //0 - over a Workarea
     //1 - over an AddWorkarea button
     //2 - over everywhere tasks
     property int lastSelection
 
     property bool firsttime:true
-
-
 
     QIconItem{
         id:iconImg
@@ -40,7 +37,6 @@ Rectangle{
         opacity:0.8
         smooth:true
     }
-
 
     //Testing Purposes
     Rectangle{
@@ -117,7 +113,6 @@ Rectangle{
                     instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
                     instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
                 }
-
 
                 instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
                 instanceOfTasksList.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
@@ -236,12 +231,10 @@ Rectangle{
 
                                 }
 
-
                             }
                         }//workalistForActivity
                         else if (mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"addWorkArea")){
                             var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
-
 
                             if((mainDraggingItem.drActiv!== activityCode) ||
                                     (mainDraggingItem.drDesktop!==desktopsNum+1) ||
@@ -251,7 +244,6 @@ Rectangle{
 
                                 selectionImage.setLocation(fixBCoord2.x,fixBCoord2.y-5,addArea.width,1.3 * addArea.height);
                                 selectionImage.opacity = 1;
-
 
                                 mainDraggingItem.drActiv = activityCode;
                                 mainDraggingItem.drDesktop = desktopsNum+1;
@@ -284,9 +276,6 @@ Rectangle{
             mainDraggingItem.lastSelection = 2;
          //   mainDraggingItem.firsttime = false;
         }
-
-
-
 
     }
 

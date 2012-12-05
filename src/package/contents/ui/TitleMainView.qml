@@ -51,7 +51,6 @@ Rectangle{
 
     }
 
-
     Text{
         anchors.top:oxygenTitle.top
         anchors.horizontalCenter: oxygenTitle.horizontalCenter
@@ -61,7 +60,6 @@ Rectangle{
 
         color:"#777777"
     }
-
 
     Row{
         x: 0.7 * oxygenTitle.height
@@ -110,7 +108,6 @@ Rectangle{
                     }
                 }
             }
-
 
             DToolTip{
                 title:i18n("Lock Activities")
@@ -293,13 +290,11 @@ Rectangle{
                 helpBtn.font.bold = false;
             }
 
-
             onClicked: {
                 mainView.getDynLib().showAboutDialog();
             }
 
         }
-
 
         DToolTip{
             title:i18n("About Dialog")

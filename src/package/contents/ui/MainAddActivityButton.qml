@@ -27,8 +27,6 @@ Rectangle{
     border.color: showRedCross===true ? "#00000000" : allWorkareas.actImagBordColor
     border.width: showRedCross===true ? 0 : 1
 
-
-
     gradient: Gradient {
         GradientStop { position: 0.0; color: addActivityBtn.currentColor2  }
         GradientStop { position: 0.15; color: addActivityBtn.currentColor1 }
@@ -93,7 +91,6 @@ Rectangle{
         }
     }
 
-
     Rectangle{
         id:addActShad1
         anchors.top: addActivityBtn.top
@@ -127,7 +124,6 @@ Rectangle{
         }
 
     }
-
 
     DToolTip{
         title:i18n("Add Activity")

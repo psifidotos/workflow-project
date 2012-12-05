@@ -22,14 +22,12 @@ Rectangle {
 
     property bool doNotShow: false
 
-
     Behavior on x{
         NumberAnimation {
             duration: 2*mainView.animationsStep2;
             easing.type: Easing.InOutQuad;
         }
     }
-
 
     ///Left Shadow for Stopped Activiies Panel
     Rectangle{
@@ -107,7 +105,6 @@ Rectangle {
         height:35
         color:parent.color
         radius:4
-
 
         anchors.horizontalCenter: parent.left
         anchors.verticalCenter: parent.verticalCenter
@@ -198,8 +195,6 @@ Rectangle {
         }
     }
 
-
-
     ScrollBar {
         id: stopVerticalScrollBar;
         width: 11;
@@ -223,14 +218,8 @@ Rectangle {
         flickableItem:stopActivitiesView
     }*/
 
-
-
-
-
     ///////Scrolling Indicators////////////
     ///////////////////////////////////////
-
-
 
     Rectangle{
         id:stpActRedShadTop
@@ -277,10 +266,6 @@ Rectangle {
         }
     }
 
-
-
-
-
     function changedChildState(){
         var counter = 0;
 
@@ -299,7 +284,6 @@ Rectangle {
     function getList(){
         return stoppedActivitiesList;
     }
-
 
 }
 
