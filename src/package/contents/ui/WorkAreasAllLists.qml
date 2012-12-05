@@ -17,6 +17,7 @@ Item{
     property int workareaWidth: 0
     property int workareaHeight: 0
     property int animationsStep: 0
+    property int verticalScrollBarLocation: view.width
 
     Flickable{
         id: view
@@ -130,8 +131,10 @@ Item{
     // Attach scrollbars to the right and bottom edges of the view.
     ScrollBar {
         id: verticalScrollBar
-        width: 11; height: view.height
-        anchors.right: view.right
+        width: 11;
+        anchors.top: view.top
+        anchors.bottom: view.bottom
+        x: allwlists.verticalScrollBarLocation - width
         opacity: 0
         orientation: Qt.Vertical
         position: view.visibleArea.yPosition
@@ -140,7 +143,9 @@ Item{
 
     ScrollBar {
         id: horizontalScrollBar
-        width: view.width; height: 11
+        height: 11
+        anchors.left: view.left
+        width: allwlists.verticalScrollBarLocation
         anchors.bottom: view.bottom
         opacity: 0
         orientation: Qt.Horizontal
