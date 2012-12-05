@@ -114,17 +114,6 @@ Item{
                 }
             }
         }
-
-        states: State {
-            name: "ShowBars"
-            when: view.movingVertically || view.movingHorizontally
-            PropertyChanges { target: verticalScrollBar; opacity: 1 }
-            PropertyChanges { target: horizontalScrollBar; opacity: 1 }
-        }
-
-        transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 2 * allwlists.animationsStep }
-        }
     }//Flickable scrolling
 
     //Scrollbars
@@ -139,6 +128,15 @@ Item{
         orientation: Qt.Vertical
         position: view.visibleArea.yPosition
         pageSize: view.visibleArea.heightRatio
+
+        states: State {
+            name: "moving"
+            when: view.movingVertically && view.height <= view.contentHeight
+            PropertyChanges { target: verticalScrollBar; opacity: 1 }
+        }
+        transitions: Transition {
+            NumberAnimation { properties: "opacity"; duration: 2 * allwlists.animationsStep }
+        }
     }
 
     ScrollBar {
@@ -151,6 +149,14 @@ Item{
         orientation: Qt.Horizontal
         position: view.visibleArea.xPosition
         pageSize: view.visibleArea.widthRatio
+        states: State {
+            name: "moving"
+            when: view.movingHorizontally && view.width <= view.contentWidth
+            PropertyChanges { target: horizontalScrollBar; opacity: 1 }
+        }
+        transitions: Transition {
+            NumberAnimation { properties: "opacity"; duration: 2 * allwlists.animationsStep }
+        }
     }
 
     //return activities listview
