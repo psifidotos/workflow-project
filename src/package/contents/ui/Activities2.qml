@@ -116,10 +116,7 @@ Rectangle {
 
     Item{
         id:centralArea
-        x: 0
-        y:0
-        width:mainView.width
-        height:mainView.height
+        anchors.fill: parent
 
         property string typeId: "centralArea"
         BorderImage {
