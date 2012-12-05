@@ -101,7 +101,7 @@ WorkFlow::~WorkFlow()
     storedWorkareas.clear();
     //
 
-    if (actManager);
+    if (actManager)
         delete actManager;
     if (taskManager)
         delete taskManager;
@@ -192,7 +192,7 @@ void WorkFlow::init(){
 
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
-    m_mainWidget->setMinimumSize(400,250);
+    m_mainWidget->setMinimumSize(550,350);
 }
 ///SLOTS
 
