@@ -163,7 +163,8 @@ Rectangle {
             //anchors.right: mainView.right
             y:oxygenT.height
             width:mainView.width
-            height:mainView.height
+            height:mainView.height - y
+            verticalScrollBarLocation: stoppedPanel.x
 
             workareaWidth: mainView.workareaWidth
             workareaHeight: mainView.workareaHeight
