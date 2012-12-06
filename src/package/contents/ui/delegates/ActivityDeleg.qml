@@ -6,8 +6,6 @@ import org.kde.qtextracomponents 0.1
 import "ui-elements"
 import "../tooltips"
 
-//Component{
-
 Item{
     id:mainActivity
     property string neededState:"Running"
@@ -19,11 +17,9 @@ Item{
 
     property int defWidth: CState === neededState ? mainView.workareaWidth : 0
     property color activeBackColor: "#ff444444"
-
     property color actUsedColor: ccode===mainView.currentActivity? activeBackColor:actImag1.color
 
     width: defWidth
-    //   height: mainView.workareaWidth / 3
     height:actImag1.height
 
     Behavior on opacity{
@@ -41,22 +37,12 @@ Item{
     }
 
     MouseArea{
+        id: globalMouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onEntered:{
-            activityBtnsI.state="show";
-        }
-
-        onExited:{
-            activityBtnsI.state="hide";
-
-        }
     }
 
-
-
     Rectangle{
-
         y:-activitiesList.y+actImag1.height-1
 
         height:parent.width
@@ -64,7 +50,6 @@ Item{
 
         rotation: -90
         transformOrigin: Item.TopLeft
-
 
         gradient: Gradient {
             GradientStop { position: 0; color:actImag1.color }
@@ -82,8 +67,6 @@ Item{
         opacity: CState===neededState ? 1:0
 
         icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
-        //x:mainView.scaleMeter/10
-        //y:mainView.scaleMeter/3
 
         anchors.bottom:parent.bottom
         anchors.bottomMargin: 3
@@ -111,21 +94,13 @@ Item{
             onEntered: {
                 if((activityName.state === "inactive")&&
                    (!mainView.lockActivities)){
-                    activityBtnsI.state="show";
-
                     fadeIcon.opacity = 0;
                     activityIcon.rotation = 0;
 
                 }
-                else{
-                    activityBtnsI.state="hide";
-                }
-
             }
 
             onExited: {
-                activityBtnsI.state="hide";
-
                 fadeIcon.opacity = 1;
                 activityIcon.rotation = -20;
             }
@@ -255,9 +230,6 @@ Item{
                     activityName.clicked(mouse);
                 }
             }
-
-
-
         }
 
         DToolTip{
@@ -267,12 +239,8 @@ Item{
             mainText: mainView.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
-            //icon:instanceOfThemeList.icons.AddWidget
         }
-
     }
-
-
 
     ActivityBtns{
         id:activityBtnsI
@@ -280,10 +248,12 @@ Item{
         width:parent.width
         height:mainView.scaleMeter - 15
 
-        opacity: CState===neededState ? 1:0
+        opacity: editActivityNameMouseArea.containsMouse || activityIconMouseArea.containsMouse || globalMouseArea.containsMouse || activityBtnsI.containsMouse
         z:40
 
-
+        Behavior on opacity {
+            NumberAnimation { duration: 2 * mainView.animationsStep }
+        }
     }
 
     Rectangle{
@@ -296,8 +266,6 @@ Item{
         color:"#15222222"
         z:10
     }
-
-
 
     ListView.onAdd: ParallelAnimation {
         PropertyAction { target: mainActivity; property: "width"; value: 0 }
@@ -314,8 +282,6 @@ Item{
             NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
             NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
         }
-
-
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }
     }
