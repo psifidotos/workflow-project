@@ -30,13 +30,12 @@
 
 
 ActivityManager::ActivityManager(QObject *parent) :
-    QObject(parent)
+    QObject(parent), m_plShowWidgets(0), m_activitiesCtrl(0)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
     m_timer = new QTimer(this);
     m_timerPhase = 0;
     m_unlockWidgetsText = "";
-
 }
 
 ActivityManager::~ActivityManager()
