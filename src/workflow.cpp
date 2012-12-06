@@ -46,16 +46,12 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
-#include <iostream>
-
-
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_mainWidget(0),
     actManager(0),
     taskManager(0)
 {
-
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPassivePopup(true);
     setHasConfigurationInterface(true);
@@ -70,7 +66,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_animations = 1;
     m_findPopupWid = false;
 
-
     m_windowsPreviews=false;
     m_windowsPreviewsOffsetX=0;
     m_windowsPreviewsOffsetY=0;
@@ -81,7 +76,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
-
     m_desktopWidget = qApp->desktop();
 }
 
@@ -99,7 +93,6 @@ WorkFlow::~WorkFlow()
         delete curWorks;
     }
     storedWorkareas.clear();
-    //
 
     if (actManager)
         delete actManager;
@@ -107,14 +100,10 @@ WorkFlow::~WorkFlow()
         delete taskManager;
 }
 
-
-
-
 QGraphicsWidget *WorkFlow::graphicsWidget()
 {
     return m_mainWidget;
 }
-
 
 void WorkFlow::init(){
     m_mainWidget = new QGraphicsWidget(this);
@@ -134,7 +123,6 @@ void WorkFlow::init(){
     kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
-    //  declarativeWidget->setInitializationDelayed(true);
     declarativeWidget->setQmlPath(path);
 
     mainLayout->addItem(declarativeWidget);
@@ -165,7 +153,6 @@ void WorkFlow::init(){
                         if(containment()->corona())
                             tCorona = containment()->corona();
 
-
                     actManager->setQMlObject(qmlActEng, tCorona, this);
                     connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                     connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
@@ -181,20 +168,14 @@ void WorkFlow::init(){
         }
     }
 
-    //the activitymanager class will be directly accessible from qml
-
-    //item->setWidget(m_mainWidget);
-
     screensSizeChanged(-1); //set Screen Ratio
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
     connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
-
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
     m_mainWidget->setMinimumSize(550,350);
 }
-///SLOTS
 
 void WorkFlow::hidePopupDialog()
 {
@@ -227,7 +208,6 @@ void WorkFlow::geomChanged()
     else
         taskManager->setTopXY(0,0);
 }
-
 
 void WorkFlow::updatePopWindowWId()
 {
@@ -281,15 +261,11 @@ void WorkFlow::activeWindowChanged(WId w)
             }
         }
     }
-
 }
-
-////INVOKES
 
 QStringList WorkFlow::getWorkAreaNames(QString id)
 {
     QStringList *ret = storedWorkareas[id];
-
 
     QStringList ret2;
     if(ret){
@@ -314,7 +290,6 @@ void WorkFlow::addEmptyActivity(QString id)
 {
     QStringList *newLst = new QStringList();
     storedWorkareas[id] = newLst;
-    // qDebug()<< this->extender()->winId();
 }
 
 void WorkFlow::removeActivity(QString id)
@@ -358,10 +333,8 @@ bool WorkFlow::activityExists(QString id)
     return storedWorkareas.contains(id);
 }
 
-
 void WorkFlow::saveWorkareas()
 {
-
     QHashIterator<QString, QStringList *> i(storedWorkareas);
     QStringList writeActivities;
     QStringList writeSizes;
@@ -382,12 +355,7 @@ void WorkFlow::saveWorkareas()
     WorkFlowSettings::setNoOfWorkareas(writeSizes);
     WorkFlowSettings::setWorkareasNames(writeWorkareas);
     WorkFlowSettings::self()->writeConfig();
-
 }
-
-
-////Properties
-
 
 void WorkFlow::setZoomFactor(int zoom)
 {
@@ -429,7 +397,6 @@ void WorkFlow::workAreaWasClicked()
         this->hidePopup();
 }
 
-
 void WorkFlow::screensSizeChanged(int s)
 {
     QRect screenRect = m_desktopWidget->screenGeometry(s);
@@ -454,7 +421,6 @@ void WorkFlow::answeredIconDialog()
 {
     this->showPopup();
 }
-
 
 void WorkFlow::setWindowsPreviews(bool b){
     m_windowsPreviews = b;
@@ -504,7 +470,6 @@ void WorkFlow::setToolTipsDelayChanged(int val)
     m_tipsDelay = val;
     QMetaObject::invokeMethod(mainQML, "setToolTipsDelay",
                               Q_ARG(QVariant, val));
-
 }
 
 void WorkFlow::addTheme(QString theme)
@@ -516,7 +481,6 @@ void WorkFlow::themeSelectionChanged(QString th){
     setCurrentTheme(th);
 }
 
-//////// Methods
 void WorkFlow::loadWorkareas()
 {
     storedWorkareas.clear();
@@ -538,10 +502,8 @@ void WorkFlow::loadWorkareas()
             foundWorkAreas->append(wnames[intpos+k]);
 
         storedWorkareas[activit] = foundWorkAreas;
-
     }
 }
-
 
 void WorkFlow::loadConfigurationFiles()
 {
@@ -575,7 +537,6 @@ void WorkFlow::loadConfigurationFiles()
 
     setAnimations(anim);
 
-
     setWindowsPreviews(winPreviews);
     QMetaObject::invokeMethod(mainQML, "setWindowsPreviews",
                               Q_ARG(QVariant, winPreviews));
@@ -605,12 +566,8 @@ void WorkFlow::loadConfigurationFiles()
                               Q_ARG(QVariant, firRunCalibrationPrev));
 
     setHideOnClick(hideOnClick);
-
-
     setCurrentTheme(curTheme);
-
     setToolTipsDelayChanged(tipsDelay);
-
 }
 
 void WorkFlow::saveConfigurationFiles()
@@ -630,7 +587,6 @@ void WorkFlow::saveConfigurationFiles()
     appConfig.writeEntry("HideOnClick",m_hideOnClick);
 
     appConfig.writeEntry("CurrentTheme",m_currentTheme);
-
     appConfig.writeEntry("ToolTipsDelay",m_tipsDelay);
 
     emit configNeedsSaving();
@@ -639,7 +595,6 @@ void WorkFlow::saveConfigurationFiles()
 void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
 }
-
 
 void WorkFlow::setHideOnClickSlot(int h)
 {
@@ -651,14 +606,10 @@ void WorkFlow::setHideOnClickSlot(int h)
 
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
-
-
     QWidget *widget = new QWidget(parent);
 
     m_config.setupUi(widget);
-
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
-
     m_config.animationsLevelSlider->setValue(m_animations);
     m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
 
@@ -666,7 +617,6 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
         m_config.themesCmb->addItem(loadedThemes.at(i));
 
     m_config.themesCmb->setCurrentIndex(loadedThemes.indexOf(m_currentTheme));
-
     m_config.tooltipsSpinBox->setValue(m_tipsDelay);
 
     connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
@@ -684,10 +634,8 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
 
-
     parent->setModal(true);
 }
-
 
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
 {
@@ -697,22 +645,16 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
         actManager->setCurrentPreviousActivity();
 }
 
-
 int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
 {
     actManager->setCurrent(actid);
-
     int nextDesk = desk;
-
     int actSize = this->activitySize(actid);
-
-    // console.debug(nextDesk+"-"+actSize);
 
     if(desk>actSize)
         nextDesk = actSize;
 
     taskManager->setCurrentDesktop(nextDesk);
-
     return nextDesk;
 }
 
