@@ -361,6 +361,7 @@ void WorkFlow::setZoomFactor(int zoom)
 {
     m_zoomFactor = zoom;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setZoomSlider", Q_ARG(QVariant, zoomF));
 }
 
 void WorkFlow::setShowWindows(bool show)
@@ -370,19 +371,20 @@ void WorkFlow::setShowWindows(bool show)
         taskManager->hideWindowsPreviews();
     }
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setShowWindows", Q_ARG(QVariant, showW));
 }
 
 void WorkFlow::setLockActivities(bool lock)
 {
     m_lockActivities = lock;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setLockActivities", Q_ARG(QVariant, lock));
 }
 
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
-    QMetaObject::invokeMethod(mainQML, "setAnimations",
-                              Q_ARG(QVariant, anim));
+    QMetaObject::invokeMethod(mainQML, "setAnimations", Q_ARG(QVariant, anim));
 }
 
 void WorkFlow::setHideOnClick(bool h)
@@ -427,30 +429,36 @@ void WorkFlow::setWindowsPreviews(bool b){
     saveConfigurationFiles();
     WId win;
     activeWindowChanged(win);
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews", Q_ARG(QVariant, winPreviews));
 }
 
 void WorkFlow::setWindowsPreviewsOffsetX(int x){
     m_windowsPreviewsOffsetX = x;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX", Q_ARG(QVariant, winPrevOffX));
 }
 
 void WorkFlow::setWindowsPreviewsOffsetY(int y){
     m_windowsPreviewsOffsetY = y;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY", Q_ARG(QVariant, winPrevOffY));
 }
 
 void WorkFlow::setFontRelevance(bool fr){
     m_fontRelevance = fr;
+    QMetaObject::invokeMethod(mainQML, "setFontRelevance", Q_ARG(QVariant, fontRel));
 }
 
 void WorkFlow::setShowStoppedActivities(bool s){
     m_showStoppedActivities = s;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities", Q_ARG(QVariant, showStopAct));
 }
 
 void WorkFlow::setFirstRunLiveTour(bool f){
     m_firstRunLiveTour = f;
     saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setFirstRunLiveTour", Q_ARG(QVariant, firRunLiveTour));
 }
 
 void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
@@ -519,52 +527,20 @@ void WorkFlow::loadConfigurationFiles()
     bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
     bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
-
     QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
     int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
 
     setLockActivities(lockAc);
-    QMetaObject::invokeMethod(mainQML, "setLockActivities",
-                              Q_ARG(QVariant, lockAc));
-
     setShowWindows(showW);
-    QMetaObject::invokeMethod(mainQML, "setShowWindows",
-                              Q_ARG(QVariant, showW));
-
     setZoomFactor(zoomF);
-    QMetaObject::invokeMethod(mainQML, "setZoomSlider",
-                              Q_ARG(QVariant, zoomF));
-
     setAnimations(anim);
-
     setWindowsPreviews(winPreviews);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews",
-                              Q_ARG(QVariant, winPreviews));
-
     setWindowsPreviewsOffsetX(winPrevOffX);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX",
-                              Q_ARG(QVariant, winPrevOffX));
-
     setWindowsPreviewsOffsetY(winPrevOffY);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY",
-                              Q_ARG(QVariant, winPrevOffY));
-
     setFontRelevance(fontRel);
-    QMetaObject::invokeMethod(mainQML, "setFontRelevance",
-                              Q_ARG(QVariant, fontRel));
-
     setShowStoppedActivities(showStopAct);
-    QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities",
-                              Q_ARG(QVariant, showStopAct));
-
     setFirstRunLiveTour(firRunLiveTour);
-    QMetaObject::invokeMethod(mainQML, "setFirstRunLiveTour",
-                              Q_ARG(QVariant, firRunLiveTour));
-
     setFirstRunCalibrationPreviews(firRunCalibrationPrev);
-    QMetaObject::invokeMethod(mainQML, "setFirstRunCalibrationPreviews",
-                              Q_ARG(QVariant, firRunCalibrationPrev));
-
     setHideOnClick(hideOnClick);
     setCurrentTheme(curTheme);
     setToolTipsDelayChanged(tipsDelay);
