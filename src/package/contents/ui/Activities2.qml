@@ -194,8 +194,12 @@ Rectangle {
 
         ZoomSliderItem{
             id:zoomSlider
-        }
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            z:10
 
+            onValueChanged: mainView.workflowManager.setZoomFactor(value)
+        }
     }
 
     DraggingInterface{

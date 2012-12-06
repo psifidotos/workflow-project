@@ -8,59 +8,49 @@ import org.kde.qtextracomponents 0.1
 import "tooltips"
 import "components"
 
-PlasmaComponents.Slider {
-    id: zoomSliderIt
-    y: mainView.height - height
-    x: mainView.width - width - 20
-    maximumValue: 75
-    minimumValue: 30
-    value: 50
-    width: 125
-    z: 10
+Item {
+    id: container
+    property alias value: zoomSliderIt.value
+    property alias minimumValue: zoomSliderIt.minimumValue
+    property alias maximumValue: zoomSliderIt.maximumValue
+    height: 30
+    width: 200
 
-    property bool firsttime: true
+    Row {
+        anchors.fill: parent
 
-    onValueChanged: firsttime === false ? workflowManager.setZoomFactor(value) : notFirstTime()
+        IconButton {
+            id: zoomOutButton
+            width: parent.height
+            height: width
+            icon: "zoom-out"
+            smooth: true
 
-    //For hiding the Warnings in KDe4.8
-    property bool updateValueWhileDragging: true
-    property bool animated: true
+            onClicked: { zoomSliderIt.value--; }
 
-    function notFirstTime(){
-        firsttime = false;
-    }
-
-    IconButton {
-        id: minusSliderImage
-        x: -width / 1.5
-        y: -5
-        width: 30
-        height: width
-
-        icon: "zoom-out"
-        smooth: true
-
-        onClicked: {
-            zoomSliderIt.value--;
+            tooltipTitle: i18n("Zoom Out")
+            tooltipText: i18n("You can zoom out your interface in order to gain more space.")
         }
 
-        tooltipTitle: i18n("Zoom Out")
-        tooltipText: i18n("You can zoom out your interface in order to gain more space.")
-    }
-
-    IconButton {
-        id: plusSliderImage
-        x: zoomSliderIt.width - width/2
-        y: -5
-        width: 30
-        height: width
-        icon: "zoom-in"
-        smooth: true
-
-        onClicked: {
-            zoomSliderIt.value++;
+        PlasmaComponents.Slider {
+            id: zoomSliderIt
+            minimumValue: 30
+            maximumValue: 75
+            value: 50
+            width: container.width - zoomOutButton.width * 2
+            anchors.verticalCenter: parent.verticalCenter
         }
-        tooltipTitle: i18n("Zoom In")
-        tooltipText: i18n("You can zoom in your interface in order to focus more on items.")
+
+        IconButton {
+            id: zoomInButton
+            width: zoomOutButton.width
+            height: width
+            icon: "zoom-in"
+            smooth: true
+
+            onClicked: { zoomSliderIt.value++; }
+            tooltipTitle: i18n("Zoom In")
+            tooltipText: i18n("You can zoom in your interface in order to focus more on items.")
+        }
     }
 }
