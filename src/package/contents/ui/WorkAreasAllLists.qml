@@ -81,7 +81,7 @@ Item{
             id:actImag1Shad
             anchors.top: actImag1.bottom
 
-            width: parent.width < allareas.width ? allareas.width : parent.width
+            width: allwlists.width < allareas.width ? allareas.width : allwlists.width
             height: allwlists.scale / 3
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "#aa0f0f0f" }
