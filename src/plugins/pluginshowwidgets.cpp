@@ -154,17 +154,13 @@ Plasma::Containment *PluginShowWidgets::getContainment(QString actId)
     return 0;
 }
 
-
 void PluginShowWidgets::showWidgetsExplorer(QString actId)
 {
     Plasma::Containment *currentContainment = getContainment(actId);
-    if(currentContainment->view()){
-
+    if(currentContainment && currentContainment->view()){
         currentContainment->view()->metaObject()->invokeMethod(currentContainment->view(),
                                                                "showWidgetExplorer");
-
     }
-
 }
 
 void PluginShowWidgets::execute(QString actid)
