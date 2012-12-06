@@ -128,7 +128,7 @@ public slots:
     void configDialogFinished();
 
 
-    void saveConfigurationFiles();
+    void configDialogAccepted();
 
 protected slots:
   virtual void wheelEvent(QGraphicsSceneWheelEvent *event);

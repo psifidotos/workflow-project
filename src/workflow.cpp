@@ -81,7 +81,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
 WorkFlow::~WorkFlow()
 {
-    saveConfigurationFiles();
     saveWorkareas();
 
     //clear workareas QHash
@@ -419,6 +418,14 @@ void WorkFlow::configDialogFinished()
         taskManager->showDashboard();
 }
 
+void WorkFlow::configDialogAccepted()
+{
+    setAnimationsSlot(m_config.animationsLevelSlider->value());
+    setHideOnClickSlot(m_config.hideOnClickCheckBox->isChecked());
+    themeSelectionChanged(m_config.themesCmb->currentText());
+    setToolTipsDelayChanged(m_config.tooltipsSpinBox->value());
+}
+
 void WorkFlow::showingIconsDialog()
 {
     this->hidePopup();
@@ -561,26 +568,6 @@ void WorkFlow::loadConfigurationFiles()
     setToolTipsDelayChanged(tipsDelay);
 }
 
-void WorkFlow::saveConfigurationFiles()
-{
-    appConfig.writeEntry("LockActivities",m_lockActivities);
-    appConfig.writeEntry("ShowWindows",m_showWindows);
-    appConfig.writeEntry("ZoomFactor",m_zoomFactor);
-    appConfig.writeEntry("Animations",m_animations);
-    appConfig.writeEntry("WindowPreviews",m_windowsPreviews);
-    appConfig.writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
-    appConfig.writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
-    appConfig.writeEntry("FontRelevance",m_fontRelevance);
-    appConfig.writeEntry("ShowStoppedPanel",m_showStoppedActivities);
-    appConfig.writeEntry("FirstRunTour",m_firstRunLiveTour);
-    appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
-    appConfig.writeEntry("HideOnClick",m_hideOnClick);
-    appConfig.writeEntry("CurrentTheme",m_currentTheme);
-    appConfig.writeEntry("ToolTipsDelay",m_tipsDelay);
-
-    emit configNeedsSaving();
-}
-
 void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
 }
@@ -608,19 +595,11 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     m_config.themesCmb->setCurrentIndex(loadedThemes.indexOf(m_currentTheme));
     m_config.tooltipsSpinBox->setValue(m_tipsDelay);
 
-    connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
-
-    if(!m_isOnDashboard)
-        connect(m_config.hideOnClickCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setHideOnClickSlot(int)));
-
     if(m_isOnDashboard)
         m_config.hideOnClickCheckBox->setEnabled(false);
 
-    connect(m_config.themesCmb, SIGNAL(currentIndexChanged (QString)), this, SLOT(themeSelectionChanged(QString)));
-    connect(m_config.tooltipsSpinBox, SIGNAL(valueChanged (int)), this, SLOT(setToolTipsDelayChanged(int)));
-
-    connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
-    connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
+    connect(parent, SIGNAL(applyClicked()), this, SLOT(configDialogAccepted()));
+    connect(parent, SIGNAL(okClicked()), this, SLOT(configDialogAccepted()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
 
     parent->setModal(true);
@@ -651,4 +630,5 @@ int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
 K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 
 #include "workflow.moc"
+
 
