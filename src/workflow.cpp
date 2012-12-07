@@ -46,16 +46,12 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
-#include <iostream>
-
-
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_mainWidget(0),
     actManager(0),
     taskManager(0)
 {
-
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setPassivePopup(true);
     setHasConfigurationInterface(true);
@@ -70,7 +66,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_animations = 1;
     m_findPopupWid = false;
 
-
     m_windowsPreviews=false;
     m_windowsPreviewsOffsetX=0;
     m_windowsPreviewsOffsetY=0;
@@ -81,13 +76,11 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
-
     m_desktopWidget = qApp->desktop();
 }
 
 WorkFlow::~WorkFlow()
 {
-    saveConfigurationFiles();
     saveWorkareas();
 
     //clear workareas QHash
@@ -99,7 +92,6 @@ WorkFlow::~WorkFlow()
         delete curWorks;
     }
     storedWorkareas.clear();
-    //
 
     if (actManager)
         delete actManager;
@@ -107,14 +99,10 @@ WorkFlow::~WorkFlow()
         delete taskManager;
 }
 
-
-
-
 QGraphicsWidget *WorkFlow::graphicsWidget()
 {
     return m_mainWidget;
 }
-
 
 void WorkFlow::init(){
     m_mainWidget = new QGraphicsWidget(this);
@@ -134,7 +122,6 @@ void WorkFlow::init(){
     kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
-    //  declarativeWidget->setInitializationDelayed(true);
     declarativeWidget->setQmlPath(path);
 
     mainLayout->addItem(declarativeWidget);
@@ -165,7 +152,6 @@ void WorkFlow::init(){
                         if(containment()->corona())
                             tCorona = containment()->corona();
 
-
                     actManager->setQMlObject(qmlActEng, tCorona, this);
                     connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                     connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
@@ -181,20 +167,14 @@ void WorkFlow::init(){
         }
     }
 
-    //the activitymanager class will be directly accessible from qml
-
-    //item->setWidget(m_mainWidget);
-
     screensSizeChanged(-1); //set Screen Ratio
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
     connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
-
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
     m_mainWidget->setMinimumSize(550,350);
 }
-///SLOTS
 
 void WorkFlow::hidePopupDialog()
 {
@@ -227,7 +207,6 @@ void WorkFlow::geomChanged()
     else
         taskManager->setTopXY(0,0);
 }
-
 
 void WorkFlow::updatePopWindowWId()
 {
@@ -281,15 +260,11 @@ void WorkFlow::activeWindowChanged(WId w)
             }
         }
     }
-
 }
-
-////INVOKES
 
 QStringList WorkFlow::getWorkAreaNames(QString id)
 {
     QStringList *ret = storedWorkareas[id];
-
 
     QStringList ret2;
     if(ret){
@@ -314,7 +289,6 @@ void WorkFlow::addEmptyActivity(QString id)
 {
     QStringList *newLst = new QStringList();
     storedWorkareas[id] = newLst;
-    // qDebug()<< this->extender()->winId();
 }
 
 void WorkFlow::removeActivity(QString id)
@@ -358,10 +332,8 @@ bool WorkFlow::activityExists(QString id)
     return storedWorkareas.contains(id);
 }
 
-
 void WorkFlow::saveWorkareas()
 {
-
     QHashIterator<QString, QStringList *> i(storedWorkareas);
     QStringList writeActivities;
     QStringList writeSizes;
@@ -382,17 +354,14 @@ void WorkFlow::saveWorkareas()
     WorkFlowSettings::setNoOfWorkareas(writeSizes);
     WorkFlowSettings::setWorkareasNames(writeWorkareas);
     WorkFlowSettings::self()->writeConfig();
-
 }
-
-
-////Properties
-
 
 void WorkFlow::setZoomFactor(int zoom)
 {
     m_zoomFactor = zoom;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setZoomSlider", Q_ARG(QVariant, zoom));
+    appConfig.writeEntry("ZoomFactor", zoom);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setShowWindows(bool show)
@@ -401,20 +370,25 @@ void WorkFlow::setShowWindows(bool show)
     if (!show){
         taskManager->hideWindowsPreviews();
     }
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setShowWindows", Q_ARG(QVariant, show));
+    appConfig.writeEntry("ShowWindows", show);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setLockActivities(bool lock)
 {
     m_lockActivities = lock;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setLockActivities", Q_ARG(QVariant, lock));
+    appConfig.writeEntry("LockActivities",m_lockActivities);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
-    QMetaObject::invokeMethod(mainQML, "setAnimations",
-                              Q_ARG(QVariant, anim));
+    QMetaObject::invokeMethod(mainQML, "setAnimations", Q_ARG(QVariant, anim));
+    appConfig.writeEntry("Animations",m_animations);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setHideOnClick(bool h)
@@ -428,7 +402,6 @@ void WorkFlow::workAreaWasClicked()
     if(m_hideOnClick)
         this->hidePopup();
 }
-
 
 void WorkFlow::screensSizeChanged(int s)
 {
@@ -445,6 +418,14 @@ void WorkFlow::configDialogFinished()
         taskManager->showDashboard();
 }
 
+void WorkFlow::configDialogAccepted()
+{
+    setAnimationsSlot(m_config.animationsLevelSlider->value());
+    setHideOnClickSlot(m_config.hideOnClickCheckBox->isChecked());
+    themeSelectionChanged(m_config.themesCmb->currentText());
+    setToolTipsDelayChanged(m_config.tooltipsSpinBox->value());
+}
+
 void WorkFlow::showingIconsDialog()
 {
     this->hidePopup();
@@ -455,56 +436,70 @@ void WorkFlow::answeredIconDialog()
     this->showPopup();
 }
 
-
 void WorkFlow::setWindowsPreviews(bool b){
     m_windowsPreviews = b;
-    saveConfigurationFiles();
     WId win;
     activeWindowChanged(win);
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews", Q_ARG(QVariant, b));
+    appConfig.writeEntry("WindowPreviews", b);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setWindowsPreviewsOffsetX(int x){
     m_windowsPreviewsOffsetX = x;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX", Q_ARG(QVariant, x));
+    appConfig.writeEntry("WindowPreviewsOffsetX", x);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setWindowsPreviewsOffsetY(int y){
     m_windowsPreviewsOffsetY = y;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY", Q_ARG(QVariant, y));
+    appConfig.writeEntry("WindowPreviewsOffsetY", y);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setFontRelevance(bool fr){
     m_fontRelevance = fr;
+    QMetaObject::invokeMethod(mainQML, "setFontRelevance", Q_ARG(QVariant, fr));
+    appConfig.writeEntry("FontRelevance", fr);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setShowStoppedActivities(bool s){
     m_showStoppedActivities = s;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities", Q_ARG(QVariant, s));
+    appConfig.writeEntry("ShowStoppedPanel", s);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setFirstRunLiveTour(bool f){
     m_firstRunLiveTour = f;
-    saveConfigurationFiles();
+    QMetaObject::invokeMethod(mainQML, "setFirstRunLiveTour", Q_ARG(QVariant, f));
+    appConfig.writeEntry("FirstRunTour", f);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
     m_firstRunCalibrationPreviews = cal;
-    saveConfigurationFiles();
+    appConfig.writeEntry("FirstRunCalibration", cal);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setCurrentTheme(QString theme)
 {
     m_currentTheme = theme;
-    QMetaObject::invokeMethod(mainQML, "setCurrentTheme",
-                              Q_ARG(QVariant, theme));
+    QMetaObject::invokeMethod(mainQML, "setCurrentTheme", Q_ARG(QVariant, theme));
+    appConfig.writeEntry("CurrentTheme", theme);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::setToolTipsDelayChanged(int val)
 {
     m_tipsDelay = val;
-    QMetaObject::invokeMethod(mainQML, "setToolTipsDelay",
-                              Q_ARG(QVariant, val));
-
+    QMetaObject::invokeMethod(mainQML, "setToolTipsDelay", Q_ARG(QVariant, val));
+    appConfig.writeEntry("ToolTipsDelay", val);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::addTheme(QString theme)
@@ -516,7 +511,6 @@ void WorkFlow::themeSelectionChanged(QString th){
     setCurrentTheme(th);
 }
 
-//////// Methods
 void WorkFlow::loadWorkareas()
 {
     storedWorkareas.clear();
@@ -538,10 +532,8 @@ void WorkFlow::loadWorkareas()
             foundWorkAreas->append(wnames[intpos+k]);
 
         storedWorkareas[activit] = foundWorkAreas;
-
     }
 }
-
 
 void WorkFlow::loadConfigurationFiles()
 {
@@ -557,108 +549,43 @@ void WorkFlow::loadConfigurationFiles()
     bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
     bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
-
     QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
     int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
 
     setLockActivities(lockAc);
-    QMetaObject::invokeMethod(mainQML, "setLockActivities",
-                              Q_ARG(QVariant, lockAc));
-
     setShowWindows(showW);
-    QMetaObject::invokeMethod(mainQML, "setShowWindows",
-                              Q_ARG(QVariant, showW));
-
     setZoomFactor(zoomF);
-    QMetaObject::invokeMethod(mainQML, "setZoomSlider",
-                              Q_ARG(QVariant, zoomF));
-
     setAnimations(anim);
-
-
     setWindowsPreviews(winPreviews);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews",
-                              Q_ARG(QVariant, winPreviews));
-
     setWindowsPreviewsOffsetX(winPrevOffX);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX",
-                              Q_ARG(QVariant, winPrevOffX));
-
     setWindowsPreviewsOffsetY(winPrevOffY);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY",
-                              Q_ARG(QVariant, winPrevOffY));
-
     setFontRelevance(fontRel);
-    QMetaObject::invokeMethod(mainQML, "setFontRelevance",
-                              Q_ARG(QVariant, fontRel));
-
     setShowStoppedActivities(showStopAct);
-    QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities",
-                              Q_ARG(QVariant, showStopAct));
-
     setFirstRunLiveTour(firRunLiveTour);
-    QMetaObject::invokeMethod(mainQML, "setFirstRunLiveTour",
-                              Q_ARG(QVariant, firRunLiveTour));
-
     setFirstRunCalibrationPreviews(firRunCalibrationPrev);
-    QMetaObject::invokeMethod(mainQML, "setFirstRunCalibrationPreviews",
-                              Q_ARG(QVariant, firRunCalibrationPrev));
-
     setHideOnClick(hideOnClick);
-
-
     setCurrentTheme(curTheme);
-
     setToolTipsDelayChanged(tipsDelay);
-
-}
-
-void WorkFlow::saveConfigurationFiles()
-{
-    appConfig.writeEntry("LockActivities",m_lockActivities);
-    appConfig.writeEntry("ShowWindows",m_showWindows);
-    appConfig.writeEntry("ZoomFactor",m_zoomFactor);
-    appConfig.writeEntry("Animations",m_animations);
-
-    appConfig.writeEntry("WindowPreviews",m_windowsPreviews);
-    appConfig.writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
-    appConfig.writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
-    appConfig.writeEntry("FontRelevance",m_fontRelevance);
-    appConfig.writeEntry("ShowStoppedPanel",m_showStoppedActivities);
-    appConfig.writeEntry("FirstRunTour",m_firstRunLiveTour);
-    appConfig.writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
-    appConfig.writeEntry("HideOnClick",m_hideOnClick);
-
-    appConfig.writeEntry("CurrentTheme",m_currentTheme);
-
-    appConfig.writeEntry("ToolTipsDelay",m_tipsDelay);
-
-    emit configNeedsSaving();
 }
 
 void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
 }
 
-
 void WorkFlow::setHideOnClickSlot(int h)
 {
-    if (h == Qt::Unchecked)
-        this->setHideOnClick(false);
-    else if (h == Qt::Checked)
-        this->setHideOnClick(true);
+    bool checked = h == Qt::Checked;
+    this->setHideOnClick(checked);
+    appConfig.writeEntry("HideOnClick", checked);
+    emit configNeedsSaving();
 }
 
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
-
-
     QWidget *widget = new QWidget(parent);
 
     m_config.setupUi(widget);
-
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
-
     m_config.animationsLevelSlider->setValue(m_animations);
     m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
 
@@ -666,28 +593,17 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
         m_config.themesCmb->addItem(loadedThemes.at(i));
 
     m_config.themesCmb->setCurrentIndex(loadedThemes.indexOf(m_currentTheme));
-
     m_config.tooltipsSpinBox->setValue(m_tipsDelay);
-
-    connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), this, SLOT(setAnimationsSlot(int)));
-
-    if(!m_isOnDashboard)
-        connect(m_config.hideOnClickCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setHideOnClickSlot(int)));
 
     if(m_isOnDashboard)
         m_config.hideOnClickCheckBox->setEnabled(false);
 
-    connect(m_config.themesCmb, SIGNAL(currentIndexChanged (QString)), this, SLOT(themeSelectionChanged(QString)));
-    connect(m_config.tooltipsSpinBox, SIGNAL(valueChanged (int)), this, SLOT(setToolTipsDelayChanged(int)));
-
-    connect(parent, SIGNAL(applyClicked()), this, SLOT(saveConfigurationFiles()));
-    connect(parent, SIGNAL(okClicked()), this, SLOT(saveConfigurationFiles()));
+    connect(parent, SIGNAL(applyClicked()), this, SLOT(configDialogAccepted()));
+    connect(parent, SIGNAL(okClicked()), this, SLOT(configDialogAccepted()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
-
 
     parent->setModal(true);
 }
-
 
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
 {
@@ -697,22 +613,16 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
         actManager->setCurrentPreviousActivity();
 }
 
-
 int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
 {
     actManager->setCurrent(actid);
-
     int nextDesk = desk;
-
     int actSize = this->activitySize(actid);
-
-    // console.debug(nextDesk+"-"+actSize);
 
     if(desk>actSize)
         nextDesk = actSize;
 
     taskManager->setCurrentDesktop(nextDesk);
-
     return nextDesk;
 }
 
@@ -720,4 +630,5 @@ int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
 K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 
 #include "workflow.moc"
+
 
