@@ -115,7 +115,7 @@ public slots:
 
     void activeWindowChanged(WId);
     void setAnimationsSlot(int);
-    void setHideOnClickSlot(int);
+    void setHideOnClickSlot(bool);
 
     void screensSizeChanged(int);
 

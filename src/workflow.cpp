@@ -46,6 +46,7 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
+
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_mainWidget(0),
@@ -572,11 +573,10 @@ void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
 }
 
-void WorkFlow::setHideOnClickSlot(int h)
+void WorkFlow::setHideOnClickSlot(bool h)
 {
-    bool checked = h == Qt::Checked;
-    this->setHideOnClick(checked);
-    appConfig.writeEntry("HideOnClick", checked);
+    this->setHideOnClick(h);
+    appConfig.writeEntry("HideOnClick", h);
     emit configNeedsSaving();
 }
 
