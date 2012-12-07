@@ -6,116 +6,51 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
 import "tooltips"
-/*
-Slider {
-    id:zoomSlider
-    y:mainView.height - height - 5
-    x:stoppedPanel.x - width - 5
-    maximum: 65
-    minimum: 32
-    value:50
-    width:125
-    z:10
+import "components"
 
-    onValueChanged: workflowManager.setZoomFactor(value);
+Item {
+    id: container
+    property alias value: zoomSliderIt.value
+    property alias minimumValue: zoomSliderIt.minimumValue
+    property alias maximumValue: zoomSliderIt.maximumValue
+    height: 30
+    width: 200
 
-    Image{
-        x:-0.4*width
-        y:-0.3*height
-        width:30
-        height:1.5*width
-        source:"Images/buttons/magnifyingglass.png"
-    }
+    Row {
+        anchors.fill: parent
 
-}*/
+        IconButton {
+            id: zoomOutButton
+            width: parent.height
+            height: width
+            icon: "zoom-out"
+            smooth: true
 
-PlasmaComponents.Slider {
-    id:zoomSliderIt
-    y:mainView.height - height
-    //x:stoppedPanel.x - width - 20
-    x:mainView.width - width - 20
-    maximumValue: 75
-    minimumValue: 30
-    value:50
+            onClicked: { zoomSliderIt.value--; }
 
-    width:125
-    z:10
-
-    property bool firsttime:true
-
-    onValueChanged: firsttime === false ? workflowManager.setZoomFactor(value) : notFirstTime()
-
-    //For hiding the Warnings in KDe4.8
-    property bool updateValueWhileDragging:true
-    property bool animated:true
-
-    function notFirstTime(){
-        firsttime = false;
-    }
-
-    //QIconItem{
-    Image{
-        id:minusSliderImage
-        //x:magnifyingMainIcon.width / 2
-        x:-width/1.5
-        width:30
-        height:width
-        y:-5
-
-        //icon:QIcon("zoom_out")
-        source:"Images/buttons/zoom_out.png"
-        smooth:true
-        fillMode:Image.PreserveAspectFit
-
-        MouseArea{
-            id:zoomOutMouseArea
-            width:0.6*parent.width
-            height:parent.height
-            anchors.left: parent.left
-
-            onClicked:{
-                zoomSliderIt.value--;
-            }
+            tooltipTitle: i18n("Zoom Out")
+            tooltipText: i18n("You can zoom out your interface in order to gain more space.")
         }
 
-        DToolTip{
-            title:i18n("Zoom Out")
-            mainText:i18n("You can zoom out your interface in order to gain more space.")
-            target:zoomOutMouseArea
-            localIcon:minusSliderImage.source
+        PlasmaComponents.Slider {
+            id: zoomSliderIt
+            minimumValue: 30
+            maximumValue: 75
+            value: 50
+            width: container.width - zoomOutButton.width * 2
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        IconButton {
+            id: zoomInButton
+            width: zoomOutButton.width
+            height: width
+            icon: "zoom-in"
+            smooth: true
+
+            onClicked: { zoomSliderIt.value++; }
+            tooltipTitle: i18n("Zoom In")
+            tooltipText: i18n("You can zoom in your interface in order to focus more on items.")
         }
     }
-
-    //QIconItem{
-    Image{
-        id:plusSliderImage
-
-        x:zoomSliderIt.width-width/2
-        width:30
-        height:width
-        y:-5
-        //icon:QIcon("zoom_in")
-        source:"Images/buttons/zoom_in.png"
-        smooth:true
-        fillMode:Image.PreserveAspectFit
-
-        MouseArea{
-            id:zoomInMouseArea
-            width:0.8*parent.width
-            height:parent.height
-            anchors.right: parent.right
-
-            onClicked:{
-                zoomSliderIt.value++;
-            }
-        }
-
-        DToolTip{
-            title:i18n("Zoom In")
-            mainText:i18n("You can zoom in your interface in order to focus more on items.")
-            target:zoomInMouseArea
-            localIcon:plusSliderImage.source
-        }
-    }
-
 }
