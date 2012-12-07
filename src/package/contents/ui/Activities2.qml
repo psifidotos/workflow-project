@@ -198,7 +198,7 @@ Rectangle {
             anchors.right: parent.right
             z:10
 
-            onValueChanged: mainView.workflowManager.setZoomFactor(value)
+            onValueChanged: workflowManager.setZoomFactor(value)
         }
     }
 
