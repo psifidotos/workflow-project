@@ -7,20 +7,13 @@ import org.kde.qtextracomponents 0.1
 
 import "delegates"
 import "tooltips"
+import "components"
 
 Item {
     id: container
 
     property int scale: 50
-    //property alias actImagHeight: 20//actImag1.height
-    //property color actImagBordColor: "#77ffffff"
-    //property alias activitiesShown: activitiesList.shownActivities
-    //property alias flickableV:view.interactive
-    //property string typeId : "workareasMainView"
-    //property int workareaWidth: 0
-    //property int workareaHeight: 0
     property int animationsStep: 0
-    //property int verticalScrollBarLocation: view.width
 
     PlasmaCore.DataSource {
         id: activitySource
@@ -43,38 +36,9 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 100
-                QIconItem {
+                ActivityIcon {
                     id: activityIcon
-                    icon: Icon === "" ? "plasma" : Icon
-
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 3
-
-                    width: 5 + container.scale
-                    height: width
-                    smooth: true
-
-                    Behavior on rotation{
-                        NumberAnimation {
-                            duration: mainView.animationsStep;
-                            easing.type: Easing.InOutQuad;
-                        }
-                    }
-
-                    MouseArea {
-                        id:activityIconMouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-
-                        onEntered: {
-                        }
-
-                        onExited: {
-                        }
-
-                        onClicked: {
-                        }
-                    }
                 }
                 Text {
                     id: activityName
