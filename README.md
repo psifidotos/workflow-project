@@ -1,33 +1,37 @@
 About
 =====
-
 This is the plasmoid version derived from the WorkFlow project. The project is
 trying to enhance every user's unique workflow by combining existing technologies
 from Plasma. 
 
 
 Differences To Default KDe Workflow
-==========================
-
--- WorkAreas use Virtual Desktops, in order to be consistent between them,
+===================================
+-  WorkAreas use Virtual Desktops, in order to be consistent between them,
    Virtual Desktops are always that big as the maximum WorkAreas present from
    Activities.
    NOTICE: You can not add a Virtual Desktop when WorkAreas are running. You
    can add the Workarea needed and Virtual Desktops will be updated.
 
-Requirements for Installation   
-==========================
-BuildRequires: kdebase4-workspace-devel >= 4.8
-BuildRequires: libkdecore4-devel >= 4.8
-BuildRequires: xorg-x11-libX11-devel
-BuildRequires: libkactivities-devel >= 4.8
-BuildRequires: libkde4-devel >= 4.8
-
-   
 Installation
 ============
-
 To build and install:
 
-1. untar the archive
-2. sudo sh install.sh
+Automatic
+---------
+    sudo sh install.sh
+
+Maunal
+------
+    mkdir build && cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`
+    make
+    sudo make install
+
+Requirements  
+------------
+kdebase4-workspace-devel >= 4.8  
+libkdecore4-devel >= 4.8  
+xorg-x11-libX11-devel  
+libkactivities-devel >= 4.8  
+libkde4-devel >= 4.8

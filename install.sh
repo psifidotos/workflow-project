@@ -27,7 +27,7 @@ echo
 if which sudo &>/dev/null; then
 	sudo make install
 else
-	echo "Enter root password"
+	echo -n "Enter Root "
 	su -c "make install"
 fi
 
