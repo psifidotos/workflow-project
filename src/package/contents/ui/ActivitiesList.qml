@@ -39,22 +39,14 @@ Item {
                 ActivityIcon {
                     id: activityIcon
                     anchors.bottom: parent.bottom
+                    anchors.left: parent.left
                 }
-                Text {
-                    id: activityName
+                ActivityTitle {
                     text: Name
                     anchors.left: activityIcon.right
+                    anchors.bottom: parent.bottom
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    anchors.bottom: parent.bottom
-                    verticalAlignment: Text.AlignBottom
-                    wrapMode: TextEdit.Wrap
-
-                    font.family: mainView.defaultFont.family
-                    font.bold: true
-                    font.italic: true
-
-                    font.pixelSize: 0.22 * parent.height
                 }
             }
         }
