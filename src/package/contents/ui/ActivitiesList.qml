@@ -5,6 +5,9 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1
 
+import "delegates"
+import "tooltips"
+
 Item {
     id: container
 
@@ -34,9 +37,62 @@ Item {
         id: modelDelegate
         Item {
             width: 70 + 3 * container.scale;
-            height: 50
-            Rectangle { color: "blue"; anchors.fill: parent }
-            Text { text: Name }
+            Item {
+                id: headder
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 100
+                QIconItem {
+                    id: activityIcon
+                    icon: Icon === "" ? "plasma" : Icon
+
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 3
+
+                    width: 5 + container.scale
+                    height: width
+                    smooth: true
+
+                    Behavior on rotation{
+                        NumberAnimation {
+                            duration: mainView.animationsStep;
+                            easing.type: Easing.InOutQuad;
+                        }
+                    }
+
+                    MouseArea {
+                        id:activityIconMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+                        onEntered: {
+                        }
+
+                        onExited: {
+                        }
+
+                        onClicked: {
+                        }
+                    }
+                }
+                Text {
+                    id: activityName
+                    text: Name
+                    anchors.left: activityIcon.right
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    verticalAlignment: Text.AlignBottom
+                    wrapMode: TextEdit.Wrap
+
+                    font.family: mainView.defaultFont.family
+                    font.bold: true
+                    font.italic: true
+
+                    font.pixelSize: 0.22 * parent.height
+                }
+            }
         }
     }
 
