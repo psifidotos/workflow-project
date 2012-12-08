@@ -152,22 +152,22 @@ Rectangle {
             }
         }
 
-        WorkAreasAllLists{
+        ActivitiesList {
             id: allWorkareas
             z:4
 
             /* Should use anchors, but they seem to break the flickable area */
-            //anchors.top: oxygenT.bottom
-            //anchors.bottom: mainView.bottom
-            //anchors.left: mainView.left
-            //anchors.right: mainView.right
-            y:oxygenT.height
-            width:mainView.width
-            height:mainView.height - y
-            verticalScrollBarLocation: stoppedPanel.x
+            anchors.top: oxygenT.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            //y:oxygenT.height
+            //width:mainView.width
+            //height:mainView.height - y
+            //verticalScrollBarLocation: stoppedPanel.x
 
-            workareaWidth: mainView.workareaWidth
-            workareaHeight: mainView.workareaHeight
+            //workareaWidth: mainView.workareaWidth
+            //workareaHeight: mainView.workareaHeight
             scale: mainView.scaleMeter
             animationsStep: mainView.animationsStep
         }
