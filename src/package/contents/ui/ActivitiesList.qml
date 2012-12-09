@@ -21,7 +21,6 @@ Item {
         Component.onCompleted: { console.log("ActivityManager loaded") }
     }
 
-
     PlasmaCore.DataSource {
         id: activitySource
         engine: "org.kde.activities"
@@ -37,7 +36,9 @@ Item {
     Component {
         id: modelDelegate
         Item {
-            width: 70 + 3 * container.scale;
+            width: model["State"] == "Running" ? (70 + 3 * container.scale) : 0;
+            opacity: model["State"] == "Running" ? 1 : 0
+            Component.onCompleted: { console.log(model["State"]); console.log(Name) }
             height: headerBackground.height
             Item {
                 id: headder
@@ -77,9 +78,9 @@ Item {
         }
     }
 
-    PlasmaExtras.ScrollArea {
-        anchors.fill: parent
+    //PlasmaExtras.ScrollArea {
         ListView {
+            anchors.fill: parent
             boundsBehavior: Flickable.StopAtBounds
             id: listView
             orientation: ListView.Horizontal
@@ -112,5 +113,5 @@ Item {
                 }
             }
         }
-    }
+    //}
 }
