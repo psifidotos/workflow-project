@@ -5,6 +5,7 @@ Item {
     id: container
     property string text: ""
     property bool activitiesLocked: true
+    property alias containsMouse: mouseArea.containsMouse
     focus: true
 
     MouseArea {

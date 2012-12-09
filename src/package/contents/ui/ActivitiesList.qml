@@ -19,6 +19,7 @@ Item {
         id: activitySource
         engine: "org.kde.activities"
         connectedSources: sources
+        onDataChanged: connectedSources = sources
     }
 
     PlasmaCore.DataModel {
@@ -30,12 +31,15 @@ Item {
         id: modelDelegate
         Item {
             width: 70 + 3 * container.scale;
+            height: headerBackground.height
             Item {
                 id: headder
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: headerBackground.height
+                anchors.fill: parent
+                MouseArea {
+                    id: mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+                }
                 ActivityIcon {
                     id: activityIcon
                     anchors.bottom: parent.bottom
@@ -43,6 +47,7 @@ Item {
                     anchors.bottomMargin: 10
                 }
                 ActivityTitle {
+                    id: activityTitle
                     text: Name
                     anchors.left: activityIcon.right
                     anchors.bottom: activityIcon.bottom
@@ -51,6 +56,15 @@ Item {
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
                 }
+                ActivityButtons {
+                    id: buttons
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    opacity: containsMouse || activityIcon.containsMouse || activityTitle.containsMouse || mouseArea.containsMouse
+                    lockActivities: mainView.lockActivities
+                    activityID: DataEngineSource
+                }
             }
         }
     }
@@ -58,7 +72,6 @@ Item {
     PlasmaExtras.ScrollArea {
         anchors.fill: parent
         ListView {
-            anchors.fill: parent
             boundsBehavior: Flickable.StopAtBounds
             id: listView
             orientation: ListView.Horizontal
@@ -74,7 +87,7 @@ Item {
                 height: 100
                 z: -100
                 color: "#646464"
-                border.color: allwlists.actImagBordColor
+                border.color: "#333333"
                 border.width:1
             }
 
