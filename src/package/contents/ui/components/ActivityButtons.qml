@@ -1,7 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-import org.kde.workflow.components 0.1 as WorkFlowComponents
+import org.kde.workflow.components 0.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 import "../tooltips"
@@ -15,12 +15,7 @@ Item{
     property bool lockActivities: false
     property bool oneActivityShown: false
     property string activityID
-
-    WorkFlowComponents.ActivityManager {
-        id: activityManager
-    }
-
-    Component.onCompleted: { console.log("Completed") }
+    property ActivityManager activityManager
 
     Rectangle{
         id: fRect

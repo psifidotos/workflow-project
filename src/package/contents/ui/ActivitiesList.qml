@@ -1,5 +1,6 @@
 import QtQuick 1.1
 
+import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
@@ -14,6 +15,12 @@ Item {
 
     property int scale: 50
     property int animationsStep: 0
+
+    WorkFlowComponents.ActivityManager {
+        id: activityManagerInstance
+        Component.onCompleted: { console.log("ActivityManager loaded") }
+    }
+
 
     PlasmaCore.DataSource {
         id: activitySource
@@ -64,6 +71,7 @@ Item {
                     opacity: containsMouse || activityIcon.containsMouse || activityTitle.containsMouse || mouseArea.containsMouse
                     lockActivities: mainView.lockActivities
                     activityID: DataEngineSource
+                    activityManager: activityManagerInstance
                 }
             }
         }
