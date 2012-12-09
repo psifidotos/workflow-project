@@ -12,7 +12,6 @@ import "components"
 
 Item {
     id: container
-
     property int scale: 50
     property int animationsStep: 0
     property bool locked: false
@@ -98,7 +97,7 @@ Item {
                     opacity: containsMouse || activityIcon.containsMouse || activityTitle.containsMouse || mouseArea.containsMouse
                     activityID: DataEngineSource
                     activityManager: activityManagerInstance
-                    oneActivityShown: activitiesLists.shownActivities == 1
+                    oneActivityShown: activitySource.data["Status"]["Running"].length == 1
                     locked: container.locked
                 }
             }
