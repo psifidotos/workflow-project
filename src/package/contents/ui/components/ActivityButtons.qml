@@ -17,6 +17,22 @@ Item{
     property string activityID
     property ActivityManager activityManager
 
+    Behavior on opacity{
+        NumberAnimation {
+            // TODO read config value
+            duration: 300;
+            easing.type: Easing.InOutQuad;
+        }
+    }
+
+    Behavior on width{
+        NumberAnimation {
+            // TODO read config value
+            duration: 300;
+            easing.type: Easing.InOutQuad;
+        }
+    }
+
     Rectangle{
         id: fRect
         anchors.top: parent.top

@@ -43,6 +43,23 @@ Item {
             width: model["State"] == "Running" ? (70 + 3 * container.scale) : 0;
             opacity: model["State"] == "Running" ? 1 : 0
             height: headerBackground.height
+
+            Behavior on opacity{
+                NumberAnimation {
+                    // TODO read config value
+                    duration: 300;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            Behavior on width{
+                NumberAnimation {
+                    // TODO read config value
+                    duration: 300;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
             Item {
                 id: header
                 anchors.fill: parent
@@ -56,6 +73,8 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.bottomMargin: 10
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
                     icon: model["Icon"] == "" ? QIcon("plasma") : model["Icon"]
                 }
                 ActivityTitle {
@@ -77,6 +96,7 @@ Item {
                     lockActivities: mainView.lockActivities
                     activityID: DataEngineSource
                     activityManager: activityManagerInstance
+                    oneActivityShown: activitiesLists.shownActivities == 1
                 }
             }
         }
