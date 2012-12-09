@@ -31,6 +31,10 @@ Item {
     PlasmaCore.DataModel {
         id: activityModel
         dataSource: activitySource
+        // This is the better way, but breaks model[key] refences for some reason
+        //keyRoleFilter: "Name"
+        // Workaround to not display the Status source (can be remnoved if the above works)
+        sourceFilter: "[^S].*"
     }
 
     Component {
@@ -38,10 +42,9 @@ Item {
         Item {
             width: model["State"] == "Running" ? (70 + 3 * container.scale) : 0;
             opacity: model["State"] == "Running" ? 1 : 0
-            Component.onCompleted: { console.log(model["State"]); console.log(Name) }
             height: headerBackground.height
             Item {
-                id: headder
+                id: header
                 anchors.fill: parent
                 MouseArea {
                     id: mouseArea
@@ -53,10 +56,11 @@ Item {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.bottomMargin: 10
+                    icon: model["Icon"] == "" ? QIcon("plasma") : model["Icon"]
                 }
                 ActivityTitle {
                     id: activityTitle
-                    text: Name
+                    text: model["Name"]
                     anchors.left: activityIcon.right
                     anchors.bottom: activityIcon.bottom
                     anchors.right: parent.right

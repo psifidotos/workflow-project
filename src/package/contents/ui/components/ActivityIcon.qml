@@ -10,13 +10,13 @@ Item {
     property int size: 55
     width: size
     height: size
+    property alias icon: icon.icon
 
     // TODO use the settings value
     property bool locked: true
 
     QIconItem {
         id: icon
-        icon: Icon === "" ? "plasma" : Icon
         rotation: mouseArea.containsMouse && !locked ? -10 : 0
 
         anchors.fill: parent
