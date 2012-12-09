@@ -71,7 +71,7 @@ Item{
         anchors.right: parent.right
         anchors.rightMargin:0.5*buttonsSize
         anchors.top: parent.top
-        opacity: oneActivityShown && mainView.locked ? 0 : 1
+        opacity: stopButton.opacity != 0 || duplicateButton.opacity != 0 || deleteButton.opacity != 0 ? 1 : 0
         width: locked || oneActivityShown ? 1.4 * stopButton.width : 1.25 * rightActions.width
         height: locked ? 1.3 * stopButton.height : 1.5 * rightActions.height
         border.color: "#404040"
