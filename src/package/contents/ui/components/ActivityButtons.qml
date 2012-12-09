@@ -12,7 +12,7 @@ Item{
     property int buttonsSize: 24
     property int buttonsSpace: 5
     property bool containsMouse: fRect.containsMouse || sRect.containsMouse
-    property bool lockActivities: false
+    property bool locked: false
     property bool oneActivityShown: false
     property string activityID
     property ActivityManager activityManager
@@ -42,7 +42,7 @@ Item{
         height: 1.5 * addWidgetButton.height
         radius: 3
         // TODO read config value instead
-        opacity: lockActivities ? 0 : 1
+        opacity: locked ? 0 : 1
         border.color: "#333333"
         border.width:  1
         color: "#222222"
@@ -71,9 +71,9 @@ Item{
         anchors.right: parent.right
         anchors.rightMargin:0.5*buttonsSize
         anchors.top: parent.top
-        opacity: oneActivityShown && mainView.lockActivities ? 0 : 1
-        width: lockActivities || oneActivityShown ? 1.4 * stopButton.width : 1.25 * rightActions.width
-        height: lockActivities ? 1.3 * stopButton.height : 1.5 * rightActions.height
+        opacity: oneActivityShown && mainView.locked ? 0 : 1
+        width: locked || oneActivityShown ? 1.4 * stopButton.width : 1.25 * rightActions.width
+        height: locked ? 1.3 * stopButton.height : 1.5 * rightActions.height
         border.color: "#404040"
         border.width:  1
         color: "#222222"
@@ -87,7 +87,7 @@ Item{
             IconButton {
                 id:stopButton
                 icon: "media-playback-pause"
-                width: lockActivities ? 1.2 * buttonsSize : buttonsSize
+                width: locked ? 1.2 * buttonsSize : buttonsSize
                 height: width
                 opacity: oneActivityShown ? 0 : 1
 
@@ -104,7 +104,7 @@ Item{
                 icon: "tab-duplicate"
                 width: buttonsSize
                 height: buttonsSize
-                opacity: lockActivities ? 0 : 1
+                opacity: locked ? 0 : 1
                 onClicked: {
                     console.log("TODO")
                 }
@@ -117,7 +117,7 @@ Item{
                 icon: "edit-delete"
                 width: buttonsSize
                 height: buttonsSize
-                opacity: oneActivityShown || lockActivities ? 0 : 1
+                opacity: oneActivityShown || locked ? 0 : 1
                 onClicked: {
                     activityManager.removeActivity(activityID)
                 }

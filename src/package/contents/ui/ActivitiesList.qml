@@ -15,6 +15,7 @@ Item {
 
     property int scale: 50
     property int animationsStep: 0
+    property bool locked: false
 
     WorkFlowComponents.ActivityManager {
         id: activityManagerInstance
@@ -76,6 +77,7 @@ Item {
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
                     icon: model["Icon"] == "" ? QIcon("plasma") : model["Icon"]
+                    locked: container.locked
                 }
                 ActivityTitle {
                     id: activityTitle
@@ -86,6 +88,7 @@ Item {
                     anchors.top: parent.top
                     anchors.leftMargin: 10
                     anchors.rightMargin: 10
+                    locked: container.locked
                 }
                 ActivityButtons {
                     id: buttons
@@ -93,10 +96,10 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     opacity: containsMouse || activityIcon.containsMouse || activityTitle.containsMouse || mouseArea.containsMouse
-                    lockActivities: mainView.lockActivities
                     activityID: DataEngineSource
                     activityManager: activityManagerInstance
                     oneActivityShown: activitiesLists.shownActivities == 1
+                    locked: container.locked
                 }
             }
         }

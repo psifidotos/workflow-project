@@ -33,6 +33,7 @@ Item {
 
     MouseArea {
         id: mouseArea
+        enabled: !locked
         anchors.fill: parent
         hoverEnabled: true
 

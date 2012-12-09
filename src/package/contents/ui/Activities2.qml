@@ -170,6 +170,7 @@ Rectangle {
             //workareaHeight: mainView.workareaHeight
             scale: mainView.scaleMeter
             animationsStep: mainView.animationsStep
+            locked: lockActivities
         }
 
         StoppedActivitiesPanel{

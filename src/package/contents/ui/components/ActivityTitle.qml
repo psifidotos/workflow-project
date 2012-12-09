@@ -4,7 +4,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 Item {
     id: container
     property string text: ""
-    property bool activitiesLocked: true
+    property bool locked: true
     property alias containsMouse: mouseArea.containsMouse
     focus: true
 
@@ -12,6 +12,7 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        enabled: !locked
         onDoubleClicked: textField.forceActiveFocus()
     }
 
