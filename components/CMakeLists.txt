@@ -3,6 +3,7 @@ project(components)
 set(components_SRCS
     componentsplugin.cpp
     activitymanager.cpp
+    icondialog.cpp
 )
 
 qt4_automoc(${components_SRCS})

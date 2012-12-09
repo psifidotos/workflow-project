@@ -1,12 +1,10 @@
 import QtQuick 1.1
+import org.kde.workflow.components 0.1
 import org.kde.qtextracomponents 0.1
 
 Item {
     id: container
     property alias containsMouse: mouseArea.containsMouse
-    signal clicked
-    signal entered
-    signal exited
     property int size: 55
     width: size
     height: size
@@ -30,6 +28,7 @@ Item {
             }
         }
     }
+    IconDialog { id: iconDialog}
 
     MouseArea {
         id: mouseArea
@@ -37,9 +36,16 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
 
-        onEntered: { entered }
-        onExited: { exited }
-        onClicked: { clicked }
+        onClicked: {
+            var icon = iconDialog.getIcon()
+
+            if (icon != "") {
+                var service = activitySource.serviceForSource(model["DataEngineSource"])
+                var operation = service.operationDescription("setIcon")
+                operation.Icon = icon
+                var job = service.startOperationCall(operation)
+            }
+        }
     }
 
 }
