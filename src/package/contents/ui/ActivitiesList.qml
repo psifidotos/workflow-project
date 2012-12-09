@@ -35,18 +35,21 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 100
+                height: headerBackground.height
                 ActivityIcon {
                     id: activityIcon
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
+                    anchors.bottomMargin: 10
                 }
                 ActivityTitle {
                     text: Name
                     anchors.left: activityIcon.right
-                    anchors.bottom: parent.bottom
+                    anchors.bottom: activityIcon.bottom
                     anchors.right: parent.right
                     anchors.top: parent.top
+                    anchors.leftMargin: 10
+                    anchors.rightMargin: 10
                 }
             }
         }
@@ -55,12 +58,38 @@ Item {
     PlasmaExtras.ScrollArea {
         anchors.fill: parent
         ListView {
+            anchors.fill: parent
             boundsBehavior: Flickable.StopAtBounds
             id: listView
             orientation: ListView.Horizontal
             model: activityModel
             delegate: modelDelegate
             Component.onCompleted: { console.log("Count: " + activityModel.count) }
+
+            Rectangle {
+                id: headerBackground
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                height: 100
+                z: -100
+                color: "#646464"
+                border.color: allwlists.actImagBordColor
+                border.width:1
+            }
+
+            Rectangle{
+                id: headerShadow
+                anchors.top: headerBackground.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 16
+                z: -100
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                    GradientStop { position: 1.0; color: "#00797979" }
+                }
+            }
         }
     }
 }

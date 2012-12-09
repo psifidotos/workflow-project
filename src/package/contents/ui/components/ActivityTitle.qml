@@ -23,6 +23,7 @@ Item {
 
         opacity: editor.opacity === 1 ? 0 : 1
 
+        color: "white"
         font.family: mainView.defaultFont.family
         font.bold: true
         font.italic: true
