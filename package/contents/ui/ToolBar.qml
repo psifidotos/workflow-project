@@ -7,42 +7,52 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
 PlasmaComponents.ToolBar {
-    id:oxygenTitle
+    id: component
     property bool activitiesLocked: !activityLockButton.checked
-    property alias windowsChecked: windowsToolBtn.checked
-    property alias effectsChecked: effectsToolBtn.checked
+    property alias showWindows: windowsVisableButton.checked
+    property alias showWindowPreviews: windowPreviewButton.checked
 
     tools: PlasmaComponents.ToolBarLayout {
-    height: parent.height
+        height: component.height * 0.8
+        
+        function windowStateChanged() {
+            if (windowsVisableButton.checked) {
+                windowPreviewButton.enabled = true
+                if (windowPreviewButton.checked) {
+                    plasmoid.writeConfig("ShowWindows", 2)
+                } else {
+                    plasmoid.writeConfig("ShowWindows", 1)
+                }
+            } else {
+                windowPreviewButton.enabled = false
+                plasmoid.writeConfig("ShowWindows", 0)
+            }
+        }
+        
         PlasmaComponents.ToolButton {
             id: activityLockButton
             width: parent.height
             height: parent.height
             iconSource: checked ? "object-locked" : "object-unlocked" 
             checkable: true
-            onCheckedChanged: plasmoid.writeConfig("ActivitiesLocked", checked)
-            Component.onCompleted: checked = plasmoid.readConfig("ActivitiesLocked")
+            checked: plasmoid.readConfig("ActivitiesLocked")
         }
         PlasmaComponents.ToolButton{
-            id:windowsToolBtn
+            id: windowsVisableButton
             width: parent.height
             height: parent.height
             checkable:true
             iconSource: "window-duplicate"
-            //TODO write to config
-            onCheckedChanged: console.log("Todo: " + checked)
         }
 
         PlasmaComponents.ToolButton{
-            id: effectsToolBtn
+            id: windowPreviewButton
             checkable: true
             width: parent.height
             height: parent.height
             iconSource: "view-preview"
-            //TODO decouple this
-            enabled: mainView.showWinds && mainView.effectsSystemEnabled
-            //TODO write to config
-            onCheckedChanged: console.log("Todo: " + checked)
+            enabled: windowsVisableButton.checked
+            onCheckedChanged: parent.windowStateChanged()
 
             Image{
                 smooth:true
@@ -62,6 +72,27 @@ PlasmaComponents.ToolBar {
             height: parent.height
             iconSource: "help-about"
             onClicked: console.log("Todo")
+        }
+        Component.onCompleted: { 
+            var showWindows =  plasmoid.readConfig("ShowWindows")
+            if (showWindows == 2) {
+                windowPreviewButton.checked = true
+                windowsVisableButton.checked = true
+                windowPreviewButton.enabled = true
+            } else if (showWindows == 1) {
+                windowPreviewButton.checked = false
+                windowsVisableButton.checked = true
+                windowPreviewButton.enabled = true
+            } else {
+                windowPreviewButton.checked = false
+                windowsVisableButton.checked = false
+                windowPreviewButton.enabled = false
+            }
+            windowPreviewButton.checkedChanged.connect(windowStateChanged)
+            windowsVisableButton.checkedChanged.connect(windowStateChanged)
+            activityLockButton.checkedChanged.connect(function() {
+                plasmoid.writeConfig("ActivitiesLocked", activityLockButton.checked)
+            })
         }
     }
 }
