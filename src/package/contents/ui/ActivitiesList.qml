@@ -164,7 +164,7 @@ Item {
                 delegate: modelDelegate
                 highlight: Component {
                         Rectangle {
-                            x: listView.currentActivity.x
+                            x: listView.currentActivity ? listView.currentActivity.x : 0
                             height: 100
                             id: currentActivityBackground
                             color: "#ff444444"

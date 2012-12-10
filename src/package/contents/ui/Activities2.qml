@@ -13,11 +13,9 @@ import "helptour"
 
 import "DynamicAnimations.js" as DynamAnim
 
-Rectangle {
+Item {
     id:mainView
     objectName: "instMainView"
-
-    color: "#dcdcdc"
 
     clip:true
     anchors.fill: parent
