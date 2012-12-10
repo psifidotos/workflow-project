@@ -13,13 +13,10 @@ Comment[es]=El plasmoide WorkFlow muestra las Actividades y Áreas de trabajo en
 Comment[de]=Das WorkFlow-Plasmoid präsentiert Aktivitäten und Arbeitsbereiche in QML wie vom WorkFlow-Projekt beschrieben.
 
 Icon=preferences-activities
-Type=Service
 
-X-KDE-Library=plasma_applet_workflow
-
+X-Plasma-API=declarativeappletscript 
 X-Plasma-MainScript=ui/WorkFlow.qml
-X-Plasma-DefaultSize=290,340
-X-Plasma-API=declarativeappletscript
+X-Plasma-DefaultSize=200,100
 
 X-KDE-PluginInfo-Author=Michail Vourlakos
 X-KDE-PluginInfo-Email=psifidotos@users.sf.net
@@ -31,4 +28,5 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 
-X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet
+X-KDE-ServiceTypes=Plasma/Applet,Plasma/PopupApplet
+Type=Service

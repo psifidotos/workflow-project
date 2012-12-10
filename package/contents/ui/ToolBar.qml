@@ -16,14 +16,14 @@ PlasmaComponents.ToolBar {
 
     tools: PlasmaComponents.ToolBarLayout {
     height: parent.height
-        PlasmaComponents.ToolButton{
+        PlasmaComponents.ToolButton {
             id: activityLockButton
             width: parent.height
             height: parent.height
             iconSource: checked ? "object-unlocked" : "object-locked"
             checkable:true
-            //TODO write to config
-            onCheckedChanged: console.log("Todo: " + checked)
+            onCheckedChanged: plasmoid.writeConfig("ActivitiesLocked", checked)
+            Component.onCompleted: checked = plasmoid.readConfig("ActivitiesLocked")
         }
         PlasmaComponents.ToolButton{
             id:windowsToolBtn

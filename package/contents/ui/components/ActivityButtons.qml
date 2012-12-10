@@ -12,7 +12,7 @@ Item{
     property int buttonsSize: 24
     property int buttonsSpace: 5
     property bool containsMouse: fRect.containsMouse || sRect.containsMouse
-    property bool locked: false
+    property bool locked: true
     property bool oneActivityShown: false
     property string activityID
     property ActivityManager activityManager
@@ -59,8 +59,8 @@ Item{
                 console.log("TODO")
             }
 
-            tooltipTitle: i18n("Add Widgets")
-            tooltipText: i18n("Add widgets to your Activity in order to customize it more.")
+            //tooltipTitle: i18n("Add Widgets")
+            //tooltipText: i18n("Add widgets to your Activity in order to customize it more.")
         }
     }
 
@@ -97,8 +97,8 @@ Item{
                     service.startOperationCall(operation)
                 }
 
-                tooltipTitle: i18n("Pause Activity")
-                tooltipText: i18n("You can pause an Activity and place it on the right panel.This way the Activity will be always available to continue your work from where you stopped.")
+                //tooltipTitle: i18n("Pause Activity")
+                //tooltipText: i18n("You can pause an Activity and place it on the right panel.This way the Activity will be always available to continue your work from where you stopped.")
             }
 
             IconButton {
