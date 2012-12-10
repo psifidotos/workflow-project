@@ -149,13 +149,39 @@ Item {
         Flickable {
             anchors.fill: parent
             boundsBehavior: Flickable.StopAtBounds
-            contentWidth: width > listView.contentWidth ? width : listView.contentWidth
+            contentWidth: width > listView.width ? width : listView.width
             contentHeight: listView.height
+
+            Rectangle {
+                id: headerBackground
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                height: 100
+                z: -100
+                color: "#646464"
+                border.color: "#333333"
+                border.width:1
+            }
+
+
+            Rectangle{
+                id: headerShadow
+                anchors.top: headerBackground.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 16
+                z: -100
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                    GradientStop { position: 1.0; color: "#00797979" }
+                }
+            }
 
             ListView {
                 id: listView
                 height: 500
-                width: parent.width > contentWidth ? parent.width : contentWidth
+                width: contentWidth == -1 ? 500 : contentWidth
                 property Item currentActivity
                 orientation: ListView.Horizontal
                 interactive: false
@@ -211,32 +237,6 @@ Item {
                                     damping: 0.2
                                 }
                         }
-                    }
-                }
-
-                Rectangle {
-                    id: headerBackground
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    height: 100
-                    z: -100
-                    color: "#646464"
-                    border.color: "#333333"
-                    border.width:1
-                }
-
-
-                Rectangle{
-                    id: headerShadow
-                    anchors.top: headerBackground.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 16
-                    z: -100
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#aa0f0f0f" }
-                        GradientStop { position: 1.0; color: "#00797979" }
                     }
                 }
             }
