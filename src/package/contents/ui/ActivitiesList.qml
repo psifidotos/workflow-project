@@ -65,11 +65,17 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: headerBackground.height
+                height: 100
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
                     hoverEnabled: true
+
+                    onClicked: {
+                        var service = activitySource.serviceForSource(model["DataEngineSource"])
+                        var operation = service.operationDescription("setCurrent")
+                        service.startOperationCall(operation)
+                    }
                 }
                 ActivityIcon {
                     id: activityIcon
@@ -92,6 +98,7 @@ Item {
                     anchors.leftMargin: 5
                     anchors.rightMargin: 5
                     locked: container.locked
+                    onClicked: mouseArea.clicked
                 }
                 ActivityButtons {
                     id: buttons

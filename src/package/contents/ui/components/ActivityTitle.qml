@@ -8,6 +8,8 @@ Item {
     property alias containsMouse: mouseArea.containsMouse
     focus: true
 
+    signal clicked
+
     MouseArea {
         id: mouseArea
         anchors.fill: parent
@@ -15,6 +17,7 @@ Item {
         enabled: !locked
         opacity: locked ? 0 : 1
         onDoubleClicked: textField.forceActiveFocus()
+        onClicked: container.clicked
     }
 
     Text{
@@ -51,6 +54,10 @@ Item {
                 onAccepted: {
                     container.text = text
                     container.forceActiveFocus()
+                    var service = activitySource.serviceForSource(model["DataEngineSource"])
+                    var operation = service.operationDescription("setName")
+                    operation.Name = text
+                    service.startOperationCall(operation)
                 }
                 onActiveFocusChanged: {
                     if (!activeFocus) {

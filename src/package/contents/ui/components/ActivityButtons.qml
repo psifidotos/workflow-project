@@ -92,7 +92,9 @@ Item{
                 opacity: oneActivityShown ? 0 : 1
 
                 onClicked: {
-                    activityManager.stopActivity(activityID)
+                    var service = activitySource.serviceForSource(model["DataEngineSource"])
+                    var operation = service.operationDescription("stop")
+                    service.startOperationCall(operation)
                 }
 
                 tooltipTitle: i18n("Pause Activity")
@@ -119,7 +121,10 @@ Item{
                 height: buttonsSize
                 opacity: oneActivityShown || locked ? 0 : 1
                 onClicked: {
-                    activityManager.removeActivity(activityID)
+                    var service = activitySource.serviceForSource(model["DataEngineSource"])
+                    var operation = service.operationDescription("remove")
+                    operation.Id = model["DataEngineSource"]
+                    service.startOperationCall(operation)
                 }
                 tooltipTitle: i18n("Delete Activity")
                 tooltipText: i18n("You can delete an Activity. Be careful, this action can not be undone.")
