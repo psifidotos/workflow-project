@@ -1,8 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-import "ui"
-import "tooltips"
 import "components"
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
@@ -30,7 +28,7 @@ PlasmaComponents.ToolBar {
             width: parent.height
             height: parent.height
             checkable:true
-            iconSource: "view-preview"
+            iconSource: "window-duplicate"
             //TODO write to config
             onCheckedChanged: console.log("Todo: " + checked)
         }
@@ -40,9 +38,9 @@ PlasmaComponents.ToolBar {
             checkable: true
             width: parent.height
             height: parent.height
+            iconSource: "view-preview"
             //TODO decouple this
             enabled: mainView.showWinds && mainView.effectsSystemEnabled
-            iconSource: "window-duplicate"
             //TODO write to config
             onCheckedChanged: console.log("Todo: " + checked)
 
