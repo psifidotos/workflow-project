@@ -13,6 +13,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         enabled: !locked
+        opacity: locked ? 0 : 1
         onDoubleClicked: textField.forceActiveFocus()
     }
 

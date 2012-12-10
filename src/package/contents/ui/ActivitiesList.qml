@@ -41,8 +41,8 @@ Item {
         id: modelDelegate
         Item {
             width: model["State"] == "Running" ? (70 + 3 * container.scale) : 0;
+            height: 500
             opacity: model["State"] == "Running" ? 1 : 0
-            height: headerBackground.height
 
             Behavior on opacity{
                 NumberAnimation {
@@ -62,7 +62,10 @@ Item {
 
             Item {
                 id: header
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: headerBackground.height
                 MouseArea {
                     id: mouseArea
                     anchors.fill: parent
@@ -72,9 +75,9 @@ Item {
                     id: activityIcon
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
-                    anchors.bottomMargin: 10
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
+                    anchors.bottomMargin: 5
+                    anchors.leftMargin: 5
+                    anchors.rightMargin: 5
                     icon: model["Icon"] == "" ? QIcon("plasma") : model["Icon"]
                     locked: container.locked
                 }
@@ -82,11 +85,12 @@ Item {
                     id: activityTitle
                     text: model["Name"]
                     anchors.left: activityIcon.right
-                    anchors.bottom: activityIcon.bottom
+                    anchors.bottom: parent.bottom
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 10
+                    anchors.bottomMargin: 5
+                    anchors.leftMargin: 5
+                    anchors.rightMargin: 5
                     locked: container.locked
                 }
                 ActivityButtons {
@@ -101,43 +105,68 @@ Item {
                     locked: container.locked
                 }
             }
-        }
-    }
-
-    //PlasmaExtras.ScrollArea {
-        ListView {
-            anchors.fill: parent
-            boundsBehavior: Flickable.StopAtBounds
-            id: listView
-            orientation: ListView.Horizontal
-            model: activityModel
-            delegate: modelDelegate
-            Component.onCompleted: { console.log("Count: " + activityModel.count) }
-
-            Rectangle {
-                id: headerBackground
+            Item {
+                id: body
+                anchors.top: header.bottom
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: parent.top
-                height: 100
-                z: -100
-                color: "#646464"
-                border.color: "#333333"
-                border.width:1
-            }
+                anchors.bottom: parent.bottom
 
-            Rectangle{
-                id: headerShadow
-                anchors.top: headerBackground.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 16
-                z: -100
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#aa0f0f0f" }
-                    GradientStop { position: 1.0; color: "#00797979" }
+                Rectangle {
+                    //TODO change to a nice gradient
+                    color: "black"
+                    anchors.right: parent.right
+                    width: 1
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
                 }
             }
         }
-    //}
+    }
+
+    PlasmaExtras.ScrollArea {
+        anchors.fill: parent
+        Flickable {
+            anchors.fill: parent
+            boundsBehavior: Flickable.StopAtBounds
+            contentWidth: width > listView.contentWidth ? width : listView.contentWidth
+            contentHeight: listView.height
+            onWidthChanged: listView.width = width > listView.contentWidth ? width : listView.contentWidth
+
+            ListView {
+                id: listView
+                height: 500
+                width: parent.width > contentWidth ? parent.width : contentWidth
+                orientation: ListView.Horizontal
+                interactive: false
+                model: activityModel
+                delegate: modelDelegate
+
+                Rectangle {
+                    id: headerBackground
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    height: 100
+                    z: -100
+                    color: "#646464"
+                    border.color: "#333333"
+                    border.width:1
+                }
+
+                Rectangle{
+                    id: headerShadow
+                    anchors.top: headerBackground.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: 16
+                    z: -100
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#aa0f0f0f" }
+                        GradientStop { position: 1.0; color: "#00797979" }
+                    }
+                }
+            }
+        }
+    }
 }
