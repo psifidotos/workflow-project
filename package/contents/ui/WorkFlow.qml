@@ -1,29 +1,28 @@
-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
-import org.kde.plasma.core 0.1 as PlasmaCore
-import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
-import "delegates"
-import "delegates/ui-elements"
-import "instances"
-import "helptour"
-
-import "DynamicAnimations.js" as DynamAnim
-
+import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Item {
-    id: mainView
-    clip:true
-    /*property Component compactRepresentation: Component {
-        Rectangle {
-            anchors.fill: parent
-            color: "blue"
-        }
-    }*/
+    id: workflow
 
-    Item{
-        id:centralArea
+    property int minimumWidth: 400
+    property int minimumHeight: 300
+
+    function popupEventSlot(shown) {
+        if(shown)
+            centralArea.forceActiveFocus();
+    }
+
+    Component.onCompleted: {
+        plasmoid.popupIcon = "properties-activities";
+        plasmoid.aspectRatioMode = IgnoreAspectRatio;
+        plasmoid.popupEvent.connect('popupEvent', popupEventSlot);
+    }
+
+    Item {
+        id: centralArea
         anchors.fill: parent
 
         ToolBar {
@@ -32,7 +31,7 @@ Item {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 32
+            height: 42
             activitiesLocked: lockActivities
         }
 
@@ -72,13 +71,6 @@ Item {
 
             onValueChanged: workflowManager.setZoomFactor(value)
         }
-    }
-
-    Component.onCompleted:{
-        plasmoid.popupIcon = "konqueror"
-        console.log(plasmoid.popupIcon)
-        plasmoid.setMinimumSize(200,200)
-        DynamAnim.createComponents();
     }
 }
 
