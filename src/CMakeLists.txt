@@ -1,5 +1,5 @@
 # We add our source code here
-set(workflow_SRCS workflow.cpp activitymanager.cpp ptaskmanager.cpp  plugins/pluginfindwallpaper.cpp plugins/pluginshowwidgets.cpp)
+set(workflow_SRCS workflow.cpp parametersmanager.cpp activitymanager.cpp ptaskmanager.cpp  plugins/pluginfindwallpaper.cpp plugins/pluginshowwidgets.cpp)
 
 # Now make sure all files get to the right place
 kde4_add_ui_files(workflow_SRCS config.ui)
