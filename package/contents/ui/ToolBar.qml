@@ -8,7 +8,7 @@ import org.kde.qtextracomponents 0.1
 
 PlasmaComponents.ToolBar {
     id:oxygenTitle
-    property alias activitiesLocked: activityLockButton.checked
+    property bool activitiesLocked: !activityLockButton.checked
     property alias windowsChecked: windowsToolBtn.checked
     property alias effectsChecked: effectsToolBtn.checked
 
@@ -18,8 +18,8 @@ PlasmaComponents.ToolBar {
             id: activityLockButton
             width: parent.height
             height: parent.height
-            iconSource: checked ? "object-unlocked" : "object-locked"
-            checkable:true
+            iconSource: checked ? "object-locked" : "object-unlocked" 
+            checkable: true
             onCheckedChanged: plasmoid.writeConfig("ActivitiesLocked", checked)
             Component.onCompleted: checked = plasmoid.readConfig("ActivitiesLocked")
         }
