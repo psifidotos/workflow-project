@@ -18,14 +18,22 @@ Item {
 
     WorkFlowComponents.ActivityManager {
         id: activityManagerInstance
-        Component.onCompleted: { console.log("ActivityManager loaded") }
     }
 
     PlasmaCore.DataSource {
         id: activitySource
         engine: "org.kde.activities"
         connectedSources: sources
-        onDataChanged: connectedSources = sources
+        onDataChanged: {
+            connectedSources = sources
+            // 0 is the highlight item, so skip it
+            for (var i = 1; i < listView.contentItem.children.length; i++) {
+                if (listView.contentItem.children[i].current) {
+                    listView.currentActivity = listView.contentItem.children[i]
+                    break
+                }
+            }
+        }
     }
 
     PlasmaCore.DataModel {
@@ -40,9 +48,12 @@ Item {
     Component {
         id: modelDelegate
         Item {
+            id: delegateItem
             width: model["State"] == "Running" ? (70 + 3 * container.scale) : 0;
             height: 500
             opacity: model["State"] == "Running" ? 1 : 0
+            property bool current: model["Current"]
+            property string name: model["Name"]
 
             Behavior on opacity{
                 NumberAnimation {
@@ -60,6 +71,12 @@ Item {
                 }
             }
 
+            function setCurrent() {
+                var service = activitySource.serviceForSource(model["DataEngineSource"])
+                var operation = service.operationDescription("setCurrent")
+                service.startOperationCall(operation)
+            }
+
             Item {
                 id: header
                 anchors.top: parent.top
@@ -70,12 +87,8 @@ Item {
                     id: mouseArea
                     anchors.fill: parent
                     hoverEnabled: true
+                    onClicked: delegateItem.setCurrent()
 
-                    onClicked: {
-                        var service = activitySource.serviceForSource(model["DataEngineSource"])
-                        var operation = service.operationDescription("setCurrent")
-                        service.startOperationCall(operation)
-                    }
                 }
                 ActivityIcon {
                     id: activityIcon
@@ -98,7 +111,7 @@ Item {
                     anchors.leftMargin: 5
                     anchors.rightMargin: 5
                     locked: container.locked
-                    onClicked: mouseArea.clicked
+                    onClicked: delegateItem.setCurrent()
                 }
                 ActivityButtons {
                     id: buttons
@@ -138,16 +151,68 @@ Item {
             boundsBehavior: Flickable.StopAtBounds
             contentWidth: width > listView.contentWidth ? width : listView.contentWidth
             contentHeight: listView.height
-            onWidthChanged: listView.width = width > listView.contentWidth ? width : listView.contentWidth
 
             ListView {
                 id: listView
                 height: 500
                 width: parent.width > contentWidth ? parent.width : contentWidth
+                property Item currentActivity
                 orientation: ListView.Horizontal
                 interactive: false
+                highlightFollowsCurrentItem: false
                 model: activityModel
                 delegate: modelDelegate
+                highlight: Component {
+                        Rectangle {
+                            x: listView.currentActivity.x
+                            height: 100
+                            id: currentActivityBackground
+                            color: "#ff444444"
+                            width: 70 + 3 * container.scale
+                            Item {
+                                anchors.top: parent.top
+                                anchors.left: parent.right
+                                anchors.bottom: parent.bottom
+                                width: 10//parent.height
+                                Rectangle {
+                                    width: parent.height
+                                    height: parent.width
+                                    rotation: -90
+                                    y: (parent.height - height) / 2
+                                    x: (-parent.height + height) / 2
+                                    color: "red"
+                                    gradient: Gradient {
+                                        GradientStop { position: 0.0; color: "#ff444444" }
+                                        GradientStop { position: 1.0; color: "#00000000" }
+                                    }
+                                }
+                            }
+                            Item {
+                                anchors.top: parent.top
+                                anchors.right: parent.left
+                                anchors.bottom: parent.bottom
+                                width: 10
+                                Rectangle {
+                                    width: parent.height
+                                    height: parent.width
+                                    rotation: 90
+                                    y: (parent.height - height) / 2
+                                    x: (-parent.height + height) / 2
+                                    color: "red"
+                                    gradient: Gradient {
+                                        GradientStop { position: 0.0; color: "#ff444444" }
+                                        GradientStop { position: 1.0; color: "#00000000" }
+                                    }
+                                }
+                            }
+                            Behavior on x {
+                                SpringAnimation {
+                                    spring: 2
+                                    damping: 0.2
+                                }
+                        }
+                    }
+                }
 
                 Rectangle {
                     id: headerBackground
@@ -160,6 +225,7 @@ Item {
                     border.color: "#333333"
                     border.width:1
                 }
+
 
                 Rectangle{
                     id: headerShadow

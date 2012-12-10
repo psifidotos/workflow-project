@@ -17,7 +17,7 @@ Item {
         enabled: !locked
         opacity: locked ? 0 : 1
         onDoubleClicked: textField.forceActiveFocus()
-        onClicked: container.clicked
+        onClicked: {console.log("Also clicked"); container.clicked() }
     }
 
     Text{
