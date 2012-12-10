@@ -17,8 +17,10 @@ Type=Service
 
 X-KDE-Library=plasma_applet_workflow
 
-X-Plasma-MainScript=ui/Activities2.qml
-X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet
+X-Plasma-MainScript=ui/WorkFlow.qml
+X-Plasma-DefaultSize=290,340
+X-Plasma-API=declarativeappletscript
+
 X-KDE-PluginInfo-Author=Michail Vourlakos
 X-KDE-PluginInfo-Email=psifidotos@users.sf.net
 X-KDE-PluginInfo-Name=workflow
@@ -28,5 +30,5 @@ X-KDE-PluginInfo-Category=Windows and Tasks
 X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
-X-Plasma-DefaultSize=290,340
-X-Plasma-ContainmentCategories=desktop
+
+X-KDE-ServiceTypes=Plasma/Applet, Plasma/PopupApplet

@@ -16,6 +16,6 @@ include_directories(
 )
 
 add_subdirectory(components)
-add_subdirectory(src)
+add_subdirectory(package)
 add_subdirectory(po)
 
