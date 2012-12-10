@@ -189,53 +189,53 @@ Item {
                 model: activityModel
                 delegate: modelDelegate
                 highlight: Component {
-                        Rectangle {
-                            x: listView.currentActivity ? listView.currentActivity.x : 0
-                            height: 100
-                            id: currentActivityBackground
-                            color: "#ff444444"
-                            width: 70 + 3 * container.scale
-                            Item {
-                                anchors.top: parent.top
-                                anchors.left: parent.right
-                                anchors.bottom: parent.bottom
-                                width: 10//parent.height
-                                Rectangle {
-                                    width: parent.height
-                                    height: parent.width
-                                    rotation: -90
-                                    y: (parent.height - height) / 2
-                                    x: (-parent.height + height) / 2
-                                    color: "red"
-                                    gradient: Gradient {
-                                        GradientStop { position: 0.0; color: "#ff444444" }
-                                        GradientStop { position: 1.0; color: "#00000000" }
-                                    }
+                    Rectangle {
+                        x: listView.currentActivity ? listView.currentActivity.x : 0
+                        height: 100
+                        id: currentActivityBackground
+                        color: "#ff444444"
+                        width: 70 + 3 * container.scale
+                        Item {
+                            anchors.top: parent.top
+                            anchors.left: parent.right
+                            anchors.bottom: parent.bottom
+                            width: 10//parent.height
+                            Rectangle {
+                                width: parent.height
+                                height: parent.width
+                                rotation: -90
+                                y: (parent.height - height) / 2
+                                x: (-parent.height + height) / 2
+                                color: "red"
+                                gradient: Gradient {
+                                    GradientStop { position: 0.0; color: "#ff444444" }
+                                    GradientStop { position: 1.0; color: "#00000000" }
                                 }
                             }
-                            Item {
-                                anchors.top: parent.top
-                                anchors.right: parent.left
-                                anchors.bottom: parent.bottom
-                                width: 10
-                                Rectangle {
-                                    width: parent.height
-                                    height: parent.width
-                                    rotation: 90
-                                    y: (parent.height - height) / 2
-                                    x: (-parent.height + height) / 2
-                                    color: "red"
-                                    gradient: Gradient {
-                                        GradientStop { position: 0.0; color: "#ff444444" }
-                                        GradientStop { position: 1.0; color: "#00000000" }
-                                    }
+                        }
+                        Item {
+                            anchors.top: parent.top
+                            anchors.right: parent.left
+                            anchors.bottom: parent.bottom
+                            width: 10
+                            Rectangle {
+                                width: parent.height
+                                height: parent.width
+                                rotation: 90
+                                y: (parent.height - height) / 2
+                                x: (-parent.height + height) / 2
+                                color: "red"
+                                gradient: Gradient {
+                                    GradientStop { position: 0.0; color: "#ff444444" }
+                                    GradientStop { position: 1.0; color: "#00000000" }
                                 }
                             }
-                            Behavior on x {
-                                SpringAnimation {
-                                    spring: 2
-                                    damping: 0.2
-                                }
+                        }
+                        Behavior on x {
+                            SpringAnimation {
+                                spring: 2
+                                damping: 0.2
+                            }
                         }
                     }
                 }

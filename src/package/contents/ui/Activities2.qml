@@ -150,22 +150,25 @@ Item {
             }
         }
 
+        ToolBar {
+            id: toolBar
+            z: 8
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 32
+
+            activitiesLocked: lockActivities
+        }
+
         ActivitiesList {
             id: allWorkareas
             z:4
 
-            /* Should use anchors, but they seem to break the flickable area */
-            anchors.top: oxygenT.bottom
+            anchors.top: toolBar.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            //y:oxygenT.height
-            //width:mainView.width
-            //height:mainView.height - y
-            //verticalScrollBarLocation: stoppedPanel.x
-
-            //workareaWidth: mainView.workareaWidth
-            //workareaHeight: mainView.workareaHeight
             scale: mainView.scaleMeter
             animationsStep: mainView.animationsStep
             locked: lockActivities
@@ -179,11 +182,6 @@ Item {
         MainAddActivityButton{
             id: mAddActivityBtn
             z:7
-        }
-
-        TitleMainView{
-            id:oxygenT
-            z:8
         }
 
         AllActivitiesTasks{
