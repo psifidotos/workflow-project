@@ -17,7 +17,7 @@ Item {
         enabled: !locked
         opacity: locked ? 0 : 1
         onDoubleClicked: textField.forceActiveFocus()
-        onClicked: {console.log("Also clicked"); container.clicked() }
+        onClicked: container.clicked()
     }
 
     Text{
@@ -34,6 +34,23 @@ Item {
         font.bold: true
         font.italic: true
         font.pixelSize: 0.2 * parent.height
+    }
+
+    IconButton {
+        icon: "document-edit"
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        width: 32
+        opacity: locked || textField.activeFocus || !(mouseArea.containsMouse || containsMouse) ? 0 : 1
+        onClicked: textField.forceActiveFocus()
+
+        Behavior on opacity {
+            NumberAnimation {
+                // TODO read config value
+                duration: 300;
+                easing.type: Easing.InOutQuad;
+            }
+        }
     }
 
     FocusScope {
