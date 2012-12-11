@@ -46,6 +46,7 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
+#include "parametersmanager.h"
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -61,9 +62,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
 
-    m_zoomFactor = 50;
-    m_showWindows = true;
-    m_lockActivities = false;
     m_animations = 1;
     m_findPopupWid = false;
 
@@ -98,6 +96,8 @@ WorkFlow::~WorkFlow()
         delete actManager;
     if (taskManager)
         delete taskManager;
+    if (paramManager)
+        delete paramManager;
 }
 
 QGraphicsWidget *WorkFlow::graphicsWidget()
@@ -109,6 +109,8 @@ void WorkFlow::init(){
     m_mainWidget = new QGraphicsWidget(this);
 
     appConfig = config();
+
+    paramManager = new ParametersManager(this,&appConfig);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -123,7 +125,10 @@ void WorkFlow::init(){
     kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
+    declarativeWidget->engine()->rootContext()->setContextProperty("parametersManager",paramManager);
     declarativeWidget->setQmlPath(path);
+
+    connect(paramManager, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
 
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
@@ -357,33 +362,6 @@ void WorkFlow::saveWorkareas()
     WorkFlowSettings::self()->writeConfig();
 }
 
-void WorkFlow::setZoomFactor(int zoom)
-{
-    m_zoomFactor = zoom;
-    QMetaObject::invokeMethod(mainQML, "setZoomSlider", Q_ARG(QVariant, zoom));
-    appConfig.writeEntry("ZoomFactor", zoom);
-    emit configNeedsSaving();
-}
-
-void WorkFlow::setShowWindows(bool show)
-{
-    m_showWindows = show;
-    if (!show){
-        taskManager->hideWindowsPreviews();
-    }
-    QMetaObject::invokeMethod(mainQML, "setShowWindows", Q_ARG(QVariant, show));
-    appConfig.writeEntry("ShowWindows", show);
-    emit configNeedsSaving();
-}
-
-void WorkFlow::setLockActivities(bool lock)
-{
-    m_lockActivities = lock;
-    QMetaObject::invokeMethod(mainQML, "setLockActivities", Q_ARG(QVariant, lock));
-    appConfig.writeEntry("LockActivities",m_lockActivities);
-    emit configNeedsSaving();
-}
-
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
@@ -538,9 +516,7 @@ void WorkFlow::loadWorkareas()
 
 void WorkFlow::loadConfigurationFiles()
 {
-    bool lockAc = appConfig.readEntry("LockActivities", true);
-    bool showW = appConfig.readEntry("ShowWindows", true);
-    int zoomF = appConfig.readEntry("ZoomFactor", 50);
+  //  int zoomF = appConfig.readEntry("ZoomFactor", 50);
     int anim = appConfig.readEntry("Animations", true);
     bool winPreviews = appConfig.readEntry("WindowPreviews", false);
     int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
@@ -553,9 +529,7 @@ void WorkFlow::loadConfigurationFiles()
     QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
     int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
 
-    setLockActivities(lockAc);
-    setShowWindows(showW);
-    setZoomFactor(zoomF);
+ //   setZoomFactor(zoomF);
     setAnimations(anim);
     setWindowsPreviews(winPreviews);
     setWindowsPreviewsOffsetX(winPrevOffX);

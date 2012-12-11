@@ -149,7 +149,7 @@ Rectangle {
         anchors.right: stopActBack.right
 
         //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
-        y:mainView.lockActivities === false ? mAddActivityBtn.height : 0
+        y:parametersManager.lockActivities === false ? mAddActivityBtn.height : 0
 
         ListView {
             id: stoppedActivitiesList

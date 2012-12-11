@@ -14,7 +14,7 @@ Rectangle{
 
     anchors.top: stoppedPanel.top
 
-    opacity: (mainView.lockActivities===true) ? 0 : 1
+    opacity: (parametersManager.lockActivities===true) ? 0 : 1
 
     property color openStpActiv1: "#ebebeb"
     property color openStpActiv2: "#bdbdbd"

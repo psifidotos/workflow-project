@@ -93,7 +93,7 @@ Item{
 
             onEntered: {
                 if((activityName.state === "inactive")&&
-                   (!mainView.lockActivities)){
+                   (!parametersManager.lockActivities)){
                     fadeIcon.opacity = 0;
                     activityIcon.rotation = 0;
 
@@ -106,7 +106,7 @@ Item{
             }
 
             onClicked: {
-                if (mainView.lockActivities === false)
+                if (parametersManager.lockActivities === false)
                     instanceOfActivitiesList.chooseIcon(ccode);
                 else
                     instanceOfActivitiesList.setCurrent(ccode);
@@ -121,8 +121,8 @@ Item{
            // visible:!mainView.lockActivities
             id:activityIconTooltip
 
-            title:mainView.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
-            mainText: mainView.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
+            title:parametersManager.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
+            mainText: parametersManager.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:activityIconMouseArea
             icon:Icon === "" ? "plasma" : Icon
@@ -172,12 +172,12 @@ Item{
 
         opacity: CState===neededState ? 1:0
 
-        enableEditing: !mainView.lockActivities
+        enableEditing: !parametersManager.lockActivities
 
         actCode: mainActivity.ccode
 
         Connections{
-            target:mainView
+            target:parametersManager
             onLockActivitiesChanged:{
                 if (activityName.state === "active"){
                     activityName.textNotAccepted();
@@ -199,7 +199,7 @@ Item{
 
                     activityBtnsI.state="show";
 
-                    if (mainView.lockActivities === false)
+                    if (parametersManager.lockActivities === false)
                         activityName.entered();
 
                 }
@@ -211,7 +211,7 @@ Item{
             }
 
             onExited: {
-                if (mainView.lockActivities === false){
+                if (parametersManager.lockActivities === false){
                     activityBtnsI.state="hide";
 
                     activityName.exited();
@@ -226,7 +226,7 @@ Item{
             }
 
             onDoubleClicked: {
-                if (mainView.lockActivities === false){
+                if (parametersManager.lockActivities === false){
                     activityName.clicked(mouse);
                 }
             }
@@ -235,8 +235,8 @@ Item{
         DToolTip{
             //visible:!mainView.lockActivities
             id:activityTooltip
-            title:mainView.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            mainText: mainView.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
+            title:parametersManager.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
+            mainText: parametersManager.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
         }

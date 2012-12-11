@@ -41,6 +41,7 @@
 #include "ui_config.h"
 
 class QDesktopWidget;
+class ParametersManager;
 
 namespace Plasma {
     class ExtenderItem;
@@ -61,15 +62,11 @@ public:
     ~WorkFlow();
 
     virtual void init();
-  //  void initExtenderItem(Plasma::ExtenderItem *item);
     virtual QGraphicsWidget *graphicsWidget();
 
     Q_INVOKABLE void loadConfigurationFiles();
 
     ///Properties
-    Q_INVOKABLE void setZoomFactor(int zoom);
-    Q_INVOKABLE void setShowWindows(bool show);
-    Q_INVOKABLE void setLockActivities(bool lock);
     Q_INVOKABLE void setAnimations(int anim);
     Q_INVOKABLE void setHideOnClick(bool);
     Q_INVOKABLE void hidePopupDialog();
@@ -137,9 +134,6 @@ private slots:
     void createConfigurationInterface(KConfigDialog *parent);
 
 private:
-    bool m_lockActivities;
-    bool m_showWindows;
-    int m_zoomFactor;//New properties
     int m_animations;
     bool m_windowsPreviews;
     int m_windowsPreviewsOffsetX;
@@ -165,6 +159,7 @@ private:
 
     ActivityManager *actManager;
     PTaskManager *taskManager;
+    ParametersManager *paramManager;
 
     QObject *mainQML;
 

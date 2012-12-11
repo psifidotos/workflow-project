@@ -18,7 +18,7 @@ Item{
         width:1.5*addWidgetsBtn.width
         height:1.5*addWidgetsBtn.height
         radius:3
-        opacity: mainView.lockActivities ? 0 : 1
+        opacity: parametersManager.lockActivities ? 0 : 1
 
         x:buttonsSize/2
         anchors.top: parent.top
@@ -51,10 +51,10 @@ Item{
         anchors.right: parent.right
         anchors.rightMargin:0.5*buttonsSize
         anchors.top: parent.top
-        opacity: allwlists.activitiesShown == 1 && mainView.lockActivities ? 0 : 1
+        opacity: allwlists.activitiesShown == 1 && parametersManager.lockActivities ? 0 : 1
 
-        width: mainView.lockActivities || allwlists.activitiesShown === 1 ? 1.4 * stopActivityBtn.width : 1.25 * rightActions.width
-        height: mainView.lockActivities ? 1.3 * stopActivityBtn.height : 1.5 * rightActions.height
+        width: parametersManager.lockActivities || allwlists.activitiesShown === 1 ? 1.4 * stopActivityBtn.width : 1.25 * rightActions.width
+        height: parametersManager.lockActivities ? 1.3 * stopActivityBtn.height : 1.5 * rightActions.height
         border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
         border.width:  1
         color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
@@ -70,7 +70,7 @@ Item{
             IconButton {
                 id:stopActivityBtn
                 icon: instanceOfThemeList.icons.PauseActivity
-                width: mainView.lockActivities ? 1.2 * buttonsSize : buttonsSize
+                width: parametersManager.lockActivities ? 1.2 * buttonsSize : buttonsSize
                 height: width
                 opacity: allwlists.activitiesShown > 1 ? 1 : 0
 
@@ -87,7 +87,7 @@ Item{
                 icon:instanceOfThemeList.icons.CloneActivity
                 width: buttonsSize
                 height: buttonsSize
-                opacity: mainView.lockActivities ? 0 : 1
+                opacity: parametersManager.lockActivities ? 0 : 1
                 onClicked: {
                     instanceOfActivitiesList.cloneActivityDialog(ccode);
                 }
@@ -100,7 +100,7 @@ Item{
                 icon: instanceOfThemeList.icons.DeleteActivity
                 width: buttonsSize
                 height: buttonsSize
-                opacity: ((allwlists.activitiesShown>1)&&(!mainView.lockActivities)) ? 1 : 0
+                opacity: ((allwlists.activitiesShown>1)&&(!parametersManager.lockActivities)) ? 1 : 0
                 onClicked: {
                     instanceOfActivitiesList.removeActivityDialog(ccode);
                 }

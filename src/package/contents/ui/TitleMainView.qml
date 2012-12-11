@@ -93,18 +93,15 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                //  checked:mainView.lockActivities
-
-                onCheckedChanged:{
-                    mainView.lockActivities = checked;
-                }
+                checked: parametersManager.lockActivities
 
                 MouseArea{
                     id:lockerToolBtnMouseArea
                     anchors.fill:parent
 
                     onClicked:{
-                        lockerToolBtn.checked = !lockerToolBtn.checked;
+                        //lockerToolBtn.checked = !lockerToolBtn.checked;
+                        parametersManager.lockActivities = !parametersManager.lockActivities;
                     }
                 }
             }
@@ -146,10 +143,10 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                // checked:mainView.showWinds
+                checked:parametersManager.showWindows
 
                 onCheckedChanged:{
-                    mainView.showWinds = checked;
+
                     if(!checked)
                         effectsToolBtn.checked = false;
                 }
@@ -159,7 +156,8 @@ Rectangle{
                     anchors.fill:parent
 
                     onClicked:{
-                        windowsToolBtn.checked = !windowsToolBtn.checked;
+                        //windowsToolBtn.checked = !windowsToolBtn.checked;
+                        parametersManager.showWindows = !parametersManager.showWindows;
                     }
                 }
             }
@@ -240,7 +238,7 @@ Rectangle{
                 checkable:true
                 //checked: (mainView.enablePreviews&&())
               //  enabled:((mainView.isOnDashBoard)&&
-                  enabled:((mainView.showWinds)&&
+                  enabled:((parametersManager.showWindows)&&
                             (mainView.effectsSystemEnabled))
 
                 onCheckedChanged:{

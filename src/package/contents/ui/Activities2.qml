@@ -34,8 +34,10 @@ Rectangle {
     property int workareaY:2*scaleMeter
 
     //Applications properties/////
-    property bool lockActivities: false
-    property bool showWinds: true
+    //property bool lockActivities: false
+  //  property bool lockActivities: parametersManager.lockActivities
+   // property bool showWinds: true
+    property bool showWinds: parametersManager.showWindows
     property bool enablePreviews: false
 
     property bool effectsSystemEnabled: true
@@ -69,11 +71,12 @@ Rectangle {
     property int toolTipsDelay:300
  //   property int pressAndHoldInterval:120
 
-    onShowWindsChanged: workflowManager.setShowWindows(showWinds);
-    onLockActivitiesChanged: {
-        workflowManager.setLockActivities(lockActivities);
-        activitiesSignals.showActivitiesButtons();
-    }
+//    onShowWindsChanged: workflowManager.setShowWindows(showWinds);
+
+  //  onLockActivitiesChanged: {
+        //workflowManager.setLockActivities(lockActivities);
+      //  activitiesSignals.showActivitiesButtons();
+ //   }
     onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
     onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
     onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
@@ -198,7 +201,8 @@ Rectangle {
             anchors.right: parent.right
             z:10
 
-            onValueChanged: workflowManager.setZoomFactor(value)
+          //  onValueChanged: workflowManager.setZoomFactor(value)
+            onValueChanged: parametersManager.zoomFactor = value;
         }
     }
 
@@ -210,8 +214,8 @@ Rectangle {
 
         DynamAnim.createComponents();
 
-        oxygenT.lockerChecked = mainView.lockActivities
-        oxygenT.windowsChecked = mainView.showWinds
+     //   oxygenT.lockerChecked = mainView.lockActivities
+     //   oxygenT.windowsChecked = mainView.showWinds
         oxygenT.effectsChecked = mainView.enablePreviews
     }
 
@@ -219,17 +223,17 @@ Rectangle {
         return DynamAnim;
     }
     /*-------------------Loading values-------------------*/
-    function setShowWindows(v){
+ /*   function setShowWindows(v){
         mainView.showWinds = v;
         oxygenT.windowsChecked = v;
-    }
-    function setLockActivities(v){
-        mainView.lockActivities = v;
-        oxygenT.lockerChecked = v;
-    }
-    function setZoomSlider(v){
+    }*/
+ /*   function setLockActivities(v){
+    //    mainView.lockActivities = v;
+    //    oxygenT.lockerChecked = v;
+    }*/
+  /*  function setZoomSlider(v){
         zoomSlider.value = v;
-    }
+    }*/
 
     function setAnimations(v){
         mainView.showAnimations = v;
