@@ -18,7 +18,7 @@ import "../tooltips"
 
         property int addedHeight:addWorkArea.height + taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
 
-        property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (mainView.showWinds === true)
+        property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (parametersManager.showWindows  === true)
 
         property string typeId : "workareasActItem"
 
@@ -109,13 +109,13 @@ import "../tooltips"
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
+                    duration: 3*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
             Behavior on opacity{
                 NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
+                    duration: 3*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -134,13 +134,13 @@ import "../tooltips"
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
+                    duration: 3*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
             Behavior on opacity{
                 NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
+                    duration: 3*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -178,7 +178,7 @@ import "../tooltips"
 
             Behavior on height{
                 NumberAnimation{
-                    duration: 3*mainView.animationsStep2;
+                    duration: 3*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -214,7 +214,7 @@ import "../tooltips"
             NumberAnimation { target: workList;
                 property: "opacity";
                 to: 1;
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad
         }*/
 
@@ -222,7 +222,7 @@ import "../tooltips"
         ListView.onRemove: SequentialAnimation {
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
-            NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
 
             // Make sure delayRemove is set back to false so that the item can be destroyed
             PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
@@ -269,25 +269,25 @@ import "../tooltips"
                     NumberAnimation {
                         target: workList;
                         property: "opacity";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workList;
                         property: "width";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workalist;
                         property: "opacity";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workalist;
                         property: "width";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -299,25 +299,25 @@ import "../tooltips"
                     NumberAnimation {
                         target: workList;
                         property: "opacity";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workList;
                         property: "width";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workalist;
                         property: "opacity";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workalist;
                         property: "width";
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

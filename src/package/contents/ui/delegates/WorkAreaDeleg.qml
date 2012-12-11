@@ -85,8 +85,8 @@ Item{
             x:mainWorkArea.imagex+1
             y:mainWorkArea.imagey
             width:mainWorkArea.imagewidth-1
-            height:mainView.showWinds ? workList.workAreaImageHeight-2*mainWorkArea.imagey : 0
-            opacity:mainView.showWinds ? 1 : 0
+            height:parametersManager.showWindows ? workList.workAreaImageHeight-2*mainWorkArea.imagey : 0
+            opacity:parametersManager.showWindows ? 1 : 0
 
             clip:true
             spacing:0
@@ -106,14 +106,14 @@ Item{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 3*mainView.animationsStep
+                    duration: 3*parametersManager.animationsStep
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on height{
                 NumberAnimation {
-                    duration: 3*mainView.animationsStep
+                    duration: 3*parametersManager.animationsStep
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -162,7 +162,7 @@ Item{
             y:borderRectangle.height-height-2-offset
             x:3+offset
 
-            opacity: ((tasksSList.shownTasks>0)&&(mainView.showWinds===true)) ?
+            opacity: ((tasksSList.shownTasks>0)&&(parametersManager.showWindows === true)) ?
                        1 : 0
 
             property color defTextColor:"#d9FFF0B6"
@@ -226,7 +226,7 @@ Item{
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 2*mainView.animationsStep;
+                        duration: 2*parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -269,7 +269,7 @@ Item{
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 3*mainView.animationsStep
+                    duration: 3*parametersManager.animationsStep
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -313,8 +313,8 @@ Item{
         PropertyAction { target: mainWorkArea; property: "height"; value: 0 }
         PropertyAction { target: mainWorkArea; property: "opacity"; value: 0 }
 
-        NumberAnimation { target: mainWorkArea; property: "height"; to: classicH; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: mainWorkArea; property: "opacity"; to: 1; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainWorkArea; property: "height"; to: classicH; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainWorkArea; property: "opacity"; to: 1; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
     }
 
     ListView.onRemove: SequentialAnimation {
@@ -324,12 +324,12 @@ Item{
         PropertyAction { target: tasksSList; property: "visible"; value: false }
 
         ParallelAnimation{
-            NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainWorkArea; property: "height"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "height"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: borderRectangle; property: "opacity"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: workAreaButtons; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: workAreaMoreBtn; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: workAreaName; property: "opacity"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: tasksSList; property: "height"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
             //NumberAnimation { target: tasksSList; property: "opacity"; to: 0; duration: 0; easing.type: Easing.InOutQuad }
         }

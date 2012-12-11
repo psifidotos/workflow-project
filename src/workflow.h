@@ -67,7 +67,7 @@ public:
     Q_INVOKABLE void loadConfigurationFiles();
 
     ///Properties
-    Q_INVOKABLE void setAnimations(int anim);
+ //   Q_INVOKABLE void setAnimations(int anim);
     Q_INVOKABLE void setHideOnClick(bool);
     Q_INVOKABLE void hidePopupDialog();
     Q_INVOKABLE void showPopupDialog();
@@ -111,7 +111,7 @@ public slots:
     void setMainWindowId();
 
     void activeWindowChanged(WId);
-    void setAnimationsSlot(int);
+//    void setAnimationsSlot(int);
     void setHideOnClickSlot(bool);
 
     void screensSizeChanged(int);
@@ -134,7 +134,7 @@ private slots:
     void createConfigurationInterface(KConfigDialog *parent);
 
 private:
-    int m_animations;
+ //   int m_animations;
     bool m_windowsPreviews;
     int m_windowsPreviewsOffsetX;
     int m_windowsPreviewsOffsetY;

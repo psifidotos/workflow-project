@@ -35,14 +35,14 @@ import "../tooltips"
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on width{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -77,14 +77,14 @@ import "../tooltips"
 
             Behavior on rotation{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep;
+                    duration: 2*parametersManager.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep;
+                    duration: 2*parametersManager.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -122,7 +122,7 @@ import "../tooltips"
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep;
+                    duration: 2*parametersManager.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -155,7 +155,7 @@ import "../tooltips"
 
             Behavior on opacity{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep;
+                    duration: 2*parametersManager.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -185,7 +185,7 @@ import "../tooltips"
 
                 instanceOfActivitiesList.startActivity(ccode);
 
-                if(mainView.animationsStep2!==0){
+                if(parametersManager.animationsStep2!==0){
                     var x1 = activityIcon.x;
                     var y1 = activityIcon.y;
 

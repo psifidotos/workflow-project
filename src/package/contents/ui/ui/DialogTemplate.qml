@@ -41,7 +41,7 @@ Rectangle{
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -68,25 +68,25 @@ Rectangle{
 
         Behavior on width{
             NumberAnimation {
-                duration: mainView.animationsStep;
+                duration: parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
         Behavior on height{
             NumberAnimation {
-                duration: mainView.animationsStep;
+                duration: parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
         Behavior on x{
             NumberAnimation {
-                duration: mainView.animationsStep;
+                duration: parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
         Behavior on y{
             NumberAnimation {
-                duration: mainView.animationsStep;
+                duration: parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

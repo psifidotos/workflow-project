@@ -36,7 +36,7 @@ Rectangle{
 
     Behavior on x{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -50,20 +50,20 @@ Rectangle{
 
     Behavior on currentColor1{
         ColorAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
     Behavior on currentColor2{
         ColorAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -78,14 +78,14 @@ Rectangle{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*mainView.animationsStep
+                duration: 2*parametersManager.animationsStep
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on scale{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

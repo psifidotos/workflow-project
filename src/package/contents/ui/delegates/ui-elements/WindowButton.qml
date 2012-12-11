@@ -225,7 +225,7 @@ Item{
         mainBtn.state="pressed";
 
 
-        if (mainView.animationsStep2 !== 0){
+        if (parametersManager.animationsStep2 !== 0){
             var x1 = mainIcon.x;
             var y1 = mainIcon.y;
 

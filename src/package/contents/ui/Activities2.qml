@@ -22,7 +22,7 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property string version:"v0.2.1"
+    property string version:"v0.2.91"
 
     property int scaleMeter: zoomSlider.value
 
@@ -34,20 +34,13 @@ Rectangle {
     property int workareaY:2*scaleMeter
 
     //Applications properties/////
-    //property bool lockActivities: false
-  //  property bool lockActivities: parametersManager.lockActivities
-   // property bool showWinds: true
-    property bool showWinds: parametersManager.showWindows
+
     property bool enablePreviews: false
 
     property bool effectsSystemEnabled: true
 
     property int previewsOffsetX: 13
     property int previewsOffsetY: 42
-
-    property int  showAnimations: 1
-    property int  animationsStep: showAnimations >= 1 ? 200:0
-    property int  animationsStep2: showAnimations >= 2 ? 200:0
 
     property alias hideStoppedPanel: stoppedPanel.doNotShow
 
@@ -77,7 +70,7 @@ Rectangle {
         //workflowManager.setLockActivities(lockActivities);
       //  activitiesSignals.showActivitiesButtons();
  //   }
-    onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
+  //  onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
     onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
     onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
     onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
@@ -172,7 +165,7 @@ Rectangle {
             workareaWidth: mainView.workareaWidth
             workareaHeight: mainView.workareaHeight
             scale: mainView.scaleMeter
-            animationsStep: mainView.animationsStep
+            animationsStep: parametersManager.animationsStep
         }
 
         StoppedActivitiesPanel{
@@ -235,9 +228,9 @@ Rectangle {
         zoomSlider.value = v;
     }*/
 
-    function setAnimations(v){
+ /*   function setAnimations(v){
         mainView.showAnimations = v;
-    }
+    }*/
 
     function setIsOnDashboard(v){
         //
@@ -336,7 +329,7 @@ Rectangle {
 
         Timer{
             id:activitiesTimer
-            interval:200+mainView.animationsStep
+            interval:200+parametersManager.animationsStep
             repeat:false
             onTriggered: {
                 activitiesSignals.hideButtons();

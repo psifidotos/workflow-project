@@ -114,7 +114,7 @@ Item{
         instanceOfActivitiesList.stopActivity(ccode);
         console.log("animationsStep2: " + animationsStep2)
 
-        if(mainView.animationsStep2!==0){
+        if(parametersManager.animationsStep2!==0){
             var x1 = activityIcon.x;
             var y1 = activityIcon.y;
 

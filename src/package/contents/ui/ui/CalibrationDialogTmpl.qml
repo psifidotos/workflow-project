@@ -130,7 +130,7 @@ DialogTemplate2{
             }
 
             transitions: Transition {
-                NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
+                NumberAnimation { properties: "opacity"; duration: 2*parametersManager.animationsStep }
             }
 
         }

@@ -4,11 +4,15 @@
 
 ParametersManager::ParametersManager(QObject *parent, KConfigGroup *conf):
     QObject(parent),
-    config(conf)
+    config(conf),
+    m_animationsStep(0),
+    m_animationsStep2(0)
 {
     m_lockActivities = config->readEntry("LockActivities", true);
     m_showWindows = config->readEntry("ShowWindows", true);
     m_zoomFactor = config->readEntry("ZoomFactor", 50);
+    m_animations = config->readEntry("Animations", 1);
+    updateAnimationsSteps();
 }
 
 ParametersManager::~ParametersManager()
@@ -56,5 +60,54 @@ int ParametersManager::zoomFactor() const
 {
     return m_zoomFactor;
 }
+
+
+void ParametersManager::setAnimations(int an)
+{
+    m_animations = an;
+    config->writeEntry("Animations",m_animations);
+    emit animationsChanged(m_animations);
+    updateAnimationsSteps();
+    emit configNeedsSaving();
+}
+
+int ParametersManager::animations() const
+{
+    return m_animations;
+}
+
+int ParametersManager::animationsStep() const
+{
+    return m_animationsStep;
+}
+
+int ParametersManager::animationsStep2() const
+{
+    return m_animationsStep2;
+}
+
+void ParametersManager::updateAnimationsSteps()
+{
+    int animationsStepOld = m_animationsStep;
+    int animationsStep2Old = m_animationsStep2;
+
+    if (m_animations>=1)
+        m_animationsStep = 200;
+    else
+        m_animationsStep = 0;
+
+    if (m_animations>=2)
+        m_animationsStep2 = 200;
+    else
+        m_animationsStep2 = 0;
+
+    if(m_animationsStep != animationsStepOld)
+        emit animationsStepChanged(m_animationsStep);
+
+    if(m_animationsStep2 != animationsStep2Old)
+        emit animationsStep2Changed(m_animationsStep2);
+}
+
+
 
 #include "parametersmanager.moc"

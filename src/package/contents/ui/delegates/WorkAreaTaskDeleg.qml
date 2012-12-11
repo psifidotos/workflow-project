@@ -43,14 +43,14 @@ import org.kde.qtextracomponents 0.1
 
         Behavior on height{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -87,7 +87,7 @@ import org.kde.qtextracomponents 0.1
 
             Behavior on color{
                 ColorAnimation {
-                    duration: 3*mainView.animationsStep
+                    duration: 3*parametersManager.animationsStep
                 }
             }
 
@@ -107,7 +107,7 @@ import org.kde.qtextracomponents 0.1
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 3*mainView.animationsStep
+                        duration: 3*parametersManager.animationsStep
                     }
                 }
             }

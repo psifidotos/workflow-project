@@ -24,7 +24,7 @@ Rectangle {
 
     Behavior on x{
         NumberAnimation {
-            duration: 2*mainView.animationsStep2;
+            duration: 2*parametersManager.animationsStep2;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -73,7 +73,7 @@ Rectangle {
 
             onClicked:{
 
-                if (mainView.animationsStep2 !== 0){
+                if (parametersManager.animationsStep2 !== 0){
                     var x1 = stopMoreButton.x;
                     var y1 = stopMoreButton.y;
 
@@ -170,14 +170,14 @@ Rectangle {
 
             Behavior on height{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep2;
+                    duration: 2*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on y{
                 NumberAnimation {
-                    duration: 2*mainView.animationsStep2;
+                    duration: 2*parametersManager.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -191,7 +191,7 @@ Rectangle {
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 2*mainView.animationsStep }
+            NumberAnimation { properties: "opacity"; duration: 2*parametersManager.animationsStep }
         }
     }
 
@@ -238,7 +238,7 @@ Rectangle {
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -260,7 +260,7 @@ Rectangle {
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*mainView.animationsStep;
+                duration: 2*parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

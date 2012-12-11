@@ -24,14 +24,14 @@ Item{
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on width{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -81,7 +81,7 @@ Item{
 
         Behavior on rotation{
             NumberAnimation {
-                duration: mainView.animationsStep;
+                duration: parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -151,7 +151,7 @@ Item{
 
         Behavior on opacity{
             NumberAnimation {
-                duration:  mainView.animationsStep;
+                duration:  parametersManager.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -252,7 +252,7 @@ Item{
         z:40
 
         Behavior on opacity {
-            NumberAnimation { duration: 2 * mainView.animationsStep }
+            NumberAnimation { duration: 2 * parametersManager.animationsStep }
         }
     }
 
@@ -271,16 +271,16 @@ Item{
         PropertyAction { target: mainActivity; property: "width"; value: 0 }
         PropertyAction { target: mainActivity; property: "opacity"; value: 0 }
 
-        NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
     }
 
     ListView.onRemove: SequentialAnimation {
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: true }
 
         ParallelAnimation{
-            NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*mainView.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
         }
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }

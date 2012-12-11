@@ -141,7 +141,7 @@ Item {
 
             function toEveryWhereAnimation(){
                 if (placeStateBtn.state === "everywhere"){
-                    if(mainView.animationsStep2!==0){
+                    if(parametersManager.animationsStep2!==0){
                         var x1 = imageTask.x;
                         var y1 = imageTask.y;
 
@@ -201,7 +201,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityClose";
-                        duration: mainView.animationsStep;
+                        duration: parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -210,7 +210,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";
-                        duration: mainView.animationsStep;
+                        duration: parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -225,7 +225,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityClose";
-                        duration: mainView.animationsStep;
+                        duration: parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -234,7 +234,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";
-                        duration: mainView.animationsStep;
+                        duration: parametersManager.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

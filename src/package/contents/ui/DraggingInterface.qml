@@ -117,7 +117,7 @@ Rectangle{
                 instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
                 instanceOfTasksList.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
 
-                if(mainView.animationsStep2!==0){
+                if(parametersManager.animationsStep2!==0){
                     var co1 = mainView.mapToItem(mainView,iX1,iY1);
                     mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
                                                                      co1,
@@ -141,7 +141,7 @@ Rectangle{
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
             instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works);
 
-            if(mainView.animationsStep2!==0){
+            if(parametersManager.animationsStep2!==0){
                 var co14 = mainView.mapToItem(mainView,iX1,iY1);
                 var toCol4 = mainView.mapToItem(mainView,mouse.x,mouse.y);
 
@@ -159,7 +159,7 @@ Rectangle{
             instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
             instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
 
-            if(mainView.animationsStep2!==0){
+            if(parametersManager.animationsStep2!==0){
                 var co13 = mainView.mapToItem(mainView,iX1,iY1);
                 mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,
                                                                 co13,

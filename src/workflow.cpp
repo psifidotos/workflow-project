@@ -62,7 +62,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     actManager = new ActivityManager(this);
     taskManager = new PTaskManager(this);
 
-    m_animations = 1;
+  //  m_animations = 1;
     m_findPopupWid = false;
 
     m_windowsPreviews=false;
@@ -361,7 +361,7 @@ void WorkFlow::saveWorkareas()
     WorkFlowSettings::setWorkareasNames(writeWorkareas);
     WorkFlowSettings::self()->writeConfig();
 }
-
+/*
 void WorkFlow::setAnimations(int anim)
 {
     m_animations = anim;
@@ -369,7 +369,7 @@ void WorkFlow::setAnimations(int anim)
     appConfig.writeEntry("Animations",m_animations);
     emit configNeedsSaving();
 }
-
+*/
 void WorkFlow::setHideOnClick(bool h)
 {
     m_hideOnClick = h;
@@ -399,7 +399,8 @@ void WorkFlow::configDialogFinished()
 
 void WorkFlow::configDialogAccepted()
 {
-    setAnimationsSlot(m_config.animationsLevelSlider->value());
+    //setAnimationsSlot(m_config.animationsLevelSlider->value());
+    paramManager->setAnimations(m_config.animationsLevelSlider->value());
     setHideOnClickSlot(m_config.hideOnClickCheckBox->isChecked());
     themeSelectionChanged(m_config.themesCmb->currentText());
     setToolTipsDelayChanged(m_config.tooltipsSpinBox->value());
@@ -517,7 +518,7 @@ void WorkFlow::loadWorkareas()
 void WorkFlow::loadConfigurationFiles()
 {
   //  int zoomF = appConfig.readEntry("ZoomFactor", 50);
-    int anim = appConfig.readEntry("Animations", true);
+ //   int anim = appConfig.readEntry("Animations", true);
     bool winPreviews = appConfig.readEntry("WindowPreviews", false);
     int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
     int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
@@ -530,7 +531,7 @@ void WorkFlow::loadConfigurationFiles()
     int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
 
  //   setZoomFactor(zoomF);
-    setAnimations(anim);
+//    setAnimations(anim);
     setWindowsPreviews(winPreviews);
     setWindowsPreviewsOffsetX(winPrevOffX);
     setWindowsPreviewsOffsetY(winPrevOffY);
@@ -542,11 +543,12 @@ void WorkFlow::loadConfigurationFiles()
     setCurrentTheme(curTheme);
     setToolTipsDelayChanged(tipsDelay);
 }
-
+/*
 void WorkFlow::setAnimationsSlot(int val){
     this->setAnimations(val);
 }
 
+*/
 void WorkFlow::setHideOnClickSlot(bool h)
 {
     this->setHideOnClick(h);
@@ -560,7 +562,8 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 
     m_config.setupUi(widget);
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
-    m_config.animationsLevelSlider->setValue(m_animations);
+    //m_config.animationsLevelSlider->setValue(m_animations);
+    m_config.animationsLevelSlider->setValue(paramManager->animations());
     m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
 
     for(int i=0; i<loadedThemes.count(); i++)

@@ -4,7 +4,7 @@ import QtQuick 1.1
 Column {
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*mainView.animationsStep;
+            duration: 2*parametersManager.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
