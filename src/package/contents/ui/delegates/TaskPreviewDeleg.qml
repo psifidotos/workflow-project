@@ -35,7 +35,7 @@ Item{
                                    ( (onAllActivities === true )&&(isPressed === false) ):
                                    (code !== 'DontShow')&&(isPressed === false)
 
-    property bool showPreviews: ((mainView.enablePreviews === true)&&
+    property bool showPreviews: ((parametersManager.windowsPreviews === true)&&
                                  (mustBeShown === true)&&
                                  (forceState1 === false))
 
@@ -992,8 +992,8 @@ Item{
             var obj = previewRect.mapToItem(mainView,x1,y1);
 
             taskManager.setWindowPreview(taskDeleg2.ccode,
-                                         obj.x+mainView.previewsOffsetX,
-                                         obj.y+mainView.previewsOffsetY,
+                                         obj.x+parametersManager.windowsPreviewsOffsetX,
+                                         obj.y+parametersManager.windowsPreviewsOffsetY,
                                          previewRect.width-(2*previewRect.border.width),
                                          previewRect.height-(2*previewRect.border.width));
         }

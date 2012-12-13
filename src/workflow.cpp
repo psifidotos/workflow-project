@@ -65,9 +65,9 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
   //  m_animations = 1;
     m_findPopupWid = false;
 
-    m_windowsPreviews=false;
-    m_windowsPreviewsOffsetX=0;
-    m_windowsPreviewsOffsetY=0;
+//    m_windowsPreviews=false;
+  //  m_windowsPreviewsOffsetX=0;
+ //   m_windowsPreviewsOffsetY=0;
     m_fontRelevance=0;
     m_showStoppedActivities=true;
     m_firstRunLiveTour=false;
@@ -416,29 +416,6 @@ void WorkFlow::answeredIconDialog()
     this->showPopup();
 }
 
-void WorkFlow::setWindowsPreviews(bool b){
-    m_windowsPreviews = b;
-    WId win;
-    activeWindowChanged(win);
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviews", Q_ARG(QVariant, b));
-    appConfig.writeEntry("WindowPreviews", b);
-    emit configNeedsSaving();
-}
-
-void WorkFlow::setWindowsPreviewsOffsetX(int x){
-    m_windowsPreviewsOffsetX = x;
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetX", Q_ARG(QVariant, x));
-    appConfig.writeEntry("WindowPreviewsOffsetX", x);
-    emit configNeedsSaving();
-}
-
-void WorkFlow::setWindowsPreviewsOffsetY(int y){
-    m_windowsPreviewsOffsetY = y;
-    QMetaObject::invokeMethod(mainQML, "setWindowsPreviewsOffsetY", Q_ARG(QVariant, y));
-    appConfig.writeEntry("WindowPreviewsOffsetY", y);
-    emit configNeedsSaving();
-}
-
 void WorkFlow::setFontRelevance(bool fr){
     m_fontRelevance = fr;
     QMetaObject::invokeMethod(mainQML, "setFontRelevance", Q_ARG(QVariant, fr));
@@ -519,9 +496,9 @@ void WorkFlow::loadConfigurationFiles()
 {
   //  int zoomF = appConfig.readEntry("ZoomFactor", 50);
  //   int anim = appConfig.readEntry("Animations", true);
-    bool winPreviews = appConfig.readEntry("WindowPreviews", false);
-    int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
-    int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
+//    bool winPreviews = appConfig.readEntry("WindowPreviews", false);
+ //   int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
+ //   int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
     int fontRel = appConfig.readEntry("FontRelevance", 0);
     bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);
     bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
@@ -532,9 +509,9 @@ void WorkFlow::loadConfigurationFiles()
 
  //   setZoomFactor(zoomF);
 //    setAnimations(anim);
-    setWindowsPreviews(winPreviews);
-    setWindowsPreviewsOffsetX(winPrevOffX);
-    setWindowsPreviewsOffsetY(winPrevOffY);
+ //   setWindowsPreviews(winPreviews);
+  //  setWindowsPreviewsOffsetX(winPrevOffX);
+ //   setWindowsPreviewsOffsetY(winPrevOffY);
     setFontRelevance(fontRel);
     setShowStoppedActivities(showStopAct);
     setFirstRunLiveTour(firRunLiveTour);

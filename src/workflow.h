@@ -72,9 +72,9 @@ public:
     Q_INVOKABLE void hidePopupDialog();
     Q_INVOKABLE void showPopupDialog();
 
-    Q_INVOKABLE void setWindowsPreviews(bool b);
-    Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
-    Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
+//    Q_INVOKABLE void setWindowsPreviews(bool b);
+ //   Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
+ //   Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
     Q_INVOKABLE void setFontRelevance(bool fr);
     Q_INVOKABLE void setShowStoppedActivities(bool s);
     Q_INVOKABLE void setFirstRunLiveTour(bool f);
@@ -135,9 +135,9 @@ private slots:
 
 private:
  //   int m_animations;
-    bool m_windowsPreviews;
-    int m_windowsPreviewsOffsetX;
-    int m_windowsPreviewsOffsetY;
+ //   bool m_windowsPreviews;
+ //   int m_windowsPreviewsOffsetX;
+ //   int m_windowsPreviewsOffsetY;
     int m_fontRelevance;
     bool m_showStoppedActivities;
     bool m_firstRunLiveTour;

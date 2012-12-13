@@ -12,7 +12,13 @@ ParametersManager::ParametersManager(QObject *parent, KConfigGroup *conf):
     m_showWindows = config->readEntry("ShowWindows", true);
     m_zoomFactor = config->readEntry("ZoomFactor", 50);
     m_animations = config->readEntry("Animations", 1);
+
     updateAnimationsSteps();
+
+    m_windowsPreviews = config->readEntry("WindowPreviews", false);
+    m_windowsPreviewsOffsetX = config->readEntry("WindowPreviewsOffsetX", 0);
+    m_windowsPreviewsOffsetY = config->readEntry("WindowPreviewsOffsetY", 0);
+
 }
 
 ParametersManager::~ParametersManager()
@@ -108,6 +114,45 @@ void ParametersManager::updateAnimationsSteps()
         emit animationsStep2Changed(m_animationsStep2);
 }
 
+
+void ParametersManager::setWindowsPreviews(bool winPrev)
+{
+    m_windowsPreviews = winPrev;
+    config->writeEntry("WindowPreviews",m_windowsPreviews);
+    emit windowsPreviewsChanged(m_windowsPreviews);
+    emit configNeedsSaving();
+}
+
+bool ParametersManager::windowsPreviews() const
+{
+    return m_windowsPreviews;
+}
+
+void ParametersManager::setWindowsPreviewsOffsetX(int offX)
+{
+    m_windowsPreviewsOffsetX = offX;
+    config->writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
+    emit windowsPreviewsOffsetXChanged(m_windowsPreviewsOffsetX);
+    emit configNeedsSaving();
+}
+
+int ParametersManager::windowsPreviewsOffsetX() const
+{
+    return m_windowsPreviewsOffsetX;
+}
+
+void ParametersManager::setWindowsPreviewsOffsetY(int offY)
+{
+    m_windowsPreviewsOffsetY = offY;
+    config->writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
+    emit windowsPreviewsOffsetYChanged(m_windowsPreviewsOffsetY);
+    emit configNeedsSaving();
+}
+
+int ParametersManager::windowsPreviewsOffsetY() const
+{
+    return m_windowsPreviewsOffsetY;
+}
 
 
 #include "parametersmanager.moc"

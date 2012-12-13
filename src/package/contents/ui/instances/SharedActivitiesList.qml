@@ -57,9 +57,9 @@ Item{
         mainView.getDynLib().deleteBusyIndicatorDialog();
 
         if(previewsWereEnabled === true)
-            mainView.enablePreviews = true;
+            parametersManager.windowsPreviews = true;
         else
-            mainView.enablePreviews = false;
+            parametersManager.windowsPreviews = false;
 
     }
 
@@ -483,9 +483,9 @@ Item{
         if(fromCloneActivity === mainView.currentActivity)
             fromActivityWasCurrent = true;
 
-        if(mainView.enablePreviews === true){
+        if(parametersManager.windowsPreviews === true){
             previewsWereEnabled = true;
-            mainView.enablePreviews = false;
+            parametersManager.windowsPreviews = false;
         }
         else
             previewsWereEnabled = false;

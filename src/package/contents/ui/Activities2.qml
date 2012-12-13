@@ -35,12 +35,12 @@ Rectangle {
 
     //Applications properties/////
 
-    property bool enablePreviews: false
+   // property bool enablePreviews: false
 
     property bool effectsSystemEnabled: true
 
-    property int previewsOffsetX: 13
-    property int previewsOffsetY: 42
+   // property int previewsOffsetX: 13
+   // property int previewsOffsetY: 42
 
     property alias hideStoppedPanel: stoppedPanel.doNotShow
 
@@ -71,9 +71,9 @@ Rectangle {
       //  activitiesSignals.showActivitiesButtons();
  //   }
   //  onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
-    onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
-    onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
-    onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
+ //   onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
+ //   onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
+ //   onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
     onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
     onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
     onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
@@ -209,7 +209,7 @@ Rectangle {
 
      //   oxygenT.lockerChecked = mainView.lockActivities
      //   oxygenT.windowsChecked = mainView.showWinds
-        oxygenT.effectsChecked = mainView.enablePreviews
+    //    oxygenT.effectsChecked = mainView.enablePreviews
     }
 
     function getDynLib(){
@@ -240,6 +240,7 @@ Rectangle {
         mainView.isOnDashBoard = v;
     }
 
+    /*
     function setWindowsPreviews(b){
         mainView.enablePreviews = b;
         oxygenT.effectsChecked = mainView.enablePreviews;
@@ -251,7 +252,7 @@ Rectangle {
 
     function setWindowsPreviewsOffsetY(y){
         mainView.previewsOffsetY = y;
-    }
+    }*/
 
     function setFontRelevance(fr){
         mainView.defaultFontRelativeness = fr;

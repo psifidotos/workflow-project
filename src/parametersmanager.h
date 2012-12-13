@@ -9,9 +9,14 @@ class ParametersManager : public QObject
     Q_PROPERTY(bool lockActivities READ lockActivities WRITE setLockActivities NOTIFY lockActivitiesChanged)
     Q_PROPERTY(bool showWindows READ showWindows WRITE setShowWindows NOTIFY showWindowsChanged)
     Q_PROPERTY(int zoomFactor READ zoomFactor WRITE setZoomFactor NOTIFY zoomFactorChanged)
+
     Q_PROPERTY(int animations READ animations WRITE setAnimations NOTIFY animationsChanged)
     Q_PROPERTY(int animationsStep READ animationsStep NOTIFY animationsStepChanged)
     Q_PROPERTY(int animationsStep2 READ animationsStep2 NOTIFY animationsStep2Changed)
+
+    Q_PROPERTY(bool windowsPreviews READ windowsPreviews WRITE setWindowsPreviews NOTIFY windowsPreviewsChanged)
+    Q_PROPERTY(int windowsPreviewsOffsetX READ windowsPreviewsOffsetX WRITE setWindowsPreviewsOffsetX NOTIFY windowsPreviewsOffsetXChanged)
+    Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
 public:
     /*
@@ -39,15 +44,29 @@ public:
     int animationsStep() const;
     int animationsStep2() const;
 
+    void setWindowsPreviews(bool);
+    bool windowsPreviews() const;
+
+    void setWindowsPreviewsOffsetX(int);
+    int windowsPreviewsOffsetX() const;
+
+    void setWindowsPreviewsOffsetY(int);
+    int windowsPreviewsOffsetY() const;
+
 signals:
     void configNeedsSaving();
 
     void lockActivitiesChanged(bool);
     void showWindowsChanged(bool);
     void zoomFactorChanged(int);
+
     void animationsChanged(int);
     void animationsStepChanged(int);
     void animationsStep2Changed(int);
+
+    void windowsPreviewsChanged(bool);
+    void windowsPreviewsOffsetXChanged(int);
+    void windowsPreviewsOffsetYChanged(int);
 
 private:
    KConfigGroup *config;
@@ -58,6 +77,10 @@ private:
    int m_animations;
    int m_animationsStep; //Basic animations duration
    int m_animationsStep2; //Full animations duration
+
+   bool m_windowsPreviews; //Windows previews enabled or not
+   int m_windowsPreviewsOffsetX; // X Offset for Windows previews
+   int m_windowsPreviewsOffsetY; // Y Offset for Windows previews
 
    void updateAnimationsSteps();
 };

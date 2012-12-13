@@ -495,8 +495,8 @@ DialogTemplate2{
     function openD(){
         calibrationDialog.open();
 
-        xOffsetSlider.value = mainView.previewsOffsetX;
-        yOffsetSlider.value = mainView.previewsOffsetY;
+        xOffsetSlider.value = parametersManager.windowsPreviewsOffsetX;
+        yOffsetSlider.value = parametersManager.windowsPreviewsOffsetY;
 
         allWorkareas.flickableV = false;
         allActT.forceState1();
@@ -525,8 +525,8 @@ DialogTemplate2{
     Connections {
         target: calibDialog
         onClickedOk:{
-            mainView.previewsOffsetX = xValueText.val
-            mainView.previewsOffsetY = yValueText.val
+            parametersManager.windowsPreviewsOffsetX = xValueText.val;
+            parametersManager.windowsPreviewsOffsetY = yValueText.val
             calibDialog.clickedCancel();
 
             completed();

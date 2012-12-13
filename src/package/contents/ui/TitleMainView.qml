@@ -208,11 +208,26 @@ Rectangle{
                     }
                 }
 
+                width: oxygenTitle.buttonWidth
+                height: oxygenTitle.buttonHeight
+
+                checkable:true
+                checked:parametersManager.windowsPreviews
+                //checked: (mainView.enablePreviews&&())
+              //  enabled:((mainView.isOnDashBoard)&&
+                  enabled:((parametersManager.showWindows)&&
+                            (mainView.effectsSystemEnabled))
+
+                //onCheckedChanged:{
+                 //   mainView.enablePreviews = checked;
+               // }
+
+
                 MouseArea{
                     id:effectsToolBtnMouseArea
                     anchors.fill:parent
                     onClicked:{
-                        effectsToolBtn.checked = !effectsToolBtn.checked;
+                        parametersManager.windowsPreviews = !parametersManager.windowsPreviews;
                         if(effectsToolBtn.checked){
                             if(mainView.firstRunCalibration === false){
                                 mainView.getDynLib().showFirstCalibrationDialog();
@@ -232,18 +247,7 @@ Rectangle{
                     }
                 }
 
-                width: oxygenTitle.buttonWidth
-                height: oxygenTitle.buttonHeight
 
-                checkable:true
-                //checked: (mainView.enablePreviews&&())
-              //  enabled:((mainView.isOnDashBoard)&&
-                  enabled:((parametersManager.showWindows)&&
-                            (mainView.effectsSystemEnabled))
-
-                onCheckedChanged:{
-                    mainView.enablePreviews = checked;
-                }
 
             }
 

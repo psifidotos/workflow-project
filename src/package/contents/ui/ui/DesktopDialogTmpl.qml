@@ -54,7 +54,7 @@ DialogTemplate2{
 
         opacity:disablePreviews === true ? 0.65 : 1
 
-        visible: mainView.enablePreviews
+        visible: parametersManager.windowsPreviews
 
         MouseArea{
             anchors.fill: parent
@@ -247,7 +247,7 @@ DialogTemplate2{
         else{
             //Count the rows and columns//
             //Count the cellWidth and cellHeight//
-            if ( (mainView.enablePreviews === false) ||
+            if ( (parametersManager.windowsPreviews === false) ||
                     (deskDialog.disablePreviews===true) ){
                 if (counter<=5){
                     deskDialog.shownRows=counter;

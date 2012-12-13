@@ -112,7 +112,7 @@ Item{
 
     function clickedStopped(){
         instanceOfActivitiesList.stopActivity(ccode);
-        console.log("animationsStep2: " + animationsStep2)
+        console.log("animationsStep2: " + parametersManager.animationsStep2)
 
         if(parametersManager.animationsStep2!==0){
             var x1 = activityIcon.x;
