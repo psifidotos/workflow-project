@@ -14,7 +14,7 @@ Rectangle{
 
     anchors.top: stoppedPanel.top
 
-    opacity: (parametersManager.lockActivities===true) ? 0 : 1
+    opacity: (storedParameters.lockActivities===true) ? 0 : 1
 
     property color openStpActiv1: "#ebebeb"
     property color openStpActiv2: "#bdbdbd"
@@ -36,7 +36,7 @@ Rectangle{
 
     Behavior on x{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -50,20 +50,20 @@ Rectangle{
 
     Behavior on currentColor1{
         ColorAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
     Behavior on currentColor2{
         ColorAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -78,14 +78,14 @@ Rectangle{
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep
+                duration: 2*storedParameters.animationsStep
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on scale{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep;
+                duration: 2*storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

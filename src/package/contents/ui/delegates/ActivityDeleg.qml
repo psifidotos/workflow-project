@@ -24,14 +24,14 @@ Item{
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on width{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -81,7 +81,7 @@ Item{
 
         Behavior on rotation{
             NumberAnimation {
-                duration: parametersManager.animationsStep;
+                duration: storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -93,7 +93,7 @@ Item{
 
             onEntered: {
                 if((activityName.state === "inactive")&&
-                   (!parametersManager.lockActivities)){
+                   (!storedParameters.lockActivities)){
                     fadeIcon.opacity = 0;
                     activityIcon.rotation = 0;
 
@@ -106,7 +106,7 @@ Item{
             }
 
             onClicked: {
-                if (parametersManager.lockActivities === false)
+                if (storedParameters.lockActivities === false)
                     instanceOfActivitiesList.chooseIcon(ccode);
                 else
                     instanceOfActivitiesList.setCurrent(ccode);
@@ -121,8 +121,8 @@ Item{
            // visible:!mainView.lockActivities
             id:activityIconTooltip
 
-            title:parametersManager.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
-            mainText: parametersManager.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
+            title:storedParameters.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
+            mainText: storedParameters.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:activityIconMouseArea
             icon:Icon === "" ? "plasma" : Icon
@@ -151,7 +151,7 @@ Item{
 
         Behavior on opacity{
             NumberAnimation {
-                duration:  parametersManager.animationsStep;
+                duration:  storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -172,12 +172,12 @@ Item{
 
         opacity: CState===neededState ? 1:0
 
-        enableEditing: !parametersManager.lockActivities
+        enableEditing: !storedParameters.lockActivities
 
         actCode: mainActivity.ccode
 
         Connections{
-            target:parametersManager
+            target:storedParameters
             onLockActivitiesChanged:{
                 if (activityName.state === "active"){
                     activityName.textNotAccepted();
@@ -199,7 +199,7 @@ Item{
 
                     activityBtnsI.state="show";
 
-                    if (parametersManager.lockActivities === false)
+                    if (storedParameters.lockActivities === false)
                         activityName.entered();
 
                 }
@@ -211,7 +211,7 @@ Item{
             }
 
             onExited: {
-                if (parametersManager.lockActivities === false){
+                if (storedParameters.lockActivities === false){
                     activityBtnsI.state="hide";
 
                     activityName.exited();
@@ -226,7 +226,7 @@ Item{
             }
 
             onDoubleClicked: {
-                if (parametersManager.lockActivities === false){
+                if (storedParameters.lockActivities === false){
                     activityName.clicked(mouse);
                 }
             }
@@ -235,8 +235,8 @@ Item{
         DToolTip{
             //visible:!mainView.lockActivities
             id:activityTooltip
-            title:parametersManager.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            mainText: parametersManager.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
+            title:storedParameters.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
+            mainText: storedParameters.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
         }
@@ -252,7 +252,7 @@ Item{
         z:40
 
         Behavior on opacity {
-            NumberAnimation { duration: 2 * parametersManager.animationsStep }
+            NumberAnimation { duration: 2 * storedParameters.animationsStep }
         }
     }
 
@@ -271,16 +271,16 @@ Item{
         PropertyAction { target: mainActivity; property: "width"; value: 0 }
         PropertyAction { target: mainActivity; property: "opacity"; value: 0 }
 
-        NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainActivity; property: "width"; to: mainActivity.defWidth; duration: 2*storedParameters.animationsStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: mainActivity; property: "opacity"; to: 1; duration: 2*storedParameters.animationsStep; easing.type: Easing.InOutQuad }
     }
 
     ListView.onRemove: SequentialAnimation {
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: true }
 
         ParallelAnimation{
-            NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
-            NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*parametersManager.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "width"; to: 0; duration: 2*storedParameters.animationsStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: mainActivity; property: "opacity"; to: 0; duration: 2*storedParameters.animationsStep; easing.type: Easing.InOutQuad }
         }
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }

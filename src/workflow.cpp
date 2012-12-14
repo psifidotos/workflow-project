@@ -46,7 +46,7 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
-#include "parametersmanager.h"
+#include "storedparameters.h"
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -96,8 +96,8 @@ WorkFlow::~WorkFlow()
         delete actManager;
     if (taskManager)
         delete taskManager;
-    if (paramManager)
-        delete paramManager;
+    if (storedParams)
+        delete storedParams;
 }
 
 QGraphicsWidget *WorkFlow::graphicsWidget()
@@ -110,7 +110,7 @@ void WorkFlow::init(){
 
     appConfig = config();
 
-    paramManager = new ParametersManager(this,&appConfig);
+    storedParams = new StoredParameters(this,&appConfig);
 
     mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -125,10 +125,10 @@ void WorkFlow::init(){
     kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
-    declarativeWidget->engine()->rootContext()->setContextProperty("parametersManager",paramManager);
+    declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",storedParams);
     declarativeWidget->setQmlPath(path);
 
-    connect(paramManager, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
+    connect(storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
 
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
@@ -400,7 +400,7 @@ void WorkFlow::configDialogFinished()
 void WorkFlow::configDialogAccepted()
 {
     //setAnimationsSlot(m_config.animationsLevelSlider->value());
-    paramManager->setAnimations(m_config.animationsLevelSlider->value());
+    storedParams->setAnimations(m_config.animationsLevelSlider->value());
     setHideOnClickSlot(m_config.hideOnClickCheckBox->isChecked());
     themeSelectionChanged(m_config.themesCmb->currentText());
     setToolTipsDelayChanged(m_config.tooltipsSpinBox->value());
@@ -541,7 +541,7 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     m_config.setupUi(widget);
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
     //m_config.animationsLevelSlider->setValue(m_animations);
-    m_config.animationsLevelSlider->setValue(paramManager->animations());
+    m_config.animationsLevelSlider->setValue(storedParams->animations());
     m_config.hideOnClickCheckBox->setChecked(m_hideOnClick);
 
     for(int i=0; i<loadedThemes.count(); i++)

@@ -29,7 +29,7 @@ Item{
 
         Behavior on scale{
             NumberAnimation {
-                duration: parametersManager.animationsStep;
+                duration: storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -93,7 +93,7 @@ Item{
 
         Behavior on scale{
             NumberAnimation {
-                duration: parametersManager.animationsStep;
+                duration: storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -146,13 +146,13 @@ Item{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "deleteY";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityDel";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -160,13 +160,13 @@ Item{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "duplicateY";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityClone";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -181,13 +181,13 @@ Item{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "deleteY";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityDel";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -195,13 +195,13 @@ Item{
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "duplicateY";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                     NumberAnimation {
                         target: workAreaButtons;
                         property: "opacityClone";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

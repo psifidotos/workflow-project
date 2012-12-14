@@ -20,11 +20,11 @@ Rectangle {
     border.color: "#d9808080"
     border.width:1
 
-    property bool doNotShow: !parametersManager.showStoppedActivities
+    property bool doNotShow: !storedParameters.showStoppedActivities
 
     Behavior on x{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep2;
+            duration: 2*storedParameters.animationsStep2;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -73,7 +73,7 @@ Rectangle {
 
             onClicked:{
 
-                if (parametersManager.animationsStep2 !== 0){
+                if (storedParameters.animationsStep2 !== 0){
                     var x1 = stopMoreButton.x;
                     var y1 = stopMoreButton.y;
 
@@ -86,7 +86,7 @@ Rectangle {
 
                 }
 
-                parametersManager.showStoppedActivities = !parametersManager.showStoppedActivities;
+                storedParameters.showStoppedActivities = !storedParameters.showStoppedActivities;
 
             }
         }
@@ -149,7 +149,7 @@ Rectangle {
         anchors.right: stopActBack.right
 
         //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
-        y:parametersManager.lockActivities === false ? mAddActivityBtn.height : 0
+        y:storedParameters.lockActivities === false ? mAddActivityBtn.height : 0
 
         ListView {
             id: stoppedActivitiesList
@@ -170,14 +170,14 @@ Rectangle {
 
             Behavior on height{
                 NumberAnimation {
-                    duration: 2*parametersManager.animationsStep2;
+                    duration: 2*storedParameters.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
 
             Behavior on y{
                 NumberAnimation {
-                    duration: 2*parametersManager.animationsStep2;
+                    duration: 2*storedParameters.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
             }
@@ -191,7 +191,7 @@ Rectangle {
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 2*parametersManager.animationsStep }
+            NumberAnimation { properties: "opacity"; duration: 2*storedParameters.animationsStep }
         }
     }
 
@@ -238,7 +238,7 @@ Rectangle {
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep;
+                duration: 2*storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -260,7 +260,7 @@ Rectangle {
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep;
+                duration: 2*storedParameters.animationsStep;
                 easing.type: Easing.InOutQuad;
             }
         }

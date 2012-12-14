@@ -33,7 +33,7 @@ Item{
 
     Behavior on scale{
         NumberAnimation {
-            duration: 3*parametersManager.animationsStep;
+            duration: 3*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }

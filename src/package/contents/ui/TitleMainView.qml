@@ -93,7 +93,7 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                checked: parametersManager.lockActivities
+                checked: storedParameters.lockActivities
 
                 MouseArea{
                     id:lockerToolBtnMouseArea
@@ -101,7 +101,7 @@ Rectangle{
 
                     onClicked:{
                         //lockerToolBtn.checked = !lockerToolBtn.checked;
-                        parametersManager.lockActivities = !parametersManager.lockActivities;
+                        storedParameters.lockActivities = !storedParameters.lockActivities;
                     }
                 }
             }
@@ -143,7 +143,7 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                checked:parametersManager.showWindows
+                checked:storedParameters.showWindows
 
                 onCheckedChanged:{
 
@@ -157,7 +157,7 @@ Rectangle{
 
                     onClicked:{
                         //windowsToolBtn.checked = !windowsToolBtn.checked;
-                        parametersManager.showWindows = !parametersManager.showWindows;
+                        storedParameters.showWindows = !storedParameters.showWindows;
                     }
                 }
             }
@@ -212,10 +212,10 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                checked:parametersManager.windowsPreviews
+                checked:storedParameters.windowsPreviews
                 //checked: (mainView.enablePreviews&&())
               //  enabled:((mainView.isOnDashBoard)&&
-                  enabled:((parametersManager.showWindows)&&
+                  enabled:((storedParameters.showWindows)&&
                             (mainView.effectsSystemEnabled))
 
                 //onCheckedChanged:{
@@ -227,7 +227,7 @@ Rectangle{
                     id:effectsToolBtnMouseArea
                     anchors.fill:parent
                     onClicked:{
-                        parametersManager.windowsPreviews = !parametersManager.windowsPreviews;
+                        storedParameters.windowsPreviews = !storedParameters.windowsPreviews;
                         if(effectsToolBtn.checked){
                             if(mainView.firstRunCalibration === false){
                                 mainView.getDynLib().showFirstCalibrationDialog();

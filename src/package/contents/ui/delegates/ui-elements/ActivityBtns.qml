@@ -18,7 +18,7 @@ Item{
         width:1.5*addWidgetsBtn.width
         height:1.5*addWidgetsBtn.height
         radius:3
-        opacity: parametersManager.lockActivities ? 0 : 1
+        opacity: storedParameters.lockActivities ? 0 : 1
 
         x:buttonsSize/2
         anchors.top: parent.top
@@ -51,10 +51,10 @@ Item{
         anchors.right: parent.right
         anchors.rightMargin:0.5*buttonsSize
         anchors.top: parent.top
-        opacity: allwlists.activitiesShown == 1 && parametersManager.lockActivities ? 0 : 1
+        opacity: allwlists.activitiesShown == 1 && storedParameters.lockActivities ? 0 : 1
 
-        width: parametersManager.lockActivities || allwlists.activitiesShown === 1 ? 1.4 * stopActivityBtn.width : 1.25 * rightActions.width
-        height: parametersManager.lockActivities ? 1.3 * stopActivityBtn.height : 1.5 * rightActions.height
+        width: storedParameters.lockActivities || allwlists.activitiesShown === 1 ? 1.4 * stopActivityBtn.width : 1.25 * rightActions.width
+        height: storedParameters.lockActivities ? 1.3 * stopActivityBtn.height : 1.5 * rightActions.height
         border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
         border.width:  1
         color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
@@ -70,7 +70,7 @@ Item{
             IconButton {
                 id:stopActivityBtn
                 icon: instanceOfThemeList.icons.PauseActivity
-                width: parametersManager.lockActivities ? 1.2 * buttonsSize : buttonsSize
+                width: storedParameters.lockActivities ? 1.2 * buttonsSize : buttonsSize
                 height: width
                 opacity: allwlists.activitiesShown > 1 ? 1 : 0
 
@@ -87,7 +87,7 @@ Item{
                 icon:instanceOfThemeList.icons.CloneActivity
                 width: buttonsSize
                 height: buttonsSize
-                opacity: parametersManager.lockActivities ? 0 : 1
+                opacity: storedParameters.lockActivities ? 0 : 1
                 onClicked: {
                     instanceOfActivitiesList.cloneActivityDialog(ccode);
                 }
@@ -100,7 +100,7 @@ Item{
                 icon: instanceOfThemeList.icons.DeleteActivity
                 width: buttonsSize
                 height: buttonsSize
-                opacity: ((allwlists.activitiesShown>1)&&(!parametersManager.lockActivities)) ? 1 : 0
+                opacity: ((allwlists.activitiesShown>1)&&(!storedParameters.lockActivities)) ? 1 : 0
                 onClicked: {
                     instanceOfActivitiesList.removeActivityDialog(ccode);
                 }
@@ -112,9 +112,9 @@ Item{
 
     function clickedStopped(){
         instanceOfActivitiesList.stopActivity(ccode);
-        console.log("animationsStep2: " + parametersManager.animationsStep2)
+        console.log("animationsStep2: " + storedParameters.animationsStep2)
 
-        if(parametersManager.animationsStep2!==0){
+        if(storedParameters.animationsStep2!==0){
             var x1 = activityIcon.x;
             var y1 = activityIcon.y;
 

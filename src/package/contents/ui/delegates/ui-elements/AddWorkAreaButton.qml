@@ -36,10 +36,10 @@ Rectangle{
     }
 
     Behavior on color{
-        ColorAnimation { from: addWorkArea.color; duration: 3*parametersManager.animationsStep }
+        ColorAnimation { from: addWorkArea.color; duration: 3*storedParameters.animationsStep }
     }
     Behavior on border.color{
-        ColorAnimation { from: addWorkArea.border.color; duration: 3*parametersManager.animationsStep }
+        ColorAnimation { from: addWorkArea.border.color; duration: 3*storedParameters.animationsStep }
     }
 
 

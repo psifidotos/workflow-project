@@ -54,7 +54,7 @@ DialogTemplate2{
 
         opacity:disablePreviews === true ? 0.65 : 1
 
-        visible: parametersManager.windowsPreviews
+        visible: storedParameters.windowsPreviews
 
         MouseArea{
             anchors.fill: parent
@@ -211,7 +211,7 @@ DialogTemplate2{
         }
 
         transitions: Transition {
-            NumberAnimation { properties: "opacity"; duration: 2*parametersManager.animationsStep }
+            NumberAnimation { properties: "opacity"; duration: 2*storedParameters.animationsStep }
         }
     }
 /*
@@ -247,7 +247,7 @@ DialogTemplate2{
         else{
             //Count the rows and columns//
             //Count the cellWidth and cellHeight//
-            if ( (parametersManager.windowsPreviews === false) ||
+            if ( (storedParameters.windowsPreviews === false) ||
                     (deskDialog.disablePreviews===true) ){
                 if (counter<=5){
                     deskDialog.shownRows=counter;

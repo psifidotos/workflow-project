@@ -40,7 +40,7 @@ DialogTemplate2 {
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }

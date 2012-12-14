@@ -35,7 +35,7 @@ Item{
                                    ( (onAllActivities === true )&&(isPressed === false) ):
                                    (code !== 'DontShow')&&(isPressed === false)
 
-    property bool showPreviews: ((parametersManager.windowsPreviews === true)&&
+    property bool showPreviews: ((storedParameters.windowsPreviews === true)&&
                                  (mustBeShown === true)&&
                                  (forceState1 === false))
 
@@ -216,21 +216,21 @@ Item{
 
     Behavior on height{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on width{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*parametersManager.animationsStep;
+            duration: 2*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -992,8 +992,8 @@ Item{
             var obj = previewRect.mapToItem(mainView,x1,y1);
 
             taskManager.setWindowPreview(taskDeleg2.ccode,
-                                         obj.x+parametersManager.windowsPreviewsOffsetX,
-                                         obj.y+parametersManager.windowsPreviewsOffsetY,
+                                         obj.x+storedParameters.windowsPreviewsOffsetX,
+                                         obj.y+storedParameters.windowsPreviewsOffsetY,
                                          previewRect.width-(2*previewRect.border.width),
                                          previewRect.height-(2*previewRect.border.width));
         }

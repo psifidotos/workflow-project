@@ -1,8 +1,8 @@
-#include "parametersmanager.h"
+#include "storedparameters.h"
 
 #include <KConfigGroup>
 
-ParametersManager::ParametersManager(QObject *parent, KConfigGroup *conf):
+StoredParameters::StoredParameters(QObject *parent, KConfigGroup *conf):
     QObject(parent),
     config(conf),
     m_animationsStep(0),
@@ -23,12 +23,12 @@ ParametersManager::ParametersManager(QObject *parent, KConfigGroup *conf):
     m_showStoppedActivities = config->readEntry("ShowStoppedPanel", true);
 }
 
-ParametersManager::~ParametersManager()
+StoredParameters::~StoredParameters()
 {
 
 }
 
-void ParametersManager::setLockActivities(bool lockActivities)
+void StoredParameters::setLockActivities(bool lockActivities)
 {
     m_lockActivities = lockActivities;
     config->writeEntry("LockActivities",m_lockActivities);
@@ -36,13 +36,13 @@ void ParametersManager::setLockActivities(bool lockActivities)
     emit configNeedsSaving();
 }
 
-bool ParametersManager::lockActivities() const
+bool StoredParameters::lockActivities() const
 {
     return m_lockActivities;
 }
 
 
-void ParametersManager::setShowWindows(bool showWinds)
+void StoredParameters::setShowWindows(bool showWinds)
 {
     m_showWindows = showWinds;
     config->writeEntry("ShowWindows",m_showWindows);
@@ -50,13 +50,13 @@ void ParametersManager::setShowWindows(bool showWinds)
     emit configNeedsSaving();
 }
 
-bool ParametersManager::showWindows() const
+bool StoredParameters::showWindows() const
 {
     return m_showWindows;
 }
 
 
-void ParametersManager::setZoomFactor(int zf)
+void StoredParameters::setZoomFactor(int zf)
 {
     m_zoomFactor = zf;
     config->writeEntry("ZoomFactor",m_zoomFactor);
@@ -64,13 +64,13 @@ void ParametersManager::setZoomFactor(int zf)
     emit configNeedsSaving();
 }
 
-int ParametersManager::zoomFactor() const
+int StoredParameters::zoomFactor() const
 {
     return m_zoomFactor;
 }
 
 
-void ParametersManager::setAnimations(int an)
+void StoredParameters::setAnimations(int an)
 {
     m_animations = an;
     config->writeEntry("Animations",m_animations);
@@ -79,22 +79,22 @@ void ParametersManager::setAnimations(int an)
     emit configNeedsSaving();
 }
 
-int ParametersManager::animations() const
+int StoredParameters::animations() const
 {
     return m_animations;
 }
 
-int ParametersManager::animationsStep() const
+int StoredParameters::animationsStep() const
 {
     return m_animationsStep;
 }
 
-int ParametersManager::animationsStep2() const
+int StoredParameters::animationsStep2() const
 {
     return m_animationsStep2;
 }
 
-void ParametersManager::updateAnimationsSteps()
+void StoredParameters::updateAnimationsSteps()
 {
     int animationsStepOld = m_animationsStep;
     int animationsStep2Old = m_animationsStep2;
@@ -117,7 +117,7 @@ void ParametersManager::updateAnimationsSteps()
 }
 
 
-void ParametersManager::setWindowsPreviews(bool winPrev)
+void StoredParameters::setWindowsPreviews(bool winPrev)
 {
     m_windowsPreviews = winPrev;
     config->writeEntry("WindowPreviews",m_windowsPreviews);
@@ -125,12 +125,12 @@ void ParametersManager::setWindowsPreviews(bool winPrev)
     emit configNeedsSaving();
 }
 
-bool ParametersManager::windowsPreviews() const
+bool StoredParameters::windowsPreviews() const
 {
     return m_windowsPreviews;
 }
 
-void ParametersManager::setWindowsPreviewsOffsetX(int offX)
+void StoredParameters::setWindowsPreviewsOffsetX(int offX)
 {
     m_windowsPreviewsOffsetX = offX;
     config->writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
@@ -138,12 +138,12 @@ void ParametersManager::setWindowsPreviewsOffsetX(int offX)
     emit configNeedsSaving();
 }
 
-int ParametersManager::windowsPreviewsOffsetX() const
+int StoredParameters::windowsPreviewsOffsetX() const
 {
     return m_windowsPreviewsOffsetX;
 }
 
-void ParametersManager::setWindowsPreviewsOffsetY(int offY)
+void StoredParameters::setWindowsPreviewsOffsetY(int offY)
 {
     m_windowsPreviewsOffsetY = offY;
     config->writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
@@ -151,13 +151,13 @@ void ParametersManager::setWindowsPreviewsOffsetY(int offY)
     emit configNeedsSaving();
 }
 
-int ParametersManager::windowsPreviewsOffsetY() const
+int StoredParameters::windowsPreviewsOffsetY() const
 {
     return m_windowsPreviewsOffsetY;
 }
 
 
-void ParametersManager::setFontRelevance(int fr)
+void StoredParameters::setFontRelevance(int fr)
 {
     m_fontRelevance = fr;
     config->writeEntry("FontRelevance",m_fontRelevance);
@@ -165,12 +165,12 @@ void ParametersManager::setFontRelevance(int fr)
     emit configNeedsSaving();
 }
 
-int ParametersManager::fontRelevance() const
+int StoredParameters::fontRelevance() const
 {
     return m_fontRelevance;
 }
 
-void ParametersManager::setShowStoppedActivities(bool showStpAct)
+void StoredParameters::setShowStoppedActivities(bool showStpAct)
 {
     m_showStoppedActivities = showStpAct;
     config->writeEntry("ShowStoppedPanel",m_showStoppedActivities);
@@ -178,10 +178,10 @@ void ParametersManager::setShowStoppedActivities(bool showStpAct)
     emit configNeedsSaving();
 }
 
-bool ParametersManager::showStoppedActivities() const
+bool StoredParameters::showStoppedActivities() const
 {
     return m_showStoppedActivities;
 }
 
 
-#include "parametersmanager.moc"
+#include "storedparameters.moc"

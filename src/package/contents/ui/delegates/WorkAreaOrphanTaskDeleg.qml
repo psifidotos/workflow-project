@@ -38,14 +38,14 @@ import "ui-elements"
 
         Behavior on height{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep2;
+                duration: 2*storedParameters.animationsStep2;
                 easing.type: Easing.InOutQuad;
             }
         }
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*parametersManager.animationsStep2;
+                duration: 2*storedParameters.animationsStep2;
                 easing.type: Easing.InOutQuad;
             }
         }
@@ -67,7 +67,7 @@ import "ui-elements"
 
             Behavior on color{
                 ColorAnimation {
-                    duration: 3*parametersManager.animationsStep
+                    duration: 3*storedParameters.animationsStep
                 }
             }
 
@@ -89,7 +89,7 @@ import "ui-elements"
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 3*parametersManager.animationsStep
+                        duration: 3*storedParameters.animationsStep
                     }
                 }
 

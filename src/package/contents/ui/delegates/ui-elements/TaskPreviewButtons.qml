@@ -144,7 +144,7 @@ Item {
 
             function toDesktopAnimation(){
                 if (placeStateBtn.state !== "everywhere"){
-                    if(parametersManager.animationsStep2!==0){
+                    if(storedParameters.animationsStep2!==0){
                         var x1 = imageTask2.x;
                         var y1 = imageTask2.y;
 
@@ -155,7 +155,7 @@ Item {
 
             function toAllDesktopsAnimation(){
                 if (placeStateBtn.state === "allDesktops"){
-                    if(parametersManager.animationsStep2!==0){
+                    if(storedParameters.animationsStep2!==0){
                         var x3 = imageTask2.x;
                         var y3 = imageTask2.y;
 
@@ -219,7 +219,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityClose";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
 
                     }
@@ -230,7 +230,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }
@@ -247,7 +247,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityClose";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
 
                     }
@@ -258,7 +258,7 @@ Item {
                     NumberAnimation {
                         target: buttonsArea;
                         property: "opacityWSt";
-                        duration: parametersManager.animationsStep;
+                        duration: storedParameters.animationsStep;
                         easing.type: Easing.InOutQuad;
                     }
                 }

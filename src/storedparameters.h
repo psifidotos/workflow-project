@@ -1,9 +1,9 @@
-#ifndef PARAMETERSMANAGER_H
-#define PARAMETERSMANAGER_H
+#ifndef STOREDPARAMETERS_H
+#define STOREDPARAMETERS_H
 
 #include <KConfigGroup>
 
-class ParametersManager : public QObject
+class StoredParameters : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool lockActivities READ lockActivities WRITE setLockActivities NOTIFY lockActivitiesChanged)
@@ -29,8 +29,8 @@ public:
        FULL
     };*/
 
-   explicit ParametersManager(QObject *parent = 0, KConfigGroup *conf = 0);
-    ~ParametersManager();
+   explicit StoredParameters(QObject *parent = 0, KConfigGroup *conf = 0);
+    ~StoredParameters();
 
     void setLockActivities(bool);
     bool lockActivities() const;

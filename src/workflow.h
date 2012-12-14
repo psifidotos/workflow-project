@@ -41,7 +41,7 @@
 #include "ui_config.h"
 
 class QDesktopWidget;
-class ParametersManager;
+class StoredParameters;
 
 namespace Plasma {
     class ExtenderItem;
@@ -159,7 +159,7 @@ private:
 
     ActivityManager *actManager;
     PTaskManager *taskManager;
-    ParametersManager *paramManager;
+    StoredParameters *storedParams;
 
     QObject *mainQML;
 

@@ -130,7 +130,7 @@ DialogTemplate2{
             }
 
             transitions: Transition {
-                NumberAnimation { properties: "opacity"; duration: 2*parametersManager.animationsStep }
+                NumberAnimation { properties: "opacity"; duration: 2*storedParameters.animationsStep }
             }
 
         }
@@ -495,8 +495,8 @@ DialogTemplate2{
     function openD(){
         calibrationDialog.open();
 
-        xOffsetSlider.value = parametersManager.windowsPreviewsOffsetX;
-        yOffsetSlider.value = parametersManager.windowsPreviewsOffsetY;
+        xOffsetSlider.value = storedParameters.windowsPreviewsOffsetX;
+        yOffsetSlider.value = storedParameters.windowsPreviewsOffsetY;
 
         allWorkareas.flickableV = false;
         allActT.forceState1();
@@ -525,8 +525,8 @@ DialogTemplate2{
     Connections {
         target: calibDialog
         onClickedOk:{
-            parametersManager.windowsPreviewsOffsetX = xValueText.val;
-            parametersManager.windowsPreviewsOffsetY = yValueText.val
+            storedParameters.windowsPreviewsOffsetX = xValueText.val;
+            storedParameters.windowsPreviewsOffsetY = yValueText.val
             calibDialog.clickedCancel();
 
             completed();

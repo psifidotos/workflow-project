@@ -11,20 +11,20 @@ Item{
     width:allActTaskL.shownTasks * allActRect.taskWidth+50
     height:allActRectShad.height+allActRect.height
 
-    x: parametersManager.showWindows && (allActTaskL.shownTasks>0) ? 0 : -width
+    x: storedParameters.showWindows && (allActTaskL.shownTasks>0) ? 0 : -width
 
     property string typeId:"allActivitiesTasks"
 
     Behavior on x{
         NumberAnimation {
-            duration: 3*parametersManager.animationsStep;
+            duration: 3*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }
 
     Behavior on width{
         NumberAnimation {
-            duration: 3*parametersManager.animationsStep;
+            duration: 3*storedParameters.animationsStep;
             easing.type: Easing.InOutQuad;
         }
     }

@@ -50,8 +50,8 @@ Rectangle {
     property real defaultFontSize:theme.defaultFont.pointSize
     //property real defaultFontRelativeness: 0
 
-    property real defFontRelStep: parametersManager.fontRelevance/20
-    property real fixedFontSize: defaultFontSize + parametersManager.fontRelevance
+    property real defFontRelStep: storedParameters.fontRelevance/20
+    property real fixedFontSize: defaultFontSize + storedParameters.fontRelevance
 
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
     //With using KWindowSystem workarea
@@ -166,7 +166,7 @@ Rectangle {
             workareaWidth: mainView.workareaWidth
             workareaHeight: mainView.workareaHeight
             scale: mainView.scaleMeter
-            animationsStep: parametersManager.animationsStep
+            animationsStep: storedParameters.animationsStep
         }
 
         StoppedActivitiesPanel{
@@ -196,7 +196,7 @@ Rectangle {
             z:10
 
           //  onValueChanged: workflowManager.setZoomFactor(value)
-            onValueChanged: parametersManager.zoomFactor = value;
+            onValueChanged: storedParameters.zoomFactor = value;
         }
     }
 
@@ -331,7 +331,7 @@ Rectangle {
 
         Timer{
             id:activitiesTimer
-            interval:200+parametersManager.animationsStep
+            interval:200+storedParameters.animationsStep
             repeat:false
             onTriggered: {
                 activitiesSignals.hideButtons();
