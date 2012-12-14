@@ -13,6 +13,9 @@ class StoredParameters : public QObject
     Q_PROPERTY(bool showStoppedActivities READ showStoppedActivities WRITE setShowStoppedActivities NOTIFY showStoppedActivitiesChanged)
     Q_PROPERTY(int fontRelevance READ fontRelevance WRITE setFontRelevance NOTIFY fontRelevanceChanged)
 
+    Q_PROPERTY(bool firstRunLiveTour READ firstRunLiveTour WRITE setFirstRunLiveTour NOTIFY firstRunLiveTourChanged)
+    Q_PROPERTY(bool firstRunCalibrationPreviews READ firstRunCalibrationPreviews WRITE setFirstRunCalibrationPreviews NOTIFY firstRunCalibrationPreviewsChanged)
+
     Q_PROPERTY(int animations READ animations WRITE setAnimations NOTIFY animationsChanged)
     Q_PROPERTY(int animationsStep READ animationsStep NOTIFY animationsStepChanged)
     Q_PROPERTY(int animationsStep2 READ animationsStep2 NOTIFY animationsStep2Changed)
@@ -47,6 +50,15 @@ public:
     void setFontRelevance(int);
     int fontRelevance() const;
 
+
+    void setFirstRunLiveTour(bool);
+    bool firstRunLiveTour() const;
+
+    void setFirstRunCalibrationPreviews(bool);
+    bool firstRunCalibrationPreviews() const;
+
+
+
     void setAnimations(int);
     int animations() const;
 
@@ -70,6 +82,9 @@ signals:
     void zoomFactorChanged(int);
     void showStoppedActivitiesChanged(bool);
     void fontRelevanceChanged(int);
+    void firstRunLiveTourChanged(bool);
+    void firstRunCalibrationPreviewsChanged(bool);
+
 
     void animationsChanged(int);
     void animationsStepChanged(int);
@@ -87,6 +102,8 @@ private:
    int m_zoomFactor;
    int m_fontRelevance;
    bool m_showStoppedActivities;
+   bool m_firstRunLiveTour;
+   bool m_firstRunCalibrationPreviews;
 
    int m_animations;
    int m_animationsStep; //Basic animations duration

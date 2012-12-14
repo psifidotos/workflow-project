@@ -57,8 +57,8 @@ Rectangle {
     //With using KWindowSystem workarea
     property real screenRatio:0.75
 
-    property bool firstRunTour:false
-    property bool firstRunCalibration:false
+   // property bool firstRunTour:false
+  //  property bool firstRunCalibration:false
 
     property int themePos:0
 
@@ -77,8 +77,8 @@ Rectangle {
  //   onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
  //   onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
   //  onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
-    onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
-    onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
+  //  onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
+  //  onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
 
     signal minimumWidthChanged;
     signal minimumHeightChanged;
@@ -208,6 +208,8 @@ Rectangle {
 
         DynamAnim.createComponents();
 
+        if(storedParameters.firstRunLiveTour === false)
+                getDynLib().showFirstHelpTourDialog();
      //   oxygenT.lockerChecked = mainView.lockActivities
      //   oxygenT.windowsChecked = mainView.showWinds
     //    oxygenT.effectsChecked = mainView.enablePreviews
@@ -263,7 +265,7 @@ Rectangle {
         mainView.hideStoppedPanel = !s;
     }*/
 
-    function setFirstRunLiveTour(f){
+  /*  function setFirstRunLiveTour(f){
         mainView.firstRunTour = f;
         if(f===false){
             getDynLib().showFirstHelpTourDialog();
@@ -272,7 +274,7 @@ Rectangle {
 
     function setFirstRunCalibrationPreviews(cal){
         mainView.firstRunCalibration = cal;
-    }
+    }*/
 
     function setEffectsSystem(ef){
         mainView.effectsSystemEnabled = ef;
@@ -418,8 +420,8 @@ Rectangle {
         target:firstHelpTourDialog
         onCompleted:{
             mainView.getDynLib().deleteFirstHelpTourDialog();
-            if(firstRunTour === false)
-                workflowManager.setFirstRunLiveTour(true);
+            if(storedParameters.firstRunLiveTour === false)
+                storedParameters.firstRunLiveTour = true;
         }
     }
 
@@ -427,9 +429,8 @@ Rectangle {
         target:firstCalibrationDialog
         onCompleted:{
             mainView.getDynLib().deleteFirstCalibrationDialog();
-            if(firstRunCalibration === false){
-                workflowManager.setFirstRunCalibrationPreviews(true);
-                setFirstRunCalibrationPreviews(true);
+            if(storedParameters.firstRunCalibrationPreviews === false){
+                storedParameters.firstRunCalibrationPreviews = true;
             }
         }
     }

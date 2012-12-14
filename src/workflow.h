@@ -77,8 +77,8 @@ public:
  //   Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
  //   Q_INVOKABLE void setFontRelevance(bool fr);
  //   Q_INVOKABLE void setShowStoppedActivities(bool s);
-    Q_INVOKABLE void setFirstRunLiveTour(bool f);
-    Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
+  //  Q_INVOKABLE void setFirstRunLiveTour(bool f);
+  //  Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
     Q_INVOKABLE void addTheme(QString);
 
@@ -140,8 +140,8 @@ private:
  //   int m_windowsPreviewsOffsetY;
  //   int m_fontRelevance;
    // bool m_showStoppedActivities;
-    bool m_firstRunLiveTour;
-    bool m_firstRunCalibrationPreviews;
+  //  bool m_firstRunLiveTour;
+  //  bool m_firstRunCalibrationPreviews;
 
     bool m_hideOnClick;
     bool m_isOnDashboard;

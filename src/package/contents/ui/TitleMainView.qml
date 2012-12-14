@@ -228,9 +228,10 @@ Rectangle{
                     anchors.fill:parent
                     onClicked:{
                         storedParameters.windowsPreviews = !storedParameters.windowsPreviews;
-                        if(effectsToolBtn.checked){
-                            if(mainView.firstRunCalibration === false){
+                        if(storedParameters.windowsPreviews){
+                            if(storedParameters.firstRunCalibrationPreviews === false){
                                 mainView.getDynLib().showFirstCalibrationDialog();
+                                storedParameters.firstRunCalibrationPreviews = true;
                             }
 
                             if(taskManager.mainWindowIdisSet() === false){
@@ -240,8 +241,8 @@ Rectangle{
                     }
 
                     onPressAndHold: {
-                        if(!effectsToolBtn.checked)
-                            effectsToolBtn.checked = true;
+                        if(!storedParameters.windowsPreviews)
+                            storedParameters.windowsPreviews = true;
 
                         mainView.getDynLib().showCalibrationDialog();
                     }

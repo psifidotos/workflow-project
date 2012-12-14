@@ -70,8 +70,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
  //   m_windowsPreviewsOffsetY=0;
    // m_fontRelevance=0;
   //  m_showStoppedActivities=true;
-    m_firstRunLiveTour=false;
-    m_firstRunCalibrationPreviews=false;
+ //   m_firstRunLiveTour=false;
+  //  m_firstRunCalibrationPreviews=false;
     m_hideOnClick = false;
 
     m_isOnDashboard = false;
@@ -429,7 +429,7 @@ void WorkFlow::setShowStoppedActivities(bool s){
     QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities", Q_ARG(QVariant, s));
     appConfig.writeEntry("ShowStoppedPanel", s);
     emit configNeedsSaving();
-}*/
+}
 
 void WorkFlow::setFirstRunLiveTour(bool f){
     m_firstRunLiveTour = f;
@@ -442,7 +442,7 @@ void WorkFlow::setFirstRunCalibrationPreviews(bool cal){
     m_firstRunCalibrationPreviews = cal;
     appConfig.writeEntry("FirstRunCalibration", cal);
     emit configNeedsSaving();
-}
+}*/
 
 void WorkFlow::setCurrentTheme(QString theme)
 {
@@ -502,8 +502,8 @@ void WorkFlow::loadConfigurationFiles()
  //   int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
 //    int fontRel = appConfig.readEntry("FontRelevance", 0);
 //    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);
-    bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
-    bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
+ //   bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
+ //   bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
     QString curTheme = appConfig.readEntry("CurrentTheme", "Oxygen");
     int tipsDelay = appConfig.readEntry("ToolTipsDelay", 300);
@@ -515,8 +515,8 @@ void WorkFlow::loadConfigurationFiles()
  //   setWindowsPreviewsOffsetY(winPrevOffY);
  //   setFontRelevance(fontRel);
  //   setShowStoppedActivities(showStopAct);
-    setFirstRunLiveTour(firRunLiveTour);
-    setFirstRunCalibrationPreviews(firRunCalibrationPrev);
+ //   setFirstRunLiveTour(firRunLiveTour);
+ //   setFirstRunCalibrationPreviews(firRunCalibrationPrev);
     setHideOnClick(hideOnClick);
     setCurrentTheme(curTheme);
     setToolTipsDelayChanged(tipsDelay);

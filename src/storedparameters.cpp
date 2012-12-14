@@ -21,6 +21,8 @@ StoredParameters::StoredParameters(QObject *parent, KConfigGroup *conf):
 
     m_fontRelevance = config->readEntry("FontRelevance", 0);
     m_showStoppedActivities = config->readEntry("ShowStoppedPanel", true);
+    m_firstRunLiveTour = config->readEntry("FirstRunTour", false);
+    m_firstRunCalibrationPreviews = config->readEntry("FirstRunCalibration", false);
 }
 
 StoredParameters::~StoredParameters()
@@ -181,6 +183,33 @@ void StoredParameters::setShowStoppedActivities(bool showStpAct)
 bool StoredParameters::showStoppedActivities() const
 {
     return m_showStoppedActivities;
+}
+
+
+void StoredParameters::setFirstRunLiveTour(bool firRunTour)
+{
+    m_firstRunLiveTour = firRunTour;
+    config->writeEntry("FirstRunTour",m_firstRunLiveTour);
+    emit firstRunLiveTourChanged(m_firstRunLiveTour);
+    emit configNeedsSaving();
+}
+
+bool StoredParameters::firstRunLiveTour() const
+{
+    return m_firstRunLiveTour;
+}
+
+void StoredParameters::setFirstRunCalibrationPreviews(bool firRunCalib)
+{
+    m_firstRunCalibrationPreviews = firRunCalib;
+    config->writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
+    emit firstRunLiveTourChanged(m_firstRunCalibrationPreviews);
+    emit configNeedsSaving();
+}
+
+bool StoredParameters::firstRunCalibrationPreviews() const
+{
+    return m_firstRunCalibrationPreviews;
 }
 
 
