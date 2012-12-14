@@ -68,8 +68,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 //    m_windowsPreviews=false;
   //  m_windowsPreviewsOffsetX=0;
  //   m_windowsPreviewsOffsetY=0;
-    m_fontRelevance=0;
-    m_showStoppedActivities=true;
+   // m_fontRelevance=0;
+  //  m_showStoppedActivities=true;
     m_firstRunLiveTour=false;
     m_firstRunCalibrationPreviews=false;
     m_hideOnClick = false;
@@ -416,6 +416,7 @@ void WorkFlow::answeredIconDialog()
     this->showPopup();
 }
 
+/*
 void WorkFlow::setFontRelevance(bool fr){
     m_fontRelevance = fr;
     QMetaObject::invokeMethod(mainQML, "setFontRelevance", Q_ARG(QVariant, fr));
@@ -428,7 +429,7 @@ void WorkFlow::setShowStoppedActivities(bool s){
     QMetaObject::invokeMethod(mainQML, "setShowStoppedActivities", Q_ARG(QVariant, s));
     appConfig.writeEntry("ShowStoppedPanel", s);
     emit configNeedsSaving();
-}
+}*/
 
 void WorkFlow::setFirstRunLiveTour(bool f){
     m_firstRunLiveTour = f;
@@ -499,8 +500,8 @@ void WorkFlow::loadConfigurationFiles()
 //    bool winPreviews = appConfig.readEntry("WindowPreviews", false);
  //   int winPrevOffX = appConfig.readEntry("WindowPreviewsOffsetX", 0);
  //   int winPrevOffY = appConfig.readEntry("WindowPreviewsOffsetY", 0);
-    int fontRel = appConfig.readEntry("FontRelevance", 0);
-    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);
+//    int fontRel = appConfig.readEntry("FontRelevance", 0);
+//    bool showStopAct = appConfig.readEntry("ShowStoppedPanel", true);
     bool firRunLiveTour = appConfig.readEntry("FirstRunTour", false);
     bool firRunCalibrationPrev = appConfig.readEntry("FirstRunCalibration", false);
     bool hideOnClick = appConfig.readEntry("HideOnClick", false);
@@ -512,8 +513,8 @@ void WorkFlow::loadConfigurationFiles()
  //   setWindowsPreviews(winPreviews);
   //  setWindowsPreviewsOffsetX(winPrevOffX);
  //   setWindowsPreviewsOffsetY(winPrevOffY);
-    setFontRelevance(fontRel);
-    setShowStoppedActivities(showStopAct);
+ //   setFontRelevance(fontRel);
+ //   setShowStoppedActivities(showStopAct);
     setFirstRunLiveTour(firRunLiveTour);
     setFirstRunCalibrationPreviews(firRunCalibrationPrev);
     setHideOnClick(hideOnClick);

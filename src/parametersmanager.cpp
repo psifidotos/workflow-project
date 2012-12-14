@@ -19,6 +19,8 @@ ParametersManager::ParametersManager(QObject *parent, KConfigGroup *conf):
     m_windowsPreviewsOffsetX = config->readEntry("WindowPreviewsOffsetX", 0);
     m_windowsPreviewsOffsetY = config->readEntry("WindowPreviewsOffsetY", 0);
 
+    m_fontRelevance = config->readEntry("FontRelevance", 0);
+    m_showStoppedActivities = config->readEntry("ShowStoppedPanel", true);
 }
 
 ParametersManager::~ParametersManager()
@@ -152,6 +154,33 @@ void ParametersManager::setWindowsPreviewsOffsetY(int offY)
 int ParametersManager::windowsPreviewsOffsetY() const
 {
     return m_windowsPreviewsOffsetY;
+}
+
+
+void ParametersManager::setFontRelevance(int fr)
+{
+    m_fontRelevance = fr;
+    config->writeEntry("FontRelevance",m_fontRelevance);
+    emit fontRelevanceChanged(m_fontRelevance);
+    emit configNeedsSaving();
+}
+
+int ParametersManager::fontRelevance() const
+{
+    return m_fontRelevance;
+}
+
+void ParametersManager::setShowStoppedActivities(bool showStpAct)
+{
+    m_showStoppedActivities = showStpAct;
+    config->writeEntry("ShowStoppedPanel",m_showStoppedActivities);
+    emit showStoppedActivitiesChanged(m_showStoppedActivities);
+    emit configNeedsSaving();
+}
+
+bool ParametersManager::showStoppedActivities() const
+{
+    return m_showStoppedActivities;
 }
 
 

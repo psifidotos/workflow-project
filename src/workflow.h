@@ -75,8 +75,8 @@ public:
 //    Q_INVOKABLE void setWindowsPreviews(bool b);
  //   Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
  //   Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
-    Q_INVOKABLE void setFontRelevance(bool fr);
-    Q_INVOKABLE void setShowStoppedActivities(bool s);
+ //   Q_INVOKABLE void setFontRelevance(bool fr);
+ //   Q_INVOKABLE void setShowStoppedActivities(bool s);
     Q_INVOKABLE void setFirstRunLiveTour(bool f);
     Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
 
@@ -138,8 +138,8 @@ private:
  //   bool m_windowsPreviews;
  //   int m_windowsPreviewsOffsetX;
  //   int m_windowsPreviewsOffsetY;
-    int m_fontRelevance;
-    bool m_showStoppedActivities;
+ //   int m_fontRelevance;
+   // bool m_showStoppedActivities;
     bool m_firstRunLiveTour;
     bool m_firstRunCalibrationPreviews;
 

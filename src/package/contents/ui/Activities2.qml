@@ -42,15 +42,16 @@ Rectangle {
    // property int previewsOffsetX: 13
    // property int previewsOffsetY: 42
 
-    property alias hideStoppedPanel: stoppedPanel.doNotShow
+    //property alias hideStoppedPanel: stoppedPanel.doNotShow
 
     property variant defaultFont: theme.defaultFont
 
     property color defaultFontColor:theme.textColor
     property real defaultFontSize:theme.defaultFont.pointSize
-    property real defaultFontRelativeness: 0
-    property real defFontRelStep: mainView.defaultFontRelativeness/20
-    property real fixedFontSize: defaultFontSize + defaultFontRelativeness
+    //property real defaultFontRelativeness: 0
+
+    property real defFontRelStep: parametersManager.fontRelevance/20
+    property real fixedFontSize: defaultFontSize + parametersManager.fontRelevance
 
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
     //With using KWindowSystem workarea
@@ -74,8 +75,8 @@ Rectangle {
  //   onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
  //   onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
  //   onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
-    onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
-    onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
+ //   onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
+  //  onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
     onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
     onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
 
@@ -252,7 +253,7 @@ Rectangle {
 
     function setWindowsPreviewsOffsetY(y){
         mainView.previewsOffsetY = y;
-    }*/
+    }
 
     function setFontRelevance(fr){
         mainView.defaultFontRelativeness = fr;
@@ -260,7 +261,7 @@ Rectangle {
 
     function setShowStoppedActivities(s){
         mainView.hideStoppedPanel = !s;
-    }
+    }*/
 
     function setFirstRunLiveTour(f){
         mainView.firstRunTour = f;

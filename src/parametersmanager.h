@@ -10,6 +10,9 @@ class ParametersManager : public QObject
     Q_PROPERTY(bool showWindows READ showWindows WRITE setShowWindows NOTIFY showWindowsChanged)
     Q_PROPERTY(int zoomFactor READ zoomFactor WRITE setZoomFactor NOTIFY zoomFactorChanged)
 
+    Q_PROPERTY(bool showStoppedActivities READ showStoppedActivities WRITE setShowStoppedActivities NOTIFY showStoppedActivitiesChanged)
+    Q_PROPERTY(int fontRelevance READ fontRelevance WRITE setFontRelevance NOTIFY fontRelevanceChanged)
+
     Q_PROPERTY(int animations READ animations WRITE setAnimations NOTIFY animationsChanged)
     Q_PROPERTY(int animationsStep READ animationsStep NOTIFY animationsStepChanged)
     Q_PROPERTY(int animationsStep2 READ animationsStep2 NOTIFY animationsStep2Changed)
@@ -38,6 +41,12 @@ public:
     void setZoomFactor(int);
     int zoomFactor() const;
 
+    void setShowStoppedActivities(bool);
+    bool showStoppedActivities() const;
+
+    void setFontRelevance(int);
+    int fontRelevance() const;
+
     void setAnimations(int);
     int animations() const;
 
@@ -59,6 +68,8 @@ signals:
     void lockActivitiesChanged(bool);
     void showWindowsChanged(bool);
     void zoomFactorChanged(int);
+    void showStoppedActivitiesChanged(bool);
+    void fontRelevanceChanged(int);
 
     void animationsChanged(int);
     void animationsStepChanged(int);
@@ -74,6 +85,9 @@ private:
    bool m_lockActivities;
    bool m_showWindows;
    int m_zoomFactor;
+   int m_fontRelevance;
+   bool m_showStoppedActivities;
+
    int m_animations;
    int m_animationsStep; //Basic animations duration
    int m_animationsStep2; //Full animations duration

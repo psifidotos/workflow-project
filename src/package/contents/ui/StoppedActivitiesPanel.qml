@@ -20,7 +20,7 @@ Rectangle {
     border.color: "#d9808080"
     border.width:1
 
-    property bool doNotShow: false
+    property bool doNotShow: !parametersManager.showStoppedActivities
 
     Behavior on x{
         NumberAnimation {
@@ -86,7 +86,7 @@ Rectangle {
 
                 }
 
-                stopActBack.doNotShow = (!stopActBack.doNotShow);
+                parametersManager.showStoppedActivities = !parametersManager.showStoppedActivities;
 
             }
         }
