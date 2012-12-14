@@ -30,7 +30,7 @@
 
 
 ActivityManager::ActivityManager(QObject *parent) :
-    QObject(parent), m_plShowWidgets(0), m_activitiesCtrl(0)
+    QObject(parent),m_activitiesCtrl(0), m_plShowWidgets(0)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
     m_timer = new QTimer(this);
