@@ -35,14 +35,8 @@ Rectangle {
 
     //Applications properties/////
 
-   // property bool enablePreviews: false
 
     property bool effectsSystemEnabled: true
-
-   // property int previewsOffsetX: 13
-   // property int previewsOffsetY: 42
-
-    //property alias hideStoppedPanel: stoppedPanel.doNotShow
 
     property variant defaultFont: theme.defaultFont
 
@@ -57,28 +51,6 @@ Rectangle {
     //With using KWindowSystem workarea
     property real screenRatio:0.75
 
-   // property bool firstRunTour:false
-  //  property bool firstRunCalibration:false
-
-    property int themePos:0
-
-    property int toolTipsDelay:300
- //   property int pressAndHoldInterval:120
-
-//    onShowWindsChanged: workflowManager.setShowWindows(showWinds);
-
-  //  onLockActivitiesChanged: {
-        //workflowManager.setLockActivities(lockActivities);
-      //  activitiesSignals.showActivitiesButtons();
- //   }
-  //  onShowAnimationsChanged: workflowManager.setAnimations(showAnimations);
- //   onEnablePreviewsChanged: workflowManager.setWindowsPreviews(enablePreviews);
- //   onPreviewsOffsetXChanged: workflowManager.setWindowsPreviewsOffsetX(previewsOffsetX);
- //   onPreviewsOffsetYChanged: workflowManager.setWindowsPreviewsOffsetY(previewsOffsetY);
- //   onDefaultFontRelativenessChanged: workflowManager.setFontRelevance(defaultFontRelativeness);
-  //  onHideStoppedPanelChanged: workflowManager.setShowStoppedActivities(!hideStoppedPanel);
-  //  onFirstRunTourChanged: workflowManager.setFirstRunLiveTour(firstRunTour);
-  //  onFirstRunCalibrationChanged: workflowManager.setFirstRunCalibrationPreviews(firstRunCalibration);
 
     signal minimumWidthChanged;
     signal minimumHeightChanged;
@@ -210,30 +182,13 @@ Rectangle {
 
         if(storedParameters.firstRunLiveTour === false)
                 getDynLib().showFirstHelpTourDialog();
-     //   oxygenT.lockerChecked = mainView.lockActivities
-     //   oxygenT.windowsChecked = mainView.showWinds
-    //    oxygenT.effectsChecked = mainView.enablePreviews
+
     }
 
     function getDynLib(){
         return DynamAnim;
     }
     /*-------------------Loading values-------------------*/
- /*   function setShowWindows(v){
-        mainView.showWinds = v;
-        oxygenT.windowsChecked = v;
-    }*/
- /*   function setLockActivities(v){
-    //    mainView.lockActivities = v;
-    //    oxygenT.lockerChecked = v;
-    }*/
-  /*  function setZoomSlider(v){
-        zoomSlider.value = v;
-    }*/
-
- /*   function setAnimations(v){
-        mainView.showAnimations = v;
-    }*/
 
     function setIsOnDashboard(v){
         //
@@ -243,38 +198,7 @@ Rectangle {
         mainView.isOnDashBoard = v;
     }
 
-    /*
-    function setWindowsPreviews(b){
-        mainView.enablePreviews = b;
-        oxygenT.effectsChecked = mainView.enablePreviews;
-    }
 
-    function setWindowsPreviewsOffsetX(x){
-        mainView.previewsOffsetX = x;
-    }
-
-    function setWindowsPreviewsOffsetY(y){
-        mainView.previewsOffsetY = y;
-    }
-
-    function setFontRelevance(fr){
-        mainView.defaultFontRelativeness = fr;
-    }
-
-    function setShowStoppedActivities(s){
-        mainView.hideStoppedPanel = !s;
-    }*/
-
-  /*  function setFirstRunLiveTour(f){
-        mainView.firstRunTour = f;
-        if(f===false){
-            getDynLib().showFirstHelpTourDialog();
-        }
-    }
-
-    function setFirstRunCalibrationPreviews(cal){
-        mainView.firstRunCalibration = cal;
-    }*/
 
     function setEffectsSystem(ef){
         mainView.effectsSystemEnabled = ef;
@@ -282,19 +206,6 @@ Rectangle {
 
     function setScreenRatio(sc){
         mainView.screenRatio = sc;
-    }
-
-    function setCurrentTheme(th){
-        mainView.themePos = instanceOfThemeList.getIndexFor(th);
-    }
-
-    function setToolTipsDelay(dl){
-        mainView.toolTipsDelay = dl;
-    }
-
-    function loadThemes() {
-        for(var i=0; i<instanceOfThemeList.model.count; ++i)
-            workflowManager.addTheme(instanceOfThemeList.model.get(i).name);
     }
 
     /*

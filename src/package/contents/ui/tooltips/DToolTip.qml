@@ -175,7 +175,7 @@ PlasmaCore.FrameSvgItem{
 
     Timer{
         id: toolTipTimer
-        interval: mainView.toolTipsDelay
+        interval: storedParameters.toolTipsDelay
         repeat: false
 
         onTriggered: {
@@ -204,7 +204,7 @@ PlasmaCore.FrameSvgItem{
     }
 
     function showToolTip(){
-        if(mainView.toolTipsDelay > 0){
+        if(storedParameters.toolTipsDelay > 0){
             if (target !== tempMouseArea && !toolTipTimer.running){
                 toolTipTimer.start();
             }

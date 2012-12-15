@@ -64,23 +64,9 @@ public:
     virtual void init();
     virtual QGraphicsWidget *graphicsWidget();
 
-    Q_INVOKABLE void loadConfigurationFiles();
-
     ///Properties
- //   Q_INVOKABLE void setAnimations(int anim);
-    Q_INVOKABLE void setHideOnClick(bool);
     Q_INVOKABLE void hidePopupDialog();
     Q_INVOKABLE void showPopupDialog();
-
-//    Q_INVOKABLE void setWindowsPreviews(bool b);
- //   Q_INVOKABLE void setWindowsPreviewsOffsetX(int x);
- //   Q_INVOKABLE void setWindowsPreviewsOffsetY(int y);
- //   Q_INVOKABLE void setFontRelevance(bool fr);
- //   Q_INVOKABLE void setShowStoppedActivities(bool s);
-  //  Q_INVOKABLE void setFirstRunLiveTour(bool f);
-  //  Q_INVOKABLE void setFirstRunCalibrationPreviews(bool cal);
-
-    Q_INVOKABLE void addTheme(QString);
 
     Q_INVOKABLE void updatePopWindowWId();
 
@@ -105,25 +91,17 @@ protected:
     virtual void popupEvent(bool show);
 
 public slots:
-    void setCurrentTheme(QString);
 
     void geomChanged();
     void setMainWindowId();
 
     void activeWindowChanged(WId);
-//    void setAnimationsSlot(int);
-    void setHideOnClickSlot(bool);
 
     void screensSizeChanged(int);
-
-    void themeSelectionChanged(QString);
-
-    void setToolTipsDelayChanged(int);
 
     void showingIconsDialog();
     void answeredIconDialog();
     void configDialogFinished();
-
 
     void configDialogAccepted();
 
@@ -134,21 +112,9 @@ private slots:
     void createConfigurationInterface(KConfigDialog *parent);
 
 private:
- //   int m_animations;
- //   bool m_windowsPreviews;
- //   int m_windowsPreviewsOffsetX;
- //   int m_windowsPreviewsOffsetY;
- //   int m_fontRelevance;
-   // bool m_showStoppedActivities;
-  //  bool m_firstRunLiveTour;
-  //  bool m_firstRunCalibrationPreviews;
-
-    bool m_hideOnClick;
     bool m_isOnDashboard;
-    int m_tipsDelay;
 
     bool m_findPopupWid;
-    QString m_currentTheme;
 
     QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
@@ -163,13 +129,9 @@ private:
 
     QObject *mainQML;
 
-
     Ui::Config m_config;
 
-
     QHash <QString,QStringList *> storedWorkareas;
-
-    QList <QString> loadedThemes;
 
     KConfigGroup appConfig;
 

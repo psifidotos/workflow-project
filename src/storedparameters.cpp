@@ -23,6 +23,10 @@ StoredParameters::StoredParameters(QObject *parent, KConfigGroup *conf):
     m_showStoppedActivities = config->readEntry("ShowStoppedPanel", true);
     m_firstRunLiveTour = config->readEntry("FirstRunTour", false);
     m_firstRunCalibrationPreviews = config->readEntry("FirstRunCalibration", false);
+    m_hideOnClick = config->readEntry("HideOnClick",false);
+    m_toolTipsDelay = config->readEntry("ToolTipsDelay", 300);
+
+    m_currentTheme = config->readEntry("CurrentTheme", "Oxygen");
 }
 
 StoredParameters::~StoredParameters()
@@ -211,6 +215,58 @@ bool StoredParameters::firstRunCalibrationPreviews() const
 {
     return m_firstRunCalibrationPreviews;
 }
+
+
+void StoredParameters::setHideOnClick(bool hideClick)
+{
+    m_hideOnClick = hideClick;
+    config->writeEntry("HideOnClick",m_hideOnClick);
+    emit hideOnClickChanged(m_hideOnClick);
+    emit configNeedsSaving();
+}
+
+bool StoredParameters::hideOnClick() const
+{
+    return m_hideOnClick;
+}
+
+void StoredParameters::setToolTipsDelay(int tDelay)
+{
+    m_toolTipsDelay = tDelay;
+    config->writeEntry("ToolTipsDelay",m_toolTipsDelay);
+    emit toolTipsDelayChanged(m_toolTipsDelay);
+    emit configNeedsSaving();
+}
+
+int StoredParameters::toolTipsDelay() const
+{
+    return m_toolTipsDelay;
+}
+
+void StoredParameters::setCurrentTheme(QString theme)
+{
+    m_currentTheme = theme;
+    config->writeEntry("CurrentTheme",m_currentTheme);
+    emit currentThemeChanged(m_currentTheme);
+    emit configNeedsSaving();
+}
+
+QString StoredParameters::currentTheme() const
+{
+    return m_currentTheme;
+}
+
+void StoredParameters::addTheme(QString theme)
+{
+    m_loadedThemes.append(theme);
+}
+
+
+QList<QString> *StoredParameters::themesList()
+{
+    return &m_loadedThemes;
+}
+
 
 
 #include "storedparameters.moc"

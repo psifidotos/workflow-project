@@ -6,6 +6,10 @@
 class StoredParameters : public QObject
 {
     Q_OBJECT
+
+
+public:
+
     Q_PROPERTY(bool lockActivities READ lockActivities WRITE setLockActivities NOTIFY lockActivitiesChanged)
     Q_PROPERTY(bool showWindows READ showWindows WRITE setShowWindows NOTIFY showWindowsChanged)
     Q_PROPERTY(int zoomFactor READ zoomFactor WRITE setZoomFactor NOTIFY zoomFactorChanged)
@@ -16,6 +20,12 @@ class StoredParameters : public QObject
     Q_PROPERTY(bool firstRunLiveTour READ firstRunLiveTour WRITE setFirstRunLiveTour NOTIFY firstRunLiveTourChanged)
     Q_PROPERTY(bool firstRunCalibrationPreviews READ firstRunCalibrationPreviews WRITE setFirstRunCalibrationPreviews NOTIFY firstRunCalibrationPreviewsChanged)
 
+    Q_PROPERTY(bool hideOnClick READ hideOnClick WRITE setHideOnClick NOTIFY hideOnClickChanged)
+    Q_PROPERTY(bool toolTipsDelay READ toolTipsDelay WRITE setToolTipsDelay NOTIFY toolTipsDelayChanged)
+
+    Q_PROPERTY(QString currentTheme READ currentTheme WRITE setCurrentTheme NOTIFY currentThemeChanged)
+    Q_INVOKABLE void addTheme(QString);
+
     Q_PROPERTY(int animations READ animations WRITE setAnimations NOTIFY animationsChanged)
     Q_PROPERTY(int animationsStep READ animationsStep NOTIFY animationsStepChanged)
     Q_PROPERTY(int animationsStep2 READ animationsStep2 NOTIFY animationsStep2Changed)
@@ -24,7 +34,7 @@ class StoredParameters : public QObject
     Q_PROPERTY(int windowsPreviewsOffsetX READ windowsPreviewsOffsetX WRITE setWindowsPreviewsOffsetX NOTIFY windowsPreviewsOffsetXChanged)
     Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
-public:
+
     /*
     enum AnimationsLevel {
        NONE,
@@ -57,6 +67,16 @@ public:
     void setFirstRunCalibrationPreviews(bool);
     bool firstRunCalibrationPreviews() const;
 
+    void setHideOnClick(bool);
+    bool hideOnClick() const;
+
+    void setToolTipsDelay(int);
+    int toolTipsDelay() const;
+
+    void setCurrentTheme(QString);
+    QString currentTheme() const;
+
+    QList<QString> *themesList();
 
 
     void setAnimations(int);
@@ -84,7 +104,9 @@ signals:
     void fontRelevanceChanged(int);
     void firstRunLiveTourChanged(bool);
     void firstRunCalibrationPreviewsChanged(bool);
-
+    void hideOnClickChanged(bool);
+    void toolTipsDelayChanged(int);
+    void currentThemeChanged(QString);
 
     void animationsChanged(int);
     void animationsStepChanged(int);
@@ -104,6 +126,11 @@ private:
    bool m_showStoppedActivities;
    bool m_firstRunLiveTour;
    bool m_firstRunCalibrationPreviews;
+   bool m_hideOnClick;
+   int m_toolTipsDelay;
+
+   QString m_currentTheme;
+   QList <QString> m_loadedThemes;
 
    int m_animations;
    int m_animationsStep; //Basic animations duration

@@ -6,10 +6,17 @@ import "../models"
 
 Item{
 
+    objectName: "instThemeList"
+
     property variant model: ThemesModel{}
 
-    property variant icons: model.get(mainView.themePos).icons.get(0)
+    property variant icons: model.get(themePos).icons.get(0)
 
+    property int themePos:0
+
+    property string currentTheme:storedParameters.currentTheme
+
+    onCurrentThemeChanged: themePos = getIndexFor(currentTheme);
 
    // function getIcons(){
     //    return model.get(mainView.themePos).icons.get(0);
@@ -25,4 +32,11 @@ Item{
         return 0;
     }
 
+    function loadThemes() {
+        for(var i=0; i<model.count; i++){
+            storedParameters.addTheme(model.get(i).name);
+        }
+    }
+
+    Component.onCompleted: loadThemes();
 }
