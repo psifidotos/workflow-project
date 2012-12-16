@@ -148,7 +148,7 @@ Item{
         //////
 
         if (cur)
-            mainView.currentActivity = source;
+            sessionParameters.currentActivity = source;
 
         setCState(source,stat);
 
@@ -178,6 +178,7 @@ Item{
     function chooseIcon(cod){
         activityManager.chooseIcon(cod);
     }
+    /*
 
     function setCurrentIns(source,cur)
     {
@@ -186,12 +187,12 @@ Item{
             model.setProperty(ind,"Current",cur);
 
             if (cur){
-                mainView.currentActivity = source;
+                sessionParameters.currentActivity = source;
             }
 
             instanceOfWorkAreasList.setCurrentIns(source,cur);
         }
-    }
+    }*/
 
     function activityUpdatedIn(source,title,icon,stat,cur)
     {
@@ -240,7 +241,7 @@ Item{
 
     function stopActivity(cod){
 
-        if(cod=== mainView.currentActivity){
+        if(cod=== sessionParameters.currentActivity){
             var nId = getFirstRunningIdAfter(cod);
 
             var nextDesk = mainView.currentDesktop;
@@ -319,14 +320,14 @@ Item{
     }
 
     function slotSetCurrentNextActivity(){
-        var nId = getFirstRunningIdAfter(mainView.currentActivity);
+        var nId = getFirstRunningIdAfter(sessionParameters.currentActivity);
 
         if(nId !== "")
             setCurrent(nId);
     }
 
     function slotSetCurrentPreviousActivity(){
-        var nId = getFirstRunningIdBefore(mainView.currentActivity);
+        var nId = getFirstRunningIdBefore(sessionParameters.currentActivity);
 
         if(nId !== "")
             setCurrent(nId);
@@ -351,7 +352,7 @@ Item{
 
             model.setProperty(ind,"Current",true);
 
-            mainView.currentActivity = cod;
+            sessionParameters.currentActivity = cod;
 
             instanceOfWorkAreasList.setCurrent(cod);
 
@@ -381,7 +382,7 @@ Item{
     }
 
     function setCurrent(cod){
-        if(mainView.currentActivity === cod)
+        if(sessionParameters.currentActivity === cod)
             updateWallpaper(cod);
 
         activityManager.setCurrent(cod);
@@ -428,7 +429,7 @@ Item{
 
         var nDesktop = mainView.currentDesktop;
 
-        var currentAct = (act === mainView.currentActivity);
+        var currentAct = (act === sessionParameters.currentActivity);
 
         if(currentAct)
             if(!mainView.isOnDashBoard)
@@ -480,7 +481,7 @@ Item{
 
         fromCloneActivity = cod;
 
-        if(fromCloneActivity === mainView.currentActivity)
+        if(fromCloneActivity === sessionParameters.currentActivity)
             fromActivityWasCurrent = true;
 
         if(storedParameters.windowsPreviews === true){
@@ -524,7 +525,7 @@ Item{
 
     function addNewActivity(){
         if(fromCloneActivity === "")
-            previousActiveActivity = mainView.currentActivity;
+            previousActiveActivity = sessionParameters.currentActivity;
 
         var res = activityManager.add(i18n("New Activity"));
 

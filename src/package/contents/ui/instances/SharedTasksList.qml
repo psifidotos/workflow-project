@@ -28,7 +28,7 @@ Item{
 
             if ((obj.activities === undefined)||
                     (obj.activities === ""))
-                fActivity = mainView.currentActivity;
+                fActivity = sessionParameters.currentActivity;
             else
                 fActivity = obj.activities;
 
@@ -145,7 +145,7 @@ Item{
     {
         var fact;
         if (activit === undefined)
-            fact=mainView.currentActivity;
+            fact=sessionParameters.currentActivity;
         else
             fact=activit[0];
 

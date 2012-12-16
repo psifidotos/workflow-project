@@ -56,7 +56,7 @@ Item{
     opacity: mustBeShown === true ? 1 : 0
 
     property string ccode: code
-    property string cActCode: activities === undefined ? mainView.currentActivity : activities
+    property string cActCode: activities === undefined ? sessionParameters.currentActivity : activities
     property int cDesktop:desktop === undefined ? mainView.currentDesktop : desktop
     property bool isPressed:false
 

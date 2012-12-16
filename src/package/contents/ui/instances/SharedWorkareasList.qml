@@ -42,13 +42,14 @@ Item{
         }
     }
 
+    /*
     function setCurrentIns(cod,cur){
 
         var ind = getIndexFor(cod);
         if(ind>-1)
             model.setProperty(ind,"Current",cur);
 
-    }
+    }*/
 
     function getIndexFor(cod){
         for(var i=0; i<model.count; ++i){

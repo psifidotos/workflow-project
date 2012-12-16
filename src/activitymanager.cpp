@@ -68,7 +68,6 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *p
 
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
-    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
@@ -388,11 +387,6 @@ void ActivityManager::activityStateChanged()
     }
 }
 
-void ActivityManager::currentActivityChanged(const QString &id)
-{
-    QMetaObject::invokeMethod(qmlActEngine, "setCurrentSignal",
-                              Q_ARG(QVariant, id));
-}
 
 
 /////////SLOTS

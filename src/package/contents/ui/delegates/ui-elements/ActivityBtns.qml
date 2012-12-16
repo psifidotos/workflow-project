@@ -23,9 +23,9 @@ Item{
         x:buttonsSize/2
         anchors.top: parent.top
 
-        border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
+        border.color: sessionParameters.currentActivity !== ccode ? "#404040" : "#333333"
         border.width:  1
-        color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
+        color: sessionParameters.currentActivity !== ccode ? "#222222" : "#0a0a0a"
         property alias containsMouse: addWidgetsBtn.containsMouse
 
         IconButton {
@@ -55,9 +55,9 @@ Item{
 
         width: storedParameters.lockActivities || allwlists.activitiesShown === 1 ? 1.4 * stopActivityBtn.width : 1.25 * rightActions.width
         height: storedParameters.lockActivities ? 1.3 * stopActivityBtn.height : 1.5 * rightActions.height
-        border.color: mainView.currentActivity !== ccode ? "#404040" : "#333333"
+        border.color: sessionParameters.currentActivity !== ccode ? "#404040" : "#333333"
         border.width:  1
-        color: mainView.currentActivity !== ccode ? "#222222" : "#0a0a0a"
+        color: sessionParameters.currentActivity !== ccode ? "#222222" : "#0a0a0a"
         property bool containsMouse: stopActivityBtn.containsMouse
                                      || duplicateActivityBtn.containsMouse
                                      || deleteActivityBtn.containsMouse

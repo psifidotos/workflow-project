@@ -63,7 +63,7 @@ QIconItem{
 
             if((elem.activities === undefined) ||
                (elem.activities === "") )
-                activityCode = mainView.currentActivity;
+                activityCode = sessionParameters.currentActivity;
             else
                 activityCode = elem.activities;
 

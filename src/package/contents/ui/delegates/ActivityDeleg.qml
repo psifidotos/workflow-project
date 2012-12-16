@@ -17,7 +17,7 @@ Item{
 
     property int defWidth: CState === neededState ? mainView.workareaWidth : 0
     property color activeBackColor: "#ff444444"
-    property color actUsedColor: ccode===mainView.currentActivity? activeBackColor:actImag1.color
+    property color actUsedColor: ccode===sessionParameters.currentActivity? activeBackColor:actImag1.color
 
     width: defWidth
     height:actImag1.height
@@ -58,7 +58,7 @@ Item{
             GradientStop { position: 1.0; color: actImag1.color }
         }
 
-        opacity:ccode === mainView.currentActivity ? 1 : 0
+        opacity:ccode === sessionParameters.currentActivity ? 1 : 0
     }
 
     QIconItem{

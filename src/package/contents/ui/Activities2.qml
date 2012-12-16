@@ -1,5 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
+
+import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
@@ -56,10 +58,15 @@ Rectangle {
     signal minimumHeightChanged;
 
     //Local properties//
-    property string currentActivity
+   // property string currentActivity
     property int currentDesktop
     property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
+
+
+    WorkFlowComponents.SessionParameters {
+        id: sessionParameters
+    }
 
     SharedActivitiesList{
         id:instanceOfActivitiesList
