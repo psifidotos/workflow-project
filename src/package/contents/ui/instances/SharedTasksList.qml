@@ -41,9 +41,8 @@ Item{
                 if(obj.activities !== fActivity)
                     setTaskActivity(obj.code,fActivity);
 
-                taskManager.setOnAllDesktops(obj.code,false);
-
-
+                if (obj.onAllDesktops !== false)
+                    taskManager.setOnAllDesktops(obj.code,false);
             }
             else if (val === "allDesktops"){
                 taskManager.setOnlyOnActivity(obj.code,fActivity);
@@ -75,10 +74,10 @@ Item{
         var ind = getIndexFor(cod);
         if(ind>-1){
             var obj = model.get(ind);
-            if(obj.activities !== val){
+     //       if(obj.activities !== val){
                 model.setProperty(ind,"activities",val);
                 taskManager.setOnlyOnActivity(cod,val);
-            }
+     //       }
         }
     }
 
@@ -98,19 +97,12 @@ Item{
         var ind = getIndexFor(cod);
         if(ind>-1){
             var obj = model.get(ind);
-            if(obj.desktop !== val){
+         //   if(obj.desktop !== val){
                 model.setProperty(ind,"desktop",val);
                 taskManager.setOnDesktop(obj.code,val);
-            }
+          //  }
         }
     }
-
-    function setTaskInDragging(cod, val){
-        var ind = getIndexFor(cod);
-        if(ind > -1)
-            model.setProperty(ind,"inDragging",val);
-    }
-
 
     function getIndexForWorkflowWindow(){
         for(var i=0; i<model.count; i++){
@@ -141,7 +133,7 @@ Item{
     }
 
 
-    function taskAddedIn(source,onalld,onalla,classc,nam, icn, indrag, desk, activit)
+    function taskAddedIn(source,onalld,onalla,classc,nam, icn, desk, activit)
     {
         var fact;
         if (activit === undefined)
@@ -157,7 +149,6 @@ Item{
                          "classClass":classc,
                          "name":nam,
                          "Icon":icn,
-                         "inDragging":indrag,
                          "desktop":desk,
                          "activities":fact} );
 

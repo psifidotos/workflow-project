@@ -928,8 +928,7 @@ Item{
                                     taskDeleg2.cActCode,
                                     taskDeleg2.cDesktop,
                                     coord1,
-                                    true,
-                                    inDragging);
+                                    true);
 
             //if(scrollingView === desktopDialog.getDeskView()){
             if (dialogType === dTypes[1]){
@@ -938,7 +937,6 @@ Item{
                 desktopDialog.closeD();
             }
 
-            instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,true);
         }
 
     }
@@ -971,10 +969,7 @@ Item{
                     desktopDialog.completed();
                 }
 
-
-                instanceOfTasksList.setTaskInDragging(taskDeleg2.ccode,false);
                 taskDeleg2.isPressed = false;
-
             }
         }
     }

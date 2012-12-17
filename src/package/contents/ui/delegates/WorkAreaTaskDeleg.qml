@@ -18,9 +18,7 @@ import org.kde.qtextracomponents 0.1
                                 ((onAllActivities !== true)&&
                                  ((onAllDesktops === true)&&
                                   (actCode === activities))))
-                              && (isPressed === false) //hide it in dragging
-                              && (inDragging === false))  //when in all desktops state to hide the others in dragging
-
+                              && (isPressed === false) ) //hide it in dragging
 
         width:mainWorkArea.imagewidth - imageTask.width - 5
         //height: shown ? 1.1 * imageTask.height : 0
@@ -222,9 +220,11 @@ import org.kde.qtextracomponents 0.1
 
         function onClicked(mouse) {
            // mainWorkArea.clickedWorkarea();
-            taskDeleg1.onExited();
-            mainWorkArea.hideButtons();
-            instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
+            if(taskDeleg1.isPressed !== true){
+                taskDeleg1.onExited();
+                mainWorkArea.hideButtons();
+                instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
+            }
 
         }
 
@@ -240,17 +240,14 @@ import org.kde.qtextracomponents 0.1
 
             var everySt = (onAllActivities === true);
 
-            if ((onAllDesktops === true)&&(onAllActivities === false))
-                instanceOfTasksList.setTaskInDragging(code,true);
-
             mDragInt.enableDragging(nCor,
                                     imageTask.icon,
                                     ccode,
                                     mainWorkArea.actCode,
                                     mainWorkArea.desktop,
                                     coord1,
-                                    everySt,
-                                    inDragging);
+                                    everySt);
+
         }
 
         function onPositionChanged(mouse,obj) {
@@ -266,6 +263,7 @@ import org.kde.qtextracomponents 0.1
 
                 mDragInt.onMReleased(mouse,mouseV);
             }
+
             taskDeleg1.isPressed = false;
         }
     }

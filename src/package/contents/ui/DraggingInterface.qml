@@ -18,7 +18,6 @@ Rectangle{
     property int intX1
     property int intY1
     property bool intIsEverywhere
-    property bool intIsShaded //for allDesktops purposes and not Everywhere
 
     property string drActiv: ""
     property int drDesktop: -1
@@ -50,7 +49,7 @@ Rectangle{
         visible:false
     }
 
-    function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere,shaded){
+    function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere){
 
         //if(desktopDialog !== mainView)
          //   desktopDialog.closeD();
@@ -68,8 +67,7 @@ Rectangle{
         mainDraggingItem.intDesktop = deskI;
         mainDraggingItem.intX1 = coord1.x;
         mainDraggingItem.intY1 = coord1.y;
-        mainDraggingItem.intIsEverywhere = everywhere;
-        mainDraggingItem.intIsShaded = shaded;
+        mainDraggingItem.intIsEverywhere = everywhere;       
 
         //  iconImg.icon = instanceOfTasksList.getTasksIcon(taskI);
 
@@ -107,15 +105,11 @@ Rectangle{
                     (mainDraggingItem.intDesktop !== mainDraggingItem.drDesktop) ||
                     (mainDraggingItem.intIsEverywhere === true)){
 
-                if(mainDraggingItem.intIsShaded === false)
-                    instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
-                else{
-                    instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
-                    instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
-                }
 
-                instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+
                 instanceOfTasksList.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
+                instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
 
                 if(storedParameters.animationsStep2!==0){
                     var co1 = mainView.mapToItem(mainView,iX1,iY1);
@@ -131,12 +125,7 @@ Rectangle{
 
             var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
 
-            if(mainDraggingItem.intIsShaded === false)
-                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
-            else{
-                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allDesktops");
-                instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
-            }
+            instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
 
             instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
             instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works);
@@ -157,7 +146,6 @@ Rectangle{
         else if (mainDraggingItem.lastSelection === 2){
 
             instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
-            instanceOfTasksList.setTaskInDragging(mainDraggingItem.intTaskId,false);
 
             if(storedParameters.animationsStep2!==0){
                 var co13 = mainView.mapToItem(mainView,iX1,iY1);

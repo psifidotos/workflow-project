@@ -47,8 +47,8 @@ void PTaskManager::setQMlObject(QObject *obj)
 {
     qmlTaskEngine = obj;
 
-    connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlTaskEngine,SLOT(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
+    connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
+            qmlTaskEngine,SLOT(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
     connect(this, SIGNAL(taskRemovedIn(QVariant)),
             qmlTaskEngine,SLOT(taskRemovedIn(QVariant)));
@@ -113,7 +113,7 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
                      QVariant(task->classClass()),
                      QVariant(task->name()),
                      QVariant(QIcon(tempIcn)),
-                     QVariant(false),
+              //       QVariant(false),
                      QVariant(task->desktop()),
                      QVariant(task->activities()));
 

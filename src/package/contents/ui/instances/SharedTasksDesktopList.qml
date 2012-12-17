@@ -41,7 +41,7 @@ Item{
                          "classClass": obj.classClass,
                          "name": obj.name,
                          "Icon": obj.Icon,
-                         "inDragging": obj.inDragging,
+                      //   "inDragging": obj.inDragging,
                          "desktop": obj.desktop,
                          "activities": obj.activities} );
 
