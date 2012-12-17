@@ -17,6 +17,8 @@ SessionParameters::SessionParameters(QObject *parent)
     m_numberOfDesktops = m_kwindowSystem->numberOfDesktops();
     m_effectsSystemEnabled = m_kwindowSystem->compositingActive();
 
+    resetTaskInDragging();
+
     initConnections();
 }
 
@@ -81,6 +83,29 @@ bool SessionParameters::effectsSystemEnabled()
 {
     return m_effectsSystemEnabled;
 }
+
+
+void SessionParameters::setTaskInDragging(QString task)
+{
+    m_taskInDragging = task;
+    emit taskInDraggingChanged(m_taskInDragging);
+}
+
+QString SessionParameters::taskInDragging()
+{
+    return m_taskInDragging;
+}
+
+void SessionParameters::resetTaskInDragging()
+{
+    m_taskInDragging = "";
+}
+
+bool SessionParameters::taskInDraggingIsSet()
+{
+    return (m_taskInDragging == "");
+}
+
 
 
 #include <sessionparameters.moc>

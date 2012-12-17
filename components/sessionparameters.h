@@ -18,6 +18,10 @@ public:
     Q_PROPERTY(int currentDesktop READ currentDesktop NOTIFY currentDesktopChanged)
     Q_PROPERTY(int numberOfDesktops READ numberOfDesktops NOTIFY numberOfDesktopsChanged)
     Q_PROPERTY(bool effectsSystemEnabled READ effectsSystemEnabled NOTIFY effectsSystemChanged)
+    Q_PROPERTY(QString taskInDragging READ taskInDragging WRITE setTaskInDragging NOTIFY taskInDraggingChanged)
+
+    Q_INVOKABLE void resetTaskInDragging();
+    Q_INVOKABLE bool taskInDraggingIsSet();
 
     explicit SessionParameters(QObject *parent = 0);
     ~SessionParameters();
@@ -27,11 +31,14 @@ public:
     int numberOfDesktops();
     bool effectsSystemEnabled();
 
+    QString taskInDragging();
+    void setTaskInDragging(QString);
 signals:
     void currentActivityChanged(QString);
     void currentDesktopChanged(int);
     void numberOfDesktopsChanged(int);
     void effectsSystemChanged(int);
+    void taskInDraggingChanged(QString);
 
 public slots:
     void setCurrentActivitySlot(QString);
@@ -47,6 +54,8 @@ private:
     int m_currentDesktop;
     int m_numberOfDesktops;
     bool m_effectsSystemEnabled;
+
+    QString m_taskInDragging;
 
     void initConnections();
 };
