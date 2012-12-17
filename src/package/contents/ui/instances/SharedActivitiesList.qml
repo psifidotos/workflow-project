@@ -147,8 +147,8 @@ Item{
 
         //////
 
-        if (cur)
-            sessionParameters.currentActivity = source;
+       // if (cur)
+          //  sessionParameters.currentActivity = source;
 
         setCState(source,stat);
 
@@ -352,7 +352,7 @@ Item{
 
             model.setProperty(ind,"Current",true);
 
-            sessionParameters.currentActivity = cod;
+         //   sessionParameters.currentActivity = cod;
 
             instanceOfWorkAreasList.setCurrent(cod);
 
