@@ -213,14 +213,10 @@ Rectangle{
 
                 checkable:true
                 checked:storedParameters.windowsPreviews
-                //checked: (mainView.enablePreviews&&())
-              //  enabled:((mainView.isOnDashBoard)&&
-                  enabled:((storedParameters.showWindows)&&
-                            (mainView.effectsSystemEnabled))
 
-                //onCheckedChanged:{
-                 //   mainView.enablePreviews = checked;
-               // }
+                enabled:(storedParameters.showWindows)
+//                            &&(sessionParameters.effectsSystemEnabled))
+//This is not trigerred for some reason
 
 
                 MouseArea{

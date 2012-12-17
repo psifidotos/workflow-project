@@ -56,21 +56,25 @@ void PTaskManager::setQMlObject(QObject *obj)
     connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
+
+
     connect(this, SIGNAL(currentDesktopChanged(QVariant)),
             qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
 
     //This is used in qml in order for consistency with workareas numbers
     connect(this, SIGNAL(numberOfDesktopsChanged(QVariant)),
             qmlTaskEngine, SLOT(setMaxDesktops(QVariant)));
+    connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
+
 
     QMetaObject::invokeMethod(qmlTaskEngine, "currentDesktopChanged",
                               Q_ARG(QVariant, taskMainM->currentDesktop()));
 /*
     QMetaObject::invokeMethod(qmlTaskEngine, "setMaxDesktops",
                               Q_ARG(QVariant, kwinSystem->numberOfDesktops()));*/
-
+/*
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
-                              Q_ARG(QVariant, kwinSystem->compositingActive()));
+                              Q_ARG(QVariant, kwinSystem->compositingActive()));*/
 
     //this->workAreaChanged();
 
@@ -81,9 +85,10 @@ void PTaskManager::setQMlObject(QObject *obj)
     // task addition and removal
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
+
     connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
 
-    connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
+
 
     //    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
 
@@ -93,7 +98,7 @@ void PTaskManager::setQMlObject(QObject *obj)
     //  connect(kwinApp,SIGNAL(compositingToggled(bool)),
     //         this, SLOT(compositingChanged(bool)));
 
-    QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde..KWin" ,"compositingToggled", this, SLOT(MySlot(uint)));
+ //   QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde..KWin" ,"compositingToggled", this, SLOT(MySlot(uint)));
 
 }
 ///////////
@@ -193,14 +198,14 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     }
 
 }
-
+/*
 void PTaskManager::compositingChanged(bool b){
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
                               Q_ARG(QVariant, b));
 
     qDebug()<<"Composition Effects:"<<b;
 
-}
+}*/
 
 /*
 void PTaskManager::workAreaChanged(){

@@ -38,7 +38,7 @@ Rectangle {
     //Applications properties/////
 
 
-    property bool effectsSystemEnabled: true
+  //  property bool effectsSystemEnabled: true
 
     property variant defaultFont: theme.defaultFont
 
@@ -206,10 +206,10 @@ Rectangle {
     }
 
 
-
+/*
     function setEffectsSystem(ef){
         mainView.effectsSystemEnabled = ef;
-    }
+    }*/
 
     function setScreenRatio(sc){
         mainView.screenRatio = sc;

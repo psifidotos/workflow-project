@@ -69,7 +69,7 @@ public slots:
   void taskUpdated(::TaskManager::TaskChanges changes);
   void desktopChanged(int);
   void changeNumberOfDesktops(int);
-  void compositingChanged(bool);
+//  void compositingChanged(bool);
 //  void workAreaChanged();
 
 private:
