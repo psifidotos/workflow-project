@@ -222,13 +222,8 @@ Item{
         // mainView.currentDesktop = desk;
     }
 
-    function currentDesktopChanged(v){
-        mainView.currentDesktop = v;
-    }
 
     function setMaxDesktops(v){
-   //     mainView.maxDesktops = v;
-
         //it is called consequently for example to go from 2VDs to 4 VDs, it is going
         //2-3-4 from the relevant signals
 
@@ -267,10 +262,6 @@ Item{
     {
         instanceOfActivitiesList.setCurrentActivityAndDesktop(activ,desk);
         setCurrentTask(cod);
-    }
-
-    function setEffectsSystemStatus(stat){
-        mainView.setEffectsSystem(stat);
     }
 
 

@@ -22,16 +22,12 @@ public:
     Q_INVOKABLE void minimizeTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
     Q_INVOKABLE QString getDesktopName(int n);
-    Q_INVOKABLE int getMaxDesktops();
+
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
     Q_INVOKABLE void hideDashboard();
     Q_INVOKABLE void showDashboard();
 
 #ifdef Q_WS_X11
-    //    Q_INVOKABLE QPixmap windowPreview(QString window, int size);
-    //    Q_INVOKABLE QPixmap windowScreenshot(QString win, int size);
-    //    Q_INVOKABLE float windowScreenshotRatio(QString win);
-
     Q_INVOKABLE void slotAddDesktop();
     Q_INVOKABLE void slotRemoveDesktop();
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
@@ -45,7 +41,6 @@ public:
 
     Q_INVOKABLE float getWindowRatio(QString win);
     Q_INVOKABLE bool mainWindowIdisSet();
-
 #endif
 
     void setMainWindowId(WId win);
@@ -58,7 +53,7 @@ signals:
     void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
     void taskRemovedIn(QVariant);
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
-    void currentDesktopChanged(QVariant);
+
     void numberOfDesktopsChanged(QVariant);
 
 
@@ -67,10 +62,8 @@ public slots:
   void taskAdded(::TaskManager::Task *);
   void taskRemoved(::TaskManager::Task *);
   void taskUpdated(::TaskManager::TaskChanges changes);
-  void desktopChanged(int);
+
   void changeNumberOfDesktops(int);
-//  void compositingChanged(bool);
-//  void workAreaChanged();
 
 private:
     TaskManager::TaskManager *taskMainM;

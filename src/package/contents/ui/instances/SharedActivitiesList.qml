@@ -47,7 +47,7 @@ Item{
         startActivity(toCloneActivity);
 
         if(fromActivityWasCurrent === true){
-            setCurrentActivityAndDesktop(fromCloneActivity,mainView.currentDesktop);
+            setCurrentActivityAndDesktop(fromCloneActivity,sessionParameters.currentDesktop);
             fromActivityWasCurrent = false;
         }
 
@@ -128,10 +128,6 @@ Item{
                          "Icon":icon,
                          "CState":stat} );
 
-        /*
-        if(mainView.maxDesktops === 0)
-            mainView.maxDesktops = taskManager.getMaxDesktops();*/
-
         if(workflowManager.activityExists(source)){
             var nms = workflowManager.getWorkAreaNames(source);
 
@@ -148,9 +144,6 @@ Item{
 
         //////
 
-       // if (cur)
-          //  sessionParameters.currentActivity = source;
-
         setCState(source,stat);
 
         updateWallpaper(source);
@@ -159,7 +152,7 @@ Item{
         if(fromCloneActivity !== ""){
             toCloneActivity = source;
             copyActivityBasicSettings(fromCloneActivity,toCloneActivity);
-            setCurrentActivityAndDesktop(source,mainView.currentDesktop);
+            setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
             stopActivity(fromCloneActivity);
         }
 
@@ -168,7 +161,7 @@ Item{
 
         if( (source === mustActivateActivity) &&
                 (fromCloneActivity === "") )
-            setCurrentActivityAndDesktop(source,mainView.currentDesktop);
+            setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
     }
 
     function setIcon(cod, val){
@@ -179,21 +172,6 @@ Item{
     function chooseIcon(cod){
         activityManager.chooseIcon(cod);
     }
-    /*
-
-    function setCurrentIns(source,cur)
-    {
-        var ind = getIndexFor(source);
-        if(ind>-1){
-            model.setProperty(ind,"Current",cur);
-
-            if (cur){
-                sessionParameters.currentActivity = source;
-            }
-
-            instanceOfWorkAreasList.setCurrentIns(source,cur);
-        }
-    }*/
 
     function activityUpdatedIn(source,title,icon,stat,cur)
     {
@@ -205,7 +183,7 @@ Item{
             model.setProperty(ind,"Name",title);
             model.setProperty(ind,"Icon",icon);
             setCState(source,stat);
-            setCurrentIns(source,cur);
+         //   setCurrentIns(source,cur);
         }
 
     }
@@ -245,7 +223,7 @@ Item{
         if(cod=== sessionParameters.currentActivity){
             var nId = getFirstRunningIdAfter(cod);
 
-            var nextDesk = mainView.currentDesktop;
+            var nextDesk = sessionParameters.currentDesktop;
 
             setCurrentActivityAndDesktop(nId,nextDesk);
         }
@@ -353,8 +331,6 @@ Item{
 
             model.setProperty(ind,"Current",true);
 
-         //   sessionParameters.currentActivity = cod;
-
             instanceOfWorkAreasList.setCurrent(cod);
 
             updateWallpaper(cod);
@@ -372,7 +348,7 @@ Item{
             //Phase 03 Of updating the wallpaper of new activity
             if((cod === mustActivateActivity)&&
                     (fromCloneActivity === ""))
-                setCurrentActivityAndDesktop(previousActiveActivity,mainView.currentDesktop);
+                setCurrentActivityAndDesktop(previousActiveActivity,sessionParameters.currentDesktop);
 
             //Phase 04 Of updating the wallpaper of new activity
             if((cod === previousActiveActivity)&&
@@ -423,39 +399,6 @@ Item{
         }
     }
 
-/*
-    function showWidgetsExplorer(act){
-        if(mainView.isOnDashBoard)
-            taskManager.hideDashboard();
-
-        var nDesktop = mainView.currentDesktop;
-
-        var currentAct = (act === sessionParameters.currentActivity);
-
-        if(currentAct)
-            if(!mainView.isOnDashBoard)
-                activityManager.showWidgetsExplorer(act);
-            else{
-                // This is only for Dashboard and on current Activity
-                // a workaround for the strange behavior showing
-                // explorer and hide it afterwards
-                showWidgetsExplorerTimer.actCode = act;
-                showWidgetsExplorerTimer.start();
-            }
-        else{
-            widgetsExplorerAwaitingActivity = true;
-            nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
-        }
-
-        instanceOfTasksList.minimizeWindowsIn(act, nDesktop);
-        activityManager.unlockWidgets();
-
-
-        //Hide it after showing the widgets
-        if((!mainView.isOnDashBoard)&&(currentAct))
-            workflowManager.hidePopupDialog();
-
-    }*/
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);
     }

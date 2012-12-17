@@ -34,7 +34,7 @@ Item{
     property int imageheight:height - 2*imagey
 
     property bool isCurrentW:((mainWorkArea.actCode === sessionParameters.currentActivity) &&
-                              (mainWorkArea.desktop === mainView.currentDesktop))
+                              (mainWorkArea.desktop === sessionParameters.currentDesktop))
 
     //In order to fix the height because of increasing size for current workarea
     onIsCurrentWChanged:{

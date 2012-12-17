@@ -57,26 +57,10 @@ void PTaskManager::setQMlObject(QObject *obj)
             qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
 
-
-    connect(this, SIGNAL(currentDesktopChanged(QVariant)),
-            qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
-
     //This is used in qml in order for consistency with workareas numbers
     connect(this, SIGNAL(numberOfDesktopsChanged(QVariant)),
             qmlTaskEngine, SLOT(setMaxDesktops(QVariant)));
     connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
-
-
-    QMetaObject::invokeMethod(qmlTaskEngine, "currentDesktopChanged",
-                              Q_ARG(QVariant, taskMainM->currentDesktop()));
-/*
-    QMetaObject::invokeMethod(qmlTaskEngine, "setMaxDesktops",
-                              Q_ARG(QVariant, kwinSystem->numberOfDesktops()));*/
-/*
-    QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
-                              Q_ARG(QVariant, kwinSystem->compositingActive()));*/
-
-    //this->workAreaChanged();
 
 
     foreach (TaskManager::Task *source, taskMainM->tasks())
@@ -85,20 +69,6 @@ void PTaskManager::setQMlObject(QObject *obj)
     // task addition and removal
     connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
     connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
-
-    connect(taskMainM , SIGNAL(desktopChanged(int)), this, SLOT(desktopChanged(int)));
-
-
-
-    //    connect(kwinSystem, SIGNAL(workAreaChanged()),this,SLOT(workAreaChanged()));
-
-    // QDBusInterface kwinApp( "org.kde.kwin", "/KWin" );
-    //connect(kwinSystem,SIGNAL(compositingChanged(bool)),
-    //        this, SLOT(compositingChanged(bool)));
-    //  connect(kwinApp,SIGNAL(compositingToggled(bool)),
-    //         this, SLOT(compositingChanged(bool)));
-
- //   QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde..KWin" ,"compositingToggled", this, SLOT(MySlot(uint)));
 
 }
 ///////////
@@ -124,10 +94,6 @@ bool PTaskManager::mainWindowIdisSet()
     return (m_mainWindowId>0);
 }
 
-
-void PTaskManager::desktopChanged (int desktop){
-    emit currentDesktopChanged(QVariant(desktop));
-}
 
 WId PTaskManager::getMainWindowId(){
     return m_mainWindowId;
@@ -198,25 +164,7 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     }
 
 }
-/*
-void PTaskManager::compositingChanged(bool b){
-    QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
-                              Q_ARG(QVariant, b));
 
-    qDebug()<<"Composition Effects:"<<b;
-
-}*/
-
-/*
-void PTaskManager::workAreaChanged(){
-    QRect screenRect = kwinSystem->workArea();
-    float ratio = (float)screenRect.height()/(float)screenRect.width();
-    QMetaObject::invokeMethod(qmlTaskEngine, "setScreenRatio",
-                              Q_ARG(QVariant, ratio));
-
- //   qDebug()<<ratio;
-
-}*/
 
 #ifdef Q_WS_X11
 void PTaskManager::slotAddDesktop()
@@ -384,11 +332,6 @@ void PTaskManager::removeWindowPreview(QString win)
     showWindowsPreviews();
 }
 
-int PTaskManager::getMaxDesktops()
-{
-    return taskMainM->numberOfDesktops();
-}
-
 ///INVOKES
 QString PTaskManager::getDesktopName(int n)
 {
@@ -435,60 +378,6 @@ void PTaskManager::setCurrentDesktop(int desk)
 {
     kwinSystem->setCurrentDesktop(desk);
 }
-
-
-/*
-
-QPixmap PTaskManager::windowPreview(QString win, int size)
-{
-    WId window = win.toULong();
-
-    QPixmap thumbnail = QPixmap::grabWindow(window);
-
-    //  ::TaskManager::Task *tsk = taskMainM->findTask(window);
-    //  return tsk->pixmap();
-
-    qDebug()<<"-32-"<<m_tempdir->name();
-    return thumbnail;
-}
-
-QPixmap PTaskManager::windowScreenshot(QString win, int chng)
-{
-    QString program = "import";
-    QStringList arguments;
-    arguments << "-window" << win;
-    arguments << "-silent";
-
-    QString filePath(m_tempdir->name()+win+".png");
-    arguments << filePath;
-
-    QProcess *myProcess = new QProcess(this);
-    myProcess->start(program, arguments);
-
-    QPixmap retPix = QPixmap(filePath);
-
-    return retPix;
-}
-
-float PTaskManager::windowScreenshotRatio(QString win)
-{
-
-
-    QString filePath(m_tempdir->name()+win+".png");
-
-    QPixmap retPix = QPixmap(filePath);
-
-    float res = (float)retPix.width() / retPix.height();
-
-    if (!retPix.isNull())
-        return res;
-    else
-        return 0;
-
-}
-
-
-*/
 
 
 #include "ptaskmanager.moc"

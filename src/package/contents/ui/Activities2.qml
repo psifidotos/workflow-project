@@ -38,8 +38,6 @@ Rectangle {
     //Applications properties/////
 
 
-  //  property bool effectsSystemEnabled: true
-
     property variant defaultFont: theme.defaultFont
 
     property color defaultFontColor:theme.textColor
@@ -58,9 +56,6 @@ Rectangle {
     signal minimumHeightChanged;
 
     //Local properties//
-   // property string currentActivity
-    property int currentDesktop
-  //  property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
 
 
@@ -204,12 +199,6 @@ Rectangle {
 
         mainView.isOnDashBoard = v;
     }
-
-
-/*
-    function setEffectsSystem(ef){
-        mainView.effectsSystemEnabled = ef;
-    }*/
 
     function setScreenRatio(sc){
         mainView.screenRatio = sc;

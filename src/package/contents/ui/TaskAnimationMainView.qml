@@ -3,6 +3,7 @@ import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
+
 QIconItem{
     id:taskAnimation
     opacity:1
@@ -70,7 +71,7 @@ QIconItem{
             console.debug("Element Desktop:"+elem.desktop);
             var desktopPos = elem.desktop - 1;//desktops count from 0?
             if (desktopPos < 0)
-                desktopPos = mainView.currentDesktop - 1;
+                desktopPos = sessionParameters.currentDesktop - 1;
 
             var actCState = instanceOfActivitiesList.getCState(activityCode);
 /*

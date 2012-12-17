@@ -57,7 +57,7 @@ Item{
 
     property string ccode: code
     property string cActCode: activities === undefined ? sessionParameters.currentActivity : activities
-    property int cDesktop:desktop === undefined ? mainView.currentDesktop : desktop
+    property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
     property bool isPressed:false
 
     property string currentNoHovered: showPreviewsFound === true ? state2 : state1
