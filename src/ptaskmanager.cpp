@@ -59,14 +59,15 @@ void PTaskManager::setQMlObject(QObject *obj)
     connect(this, SIGNAL(currentDesktopChanged(QVariant)),
             qmlTaskEngine, SLOT(currentDesktopChanged(QVariant)));
 
+    //This is used in qml in order for consistency with workareas numbers
     connect(this, SIGNAL(numberOfDesktopsChanged(QVariant)),
             qmlTaskEngine, SLOT(setMaxDesktops(QVariant)));
 
     QMetaObject::invokeMethod(qmlTaskEngine, "currentDesktopChanged",
                               Q_ARG(QVariant, taskMainM->currentDesktop()));
-
+/*
     QMetaObject::invokeMethod(qmlTaskEngine, "setMaxDesktops",
-                              Q_ARG(QVariant, kwinSystem->numberOfDesktops()));
+                              Q_ARG(QVariant, kwinSystem->numberOfDesktops()));*/
 
     QMetaObject::invokeMethod(qmlTaskEngine, "setEffectsSystemStatus",
                               Q_ARG(QVariant, kwinSystem->compositingActive()));

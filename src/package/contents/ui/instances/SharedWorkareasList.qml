@@ -137,8 +137,8 @@ Item{
             if((instanceOfActivitiesList.fromCloneActivity === "") &&
                     (instanceOfActivitiesList.toCloneActivity === "")){
 
-                if((maxWorkareas() < mainView.maxDesktops) &&
-                        (mainView.maxDesktops > 2))
+                if((maxWorkareas() < sessionParameters.numberOfDesktops) &&
+                        (sessionParameters.numberOfDesktops > 2))
                     taskManager.slotRemoveDesktop();
             }
         }
@@ -169,7 +169,7 @@ Item{
             if((instanceOfActivitiesList.fromCloneActivity === "") &&
                     (instanceOfActivitiesList.toCloneActivity === "")){
 
-                if(counts === mainView.maxDesktops){
+                if(counts === sessionParameters.numberOfDesktops){
                     taskManager.slotAddDesktop();
                     activitysNewWorkAreaName = actCode;
                 }
@@ -275,7 +275,7 @@ Item{
 
             var counts = workMod.count;
 
-            if(counts === mainView.maxDesktops)
+            if(counts ===sessionParameters.numberOfDesktops)
                 taskManager.slotAddDesktop();
 
             var lastobj = workMod.get(counts-1);

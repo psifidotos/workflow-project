@@ -60,7 +60,7 @@ Rectangle {
     //Local properties//
    // property string currentActivity
     property int currentDesktop
-    property int maxDesktops
+  //  property int maxDesktops
     property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
 
 

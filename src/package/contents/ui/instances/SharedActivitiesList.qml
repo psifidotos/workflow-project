@@ -128,8 +128,9 @@ Item{
                          "Icon":icon,
                          "CState":stat} );
 
+        /*
         if(mainView.maxDesktops === 0)
-            mainView.maxDesktops = taskManager.getMaxDesktops();
+            mainView.maxDesktops = taskManager.getMaxDesktops();*/
 
         if(workflowManager.activityExists(source)){
             var nms = workflowManager.getWorkAreaNames(source);
@@ -139,7 +140,7 @@ Item{
         else{
             instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
 
-            for(var j=1; j<mainView.maxDesktops; ++j){
+            for(var j=1; j<sessionParameters.numberOfDesktops; ++j){
                 instanceOfWorkAreasList.addWorkarea(source);
             }
 
