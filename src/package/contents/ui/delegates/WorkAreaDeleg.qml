@@ -344,12 +344,7 @@ Item{
     }
 
     function clickedWorkarea(){
-
         instanceOfActivitiesList.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-        if(mainView.isOnDashBoard === true)
-            taskManager.hideDashboard();
-        else
-            workflowManager.workAreaWasClicked();
     }
 
     function getBorderRectangle(){

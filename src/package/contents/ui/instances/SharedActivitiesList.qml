@@ -341,7 +341,7 @@ Item{
                 widgetsExplorerAwaitingActivity = false;
 
                 //Hide it after showing the widgets
-                if(!mainView.isOnDashBoard)
+                if(sessionParameters.isInPanel)
                     workflowManager.hidePopupDialog();
             }
 

@@ -44,6 +44,7 @@
 #include <Plasma/Corona>
 
 #include "storedparameters.h"
+#include <iostream>
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -134,30 +135,31 @@ void WorkFlow::init(){
 
             loadWorkareas();
 
-            if(!rootObject)
-                qDebug() << "root was not found...";
-            else{
-                if(qmlActEng){
 
-                    Plasma::Corona *tCorona=NULL;
+            if(qmlActEng){
 
-                    if(containment())
-                        if(containment()->corona())
-                            tCorona = containment()->corona();
+                Plasma::Corona *tCorona=NULL;
 
-                    actManager->setQMlObject(qmlActEng, tCorona, this);
-                    connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
-                    connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
-                }
-                if(qmlTaskEng){
-                    taskManager->setQMlObject(qmlTaskEng);
-                }
+                if(containment())
+                    if(containment()->corona())
+                        tCorona = containment()->corona();
+
+                actManager->setQMlObject(qmlActEng, tCorona, this);
+                connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
+                connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
+            }
+            if(qmlTaskEng){
+                taskManager->setQMlObject(qmlTaskEng);
             }
 
+            if(containment())
+                m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
         }
+
     }
 
     screensSizeChanged(-1); //set Screen Ratio
+
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
     connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
@@ -231,23 +233,9 @@ void WorkFlow::popupEvent(bool show)
 //this id is used for the window previews
 void WorkFlow::activeWindowChanged(WId w)
 {
-    if( view() ){
-        //  if(view()->winId() != taskManager->getMainWindowId()){
-
-        if(containment()){
-            KConfigGroup kfg=this->containment()->config();
-            QString inDashboard = kfg.readEntry("plugin","---");
-
-            m_isOnDashboard = (inDashboard == "desktopDashboard");
-
-            QMetaObject::invokeMethod(mainQML, "setIsOnDashboard",
-                                      Q_ARG(QVariant, m_isOnDashboard));
-
-            if(m_isOnDashboard){
-                if(view()->effectiveWinId() != taskManager->getMainWindowId()){
-                    this->setMainWindowId();
-                }
-            }
+    if( m_isOnDashboard && view() && containment()){
+        if(view()->effectiveWinId() != taskManager->getMainWindowId()){
+            this->setMainWindowId();
         }
     }
 }
@@ -351,6 +339,9 @@ void WorkFlow::workAreaWasClicked()
 {
     if(storedParams->hideOnClick())
         this->hidePopup();
+
+    if(m_isOnDashboard)
+        taskManager->hideDashboard();
 }
 
 void WorkFlow::screensSizeChanged(int s)

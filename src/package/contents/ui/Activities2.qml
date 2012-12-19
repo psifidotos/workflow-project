@@ -48,19 +48,16 @@ Rectangle {
     property real fixedFontSize: defaultFontSize + storedParameters.fontRelevance
 
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
-    //With using KWindowSystem workarea
-    property real screenRatio:0.75
-
 
     signal minimumWidthChanged;
     signal minimumHeightChanged;
 
     //Local properties//
-    property bool isOnDashBoard:true //development purposes,must be changed to false in the official release
-
+    property real screenRatio:0.75
 
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
+        objectName:"sessionParameters"
     }
 
     SharedActivitiesList{
@@ -184,21 +181,12 @@ Rectangle {
 
         if(storedParameters.firstRunLiveTour === false)
                 getDynLib().showFirstHelpTourDialog();
-
     }
 
     function getDynLib(){
         return DynamAnim;
     }
     /*-------------------Loading values-------------------*/
-
-    function setIsOnDashboard(v){
-        //
-        // BE CAREFUL:: should be enabled in the official release...
-        //
-
-        mainView.isOnDashBoard = v;
-    }
 
     function setScreenRatio(sc){
         mainView.screenRatio = sc;
