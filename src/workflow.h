@@ -120,7 +120,6 @@ private:
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    Plasma::ExtenderItem *item;
     QDesktopWidget *m_desktopWidget;
 
     ActivityManager *actManager;
