@@ -52,7 +52,7 @@ void PluginShowWidgets::init()
 void PluginShowWidgets::currentActivityChanged(QString id)
 {
     if (m_widgetsExplorerAwaitingActivity){               
-        showWidgetsExplorer(m_toShowActivityId);
+        showWidgetsExplorer(id);
         m_widgetsExplorerAwaitingActivity = false;
 
         if(!m_isOnDashboard)

@@ -5,6 +5,7 @@ set(workflow_SRCS workflow.cpp
                   ptaskmanager.cpp
                   plugins/pluginfindwallpaper.cpp
                   plugins/pluginshowwidgets.cpp
+                  plugins/plugincloneactivity.cpp
 )
 
 # Now make sure all files get to the right place

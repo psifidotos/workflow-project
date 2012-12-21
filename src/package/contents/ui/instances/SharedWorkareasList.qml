@@ -11,6 +11,8 @@ Item{
 
     property string activitysNewWorkAreaName:""
 
+    property bool inCloning:false
+
     function setCState(cod, val){
         var ind = getIndexFor(cod);
         if(ind>-1)
@@ -78,6 +80,9 @@ Item{
         var p2 = getIndexFor(from);
 
         if((p1>-1)&&(p2>-1)){
+
+            inCloning = true;
+
             var sz1 = model.get(p1).workareas.count;
             //for(var i=0; i<sz1-1; i++)
             //   removeWorkArea(to,1);
@@ -94,6 +99,8 @@ Item{
 
             for(var i=sz2; i<sz1; i++)
                 removeWorkArea(to,1);
+
+            inCloning = false;
         }
     }
 
@@ -125,16 +132,17 @@ Item{
 
 
             //Not in cloning
-            if((instanceOfActivitiesList.fromCloneActivity === "") &&
-                    (instanceOfActivitiesList.toCloneActivity === "")){
+            //if((instanceOfActivitiesList.fromCloneActivity === "") &&
+            //       (instanceOfActivitiesList.toCloneActivity === "")){
+            if((inCloning === false)&&
+                    (maxWorkareas() < sessionParameters.numberOfDesktops) &&
+                    (sessionParameters.numberOfDesktops > 2))
+                taskManager.slotRemoveDesktop();
 
-                if((maxWorkareas() < sessionParameters.numberOfDesktops) &&
-                        (sessionParameters.numberOfDesktops > 2))
-                    taskManager.slotRemoveDesktop();
-            }
         }
-
     }
+
+
 
     function maxWorkareas()
     {
@@ -157,14 +165,12 @@ Item{
             var counts = workMod.count;
 
             //Not in cloning
-            if((instanceOfActivitiesList.fromCloneActivity === "") &&
-                    (instanceOfActivitiesList.toCloneActivity === "")){
-
-                if(counts === sessionParameters.numberOfDesktops){
-                    taskManager.slotAddDesktop();
-                    activitysNewWorkAreaName = actCode;
-                }
+            if((inCloning === false)&&
+                    (counts === sessionParameters.numberOfDesktops)){
+                taskManager.slotAddDesktop();
+                activitysNewWorkAreaName = actCode;
             }
+
 
             workMod.append( {  "elemTitle": val,
                                "gridRow":counts+1

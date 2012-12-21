@@ -21,7 +21,7 @@ Item{
     property string toCloneActivity:""
     property bool fromActivityWasCurrent:false
     property bool previewsWereEnabled:false
-    property bool widgetsExplorerAwaitingActivity:false
+
 
     //When we add a new activity a series of signal must be generated in order
     //to have a success creation
@@ -62,6 +62,33 @@ Item{
             storedParameters.windowsPreviews = false;
 
     }
+
+
+    //Cloning Signals for interaction with the interface
+    function copyWorkareasSlot(from, to){
+        instanceOfWorkAreasList.copyWorkareas(from,to);
+    }
+
+    function cloningStartedSlot(){
+        if(storedParameters.windowsPreviews === true){
+            previewsWereEnabled = true;
+            storedParameters.windowsPreviews = false;
+        }
+        else
+            previewsWereEnabled = false;
+
+        mainView.getDynLib().showBusyIndicatorDialog();
+    }
+
+    function cloningEndedSlot(){
+        mainView.getDynLib().deleteBusyIndicatorDialog();
+
+        if(previewsWereEnabled === true)
+            storedParameters.windowsPreviews = true;
+        else
+            storedParameters.windowsPreviews = false;
+    }
+    /////////////////////////////////////////////
 
 
     function setCState(cod, val){
@@ -405,7 +432,7 @@ Item{
     }
 
     function cloneActivity(cod){
-
+/*
         fromCloneActivity = cod;
 
         if(fromCloneActivity === sessionParameters.currentActivity)
@@ -421,7 +448,8 @@ Item{
         mainView.getDynLib().showBusyIndicatorDialog();
 
         addNewActivity();
-
+*/
+        activityManager.cloneActivity(cod);
     }
 
     function cloneActivityDialog(cod){

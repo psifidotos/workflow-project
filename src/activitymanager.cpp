@@ -27,10 +27,14 @@
 ////Plugins/////
 #include "plugins/pluginfindwallpaper.h"
 #include "plugins/pluginshowwidgets.h"
+#include "plugins/plugincloneactivity.h"
 
 
 ActivityManager::ActivityManager(QObject *parent) :
-    QObject(parent),m_activitiesCtrl(0), m_plShowWidgets(0)
+    QObject(parent),
+    m_activitiesCtrl(0),
+    m_plShowWidgets(0),
+    m_plCloneActivity(0)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
     m_timer = new QTimer(this);
@@ -44,6 +48,8 @@ ActivityManager::~ActivityManager()
         delete m_activitiesCtrl;
     if (m_plShowWidgets)
         delete m_plShowWidgets;
+    if (m_plCloneActivity)
+        delete m_plShowWidgets;
 }
 
 void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)
@@ -51,7 +57,7 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *p
     qmlActEngine = obj;
     m_corona = cor;
     m_plasmoid = pmoid;
-    m_plShowWidgets = new PluginShowWidgets(pmoid, m_activitiesCtrl);
+    m_plShowWidgets = new PluginShowWidgets(m_plasmoid, m_activitiesCtrl);
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -269,6 +275,29 @@ int ActivityManager::storeCloneActivitySettings(){
 
     return 0;
 }
+
+void ActivityManager::cloningStartedSlot()
+{
+    QMetaObject::invokeMethod(qmlActEngine, "cloningStartedSlot");
+}
+
+void ActivityManager::cloningEndedSlot()
+{
+    QMetaObject::invokeMethod(qmlActEngine, "cloningEndedSlot");
+    if(m_plCloneActivity){
+        delete m_plCloneActivity;
+        m_plCloneActivity = 0;
+    }
+}
+
+void ActivityManager::copyWorkareasSlot(QString from,QString to)
+{
+    QMetaObject::invokeMethod(qmlActEngine, "copyWorkareasSlot",
+                              Q_ARG(QVariant, from),
+                              Q_ARG(QVariant, to));
+}
+
+
 
 void ActivityManager::activityAdded(QString id) {
 
@@ -511,6 +540,21 @@ QString ActivityManager::getWallpaper(QString source)
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
     m_plShowWidgets->execute(actId);
+}
+
+void ActivityManager::cloneActivity(QString actId)
+{
+    if(!m_plCloneActivity){
+        m_plCloneActivity = new PluginCloneActivity(m_plasmoid, m_activitiesCtrl);
+
+        connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SLOT(cloningStartedSlot()));
+        connect(m_plCloneActivity, SIGNAL(cloningEnded()),this,SLOT(cloningEndedSlot()));
+        connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SLOT(copyWorkareasSlot(QString,QString)));
+        connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SLOT(updateWallpaper(QString)));
+
+        m_plCloneActivity->execute(actId);
+    }
+
 }
 
 void  ActivityManager::updateWallpaper(QString actId)

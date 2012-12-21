@@ -11,6 +11,7 @@
 
 class WorkFlow;
 class PluginShowWidgets;
+class PluginCloneActivity;
 
 namespace KActivities
 {
@@ -55,6 +56,7 @@ public:
     //Interact with Corona() and Desktops Containments()
 
     Q_INVOKABLE void showWidgetsExplorer(QString);
+    Q_INVOKABLE void cloneActivity(QString);
 
     void setQMlObject(QObject *,Plasma::Corona *, WorkFlow *);
     void setCurrentNextActivity();
@@ -73,7 +75,12 @@ public slots:
   void activityDataChanged();
   void activityStateChanged();
   void currentActivityChanged(const QString &);
+
   void updateWallpaper(QString);
+
+  void cloningStartedSlot();
+  void cloningEndedSlot();
+  void copyWorkareasSlot(QString,QString);
 
 private slots:
   void timerTrigerred();
@@ -111,6 +118,7 @@ private:
     WorkFlow *m_plasmoid;
 
     PluginShowWidgets *m_plShowWidgets;
+    PluginCloneActivity *m_plCloneActivity;
 
     ////////////
     Plasma::Containment *getContainment(QString actId);
