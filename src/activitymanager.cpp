@@ -403,6 +403,8 @@ void ActivityManager::currentActivityChanged(const QString &id)
 {
     QMetaObject::invokeMethod(qmlActEngine, "setCurrentSignal",
                               Q_ARG(QVariant, id));
+
+    updateWallpaper(id);
 }
 
 ////////////
@@ -469,7 +471,6 @@ void ActivityManager::remove(QString id) {
 }
 
 /*
-
  int ActivityManager::askForDelete(QString activityName)
 {
     QString question("Do you yeally want to delete activity ");
@@ -478,8 +479,6 @@ void ActivityManager::remove(QString id) {
     int responce =  KMessageBox::questionYesNo(0,question,"Delete Activity");
     return responce;
 }
-
-
 */
 
 Plasma::Containment *ActivityManager::getContainment(QString actId)
@@ -512,6 +511,15 @@ QString ActivityManager::getWallpaper(QString source)
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
     m_plShowWidgets->execute(actId);
+}
+
+void  ActivityManager::updateWallpaper(QString actId)
+{
+    QString background = getWallpaper(actId);
+    if(background != "")
+        QMetaObject::invokeMethod(qmlActEngine, "updateWallpaperSlot",
+                                  Q_ARG(QVariant, actId),
+                                  Q_ARG(QVariant, background));
 }
 
 #include "activitymanager.moc"

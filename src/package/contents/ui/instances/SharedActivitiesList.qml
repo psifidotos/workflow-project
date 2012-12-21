@@ -240,6 +240,11 @@ Item{
             instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
 
+    function updateWallpaperSlot(cod,pt){
+        if (pt !== "")
+            instanceOfWorkAreasList.setWallpaper(cod,pt);
+    }
+
 
     function startActivity(cod){
 
@@ -333,7 +338,7 @@ Item{
 
             instanceOfWorkAreasList.setCurrent(cod);
 
-            updateWallpaper(cod);
+         //   updateWallpaper(cod);
 
             //Phase 03 Of updating the wallpaper of new activity
             if((cod === mustActivateActivity)&&
@@ -376,18 +381,6 @@ Item{
         return nextDesk;
 
     }
-
-    //This is only for Dashboard and on current Activity
-   /* Timer{
-        id:showWidgetsExplorerTimer
-        interval: 200
-        repeat: false
-
-        property string actCode:""
-        onTriggered: {
-            activityManager.showWidgetsExplorer(actCode);
-        }
-    }*/
 
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);

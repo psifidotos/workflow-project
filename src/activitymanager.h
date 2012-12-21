@@ -73,6 +73,7 @@ public slots:
   void activityDataChanged();
   void activityStateChanged();
   void currentActivityChanged(const QString &);
+  void updateWallpaper(QString);
 
 private slots:
   void timerTrigerred();
