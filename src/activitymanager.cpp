@@ -68,6 +68,7 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *p
 
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
+    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
@@ -269,8 +270,6 @@ int ActivityManager::storeCloneActivitySettings(){
     return 0;
 }
 
-
-
 void ActivityManager::activityAdded(QString id) {
 
     KActivities::Info *activity = new KActivities::Info(id, this);
@@ -400,8 +399,11 @@ void ActivityManager::setCurrentPreviousActivity()
     QMetaObject::invokeMethod(qmlActEngine, "slotSetCurrentPreviousActivity");
 }
 
-
-
+void ActivityManager::currentActivityChanged(const QString &id)
+{
+    QMetaObject::invokeMethod(qmlActEngine, "setCurrentSignal",
+                              Q_ARG(QVariant, id));
+}
 
 ////////////
 

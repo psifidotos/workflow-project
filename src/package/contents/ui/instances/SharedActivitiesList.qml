@@ -468,6 +468,8 @@ Item{
 
 
     function addNewActivity(){
+
+        //Phase01 of updating new activity's wallpaper
         if(fromCloneActivity === "")
             previousActiveActivity = sessionParameters.currentActivity;
 

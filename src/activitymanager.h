@@ -72,6 +72,7 @@ public slots:
   void activityRemoved(QString id);
   void activityDataChanged();
   void activityStateChanged();
+  void currentActivityChanged(const QString &);
 
 private slots:
   void timerTrigerred();
