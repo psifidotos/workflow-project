@@ -335,16 +335,6 @@ Item{
 
             updateWallpaper(cod);
 
-
-            if(widgetsExplorerAwaitingActivity){
-                activityManager.showWidgetsExplorer(cod);
-                widgetsExplorerAwaitingActivity = false;
-
-                //Hide it after showing the widgets
-                if(sessionParameters.isInPanel)
-                    workflowManager.hidePopupDialog();
-            }
-
             //Phase 03 Of updating the wallpaper of new activity
             if((cod === mustActivateActivity)&&
                     (fromCloneActivity === ""))
@@ -388,7 +378,7 @@ Item{
     }
 
     //This is only for Dashboard and on current Activity
-    Timer{
+   /* Timer{
         id:showWidgetsExplorerTimer
         interval: 200
         repeat: false
@@ -397,7 +387,7 @@ Item{
         onTriggered: {
             activityManager.showWidgetsExplorer(actCode);
         }
-    }
+    }*/
 
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);
@@ -469,7 +459,7 @@ Item{
 
     function addNewActivity(){
 
-        //Phase01 of updating new activity's wallpaper
+      //Phase01 of updating new activity's wallpaper
         if(fromCloneActivity === "")
             previousActiveActivity = sessionParameters.currentActivity;
 

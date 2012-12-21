@@ -54,6 +54,9 @@ void PluginShowWidgets::currentActivityChanged(QString id)
     if (m_widgetsExplorerAwaitingActivity){
         showWidgetsExplorer(m_toShowActivityId);
         m_widgetsExplorerAwaitingActivity = false;
+
+        if(!m_isOnDashboard)
+            m_plasmoid->hidePopupDialog();;
     }
 }
 
@@ -172,73 +175,29 @@ void PluginShowWidgets::execute(QString actid)
 
     bool currentAct = (actid == m_taskMainM->currentActivity());
 
-    if(currentAct){
-        if(!m_isOnDashboard)
-            showWidgetsExplorer(actid);
-        else{
-            // This is only for Dashboard and on current Activity
-            // a workaround for the strange behavior showing
-            // explorer and hide it afterwards
-            m_toShowActivityId = actid;
-
-            QTimer::singleShot(200, this, SLOT(showWidgetsExplorerFromDelay()));
-        }
+    if((currentAct) && (!m_isOnDashboard)){
+        showWidgetsExplorer(actid);
+        m_plasmoid->hidePopupDialog();
     }
-    else{
+    else if ((currentAct) && (m_isOnDashboard)){
+        // This is only for Dashboard and on current Activity
+        // a workaround for the strange behavior showing
+        // explorer and hide it afterwards
+        m_toShowActivityId = actid;
+
+        QTimer::singleShot(200, this, SLOT(showWidgetsExplorerFromDelay()));
+    }
+    else if(!currentAct){
         m_widgetsExplorerAwaitingActivity = true; ///wait for activity activation....
         m_toShowActivityId = actid;
         nDesktop = m_plasmoid->setCurrentActivityAndDesktop(actid,nDesktop);
-
-        showWidgetsExplorer(actid);
     }
 
     minimizeWindowsIn(actid, nDesktop);
     unlockWidgets();
 
-    //Otherwise the widgets explorer it is hidden again because it loses focus
-    //When we change activity the popup is hidden automaticaly from KDE
-    if((!m_isOnDashboard)&&(currentAct))
-        m_plasmoid->hidePopupDialog();
-}
-
-
-/////////////////////////////////////////////////////
-/*
-function showWidgetsExplorer(act){
-    if(mainView.isOnDashBoard)
-        taskManager.hideDashboard();
-
-    var nDesktop = mainView.currentDesktop;
-
-    var currentAct = (act === mainView.currentActivity);
-
-    if(currentAct)
-        //   if(!mainView.isOnDashBoard)
-        activityManager.showWidgetsExplorer(act);
-    //    else{
-    // This is only for Dashboard and on current Activity
-    // a workaround for the strange behavior showing
-    // explorer and hide it afterwards
-    showWidgetsExplorerTimer.actCode = act;
-    showWidgetsExplorerTimer.start();
-    //     }
-    else{
-        widgetsExplorerAwaitingActivity = true;
-        nDesktop = setCurrentActivityAndDesktop(act,mainView.currentDesktop);
-    }
-
-    instanceOfTasksList.minimizeWindowsIn(act, nDesktop);
-    activityManager.unlockWidgets();
-
-
-    //Hide it after showing the widgets
-    if((!mainView.isOnDashBoard)&&(currentAct))
-        workflowManager.hidePopupDialog();
 
 }
-*/
-
-
 
 
 #include "pluginshowwidgets.moc"
