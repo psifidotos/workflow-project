@@ -41,7 +41,7 @@ Item{
         ListView{
             id:allareas
 
-            y: 2.8 * allwlists.scale
+            y: 2.2 * allwlists.scale
             //+1, for not creating a visual issue...
             width: (activitiesList.shownActivities + 1) * allwlists.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height
@@ -93,7 +93,7 @@ Item{
             id: actImag1
             width: allwlists.width < allareas.width ? allareas.width : allwlists.width
 
-            height: 1.8 * allwlists.scale
+            height: 1.6 * allwlists.scale
             color: "#646464"
             border.color: allwlists.actImagBordColor
             border.width:1
