@@ -444,19 +444,6 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
         actManager->setCurrentPreviousActivity();
 }
 
-int WorkFlow::setCurrentActivityAndDesktop(QString actid,int desk)
-{
-    actManager->setCurrent(actid);
-    int nextDesk = desk;
-    int actSize = this->activitySize(actid);
-
-    if(desk>actSize)
-        nextDesk = actSize;
-
-    taskManager->setCurrentDesktop(nextDesk);
-    return nextDesk;
-}
-
 // This is the command that links your applet to the .desktop file
 K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
 

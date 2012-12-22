@@ -48,6 +48,8 @@ private:
 
     QTimer *m_timer;
 
+    QString m_currentActivityInBegin;
+
     QString m_fromActivity;
     QString m_fromActivityContainmentId;
     QString m_fromCloneActivityText;
@@ -55,7 +57,6 @@ private:
     QString m_toActivity;
     QString m_toActivityContainmentId;
 
-    bool m_fromActivityWasCurrent;
     int m_timerPhase;
 
     void initCloningPhase02();

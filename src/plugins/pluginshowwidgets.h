@@ -29,6 +29,9 @@ public:
 
     void execute(QString);
 
+signals:
+    void showWidgetsEnded();
+
 public slots:
     void showWidgetsExplorerFromDelay();
     void currentActivityChanged(QString id);

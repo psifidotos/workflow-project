@@ -252,7 +252,7 @@ Item{
     function setCurrentTaskInWorkarea(activ,desk,cod)
     {
         //instanceOfActivitiesList.setCurrentActivityAndDesktop(activ,desk);
-        workflowManager.setCurrentActivityAndDesktop(activ,desk);
+        activityManager.setCurrentActivityAndDesktop(activ,desk);
         setCurrentTask(cod);
     }
 

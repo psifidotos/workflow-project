@@ -29,6 +29,7 @@
 #include "plugins/pluginshowwidgets.h"
 #include "plugins/plugincloneactivity.h"
 #include "plugins/pluginremoveactivity.h"
+#include "plugins/pluginchangeworkarea.h"
 
 
 ActivityManager::ActivityManager(QObject *parent) :
@@ -36,7 +37,8 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_activitiesCtrl(0),
     m_plShowWidgets(0),
     m_plCloneActivity(0),
-    m_plRemoveActivity(0)
+    m_plRemoveActivity(0),
+    m_plChangeWorkarea(0)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
 }
@@ -48,9 +50,11 @@ ActivityManager::~ActivityManager()
     if (m_plShowWidgets)
         delete m_plShowWidgets;
     if (m_plCloneActivity)
-        delete m_plShowWidgets;
+        delete m_plCloneActivity;
     if (m_plRemoveActivity)
         delete m_plRemoveActivity;
+    if (m_plChangeWorkarea)
+        delete m_plChangeWorkarea;
 }
 
 void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)
@@ -58,7 +62,6 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *p
     qmlActEngine = obj;
     m_corona = cor;
     m_plasmoid = pmoid;
-    m_plShowWidgets = new PluginShowWidgets(m_plasmoid, m_activitiesCtrl);
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -85,6 +88,15 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
 {
     KIcon icon3(ic);
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
+}
+
+
+void ActivityManager::showWidgetsEndedSlot()
+{
+    if (m_plShowWidgets){
+        delete m_plShowWidgets;
+        m_plShowWidgets = 0;
+    }
 }
 
 
@@ -117,6 +129,16 @@ void ActivityManager::copyWorkareasSlot(QString from,QString to)
                               Q_ARG(QVariant, from),
                               Q_ARG(QVariant, to));
 }
+
+
+void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
+{
+    if (m_plChangeWorkarea){
+        delete m_plChangeWorkarea;
+        m_plChangeWorkarea = 0;
+    }
+}
+
 
 
 
@@ -352,6 +374,16 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
     return 0;
 }
 
+void  ActivityManager::updateWallpaper(QString actId)
+{
+    QString background = getWallpaper(actId);
+    if(background != "")
+        QMetaObject::invokeMethod(qmlActEngine, "updateWallpaperSlot",
+                                  Q_ARG(QVariant, actId),
+                                  Q_ARG(QVariant, background));
+}
+
+
 QString ActivityManager::getWallpaper(QString source)
 {
     PluginFindWallpaper plg(getContainment(source));
@@ -360,7 +392,13 @@ QString ActivityManager::getWallpaper(QString source)
 
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
-    m_plShowWidgets->execute(actId);
+    if(!m_plShowWidgets){
+        m_plShowWidgets = new PluginShowWidgets(m_plasmoid, m_activitiesCtrl);
+
+        connect(m_plShowWidgets, SIGNAL(showWidgetsEnded()), this, SLOT(showWidgetsEndedSlot()));
+
+        m_plShowWidgets->execute(actId);
+    }
 }
 
 void ActivityManager::cloneActivity(QString actId)
@@ -378,13 +416,20 @@ void ActivityManager::cloneActivity(QString actId)
 
 }
 
-void  ActivityManager::updateWallpaper(QString actId)
+void ActivityManager::setCurrentActivityAndDesktop(QString actId, int desktop)
 {
-    QString background = getWallpaper(actId);
-    if(background != "")
-        QMetaObject::invokeMethod(qmlActEngine, "updateWallpaperSlot",
-                                  Q_ARG(QVariant, actId),
-                                  Q_ARG(QVariant, background));
+    if(!m_plChangeWorkarea){
+        m_plChangeWorkarea = new PluginChangeWorkarea(this, m_activitiesCtrl);
+
+        connect(m_plChangeWorkarea, SIGNAL(changeWorkareaEnded(QString,int)), this, SLOT(changeWorkareaEnded(QString,int)));
+        m_plChangeWorkarea->execute(actId, desktop);
+    }
+    else
+        m_plChangeWorkarea->execute(actId, desktop);
+
 }
+
+
+
 
 #include "activitymanager.moc"

@@ -79,8 +79,6 @@ public:
 
     Q_INVOKABLE void workAreaWasClicked();
 
-    Q_INVOKABLE int setCurrentActivityAndDesktop(QString ,int );
-
 protected:
 
     virtual void popupEvent(bool show);

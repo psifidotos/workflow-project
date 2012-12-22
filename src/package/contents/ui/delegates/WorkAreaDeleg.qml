@@ -344,7 +344,7 @@ Item{
     }
 
     function clickedWorkarea(){
-        workflowManager.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
+        activityManager.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
     }
 
     function getBorderRectangle(){

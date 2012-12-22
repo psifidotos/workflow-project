@@ -14,6 +14,7 @@ class WorkFlow;
 class PluginShowWidgets;
 class PluginCloneActivity;
 class PluginRemoveActivity;
+class PluginChangeWorkarea;
 
 namespace KActivities
 {
@@ -39,7 +40,7 @@ public:
     Q_INVOKABLE QString getWallpaper(QString source);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
     Q_INVOKABLE QString add(QString name);
-//    Q_INVOKABLE void clone(QString id, QString name);
+
     Q_INVOKABLE void setCurrent(QString id);
     Q_INVOKABLE void stop(QString id);
     Q_INVOKABLE void start(QString id);
@@ -50,10 +51,10 @@ public:
 
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
-    //Interact with Corona() and Desktops Containments()
-
     Q_INVOKABLE void showWidgetsExplorer(QString);
     Q_INVOKABLE void cloneActivity(QString);
+
+
 
     void setQMlObject(QObject *,Plasma::Corona *, WorkFlow *);
     void setCurrentNextActivity();
@@ -75,11 +76,17 @@ public slots:
 
   void updateWallpaper(QString);
 
+  void showWidgetsEndedSlot();
+
   void cloningStartedSlot();
   void cloningEndedSlot();
   void copyWorkareasSlot(QString,QString);
 
   void activityRemovedEnded(QString);
+
+  void changeWorkareaEnded(QString, int);
+
+  Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
 
 private:
 
@@ -93,6 +100,7 @@ private:
     PluginShowWidgets *m_plShowWidgets;
     PluginCloneActivity *m_plCloneActivity;
     PluginRemoveActivity *m_plRemoveActivity;
+    PluginChangeWorkarea *m_plChangeWorkarea;
 
     Plasma::Containment *getContainment(QString actId);
 

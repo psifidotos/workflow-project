@@ -16,11 +16,10 @@ PluginCloneActivity::PluginCloneActivity(WorkFlow *plasmoid, KActivities::Contro
     QObject(plasmoid),
     m_plasmoid(plasmoid),
     m_activitiesCtrl(actControl),
+    m_currentActivityInBegin(""),
     m_fromActivity(""),
     m_toActivity(""),
-    m_fromActivityWasCurrent(false),
     m_timerPhase(0)
-
 {
     m_taskMainM = TaskManager::TaskManager::self();
     m_timer = new QTimer(this);
@@ -239,10 +238,7 @@ int PluginCloneActivity::storeCloneActivitySettings(){
 
     m_activitiesCtrl->startActivity(m_toActivity);
 
-    if(m_fromActivityWasCurrent == true){
-        m_plasmoid->setCurrentActivityAndDesktop(m_fromActivity,m_taskMainM->currentDesktop());
-        m_fromActivityWasCurrent = false;
-    }
+    m_activitiesCtrl->setCurrentActivity(m_currentActivityInBegin);
 
     return 0;
 }
@@ -317,7 +313,8 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
 
         emit copyWorkareas(m_fromActivity, m_toActivity);
 
-        m_plasmoid->setCurrentActivityAndDesktop(m_toActivity, m_taskMainM->currentDesktop());
+       // m_plasmoid->setCurrentActivityAndDesktop(m_toActivity, m_taskMainM->currentDesktop());
+        m_activitiesCtrl->setCurrentActivity(m_toActivity);
 
         m_activitiesCtrl->stopActivity(m_fromActivity);
     }
@@ -328,12 +325,11 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
 //Phase-00
 void PluginCloneActivity::execute(QString actId)
 {
+    m_currentActivityInBegin = m_activitiesCtrl->currentActivity();
+
     emit cloningStarted();
 
     m_fromActivity = actId;
-
-    if(m_fromActivity == m_activitiesCtrl->currentActivity())
-        m_fromActivityWasCurrent = true;
 
     m_toActivity = m_activitiesCtrl->addActivity(i18n("New Activity"));
 }

@@ -56,7 +56,9 @@ void PluginShowWidgets::currentActivityChanged(QString id)
         m_widgetsExplorerAwaitingActivity = false;
 
         if(!m_isOnDashboard)
-            m_plasmoid->hidePopupDialog();;
+            m_plasmoid->hidePopupDialog();
+
+        emit showWidgetsEnded();
     }
 }
 
@@ -125,15 +127,6 @@ void PluginShowWidgets::minimizeWindowsIn(QString actid,int desktop)
 }
 
 
-
-void PluginShowWidgets::showWidgetsExplorerFromDelay()
-{
-    showWidgetsExplorer(m_toShowActivityId);
-}
-
-
-
-
 Plasma::Containment *PluginShowWidgets::getContainment(QString actId)
 {
 
@@ -157,6 +150,13 @@ Plasma::Containment *PluginShowWidgets::getContainment(QString actId)
     return 0;
 }
 
+void PluginShowWidgets::showWidgetsExplorerFromDelay()
+{
+    showWidgetsExplorer(m_toShowActivityId);
+    emit showWidgetsEnded();
+}
+
+
 void PluginShowWidgets::showWidgetsExplorer(QString actId)
 {
     Plasma::Containment *currentContainment = getContainment(actId);
@@ -173,7 +173,9 @@ void PluginShowWidgets::execute(QString actid)
 
     int nDesktop = m_taskMainM->currentDesktop();
 
-    bool currentAct = (actid == m_taskMainM->currentActivity());
+    bool currentAct = (actid == m_activitiesCtrl->currentActivity());
+
+    bool timerNeeded = false;
 
     if((currentAct) && (!m_isOnDashboard)){
         showWidgetsExplorer(actid);
@@ -183,6 +185,7 @@ void PluginShowWidgets::execute(QString actid)
         // This is only for Dashboard and on current Activity
         // a workaround for the strange behavior showing
         // explorer and hide it afterwards
+        timerNeeded = true;
         m_toShowActivityId = actid;
 
         QTimer::singleShot(200, this, SLOT(showWidgetsExplorerFromDelay()));
@@ -190,12 +193,16 @@ void PluginShowWidgets::execute(QString actid)
     else if(!currentAct){
         m_widgetsExplorerAwaitingActivity = true; ///wait for activity activation....
         m_toShowActivityId = actid;
-        nDesktop = m_plasmoid->setCurrentActivityAndDesktop(actid,nDesktop);
+        m_activitiesCtrl->setCurrentActivity(actid);
+        timerNeeded = true;
+      //  nDesktop = m_plasmoid->setCurrentActivityAndDesktop(actid,nDesktop);
     }
 
     minimizeWindowsIn(actid, nDesktop);
     unlockWidgets();
 
+    if(!timerNeeded)
+        emit showWidgetsEnded();
 
 }
 
