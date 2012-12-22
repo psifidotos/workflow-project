@@ -21,16 +21,11 @@
 #ifndef WORKFLOW_HEADER
 #define WORKFLOW_HEADER
 
-// We need the Plasma Applet headers
-
 
 #include <Plasma/Label>
 #include <Plasma/PopupApplet>
 #include <plasma/widgets/declarativewidget.h>
 #include <Plasma/ExtenderItem>
-
-
-#include <QGraphicsLinearLayout>
 
 #include <KGlobal>
 #include <KStandardDirs>
@@ -95,14 +90,16 @@ public slots:
     void geomChanged();
     void setMainWindowId();
 
+    void setPassivePopupSlot(bool);
+
     void activeWindowChanged(WId);
 
     void screensSizeChanged(int);
 
     void showingIconsDialog();
     void answeredIconDialog();
-    void configDialogFinished();
 
+    void configDialogFinished();
     void configDialogAccepted();
 
 protected slots:
@@ -116,7 +113,6 @@ private:
 
     bool m_findPopupWid;
 
-    QGraphicsLinearLayout *mainLayout;
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
 

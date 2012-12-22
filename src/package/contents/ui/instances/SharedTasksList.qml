@@ -251,7 +251,8 @@ Item{
     //in order to change to right workarea when a window is inAllDesktops
     function setCurrentTaskInWorkarea(activ,desk,cod)
     {
-        instanceOfActivitiesList.setCurrentActivityAndDesktop(activ,desk);
+        //instanceOfActivitiesList.setCurrentActivityAndDesktop(activ,desk);
+        workflowManager.setCurrentActivityAndDesktop(activ,desk);
         setCurrentTask(cod);
     }
 

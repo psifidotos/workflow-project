@@ -35,6 +35,7 @@
 #include <QDesktopWidget>
 #include <QGraphicsView>
 #include <QGraphicsSceneWheelEvent>
+#include <QGraphicsLinearLayout>
 #include <QRectF>
 #include <QString>
 
@@ -53,7 +54,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     taskManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
-    setPassivePopup(true);
     setHasConfigurationInterface(true);
     setPopupIcon("preferences-activities");
 
@@ -100,7 +100,7 @@ void WorkFlow::init(){
 
     storedParams = new StoredParameters(this,&appConfig);
 
-    mainLayout = new QGraphicsLinearLayout(m_mainWidget);
+    QGraphicsLinearLayout *mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -166,6 +166,8 @@ void WorkFlow::init(){
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
     m_mainWidget->setMinimumSize(550,350);
+    setPassivePopupSlot(storedParams->hideOnClick());
+    connect(storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
 }
 
 void WorkFlow::hidePopupDialog()
@@ -219,6 +221,11 @@ void WorkFlow::updatePopWindowWId()
         taskManager->setMainWindowId(lastWindow);
         taskManager->setTopXY(0,0);
     }
+}
+
+void WorkFlow::setPassivePopupSlot(bool passive)
+{
+    setPassivePopup(!passive);
 }
 
 void WorkFlow::popupEvent(bool show)

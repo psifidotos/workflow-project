@@ -300,7 +300,7 @@ Item{
         }
     }
 
-    function setCurrent(cod){
+   /* function setCurrent(cod){
         if(sessionParameters.currentActivity === cod)
             updateWallpaper(cod);
 
@@ -327,7 +327,7 @@ Item{
 
         return nextDesk;
 
-    }
+    }*/
 
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);

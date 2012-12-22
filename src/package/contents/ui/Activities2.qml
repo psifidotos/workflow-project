@@ -49,8 +49,14 @@ Rectangle {
 
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
 
+    //these signals remove the warnings when running the plasmoid
     signal minimumWidthChanged;
     signal minimumHeightChanged;
+    signal maximumWidthChanged;
+    signal maximumHeightChanged;
+    signal preferredWidthChanged;
+    signal preferredHeightChanged;
+
 
     //Local properties//
     property real screenRatio:0.75
