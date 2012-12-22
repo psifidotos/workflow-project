@@ -6,6 +6,7 @@ set(workflow_SRCS workflow.cpp
                   plugins/pluginfindwallpaper.cpp
                   plugins/pluginshowwidgets.cpp
                   plugins/plugincloneactivity.cpp
+                  plugins/pluginremoveactivity.cpp
 )
 
 # Now make sure all files get to the right place

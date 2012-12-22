@@ -125,7 +125,7 @@ Item{
         //Phase 02 of loading Wallpaper of New Activity
 
         if(source === mustActivateActivity)
-            setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
+            workflowManager.setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
     }
 
     function setIcon(cod, val){
@@ -174,7 +174,7 @@ Item{
 
             var nextDesk = sessionParameters.currentDesktop;
 
-            setCurrentActivityAndDesktop(nId,nextDesk);
+            workflowManager.setCurrentActivityAndDesktop(nId,nextDesk);
         }
 
         activityManager.stop(cod);
@@ -291,7 +291,7 @@ Item{
 
             //Phase 03 Of updating the wallpaper of new activity
             if(cod === mustActivateActivity)
-                setCurrentActivityAndDesktop(previousActiveActivity,sessionParameters.currentDesktop);
+                workflowManager.setCurrentActivityAndDesktop(previousActiveActivity,sessionParameters.currentDesktop);
 
             //Phase 04 Of updating the wallpaper of new activity
             if(cod === previousActiveActivity)

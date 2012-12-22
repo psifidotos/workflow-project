@@ -28,13 +28,15 @@
 #include "plugins/pluginfindwallpaper.h"
 #include "plugins/pluginshowwidgets.h"
 #include "plugins/plugincloneactivity.h"
+#include "plugins/pluginremoveactivity.h"
 
 
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
     m_plShowWidgets(0),
-    m_plCloneActivity(0)
+    m_plCloneActivity(0),
+    m_plRemoveActivity(0)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
 }
@@ -47,6 +49,8 @@ ActivityManager::~ActivityManager()
         delete m_plShowWidgets;
     if (m_plCloneActivity)
         delete m_plShowWidgets;
+    if (m_plRemoveActivity)
+        delete m_plRemoveActivity;
 }
 
 void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)
@@ -95,6 +99,15 @@ void ActivityManager::cloningEndedSlot()
     if(m_plCloneActivity){
         delete m_plCloneActivity;
         m_plCloneActivity = 0;
+    }
+}
+
+
+void ActivityManager::activityRemovedEnded(QString)
+{
+    if (m_plRemoveActivity){
+        delete m_plRemoveActivity;
+        m_plRemoveActivity = 0;
     }
 }
 
@@ -298,7 +311,13 @@ void ActivityManager::setName(QString id, QString name) {
 }
 
 void ActivityManager::remove(QString id) {
-    m_activitiesCtrl->removeActivity(id);
+    //Problem in removing an activity it creates a ghost record in activities list
+    //m_activitiesCtrl->removeActivity(id);
+    if(!m_plRemoveActivity)
+        m_plRemoveActivity = new PluginRemoveActivity(this,m_activitiesCtrl);
+
+    connect(m_plRemoveActivity, SIGNAL(activityRemovedEnded(QString)), this, SLOT(activityRemovedEnded(QString)));
+    m_plRemoveActivity->execute(id);
 }
 
 /*

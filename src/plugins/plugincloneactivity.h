@@ -22,6 +22,8 @@ public:
     ~PluginCloneActivity();
 
     void execute(QString);
+
+protected:
     void init();
 
 signals:
@@ -33,7 +35,6 @@ signals:
 protected slots:
     void activityAddedSlot(QString);
     void activityStateChangedSlot();
-
 
 private slots:
   void timerTrigerred();

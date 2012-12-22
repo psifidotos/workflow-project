@@ -10,8 +10,10 @@
 #include <QTimer>
 
 class WorkFlow;
+
 class PluginShowWidgets;
 class PluginCloneActivity;
+class PluginRemoveActivity;
 
 namespace KActivities
 {
@@ -77,6 +79,8 @@ public slots:
   void cloningEndedSlot();
   void copyWorkareasSlot(QString,QString);
 
+  void activityRemovedEnded(QString);
+
 private:
 
     WorkFlow *m_plasmoid;
@@ -88,6 +92,7 @@ private:
 
     PluginShowWidgets *m_plShowWidgets;
     PluginCloneActivity *m_plCloneActivity;
+    PluginRemoveActivity *m_plRemoveActivity;
 
     Plasma::Containment *getContainment(QString actId);
 

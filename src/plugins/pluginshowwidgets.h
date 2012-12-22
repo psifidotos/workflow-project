@@ -28,11 +28,13 @@ public:
     ~PluginShowWidgets();
 
     void execute(QString);
-    void init();
 
 public slots:
     void showWidgetsExplorerFromDelay();
     void currentActivityChanged(QString id);
+
+protected:
+    void init();
 
 private:
 
