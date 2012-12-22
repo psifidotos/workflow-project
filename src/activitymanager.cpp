@@ -216,11 +216,6 @@ void ActivityManager::activityStateChanged()
                               Q_ARG(QVariant, id),
                               Q_ARG(QVariant, state));
 
-    if((activity->id()==activityForDelete)&&
-            (state=="Stopped")){
-        m_activitiesCtrl->removeActivity(activity->id());
-        activityForDelete = "";
-    }
 }
 
 
@@ -303,8 +298,7 @@ void ActivityManager::setName(QString id, QString name) {
 }
 
 void ActivityManager::remove(QString id) {
-    m_activitiesCtrl->stopActivity(id);
-    activityForDelete = id;
+    m_activitiesCtrl->removeActivity(id);
 }
 
 /*
