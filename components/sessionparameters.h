@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include <QDesktopWidget>
+#include <QDBusInterface>
 
 #include <KActivities/Controller>
-
 
 class KWindowSystem;
 
@@ -47,12 +47,12 @@ public slots:
     void setNumberOfDesktopsSlot(int);
     void setEffectsSystemEnabledSlot(bool);
 
-
  //   void setScreensSizeSlot(int);
 
 private:
     KActivities::Controller *m_controller;
     KWindowSystem *m_kwindowSystem;
+    QDBusInterface *m_dbus;
  //   QDesktopWidget *m_desktopWidget;
 
     QString m_currentActivity;

@@ -6,12 +6,14 @@
 
 #include <KActivities/Controller>
 #include <KWindowSystem>
+#include <KDebug>
 
 
 SessionParameters::SessionParameters(QObject *parent)
     : QObject(parent),
       m_controller(new KActivities::Controller(this)),
       m_kwindowSystem(KWindowSystem::KWindowSystem::self()),
+      m_dbus(0),
       m_isInPanel(0)
 {
     m_currentActivity = m_controller->currentActivity();
@@ -19,8 +21,9 @@ SessionParameters::SessionParameters(QObject *parent)
     m_numberOfDesktops = m_kwindowSystem->numberOfDesktops();
     m_effectsSystemEnabled = m_kwindowSystem->compositingActive();
 
-    //   m_screenRatio = 1;
+    m_dbus = new QDBusInterface("org.kde.kwin", "/KWin", "org.kde.KWin");
 
+    //   m_screenRatio = 1;
     //   m_desktopWidget = qApp->desktop();
 
     initConnections();
@@ -30,6 +33,9 @@ SessionParameters::~SessionParameters()
 {
     if (m_controller)
         delete m_controller;
+
+    if (m_dbus)
+        delete m_dbus;
 }
 
 
@@ -39,8 +45,15 @@ void SessionParameters::initConnections()
     connect(m_controller, SIGNAL(currentActivityChanged(QString)), this, SLOT(setCurrentActivitySlot(QString)));
     connect(m_kwindowSystem, SIGNAL(currentDesktopChanged(int)), this, SLOT(setCurrentDesktopSlot(int)));
     connect(m_kwindowSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(setNumberOfDesktopsSlot(int)));
-    QDBusConnection::sessionBus().connect("org.kde.kwin", "/KWin", "org.kde.KWin" ,"compositingToggled", this, SLOT(setEffectsSystemEnabledSlot(bool)));
-    //   connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(setScreensSizeSlot(int)));
+
+    if(m_dbus->isValid()){
+        m_dbus->setParent(this);
+        connect(m_dbus,SIGNAL(compositingToggled(bool)), this, SLOT(setEffectsSystemEnabledSlot(bool)));
+    }
+    else{
+        delete m_dbus;
+        m_dbus=0;
+    }
 }
 
 
@@ -88,7 +101,7 @@ void SessionParameters::setEffectsSystemEnabledSlot(bool status)
 {
     if(m_effectsSystemEnabled != status){
         m_effectsSystemEnabled = status;
-        emit numberOfDesktopsChanged(m_effectsSystemEnabled);
+        emit effectsSystemChanged(m_effectsSystemEnabled);
     }
 }
 
