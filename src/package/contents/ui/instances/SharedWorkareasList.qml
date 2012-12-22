@@ -191,27 +191,6 @@ Item{
 
             addWorkareaWithName(actCode,ndesk);
         }
-
-        /*        var ind = getIndexFor(actCode);
-        var actOb = model.get(ind);
-        var workMod = actOb.workareas;
-
-        var counts = workMod.count;
-
-        if(counts === mainView.maxDesktops)
-            taskManager.slotAddDesktop();
-
-     //   var lastobj = workMod.get(counts-1);
-
-        var ndesk = taskManager.getDesktopName(counts+1);
-
-        workMod.append( {  "elemTitle": ndesk,
-                           "gridRow":counts+1
-       //                    "gridRow":lastobj.gridRow+1
-                       } );
-
-        workflowManager.addWorkArea(actCode,ndesk);
-*/
     }
 
 

@@ -124,8 +124,7 @@ Item{
 
         //Phase 02 of loading Wallpaper of New Activity
 
-        if( (source === mustActivateActivity) &&
-                (fromCloneActivity === "") )
+        if(source === mustActivateActivity)
             setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
     }
 
