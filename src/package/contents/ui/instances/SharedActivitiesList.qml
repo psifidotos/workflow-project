@@ -17,9 +17,6 @@ Item{
     //first go to an activity and then change desktop
     property int goToDesktop:-1
 
-    property string fromCloneActivity:""
-    property string toCloneActivity:""
-    property bool fromActivityWasCurrent:false
     property bool previewsWereEnabled:false
 
 
@@ -36,31 +33,6 @@ Item{
             console.debug(obj.code + " - " + obj.Name + " - " +obj.Icon + " - " +obj.Current + " - " +obj.CState);
         }
         console.debug("----  -----");
-    }
-
-    function initPhase02Completed(){
-        startActivity(fromCloneActivity);
-    }
-
-    function initPhase04Completed(){
-        updateWallpaper(toCloneActivity);
-        startActivity(toCloneActivity);
-
-        if(fromActivityWasCurrent === true){
-            setCurrentActivityAndDesktop(fromCloneActivity,sessionParameters.currentDesktop);
-            fromActivityWasCurrent = false;
-        }
-
-        fromCloneActivity = "";
-        toCloneActivity = "";
-        //busyIndicatorDialog.resetAnimation();
-        mainView.getDynLib().deleteBusyIndicatorDialog();
-
-        if(previewsWereEnabled === true)
-            storedParameters.windowsPreviews = true;
-        else
-            storedParameters.windowsPreviews = false;
-
     }
 
 
@@ -95,41 +67,16 @@ Item{
         var ind = getIndexFor(cod);
         if (ind>-1){
 
-            if( (fromCloneActivity === "") &&
-                    (toCloneActivity === "")){
+            model.setProperty(ind,"CState",val);
 
-                model.setProperty(ind,"CState",val);
+            instanceOfWorkAreasList.setCState(cod,val);
 
-                instanceOfWorkAreasList.setCState(cod,val);
-
-
-                allWorkareas.updateShowActivities();
-                stoppedPanel.changedChildState();
-            }
-
-
-            //This is Phase02 of Cloning
-            if( (cod === fromCloneActivity) &&
-                    (val === "Stopped")){
-                activityManager.initCloningPhase02(cod);
-            }
-
-            //This is Phase03 of Cloning
-            if( (cod === fromCloneActivity) &&
-                    (val === "Running"))
-                stopActivity(toCloneActivity);
-
-            //This is Phase04 of Cloning
-            if( (cod === toCloneActivity) &&
-                    (val === "Stopped"))
-                activityManager.initCloningPhase04(cod);
-
-
+            allWorkareas.updateShowActivities();
+            stoppedPanel.changedChildState();
 
             //Phase 05 of loading Wallpaper of New Activity
             if( (cod === mustActivateActivity) &&
-                    (val === "Stopped")&&
-                    (toCloneActivity === "")){
+                    (val === "Stopped")){
                 var act = mustActivateActivity;
                 var oldAct = previousActiveActivity;
 
@@ -175,15 +122,6 @@ Item{
 
         updateWallpaper(source);
 
-        //Phase-01 Of Cloning
-        if(fromCloneActivity !== ""){
-            toCloneActivity = source;
-            copyActivityBasicSettings(fromCloneActivity,toCloneActivity);
-            setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
-            stopActivity(fromCloneActivity);
-        }
-
-
         //Phase 02 of loading Wallpaper of New Activity
 
         if( (source === mustActivateActivity) &&
@@ -210,7 +148,7 @@ Item{
             model.setProperty(ind,"Name",title);
             model.setProperty(ind,"Icon",icon);
             setCState(source,stat);
-         //   setCurrentIns(source,cur);
+            //   setCurrentIns(source,cur);
         }
 
     }
@@ -228,21 +166,6 @@ Item{
             allWorkareas.updateShowActivities();
         }
 
-    }
-
-    //It is used from the cloning process in order to copy
-    //Name and Icon
-    function copyActivityBasicSettings(from,to){
-        var p = getIndexFor(from);
-        if (p>-1){
-            var nm = model.get(p).Name;
-            var ic = model.get(p).Icon;
-
-            setName(to,i18n("Copy of")+" "+nm);
-            setIcon(to,ic);
-
-            instanceOfWorkAreasList.copyWorkareas(from,to);
-        }
     }
 
     function stopActivity(cod){
@@ -365,16 +288,14 @@ Item{
 
             instanceOfWorkAreasList.setCurrent(cod);
 
-         //   updateWallpaper(cod);
+            //   updateWallpaper(cod);
 
             //Phase 03 Of updating the wallpaper of new activity
-            if((cod === mustActivateActivity)&&
-                    (fromCloneActivity === ""))
+            if(cod === mustActivateActivity)
                 setCurrentActivityAndDesktop(previousActiveActivity,sessionParameters.currentDesktop);
 
             //Phase 04 Of updating the wallpaper of new activity
-            if((cod === previousActiveActivity)&&
-                    (fromCloneActivity === ""))
+            if(cod === previousActiveActivity)
                 stopActivity(mustActivateActivity);
 
         }
@@ -432,23 +353,6 @@ Item{
     }
 
     function cloneActivity(cod){
-/*
-        fromCloneActivity = cod;
-
-        if(fromCloneActivity === sessionParameters.currentActivity)
-            fromActivityWasCurrent = true;
-
-        if(storedParameters.windowsPreviews === true){
-            previewsWereEnabled = true;
-            storedParameters.windowsPreviews = false;
-        }
-        else
-            previewsWereEnabled = false;
-
-        mainView.getDynLib().showBusyIndicatorDialog();
-
-        addNewActivity();
-*/
         activityManager.cloneActivity(cod);
     }
 
@@ -468,7 +372,6 @@ Item{
 
     function removeActivityDialog(cod){
 
-
         var p = getIndexFor(cod);
         if(p>-1){
             var ob = model.get(p);
@@ -480,14 +383,13 @@ Item{
 
     function addNewActivity(){
 
-      //Phase01 of updating new activity's wallpaper
-        if(fromCloneActivity === "")
-            previousActiveActivity = sessionParameters.currentActivity;
+        //Phase01 of updating new activity's wallpaper
+
+        previousActiveActivity = sessionParameters.currentActivity;
 
         var res = activityManager.add(i18n("New Activity"));
 
-        if(fromCloneActivity === "")
-            mustActivateActivity = res;
+        mustActivateActivity = res;
 
         return res;
 
@@ -501,7 +403,7 @@ Item{
         ///////////////////////////
         ////////SOS, DO NOT DELETE, IT CAN NOT CLONE THE EMPTY ACTIVITY(NEW ACTIVITY)
 
-       //   previousActiveActivity = "";
+        //   previousActiveActivity = "";
         //   mustActivateActivity = "";
 
 

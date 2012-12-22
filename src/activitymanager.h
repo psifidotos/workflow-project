@@ -31,8 +31,6 @@ public:
     explicit ActivityManager(QObject *parent = 0);
     ~ActivityManager();
 
-//  Q_INVOKABLE void cloneCurrentActivity();
-//  Q_INVOKABLE void createActivity(const QString &pluginName);
 //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
 //  Q_INVOKABLE void downloadActivityScripts();
 
@@ -48,9 +46,6 @@ public:
     Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE void setIcon(QString id, QString name);
 
-    //are used in cloning
-    Q_INVOKABLE void initCloningPhase02(QString id);
-    Q_INVOKABLE void initCloningPhase04(QString id);
 //    Q_INVOKABLE int askForDelete(QString activityName);
 
     //Interact with Corona() and Desktops Containments()
@@ -82,46 +77,20 @@ public slots:
   void cloningEndedSlot();
   void copyWorkareasSlot(QString,QString);
 
-private slots:
-  void timerTrigerred();
-
 private:
 
-    QString getContainmentId(QString txt) const;
-
-    int loadCloneActivitySettings();
-    int storeCloneActivitySettings();
-
+    WorkFlow *m_plasmoid;
+    Plasma::Corona *m_corona;
+    KActivities::Controller *m_activitiesCtrl;
     QObject *qmlActEngine;
 
-    KActivities::Controller *m_activitiesCtrl;
     QString activityForDelete;
-
-    KStandardDirs kStdDrs;
-
-    QString fromCloneActivityText;
-    QString fromCloneActivityId;
-    QString fromCloneContainmentId;
-
-    QString toCloneContainmentId;
-    QString toCloneActivityId;
-
-    Plasma::Corona *m_corona;
-
-    int m_timerPhase;
-
-    QTimer *m_timer;
-
-    //This is an indicator for the corona() actions in order to check
-    //if widgets are already unlocked.
-    QString m_unlockWidgetsText;
-    WorkFlow *m_plasmoid;
 
     PluginShowWidgets *m_plShowWidgets;
     PluginCloneActivity *m_plCloneActivity;
 
-    ////////////
     Plasma::Containment *getContainment(QString actId);
+
 };
 
 #endif // ACTIVITYMANAGER_H
