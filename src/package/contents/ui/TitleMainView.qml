@@ -212,12 +212,11 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                checked:storedParameters.windowsPreviews
+                checked:((storedParameters.windowsPreviews)&&
+                         (sessionParameters.effectsSystemEnabled))
 
-                enabled:(storedParameters.showWindows)
-//                            &&(sessionParameters.effectsSystemEnabled))
-//This is not trigerred for some reason
-
+                enabled:((storedParameters.showWindows)&&
+                         (sessionParameters.effectsSystemEnabled))
 
                 MouseArea{
                     id:effectsToolBtnMouseArea

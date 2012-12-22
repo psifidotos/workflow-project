@@ -412,7 +412,7 @@ void WorkFlow::loadWorkareas()
 
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
-    QWidget *widget = new QWidget(parent);
+    QWidget *widget = new QWidget();
 
     m_config.setupUi(widget);
     parent->addPage(widget, i18n("General"), icon(), QString(), false);
@@ -428,6 +428,11 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 
     if(m_isOnDashboard)
         m_config.hideOnClickCheckBox->setEnabled(false);
+
+    connect(m_config.themesCmb, SIGNAL(activated(int)), parent, SLOT(settingsModified()));
+    connect(m_config.hideOnClickCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
+    connect(m_config.tooltipsSpinBox, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
+    connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
 
     connect(parent, SIGNAL(applyClicked()), this, SLOT(configDialogAccepted()));
     connect(parent, SIGNAL(okClicked()), this, SLOT(configDialogAccepted()));
