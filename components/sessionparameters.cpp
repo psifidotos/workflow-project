@@ -46,12 +46,6 @@ void SessionParameters::initConnections()
     connect(m_kwindowSystem, SIGNAL(currentDesktopChanged(int)), this, SLOT(setCurrentDesktopSlot(int)));
     connect(m_kwindowSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(setNumberOfDesktopsSlot(int)));
 
-
- /*   QDBusConnection dbus = QDBusConnection::sessionBus();
-    dbus.connect(QString(), "/KWin", "org.kde.KWin", "compositingToggled(bool)",
-                 this, SLOT(setEffectsSystemEnabledSlot(bool)));
-*/
-
     if(m_dbus->isValid()){
         m_dbus->setParent(this);
         connect(m_dbus,SIGNAL(compositingToggled(bool)), this, SLOT(setEffectsSystemEnabledSlot(bool)));

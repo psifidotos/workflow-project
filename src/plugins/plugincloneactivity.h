@@ -4,21 +4,20 @@
 #include <QTimer>
 
 #include <KActivities/Controller>
+#include <KStandardDirs>
 
 #include <taskmanager/taskmanager.h>
 
-#include "../workflow.h"
-
 namespace KActivities
 {
-class Controller;
+    class Controller;
 }
 
 class PluginCloneActivity : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginCloneActivity(WorkFlow *, KActivities::Controller *);
+    explicit PluginCloneActivity(QObject *, KActivities::Controller *);
     ~PluginCloneActivity();
 
     void execute(QString);
@@ -40,8 +39,6 @@ private slots:
   void timerTrigerred();
 
 private:
-
-    WorkFlow *m_plasmoid;
     KActivities::Controller *m_activitiesCtrl;
     TaskManager::TaskManager *m_taskMainM;
     KStandardDirs kStdDrs;

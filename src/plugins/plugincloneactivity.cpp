@@ -1,5 +1,6 @@
 #include "plugincloneactivity.h"
 
+#include <QDebug>
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
@@ -12,9 +13,8 @@
 #include <taskmanager/taskmanager.h>
 
 
-PluginCloneActivity::PluginCloneActivity(WorkFlow *plasmoid, KActivities::Controller *actControl) :
-    QObject(plasmoid),
-    m_plasmoid(plasmoid),
+PluginCloneActivity::PluginCloneActivity(QObject *parent, KActivities::Controller *actControl) :
+    QObject(parent),
     m_activitiesCtrl(actControl),
     m_currentActivityInBegin(""),
     m_fromActivity(""),
@@ -308,7 +308,7 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
         connect(activityTo, SIGNAL(stateChanged(KActivities::Info::State)), this,SLOT(activityStateChangedSlot()));
 
 
-        m_activitiesCtrl->setActivityName(m_toActivity,QString(i18n("Copy of ")+activityFrom->name()));
+        m_activitiesCtrl->setActivityName(m_toActivity,QString(tr("Copy of ")+activityFrom->name()));
         m_activitiesCtrl->setActivityIcon(m_toActivity,activityFrom->icon());
 
         emit copyWorkareas(m_fromActivity, m_toActivity);
@@ -331,7 +331,7 @@ void PluginCloneActivity::execute(QString actId)
 
     m_fromActivity = actId;
 
-    m_toActivity = m_activitiesCtrl->addActivity(i18n("New Activity"));
+    m_toActivity = m_activitiesCtrl->addActivity(tr("New Activity"));
 }
 
 

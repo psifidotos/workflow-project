@@ -19,8 +19,9 @@
 
 #include "workflow.h"
 
-#include "ui_config.h"
-#include "workflowsettings.h"
+#include "ui_workflowConfig.h"
+#include "workareasdata.h"
+#include "storedparameters.h"
 
 #include <KDebug>
 #include <KGlobalSettings>
@@ -44,7 +45,7 @@
 #include <Plasma/Package>
 #include <Plasma/Corona>
 
-#include "storedparameters.h"
+
 #include <iostream>
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
@@ -54,7 +55,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     taskManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
-    setHasConfigurationInterface(true);
+
     setPopupIcon("preferences-activities");
 
     actManager = new ActivityManager(this);
@@ -94,11 +95,15 @@ QGraphicsWidget *WorkFlow::graphicsWidget()
 }
 
 void WorkFlow::init(){
+    setHasConfigurationInterface(true);
+
     m_mainWidget = new QGraphicsWidget(this);
 
     appConfig = config();
 
-    storedParams = new StoredParameters(this,&appConfig);
+    storedParams = new StoredParameters(this,& appConfig);
+
+    connect(storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
 
     QGraphicsLinearLayout *mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -115,8 +120,6 @@ void WorkFlow::init(){
     declarativeWidget = new Plasma::DeclarativeWidget();
     declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",storedParams);
     declarativeWidget->setQmlPath(path);
-
-    connect(storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
 
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
@@ -159,6 +162,7 @@ void WorkFlow::init(){
     }
 
     screensSizeChanged(-1); //set Screen Ratio
+    setGraphicsWidget(m_mainWidget);
 
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
@@ -335,10 +339,10 @@ void WorkFlow::saveWorkareas()
         }
     }
 
-    WorkFlowSettings::setActivities(writeActivities);
-    WorkFlowSettings::setNoOfWorkareas(writeSizes);
-    WorkFlowSettings::setWorkareasNames(writeWorkareas);
-    WorkFlowSettings::self()->writeConfig();
+    WorkareasData::setActivities(writeActivities);
+    WorkareasData::setNoOfWorkareas(writeSizes);
+    WorkareasData::setWorkareasNames(writeWorkareas);
+    WorkareasData::self()->writeConfig();
 }
 
 
@@ -366,14 +370,20 @@ void WorkFlow::configDialogFinished()
         taskManager->showDashboard();
 }
 
-void WorkFlow::configDialogAccepted()
+void WorkFlow::configChanged()
 {
-    //setAnimationsSlot(m_config.animationsLevelSlider->value());
-    storedParams->setAnimations(m_config.animationsLevelSlider->value());
-    storedParams->setHideOnClick(m_config.hideOnClickCheckBox->isChecked());
-    storedParams->setToolTipsDelay(m_config.tooltipsSpinBox->value());
+    storedParams->configChanged();
+}
 
-    storedParams->setCurrentTheme(m_config.themesCmb->currentText());
+void WorkFlow::configAccepted()
+{
+    storedParams->setAnimations(ui.animationsLevelSlider->value());
+    storedParams->setHideOnClick(ui.hideOnClickCheckBox->isChecked());
+    storedParams->setToolTipsDelay(ui.tooltipsSpinBox->value());
+
+    storedParams->setCurrentTheme(ui.themesCmb->currentText());
+
+    emit configNeedsSaving();
 }
 
 void WorkFlow::showingIconsDialog()
@@ -390,9 +400,9 @@ void WorkFlow::loadWorkareas()
 {
     storedWorkareas.clear();
 
-    QStringList acts = WorkFlowSettings::activities();
-    QStringList lengths = WorkFlowSettings::noOfWorkareas();
-    QStringList wnames = WorkFlowSettings::workareasNames();
+    QStringList acts = WorkareasData::activities();
+    QStringList lengths = WorkareasData::noOfWorkareas();
+    QStringList wnames = WorkareasData::workareasNames();
 
     for(int i=0; i<acts.size(); i++){
         QString activit = acts[i];
@@ -414,31 +424,32 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
     QWidget *widget = new QWidget();
 
-    m_config.setupUi(widget);
-    parent->addPage(widget, i18n("General"), icon(), QString(), false);
-    //m_config.animationsLevelSlider->setValue(m_animations);
-    m_config.animationsLevelSlider->setValue(storedParams->animations());
-    m_config.hideOnClickCheckBox->setChecked(storedParams->hideOnClick());
+    ui.setupUi(widget);
+    parent->addPage(widget, i18n("General"), icon());
 
-    for(int i=0; i<storedParams->themesList()->count(); i++)
-        m_config.themesCmb->addItem(storedParams->themesList()->at(i));
-
-    m_config.themesCmb->setCurrentIndex(storedParams->themesList()->indexOf(storedParams->currentTheme()));
-    m_config.tooltipsSpinBox->setValue(storedParams->toolTipsDelay());
-
-    if(m_isOnDashboard)
-        m_config.hideOnClickCheckBox->setEnabled(false);
-
-    connect(m_config.themesCmb, SIGNAL(activated(int)), parent, SLOT(settingsModified()));
-    connect(m_config.hideOnClickCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
-    connect(m_config.tooltipsSpinBox, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
-    connect(m_config.animationsLevelSlider, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
-
-    connect(parent, SIGNAL(applyClicked()), this, SLOT(configDialogAccepted()));
-    connect(parent, SIGNAL(okClicked()), this, SLOT(configDialogAccepted()));
+    connect(parent, SIGNAL(applyClicked()), this, SLOT(configAccepted()));
+    connect(parent, SIGNAL(okClicked()), this, SLOT(configAccepted()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
 
-    parent->setModal(true);
+    ui.animationsLevelSlider->setValue(storedParams->animations());
+    ui.hideOnClickCheckBox->setChecked(storedParams->hideOnClick());
+
+    for(int i=0; i<storedParams->themesList()->count(); i++)
+        ui.themesCmb->addItem(storedParams->themesList()->at(i));
+
+    ui.themesCmb->setCurrentIndex(storedParams->themesList()->indexOf(storedParams->currentTheme()));
+    ui.tooltipsSpinBox->setValue(storedParams->toolTipsDelay());
+
+    if(m_isOnDashboard)
+        ui.hideOnClickCheckBox->setEnabled(false);
+
+    connect(ui.themesCmb, SIGNAL(activated(int)), parent, SLOT(settingsModified()));
+    connect(ui.hideOnClickCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
+    connect(ui.tooltipsSpinBox, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
+    connect(ui.animationsLevelSlider, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
+
+    //  parent->setModal(true);
+
 }
 
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
@@ -449,9 +460,7 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
         actManager->setCurrentPreviousActivity();
 }
 
-// This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(workflow,WorkFlow);
-
 #include "workflow.moc"
 
-
+// This is the command that links your applet to the .desktop file
+K_EXPORT_PLASMA_APPLET(workflow, WorkFlow)

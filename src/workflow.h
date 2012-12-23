@@ -33,7 +33,7 @@
 
 #include "activitymanager.h"
 #include "ptaskmanager.h"
-#include "ui_config.h"
+#include "ui_workflowConfig.h"
 
 class QDesktopWidget;
 class StoredParameters;
@@ -43,27 +43,25 @@ namespace Plasma {
     class Containment;
 }
 
-namespace Ui {
-    class Config;
-}
 
 // Define our plasma Applet
 class WorkFlow : public Plasma::PopupApplet
 {
     Q_OBJECT
 
+
 public:
     WorkFlow(QObject *parent, const QVariantList &args);
     ~WorkFlow();
 
-    virtual void init();
-    virtual QGraphicsWidget *graphicsWidget();
+    void init();
+    QGraphicsWidget *graphicsWidget();
+
+    Q_INVOKABLE void updatePopWindowWId();
 
     ///Properties
     Q_INVOKABLE void hidePopupDialog();
     Q_INVOKABLE void showPopupDialog();
-
-    Q_INVOKABLE void updatePopWindowWId();
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -80,8 +78,9 @@ public:
     Q_INVOKABLE void workAreaWasClicked();
 
 protected:
-
+    void createConfigurationInterface(KConfigDialog *parent);
     virtual void popupEvent(bool show);
+
 
 public slots:
 
@@ -98,13 +97,12 @@ public slots:
     void answeredIconDialog();
 
     void configDialogFinished();
-    void configDialogAccepted();
+    void configChanged();
+
 
 protected slots:
-  virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
-
-private slots:
-    void createConfigurationInterface(KConfigDialog *parent);
+    virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
+    void configAccepted();
 
 private:
     bool m_isOnDashboard;
@@ -122,7 +120,7 @@ private:
 
     QObject *mainQML;
 
-    Ui::Config m_config;
+    Ui::workflowConfig ui;
 
     QHash <QString,QStringList *> storedWorkareas;
 

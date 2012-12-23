@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Config</class>
- <widget class="QWidget" name="Config">
+ <class>workflowConfig</class>
+ <widget class="QWidget" name="workflowConfig">
   <property name="geometry">
    <rect>
     <x>0</x>

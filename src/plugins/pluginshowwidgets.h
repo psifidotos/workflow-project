@@ -1,23 +1,21 @@
 #ifndef PLUGINSHOWWIDGETS_H
 #define PLUGINSHOWWIDGETS_H
 
-#include <QObject>
-
 #include <KActivities/Controller>
 
 #include <taskmanager/taskmanager.h>
 
-#include "../workflow.h"
+class WorkFlow;
 
 namespace KActivities
 {
-class Controller;
+    class Controller;
 }
 
 namespace Plasma {
-class Containment;
-class Corona;
-class PopupApplet;
+    class Containment;
+    class Corona;
+    class PopupApplet;
 }
 
 class PluginShowWidgets : public QObject

@@ -12,7 +12,7 @@ namespace Plasma {
 
 class PluginFindWallpaper{
   public:
-    PluginFindWallpaper(Plasma::Containment *);
+    explicit PluginFindWallpaper(Plasma::Containment *);
     ~PluginFindWallpaper();
 
     QString getWallpaper(QString source);

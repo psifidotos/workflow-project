@@ -7,7 +7,6 @@ class StoredParameters : public QObject
 {
     Q_OBJECT
 
-
 public:
 
     Q_PROPERTY(bool lockActivities READ lockActivities WRITE setLockActivities NOTIFY lockActivitiesChanged)
@@ -34,7 +33,6 @@ public:
     Q_PROPERTY(int windowsPreviewsOffsetX READ windowsPreviewsOffsetX WRITE setWindowsPreviewsOffsetX NOTIFY windowsPreviewsOffsetXChanged)
     Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
-
     /*
     enum AnimationsLevel {
        NONE,
@@ -44,6 +42,8 @@ public:
 
    explicit StoredParameters(QObject *parent = 0, KConfigGroup *conf = 0);
     ~StoredParameters();
+
+    void configChanged();
 
     void setLockActivities(bool);
     bool lockActivities() const;

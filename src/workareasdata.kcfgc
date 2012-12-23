@@ -1,0 +1,5 @@
+File=workareas.kcfg
+ClassName=WorkareasData
+Singleton=true
+Mutators=true
+ 

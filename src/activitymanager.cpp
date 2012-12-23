@@ -310,11 +310,6 @@ QString ActivityManager::add(QString name) {
     return m_activitiesCtrl->addActivity(name);
 }
 
-/*
-void ActivityManager::clone(QString id, QString name) {
-
-}*/
-
 void ActivityManager::setCurrent(QString id) {
     m_activitiesCtrl->setCurrentActivity(id);
 }
@@ -404,7 +399,7 @@ void ActivityManager::showWidgetsExplorer(QString actId)
 void ActivityManager::cloneActivity(QString actId)
 {
     if(!m_plCloneActivity){
-        m_plCloneActivity = new PluginCloneActivity(m_plasmoid, m_activitiesCtrl);
+        m_plCloneActivity = new PluginCloneActivity(this, m_activitiesCtrl);
 
         connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SLOT(cloningStartedSlot()));
         connect(m_plCloneActivity, SIGNAL(cloningEnded()),this,SLOT(cloningEndedSlot()));

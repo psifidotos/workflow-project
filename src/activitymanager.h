@@ -67,7 +67,6 @@ signals:
     void answeredIconDialog();
 
 public slots:
- // void dataUpdated(QString source, Plasma::DataEngine::Data data);
   void activityAdded(QString id);
   void activityRemoved(QString id);
   void activityDataChanged();

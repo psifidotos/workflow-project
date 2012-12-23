@@ -17,6 +17,8 @@
 
 #include <taskmanager/task.h>
 
+#include "../workflow.h"
+
 PluginShowWidgets::PluginShowWidgets(WorkFlow *plasmoid, KActivities::Controller *actControl) :
     QObject(plasmoid),
     m_plasmoid(plasmoid),

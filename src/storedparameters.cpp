@@ -8,6 +8,16 @@ StoredParameters::StoredParameters(QObject *parent, KConfigGroup *conf):
     m_animationsStep(0),
     m_animationsStep2(0)
 {
+    configChanged();
+}
+
+StoredParameters::~StoredParameters()
+{
+
+}
+
+void StoredParameters::configChanged()
+{
     m_lockActivities = config->readEntry("LockActivities", true);
     m_showWindows = config->readEntry("ShowWindows", true);
     m_zoomFactor = config->readEntry("ZoomFactor", 50);
@@ -29,17 +39,14 @@ StoredParameters::StoredParameters(QObject *parent, KConfigGroup *conf):
     m_currentTheme = config->readEntry("CurrentTheme", "Oxygen");
 }
 
-StoredParameters::~StoredParameters()
-{
-
-}
-
 void StoredParameters::setLockActivities(bool lockActivities)
 {
-    m_lockActivities = lockActivities;
-    config->writeEntry("LockActivities",m_lockActivities);
-    emit lockActivitiesChanged(m_lockActivities);
-    emit configNeedsSaving();
+    if(m_lockActivities != lockActivities){
+        m_lockActivities = lockActivities;
+        config->writeEntry("LockActivities",m_lockActivities);
+        emit lockActivitiesChanged(m_lockActivities);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::lockActivities() const
@@ -50,10 +57,12 @@ bool StoredParameters::lockActivities() const
 
 void StoredParameters::setShowWindows(bool showWinds)
 {
-    m_showWindows = showWinds;
-    config->writeEntry("ShowWindows",m_showWindows);
-    emit showWindowsChanged(m_showWindows);
-    emit configNeedsSaving();
+    if(m_showWindows != showWinds){
+        m_showWindows = showWinds;
+        config->writeEntry("ShowWindows",m_showWindows);
+        emit showWindowsChanged(m_showWindows);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::showWindows() const
@@ -64,10 +73,12 @@ bool StoredParameters::showWindows() const
 
 void StoredParameters::setZoomFactor(int zf)
 {
-    m_zoomFactor = zf;
-    config->writeEntry("ZoomFactor",m_zoomFactor);
-    emit zoomFactorChanged(m_zoomFactor);
-    emit configNeedsSaving();
+    if(m_zoomFactor != zf){
+        m_zoomFactor = zf;
+        config->writeEntry("ZoomFactor",m_zoomFactor);
+        emit zoomFactorChanged(m_zoomFactor);
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::zoomFactor() const
@@ -78,11 +89,13 @@ int StoredParameters::zoomFactor() const
 
 void StoredParameters::setAnimations(int an)
 {
-    m_animations = an;
-    config->writeEntry("Animations",m_animations);
-    emit animationsChanged(m_animations);
-    updateAnimationsSteps();
-    emit configNeedsSaving();
+    if(m_animations != an){
+        m_animations = an;
+        config->writeEntry("Animations",m_animations);
+        emit animationsChanged(m_animations);
+        updateAnimationsSteps();
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::animations() const
@@ -125,10 +138,12 @@ void StoredParameters::updateAnimationsSteps()
 
 void StoredParameters::setWindowsPreviews(bool winPrev)
 {
-    m_windowsPreviews = winPrev;
-    config->writeEntry("WindowPreviews",m_windowsPreviews);
-    emit windowsPreviewsChanged(m_windowsPreviews);
-    emit configNeedsSaving();
+    if(m_windowsPreviews != winPrev){
+        m_windowsPreviews = winPrev;
+        config->writeEntry("WindowPreviews",m_windowsPreviews);
+        emit windowsPreviewsChanged(m_windowsPreviews);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::windowsPreviews() const
@@ -138,10 +153,12 @@ bool StoredParameters::windowsPreviews() const
 
 void StoredParameters::setWindowsPreviewsOffsetX(int offX)
 {
-    m_windowsPreviewsOffsetX = offX;
-    config->writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
-    emit windowsPreviewsOffsetXChanged(m_windowsPreviewsOffsetX);
-    emit configNeedsSaving();
+    if(m_windowsPreviewsOffsetX != offX){
+        m_windowsPreviewsOffsetX = offX;
+        config->writeEntry("WindowPreviewsOffsetX",m_windowsPreviewsOffsetX);
+        emit windowsPreviewsOffsetXChanged(m_windowsPreviewsOffsetX);
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::windowsPreviewsOffsetX() const
@@ -151,10 +168,12 @@ int StoredParameters::windowsPreviewsOffsetX() const
 
 void StoredParameters::setWindowsPreviewsOffsetY(int offY)
 {
-    m_windowsPreviewsOffsetY = offY;
-    config->writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
-    emit windowsPreviewsOffsetYChanged(m_windowsPreviewsOffsetY);
-    emit configNeedsSaving();
+    if(m_windowsPreviewsOffsetY != offY){
+        m_windowsPreviewsOffsetY = offY;
+        config->writeEntry("WindowPreviewsOffsetY",m_windowsPreviewsOffsetY);
+        emit windowsPreviewsOffsetYChanged(m_windowsPreviewsOffsetY);
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::windowsPreviewsOffsetY() const
@@ -165,10 +184,12 @@ int StoredParameters::windowsPreviewsOffsetY() const
 
 void StoredParameters::setFontRelevance(int fr)
 {
-    m_fontRelevance = fr;
-    config->writeEntry("FontRelevance",m_fontRelevance);
-    emit fontRelevanceChanged(m_fontRelevance);
-    emit configNeedsSaving();
+    if(m_fontRelevance != fr){
+        m_fontRelevance = fr;
+        config->writeEntry("FontRelevance",m_fontRelevance);
+        emit fontRelevanceChanged(m_fontRelevance);
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::fontRelevance() const
@@ -178,10 +199,12 @@ int StoredParameters::fontRelevance() const
 
 void StoredParameters::setShowStoppedActivities(bool showStpAct)
 {
-    m_showStoppedActivities = showStpAct;
-    config->writeEntry("ShowStoppedPanel",m_showStoppedActivities);
-    emit showStoppedActivitiesChanged(m_showStoppedActivities);
-    emit configNeedsSaving();
+    if(m_showStoppedActivities != showStpAct){
+        m_showStoppedActivities = showStpAct;
+        config->writeEntry("ShowStoppedPanel",m_showStoppedActivities);
+        emit showStoppedActivitiesChanged(m_showStoppedActivities);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::showStoppedActivities() const
@@ -192,10 +215,12 @@ bool StoredParameters::showStoppedActivities() const
 
 void StoredParameters::setFirstRunLiveTour(bool firRunTour)
 {
-    m_firstRunLiveTour = firRunTour;
-    config->writeEntry("FirstRunTour",m_firstRunLiveTour);
-    emit firstRunLiveTourChanged(m_firstRunLiveTour);
-    emit configNeedsSaving();
+    if(m_firstRunLiveTour != firRunTour){
+        m_firstRunLiveTour = firRunTour;
+        config->writeEntry("FirstRunTour",m_firstRunLiveTour);
+        emit firstRunLiveTourChanged(m_firstRunLiveTour);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::firstRunLiveTour() const
@@ -205,10 +230,12 @@ bool StoredParameters::firstRunLiveTour() const
 
 void StoredParameters::setFirstRunCalibrationPreviews(bool firRunCalib)
 {
-    m_firstRunCalibrationPreviews = firRunCalib;
-    config->writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
-    emit firstRunLiveTourChanged(m_firstRunCalibrationPreviews);
-    emit configNeedsSaving();
+    if(m_firstRunCalibrationPreviews != firRunCalib){
+        m_firstRunCalibrationPreviews = firRunCalib;
+        config->writeEntry("FirstRunCalibration",m_firstRunCalibrationPreviews);
+        emit firstRunLiveTourChanged(m_firstRunCalibrationPreviews);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::firstRunCalibrationPreviews() const
@@ -219,10 +246,12 @@ bool StoredParameters::firstRunCalibrationPreviews() const
 
 void StoredParameters::setHideOnClick(bool hideClick)
 {
-    m_hideOnClick = hideClick;
-    config->writeEntry("HideOnClick",m_hideOnClick);
-    emit hideOnClickChanged(m_hideOnClick);
-    emit configNeedsSaving();
+    if(m_hideOnClick != hideClick){
+        m_hideOnClick = hideClick;
+        config->writeEntry("HideOnClick",m_hideOnClick);
+        emit hideOnClickChanged(m_hideOnClick);
+        emit configNeedsSaving();
+    }
 }
 
 bool StoredParameters::hideOnClick() const
@@ -232,10 +261,12 @@ bool StoredParameters::hideOnClick() const
 
 void StoredParameters::setToolTipsDelay(int tDelay)
 {
-    m_toolTipsDelay = tDelay;
-    config->writeEntry("ToolTipsDelay",m_toolTipsDelay);
-    emit toolTipsDelayChanged(m_toolTipsDelay);
-    emit configNeedsSaving();
+    if(m_toolTipsDelay != tDelay){
+        m_toolTipsDelay = tDelay;
+        config->writeEntry("ToolTipsDelay",m_toolTipsDelay);
+        emit toolTipsDelayChanged(m_toolTipsDelay);
+        emit configNeedsSaving();
+    }
 }
 
 int StoredParameters::toolTipsDelay() const
@@ -245,10 +276,12 @@ int StoredParameters::toolTipsDelay() const
 
 void StoredParameters::setCurrentTheme(QString theme)
 {
-    m_currentTheme = theme;
-    config->writeEntry("CurrentTheme",m_currentTheme);
-    emit currentThemeChanged(m_currentTheme);
-    emit configNeedsSaving();
+    if(m_currentTheme != theme){
+        m_currentTheme = theme;
+        config->writeEntry("CurrentTheme",m_currentTheme);
+        emit currentThemeChanged(m_currentTheme);
+        emit configNeedsSaving();
+    }
 }
 
 QString StoredParameters::currentTheme() const
