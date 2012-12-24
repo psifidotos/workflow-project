@@ -101,7 +101,7 @@ DialogTemplate2{
 
         AnimatedText{
             id:authorsTxt
-            fullText: "Michail Vourlakos"
+            fullText: "Michail Vourlakos<br>Michael Daffin"
 
             font.pixelSize: mediumFont
             font.italic: true
