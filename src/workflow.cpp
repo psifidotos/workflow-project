@@ -20,7 +20,6 @@
 #include "workflow.h"
 
 #include "ui_workflowConfig.h"
-#include "workareasdata.h"
 #include "storedparameters.h"
 
 #include <KDebug>
@@ -51,15 +50,16 @@
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_mainWidget(0),
-    actManager(0),
-    taskManager(0)
+    m_actManager(0),
+    m_taskManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
 
     setPopupIcon("preferences-activities");
 
-    actManager = new ActivityManager(this);
-    taskManager = new PTaskManager(this);
+    m_actManager = new ActivityManager(this);
+    m_taskManager = new PTaskManager(this);
+    m_workareasManager = new WorkareasManager(this);
 
     m_findPopupWid = false;
 
@@ -69,24 +69,14 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
 WorkFlow::~WorkFlow()
 {
-    saveWorkareas();
-
-    //clear workareas QHash
-    QHashIterator<QString, QStringList *> i(storedWorkareas);
-    while (i.hasNext()) {
-        i.next();
-        QStringList *curWorks = i.value();
-        curWorks->clear();
-        delete curWorks;
-    }
-    storedWorkareas.clear();
-
-    if (actManager)
-        delete actManager;
-    if (taskManager)
-        delete taskManager;
-    if (storedParams)
-        delete storedParams;
+    if (m_actManager)
+        delete m_actManager;
+    if (m_taskManager)
+        delete m_taskManager;
+    if (m_workareasManager)
+        delete m_workareasManager;
+    if (m_storedParams)
+        delete m_storedParams;
 }
 
 QGraphicsWidget *WorkFlow::graphicsWidget()
@@ -101,9 +91,7 @@ void WorkFlow::init(){
 
     appConfig = config();
 
-    storedParams = new StoredParameters(this,& appConfig);
-
-    connect(storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
+    m_storedParams = new StoredParameters(this,& appConfig);
 
     QGraphicsLinearLayout *mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -118,7 +106,7 @@ void WorkFlow::init(){
     kDebug() << "Path: " << path << endl;
 
     declarativeWidget = new Plasma::DeclarativeWidget();
-    declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",storedParams);
+    declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",m_storedParams);
     declarativeWidget->setQmlPath(path);
 
     mainLayout->addItem(declarativeWidget);
@@ -127,16 +115,15 @@ void WorkFlow::init(){
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
         if (ctxt) {
-            ctxt->setContextProperty("activityManager", actManager);
-            ctxt->setContextProperty("taskManager", taskManager);
+            ctxt->setContextProperty("activityManager", m_actManager);
+            ctxt->setContextProperty("taskManager", m_taskManager);
+            ctxt->setContextProperty("workareasManager", m_workareasManager);
             ctxt->setContextProperty("workflowManager", this);
 
             QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
             QObject *qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
             QObject *qmlTaskEng = rootObject->findChild<QObject*>("instTasksEngine");
             mainQML = rootObject;
-
-            loadWorkareas();
 
 
             if(qmlActEng){
@@ -147,12 +134,12 @@ void WorkFlow::init(){
                     if(containment()->corona())
                         tCorona = containment()->corona();
 
-                actManager->setQMlObject(qmlActEng, tCorona, this);
-                connect(actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
-                connect(actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
+                m_actManager->setQMlObject(qmlActEng, tCorona, this);
+                connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
+                connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
             }
             if(qmlTaskEng){
-                taskManager->setQMlObject(qmlTaskEng);
+                m_taskManager->setQMlObject(qmlTaskEng);
             }
 
             if(containment())
@@ -164,22 +151,33 @@ void WorkFlow::init(){
     screensSizeChanged(-1); //set Screen Ratio
     setGraphicsWidget(m_mainWidget);
 
+    m_mainWidget->setMinimumSize(550,350);
+    setPassivePopupSlot(m_storedParams->hideOnClick());
 
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
-    connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
+
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
 
-    m_mainWidget->setMinimumSize(550,350);
-    setPassivePopupSlot(storedParams->hideOnClick());
-    connect(storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
+    connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
+
+    connect(m_storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
+    connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
+
+    connect(m_workareasManager, SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
+
+    connect(m_taskManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
+    connect(m_taskManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
+
+    connect(m_actManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
+
 }
 
-void WorkFlow::hidePopupDialog()
+void WorkFlow::hidePopupDialogSlot()
 {
     this->hidePopup();
 }
 
-void WorkFlow::showPopupDialog()
+void WorkFlow::showPopupDialogSlot()
 {
     this->showPopup();
 }
@@ -189,11 +187,11 @@ void WorkFlow::setMainWindowId()
     QRectF rf = this->geometry();
 
     if(m_isOnDashboard)
-        taskManager->setTopXY(rf.x(),rf.y());
+        m_taskManager->setTopXY(rf.x(),rf.y());
     else
-        taskManager->setTopXY(0,0);
+        m_taskManager->setTopXY(0,0);
 
-    taskManager->setMainWindowId(view()->effectiveWinId());
+    m_taskManager->setMainWindowId(view()->effectiveWinId());
 }
 
 void WorkFlow::geomChanged()
@@ -201,14 +199,14 @@ void WorkFlow::geomChanged()
     QRectF rf = this->geometry();
 
     if(m_isOnDashboard)
-        taskManager->setTopXY(rf.x(),rf.y());
+        m_taskManager->setTopXY(rf.x(),rf.y());
     else
-        taskManager->setTopXY(0,0);
+        m_taskManager->setTopXY(0,0);
 }
 
-void WorkFlow::updatePopWindowWId()
+void WorkFlow::updatePopWindowWIdSlot()
 {
-    if(taskManager->getMainWindowId() == 0){
+    if(m_taskManager->getMainWindowId() == 0){
         WId lastWindow = 0;
 
         QList<WId>::ConstIterator it;
@@ -222,8 +220,8 @@ void WorkFlow::updatePopWindowWId()
         }
 
         m_findPopupWid = true;
-        taskManager->setMainWindowId(lastWindow);
-        taskManager->setTopXY(0,0);
+        m_taskManager->setMainWindowId(lastWindow);
+        m_taskManager->setTopXY(0,0);
     }
 }
 
@@ -235,7 +233,7 @@ void WorkFlow::setPassivePopupSlot(bool passive)
 void WorkFlow::popupEvent(bool show)
 {
     if((!show)&&(!m_findPopupWid)){
-        updatePopWindowWId();
+        updatePopWindowWIdSlot();
     }
 }
 
@@ -245,114 +243,19 @@ void WorkFlow::popupEvent(bool show)
 void WorkFlow::activeWindowChanged(WId w)
 {
     if( m_isOnDashboard && view() && containment()){
-        if(view()->effectiveWinId() != taskManager->getMainWindowId()){
+        if(view()->effectiveWinId() != m_taskManager->getMainWindowId()){
             this->setMainWindowId();
         }
     }
 }
 
-QStringList WorkFlow::getWorkAreaNames(QString id)
+void WorkFlow::workAreaWasClickedSlot()
 {
-    QStringList *ret = storedWorkareas[id];
-
-    QStringList ret2;
-    if(ret){
-        for(int i=0; i<ret->size(); i++)
-            ret2.append(ret->value(i));
-    }
-    return ret2;
-}
-
-void WorkFlow::addWorkArea(QString id, QString name)
-{
-    QStringList *ret = storedWorkareas[id];
-
-    if (ret)
-        ret->append(name);
-
-    QRectF rf = this->geometry();
-    taskManager->setTopXY(rf.x(),rf.y());
-}
-
-void WorkFlow::addEmptyActivity(QString id)
-{
-    QStringList *newLst = new QStringList();
-    storedWorkareas[id] = newLst;
-}
-
-void WorkFlow::removeActivity(QString id)
-{
-    if (storedWorkareas.contains(id)){
-        QStringList *ret = storedWorkareas[id];
-        ret->clear();
-
-        storedWorkareas.remove(id);
-        delete ret;
-    }
-}
-
-void WorkFlow::renameWorkarea(QString id, int desktop, QString name)
-{
-    QStringList *ret = storedWorkareas[id];
-
-    if (ret)
-        ret->replace(desktop-1,name);
-}
-
-int WorkFlow::activitySize(QString id)
-{
-    QStringList *ret = storedWorkareas[id];
-    if (ret)
-        return ret->size();
-    else
-        return 0;
-}
-
-void WorkFlow::removeWorkarea(QString id, int desktop)
-{
-    QStringList *ret = storedWorkareas[id];
-
-    if (ret)
-        ret->removeAt(desktop-1);
-}
-
-bool WorkFlow::activityExists(QString id)
-{
-    return storedWorkareas.contains(id);
-}
-
-void WorkFlow::saveWorkareas()
-{
-    QHashIterator<QString, QStringList *> i(storedWorkareas);
-    QStringList writeActivities;
-    QStringList writeSizes;
-    QStringList writeWorkareas;
-
-    while (i.hasNext()) {
-        i.next();
-        QStringList *curWorks = i.value();
-        writeActivities.append(i.key());
-        writeSizes.append(QString::number(curWorks->size()));
-
-        for(int j=0; j<curWorks->size(); j++){
-            writeWorkareas.append(curWorks->value(j));
-        }
-    }
-
-    WorkareasData::setActivities(writeActivities);
-    WorkareasData::setNoOfWorkareas(writeSizes);
-    WorkareasData::setWorkareasNames(writeWorkareas);
-    WorkareasData::self()->writeConfig();
-}
-
-
-void WorkFlow::workAreaWasClicked()
-{
-    if(storedParams->hideOnClick())
+    if(m_storedParams->hideOnClick())
         this->hidePopup();
 
     if(m_isOnDashboard)
-        taskManager->hideDashboard();
+        m_taskManager->hideDashboard();
 }
 
 void WorkFlow::screensSizeChanged(int s)
@@ -367,21 +270,21 @@ void WorkFlow::screensSizeChanged(int s)
 void WorkFlow::configDialogFinished()
 {
     if(m_isOnDashboard)
-        taskManager->showDashboard();
+        m_taskManager->showDashboard();
 }
 
 void WorkFlow::configChanged()
 {
-    storedParams->configChanged();
+    m_storedParams->configChanged();
 }
 
 void WorkFlow::configAccepted()
 {
-    storedParams->setAnimations(ui.animationsLevelSlider->value());
-    storedParams->setHideOnClick(ui.hideOnClickCheckBox->isChecked());
-    storedParams->setToolTipsDelay(ui.tooltipsSpinBox->value());
+    m_storedParams->setAnimations(ui.animationsLevelSlider->value());
+    m_storedParams->setHideOnClick(ui.hideOnClickCheckBox->isChecked());
+    m_storedParams->setToolTipsDelay(ui.tooltipsSpinBox->value());
 
-    storedParams->setCurrentTheme(ui.themesCmb->currentText());
+    m_storedParams->setCurrentTheme(ui.themesCmb->currentText());
 
     emit configNeedsSaving();
 }
@@ -396,29 +299,6 @@ void WorkFlow::answeredIconDialog()
     this->showPopup();
 }
 
-void WorkFlow::loadWorkareas()
-{
-    storedWorkareas.clear();
-
-    QStringList acts = WorkareasData::activities();
-    QStringList lengths = WorkareasData::noOfWorkareas();
-    QStringList wnames = WorkareasData::workareasNames();
-
-    for(int i=0; i<acts.size(); i++){
-        QString activit = acts[i];
-
-        int intpos = 0;
-        for(int j=0; j<i; j++)
-            intpos += lengths[j].toInt();
-
-        QStringList *foundWorkAreas = new QStringList();
-
-        for(int k=0; k<lengths[i].toInt(); k++)
-            foundWorkAreas->append(wnames[intpos+k]);
-
-        storedWorkareas[activit] = foundWorkAreas;
-    }
-}
 
 void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 {
@@ -431,14 +311,14 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     connect(parent, SIGNAL(okClicked()), this, SLOT(configAccepted()));
     connect(parent, SIGNAL(finished()), this, SLOT(configDialogFinished()));
 
-    ui.animationsLevelSlider->setValue(storedParams->animations());
-    ui.hideOnClickCheckBox->setChecked(storedParams->hideOnClick());
+    ui.animationsLevelSlider->setValue(m_storedParams->animations());
+    ui.hideOnClickCheckBox->setChecked(m_storedParams->hideOnClick());
 
-    for(int i=0; i<storedParams->themesList()->count(); i++)
-        ui.themesCmb->addItem(storedParams->themesList()->at(i));
+    for(int i=0; i<m_storedParams->themesList()->count(); i++)
+        ui.themesCmb->addItem(m_storedParams->themesList()->at(i));
 
-    ui.themesCmb->setCurrentIndex(storedParams->themesList()->indexOf(storedParams->currentTheme()));
-    ui.tooltipsSpinBox->setValue(storedParams->toolTipsDelay());
+    ui.themesCmb->setCurrentIndex(m_storedParams->themesList()->indexOf(m_storedParams->currentTheme()));
+    ui.tooltipsSpinBox->setValue(m_storedParams->toolTipsDelay());
 
     if(m_isOnDashboard)
         ui.hideOnClickCheckBox->setEnabled(false);
@@ -455,9 +335,9 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
 {
     if(e->delta() < 0)
-        actManager->setCurrentNextActivity();
+        m_actManager->setCurrentNextActivity();
     else
-        actManager->setCurrentPreviousActivity();
+        m_actManager->setCurrentPreviousActivity();
 }
 
 #include "workflow.moc"

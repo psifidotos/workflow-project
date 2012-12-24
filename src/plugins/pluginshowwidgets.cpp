@@ -58,7 +58,7 @@ void PluginShowWidgets::currentActivityChanged(QString id)
         m_widgetsExplorerAwaitingActivity = false;
 
         if(!m_isOnDashboard)
-            m_plasmoid->hidePopupDialog();
+            emit hidePopup();
 
         emit showWidgetsEnded();
     }
@@ -181,7 +181,7 @@ void PluginShowWidgets::execute(QString actid)
 
     if((currentAct) && (!m_isOnDashboard)){
         showWidgetsExplorer(actid);
-        m_plasmoid->hidePopupDialog();
+        emit hidePopup();
     }
     else if ((currentAct) && (m_isOnDashboard)){
         // This is only for Dashboard and on current Activity

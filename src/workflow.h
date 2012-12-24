@@ -33,14 +33,15 @@
 
 #include "activitymanager.h"
 #include "ptaskmanager.h"
+#include "workareasmanager.h"
 #include "ui_workflowConfig.h"
 
 class QDesktopWidget;
 class StoredParameters;
 
 namespace Plasma {
-    class ExtenderItem;
-    class Containment;
+class ExtenderItem;
+class Containment;
 }
 
 
@@ -49,33 +50,12 @@ class WorkFlow : public Plasma::PopupApplet
 {
     Q_OBJECT
 
-
 public:
     WorkFlow(QObject *parent, const QVariantList &args);
     ~WorkFlow();
 
     void init();
     QGraphicsWidget *graphicsWidget();
-
-    Q_INVOKABLE void updatePopWindowWId();
-
-    ///Properties
-    Q_INVOKABLE void hidePopupDialog();
-    Q_INVOKABLE void showPopupDialog();
-
-    ///Workareas Storing/Accessing
-    Q_INVOKABLE void loadWorkareas();
-    Q_INVOKABLE void saveWorkareas();
-    Q_INVOKABLE QStringList getWorkAreaNames(QString);
-    Q_INVOKABLE void addWorkArea(QString id, QString name);
-    Q_INVOKABLE void addEmptyActivity(QString id);
-    Q_INVOKABLE void removeActivity(QString id);
-    Q_INVOKABLE bool activityExists(QString id);
-    Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
-    Q_INVOKABLE void removeWorkarea(QString id, int desktop);
-    Q_INVOKABLE int activitySize(QString id);
-
-    Q_INVOKABLE void workAreaWasClicked();
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);
@@ -99,6 +79,11 @@ public slots:
     void configDialogFinished();
     void configChanged();
 
+    void workAreaWasClickedSlot();
+    void updatePopWindowWIdSlot();
+
+    void hidePopupDialogSlot();
+    void showPopupDialogSlot();
 
 protected slots:
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
@@ -114,15 +99,14 @@ private:
 
     QDesktopWidget *m_desktopWidget;
 
-    ActivityManager *actManager;
-    PTaskManager *taskManager;
-    StoredParameters *storedParams;
+    ActivityManager *m_actManager;
+    PTaskManager *m_taskManager;
+    WorkareasManager *m_workareasManager;
+    StoredParameters *m_storedParams;
 
     QObject *mainQML;
 
     Ui::workflowConfig ui;
-
-    QHash <QString,QStringList *> storedWorkareas;
 
     KConfigGroup appConfig;
 

@@ -362,6 +362,7 @@ void PTaskManager::activateTask(QString id)
     //   t->restore();
     t->activate();
     hideDashboard();
+    emit hidePopup();
 }
 
 void PTaskManager::minimizeTask(QString id)

@@ -391,6 +391,7 @@ void ActivityManager::showWidgetsExplorer(QString actId)
         m_plShowWidgets = new PluginShowWidgets(m_plasmoid, m_activitiesCtrl);
 
         connect(m_plShowWidgets, SIGNAL(showWidgetsEnded()), this, SLOT(showWidgetsEndedSlot()));
+        connect(m_plShowWidgets, SIGNAL(hidePopup()), this, SIGNAL(hidePopup()));
 
         m_plShowWidgets->execute(actId);
     }

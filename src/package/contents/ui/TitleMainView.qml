@@ -230,7 +230,7 @@ Rectangle{
                             }
 
                             if(taskManager.mainWindowIdisSet() === false){
-                                workflowManager.updatePopWindowWId();
+                                taskManager.updatePopWindowWId();
                             }
                         }
                     }

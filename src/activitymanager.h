@@ -65,6 +65,7 @@ signals:
     void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void showedIconDialog();
     void answeredIconDialog();
+    void hidePopup();
 
 public slots:
   void activityAdded(QString id);

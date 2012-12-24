@@ -3,6 +3,7 @@ set(workflow_SRCS workflow.cpp
                   storedparameters.cpp
                   activitymanager.cpp
                   ptaskmanager.cpp
+                  workareasmanager.cpp
                   plugins/pluginfindwallpaper.cpp
                   plugins/pluginshowwidgets.cpp
                   plugins/plugincloneactivity.cpp

@@ -102,8 +102,8 @@ Item{
                          "Icon":icon,
                          "CState":stat} );
 
-        if(workflowManager.activityExists(source)){
-            var nms = workflowManager.getWorkAreaNames(source);
+        if(workareasManager.activityExists(source)){
+            var nms = workareasManager.getWorkAreaNames(source);
 
             instanceOfWorkAreasList.addActivityOnLoading(source,stat,cur,nms);
         }
@@ -159,7 +159,7 @@ Item{
             //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
             model.remove(p);
 
-            workflowManager.removeActivity(cod);
+            workareasManager.removeActivity(cod);
 
             instanceOfWorkAreasList.removeActivity(cod);
             allWorkareas.updateShowActivities();

@@ -29,6 +29,7 @@ public:
 
 signals:
     void showWidgetsEnded();
+    void hidePopup();
 
 public slots:
     void showWidgetsExplorerFromDelay();

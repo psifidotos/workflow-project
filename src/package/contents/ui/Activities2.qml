@@ -172,7 +172,6 @@ Rectangle {
             anchors.right: parent.right
             z:10
 
-          //  onValueChanged: workflowManager.setZoomFactor(value)
             onValueChanged: storedParameters.zoomFactor = value;
         }
     }

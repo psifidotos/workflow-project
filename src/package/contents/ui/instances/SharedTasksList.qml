@@ -245,7 +245,6 @@ Item{
 
     function setCurrentTask(cod){
         taskManager.activateTask(cod);
-        workflowManager.hidePopupDialog();
     }
 
     //in order to change to right workarea when a window is inAllDesktops

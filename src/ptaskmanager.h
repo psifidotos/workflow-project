@@ -55,6 +55,8 @@ signals:
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
 
     void numberOfDesktopsChanged(QVariant);
+    Q_INVOKABLE void updatePopWindowWId();
+    void hidePopup();
 
 
 public slots:

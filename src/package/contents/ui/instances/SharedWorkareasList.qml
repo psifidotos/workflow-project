@@ -40,7 +40,7 @@ Item{
             var workMod = actOb.workareas;
 
             workMod.setProperty(desktop-1,"elemTitle",title);
-            workflowManager.renameWorkarea(actCode,desktop,title);
+            workareasManager.renameWorkarea(actCode,desktop,title);
         }
     }
 
@@ -128,7 +128,7 @@ Item{
 
             workMod.remove(desktop-1);
 
-            workflowManager.removeWorkarea(actCode,desktop);
+            workareasManager.removeWorkarea(actCode,desktop);
 
 
             //Not in cloning
@@ -176,7 +176,7 @@ Item{
                                "gridRow":counts+1
                            } );
 
-            workflowManager.addWorkArea(actCode,val);
+            workareasManager.addWorkArea(actCode,val);
         }
 
     }
@@ -238,8 +238,8 @@ Item{
                              }]
                      });
 
-        workflowManager.addEmptyActivity(cod);
-        workflowManager.addWorkArea(cod,deskone);
+        workareasManager.addEmptyActivity(cod);
+        workareasManager.addWorkArea(cod,deskone);
 
     }
 
