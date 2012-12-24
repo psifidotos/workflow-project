@@ -118,7 +118,6 @@ void WorkFlow::init(){
             ctxt->setContextProperty("activityManager", m_actManager);
             ctxt->setContextProperty("taskManager", m_taskManager);
             ctxt->setContextProperty("workareasManager", m_workareasManager);
-            ctxt->setContextProperty("workflowManager", this);
 
             QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
             QObject *qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
