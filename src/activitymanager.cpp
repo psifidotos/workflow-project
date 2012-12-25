@@ -38,7 +38,8 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_plShowWidgets(0),
     m_plCloneActivity(0),
     m_plRemoveActivity(0),
-    m_plChangeWorkarea(0)
+    m_plChangeWorkarea(0),
+    m_firstTime(true)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
 }
@@ -175,6 +176,13 @@ void ActivityManager::activityAdded(QString id) {
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));
     connect(activity, SIGNAL(stateChanged(KActivities::Info::State)), this, SLOT(activityStateChanged()));
 
+    if((m_activitiesCtrl->currentActivity() == id) &&
+            (m_firstTime)){
+        m_firstTime = false;
+        emit currentActivityInformationChanged(activity->name(),
+                                               activity->icon());
+    }
+
 }
 
 void ActivityManager::activityRemoved(QString id) {
@@ -217,6 +225,9 @@ void ActivityManager::activityDataChanged()
                            QVariant(activity->icon()),
                            QVariant(state),
                            QVariant(m_activitiesCtrl->currentActivity() == activity->id()));
+
+    emit currentActivityInformationChanged(activity->name(),
+                                           activity->icon());
 }
 
 void ActivityManager::activityStateChanged()
@@ -272,6 +283,10 @@ void ActivityManager::currentActivityChanged(const QString &id)
                               Q_ARG(QVariant, id));
 
     updateWallpaper(id);
+
+    KActivities::Info *activity = new KActivities::Info(id, this);
+    emit currentActivityInformationChanged(activity->name(),
+                                           activity->icon());
 }
 
 ////////////

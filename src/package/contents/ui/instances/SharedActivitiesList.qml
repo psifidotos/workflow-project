@@ -13,10 +13,8 @@ Item{
 
     property int vbYes:3
 
-    //variable to use in asychronous change an activity,
-    //first go to an activity and then change desktop
-    property int goToDesktop:-1
-
+    //is used when cloning an activity to temporary
+    //disable previews
     property bool previewsWereEnabled:false
 
 
@@ -256,14 +254,14 @@ Item{
         var nId = getFirstRunningIdAfter(sessionParameters.currentActivity);
 
         if(nId !== "")
-            setCurrent(nId);
+            activityManager.setCurrent(nId);
     }
 
     function slotSetCurrentPreviousActivity(){
         var nId = getFirstRunningIdBefore(sessionParameters.currentActivity);
 
         if(nId !== "")
-            setCurrent(nId);
+            activityManager.setCurrent(nId);
     }
 
     function getCState(cod){
@@ -299,35 +297,6 @@ Item{
 
         }
     }
-
-   /* function setCurrent(cod){
-        if(sessionParameters.currentActivity === cod)
-            updateWallpaper(cod);
-
-        activityManager.setCurrent(cod);
-    }
-
-    function setCurrentActivityAndDesktop(activit, desk)
-    {
-
-        setCurrent(activit);
-
-        var nextDesk = desk;
-
-        var actSize = instanceOfWorkAreasList.getActivitySize(activit);
-
-        // console.debug(nextDesk+"-"+actSize);
-
-        if(desk>instanceOfWorkAreasList.getActivitySize(activit))
-            nextDesk = actSize;
-
-        instanceOfTasksList.setCurrentDesktop(nextDesk);
-
-
-
-        return nextDesk;
-
-    }*/
 
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);

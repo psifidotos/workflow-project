@@ -109,7 +109,7 @@ Item{
                 if (storedParameters.lockActivities === false)
                     instanceOfActivitiesList.chooseIcon(ccode);
                 else
-                    instanceOfActivitiesList.setCurrent(ccode);
+                    activityManager.setCurrent(ccode);
             }
 
 
@@ -222,7 +222,7 @@ Item{
             }
 
             onClicked: {
-                instanceOfActivitiesList.setCurrent(ccode);
+                activityManager.setCurrent(ccode);
             }
 
             onDoubleClicked: {

@@ -51,7 +51,10 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_mainWidget(0),
     m_actManager(0),
-    m_taskManager(0)
+    m_taskManager(0),
+    m_theme(0),
+    m_activityIcon("preferences-activities"),
+    m_activityName("")
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
 
@@ -77,6 +80,8 @@ WorkFlow::~WorkFlow()
         delete m_workareasManager;
     if (m_storedParams)
         delete m_storedParams;
+    if (m_theme)
+        delete m_theme;
 }
 
 QGraphicsWidget *WorkFlow::graphicsWidget()
@@ -133,6 +138,8 @@ void WorkFlow::init(){
                     if(containment()->corona())
                         tCorona = containment()->corona();
 
+                connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
+                        this, SLOT(setActivityNameIconSlot(QString,QString)));
                 m_actManager->setQMlObject(qmlActEng, tCorona, this);
                 connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                 connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
@@ -257,6 +264,24 @@ void WorkFlow::workAreaWasClickedSlot()
         m_taskManager->hideDashboard();
 }
 
+void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
+{
+    bool updateIcon = false;
+
+    if(m_activityIcon != icon){
+        m_activityIcon = icon;
+        updateIcon = true;
+    }
+    if(m_activityName != name){
+        m_activityName = name;
+        updateIcon = true;
+    }
+
+    if(updateIcon)
+        paintIcon();
+}
+
+
 void WorkFlow::screensSizeChanged(int s)
 {
     QRect screenRect = m_desktopWidget->screenGeometry(s);
@@ -338,6 +363,39 @@ void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
     else
         m_actManager->setCurrentPreviousActivity();
 }
+
+
+void WorkFlow::paintIcon()
+{
+    const int iconSize = qMin(size().width(), size().height());
+
+    if (iconSize <= 0) {
+        return;
+    }
+
+    KIcon icon3(m_activityIcon);
+    QPixmap icon = icon3.pixmap(iconSize, iconSize);
+
+    if (!m_theme) {
+        m_theme = new Plasma::Svg(this);
+    }
+
+    QPainter p(&icon);
+
+    m_theme->paint(&p, icon.rect(), m_activityIcon);
+
+    QFont font = Plasma::Theme::defaultTheme()->font(Plasma::Theme::DefaultFont);
+    p.setPen(Plasma::Theme::defaultTheme()->color(Plasma::Theme::ButtonTextColor));
+    font.setBold(true);
+    font.setPixelSize(icon.size().height() / 3);
+    p.setFont(font);
+    p.drawText(icon.rect().adjusted(0, icon.size().height()-font.pixelSize(), 0, 0), Qt::AlignLeft,
+               m_activityName);
+    m_theme->resize();
+    p.end();
+    setPopupIcon(icon);
+}
+
 
 #include "workflow.moc"
 

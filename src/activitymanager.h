@@ -18,13 +18,13 @@ class PluginChangeWorkarea;
 
 namespace KActivities
 {
-    class Controller;
-    class Info;
+class Controller;
+class Info;
 }
 
 namespace Plasma {
-    class Containment;
-    class Corona;
+class Containment;
+class Corona;
 }
 
 class ActivityManager : public QObject
@@ -34,8 +34,8 @@ public:
     explicit ActivityManager(QObject *parent = 0);
     ~ActivityManager();
 
-//  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
-//  Q_INVOKABLE void downloadActivityScripts();
+    //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
+    //  Q_INVOKABLE void downloadActivityScripts();
 
     Q_INVOKABLE QString getWallpaper(QString source);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
@@ -49,7 +49,7 @@ public:
     Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE void setIcon(QString id, QString name);
 
-//    Q_INVOKABLE int askForDelete(QString activityName);
+    //    Q_INVOKABLE int askForDelete(QString activityName);
 
     Q_INVOKABLE void showWidgetsExplorer(QString);
     Q_INVOKABLE void cloneActivity(QString);
@@ -66,27 +66,28 @@ signals:
     void showedIconDialog();
     void answeredIconDialog();
     void hidePopup();
+    void currentActivityInformationChanged(QString name, QString icon);
 
 public slots:
-  void activityAdded(QString id);
-  void activityRemoved(QString id);
-  void activityDataChanged();
-  void activityStateChanged();
-  void currentActivityChanged(const QString &);
+    void activityAdded(QString id);
+    void activityRemoved(QString id);
+    void activityDataChanged();
+    void activityStateChanged();
+    void currentActivityChanged(const QString &);
 
-  void updateWallpaper(QString);
+    void updateWallpaper(QString);
 
-  void showWidgetsEndedSlot();
+    void showWidgetsEndedSlot();
 
-  void cloningStartedSlot();
-  void cloningEndedSlot();
-  void copyWorkareasSlot(QString,QString);
+    void cloningStartedSlot();
+    void cloningEndedSlot();
+    void copyWorkareasSlot(QString,QString);
 
-  void activityRemovedEnded(QString);
+    void activityRemovedEnded(QString);
 
-  void changeWorkareaEnded(QString, int);
+    void changeWorkareaEnded(QString, int);
 
-  Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
+    Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
 
 private:
 
@@ -103,6 +104,8 @@ private:
     PluginChangeWorkarea *m_plChangeWorkarea;
 
     Plasma::Containment *getContainment(QString actId);
+
+    bool m_firstTime;
 
 };
 

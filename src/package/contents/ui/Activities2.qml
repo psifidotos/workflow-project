@@ -173,6 +173,8 @@ Rectangle {
             z:10
 
             onValueChanged: storedParameters.zoomFactor = value;
+
+            Component.onCompleted: value = storedParameters.zoomFactor;
         }
     }
 

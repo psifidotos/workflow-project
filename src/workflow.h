@@ -21,7 +21,8 @@
 #ifndef WORKFLOW_HEADER
 #define WORKFLOW_HEADER
 
-
+#include <Plasma/Svg>
+#include <Plasma/Theme>
 #include <Plasma/Label>
 #include <Plasma/PopupApplet>
 #include <plasma/widgets/declarativewidget.h>
@@ -42,6 +43,7 @@ class StoredParameters;
 namespace Plasma {
 class ExtenderItem;
 class Containment;
+class Svg;
 }
 
 
@@ -85,6 +87,8 @@ public slots:
     void hidePopupDialogSlot();
     void showPopupDialogSlot();
 
+    void setActivityNameIconSlot(QString, QString);
+
 protected slots:
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
     void configAccepted();
@@ -109,6 +113,13 @@ private:
     Ui::workflowConfig ui;
 
     KConfigGroup appConfig;
+
+    Plasma::Svg *m_theme;
+
+    QString m_activityIcon;
+    QString m_activityName;
+
+    void paintIcon();
 
 };
 
