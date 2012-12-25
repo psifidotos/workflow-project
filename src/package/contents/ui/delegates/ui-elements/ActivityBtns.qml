@@ -60,12 +60,24 @@ Item{
         color: sessionParameters.currentActivity !== ccode ? "#222222" : "#0a0a0a"
         property bool containsMouse: stopActivityBtn.containsMouse
                                      || duplicateActivityBtn.containsMouse
-                                     || deleteActivityBtn.containsMouse
 
         Row{
             id:rightActions
             spacing:buttonsSpace
             anchors.centerIn: parent
+
+            IconButton {
+                id:duplicateActivityBtn
+                icon:instanceOfThemeList.icons.CloneActivity
+                width: buttonsSize
+                height: buttonsSize
+                opacity: storedParameters.lockActivities ? 0 : 1
+                onClicked: {
+                    instanceOfActivitiesList.cloneActivityDialog(ccode);
+                }
+                tooltipTitle: i18n("Clone Activity")
+                tooltipText: i18n("You can clone an Activity.")
+            }
 
             IconButton {
                 id:stopActivityBtn
@@ -82,31 +94,6 @@ Item{
                 tooltipText: i18n("You can pause an Activity and place it on the right panel.This way the Activity will be always available to continue your work from where you stopped.")
             }
 
-            IconButton {
-                id:duplicateActivityBtn
-                icon:instanceOfThemeList.icons.CloneActivity
-                width: buttonsSize
-                height: buttonsSize
-                opacity: storedParameters.lockActivities ? 0 : 1
-                onClicked: {
-                    instanceOfActivitiesList.cloneActivityDialog(ccode);
-                }
-                tooltipTitle: i18n("Clone Activity")
-                tooltipText: i18n("You can clone an Activity.")
-            }
-
-            IconButton {
-                id:deleteActivityBtn
-                icon: instanceOfThemeList.icons.DeleteActivity
-                width: buttonsSize
-                height: buttonsSize
-                opacity: ((allwlists.activitiesShown>1)&&(!storedParameters.lockActivities)) ? 1 : 0
-                onClicked: {
-                    instanceOfActivitiesList.removeActivityDialog(ccode);
-                }
-                tooltipTitle: i18n("Delete Activity")
-                tooltipText: i18n("You can delete an Activity. Be careful, this action can not be undone.")
-            }
         }
     }
 

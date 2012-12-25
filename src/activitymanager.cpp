@@ -37,7 +37,6 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_activitiesCtrl(0),
     m_plShowWidgets(0),
     m_plCloneActivity(0),
-    m_plRemoveActivity(0),
     m_plChangeWorkarea(0),
     m_firstTime(true)
 {
@@ -52,8 +51,6 @@ ActivityManager::~ActivityManager()
         delete m_plShowWidgets;
     if (m_plCloneActivity)
         delete m_plCloneActivity;
-    if (m_plRemoveActivity)
-        delete m_plRemoveActivity;
     if (m_plChangeWorkarea)
         delete m_plChangeWorkarea;
 }
@@ -115,14 +112,6 @@ void ActivityManager::cloningEndedSlot()
     }
 }
 
-
-void ActivityManager::activityRemovedEnded(QString)
-{
-    if (m_plRemoveActivity){
-        delete m_plRemoveActivity;
-        m_plRemoveActivity = 0;
-    }
-}
 
 void ActivityManager::copyWorkareasSlot(QString from,QString to)
 {
@@ -343,13 +332,7 @@ void ActivityManager::setName(QString id, QString name) {
 }
 
 void ActivityManager::remove(QString id) {
-    //Problem in removing an activity it creates a ghost record in activities list
-    //m_activitiesCtrl->removeActivity(id);
-    if(!m_plRemoveActivity)
-        m_plRemoveActivity = new PluginRemoveActivity(this,m_activitiesCtrl);
-
-    connect(m_plRemoveActivity, SIGNAL(activityRemovedEnded(QString)), this, SLOT(activityRemovedEnded(QString)));
-    m_plRemoveActivity->execute(id);
+    m_activitiesCtrl->removeActivity(id);
 }
 
 /*

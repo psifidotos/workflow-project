@@ -13,7 +13,6 @@ class WorkFlow;
 
 class PluginShowWidgets;
 class PluginCloneActivity;
-class PluginRemoveActivity;
 class PluginChangeWorkarea;
 
 namespace KActivities
@@ -83,8 +82,6 @@ public slots:
     void cloningEndedSlot();
     void copyWorkareasSlot(QString,QString);
 
-    void activityRemovedEnded(QString);
-
     void changeWorkareaEnded(QString, int);
 
     Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
@@ -100,7 +97,6 @@ private:
 
     PluginShowWidgets *m_plShowWidgets;
     PluginCloneActivity *m_plCloneActivity;
-    PluginRemoveActivity *m_plRemoveActivity;
     PluginChangeWorkarea *m_plChangeWorkarea;
 
     Plasma::Containment *getContainment(QString actId);

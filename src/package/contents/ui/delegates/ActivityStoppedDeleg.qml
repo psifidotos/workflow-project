@@ -5,6 +5,7 @@ import org.kde.qtextracomponents 0.1
 
 import "ui-elements"
 import "../tooltips"
+import "../components"
 
 //Component{
 
@@ -23,9 +24,13 @@ import "../tooltips"
         height: shown ? basicHeight : 0
 
         property real basicHeight:0.62*mainView.workareaHeight
+        property int buttonsSize:0.5 * mainView.scaleMeter
 
         property real defOpacity  : 0.6
-        property real defOpacity2 : 0.6
+
+        property bool containsMouse: (deleteActivityBtn.containsMouse) ||
+                                     (playActivity.containsMouse) ||
+                                     (backgroundArea.containsMouse)
 
         /*
         onCStateChanged:{
@@ -52,14 +57,21 @@ import "../tooltips"
             ///second children
         }
 
+        MouseArea{
+            id: backgroundArea
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+
         QIconItem{
             id:activityIcon
             rotation:-20
-            opacity:parent.defOpacity
+            opacity:stpActivity.containsMouse ? 1 : parent.defOpacity
             smooth:true
 
             icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
-            enabled:false
+            enabled:stpActivity.containsMouse ? true : false
 
             x:stpActivity.width/2
             width:5+0.9*mainView.scaleMeter
@@ -104,7 +116,7 @@ import "../tooltips"
 
             font.pixelSize: (0.13+mainView.defFontRelStep)*parent.height
 
-            opacity:stpActivity.defOpacity2
+            opacity:stpActivity.containsMouse ? 1 : stpActivity.defOpacity
 
             color:"#4d4b4b"
 
@@ -141,16 +153,19 @@ import "../tooltips"
         }
 
 
-        QIconItem{
+        IconButton{
             id:playActivity
-            opacity:0
+            opacity:stpActivity.containsMouse ? 1 : 0
             icon: instanceOfThemeList.icons.RunActivity
 
-            anchors.horizontalCenter: stpActivity.horizontalCenter
-            anchors.verticalCenter: activityIcon.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
             width: stpActivity.width/2
             height: width
+
+            tooltipTitle: i18n("Restore Activity")
+            tooltipText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
 
 
             Behavior on opacity{
@@ -158,27 +173,6 @@ import "../tooltips"
                     duration: 2*storedParameters.animationsStep;
                     easing.type: Easing.InOutQuad;
                 }
-            }
-        }
-
-        MouseArea{
-            id:stopActivityMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                activityIcon.enabled = true;
-                activityIcon.opacity = 1
-                stpActivityName.opacity = 1
-                playActivity.opacity = 1
-
-            }
-
-            onExited: {
-                activityIcon.enabled = false;
-                activityIcon.opacity = stpActivity.defOpacity
-                stpActivityName.opacity = stpActivity.defOpacity2
-                playActivity.opacity = 0
             }
 
             onClicked: {
@@ -195,14 +189,32 @@ import "../tooltips"
                 //instanceOfActivitiesList.setCState(ccode,"Running");
 
             }
+
         }
 
-        DToolTip{
-            title:i18n("Restore Activity")
-            mainText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
-            target:stopActivityMouseArea
-            icon:instanceOfThemeList.icons.RunActivity
+        IconButton {
+            id:deleteActivityBtn
+            icon: instanceOfThemeList.icons.DeleteActivity
+            anchors.right:parent.right
+            anchors.top:parent.top
+            width: buttonsSize
+            height: buttonsSize
+            opacity: stpActivity.containsMouse ? 1 : 0
+            onClicked: {
+                instanceOfActivitiesList.removeActivityDialog(ccode);
+            }
+
+            tooltipTitle: i18n("Delete Activity")
+            tooltipText: i18n("You can delete an Activity. Be careful, this action can not be undone.")
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 2*storedParameters.animationsStep;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
         }
+
 
 
     }
