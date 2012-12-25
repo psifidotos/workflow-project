@@ -3,6 +3,7 @@ import QtQuick 1.1
 
 import "ui"
 import "tooltips"
+import "components"
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
@@ -258,47 +259,23 @@ Rectangle{
 
     }// End Of Left Set of Buttons // Row
 
-    Text{
+    IconButton{
         id:helpBtn
-        text:"?"
-        font.family: "Serif"
-        font.pixelSize: 0.75*oxygenTitle.height
 
-        color:"#444444"
-        opacity:defOpacity
+        opacity:1
         anchors.right: parent.right
-        anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
 
-        property real defOpacity:0.6
+        width: 0.65*oxygenTitle.buttonWidth
+        height: 0.75*oxygenTitle.buttonHeight
 
-        MouseArea {
-            id:helpBtnMouseArea
-            anchors.fill: parent
+        icon:instanceOfThemeList.icons.HelpTour
 
-            hoverEnabled: true
+        tooltipTitle: i18n("About Dialog")
+        tooltipText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
 
-            onEntered: {
-                helpBtn.opacity = 1;
-                helpBtn.font.bold = true;
-            }
-
-            onExited: {
-                helpBtn.opacity = helpBtn.defOpacity;
-                helpBtn.font.bold = false;
-            }
-
-            onClicked: {
-                mainView.getDynLib().showAboutDialog();
-            }
-
-        }
-
-        DToolTip{
-            title:i18n("About Dialog")
-            mainText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
-            target:helpBtnMouseArea
-            icon:instanceOfThemeList.icons.HelpTour
+        onClicked: {
+            mainView.getDynLib().showAboutDialog();
         }
 
     }
