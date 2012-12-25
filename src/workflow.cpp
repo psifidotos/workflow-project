@@ -124,10 +124,9 @@ void WorkFlow::init(){
             ctxt->setContextProperty("taskManager", m_taskManager);
             ctxt->setContextProperty("workareasManager", m_workareasManager);
 
-            QObject *rootObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
-            QObject *qmlActEng = rootObject->findChild<QObject*>("instActivitiesEngine");
-            QObject *qmlTaskEng = rootObject->findChild<QObject*>("instTasksEngine");
-            mainQML = rootObject;
+            m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
+            QObject *qmlActEng = m_rootQMLObject->findChild<QObject*>("instActivitiesEngine");
+            QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
 
 
             if(qmlActEng){
@@ -269,7 +268,10 @@ void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
     bool updateIcon = false;
 
     if(m_activityIcon != icon){
-        m_activityIcon = icon;
+        if(icon == "")
+            m_activityIcon = "plasma";
+        else
+            m_activityIcon = icon;
         updateIcon = true;
     }
     if(m_activityName != name){
@@ -286,7 +288,7 @@ void WorkFlow::screensSizeChanged(int s)
 {
     QRect screenRect = m_desktopWidget->screenGeometry(s);
     float ratio = (float)screenRect.height()/(float)screenRect.width();
-    QMetaObject::invokeMethod(mainQML, "setScreenRatio",
+    QMetaObject::invokeMethod(m_rootQMLObject, "setScreenRatio",
                               Q_ARG(QVariant, ratio));
 
 }
@@ -375,7 +377,7 @@ void WorkFlow::paintIcon()
 
     KIcon icon3(m_activityIcon);
     QPixmap icon = icon3.pixmap(iconSize, iconSize);
-
+/*
     if (!m_theme) {
         m_theme = new Plasma::Svg(this);
     }
@@ -392,12 +394,11 @@ void WorkFlow::paintIcon()
     p.drawText(icon.rect().adjusted(0, icon.size().height()-font.pixelSize(), 0, 0), Qt::AlignLeft,
                m_activityName);
     m_theme->resize();
-    p.end();
+    p.end(); */
     setPopupIcon(icon);
 }
-
+// This is the command that links your applet to the .desktop file
+K_EXPORT_PLASMA_APPLET(workflow, WorkFlow)
 
 #include "workflow.moc"
 
-// This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(workflow, WorkFlow)

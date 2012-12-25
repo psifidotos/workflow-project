@@ -19,9 +19,9 @@
 
 #include "../workflow.h"
 
-PluginShowWidgets::PluginShowWidgets(WorkFlow *plasmoid, KActivities::Controller *actControl) :
-    QObject(plasmoid),
-    m_plasmoid(plasmoid),
+PluginShowWidgets::PluginShowWidgets(WorkFlow *parent, KActivities::Controller *actControl) :
+    QObject(parent),
+    m_plasmoid(parent),
     m_activitiesCtrl(actControl)
 {
     m_unlockWidgetsText = "";

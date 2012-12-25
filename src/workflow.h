@@ -108,7 +108,7 @@ private:
     WorkareasManager *m_workareasManager;
     StoredParameters *m_storedParams;
 
-    QObject *mainQML;
+    QObject *m_rootQMLObject;
 
     Ui::workflowConfig ui;
 
@@ -122,5 +122,6 @@ private:
     void paintIcon();
 
 };
+
 
 #endif
