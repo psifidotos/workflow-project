@@ -28,8 +28,8 @@
 #include "plugins/pluginfindwallpaper.h"
 #include "plugins/pluginshowwidgets.h"
 #include "plugins/plugincloneactivity.h"
-#include "plugins/pluginremoveactivity.h"
 #include "plugins/pluginchangeworkarea.h"
+#include "plugins/pluginaddactivity.h"
 
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent),
@@ -39,6 +39,7 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_plShowWidgets(0),
     m_plCloneActivity(0),
     m_plChangeWorkarea(0),
+    m_plAddActivity(0),
     m_firstTime(true)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
@@ -54,6 +55,8 @@ ActivityManager::~ActivityManager()
         delete m_plCloneActivity;
     if (m_plChangeWorkarea)
         delete m_plChangeWorkarea;
+    if (m_plAddActivity)
+        delete m_plAddActivity;
 }
 
 void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment)
@@ -135,7 +138,13 @@ void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
     }
 }
 
-
+void ActivityManager::addActivityEnded()
+{
+    if (m_plAddActivity){
+        delete m_plAddActivity;
+        m_plAddActivity = 0;
+    }
+}
 
 
 void ActivityManager::activityAdded(QString id) {
@@ -257,6 +266,8 @@ void ActivityManager::activityStateChanged()
                               Q_ARG(QVariant, id),
                               Q_ARG(QVariant, state));
 
+    updateWallpaper(id);
+
 }
 
 
@@ -314,10 +325,14 @@ QString ActivityManager::chooseIcon(QString id)
     return icon;
 }
 
+void ActivityManager::add(QString name) {
+    if(!m_plAddActivity){
+        m_plAddActivity = new PluginAddActivity(this, m_activitiesCtrl);
 
+        connect(m_plAddActivity, SIGNAL(addActivityEnded()), this, SLOT(addActivityEnded()) );
 
-QString ActivityManager::add(QString name) {
-    return m_activitiesCtrl->addActivity(name);
+        m_plAddActivity->execute(name);
+    }
 }
 
 void ActivityManager::setCurrent(QString id) {

@@ -9,6 +9,7 @@ set(workflow_SRCS workflow.cpp
                   plugins/plugincloneactivity.cpp
                   plugins/pluginremoveactivity.cpp
                   plugins/pluginchangeworkarea.cpp
+                  plugins/pluginaddactivity.cpp
 )
 
 # Now make sure all files get to the right place

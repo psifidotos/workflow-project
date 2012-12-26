@@ -1,7 +1,6 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-
 import ".."
 import "../models"
 
@@ -9,20 +8,9 @@ Item{
 
     property variant model: ActivitiesModel1{}
 
-    property int newActivityCounter:0
-
-    property int vbYes:3
-
     //is used when cloning an activity to temporary
     //disable previews
     property bool previewsWereEnabled:false
-
-
-    //When we add a new activity a series of signal must be generated in order
-    //to have a success creation
-    property string previousActiveActivity:""
-    property string mustActivateActivity:""
-
 
     function printModel(){
         console.debug("---- Activities Model -----");
@@ -72,20 +60,6 @@ Item{
             allWorkareas.updateShowActivities();
             stoppedPanel.changedChildState();
 
-            //Phase 05 of loading Wallpaper of New Activity
-            if( (cod === mustActivateActivity) &&
-                    (val === "Stopped")){
-                var act = mustActivateActivity;
-                var oldAct = previousActiveActivity;
-
-                mustActivateActivity = "";
-                previousActiveActivity = "";
-
-                console.debug("OK the end:"+mustActivateActivity+"-"+previousActiveActivity);
-                startActivity(act);
-
-            }
-
         }
     }
 
@@ -119,11 +93,6 @@ Item{
         setCState(source,stat);
 
         updateWallpaper(source);
-
-        //Phase 02 of loading Wallpaper of New Activity
-
-        if(source === mustActivateActivity)
-            activityManager.setCurrentActivityAndDesktop(source,sessionParameters.currentDesktop);
     }
 
     function setIcon(cod, val){
@@ -284,17 +253,6 @@ Item{
             model.setProperty(ind,"Current",true);
 
             instanceOfWorkAreasList.setCurrent(cod);
-
-            //   updateWallpaper(cod);
-
-            //Phase 03 Of updating the wallpaper of new activity
-            if(cod === mustActivateActivity)
-                activityManager.setCurrentActivityAndDesktop(previousActiveActivity,sessionParameters.currentDesktop);
-
-            //Phase 04 Of updating the wallpaper of new activity
-            if(cod === previousActiveActivity)
-                stopActivity(mustActivateActivity);
-
         }
     }
 
@@ -350,31 +308,7 @@ Item{
 
 
     function addNewActivity(){
-
-        //Phase01 of updating new activity's wallpaper
-
-        previousActiveActivity = sessionParameters.currentActivity;
-
-        var res = activityManager.add(i18n("New Activity"));
-
-        mustActivateActivity = res;
-
-        return res;
-
-
-        ////////SOS, DO NOT DELETE, IT CAN NOT CLONE THE EMPTY ACTIVITY(NEW ACTIVITY)
-        ///////IT CREATES AN ENTERNAL LOOP...................//////
-
-        //      setCurrentActivityAndDesktop(res,mainView.currentDesktop);
-        //       setCurrentActivityAndDesktop(previousActiveActivity,mainView.currentDesktop);
-
-        ///////////////////////////
-        ////////SOS, DO NOT DELETE, IT CAN NOT CLONE THE EMPTY ACTIVITY(NEW ACTIVITY)
-
-        //   previousActiveActivity = "";
-        //   mustActivateActivity = "";
-
-
+        activityManager.add(i18n("New Activity"));
     }
 
 

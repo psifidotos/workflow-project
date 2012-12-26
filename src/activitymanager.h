@@ -8,6 +8,7 @@
 class PluginShowWidgets;
 class PluginCloneActivity;
 class PluginChangeWorkarea;
+class PluginAddActivity;
 
 namespace KActivities
 {
@@ -31,7 +32,7 @@ public:
 
     Q_INVOKABLE QString getWallpaper(QString source);
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QString &ic);
-    Q_INVOKABLE QString add(QString name);
+    Q_INVOKABLE void add(QString name);
 
     Q_INVOKABLE void setCurrent(QString id);
     Q_INVOKABLE void stop(QString id);
@@ -69,6 +70,7 @@ public slots:
 
     void updateWallpaper(QString);
 
+    //SIGNALS FROM THE PLUGINS
     void showWidgetsEndedSlot();
 
     void cloningStartedSlot();
@@ -76,6 +78,8 @@ public slots:
     void copyWorkareasSlot(QString,QString);
 
     void changeWorkareaEnded(QString, int);
+
+    void addActivityEnded();
 
     Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
 
@@ -92,6 +96,7 @@ private:
     PluginShowWidgets *m_plShowWidgets;
     PluginCloneActivity *m_plCloneActivity;
     PluginChangeWorkarea *m_plChangeWorkarea;
+    PluginAddActivity *m_plAddActivity;
 
     Plasma::Containment *getContainment(QString actId);
 
