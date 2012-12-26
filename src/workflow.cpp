@@ -57,7 +57,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_activityName("")
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
-
+    setHasConfigurationInterface(true);
     setPopupIcon("preferences-activities");
 
     m_actManager = new ActivityManager(this);
@@ -72,6 +72,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
 WorkFlow::~WorkFlow()
 {
+    emit configNeedsSaving();
+
     if (m_actManager)
         delete m_actManager;
     if (m_taskManager)
@@ -84,19 +86,12 @@ WorkFlow::~WorkFlow()
         delete m_theme;
 }
 
-QGraphicsWidget *WorkFlow::graphicsWidget()
+void WorkFlow::init()
 {
-    return m_mainWidget;
-}
-
-void WorkFlow::init(){
-    setHasConfigurationInterface(true);
 
     m_mainWidget = new QGraphicsWidget(this);
 
-    appConfig = config();
-
-    m_storedParams = new StoredParameters(this,& appConfig);
+    m_storedParams = new StoredParameters(this);
 
     QGraphicsLinearLayout *mainLayout = new QGraphicsLinearLayout(m_mainWidget);
     mainLayout->setOrientation(Qt::Vertical);
@@ -108,7 +103,8 @@ void WorkFlow::init(){
     Plasma::Package package(workflowPath, structure);
     QString path = package.filePath("mainscript");
 
-    kDebug() << "Path: " << path << endl;
+    //kDebug() << "Path: " << path << endl;
+    configChanged();
 
     declarativeWidget = new Plasma::DeclarativeWidget();
     declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",m_storedParams);
@@ -130,16 +126,9 @@ void WorkFlow::init(){
 
 
             if(qmlActEng){
-
-                Plasma::Corona *tCorona=NULL;
-
-                if(containment())
-                    if(containment()->corona())
-                        tCorona = containment()->corona();
-
                 connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
                         this, SLOT(setActivityNameIconSlot(QString,QString)));
-                m_actManager->setQMlObject(qmlActEng, tCorona, this);
+                m_actManager->setQMlObject(qmlActEng, containment());
                 connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
                 connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
             }
@@ -154,7 +143,6 @@ void WorkFlow::init(){
     }
 
     screensSizeChanged(-1); //set Screen Ratio
-    setGraphicsWidget(m_mainWidget);
 
     m_mainWidget->setMinimumSize(550,350);
     setPassivePopupSlot(m_storedParams->hideOnClick());
@@ -166,7 +154,7 @@ void WorkFlow::init(){
     connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
 
     connect(m_storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
-    connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SIGNAL(configNeedsSaving()));
+    connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SLOT(configAccepted()));
 
     connect(m_workareasManager, SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
 
@@ -175,6 +163,7 @@ void WorkFlow::init(){
 
     connect(m_actManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
+    setGraphicsWidget(m_mainWidget);
 }
 
 void WorkFlow::hidePopupDialogSlot()
@@ -301,16 +290,56 @@ void WorkFlow::configDialogFinished()
 
 void WorkFlow::configChanged()
 {
-    m_storedParams->configChanged();
+    KConfigGroup cg = config();
+
+    m_storedParams->setLockActivities( cg.readEntry("LockActivities", true));
+    m_storedParams->setShowWindows( cg.readEntry("ShowWindows", true));
+    m_storedParams->setZoomFactor( cg.readEntry("ZoomFactor", 50));
+    m_storedParams->setAnimations( cg.readEntry("Animations", 1));
+
+    m_storedParams->setWindowsPreviews( cg.readEntry("WindowPreviews", false));
+    m_storedParams->setWindowsPreviewsOffsetX( cg.readEntry("WindowPreviewsOffsetX", 0));
+    m_storedParams->setWindowsPreviewsOffsetY( cg.readEntry("WindowPreviewsOffsetY", 0));
+
+    m_storedParams->setFontRelevance( cg.readEntry("FontRelevance", 0));
+    m_storedParams->setShowStoppedActivities( cg.readEntry("ShowStoppedPanel", true));
+    m_storedParams->setFirstRunLiveTour( cg.readEntry("FirstRunTour", false));
+    m_storedParams->setFirstRunCalibrationPreviews( cg.readEntry("FirstRunCalibration", false));
+    m_storedParams->setHideOnClick( cg.readEntry("HideOnClick",false));
+    m_storedParams->setToolTipsDelay( cg.readEntry("ToolTipsDelay", 300));
+
+    m_storedParams->setCurrentTheme(cg.readEntry("CurrentTheme", "Oxygen"));
+
+    /*
+    ui.animationsLevelSlider->setValue(m_storedParams->animations());
+    ui.hideOnClickCheckBox->setChecked(m_storedParams->hideOnClick());
+    ui.themesCmb->setCurrentIndex(m_storedParams->themesList()->indexOf(m_storedParams->currentTheme()));
+    ui.tooltipsSpinBox->setValue(m_storedParams->toolTipsDelay());*/
 }
 
 void WorkFlow::configAccepted()
 {
+    KConfigGroup cg = config();
+
     m_storedParams->setAnimations(ui.animationsLevelSlider->value());
     m_storedParams->setHideOnClick(ui.hideOnClickCheckBox->isChecked());
     m_storedParams->setToolTipsDelay(ui.tooltipsSpinBox->value());
-
     m_storedParams->setCurrentTheme(ui.themesCmb->currentText());
+
+    cg.writeEntry("LockActivities",m_storedParams->lockActivities());
+    cg.writeEntry("ShowWindows",m_storedParams->showWindows());
+    cg.writeEntry("ZoomFactor",m_storedParams->zoomFactor());
+    cg.writeEntry("Animations",m_storedParams->animations());
+    cg.writeEntry("WindowPreviews",m_storedParams->windowsPreviews());
+    cg.writeEntry("WindowPreviewsOffsetX",m_storedParams->windowsPreviewsOffsetX());
+    cg.writeEntry("WindowPreviewsOffsetY",m_storedParams->windowsPreviewsOffsetY());
+    cg.writeEntry("FontRelevance",m_storedParams->fontRelevance());
+    cg.writeEntry("ShowStoppedPanel",m_storedParams->showStoppedActivities());
+    cg.writeEntry("FirstRunTour",m_storedParams->firstRunLiveTour());
+    cg.writeEntry("FirstRunCalibration",m_storedParams->firstRunCalibrationPreviews());
+    cg.writeEntry("HideOnClick",m_storedParams->hideOnClick());
+    cg.writeEntry("ToolTipsDelay",m_storedParams->toolTipsDelay());
+    cg.writeEntry("CurrentTheme",m_storedParams->currentTheme());
 
     emit configNeedsSaving();
 }
@@ -377,7 +406,7 @@ void WorkFlow::paintIcon()
 
     KIcon icon3(m_activityIcon);
     QPixmap icon = icon3.pixmap(iconSize, iconSize);
-/*
+    /*
     if (!m_theme) {
         m_theme = new Plasma::Svg(this);
     }
@@ -397,8 +426,6 @@ void WorkFlow::paintIcon()
     p.end(); */
     setPopupIcon(icon);
 }
-// This is the command that links your applet to the .desktop file
-K_EXPORT_PLASMA_APPLET(workflow, WorkFlow)
 
 #include "workflow.moc"
 

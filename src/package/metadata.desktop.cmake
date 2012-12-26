@@ -29,5 +29,4 @@ X-KDE-PluginInfo-Depends=
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
 X-Plasma-DefaultSize=500,300
-X-Plasma-Requires-FileDialog=Unused
-X-Plasma-Requires-LaunchApp=Unused
+

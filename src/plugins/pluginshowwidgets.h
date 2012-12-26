@@ -5,8 +5,6 @@
 
 #include <taskmanager/taskmanager.h>
 
-class WorkFlow;
-
 namespace KActivities
 {
     class Controller;
@@ -22,7 +20,7 @@ class PluginShowWidgets : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginShowWidgets(WorkFlow *, KActivities::Controller *);
+    explicit PluginShowWidgets(QObject *, Plasma::Containment *, KActivities::Controller *);
     ~PluginShowWidgets();
 
     void execute(QString);
@@ -38,13 +36,12 @@ public slots:
 protected:
     void init();
 
-private:
-
-    WorkFlow *m_plasmoid;
+private:    
+    KActivities::Controller *m_activitiesCtrl;
     Plasma::Containment *m_mainContainment;
     Plasma::Corona *m_corona;
     TaskManager::TaskManager *m_taskMainM;
-    KActivities::Controller *m_activitiesCtrl;
+
 
     QString m_toShowActivityId;
 

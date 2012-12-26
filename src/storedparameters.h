@@ -1,14 +1,11 @@
 #ifndef STOREDPARAMETERS_H
 #define STOREDPARAMETERS_H
 
-#include <KConfigGroup>
+#include <QObject>
 
 class StoredParameters : public QObject
 {
     Q_OBJECT
-
-public:
-
     Q_PROPERTY(bool lockActivities READ lockActivities WRITE setLockActivities NOTIFY lockActivitiesChanged)
     Q_PROPERTY(bool showWindows READ showWindows WRITE setShowWindows NOTIFY showWindowsChanged)
     Q_PROPERTY(int zoomFactor READ zoomFactor WRITE setZoomFactor NOTIFY zoomFactorChanged)
@@ -23,7 +20,6 @@ public:
     Q_PROPERTY(bool toolTipsDelay READ toolTipsDelay WRITE setToolTipsDelay NOTIFY toolTipsDelayChanged)
 
     Q_PROPERTY(QString currentTheme READ currentTheme WRITE setCurrentTheme NOTIFY currentThemeChanged)
-    Q_INVOKABLE void addTheme(QString);
 
     Q_PROPERTY(int animations READ animations WRITE setAnimations NOTIFY animationsChanged)
     Q_PROPERTY(int animationsStep READ animationsStep NOTIFY animationsStepChanged)
@@ -33,6 +29,7 @@ public:
     Q_PROPERTY(int windowsPreviewsOffsetX READ windowsPreviewsOffsetX WRITE setWindowsPreviewsOffsetX NOTIFY windowsPreviewsOffsetXChanged)
     Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
+public:
     /*
     enum AnimationsLevel {
        NONE,
@@ -40,10 +37,10 @@ public:
        FULL
     };*/
 
-   explicit StoredParameters(QObject *parent = 0, KConfigGroup *conf = 0);
+    explicit StoredParameters(QObject *parent = 0);
     ~StoredParameters();
 
-    void configChanged();
+    Q_INVOKABLE void addTheme(QString);
 
     void setLockActivities(bool);
     bool lockActivities() const;
@@ -59,7 +56,6 @@ public:
 
     void setFontRelevance(int);
     int fontRelevance() const;
-
 
     void setFirstRunLiveTour(bool);
     bool firstRunLiveTour() const;
@@ -117,8 +113,6 @@ signals:
     void windowsPreviewsOffsetYChanged(int);
 
 private:
-   KConfigGroup *config;
-
    bool m_lockActivities;
    bool m_showWindows;
    int m_zoomFactor;

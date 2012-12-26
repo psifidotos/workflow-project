@@ -56,8 +56,8 @@ public:
     WorkFlow(QObject *parent, const QVariantList &args);
     ~WorkFlow();
 
+    //QGraphicsWidget *graphicsWidget();
     void init();
-    QGraphicsWidget *graphicsWidget();
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);
@@ -112,8 +112,6 @@ private:
 
     Ui::workflowConfig ui;
 
-    KConfigGroup appConfig;
-
     Plasma::Svg *m_theme;
 
     QString m_activityIcon;
@@ -123,5 +121,7 @@ private:
 
 };
 
+// This is the command that links your applet to the .desktop file
+K_EXPORT_PLASMA_APPLET(workflow, WorkFlow)
 
 #endif

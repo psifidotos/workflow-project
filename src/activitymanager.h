@@ -1,15 +1,9 @@
 #ifndef ACTIVITYMANAGER_H
 #define ACTIVITYMANAGER_H
 
-#include <QObject>
 
-#include <KStandardDirs>
 #include <KActivities/Controller>
-#include <KConfigGroup>
 
-#include <QTimer>
-
-class WorkFlow;
 
 class PluginShowWidgets;
 class PluginCloneActivity;
@@ -18,7 +12,6 @@ class PluginChangeWorkarea;
 namespace KActivities
 {
 class Controller;
-class Info;
 }
 
 namespace Plasma {
@@ -55,7 +48,7 @@ public:
 
 
 
-    void setQMlObject(QObject *,Plasma::Corona *, WorkFlow *);
+    void setQMlObject(QObject *,Plasma::Containment *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -88,9 +81,10 @@ public slots:
 
 private:
 
-    WorkFlow *m_plasmoid;
-    Plasma::Corona *m_corona;
     KActivities::Controller *m_activitiesCtrl;
+    Plasma::Containment *m_mainContainment;
+    Plasma::Corona *m_corona;
+
     QObject *qmlActEngine;
 
     QString activityForDelete;

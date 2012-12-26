@@ -17,22 +17,20 @@
 
 #include <taskmanager/task.h>
 
-#include "../workflow.h"
 
-PluginShowWidgets::PluginShowWidgets(WorkFlow *parent, KActivities::Controller *actControl) :
+PluginShowWidgets::PluginShowWidgets(QObject *parent,Plasma::Containment *containment,KActivities::Controller *actControl) :
     QObject(parent),
-    m_plasmoid(parent),
-    m_activitiesCtrl(actControl)
+    m_activitiesCtrl(actControl),
+    m_mainContainment(containment),
+    m_corona(0)
 {
     m_unlockWidgetsText = "";
     m_widgetsExplorerAwaitingActivity = false;
     m_isOnDashboard = isOnDashboard();
 
-    m_corona = NULL;
-
-    if(m_plasmoid->containment())
-        if(m_plasmoid->containment()->corona())
-            m_corona = m_plasmoid->containment()->corona();
+    if(m_mainContainment)
+        if(m_mainContainment->corona())
+            m_corona = m_mainContainment->corona();
 
 
     m_taskMainM = TaskManager::TaskManager::self();
@@ -107,8 +105,8 @@ void PluginShowWidgets::unlockWidgets()
 bool PluginShowWidgets::isOnDashboard()
 {
     m_isOnDashboard = false;
-    if(m_plasmoid->containment()){
-        KConfigGroup kfg=m_plasmoid->containment()->config();
+    if(m_mainContainment){
+        KConfigGroup kfg=m_mainContainment->config();
         QString inDashboard = kfg.readEntry("plugin","---");
 
         m_isOnDashboard = (inDashboard == "desktopDashboard");

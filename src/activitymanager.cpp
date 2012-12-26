@@ -31,10 +31,11 @@
 #include "plugins/pluginremoveactivity.h"
 #include "plugins/pluginchangeworkarea.h"
 
-
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
+    m_mainContainment(0),
+    m_corona(0),
     m_plShowWidgets(0),
     m_plCloneActivity(0),
     m_plChangeWorkarea(0),
@@ -55,11 +56,16 @@ ActivityManager::~ActivityManager()
         delete m_plChangeWorkarea;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Corona *cor, WorkFlow *pmoid)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment)
 {
     qmlActEngine = obj;
-    m_corona = cor;
-    m_plasmoid = pmoid;
+
+    m_mainContainment = containment;
+
+    if(m_mainContainment)
+        if(m_mainContainment->corona())
+            m_corona = m_mainContainment->corona();
+
 
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
@@ -386,7 +392,7 @@ QString ActivityManager::getWallpaper(QString source)
 void ActivityManager::showWidgetsExplorer(QString actId)
 {
     if(!m_plShowWidgets){
-        m_plShowWidgets = new PluginShowWidgets(m_plasmoid, m_activitiesCtrl);
+        m_plShowWidgets = new PluginShowWidgets(this,m_mainContainment, m_activitiesCtrl);
 
         connect(m_plShowWidgets, SIGNAL(showWidgetsEnded()), this, SLOT(showWidgetsEndedSlot()));
         connect(m_plShowWidgets, SIGNAL(hidePopup()), this, SIGNAL(hidePopup()));
