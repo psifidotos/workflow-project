@@ -91,8 +91,6 @@ Item{
         //////
 
         setCState(source,stat);
-
-        updateWallpaper(source);
     }
 
     function setIcon(cod, val){
@@ -149,13 +147,6 @@ Item{
     }
 
 
-    function updateWallpaper(cod){
-        var pt = activityManager.getWallpaper(cod);
-
-        if (pt !== "")
-            instanceOfWorkAreasList.setWallpaper(cod,pt);
-    }
-
     function updateWallpaperSlot(cod,pt){
         if (pt !== "")
             instanceOfWorkAreasList.setWallpaper(cod,pt);
@@ -163,10 +154,7 @@ Item{
 
 
     function startActivity(cod){
-
         activityManager.start(cod);
-
-        updateWallpaper(cod);
     }
 
     function setName(cod,title){

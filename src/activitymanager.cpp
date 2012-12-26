@@ -187,6 +187,8 @@ void ActivityManager::activityAdded(QString id) {
                                                activity->icon());
     }
 
+    updateWallpaper(id);
+
 }
 
 void ActivityManager::activityRemoved(QString id) {
