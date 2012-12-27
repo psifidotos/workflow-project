@@ -123,23 +123,6 @@ Item{
             }
         }
 
-        Component.onCompleted: allActTasksPanel.changedChildState()
-
-    }
-
-    function changedChildState(){
-        var counter = 0;
-
-        for (var i=0; i<allActTaskL.model.count; ++i)
-        {
-            var elem = allActTaskL.model.get(i);
-
-            if (elem.onAllActivities === true)
-//                &&(elem.onAllDesktops === true))
-                counter++;
-        }
-
-        allActTaskL.shownTasks = counter;
     }
 
     function getList(){
@@ -152,26 +135,10 @@ Item{
 
     function forceState1(){
         allActTaskL.onlyState1 = true;
-/*        for(var i=0; i<allActTaskL.children[0].children.length; i++){
-            var ch = allActTaskL.children[0].children[i];
-
-            if (ch.mustBeShown===true){
-                ch.forceState1 = true;
-            }
-        }*/
-
     }
 
     function unForceState1(){
         allActTaskL.onlyState1 = false;
-/*        for(var i=0; i<allActTaskL.children[0].children.length; i++){
-            var ch = allActTaskL.children[0].children[i];
-
-            if (ch.mustBeShown===true){
-                ch.forceState1 = false;
-            }
-        }*/
-
     }
 
 }

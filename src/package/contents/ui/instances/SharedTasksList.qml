@@ -56,28 +56,21 @@ Item{
                 instanceOfTasksDesktopList.removeTask(cod);
             }
 
-            allActT.changedChildState();
             sharedTasksListTempl.tasksChanged();
         }
     }
 
     function setTaskActivity(cod, val){
-        //     var ind = getIndexFor(cod);
-        //     var obj = model.get(ind);
-        //     if(obj.activities !== val){
-        //     model.setProperty(ind,"activities",val);
         taskManager.setOnlyOnActivity(cod,val);
-        //   }
     }
 
     function setTaskActivityForAnimation(cod,val){
         var ind = getIndexFor(cod);
         if(ind>-1){
             var obj = model.get(ind);
-     //       if(obj.activities !== val){
                 model.setProperty(ind,"activities",val);
                 taskManager.setOnlyOnActivity(cod,val);
-     //       }
+
         }
     }
 
@@ -86,21 +79,16 @@ Item{
         var ind = getIndexFor(cod);
         if(ind>-1){
             var obj = model.get(ind);
-            //    if(obj.desktop !== val){
-            //          model.setProperty(ind,"desktop",val);
             taskManager.setOnDesktop(obj.code,val);
         }
-        //  }
     }
 
     function setTaskDesktopForAnimation(cod, val){
         var ind = getIndexFor(cod);
         if(ind>-1){
             var obj = model.get(ind);
-         //   if(obj.desktop !== val){
                 model.setProperty(ind,"desktop",val);
                 taskManager.setOnDesktop(obj.code,val);
-          //  }
         }
     }
 
@@ -141,8 +129,6 @@ Item{
         else
             fact=activit[0];
 
-        //        console.debug(source+"-"+onalld+"-"+onalla+"-"+classc+"-"+nam+"-"+icn+"-"+indrag+"-"+desk+"-"+fact );
-
         model.append( {  "code": source,
                          "onAllDesktops":onalld,
                          "onAllActivities":onalla,
@@ -156,8 +142,6 @@ Item{
             taskManager.setOnAllDesktops(source,true);
         }
 
-
-        allActT.changedChildState();
         sharedTasksListTempl.tasksChanged();
     }
 
@@ -168,7 +152,6 @@ Item{
             model.remove(ind);  //Be Careful there is a bug when removing the first element (0), it crashed KDE
             instanceOfTasksDesktopList.removeTask(cod);
             sharedTasksListTempl.tasksChanged();
-            allActT.changedChildState();
         }
     }
 
@@ -197,20 +180,16 @@ Item{
                     taskManager.setOnAllDesktops(source,true);
 
         }
-
-        allActT.changedChildState();
         sharedTasksListTempl.tasksChanged();
     }
 
 
     function removeTask(cod){
-        //    taskRemovedIn(cod);
         taskManager.closeTask(cod);
     }
 
     function setCurrentDesktop(desk){
         taskManager.setCurrentDesktop(desk);
-        // mainView.currentDesktop = desk;
     }
 
 

@@ -39,6 +39,13 @@ import org.kde.qtextracomponents 0.1
         property color taskTitleColorH : "#ffffff";
 
 
+        onShownChanged:{
+            if(shown)
+                tasksSList.shownTasks++;
+            else
+                tasksSList.shownTasks--;
+        }
+
         Behavior on height{
             NumberAnimation {
                 duration: 2*storedParameters.animationsStep;

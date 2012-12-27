@@ -118,37 +118,6 @@ Item{
                 }
             }
 
-            Component.onCompleted: {
-                countShownChildren();
-            }
-
-            Connections{
-                target:instanceOfTasksList
-                onTasksChanged:{
-                    if(workList.state === "show")
-                        tasksSList.countShownChildren();
-                }
-            }
-
-            function countShownChildren(){
-                var counter = 0;
-
-                for (var i=0; i<tasksSList.model.count; ++i)
-                {
-                    var elem = tasksSList.model.get(i);
-
-                    if (elem.onAllActivities === false){
-                        if(elem.activities === mainWorkArea.actCode){
-                            if((elem.desktop === mainWorkArea.desktop) ||
-                                    (elem.onAllDesktops === true))
-                                counter++;
-                        }
-                    }
-
-                }
-
-                tasksSList.shownTasks = counter;
-            }
         }
 
         Image{
@@ -252,60 +221,6 @@ Item{
             text: elemTitle
         }
 
-        /*
-        MoreButton{
-            id:workAreaMoreBtn
-            state:tasksSList.isClipped === true ? "more" : "simple"
-
-            width:0.2*borderRectangle.width
-            height:0.5*width
-
-            x:(0.5*borderRectangle.width)+borderRectangle.x - 0.5*width
-            y:borderRectangle.y+borderRectangle.height-height
-            opacity:0
-
-            visible:(tasksSList.hasChildren === true)&&(mainWorkArea.ListView.delayRemove===false)
-
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 3*storedParameters.animationsStep
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onClicked: {
-                    workAreaMoreBtn.onClicked();
-
-                    //mainView.getDynLib().showDesktopDialog(actCode,desktop);
-                    desktopDialog.openD(actCode,desktop);
-                }
-
-                onEntered: {
-                    workAreaMoreBtn.onEntered();
-                    mainWorkArea.showButtons();
-                }
-
-                onExited: {
-                    workAreaMoreBtn.onExited();
-                    mainWorkArea.hideButtons();
-                }
-
-                onReleased: {
-                    workAreaMoreBtn.onReleased();
-                }
-
-                onPressed: {
-                    workAreaMoreBtn.onPressed();
-                }
-
-            }
-
-        }*/
 
     } //normalWorkArea Item
 

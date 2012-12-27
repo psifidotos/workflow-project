@@ -46,6 +46,12 @@ Item{
 
     property bool showPreviewsFound: (showPreviews === true)
 
+    onMustBeShownChanged:{
+        if(mustBeShown)
+            allActTaskL.shownTasks++;
+        else
+            allActTaskL.shownTasks--;
+    }
 
 
     property int rWidth:100
