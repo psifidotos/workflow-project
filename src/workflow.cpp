@@ -107,40 +107,38 @@ void WorkFlow::init()
     configChanged();
 
     declarativeWidget = new Plasma::DeclarativeWidget();
-    declarativeWidget->engine()->rootContext()->setContextProperty("storedParameters",m_storedParams);
-    declarativeWidget->setQmlPath(path);
+    if (declarativeWidget->engine()) {
+        QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
+
+        ctxt->setContextProperty("storedParameters",m_storedParams);
+        ctxt->setContextProperty("activityManager", m_actManager);
+        ctxt->setContextProperty("taskManager", m_taskManager);
+        ctxt->setContextProperty("workareasManager", m_workareasManager);
+
+        declarativeWidget->setQmlPath(path);
+
+        m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
+        QObject *qmlActEng = m_rootQMLObject->findChild<QObject*>("instActivitiesEngine");
+        QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
+
+        if(qmlActEng){
+            connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
+                    this, SLOT(setActivityNameIconSlot(QString,QString)));
+            m_actManager->setQMlObject(qmlActEng, containment());
+            connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
+            connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
+        }
+        if(qmlTaskEng){
+            m_taskManager->setQMlObject(qmlTaskEng);
+        }
+
+        if(containment())
+            m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
+
+    }
 
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
-
-    if (declarativeWidget->engine()) {
-        QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
-        if (ctxt) {
-            ctxt->setContextProperty("activityManager", m_actManager);
-            ctxt->setContextProperty("taskManager", m_taskManager);
-            ctxt->setContextProperty("workareasManager", m_workareasManager);
-
-            m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
-            QObject *qmlActEng = m_rootQMLObject->findChild<QObject*>("instActivitiesEngine");
-            QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
-
-
-            if(qmlActEng){
-                connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
-                        this, SLOT(setActivityNameIconSlot(QString,QString)));
-                m_actManager->setQMlObject(qmlActEng, containment());
-                connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
-                connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
-            }
-            if(qmlTaskEng){
-                m_taskManager->setQMlObject(qmlTaskEng);
-            }
-
-            if(containment())
-                m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
-        }
-
-    }
 
     screensSizeChanged(-1); //set Screen Ratio
 
