@@ -160,7 +160,7 @@ Rectangle {
 
             anchors.right: parent.right
 
-            property int shownActivities: 1
+            property int shownActivities: 0
 
             interactive:false
             model: instanceOfActivitiesList.model
@@ -266,19 +266,6 @@ Rectangle {
         }
     }
 
-    function changedChildState(){
-        var counter = 0;
-
-        for (var i=0; i<stoppedActivitiesList.model.count; ++i)
-        {
-            var elem = stoppedActivitiesList.model.get(i);
-
-            if (elem.CState === "Stopped")
-                counter++;
-        }
-        stoppedActivitiesList.shownActivities = counter;
-        //console.debug("Stopped Activitis:"+counter);
-    }
 
     //return stopped activities listview
     function getList(){

@@ -31,7 +31,12 @@ import "../components"
         property bool containsMouse: (deleteActivityBtn.containsMouse) ||
                                      (playActivity.containsMouse) ||
                                      (backgroundArea.containsMouse)
-
+        onShownChanged:{
+            if(shown)
+                stoppedActivitiesList.shownActivities++;
+            else
+                stoppedActivitiesList.shownActivities--;
+        }
         /*
         onCStateChanged:{
             //stoppedPanel.changedChildState();

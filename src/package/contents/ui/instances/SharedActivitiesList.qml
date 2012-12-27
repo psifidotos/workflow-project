@@ -56,8 +56,6 @@ Item{
             model.setProperty(ind,"CState",val);
 
             instanceOfWorkAreasList.setCState(cod,val);
-            stoppedPanel.changedChildState();
-
         }
     }
 
