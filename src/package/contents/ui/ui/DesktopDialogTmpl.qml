@@ -36,8 +36,8 @@ DialogTemplate2{
     property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
-        target:instanceOfTasksDesktopList
-        onSizeWasChanged:{
+        target:instanceOfTasksDesktopList.model
+        onCountChanged:{
             deskDialog.initInterface();
         }
     }

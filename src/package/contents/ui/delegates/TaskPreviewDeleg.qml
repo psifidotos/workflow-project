@@ -24,7 +24,8 @@ Item{
     property variant dTypes:["allActivitiesTasks",
         "DesktopDialog",
         "CalibrationDialog"]
-    property string dialogType: dTypes[0]
+
+    property string dialogType
 
     property bool forceState1:false
     property bool forcedState1InDialog:false
@@ -40,17 +41,18 @@ Item{
                                  (mustBeShown === true)&&
                                  (forceState1 === false))
 
-
     //     property bool showPreviewsFound: ((showPreviews === true) &&
     //                                       (previewRect.ratio > 0))
 
     property bool showPreviewsFound: (showPreviews === true)
 
     onMustBeShownChanged:{
-        if(mustBeShown)
-            allActTaskL.shownTasks++;
-        else
-            allActTaskL.shownTasks--;
+//        if(dialogType === dTypes[0]){
+            if(mustBeShown)
+                allActTaskL.shownTasks++;
+            else
+                allActTaskL.shownTasks--;
+  //      }
     }
 
 

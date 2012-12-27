@@ -10,8 +10,6 @@ Item{
 
     property variant model: TasksDesktopList{}
 
-    signal sizeWasChanged;
-
     function loadDesktop(activ,desk){
         model.clear();
 
@@ -53,10 +51,9 @@ Item{
 
     function removeTask(cod){
         var ind = getIndexFor(cod);
-        if (ind>-1){
+        if (ind>-1)
             model.remove(ind);
-            stasksDesktopList.sizeWasChanged();
-        }
+
     }
 
     function getIndexFor(cod){
