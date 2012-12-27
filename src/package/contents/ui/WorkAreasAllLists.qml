@@ -109,9 +109,6 @@ Item{
                 delegate: ActivityDeleg{}
                 property int shownActivities: 0
 
-                Component.onCompleted: {
-                    allwlists.updateShowActivities();
-                }
             }
         }
     }//Flickable scrolling
@@ -164,18 +161,6 @@ Item{
         return activitiesList;
     }
 
-    function updateShowActivities(){
-        var counter = 0;
-
-        for (var i=0; i<activitiesList.model.count; ++i)
-        {
-            var elem = activitiesList.model.get(i);
-
-            if (elem.CState === "Running")
-                counter++;
-        }
-        activitiesList.shownActivities = counter;
-    }
 
     function getActivityColumn(cd){
         for (var i=0; i<allareas.children[0].children.length; ++i)

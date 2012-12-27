@@ -56,8 +56,6 @@ Item{
             model.setProperty(ind,"CState",val);
 
             instanceOfWorkAreasList.setCState(cod,val);
-
-            allWorkareas.updateShowActivities();
             stoppedPanel.changedChildState();
 
         }
@@ -127,7 +125,6 @@ Item{
             workareasManager.removeActivity(cod);
 
             instanceOfWorkAreasList.removeActivity(cod);
-            allWorkareas.updateShowActivities();
         }
 
     }
