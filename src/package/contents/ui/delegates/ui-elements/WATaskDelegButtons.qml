@@ -10,7 +10,7 @@ Item {
     height: taskDeleg1.height
     state: "hide"
 
-    property string status:"nothover"
+   // property string status:"nothover"
     property int buttonsSize: 1.55*taskTitleRec.height
     property int buttonsSpace: -buttonsSize/8
 
@@ -21,7 +21,10 @@ Item {
 
     y:-buttonsSize/6
 
-    signal changedStatus();
+    property bool containsMouse: closeBtnMouseArea.containsMouse ||
+                                 placeStateBtnMouseArea.containsMouse
+
+    property bool shown:containsMouse || taskDeleg1.containsMouse
 
     CloseWindowButton{
         id:closeBtn
@@ -37,16 +40,10 @@ Item {
 
             onEntered: {
                 closeBtn.onEntered();
-                buttonsArea.state = "show";
-                buttonsArea.status = "hover";
-                buttonsArea.changedStatus();
             }
 
             onExited: {
                 closeBtn.onExited();
-                buttonsArea.state = "hide";
-                buttonsArea.status = "nothoverred";
-                buttonsArea.changedStatus();
             }
 
             onReleased: {
@@ -104,16 +101,10 @@ Item {
 
             onEntered: {
                 placeStateBtn.onEntered();
-                buttonsArea.state = "show";
-                buttonsArea.status = "hover";
-                buttonsArea.changedStatus();
             }
 
             onExited: {
                 placeStateBtn.onExited();
-                buttonsArea.state = "hide";
-                buttonsArea.status = "nothoverred";
-                buttonsArea.changedStatus();
             }
 
             onPressAndHold: {
@@ -167,26 +158,21 @@ Item {
     states: [
         State {
             name: "show"
+            when: shown
 
             PropertyChanges {
                 target: buttonsArea
-
                 opacityClose: 1
-                //      xClose: width - buttonsSize
                 opacityWSt: 1
-                //      xWSt: width - 2*buttonsSize - buttonsSpace
             }
         },
         State {
             name: "hide"
+            when: !shown
             PropertyChanges {
                 target: buttonsArea
-
                 opacityClose: 0
-                //   xClose: 0
                 opacityWSt: 0
-                //  xWSt: 0
-
             }
         }
     ]
