@@ -11,6 +11,7 @@ Item {
 
     property string status:"nothover"
 
+
     signal changedStatus();
 
     property alias opacityClose: closeBtn.opacity
@@ -21,6 +22,8 @@ Item {
     property int buttonsSize
     property int buttonsSpace: -buttonsSize/8
 
+    property bool containsMouse: closeBtn.containsMouse ||
+                                 placeStateBtn.containsMouse
 
     CloseWindowButton{
         id:closeBtn
@@ -66,6 +69,43 @@ Item {
         allDesks: onAllDesktops || 0 ? true : false
         allActiv: onAllActivities || 0 ? true : false
 
+        onEntered: {
+            buttonsArea.state = "show";
+            buttonsArea.status = "hover"
+            changedStatus();
+        }
+
+        onExited: {
+            buttonsArea.state = "hide";
+            buttonsArea.status = "nothover"
+            changedStatus();
+        }
+
+        onPressAndHold:{
+            //if (placeStateBtn.state === "allDesktops"){
+            //    toAllDesktopsAnimation();
+            // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
+
+            placeStateBtn.previousState();
+            placeStateBtn.informState();
+            //    }
+            //  }
+
+            toDesktopAnimation();
+
+        }
+
+        onClicked: {
+            //Animation must start before changing state
+            toAllDesktopsAnimation();
+
+            placeStateBtn.nextState();
+            placeStateBtn.informState();
+
+            toDesktopAnimation();
+
+        }
+
         function informState(){
             if (placeStateBtn.state === "one"){
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"oneDesktop");
@@ -78,90 +118,33 @@ Item {
                 instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allActivities");
         }
 
-        MouseArea {
-            id:placeStateBtnMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            z:4
+        function toDesktopAnimation(){
+            if (placeStateBtn.state !== "everywhere"){
+                if(storedParameters.animationsStep2!==0){
+                    var x1 = imageTask2.x;
+                    var y1 = imageTask2.y;
 
-            onEntered: {
-                placeStateBtn.onEntered();
-                buttonsArea.state = "show";
-                buttonsArea.status = "hover"
-                changedStatus();
-            }
-
-            onExited: {
-                placeStateBtn.onExited();
-                buttonsArea.state = "hide";
-                buttonsArea.status = "nothover"
-                changedStatus();
-            }
-
-            onPressAndHold:{
-                //if (placeStateBtn.state === "allDesktops"){
-                //    toAllDesktopsAnimation();
-                // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
-
-                placeStateBtn.previousState();
-                placeStateBtn.informState();
-                //    }
-                //  }
-
-                toDesktopAnimation();
-
-            }
-
-            onClicked: {
-                //Animation must start before changing state
-                toAllDesktopsAnimation();
-
-                placeStateBtn.onClicked();
-                placeStateBtn.nextState();
-                placeStateBtn.informState();
-
-                toDesktopAnimation();
-
-            }
-
-            function toDesktopAnimation(){
-                if (placeStateBtn.state !== "everywhere"){
-                    if(storedParameters.animationsStep2!==0){
-                        var x1 = imageTask2.x;
-                        var y1 = imageTask2.y;
-
-                        mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
-                    }
+                    mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
                 }
             }
+        }
 
-            function toAllDesktopsAnimation(){
-                if (placeStateBtn.state === "allDesktops"){
-                    if(storedParameters.animationsStep2!==0){
-                        var x3 = imageTask2.x;
-                        var y3 = imageTask2.y;
+        function toAllDesktopsAnimation(){
+            if (placeStateBtn.state === "allDesktops"){
+                if(storedParameters.animationsStep2!==0){
+                    var x3 = imageTask2.x;
+                    var y3 = imageTask2.y;
 
-                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
-                    }
-
+                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
                 }
+
             }
-
-            onReleased: {
-                placeStateBtn.onReleased();
-            }
-
-            onPressed: {
-                placeStateBtn.onPressed();
-            }
-
-
         }
 
         DToolTip{
             title:i18n("Change Window State")
             mainText: i18n("You can change the window's state, there are three states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
-            target:placeStateBtnMouseArea
+            target:placeStateBtn
             //icon:instanceOfThemeList.icons.RunActivity
         }
 

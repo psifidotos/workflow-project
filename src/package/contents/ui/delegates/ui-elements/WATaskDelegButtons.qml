@@ -10,7 +10,7 @@ Item {
     height: taskDeleg1.height
     state: "hide"
 
-   // property string status:"nothover"
+    // property string status:"nothover"
     property int buttonsSize: 1.55*taskTitleRec.height
     property int buttonsSpace: -buttonsSize/8
 
@@ -22,7 +22,7 @@ Item {
     y:-buttonsSize/6
 
     property bool containsMouse: closeBtn.containsMouse ||
-                                 placeStateBtnMouseArea.containsMouse
+                                 placeStateBtn.containsMouse
 
     property bool shown:containsMouse || taskDeleg1.containsMouse
 
@@ -60,6 +60,33 @@ Item {
         allDesks: onAllDesktops || 0 ? true : false
         allActiv: onAllActivities || 0 ? true : false
 
+        onPressAndHold: {
+            placeStateBtn.previousState();
+            placeStateBtn.informState();
+            instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
+            toEveryWhereAnimation();
+        }
+
+        onClicked: {
+            placeStateBtn.nextState();
+            placeStateBtn.informState();
+
+            toEveryWhereAnimation();
+        }
+
+
+        function toEveryWhereAnimation(){
+            if (placeStateBtn.state === "everywhere"){
+                if(storedParameters.animationsStep2!==0){
+                    var x1 = imageTask.x;
+                    var y1 = imageTask.y;
+
+                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                }
+            }
+        }
+
+
         function informState(){
 
             if (placeStateBtn.state === "one"){
@@ -72,61 +99,10 @@ Item {
                 instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allActivities");
         }
 
-        MouseArea {
-            id:placeStateBtnMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            z:4
-
-            onEntered: {
-                placeStateBtn.onEntered();
-            }
-
-            onExited: {
-                placeStateBtn.onExited();
-            }
-
-            onPressAndHold: {
-                placeStateBtn.previousState();
-                placeStateBtn.informState();
-                instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
-                toEveryWhereAnimation();
-            }
-
-            onClicked: {
-                placeStateBtn.onClicked();
-                placeStateBtn.nextState();
-                placeStateBtn.informState();
-
-                toEveryWhereAnimation();
-            }
-
-            onReleased: {
-                placeStateBtn.onReleased();
-            }
-
-            onPressed: {
-                placeStateBtn.onPressed();
-            }
-
-            function toEveryWhereAnimation(){
-                if (placeStateBtn.state === "everywhere"){
-                    if(storedParameters.animationsStep2!==0){
-                        var x1 = imageTask.x;
-                        var y1 = imageTask.y;
-
-                        mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
-                    }
-                }
-            }
-
-
-        }
-
         DToolTip{
             title:i18n("Change Window State")
             mainText: i18n("You can change the window's state, there are three states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
-            target:placeStateBtnMouseArea
+            target:placeStateBtn
             //icon:instanceOfThemeList.icons.RunActivity
         }
 

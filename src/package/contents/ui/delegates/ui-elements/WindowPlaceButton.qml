@@ -10,7 +10,17 @@ Item{
     property bool allDesks
     property bool allActiv
 
-    property alias enabled:mouseAr.enabled
+    //property alias enabled:mouseAr.enabled
+
+    property alias containsMouse: winStateBtn.containsMouse
+
+    signal entered;
+    signal clicked;
+    signal exited;
+    signal pressed;
+    signal pressAndHold;
+    signal released;
+
     WindowButton{
         id:winStateBtn
 
@@ -20,9 +30,22 @@ Item{
         imgShadow:"../../Images/buttons/plasma_ui/greyShadow.png"
         imgShadowHov: "../../Images/buttons/plasma_ui/blueShadow.png"
 
+        onEntered: winStateItem.entered();
+        onExited: winStateItem.exited();
+
+        onClicked: {
+            winStateItem.clicked();
+            winStateItem.nextState();
+        }
+
+        onReleased: winStateItem.released();
+        onPressed: winStateItem.pressed();
+        onPressAndHold: winStateItem.pressAndHold();
     }
 
     state:"one"
+
+
 
     states: [
         State {
@@ -61,36 +84,6 @@ Item{
 
     ]
 
-    MouseArea {
-        id:mouseAr
-        anchors.fill: parent
-        hoverEnabled: true
-        enabled: true
-
-        onEntered: {
-            winStateItem.onEntered();
-        }
-
-        onExited: {
-            winStateItem.onExited();
-        }
-
-        onClicked: {
-            winStateItem.onClicked();
-            winStateItem.nextState();
-        }
-
-        onReleased: {
-            winStateItem.onReleased();
-        }
-
-        onPressed: {
-            winStateItem.onPressed();
-        }
-
-
-    }
-
     function nextState(){
         if (winStateItem.state === "one")
             winStateItem.state = "allDesktops";
@@ -108,26 +101,6 @@ Item{
             winStateItem.state = "one";
         else if (winStateItem.state === "everywhere")
             winStateItem.state = "allDesktops";
-    }
-
-    function onEntered(){
-        winStateBtn.onEntered();
-    }
-
-    function onExited(){
-        winStateBtn.onExited();
-    }
-
-    function onPressed(){
-        winStateBtn.onPressed();
-    }
-
-    function onClicked(){
-        winStateBtn.onClicked();
-    }
-
-    function onReleased(){
-        winStateBtn.onReleased();
     }
 
 }

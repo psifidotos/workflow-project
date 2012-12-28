@@ -46,6 +46,9 @@ Item{
 
     property bool showPreviewsFound: (showPreviews === true)
 
+  //  property bool containsMouse:
+
+
     onMustBeShownChanged:{
         if(mustBeShown)
             allActTaskL.shownTasks++;
