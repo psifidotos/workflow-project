@@ -202,8 +202,6 @@ Item{
     function onClicked(mouse) {
         // mainWorkArea.clickedWorkarea();
         if(taskDeleg1.isPressed !== true){
-            taskDeleg1.onExited();
-            mainWorkArea.hideButtons();
             instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
         }
 
@@ -211,9 +209,6 @@ Item{
 
     function onPressed(x1,y1,obj) {
         taskDeleg1.isPressed = true;
-        taskDeleg1.state = "def";
-        tasksBtns.state = "hide";
-        workAreaButtons.state="hide";
 
         var nCor = obj.mapToItem(mainView,x1,y1);
 
