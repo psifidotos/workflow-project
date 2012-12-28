@@ -29,46 +29,28 @@ Item {
         height: width
         y:0
 
-        MouseArea {
-            id:closeBtnMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                closeBtn.onEntered();
-                buttonsArea.state = "show"
-                buttonsArea.status = "hover"
-                changedStatus();
-            }
-
-            onExited: {
-                closeBtn.onExited();
-                buttonsArea.state = "hide"
-                buttonsArea.status = "nothover"
-                changedStatus();
-            }
-
-            onReleased: {
-                closeBtn.onReleased();
-            }
-
-            onPressed: {
-                closeBtn.onPressed();
-            }
-
-            onClicked: {
-                closeBtn.onClicked();
-                instanceOfTasksList.removeTask(taskDeleg2.ccode);
-                allActT.changedChildState();
-            }
-
-
+        onEntered: {
+            buttonsArea.state = "show"
+            buttonsArea.status = "hover"
+            changedStatus();
         }
+
+        onExited: {
+            buttonsArea.state = "hide"
+            buttonsArea.status = "nothover"
+            changedStatus();
+        }
+
+        onClicked: {
+            instanceOfTasksList.removeTask(taskDeleg2.ccode);
+            allActT.changedChildState();
+        }
+
 
         DToolTip{
             title:i18n("Close Window")
             mainText: i18n("You can close this window if you want to.")
-            target:closeBtnMouseArea
+            target:closeBtn
             //icon:instanceOfThemeList.icons.RunActivity
         }
 
@@ -118,8 +100,8 @@ Item {
 
             onPressAndHold:{
                 //if (placeStateBtn.state === "allDesktops"){
-            //    toAllDesktopsAnimation();
-               // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
+                //    toAllDesktopsAnimation();
+                // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
 
                 placeStateBtn.previousState();
                 placeStateBtn.informState();

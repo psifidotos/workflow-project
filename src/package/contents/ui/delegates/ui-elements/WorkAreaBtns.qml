@@ -34,49 +34,26 @@ Item{
             }
         }
 
-        MouseArea {
-            id:deleteWorkareaBtnMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
+        onClicked: {
+            instanceOfWorkAreasList.removeWorkArea(mainWorkArea.actCode,mainWorkArea.desktop);
+        }
 
-            onClicked: {
-                deleteWorkareaBtn.onClicked();
+        onEntered: {
+            mainWorkArea.showButtons();
+            deleteWorkareaBtn.scale = workAreaButtons.curBtnScale;
+        }
 
-                instanceOfWorkAreasList.removeWorkArea(mainWorkArea.actCode,mainWorkArea.desktop);                
-            }
-
-            onEntered: {
-                deleteWorkareaBtn.onEntered();
-
-                mainWorkArea.showButtons();
-                deleteWorkareaBtn.scale = workAreaButtons.curBtnScale;
-            }
-
-            onExited: {
-                deleteWorkareaBtn.onExited();
-
-                mainWorkArea.hideButtons();
-                deleteWorkareaBtn.scale = 1;
-            }
-
-            onReleased: {
-                deleteWorkareaBtn.onReleased();
-            }
-
-            onPressed: {
-                deleteWorkareaBtn.onPressed();
-            }
-
+        onExited: {
+            mainWorkArea.hideButtons();
+            deleteWorkareaBtn.scale = 1;
         }
 
         DToolTip{
             title:i18n("Delete Workarea")
             mainText: i18n("You can delete this WorkArea if you want to.")
-            target:deleteWorkareaBtnMouseArea
+            target:deleteWorkareaBtn
             //icon:instanceOfThemeList.icons.RunActivity
         }
-
-
     }
 
 

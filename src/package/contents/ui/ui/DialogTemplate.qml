@@ -200,34 +200,10 @@ Rectangle{
             anchors.rightMargin: 35
             anchors.topMargin: 36
 
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
 
-                onEntered: {
-                    closeBtnGlb.onEntered();
-                }
-
-                onExited: {
-                    closeBtnGlb.onExited();
-                }
-
-                onReleased: {
-                    closeBtnGlb.onReleased();
-                }
-
-                onPressed: {
-                    closeBtnGlb.onPressed();
-                }
-
-                onClicked: {
-                    closeBtnGlb.onClicked();
-
-                    templDialog.clickedCancel();
-                    templDialog.close();
-                }
-
-
+            onClicked: {
+                templDialog.clickedCancel();
+                templDialog.close();
             }
 
         }

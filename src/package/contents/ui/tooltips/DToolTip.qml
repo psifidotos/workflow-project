@@ -151,7 +151,7 @@ PlasmaCore.FrameSvgItem{
     }
 
     Component.onCompleted: {
-        target.hoverEnabled = true;
+//        target.hoverEnabled = true;
     }
 
     Connections{

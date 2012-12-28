@@ -21,7 +21,7 @@ Item {
 
     y:-buttonsSize/6
 
-    property bool containsMouse: closeBtnMouseArea.containsMouse ||
+    property bool containsMouse: closeBtn.containsMouse ||
                                  placeStateBtnMouseArea.containsMouse
 
     property bool shown:containsMouse || taskDeleg1.containsMouse
@@ -33,38 +33,17 @@ Item {
         height: width
         x: buttonsArea.width - buttonsSize
 
-        MouseArea {
-            id:closeBtnMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
 
-            onEntered: {
-                closeBtn.onEntered();
-            }
-
-            onExited: {
-                closeBtn.onExited();
-            }
-
-            onReleased: {
-                closeBtn.onReleased();
-            }
-
-            onPressed: {
-                closeBtn.onPressed();
-            }
-
-            onClicked: {
-                closeBtn.onClicked();
-                instanceOfTasksList.removeTask(taskDeleg1.ccode);
-            }
-
+        onClicked: {
+            instanceOfTasksList.removeTask(taskDeleg1.ccode);
         }
+
+
 
         DToolTip{
             title:i18n("Close Window")
             mainText: i18n("You can close this window if you want to.")
-            target:closeBtnMouseArea
+            target:closeBtn
             //icon:instanceOfThemeList.icons.RunActivity
         }
 

@@ -28,6 +28,14 @@ Item{
     property alias borderColorPreC : mainBtnGrad.borderCPre
     property alias borderColorHovC: mainBtnGrad.borderCHov
 
+    property bool containsMouse:buttonArea.containsMouse
+
+    signal entered;
+    signal clicked;
+    signal exited;
+    signal pressed;
+    signal pressAndHold;
+    signal released;
 
     Image{
         id:backShadow
@@ -176,71 +184,62 @@ Item{
     ]
 
     MouseArea {
+        id:buttonArea
+
         anchors.fill: parent
         hoverEnabled: true
 
         onEntered: {
-            mainBtn.onEntered();
+            if(mainBtn.state !== "pressed")
+                mainBtn.state="hovered"
+
+            mainBtn.entered();
         }
 
         onExited: {
-            mainBtn.onExited();
+            if(mainBtn.state !== "pressed")
+                mainBtn.state="simple";
+
+            mainBtn.exited();
         }
 
         onPressed: {
-            mainBtn.onPressed();
+            mainBtn.state="pressed";
+            mainBtn.pressed();
+        }
+
+        onPressAndHold:{
+            mainBtn.pressAndHold();
         }
 
         onReleased: {
-            mainBtn.onReleased();
+            mainBtn.state="simple";
+            mainBtn.released();
         }
 
         onClicked: {
-            mainBtn.onClicked();
+            mainBtn.state="pressed";
+
+
+            if (storedParameters.animationsStep2 !== 0){
+                var x1 = mainIcon.x;
+                var y1 = mainIcon.y;
+
+                var crd = mainIcon.mapToItem(mainView,x1, y1);
+
+                mainView.getDynLib().animateIcon(mainIcon.source,
+                                                 mainIcon.height/mainIcon.width,
+                                                 mainIcon.width,
+                                                 crd);
+
+            }
+            mainBtn.state="hovered";
+
+            mainBtn.clicked();
         }
 
 
     }
-
-    function onEntered(){
-        if(mainBtn.state !== "pressed")
-            mainBtn.state="hovered"
-    }
-
-    function onExited(){
-        if(mainBtn.state !== "pressed")
-            mainBtn.state="simple";
-    }
-
-    function onPressed(){
-        mainBtn.state="pressed"
-    }
-
-    function onReleased(){
-        mainBtn.state="simple"
-    }
-
-    function onClicked(){
-
-        mainBtn.state="pressed";
-
-
-        if (storedParameters.animationsStep2 !== 0){
-            var x1 = mainIcon.x;
-            var y1 = mainIcon.y;
-
-            var crd = mainIcon.mapToItem(mainView,x1, y1);
-
-            mainView.getDynLib().animateIcon(mainIcon.source,
-                                             mainIcon.height/mainIcon.width,
-                                             mainIcon.width,
-                                             crd);
-
-        }
-        mainBtn.state="hovered";
-
-    }
-
 
 }
 

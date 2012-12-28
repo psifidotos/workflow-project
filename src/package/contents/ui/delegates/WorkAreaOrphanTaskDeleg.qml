@@ -36,7 +36,7 @@ Item{
     property alias taskTitleRecCol: taskOrTitleRec.color
 
     property bool containsMouse: taskOrTitleRecMouseArea.containsMouse ||
-                                 closeButtonArea.containsMouse
+                                 closeBtnOr.containsMouse
 
 
     Behavior on height{
@@ -119,33 +119,9 @@ Item{
 
         y: - height/4
 
-        MouseArea {
-            id:closeButtonArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                closeBtnOr.onEntered();
-            }
-
-            onExited: {
-                closeBtnOr.onExited();
-            }
-
-            onReleased: {
-                closeBtnOr.onReleased();
-            }
-
-            onPressed: {
-                closeBtnOr.onPressed();
-            }
-
-            onClicked: {
-                closeBtnOr.onClicked();
-                instanceOfTasksList.removeTask(code);
-                orphansList.changedOrphansWindows();
-            }
-
+        onClicked: {
+            instanceOfTasksList.removeTask(code);
+            orphansList.changedOrphansWindows();
         }
 
     }
