@@ -47,12 +47,10 @@ Item{
     property bool showPreviewsFound: (showPreviews === true)
 
     onMustBeShownChanged:{
-//        if(dialogType === dTypes[0]){
-            if(mustBeShown)
-                allActTaskL.shownTasks++;
-            else
-                allActTaskL.shownTasks--;
-  //      }
+        if(mustBeShown)
+            allActTaskL.shownTasks++;
+        else
+            allActTaskL.shownTasks--;
     }
 
 
