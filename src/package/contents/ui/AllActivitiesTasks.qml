@@ -120,6 +120,33 @@ Item{
                 scrollingView: allActTaskL // just to skip the warnings
                 centralListView: allActTaskL // just to skip the warnings
                 //Not Used//
+
+                onMustBeShownChanged:{
+                    if(mustBeShown)
+                        allActTaskL.shownTasks++;
+                    else
+                        allActTaskL.shownTasks--;
+                }
+
+            }
+
+            Connections{
+                target:allActTaskL.model
+                onCountChanged:allActTaskL.countTasks();
+            }
+
+            function countTasks(){
+                var counter = 0;
+
+                for (var i=0; i<model.count; ++i)
+                {
+                    var elem = model.get(i);
+
+                    if (elem.onAllActivities === true)
+                        counter++;
+                }
+
+                shownTasks = counter;
             }
         }
 

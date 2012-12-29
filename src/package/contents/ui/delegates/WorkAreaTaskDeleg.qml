@@ -42,13 +42,6 @@ Item{
                                  tasksBtns.containsMouse
 
 
-    onShownChanged:{
-        if(shown)
-            tasksSList.shownTasks++;
-        else
-            tasksSList.shownTasks--;
-    }
-
     Behavior on height{
         NumberAnimation {
             duration: 2*storedParameters.animationsStep;

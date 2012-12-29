@@ -48,15 +48,6 @@ Item{
 
   //  property bool containsMouse:
 
-
-    onMustBeShownChanged:{
-        if(mustBeShown)
-            allActTaskL.shownTasks++;
-        else
-            allActTaskL.shownTasks--;
-    }
-
-
     property int rWidth:100
     property int rHeight:100
 

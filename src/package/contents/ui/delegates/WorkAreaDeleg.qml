@@ -101,6 +101,13 @@ Item{
 
             delegate:WorkAreaTaskDeleg{
                 rHeight:Math.max(tasksSList.height/6,18)
+
+                onShownChanged:{
+                    if(shown)
+                        tasksSList.shownTasks++;
+                    else
+                        tasksSList.shownTasks--;
+                }
             }
 
 
@@ -116,6 +123,29 @@ Item{
                     duration: 3*storedParameters.animationsStep
                     easing.type: Easing.InOutQuad;
                 }
+            }
+
+            Connections{
+                target:tasksSList.model
+                onCountChanged: tasksSList.countTasks();
+            }
+
+            function countTasks(){
+                var counter = 0;
+
+                for (var i=0; i<model.count; ++i)
+                {
+                    var elem = model.get(i);
+
+                    if(elem.activities === mainWorkArea.actCode){
+                        if((elem.onAllDesktops === true) ||
+                                (elem.desktop === mainWorkArea.desktop))
+                            counter++;
+                    }
+
+                }
+
+                shownTasks = counter;
             }
 
         }

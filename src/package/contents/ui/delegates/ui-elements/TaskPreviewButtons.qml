@@ -46,7 +46,6 @@ Item {
 
         onClicked: {
             instanceOfTasksList.removeTask(taskDeleg2.ccode);
-            allActT.changedChildState();
         }
 
 
