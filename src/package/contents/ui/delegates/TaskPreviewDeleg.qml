@@ -36,7 +36,8 @@ Item{
                                    ( (onAllActivities === true )&&(isPressed === false) ):
                                    (code !== 'DontShow')&&(isPressed === false)
 
-    property bool showPreviews: ((storedParameters.windowsPreviews === true)&&
+    property bool showPreviews: ((storedParameters.showWindows === true)&&
+                                 (storedParameters.windowsPreviews === true)&&
                                  (sessionParameters.effectsSystemEnabled)&&
                                  (mustBeShown === true)&&
                                  (forceState1 === false))

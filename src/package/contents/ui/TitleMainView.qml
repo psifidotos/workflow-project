@@ -146,12 +146,6 @@ Rectangle{
                 checkable:true
                 checked:storedParameters.showWindows
 
-                onCheckedChanged:{
-
-                    if(!checked)
-                        effectsToolBtn.checked = false;
-                }
-
                 MouseArea{
                     id:windowsToolBtnMouseArea
                     anchors.fill:parent
@@ -213,8 +207,7 @@ Rectangle{
                 height: oxygenTitle.buttonHeight
 
                 checkable:true
-                checked:((storedParameters.windowsPreviews)&&
-                         (sessionParameters.effectsSystemEnabled))
+                checked:storedParameters.windowsPreviews
 
                 enabled:((storedParameters.showWindows)&&
                          (sessionParameters.effectsSystemEnabled))

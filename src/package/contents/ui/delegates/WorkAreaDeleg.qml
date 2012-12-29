@@ -102,12 +102,7 @@ Item{
             delegate:WorkAreaTaskDeleg{
                 rHeight:Math.max(tasksSList.height/6,18)
 
-                onShownChanged:{
-                    if(shown)
-                        tasksSList.shownTasks++;
-                    else
-                        tasksSList.shownTasks--;
-                }
+                onShownChanged:tasksSList.countTasks();
             }
 
 
