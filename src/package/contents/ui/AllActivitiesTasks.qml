@@ -121,13 +121,7 @@ Item{
                 centralListView: allActTaskL // just to skip the warnings
                 //Not Used//
 
-                onMustBeShownChanged:{
-                    if(mustBeShown)
-                        allActTaskL.shownTasks++;
-                    else
-                        allActTaskL.shownTasks--;
-                }
-
+                onMustBeShownChanged:allActTaskL.countTasks();
             }
 
             Connections{
