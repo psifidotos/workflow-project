@@ -53,6 +53,9 @@ public:
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
+    QString getCurrentActivityName();
+    QString getCurrentActivityIcon();
+
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);

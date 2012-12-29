@@ -260,5 +260,19 @@ QList<QString> *StoredParameters::themesList()
 }
 
 
+void StoredParameters::setUseActivityIcon(bool useActIcon)
+{
+    if(m_useActivityIcon != useActIcon){
+        m_useActivityIcon = useActIcon;
+        emit useActivityIconChanged (m_useActivityIcon);
+        //emit configNeedsSaving();
+    }
+}
+
+bool StoredParameters::useActivityIcon() const
+{
+    return m_useActivityIcon;
+}
+
 
 #include "storedparameters.moc"

@@ -118,6 +118,7 @@ private:
     QString m_activityName;
 
     void paintIcon();
+    void initTooltip();
 
 };
 

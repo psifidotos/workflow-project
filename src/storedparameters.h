@@ -29,6 +29,7 @@ class StoredParameters : public QObject
     Q_PROPERTY(int windowsPreviewsOffsetX READ windowsPreviewsOffsetX WRITE setWindowsPreviewsOffsetX NOTIFY windowsPreviewsOffsetXChanged)
     Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
+    Q_PROPERTY(bool useActivityIcon READ useActivityIcon WRITE setUseActivityIcon NOTIFY useActivityIconChanged)
 public:
     /*
     enum AnimationsLevel {
@@ -90,6 +91,9 @@ public:
     void setWindowsPreviewsOffsetY(int);
     int windowsPreviewsOffsetY() const;
 
+    void setUseActivityIcon(bool);
+    bool useActivityIcon() const;
+
 signals:
     void configNeedsSaving();
 
@@ -112,6 +116,8 @@ signals:
     void windowsPreviewsOffsetXChanged(int);
     void windowsPreviewsOffsetYChanged(int);
 
+    void useActivityIconChanged(bool);
+
 private:
    bool m_lockActivities;
    bool m_showWindows;
@@ -133,6 +139,8 @@ private:
    bool m_windowsPreviews; //Windows previews enabled or not
    int m_windowsPreviewsOffsetX; // X Offset for Windows previews
    int m_windowsPreviewsOffsetY; // Y Offset for Windows previews
+
+   bool m_useActivityIcon;
 
    void updateAnimationsSteps();
 };

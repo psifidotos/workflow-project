@@ -132,6 +132,9 @@ void ActivityManager::copyWorkareasSlot(QString from,QString to)
 
 void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
 {
+    Q_UNUSED(actId);
+    Q_UNUSED(desktop);
+
     if (m_plChangeWorkarea){
         delete m_plChangeWorkarea;
         m_plChangeWorkarea = 0;
@@ -270,6 +273,18 @@ void ActivityManager::activityStateChanged()
 
     updateWallpaper(id);
 
+}
+
+QString ActivityManager::getCurrentActivityName()
+{
+    KActivities::Info *activity = new KActivities::Info(m_activitiesCtrl->currentActivity(), this);
+    return activity->name();
+}
+
+QString ActivityManager::getCurrentActivityIcon()
+{
+    KActivities::Info *activity = new KActivities::Info(m_activitiesCtrl->currentActivity(), this);
+    return activity->icon();
 }
 
 

@@ -42,6 +42,8 @@
 #include <Plasma/Containment>
 #include <Plasma/PackageStructure>
 #include <Plasma/Package>
+#include <Plasma/ToolTipManager>
+#include <Plasma/ToolTipContent>
 #include <Plasma/Corona>
 
 
@@ -162,6 +164,18 @@ void WorkFlow::init()
     connect(m_actManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
     setGraphicsWidget(m_mainWidget);
+
+    Plasma::ToolTipManager::self()->registerWidget(this);
+}
+
+
+void WorkFlow::initTooltip()
+{
+    Plasma::ToolTipContent data(i18n("WorkFlow Plasmoid"),
+                                i18n("Activities, Workareas, Windows organize your "
+                                     "full workflow through the KDE technologies"),
+                                popupIcon().pixmap(IconSize(KIconLoader::Desktop)));
+    Plasma::ToolTipManager::self()->setContent(this, data);
 }
 
 void WorkFlow::hidePopupDialogSlot()
@@ -234,6 +248,8 @@ void WorkFlow::popupEvent(bool show)
 //this id is used for the window previews
 void WorkFlow::activeWindowChanged(WId w)
 {
+    Q_UNUSED(w);
+
     if( m_isOnDashboard && view() && containment()){
         if(view()->effectiveWinId() != m_taskManager->getMainWindowId()){
             this->setMainWindowId();
@@ -254,11 +270,16 @@ void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
 {
     bool updateIcon = false;
 
-    if(m_activityIcon != icon){
+    QString tempIcon = icon;
+
+    if(!m_storedParams->useActivityIcon())
+        tempIcon = "preferences-activities";
+
+    if(m_activityIcon != tempIcon){
         if(icon == "")
             m_activityIcon = "plasma";
         else
-            m_activityIcon = icon;
+            m_activityIcon = tempIcon;
         updateIcon = true;
     }
     if(m_activityName != name){
@@ -286,6 +307,8 @@ void WorkFlow::configDialogFinished()
         m_taskManager->showDashboard();
 }
 
+
+
 void WorkFlow::configChanged()
 {
     KConfigGroup cg = config();
@@ -308,12 +331,15 @@ void WorkFlow::configChanged()
 
     m_storedParams->setCurrentTheme(cg.readEntry("CurrentTheme", "Oxygen"));
 
+    m_storedParams->setUseActivityIcon(cg.readEntry("UseCurrentActivityIcon", false));
+
     /*
     ui.animationsLevelSlider->setValue(m_storedParams->animations());
     ui.hideOnClickCheckBox->setChecked(m_storedParams->hideOnClick());
     ui.themesCmb->setCurrentIndex(m_storedParams->themesList()->indexOf(m_storedParams->currentTheme()));
     ui.tooltipsSpinBox->setValue(m_storedParams->toolTipsDelay());*/
 }
+
 
 void WorkFlow::configAccepted()
 {
@@ -323,6 +349,9 @@ void WorkFlow::configAccepted()
     m_storedParams->setHideOnClick(ui.hideOnClickCheckBox->isChecked());
     m_storedParams->setToolTipsDelay(ui.tooltipsSpinBox->value());
     m_storedParams->setCurrentTheme(ui.themesCmb->currentText());
+
+    m_storedParams->setUseActivityIcon(ui.currentActivityIconCheckBox->isChecked());
+    setActivityNameIconSlot(m_actManager->getCurrentActivityName(), m_actManager->getCurrentActivityIcon());
 
     cg.writeEntry("LockActivities",m_storedParams->lockActivities());
     cg.writeEntry("ShowWindows",m_storedParams->showWindows());
@@ -338,6 +367,7 @@ void WorkFlow::configAccepted()
     cg.writeEntry("HideOnClick",m_storedParams->hideOnClick());
     cg.writeEntry("ToolTipsDelay",m_storedParams->toolTipsDelay());
     cg.writeEntry("CurrentTheme",m_storedParams->currentTheme());
+    cg.writeEntry("UseCurrentActivityIcon",m_storedParams->useActivityIcon());
 
     emit configNeedsSaving();
 }
@@ -376,10 +406,13 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
     if(m_isOnDashboard)
         ui.hideOnClickCheckBox->setEnabled(false);
 
+    ui.currentActivityIconCheckBox->setChecked(m_storedParams->useActivityIcon());
+
     connect(ui.themesCmb, SIGNAL(activated(int)), parent, SLOT(settingsModified()));
     connect(ui.hideOnClickCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
     connect(ui.tooltipsSpinBox, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
     connect(ui.animationsLevelSlider, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
+    connect(ui.currentActivityIconCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
 
     //  parent->setModal(true);
 
@@ -423,6 +456,7 @@ void WorkFlow::paintIcon()
     m_theme->resize();
     p.end(); */
     setPopupIcon(icon);
+    initTooltip();
 }
 
 #include "workflow.moc"
