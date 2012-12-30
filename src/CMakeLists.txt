@@ -1,5 +1,9 @@
 # We add our source code here
-set(workflow_SRCS workflow.cpp
+set(workflow_SRCS
+                  models/listitem.cpp
+                  models/listmodel.cpp
+                  models/activityitem.cpp
+                  workflow.cpp
                   storedparameters.cpp
                   activitymanager.cpp
                   ptaskmanager.cpp
@@ -10,6 +14,7 @@ set(workflow_SRCS workflow.cpp
                   plugins/pluginremoveactivity.cpp
                   plugins/pluginchangeworkarea.cpp
                   plugins/pluginaddactivity.cpp
+
 )
 
 # Now make sure all files get to the right place

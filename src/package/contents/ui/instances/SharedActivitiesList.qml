@@ -6,7 +6,8 @@ import "../models"
 
 Item{
 
-    property variant model: ActivitiesModel1{}
+    //property variant model: ActivitiesModel1{}
+    property variant model: activitiesModelNew
 
     //is used when cloning an activity to temporary
     //disable previews
@@ -64,11 +65,11 @@ Item{
         if (stat === "")
             stat = "Running";
 
-        model.append( {  "code": source,
+     /*   model.append( {  "code": source,
                          "Current":cur,
                          "Name":title,
                          "Icon":icon,
-                         "CState":stat} );
+                         "CState":stat} );*/
 
         if(workareasManager.activityExists(source)){
             var nms = workareasManager.getWorkAreaNames(source);
@@ -228,12 +229,12 @@ Item{
     function setCurrentSignal(cod){
         var ind = getIndexFor(cod);
         if(ind>-1){
-            for(var i=0; i<model.count; ++i){
+  /*          for(var i=0; i<model.count; ++i){
                 model.setProperty(i,"Current",false);
             }
 
 
-            model.setProperty(ind,"Current",true);
+            model.setProperty(ind,"Current",true);*/
 
             instanceOfWorkAreasList.setCurrent(cod);
         }

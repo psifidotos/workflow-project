@@ -46,8 +46,11 @@
 #include <Plasma/ToolTipContent>
 #include <Plasma/Corona>
 
-
 #include <iostream>
+
+#include "models/listmodel.h"
+#include "models/activityitem.h"
+
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
@@ -86,6 +89,8 @@ WorkFlow::~WorkFlow()
         delete m_storedParams;
     if (m_theme)
         delete m_theme;
+    if (m_activitiesModel)
+        delete m_activitiesModel;
 }
 
 void WorkFlow::init()
@@ -112,6 +117,9 @@ void WorkFlow::init()
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
+        m_activitiesModel = new ListModel(new ActivityItem, qApp);
+
+        ctxt->setContextProperty("activitiesModelNew",m_activitiesModel);
         ctxt->setContextProperty("storedParameters",m_storedParams);
         ctxt->setContextProperty("activityManager", m_actManager);
         ctxt->setContextProperty("taskManager", m_taskManager);
@@ -126,7 +134,7 @@ void WorkFlow::init()
         if(qmlActEng){
             connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
                     this, SLOT(setActivityNameIconSlot(QString,QString)));
-            m_actManager->setQMlObject(qmlActEng, containment());
+            m_actManager->setQMlObject(qmlActEng, containment(),m_activitiesModel);
             connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
             connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
         }

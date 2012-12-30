@@ -4,11 +4,12 @@
 
 #include <KActivities/Controller>
 
-
 class PluginShowWidgets;
 class PluginCloneActivity;
 class PluginChangeWorkarea;
 class PluginAddActivity;
+
+class ListModel;
 
 namespace KActivities
 {
@@ -49,7 +50,7 @@ public:
 
 
 
-    void setQMlObject(QObject *,Plasma::Containment *);
+    void setQMlObject(QObject *,Plasma::Containment *, ListModel *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -105,6 +106,7 @@ private:
 
     bool m_firstTime;
 
+    ListModel *m_actModel;
 };
 
 #endif // ACTIVITYMANAGER_H

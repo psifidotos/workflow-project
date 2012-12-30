@@ -31,6 +31,9 @@
 #include "plugins/pluginchangeworkarea.h"
 #include "plugins/pluginaddactivity.h"
 
+#include "models/listmodel.h"
+#include "models/activityitem.h"
+
 ActivityManager::ActivityManager(QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
@@ -59,11 +62,13 @@ ActivityManager::~ActivityManager()
         delete m_plAddActivity;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment, ListModel *activitiesModel)
 {
     qmlActEngine = obj;
 
     m_mainContainment = containment;
+
+    m_actModel = activitiesModel;
 
     if(m_mainContainment)
         if(m_mainContainment->corona())
@@ -179,6 +184,8 @@ void ActivityManager::activityAdded(QString id) {
                          QVariant(activity->icon()),
                          QVariant(state),
                          QVariant(m_activitiesCtrl->currentActivity() == id));
+    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,m_actModel));
+
 
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));
     connect(activity, SIGNAL(stateChanged(KActivities::Info::State)), this, SLOT(activityStateChanged()));

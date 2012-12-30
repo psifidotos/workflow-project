@@ -39,6 +39,7 @@
 
 class QDesktopWidget;
 class StoredParameters;
+class ListModel;
 
 namespace Plasma {
 class ExtenderItem;
@@ -119,6 +120,8 @@ private:
 
     void paintIcon();
     void initTooltip();
+
+    ListModel *m_activitiesModel;
 
 };
 
