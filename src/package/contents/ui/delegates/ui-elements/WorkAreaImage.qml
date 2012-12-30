@@ -36,7 +36,7 @@ BorderImage {
 
         Image {
             id: mainImg
-            source: workList.eelemImg
+            source: background
            // fillMode:Image.
             anchors.centerIn: parent
             width:parent.width

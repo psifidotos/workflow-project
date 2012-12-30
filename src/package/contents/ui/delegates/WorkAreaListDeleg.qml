@@ -12,9 +12,6 @@ Item{
     property string ccode:code
     property string neededState:"Running"
 
-
-    property string eelemImg : elemImg
-
     property int addedHeight:addWorkArea.height + taskOrFTitle.height + taskOrFTitleL.height + orphansList.rHeight
 
     property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (storedParameters.showWindows  === true)
@@ -23,7 +20,6 @@ Item{
 
     //   state: tCState === neededState ? "show" : "hide"
     state:"hide"
-
 
     property int workAreaImageHeight: mainView.screenRatio*bWidth
     property int workAreaNameHeight:20 + mainView.scaleMeter/2

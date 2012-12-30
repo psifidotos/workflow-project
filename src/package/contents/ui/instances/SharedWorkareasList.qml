@@ -19,19 +19,6 @@ Item{
             model.setProperty(ind,"CState",val);
     }
 
-    function setCurrent(cod){
-        var ind = getIndexFor(cod);
-
-        if(ind>-1){
-
-            for(var i=0; i<model.count; ++i){
-                model.setProperty(i,"Current",false);
-            }
-
-            model.setProperty(ind,"Current",true);
-        }
-
-    }
 
     function setWorkareaTitle(actCode, desktop, title){
         var ind = getIndexFor(actCode);
@@ -39,7 +26,7 @@ Item{
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
-            workMod.setProperty(desktop-1,"elemTitle",title);
+            workMod.setProperty(desktop-1,"title",title);
             workareasManager.renameWorkarea(actCode,desktop,title);
         }
     }
@@ -57,8 +44,9 @@ Item{
         var ind=getIndexFor(cod);
         if (ind>-1){
             var workMod = model.get(ind).workareas;
-            if(desk <= workMod.count);
-            return workMod.get(desk-1).elemTitle;
+            if(desk <= workMod.length)
+             return workMod[desk-1];
+           // return workMod.get(desk-1).elemTitle;
         }
 
         return "";
@@ -68,7 +56,7 @@ Item{
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
-                return obj.workareas.count;
+                return obj.workareas.length;
         }
 
         return -1;
@@ -83,16 +71,16 @@ Item{
 
             inCloning = true;
 
-            var sz1 = model.get(p1).workareas.count;
+            var sz1 = model.get(p1).workareas.length;
             //for(var i=0; i<sz1-1; i++)
             //   removeWorkArea(to,1);
 
             //in order ot stay the computations without
             //issues
-            var sz2 = model.get(p2).workareas.count;
+            var sz2 = model.get(p2).workareas.length;
             for(var j=0; j<sz2; j++){
-                var ob2 = model.get(p2).workareas.get(j);
-                addWorkareaWithName(to,ob2.elemTitle);
+                var ob2 = model.get(p2).workareas[j];
+                addWorkareaWithName(to,ob2);
                 if(j<sz1)
                     removeWorkArea(to,1);
             }
@@ -121,11 +109,6 @@ Item{
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
-            for (var i=desktop-1; i<workMod.count; i++)
-            {
-                workMod.setProperty(i ,"gridRow",i);
-            }
-
             workMod.remove(desktop-1);
 
             workareasManager.removeWorkarea(actCode,desktop);
@@ -150,8 +133,8 @@ Item{
         for (var i=0; i<model.count; i++)
         {
             var workMod = model.get(i);
-            if (workMod.workareas.count>max)
-                max = workMod.workareas.count;
+            if (workMod.workareas.length>max)
+                max = workMod.workareas.length;
         }
 
         return max;
@@ -162,7 +145,7 @@ Item{
         if(ind>-1){
             var workMod = model.get(ind).workareas;
 
-            var counts = workMod.count;
+            var counts = workMod.length;
 
             //Not in cloning
             if((inCloning === false)&&
@@ -171,10 +154,7 @@ Item{
                 activitysNewWorkAreaName = actCode;
             }
 
-
-            workMod.append( {  "elemTitle": val,
-                               "gridRow":counts+1
-                           } );
+            workMod.append({"title": val});
 
             workareasManager.addWorkArea(actCode,val);
         }
@@ -186,7 +166,7 @@ Item{
         if(ind>-1){
             var workMod = model.get(ind).workareas;
 
-            var counts = workMod.count;
+            var counts = workMod.length;
             var ndesk = taskManager.getDesktopName(counts+1);
 
             addWorkareaWithName(actCode,ndesk);
@@ -202,12 +182,10 @@ Item{
 
             model.insert(ind+1, {"code": ncod,
                              "CState":"Running",
-                             "elemImg":ob.elemImg,
-                             "workareas":[{
-                                     "gridRow":1,
-                                     "elemTitle":"New Workarea"
-                                 }]
-                         });
+                             "background":ob.background,
+                             "workareas":[{"title":"New Workarea"}]
+                         }
+                         );
         }
 
     }
@@ -215,10 +193,10 @@ Item{
     function setWallpaper(cod,path){
         var ind = getIndexFor(cod);
         if(ind>-1)
-            model.setProperty(ind,"elemImg",path);
+            model.setProperty(ind,"background",path);
     }
 
-    function addNewActivityF(cod, stat, cur){
+    function addNewActivityF(cod, stat){
         addNewActivity(cod, stat);
 
         setCState(cod,stat);
@@ -230,13 +208,10 @@ Item{
 
         model.append( {  "code": cod,
                          "CState":stat,
-                         "Current":false,
-                         "elemImg":getNextDefWallpaper(),
-                         "workareas":[{
-                                 "gridRow":1,
-                                 "elemTitle":deskone
-                             }]
-                     });
+                         "background":getNextDefWallpaper(),
+                         "workareas":[{"title":deskone}]
+                       }
+                     );
 
         workareasManager.addEmptyActivity(cod);
         workareasManager.addWorkArea(cod,deskone);
@@ -249,32 +224,28 @@ Item{
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
-            var counts = workMod.count;
+            var counts = workMod.length;
 
             if(counts ===sessionParameters.numberOfDesktops)
                 taskManager.slotAddDesktop();
 
             var lastobj = workMod.get(counts-1);
 
-            workMod.append( {  "elemTitle": title,
-                               "gridRow":lastobj.gridRow+1
-                           } );
+            workMod.append({"title": title });
         }
     }
 
-    function addActivityOnLoading(cod, stat, cur, names){
+    function addActivityOnLoading(cod, stat){
 
-        //    var deskone = taskManager.getDesktopName(1);
+        var names = workareasManager.getWorkAreaNames(cod);
 
         model.append( {  "code": cod,
                          "CState":stat,
-                         "Current":false,
-                         "elemImg":getNextDefWallpaper(),
-                         "workareas":[{
-                                 "gridRow":1,
-                                 "elemTitle":names[0]
-                             }]
-                     });
+                         "background":getNextDefWallpaper(),
+                         "workareas":[{"title":names[0]}]
+                       }
+                     );
+
 
         for(var j=1; j<names.length; j++)
             addWorkareaOnLoading(cod,names[j]);

@@ -71,13 +71,10 @@ Item{
                          "Icon":icon,
                          "CState":stat} );*/
 
-        if(workareasManager.activityExists(source)){
-            var nms = workareasManager.getWorkAreaNames(source);
-
-            instanceOfWorkAreasList.addActivityOnLoading(source,stat,cur,nms);
-        }
+        if(workareasManager.activityExists(source))
+            instanceOfWorkAreasList.addActivityOnLoading(source,stat);
         else{
-            instanceOfWorkAreasList.addNewActivityF(source, stat, cur);
+            instanceOfWorkAreasList.addNewActivityF(source, stat);
 
             for(var j=1; j<sessionParameters.numberOfDesktops; ++j){
                 instanceOfWorkAreasList.addWorkarea(source);
@@ -87,7 +84,7 @@ Item{
 
         //////
 
-        setCState(source,stat);
+      //  setCState(source,stat);
     }
 
     function setIcon(cod, val){

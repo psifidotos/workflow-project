@@ -25,7 +25,8 @@ Item{
     property string typeId : "workareaDeleg"
 
     property string actCode: workList.ccode
-    property int desktop: gridRow
+    //property int desktop: gridRow
+    property int desktop: index+1
 
     property int imagex:15
     property int imagey:15
@@ -243,7 +244,7 @@ Item{
             y: borderRectangle.height-5
             width: mainWorkArea.width
             height: workList.workAreaNameHeight
-            text: elemTitle
+            text: modelData
         }
 
 

@@ -13,7 +13,7 @@ Item{
     id: taskDeleg1
 
     property bool shown: ( (((onAllActivities !== true)&&
-                             ((gridRow === desktop)&&
+                             ((mainWorkArea.desktop === desktop)&&
                               (actCode === activities))) ||
                             ((onAllActivities !== true)&&
                              ((onAllDesktops === true)&&
