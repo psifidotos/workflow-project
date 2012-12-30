@@ -184,7 +184,7 @@ void ActivityManager::activityAdded(QString id) {
                          QVariant(activity->icon()),
                          QVariant(state),
                          QVariant(m_activitiesCtrl->currentActivity() == id));
-    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,m_actModel));
+    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,"",m_actModel));
 
 
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));

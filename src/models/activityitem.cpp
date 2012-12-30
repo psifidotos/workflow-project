@@ -2,12 +2,14 @@
 #include "listitem.h"
 
 ActivityItem::ActivityItem(const QString &code, const QString &name,
-                           const QString &icon, const QString &cstate, QObject *parent) :
+                           const QString &icon, const QString &cstate,
+                           const QString &background, QObject *parent) :
   ListItem(parent),
   m_code(code),
   m_name(name),
   m_icon(icon),
-  m_cstate(cstate)
+  m_cstate(cstate),
+  m_background(background)
 {
 }
 
@@ -32,7 +34,8 @@ void ActivityItem::setProperty(QString role,QVariant value)
         setIcon(value.toString());
     else if(role == names[CStateRole])
         setCState(value.toString());
-
+    else if(role == names[BackgroundRole])
+        setBackground(value.toString());
 }
 
 void ActivityItem::setCode(QString code)
@@ -66,6 +69,39 @@ void ActivityItem::setCState(QString cstate)
     }
 }
 
+void ActivityItem::setBackground(QString background)
+{
+    if(m_background != background){
+        m_background = background;
+        emit dataChanged();
+    }
+}
+
+void ActivityItem::addWorkarea(QString name)
+{
+    m_workareas.append(name);
+    emit dataChanged();
+}
+
+void ActivityItem::removeWorkarea(int pos)
+{
+    if((pos>0)&&(m_workareas.size()<=pos)){
+        m_workareas.removeAt(pos-1);
+        emit dataChanged();
+    }
+}
+
+void ActivityItem::renameWorkarea(int pos, QString name)
+{
+    if((pos>0)&&(m_workareas.size()<=pos)){
+        if(m_workareas.at(pos-1) != name){
+            m_workareas.replace(pos-1, name);
+            emit dataChanged();
+        }
+    }
+}
+
+
 QHash<int, QByteArray> ActivityItem::roleNames() const
 {
   QHash<int, QByteArray> names;
@@ -73,6 +109,8 @@ QHash<int, QByteArray> ActivityItem::roleNames() const
   names[NameRole] = "Name";
   names[IconRole] = "Icon";
   names[CStateRole] = "CState";
+  names[BackgroundRole] = "background";
+  names[WorkareasRole] = "workareas";
   return names;
 }
 
@@ -87,6 +125,10 @@ QVariant ActivityItem::data(int role) const
     return icon();
   case CStateRole:
     return cstate();
+  case BackgroundRole:
+    return background();
+  case WorkareasRole:
+    return workareas();
   default:
     return QVariant();
   }
