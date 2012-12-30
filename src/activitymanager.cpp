@@ -309,9 +309,6 @@ void ActivityManager::setCurrentPreviousActivity()
 
 void ActivityManager::currentActivityChanged(const QString &id)
 {
-    QMetaObject::invokeMethod(qmlActEngine, "setCurrentSignal",
-                              Q_ARG(QVariant, id));
-
     updateWallpaper(id);
 
     KActivities::Info *activity = new KActivities::Info(id, this);

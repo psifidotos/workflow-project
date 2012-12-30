@@ -44,8 +44,8 @@ Item{
         var ind=getIndexFor(cod);
         if (ind>-1){
             var workMod = model.get(ind).workareas;
-            if(desk <= workMod.length)
-             return workMod[desk-1];
+            if(desk <= workMod.count)
+             return workMod.get(desk-1).modelData;
            // return workMod.get(desk-1).elemTitle;
         }
 
@@ -56,7 +56,7 @@ Item{
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
             if (obj.code === cod)
-                return obj.workareas.length;
+                return obj.workareas.count;
         }
 
         return -1;
@@ -71,16 +71,16 @@ Item{
 
             inCloning = true;
 
-            var sz1 = model.get(p1).workareas.length;
+            var sz1 = model.get(p1).workareas.count;
             //for(var i=0; i<sz1-1; i++)
             //   removeWorkArea(to,1);
 
             //in order ot stay the computations without
             //issues
-            var sz2 = model.get(p2).workareas.length;
+            var sz2 = model.get(p2).workareas.count;
             for(var j=0; j<sz2; j++){
-                var ob2 = model.get(p2).workareas[j];
-                addWorkareaWithName(to,ob2);
+                var ob2 = model.get(p2).workareas.get(j);
+                addWorkareaWithName(to,ob2.modelData);
                 if(j<sz1)
                     removeWorkArea(to,1);
             }
@@ -133,8 +133,8 @@ Item{
         for (var i=0; i<model.count; i++)
         {
             var workMod = model.get(i);
-            if (workMod.workareas.length>max)
-                max = workMod.workareas.length;
+            if (workMod.workareas.count>max)
+                max = workMod.workareas.count;
         }
 
         return max;
@@ -145,14 +145,19 @@ Item{
         if(ind>-1){
             var workMod = model.get(ind).workareas;
 
-            var counts = workMod.length;
+            var counts = workMod.count;
+
 
             //Not in cloning
+            //This is used to trace a VDs name which is in greater length
+            //than the current VDs count
             if((inCloning === false)&&
                     (counts === sessionParameters.numberOfDesktops)){
-                taskManager.slotAddDesktop();
                 activitysNewWorkAreaName = actCode;
+                taskManager.slotAddDesktop();
             }
+
+            console.debug(counts);
 
             workMod.append({"title": val});
 
@@ -166,7 +171,7 @@ Item{
         if(ind>-1){
             var workMod = model.get(ind).workareas;
 
-            var counts = workMod.length;
+            var counts = workMod.count;
             var ndesk = taskManager.getDesktopName(counts+1);
 
             addWorkareaWithName(actCode,ndesk);
@@ -224,9 +229,9 @@ Item{
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
-            var counts = workMod.length;
+            var counts = workMod.count;
 
-            if(counts ===sessionParameters.numberOfDesktops)
+            if(counts === sessionParameters.numberOfDesktops)
                 taskManager.slotAddDesktop();
 
             var lastobj = workMod.get(counts-1);

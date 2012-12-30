@@ -223,20 +223,6 @@ Item{
             return "";
     }
 
-    function setCurrentSignal(cod){
-        var ind = getIndexFor(cod);
-        if(ind>-1){
-  /*          for(var i=0; i<model.count; ++i){
-                model.setProperty(i,"Current",false);
-            }
-
-
-            model.setProperty(ind,"Current",true);*/
-
-            instanceOfWorkAreasList.setCurrent(cod);
-        }
-    }
-
     function showWidgetsExplorer(act){
         activityManager.showWidgetsExplorer(act);
     }

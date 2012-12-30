@@ -1,7 +1,7 @@
-project(components)
+project(workflowcomponents)
 
 set(components_SRCS
-    componentsplugin.cpp
+    workflowcomponentsplugin.cpp
     sessionparameters.cpp
     activitymanager.cpp
     icondialog.cpp
@@ -13,9 +13,9 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/internal
 )
 
-kde4_add_library(componentsplugin SHARED ${components_SRCS})
+kde4_add_library(workflowcomponentsplugin SHARED ${components_SRCS})
 
-target_link_libraries(componentsplugin
+target_link_libraries(workflowcomponentsplugin
         ${KACTIVITIES_LIBRARY}
         ${QT_QTCORE_LIBRARY}
         ${QT_QTDECLARATIVE_LIBRARY}
@@ -25,7 +25,7 @@ target_link_libraries(componentsplugin
         ${KDE4WORKSPACE_KWORKSPACE_LIBS}
 )
 
-install(TARGETS componentsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/workflow/components)
+install(TARGETS workflowcomponentsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/workflow/components)
 install(DIRECTORY qml/
     DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/workflow/components
     PATTERN "*.qml"

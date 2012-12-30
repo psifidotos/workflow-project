@@ -129,17 +129,11 @@ Item{
             function countTasks(){
                 var counter = 0;
 
-                for (var i=0; i<model.count; ++i)
-                {
-                    var elem = model.get(i);
+                var tlist = tasksSList.children[0];
 
-                    if(elem.activities === mainWorkArea.actCode){
-                        if((elem.onAllDesktops === true) ||
-                                (elem.desktop === mainWorkArea.desktop))
-                            counter++;
-                    }
-
-                }
+                for(var i=0; i < tlist.children.length; ++i)
+                    if (tlist.children[i].shown === true)
+                        counter++;
 
                 shownTasks = counter;
             }
