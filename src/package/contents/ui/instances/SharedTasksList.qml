@@ -196,7 +196,7 @@ Item{
     function setMaxDesktops(v){
         //it is called consequently for example to go from 2VDs to 4 VDs, it is going
         //2-3-4 from the relevant signals
-
+        console.log(v + " - "+instanceOfWorkAreasList.maxWorkareas());
         var mxs = instanceOfWorkAreasList.maxWorkareas();
         if (mxs>v)
             taskManager.slotAddDesktop();

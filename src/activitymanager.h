@@ -9,7 +9,7 @@ class PluginCloneActivity;
 class PluginChangeWorkarea;
 class PluginAddActivity;
 
-class ListModel;
+class ActivitiesEnhancedModel;
 
 namespace KActivities
 {
@@ -50,7 +50,7 @@ public:
 
 
 
-    void setQMlObject(QObject *,Plasma::Containment *, ListModel *);
+    void setQMlObject(QObject *,Plasma::Containment *, ActivitiesEnhancedModel *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -106,7 +106,7 @@ private:
 
     bool m_firstTime;
 
-    ListModel *m_actModel;
+    ActivitiesEnhancedModel *m_actModel;
 };
 
 #endif // ACTIVITYMANAGER_H

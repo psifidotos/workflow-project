@@ -1,12 +1,14 @@
 #include "workareasmanager.h"
 
 #include <QHash>
-
-
 #include "workareasdata.h"
+#include "models/activitiesenhancedmodel.h"
+#include "models/workareaitem.h"
+#include "models/listmodel.h"
 
-WorkareasManager::WorkareasManager(QObject *parent) :
-    QObject(parent)
+WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
+    QObject(parent),
+    m_actModel(model)
 {
     loadWorkareas();
 }
@@ -44,8 +46,20 @@ void WorkareasManager::addWorkArea(QString id, QString name)
 {
     QStringList *ret = m_storedWorkareas[id];
 
-    if (ret)
+    if (ret){
         ret->append(name);
+
+        ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
+        if(model)
+            model->appendRow(new WorkareaItem(name,name,true,model));
+    }
+}
+
+void WorkareasManager::addWorkareaInLoading(QString id, QString name)
+{
+    ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
+    if(model)
+        model->appendRow(new WorkareaItem(name,name,true,model));
 }
 
 void WorkareasManager::addEmptyActivity(QString id)
@@ -69,8 +83,13 @@ void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
 {
     QStringList *ret = m_storedWorkareas[id];
 
-    if (ret)
+    if (ret){
         ret->replace(desktop-1,name);
+        ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
+        if(model)
+            model->setProperty(desktop-1,"title",name);
+    }
+
 }
 
 int WorkareasManager::activitySize(QString id)
@@ -86,8 +105,13 @@ void WorkareasManager::removeWorkarea(QString id, int desktop)
 {
     QStringList *ret = m_storedWorkareas[id];
 
-    if (ret)
+    if (ret){
         ret->removeAt(desktop-1);
+
+        ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
+        if(model)
+            model->removeRow(desktop-1);
+    }
 }
 
 bool WorkareasManager::activityExists(QString id)

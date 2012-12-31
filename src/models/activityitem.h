@@ -8,6 +8,9 @@
 #include <QStringList>
 
 #include "listitem.h"
+#include "listmodel.h"
+
+typedef ListModel WorkareasModel;
 
 class ActivityItem : public ListItem
 {
@@ -20,7 +23,6 @@ public:
     IconRole,
     CStateRole,
     BackgroundRole,
-    WorkareasRole
   };
 
   ActivityItem(QObject *parent = 0): ListItem(parent) {}
@@ -28,7 +30,7 @@ public:
                         const QString &icon, const QString &cstate,
                         const QString &background,
                         QObject *parent = 0);
-  ~ActivityItem(){}
+  ~ActivityItem();
 
   QVariant data(int role) const;
   QHash<int, QByteArray> roleNames() const;
@@ -39,7 +41,6 @@ public:
   inline QString icon() const { return m_icon; }
   inline QString cstate() const { return m_cstate; }
   inline QString background() const { return m_background; }
-  inline QStringList workareas() const { return m_workareas; }
 
   void setProperty(QString role,QVariant value);
   void setCode(QString);
@@ -48,9 +49,9 @@ public:
   void setCState(QString);
   void setBackground(QString);
 
-  Q_INVOKABLE void addWorkarea(QString);
-  Q_INVOKABLE void removeWorkarea(int);
-  Q_INVOKABLE void renameWorkarea(int, QString);
+  WorkareasModel* workareas() const {
+    return m_workareas;
+  }
 
 private:
   QString m_code;
@@ -58,7 +59,8 @@ private:
   QString m_icon;
   QString m_cstate;
   QString m_background;
-  QStringList m_workareas;
+
+  WorkareasModel *m_workareas;
 };
 
 #endif

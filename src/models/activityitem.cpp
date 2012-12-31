@@ -1,5 +1,6 @@
 #include "activityitem.h"
 #include "listitem.h"
+#include "workareaitem.h"
 
 ActivityItem::ActivityItem(const QString &code, const QString &name,
                            const QString &icon, const QString &cstate,
@@ -11,16 +12,15 @@ ActivityItem::ActivityItem(const QString &code, const QString &name,
   m_cstate(cstate),
   m_background(background)
 {
+    m_workareas = new ListModel(new WorkareaItem,this);
 }
 
-/*
-void ActivityItem::setPrice(qreal price)
+ActivityItem::~ActivityItem()
 {
-  if(m_price != price) {
-    m_price = price;
-    emit dataChanged();
-  }
-}*/
+//    if(m_workareas)
+  //      delete m_workareas;
+
+}
 
 void ActivityItem::setProperty(QString role,QVariant value)
 {
@@ -77,30 +77,6 @@ void ActivityItem::setBackground(QString background)
     }
 }
 
-void ActivityItem::addWorkarea(QString name)
-{
-    m_workareas.append(name);
-    emit dataChanged();
-}
-
-void ActivityItem::removeWorkarea(int pos)
-{
-    if((pos>0)&&(m_workareas.size()<=pos)){
-        m_workareas.removeAt(pos-1);
-        emit dataChanged();
-    }
-}
-
-void ActivityItem::renameWorkarea(int pos, QString name)
-{
-    if((pos>0)&&(m_workareas.size()<=pos)){
-        if(m_workareas.at(pos-1) != name){
-            m_workareas.replace(pos-1, name);
-            emit dataChanged();
-        }
-    }
-}
-
 
 QHash<int, QByteArray> ActivityItem::roleNames() const
 {
@@ -110,7 +86,6 @@ QHash<int, QByteArray> ActivityItem::roleNames() const
   names[IconRole] = "Icon";
   names[CStateRole] = "CState";
   names[BackgroundRole] = "background";
-  names[WorkareasRole] = "workareas";
   return names;
 }
 
@@ -127,8 +102,6 @@ QVariant ActivityItem::data(int role) const
     return cstate();
   case BackgroundRole:
     return background();
-  case WorkareasRole:
-    return workareas();
   default:
     return QVariant();
   }

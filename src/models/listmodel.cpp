@@ -96,7 +96,7 @@ void ListModel::clear()
 bool ListModel::removeRow(int row, const QModelIndex &parent)
 {
   Q_UNUSED(parent);
-  if(row < 0 || row >= m_list.size()) return false;
+  if(row < 0 || row > m_list.size()) return false;
   beginRemoveRows(QModelIndex(), row, row);
   delete m_list.takeAt(row);
   endRemoveRows();
@@ -107,12 +107,13 @@ bool ListModel::removeRow(int row, const QModelIndex &parent)
 bool ListModel::removeRows(int row, int count, const QModelIndex &parent)
 {
   Q_UNUSED(parent);
-  if(row < 0 || (row+count) >= m_list.size()) return false;
+  if(row < 0 || (row+count) > m_list.size()) return false;
   beginRemoveRows(QModelIndex(), row, row+count-1);
   for(int i=0; i<count; ++i) {
     delete m_list.takeAt(row);
   }
   endRemoveRows();
+  emit countChanged(getCount());
   return true;
 }
 

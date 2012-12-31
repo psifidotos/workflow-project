@@ -1,8 +1,5 @@
 # We add our source code here
 set(workflow_SRCS
-                  models/listitem.cpp
-                  models/listmodel.cpp
-                  models/activityitem.cpp
                   workflow.cpp
                   storedparameters.cpp
                   activitymanager.cpp
@@ -14,7 +11,11 @@ set(workflow_SRCS
                   plugins/pluginremoveactivity.cpp
                   plugins/pluginchangeworkarea.cpp
                   plugins/pluginaddactivity.cpp
-
+                  models/listitem.cpp
+                  models/listmodel.cpp
+                  models/activityitem.cpp
+                  models/workareaitem.cpp
+                  models/activitiesenhancedmodel.cpp
 )
 
 # Now make sure all files get to the right place

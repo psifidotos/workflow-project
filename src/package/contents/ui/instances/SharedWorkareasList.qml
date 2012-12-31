@@ -5,7 +5,10 @@ import "../models"
 
 Item{
 
-    property variant model: WorkAreasCompleteModel{}
+  //  property variant model: WorkAreasCompleteModel{}
+    property variant model: activitiesModelNew
+
+    //instanceOfWorkAreasList.model.workareas(code)
 
     property int addednew:0
 
@@ -14,21 +17,21 @@ Item{
     property bool inCloning:false
 
     function setCState(cod, val){
-        var ind = getIndexFor(cod);
+     /*   var ind = getIndexFor(cod);
         if(ind>-1)
-            model.setProperty(ind,"CState",val);
+            model.setProperty(ind,"CState",val);*/
     }
 
 
     function setWorkareaTitle(actCode, desktop, title){
-        var ind = getIndexFor(actCode);
+   /*     var ind = getIndexFor(actCode);
         if(ind>-1){
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
-            workMod.setProperty(desktop-1,"title",title);
+            workMod.setProperty(desktop-1,"title",title);*/
             workareasManager.renameWorkarea(actCode,desktop,title);
-        }
+        //}
     }
 
     function getIndexFor(cod){
@@ -104,13 +107,13 @@ Item{
 
     function removeWorkArea(actCode,desktop)
     {
-        var ind = getIndexFor(actCode);
+/*        var ind = getIndexFor(actCode);
         if(ind>-1){
             var actOb = model.get(ind);
             var workMod = actOb.workareas;
 
             workMod.remove(desktop-1);
-
+*/
             workareasManager.removeWorkarea(actCode,desktop);
 
 
@@ -122,7 +125,7 @@ Item{
                     (sessionParameters.numberOfDesktops > 2))
                 taskManager.slotRemoveDesktop();
 
-        }
+  //      }
     }
 
 
@@ -133,8 +136,9 @@ Item{
         for (var i=0; i<model.count; i++)
         {
             var workMod = model.get(i);
-            if (workMod.workareas.count>max)
-                max = workMod.workareas.count;
+            var actId = model.get(i).code;
+            if (model.workareas(actId).count>max)
+                max = model.workareas(actId).count;
         }
 
         return max;
@@ -143,25 +147,28 @@ Item{
     function addWorkareaWithName(actCode, val){
         var ind = getIndexFor(actCode);
         if(ind>-1){
-            var workMod = model.get(ind).workareas;
+            var workMod = model.workareas(actCode);
 
             var counts = workMod.count;
 
+            console.log(actCode+" - "+ counts + " - "+sessionParameters.numberOfDesktops);
 
+
+            workareasManager.addWorkArea(actCode,val);
             //Not in cloning
             //This is used to trace a VDs name which is in greater length
             //than the current VDs count
             if((inCloning === false)&&
-                    (counts === sessionParameters.numberOfDesktops)){
+               (counts === sessionParameters.numberOfDesktops)){
                 activitysNewWorkAreaName = actCode;
                 taskManager.slotAddDesktop();
             }
 
-            console.debug(counts);
+//            console.debug(counts);
 
-            workMod.append({"title": val});
+  //          workMod.append({"title": val});
 
-            workareasManager.addWorkArea(actCode,val);
+
         }
 
     }
@@ -169,7 +176,7 @@ Item{
     function addWorkarea(actCode){
         var ind = getIndexFor(actCode);
         if(ind>-1){
-            var workMod = model.get(ind).workareas;
+            var workMod = model.workareas(actCode);
 
             var counts = workMod.count;
             var ndesk = taskManager.getDesktopName(counts+1);
@@ -224,38 +231,42 @@ Item{
     }
 
     function addWorkareaOnLoading(actCode, title){
-        var ind = getIndexFor(actCode);
-        if(ind>-1){
-            var actOb = model.get(ind);
-            var workMod = actOb.workareas;
+//        var ind = getIndexFor(actCode);
+  //      if(ind>-1){
+            //var actOb = model.get(ind);
+            //var workMod = actOb.workareas;
+         var workMod = model.workareas(actCode);
 
-            var counts = workMod.count;
-
-            if(counts === sessionParameters.numberOfDesktops)
+            if(workMod.count === sessionParameters.numberOfDesktops)
                 taskManager.slotAddDesktop();
 
-            var lastobj = workMod.get(counts-1);
+      //      var lastobj = workMod.get(counts-1);
 
-            workMod.append({"title": title });
-        }
+//            workMod.append({"title": title });
+            workareasManager.addWorkareaInLoading(actCode, title);
+    //    }
     }
 
     function addActivityOnLoading(cod, stat){
 
         var names = workareasManager.getWorkAreaNames(cod);
 
-        model.append( {  "code": cod,
+      /*  model.append( {  "code": cod,
                          "CState":stat,
                          "background":getNextDefWallpaper(),
                          "workareas":[{"title":names[0]}]
                        }
-                     );
+                     );*/
+        var ind = getIndexFor(cod);
+
+        if(ind>-1)
+            model.setProperty(ind,"background",getNextDefWallpaper());
 
 
-        for(var j=1; j<names.length; j++)
+        for(var j=0; j<names.length; j++)
             addWorkareaOnLoading(cod,names[j]);
 
-        setCState(cod,stat);
+     //   setCState(cod,stat);
 
     }
 

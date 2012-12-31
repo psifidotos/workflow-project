@@ -26,7 +26,8 @@ Item{
     property int realWorkAreaNameHeight: 0.8*workAreaNameHeight
 
     property int bWidth: mainView.workareaWidth
-    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*workalist.model.count
+
+    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.01)
 
 
     //    width: bWidth
@@ -39,12 +40,11 @@ Item{
 
     onStateChanged: allareas.changedChildHeight();
 
-
-    ListView {
+    ListView{
         id:workalist
 
         height:workList.bHeight
-        //   width: workList.tCState === workList.neededState ? workList.bWidth : 0
+       // width: workList.tCState === workList.neededState ? workList.bWidth : 0
         property string typeId : "workalistForActivity"
 
         property int addedHeightForCurrent:(mainView.screenRatio*0.2*mainView.scaleMeter)
@@ -53,7 +53,7 @@ Item{
 
         interactive:false
 
-        model:workareas
+        model:instanceOfWorkAreasList.model.workareas(code)
 
         orientation:ListView.Vertical
 

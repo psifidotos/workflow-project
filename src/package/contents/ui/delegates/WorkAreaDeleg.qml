@@ -238,7 +238,7 @@ Item{
             y: borderRectangle.height-5
             width: mainWorkArea.width
             height: workList.workAreaNameHeight
-            text: modelData
+            text: title
         }
 
 

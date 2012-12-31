@@ -31,7 +31,7 @@
 #include "plugins/pluginchangeworkarea.h"
 #include "plugins/pluginaddactivity.h"
 
-#include "models/listmodel.h"
+#include "models/activitiesenhancedmodel.h"
 #include "models/activityitem.h"
 
 ActivityManager::ActivityManager(QObject *parent) :
@@ -62,7 +62,7 @@ ActivityManager::~ActivityManager()
         delete m_plAddActivity;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment, ListModel *activitiesModel)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment, ActivitiesEnhancedModel *activitiesModel)
 {
     qmlActEngine = obj;
 
@@ -179,12 +179,14 @@ void ActivityManager::activityAdded(QString id) {
         state = "Invalid";
     }
 
+    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,"",m_actModel));
+
     emit activityAddedIn(QVariant(id),
                          QVariant(activity->name()),
                          QVariant(activity->icon()),
                          QVariant(state),
                          QVariant(m_activitiesCtrl->currentActivity() == id));
-    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,"",m_actModel));
+
 
 
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));

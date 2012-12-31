@@ -3,14 +3,13 @@
 
 #include <QHash>
 
-class WorkFlow;
-
+class ActivitiesEnhancedModel;
 
 class WorkareasManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit WorkareasManager(QObject *parent = 0);
+    explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
 
 
@@ -27,6 +26,7 @@ public:
     Q_INVOKABLE int activitySize(QString id);
 
     Q_INVOKABLE void setWorkAreaWasClicked();
+    Q_INVOKABLE void addWorkareaInLoading(QString, QString);
 
 signals:
     void workAreaWasClicked();
@@ -36,7 +36,7 @@ public slots:
 private:
     QHash <QString,QStringList *> m_storedWorkareas;
 
-
+    ActivitiesEnhancedModel *m_actModel;
 };
 
 #endif // WORKAREASMANAGER_H

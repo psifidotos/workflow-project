@@ -48,8 +48,7 @@
 
 #include <iostream>
 
-#include "models/listmodel.h"
-#include "models/activityitem.h"
+#include "models/activitiesenhancedmodel.h"
 
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
@@ -67,7 +66,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_actManager = new ActivityManager(this);
     m_taskManager = new PTaskManager(this);
-    m_workareasManager = new WorkareasManager(this);
 
     m_findPopupWid = false;
 
@@ -79,6 +77,8 @@ WorkFlow::~WorkFlow()
 {
     emit configNeedsSaving();
 
+    if (m_activitiesModel)
+        delete m_activitiesModel;
     if (m_actManager)
         delete m_actManager;
     if (m_taskManager)
@@ -89,8 +89,7 @@ WorkFlow::~WorkFlow()
         delete m_storedParams;
     if (m_theme)
         delete m_theme;
-    if (m_activitiesModel)
-        delete m_activitiesModel;
+
 }
 
 void WorkFlow::init()
@@ -117,7 +116,9 @@ void WorkFlow::init()
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
-        m_activitiesModel = new ListModel(new ActivityItem, qApp);
+        m_activitiesModel = new ActivitiesEnhancedModel(qApp);
+
+        m_workareasManager = new WorkareasManager(m_activitiesModel, this);
 
         ctxt->setContextProperty("activitiesModelNew",m_activitiesModel);
         ctxt->setContextProperty("storedParameters",m_storedParams);
