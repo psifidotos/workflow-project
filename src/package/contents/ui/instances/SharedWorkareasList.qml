@@ -5,7 +5,7 @@ import "../models"
 
 Item{
 
-  //  property variant model: WorkAreasCompleteModel{}
+    //  property variant model: WorkAreasCompleteModel{}
     property variant model: activitiesModelNew
 
     //instanceOfWorkAreasList.model.workareas(code)
@@ -14,24 +14,9 @@ Item{
 
     property string activitysNewWorkAreaName:""
 
-    property bool inCloning:false
-
-    function setCState(cod, val){
-     /*   var ind = getIndexFor(cod);
-        if(ind>-1)
-            model.setProperty(ind,"CState",val);*/
-    }
-
 
     function setWorkareaTitle(actCode, desktop, title){
-   /*     var ind = getIndexFor(actCode);
-        if(ind>-1){
-            var actOb = model.get(ind);
-            var workMod = actOb.workareas;
-
-            workMod.setProperty(desktop-1,"title",title);*/
-            workareasManager.renameWorkarea(actCode,desktop,title);
-        //}
+        workareasManager.renameWorkarea(actCode,desktop,title);
     }
 
     function getIndexFor(cod){
@@ -44,91 +29,33 @@ Item{
     }
 
     function getWorkareaName(cod,desk){
-        var ind=getIndexFor(cod);
-        if (ind>-1){
-            var workMod = model.get(ind).workareas;
-            if(desk <= workMod.count)
-             return workMod.get(desk-1).modelData;
-           // return workMod.get(desk-1).elemTitle;
-        }
+        var workMod = model.workareas(cod);
+        if(desk <= workMod.count)
+            return workMod.get(desk-1).title;
 
         return "";
     }
 
     function getActivitySize(cod){
-        for(var i=0; i<model.count; ++i){
-            var obj = model.get(i);
-            if (obj.code === cod)
-                return obj.workareas.count;
-        }
-
-        return -1;
+        return model.workareas(cod).count;
     }
 
     function copyWorkareas(from, to){
-
-        var p1 = getIndexFor(to);
-        var p2 = getIndexFor(from);
-
-        if((p1>-1)&&(p2>-1)){
-
-            inCloning = true;
-
-            var sz1 = model.get(p1).workareas.count;
-            //for(var i=0; i<sz1-1; i++)
-            //   removeWorkArea(to,1);
-
-            //in order ot stay the computations without
-            //issues
-            var sz2 = model.get(p2).workareas.count;
-            for(var j=0; j<sz2; j++){
-                var ob2 = model.get(p2).workareas.get(j);
-                addWorkareaWithName(to,ob2.modelData);
-                if(j<sz1)
-                    removeWorkArea(to,1);
-            }
-
-            for(var i=sz2; i<sz1; i++)
-                removeWorkArea(to,1);
-
-            inCloning = false;
-        }
+            workareasManager.cloneWorkareas(from,to);
     }
 
-    function removeActivity(cod){
-        var ind = getIndexFor(cod);
-
-        if (ind>-1){
-            //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
-            model.remove(ind);
-        }
-
-    }
 
     function removeWorkArea(actCode,desktop)
     {
-/*        var ind = getIndexFor(actCode);
-        if(ind>-1){
-            var actOb = model.get(ind);
-            var workMod = actOb.workareas;
+        workareasManager.removeWorkarea(actCode,desktop);
 
-            workMod.remove(desktop-1);
-*/
-            workareasManager.removeWorkarea(actCode,desktop);
-
-
-            //Not in cloning
-            //if((instanceOfActivitiesList.fromCloneActivity === "") &&
-            //       (instanceOfActivitiesList.toCloneActivity === "")){
-            if((inCloning === false)&&
-                    (maxWorkareas() < sessionParameters.numberOfDesktops) &&
-                    (sessionParameters.numberOfDesktops > 2))
-                taskManager.slotRemoveDesktop();
-
-  //      }
+        //Not in cloning
+        //if((instanceOfActivitiesList.fromCloneActivity === "") &&
+        //       (instanceOfActivitiesList.toCloneActivity === "")){
+        if((maxWorkareas() < sessionParameters.numberOfDesktops) &&
+           (sessionParameters.numberOfDesktops > 2))
+            taskManager.slotRemoveDesktop();
     }
-
-
 
     function maxWorkareas()
     {
@@ -144,48 +71,34 @@ Item{
         return max;
     }
 
+
     function addWorkareaWithName(actCode, val){
-        var ind = getIndexFor(actCode);
-        if(ind>-1){
-            var workMod = model.workareas(actCode);
 
-            var counts = workMod.count;
+        var workMod = model.workareas(actCode);
 
-            console.log(actCode+" - "+ counts + " - "+sessionParameters.numberOfDesktops);
+        var counts = workMod.count;
 
+        console.log(actCode+" - "+ counts + " - "+sessionParameters.numberOfDesktops);
 
-            workareasManager.addWorkArea(actCode,val);
-            //Not in cloning
-            //This is used to trace a VDs name which is in greater length
-            //than the current VDs count
-            if((inCloning === false)&&
-               (counts === sessionParameters.numberOfDesktops)){
-                activitysNewWorkAreaName = actCode;
-                taskManager.slotAddDesktop();
-            }
-
-//            console.debug(counts);
-
-  //          workMod.append({"title": val});
-
-
+        workareasManager.addWorkArea(actCode,val);
+        //Not in cloning
+        //This is used to trace a VDs name which is in greater length
+        //than the current VDs count
+        if(counts === sessionParameters.numberOfDesktops){
+            activitysNewWorkAreaName = actCode;
+            taskManager.slotAddDesktop();
         }
-
     }
 
     function addWorkarea(actCode){
-        var ind = getIndexFor(actCode);
-        if(ind>-1){
-            var workMod = model.workareas(actCode);
+        var workMod = model.workareas(actCode);
 
-            var counts = workMod.count;
-            var ndesk = taskManager.getDesktopName(counts+1);
+        var counts = workMod.count;
+        var ndesk = taskManager.getDesktopName(counts+1);
 
-            addWorkareaWithName(actCode,ndesk);
-        }
+        addWorkareaWithName(actCode,ndesk);
+
     }
-
-
 
     function cloneActivity(cod,ncod){
         var ind = getIndexFor(cod);
@@ -202,61 +115,30 @@ Item{
 
     }
 
-    function setWallpaper(cod,path){
+
+    function addNewActivity(cod){
         var ind = getIndexFor(cod);
+
         if(ind>-1)
-            model.setProperty(ind,"background",path);
-    }
-
-    function addNewActivityF(cod, stat){
-        addNewActivity(cod, stat);
-
-        setCState(cod,stat);
-    }
-
-    function addNewActivity(cod, stat){
-
-        var deskone = taskManager.getDesktopName(1);
-
-        model.append( {  "code": cod,
-                         "CState":stat,
-                         "background":getNextDefWallpaper(),
-                         "workareas":[{"title":deskone}]
-                       }
-                     );
+            model.setProperty(ind,"background",getNextDefWallpaper());
 
         workareasManager.addEmptyActivity(cod);
-        workareasManager.addWorkArea(cod,deskone);
-
     }
 
     function addWorkareaOnLoading(actCode, title){
-//        var ind = getIndexFor(actCode);
-  //      if(ind>-1){
-            //var actOb = model.get(ind);
-            //var workMod = actOb.workareas;
-         var workMod = model.workareas(actCode);
 
-            if(workMod.count === sessionParameters.numberOfDesktops)
-                taskManager.slotAddDesktop();
+        var workMod = model.workareas(actCode);
 
-      //      var lastobj = workMod.get(counts-1);
+        if(workMod.count === sessionParameters.numberOfDesktops)
+            taskManager.slotAddDesktop();
 
-//            workMod.append({"title": title });
-            workareasManager.addWorkareaInLoading(actCode, title);
-    //    }
+        workareasManager.addWorkareaInLoading(actCode, title);
+
     }
 
-    function addActivityOnLoading(cod, stat){
-
+    function addActivityOnLoading(cod){
         var names = workareasManager.getWorkAreaNames(cod);
 
-      /*  model.append( {  "code": cod,
-                         "CState":stat,
-                         "background":getNextDefWallpaper(),
-                         "workareas":[{"title":names[0]}]
-                       }
-                     );*/
         var ind = getIndexFor(cod);
 
         if(ind>-1)
@@ -265,9 +147,6 @@ Item{
 
         for(var j=0; j<names.length; j++)
             addWorkareaOnLoading(cod,names[j]);
-
-     //   setCState(cod,stat);
-
     }
 
     function getNextDefWallpaper(){

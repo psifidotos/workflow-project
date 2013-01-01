@@ -22,7 +22,7 @@ public:
     NameRole,
     IconRole,
     CStateRole,
-    BackgroundRole,
+    BackgroundRole
   };
 
   ActivityItem(QObject *parent = 0): ListItem(parent) {}

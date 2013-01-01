@@ -13,6 +13,8 @@ Item{
     //disable previews
     property bool previewsWereEnabled:false
 
+    property bool isAddingNewActivity:false
+
     function printModel(){
         console.debug("---- Activities Model -----");
         for(var i=0; i<model.count; ++i){
@@ -51,13 +53,13 @@ Item{
 
 
     function setCState(cod, val){
-        var ind = getIndexFor(cod);
+       /* var ind = getIndexFor(cod);
         if (ind>-1){
 
             model.setProperty(ind,"CState",val);
 
             instanceOfWorkAreasList.setCState(cod,val);
-        }
+        }*/
     }
 
     function activityAddedIn(source,title,icon,stat,cur)
@@ -71,14 +73,19 @@ Item{
                          "Icon":icon,
                          "CState":stat} );*/
 
-        if(workareasManager.activityExists(source))
-            instanceOfWorkAreasList.addActivityOnLoading(source,stat);
+        if((!isAddingNewActivity)&&(workareasManager.activityExists(source)))
+            instanceOfWorkAreasList.addActivityOnLoading(source);
         else{
-            instanceOfWorkAreasList.addNewActivityF(source, stat);
 
-            for(var j=1; j<sessionParameters.numberOfDesktops; ++j){
+            instanceOfWorkAreasList.addNewActivity(source);
+
+            isAddingNewActivity = false;
+
+            for(var j=0; j<sessionParameters.numberOfDesktops; ++j){
                 instanceOfWorkAreasList.addWorkarea(source);
             }
+
+            isAddingNewActivity = false;
 
         }
 
@@ -120,7 +127,7 @@ Item{
 
             workareasManager.removeActivity(cod);
 
-            instanceOfWorkAreasList.removeActivity(cod);
+            //instanceOfWorkAreasList.removeActivity(cod);
         }
 
     }
@@ -137,12 +144,6 @@ Item{
 
         activityManager.stop(cod);
 
-    }
-
-
-    function updateWallpaperSlot(cod,pt){
-        if (pt !== "")
-            instanceOfWorkAreasList.setWallpaper(cod,pt);
     }
 
 
@@ -275,6 +276,7 @@ Item{
 
 
     function addNewActivity(){
+        isAddingNewActivity = true;
         activityManager.add(i18n("New Activity"));
     }
 

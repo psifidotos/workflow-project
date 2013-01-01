@@ -276,12 +276,15 @@ void ActivityManager::activityStateChanged()
 
     //qDebug() <<activity->id()<< "-" << state;
 
-    QMetaObject::invokeMethod(qmlActEngine, "setCState",
+    /*QMetaObject::invokeMethod(qmlActEngine, "setCState",
                               Q_ARG(QVariant, id),
-                              Q_ARG(QVariant, state));
+                              Q_ARG(QVariant, state));*/
+
+    ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(id));
+    if(activityObj)
+        activityObj->setCState(state);
 
     updateWallpaper(id);
-
 }
 
 QString ActivityManager::getCurrentActivityName()
@@ -414,10 +417,11 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
 void  ActivityManager::updateWallpaper(QString actId)
 {
     QString background = getWallpaper(actId);
-    if(background != "")
-        QMetaObject::invokeMethod(qmlActEngine, "updateWallpaperSlot",
-                                  Q_ARG(QVariant, actId),
-                                  Q_ARG(QVariant, background));
+    if(background != ""){
+        ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(actId));
+        if(activityObj)
+            activityObj->setBackground(background);
+    }
 }
 
 

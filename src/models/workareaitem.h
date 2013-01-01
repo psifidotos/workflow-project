@@ -38,6 +38,8 @@ public:
   void setTitle(QString);
   void setEnabled(bool);
 
+  WorkareaItem *copy(QObject *parent);
+
 private:
   QString m_code;
   QString m_title;

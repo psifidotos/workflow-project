@@ -22,8 +22,10 @@ WorkareasManager::~WorkareasManager()
     while (i.hasNext()) {
         i.next();
         QStringList *curWorks = i.value();
-        curWorks->clear();
-        delete curWorks;
+        if(curWorks){
+            curWorks->clear();
+            delete curWorks;
+        }
     }
     m_storedWorkareas.clear();
 
@@ -72,10 +74,13 @@ void WorkareasManager::removeActivity(QString id)
 {
     if (m_storedWorkareas.contains(id)){
         QStringList *ret = m_storedWorkareas[id];
-        ret->clear();
+        if(ret){
+            ret->clear();
+            delete ret;
+        }
 
         m_storedWorkareas.remove(id);
-        delete ret;
+
     }
 }
 
@@ -114,6 +119,28 @@ void WorkareasManager::removeWorkarea(QString id, int desktop)
     }
 }
 
+void WorkareasManager::cloneWorkareas(QString from, QString to)
+{
+    ListModel *modelFrom = static_cast<ListModel *>(m_actModel->workareas(from));
+    ListModel *modelTo = static_cast<ListModel *>(m_actModel->workareas(to));
+    QStringList *toAreas = m_storedWorkareas[to];
+
+    if(modelFrom && modelTo && toAreas){
+        modelTo->clear();
+        toAreas->clear();   ///This must be replaced in the future, all the model
+                            ///will be stored in xml file without QStringLists in RAM
+                            ///only an xml DOM model should only exist if any
+
+        for(int i=0; i<modelFrom->getCount(); i++){
+            WorkareaItem *res = static_cast<WorkareaItem *>(modelFrom->at(i));
+            if(res){
+                modelTo->appendRow(res->copy(modelTo));
+                toAreas->append(res->title());
+            }
+        }
+    }
+}
+
 bool WorkareasManager::activityExists(QString id)
 {
     return m_storedWorkareas.contains(id);
@@ -129,11 +156,13 @@ void WorkareasManager::saveWorkareas()
     while (i.hasNext()) {
         i.next();
         QStringList *curWorks = i.value();
-        writeActivities.append(i.key());
-        writeSizes.append(QString::number(curWorks->size()));
+        if(curWorks){
+            writeActivities.append(i.key());
+            writeSizes.append(QString::number(curWorks->size()));
 
-        for(int j=0; j<curWorks->size(); j++){
-            writeWorkareas.append(curWorks->value(j));
+            for(int j=0; j<curWorks->size(); j++){
+                writeWorkareas.append(curWorks->value(j));
+            }
         }
     }
 

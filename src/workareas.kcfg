@@ -3,11 +3,8 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <kcfgfile name="workareasrc"/>
-  <group name="Workareas">
-    <entry name="Orders" type="StringList">
-      <label>The activities orders</label>
-    </entry>
+  <kcfgfile name="workflowrc"/>
+  <group name="workflow">
     <entry name="Activities" type="StringList">
       <label>The various activities ids</label>
     </entry>

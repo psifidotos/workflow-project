@@ -27,6 +27,7 @@ public:
 
     Q_INVOKABLE void setWorkAreaWasClicked();
     Q_INVOKABLE void addWorkareaInLoading(QString, QString);
+    Q_INVOKABLE void cloneWorkareas(QString, QString);
 
 signals:
     void workAreaWasClicked();

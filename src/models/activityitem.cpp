@@ -10,16 +10,19 @@ ActivityItem::ActivityItem(const QString &code, const QString &name,
   m_name(name),
   m_icon(icon),
   m_cstate(cstate),
-  m_background(background)
+  m_background(background),
+  m_workareas(0)
 {
     m_workareas = new ListModel(new WorkareaItem,this);
 }
 
 ActivityItem::~ActivityItem()
 {
-//    if(m_workareas)
-  //      delete m_workareas;
-
+    //It crashes the model for some reason when closing the application...
+   // if(m_workareas){
+    //    m_workareas->clear();
+    //   delete m_workareas;
+   //}
 }
 
 void ActivityItem::setProperty(QString role,QVariant value)

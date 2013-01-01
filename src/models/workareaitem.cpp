@@ -10,6 +10,14 @@ WorkareaItem::WorkareaItem(const QString &code, const QString &title,
 {
 }
 
+WorkareaItem *WorkareaItem::copy(QObject *parent)
+{
+    WorkareaItem *res = new WorkareaItem(code(),
+                                         title(),
+                                         enabled(),
+                                         parent);
+    return res;
+}
 
 void WorkareaItem::setProperty(QString role,QVariant value)
 {
