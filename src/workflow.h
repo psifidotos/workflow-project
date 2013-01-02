@@ -74,8 +74,6 @@ public slots:
 
     void activeWindowChanged(WId);
 
-    void screensSizeChanged(int);
-
     void showingIconsDialog();
     void answeredIconDialog();
 

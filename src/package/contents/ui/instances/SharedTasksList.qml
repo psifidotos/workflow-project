@@ -196,8 +196,8 @@ Item{
     function setMaxDesktops(v){
         //it is called consequently for example to go from 2VDs to 4 VDs, it is going
         //2-3-4 from the relevant signals
-        console.log(v + " - "+instanceOfWorkAreasList.maxWorkareas());
-        var mxs = instanceOfWorkAreasList.maxWorkareas();
+        console.log(v + " - "+workareasManager.maxWorkareas);
+        var mxs = workareasManager.maxWorkareas;
         if (mxs>v)
             taskManager.slotAddDesktop();
         else if(mxs<v)
@@ -234,8 +234,4 @@ Item{
         setCurrentTask(cod);
     }
 
-
-    function setScreenRatio(sc){
-        mainView.setScreenRatio(sc);
-    }
 }

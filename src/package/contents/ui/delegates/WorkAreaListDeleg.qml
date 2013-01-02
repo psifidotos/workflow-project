@@ -21,7 +21,7 @@ Item{
     //   state: tCState === neededState ? "show" : "hide"
     state:"hide"
 
-    property int workAreaImageHeight: mainView.screenRatio*bWidth
+    property int workAreaImageHeight: sessionParameters.screenRatio*bWidth
     property int workAreaNameHeight:20 + mainView.scaleMeter/2
     property int realWorkAreaNameHeight: 0.8*workAreaNameHeight
 
@@ -46,7 +46,7 @@ Item{
        // width: workList.tCState === workList.neededState ? workList.bWidth : 0
         property string typeId : "workalistForActivity"
 
-        property int addedHeightForCurrent:(mainView.screenRatio*0.2*mainView.scaleMeter)
+        property int addedHeightForCurrent:(sessionParameters.screenRatio*0.2*mainView.scaleMeter)
 
         z:5
 

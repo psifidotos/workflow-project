@@ -58,8 +58,6 @@ Rectangle {
     signal preferredHeightChanged;
 
 
-    //Local properties//
-    property real screenRatio:0.75
 
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
@@ -193,22 +191,7 @@ Rectangle {
     function getDynLib(){
         return DynamAnim;
     }
-    /*-------------------Loading values-------------------*/
 
-    function setScreenRatio(sc){
-        mainView.screenRatio = sc;
-    }
-
-    /*
-    onMinimumWidthChanged:{
-        if(mainView.minimumWidth>mainView.width)
-            main{View.width = mainView.minimumWidth
-    }
-
-    onMinimumHeightChanged:{
-        if(mainView.minimumHeight>mainView.height)
-            mainView.height = mainView.minimumHeight
-    }*/
 
     /*---------- Central Controllers For Signals **********/
 

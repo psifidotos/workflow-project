@@ -166,7 +166,6 @@ void WorkFlow::init()
     mainLayout->addItem(declarativeWidget);
     m_mainWidget->setLayout(mainLayout);
 
-    screensSizeChanged(-1); //set Screen Ratio
 
     m_mainWidget->setMinimumSize(550,350);
     setPassivePopupSlot(m_storedParams->hideOnClick());
@@ -174,8 +173,6 @@ void WorkFlow::init()
     connect(this,SIGNAL(geometryChanged()),this,SLOT(geomChanged()));
 
     connect(KWindowSystem::self(),SIGNAL(activeWindowChanged(WId)),this,SLOT(activeWindowChanged(WId)));
-
-    connect(m_desktopWidget,SIGNAL(resized(int)),this,SLOT(screensSizeChanged(int)));
 
     connect(m_storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
     connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SLOT(configAccepted()));
@@ -315,15 +312,6 @@ void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
         paintIcon();
 }
 
-
-void WorkFlow::screensSizeChanged(int s)
-{
-    QRect screenRect = m_desktopWidget->screenGeometry(s);
-    float ratio = (float)screenRect.height()/(float)screenRect.width();
-    QMetaObject::invokeMethod(m_rootQMLObject, "setScreenRatio",
-                              Q_ARG(QVariant, ratio));
-
-}
 
 void WorkFlow::configDialogFinished()
 {
