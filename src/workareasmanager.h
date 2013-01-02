@@ -8,10 +8,11 @@ class ActivitiesEnhancedModel;
 class WorkareasManager : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int maxWorkareas READ maxWorkareas NOTIFY maxWorkareasChanged)
 public:
+
     explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
-
 
     ///Workareas Storing/Accessing
     Q_INVOKABLE void loadWorkareas();
@@ -29,15 +30,25 @@ public:
     Q_INVOKABLE void addWorkareaInLoading(QString, QString);
     Q_INVOKABLE void cloneWorkareas(QString, QString);
 
+    void init();
+
+    inline int maxWorkareas(){return m_maxWorkareas;}
+
 signals:
     void workAreaWasClicked();
+    void maxWorkareasChanged(int);
 
-public slots:
+private slots:
+    void setMaxWorkareas();
 
 private:
     QHash <QString,QStringList *> m_storedWorkareas;
 
     ActivitiesEnhancedModel *m_actModel;
+
+    int m_maxWorkareas;
+
+
 };
 
 #endif // WORKAREASMANAGER_H

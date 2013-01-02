@@ -40,9 +40,9 @@ Item{
         return model.workareas(cod).count;
     }
 
-    function copyWorkareas(from, to){
-            workareasManager.cloneWorkareas(from,to);
-    }
+//    function copyWorkareas(from, to){
+  //          workareasManager.cloneWorkareas(from,to);
+   // }
 
 
     function removeWorkArea(actCode,desktop)
@@ -99,7 +99,7 @@ Item{
         addWorkareaWithName(actCode,ndesk);
 
     }
-
+/*
     function cloneActivity(cod,ncod){
         var ind = getIndexFor(cod);
         if(ind>-1){
@@ -113,7 +113,7 @@ Item{
                          );
         }
 
-    }
+    }*/
 
 
     function addNewActivity(cod){

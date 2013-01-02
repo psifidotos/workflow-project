@@ -25,7 +25,7 @@ class ActivityManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit ActivityManager(QObject *parent = 0);
+    explicit ActivityManager(ActivitiesEnhancedModel *,QObject *parent = 0);
     ~ActivityManager();
 
     //  Q_INVOKABLE void createActivityFromScript(const QString &script, const QString &name, const QString &icon, const QStringList &startupApps);
@@ -48,9 +48,9 @@ public:
     Q_INVOKABLE void showWidgetsExplorer(QString);
     Q_INVOKABLE void cloneActivity(QString);
 
+    void loadActivitiesInModel();
 
-
-    void setQMlObject(QObject *,Plasma::Containment *, ActivitiesEnhancedModel *);
+    void setQMlObject(QObject *,Plasma::Containment *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -59,27 +59,31 @@ public:
 
 signals:
     void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
-    void activityUpdatedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void showedIconDialog();
     void answeredIconDialog();
     void hidePopup();
     void currentActivityInformationChanged(QString name, QString icon);
 
+    void activityAdded(QString);
+    void activityRemoved(QString);
+
+    void cloningStarted();
+    void cloningEnded();
+    void cloningCopyWorkareas(QString from, QString to);
+
 public slots:
-    void activityAdded(QString id);
-    void activityRemoved(QString id);
-    void activityDataChanged();
-    void activityStateChanged();
-    void currentActivityChanged(const QString &);
+    void activityAddedSlot(QString id);
+    void activityRemovedSlot(QString id);
+    void activityUpdatedSlot();
+    void activityStateChangedSlot();
+    void currentActivityChangedSlot(const QString &);
 
     void updateWallpaper(QString);
 
     //SIGNALS FROM THE PLUGINS
     void showWidgetsEndedSlot();
 
-    void cloningStartedSlot();
     void cloningEndedSlot();
-    void copyWorkareasSlot(QString,QString);
 
     void changeWorkareaEnded(QString, int);
 
@@ -107,6 +111,10 @@ private:
     bool m_firstTime;
 
     ActivitiesEnhancedModel *m_actModel;
+
+    QString stateToString(int);
+    QString nextRunningActivity();
+    QString previousRunningActivity();
 };
 
 #endif // ACTIVITYMANAGER_H

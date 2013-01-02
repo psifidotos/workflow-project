@@ -7,6 +7,7 @@
 #include <QIODevice>
 #include <QAction>
 #include <QGraphicsView>
+#include <QModelIndex>
 
 
 #include <KIconDialog>
@@ -33,8 +34,9 @@
 
 #include "models/activitiesenhancedmodel.h"
 #include "models/activityitem.h"
+#include "models/listitem.h"
 
-ActivityManager::ActivityManager(QObject *parent) :
+ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
     m_mainContainment(0),
@@ -43,7 +45,8 @@ ActivityManager::ActivityManager(QObject *parent) :
     m_plCloneActivity(0),
     m_plChangeWorkarea(0),
     m_plAddActivity(0),
-    m_firstTime(true)
+    m_firstTime(true),
+    m_actModel(model)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
 }
@@ -62,13 +65,11 @@ ActivityManager::~ActivityManager()
         delete m_plAddActivity;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment, ActivitiesEnhancedModel *activitiesModel)
+void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment)
 {
     qmlActEngine = obj;
 
     m_mainContainment = containment;
-
-    m_actModel = activitiesModel;
 
     if(m_mainContainment)
         if(m_mainContainment->corona())
@@ -78,23 +79,20 @@ void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment
     connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
 
-    connect(this, SIGNAL(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlActEngine,SLOT(activityUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
+    connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
+    connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
+    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
 
-
-    QStringList activities = m_activitiesCtrl->listActivities();
-
-    foreach (const QString &id, activities) {
-        activityAdded(id);
-    }
-
-    connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAdded(QString)));
-    connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemoved(QString)));
-    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChanged(QString)));
-
+    loadActivitiesInModel();
 }
 
+void ActivityManager::loadActivitiesInModel()
+{
+    QStringList activities = m_activitiesCtrl->listActivities();
 
+    foreach (const QString &id, activities)
+        activityAddedSlot(id);
+}
 
 QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
 {
@@ -112,28 +110,16 @@ void ActivityManager::showWidgetsEndedSlot()
 }
 
 
-void ActivityManager::cloningStartedSlot()
-{
-    QMetaObject::invokeMethod(qmlActEngine, "cloningStartedSlot");
-}
 
 void ActivityManager::cloningEndedSlot()
 {
-    QMetaObject::invokeMethod(qmlActEngine, "cloningEndedSlot");
+    emit cloningEnded();
+
     if(m_plCloneActivity){
         delete m_plCloneActivity;
         m_plCloneActivity = 0;
     }
 }
-
-
-void ActivityManager::copyWorkareasSlot(QString from,QString to)
-{
-    QMetaObject::invokeMethod(qmlActEngine, "copyWorkareasSlot",
-                              Q_ARG(QVariant, from),
-                              Q_ARG(QVariant, to));
-}
-
 
 void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
 {
@@ -155,29 +141,12 @@ void ActivityManager::addActivityEnded()
 }
 
 
-void ActivityManager::activityAdded(QString id) {
+void ActivityManager::activityAddedSlot(QString id) {
 
     KActivities::Info *activity = new KActivities::Info(id, this);
 
 
-    QString state;
-    switch (activity->state()) {
-    case KActivities::Info::Running:
-        state = "Running";
-        break;
-    case KActivities::Info::Starting:
-        state = "Starting";
-        break;
-    case KActivities::Info::Stopping:
-        state = "Stopping";
-        break;
-    case KActivities::Info::Stopped:
-        state = "Stopped";
-        break;
-    case KActivities::Info::Invalid:
-    default:
-        state = "Invalid";
-    }
+    QString state = stateToString(activity->state());
 
     m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,"",m_actModel));
 
@@ -188,9 +157,9 @@ void ActivityManager::activityAdded(QString id) {
                          QVariant(m_activitiesCtrl->currentActivity() == id));
 
 
-
-    connect(activity, SIGNAL(infoChanged()), this, SLOT(activityDataChanged()));
-    connect(activity, SIGNAL(stateChanged(KActivities::Info::State)), this, SLOT(activityStateChanged()));
+    connect(activity, SIGNAL(infoChanged()), this, SLOT(activityUpdatedSlot()));
+    connect(activity, SIGNAL(stateChanged(KActivities::Info::State)),
+            this, SLOT(activityStateChangedSlot()) );
 
     if((m_activitiesCtrl->currentActivity() == id) &&
             (m_firstTime)){
@@ -201,84 +170,45 @@ void ActivityManager::activityAdded(QString id) {
 
     updateWallpaper(id);
 
+    emit activityAdded(id);
 }
 
-void ActivityManager::activityRemoved(QString id) {
+void ActivityManager::activityRemovedSlot(QString id) {
 
     QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
                               Q_ARG(QVariant, id));
 
+    emit activityRemoved(id);
 }
 
-void ActivityManager::activityDataChanged()
+void ActivityManager::activityUpdatedSlot()
 {
     KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
     if (!activity) {
         return;
     }
 
-    QString state;
-    switch (activity->state()) {
-    case KActivities::Info::Running:
-        state = "Running";
-        break;
-    case KActivities::Info::Starting:
-        state = "Starting";
-        break;
-    case KActivities::Info::Stopping:
-        state = "Stopping";
-        break;
-    case KActivities::Info::Stopped:
-        state = "Stopped";
-        break;
-    case KActivities::Info::Invalid:
-    default:
-        state = "Invalid";
+    QString state = stateToString(activity->state());
+
+    ActivityItem *activityObj = static_cast<ActivityItem *>(m_actModel->find(activity->id()));
+    if(activityObj){
+        activityObj->setName(activity->name());
+        activityObj->setIcon(activity->icon());
+        activityObj->setCState(state);
     }
-
-
-
-    emit activityUpdatedIn(QVariant(activity->id()),
-                           QVariant(activity->name()),
-                           QVariant(activity->icon()),
-                           QVariant(state),
-                           QVariant(m_activitiesCtrl->currentActivity() == activity->id()));
 
     emit currentActivityInformationChanged(activity->name(),
                                            activity->icon());
 }
 
-void ActivityManager::activityStateChanged()
+void ActivityManager::activityStateChangedSlot()
 {
     KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
     const QString id = activity->id();
     if (!activity) {
         return;
     }
-    QString state;
-    switch (activity->state()) {
-    case KActivities::Info::Running:
-        state = "Running";
-        break;
-    case KActivities::Info::Starting:
-        state = "Starting";
-        break;
-    case KActivities::Info::Stopping:
-        state = "Stopping";
-        break;
-    case KActivities::Info::Stopped:
-        state = "Stopped";
-        break;
-    case KActivities::Info::Invalid:
-    default:
-        state = "Invalid";
-    }
-
-    //qDebug() <<activity->id()<< "-" << state;
-
-    /*QMetaObject::invokeMethod(qmlActEngine, "setCState",
-                              Q_ARG(QVariant, id),
-                              Q_ARG(QVariant, state));*/
+    QString state = stateToString(activity->state());
 
     ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(id));
     if(activityObj)
@@ -286,6 +216,18 @@ void ActivityManager::activityStateChanged()
 
     updateWallpaper(id);
 }
+
+
+void ActivityManager::currentActivityChangedSlot(const QString &id)
+{
+    updateWallpaper(id);
+
+    KActivities::Info *activity = new KActivities::Info(id, this);
+    emit currentActivityInformationChanged(activity->name(),
+                                           activity->icon());
+}
+
+/////////SLOTS
 
 QString ActivityManager::getCurrentActivityName()
 {
@@ -300,26 +242,23 @@ QString ActivityManager::getCurrentActivityIcon()
 }
 
 
-
-/////////SLOTS
 void ActivityManager::setCurrentNextActivity()
 {
-    QMetaObject::invokeMethod(qmlActEngine, "slotSetCurrentNextActivity");
+    QString nId = nextRunningActivity();
+
+    if(nId != "")
+        setCurrent(nId);
 }
 
 void ActivityManager::setCurrentPreviousActivity()
 {
-    QMetaObject::invokeMethod(qmlActEngine, "slotSetCurrentPreviousActivity");
+    QString pId = previousRunningActivity();
+
+    if(pId != "")
+        setCurrent(pId);
+
 }
 
-void ActivityManager::currentActivityChanged(const QString &id)
-{
-    updateWallpaper(id);
-
-    KActivities::Info *activity = new KActivities::Info(id, this);
-    emit currentActivityInformationChanged(activity->name(),
-                                           activity->icon());
-}
 
 ////////////
 
@@ -414,6 +353,76 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
     return 0;
 }
 
+
+QString ActivityManager::stateToString(int stateNum)
+{
+    QString state="";
+
+    switch (stateNum) {
+    case KActivities::Info::Running:
+        state = "Running";
+        break;
+    case KActivities::Info::Starting:
+        state = "Starting";
+        break;
+    case KActivities::Info::Stopping:
+        state = "Stopping";
+        break;
+    case KActivities::Info::Stopped:
+        state = "Stopped";
+        break;
+    case KActivities::Info::Invalid:
+    default:
+        state = "Invalid";
+    }
+
+    return state;
+}
+
+
+QString ActivityManager::nextRunningActivity()
+{
+    ListItem *activity = m_actModel->find(m_activitiesCtrl->currentActivity());
+    int pos =  (m_actModel->indexFromItem(activity)).row();
+
+    if(pos>-1){
+        for(int i=pos+1; i<m_actModel->getCount(); ++i){
+            ActivityItem *activityTemp = static_cast<ActivityItem *>(m_actModel->at(i));
+            if ( (activityTemp) && (activityTemp->cstate() == "Running"))
+              return activityTemp->code();
+        }
+        for(int j=0; j<pos; ++j){
+            ActivityItem *activityTemp2 = static_cast<ActivityItem *>(m_actModel->at(j));
+            if ( (activityTemp2) && (activityTemp2->cstate() == "Running"))
+              return activityTemp2->code();
+        }
+    }
+
+    return "";
+}
+
+QString ActivityManager::previousRunningActivity()
+{
+    ListItem *activity = m_actModel->find(m_activitiesCtrl->currentActivity());
+    int pos =  (m_actModel->indexFromItem(activity)).row();
+
+    if(pos>-1){
+        for(int i=pos-1; i>=0; i--){
+            ActivityItem *activityTemp = static_cast<ActivityItem *>(m_actModel->at(i));
+            if ( (activityTemp) && (activityTemp->cstate() == "Running"))
+              return activityTemp->code();
+        }
+        for(int j=m_actModel->getCount()-1; j>pos; j--){
+            ActivityItem *activityTemp2 = static_cast<ActivityItem *>(m_actModel->at(j));
+            if ( (activityTemp2) && (activityTemp2->cstate() == "Running"))
+              return activityTemp2->code();
+        }
+    }
+    return "";
+}
+
+///////////////Plugins
+
 void  ActivityManager::updateWallpaper(QString actId)
 {
     QString background = getWallpaper(actId);
@@ -448,9 +457,9 @@ void ActivityManager::cloneActivity(QString actId)
     if(!m_plCloneActivity){
         m_plCloneActivity = new PluginCloneActivity(this, m_activitiesCtrl);
 
-        connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SLOT(cloningStartedSlot()));
+        connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SIGNAL(cloningStarted()));
         connect(m_plCloneActivity, SIGNAL(cloningEnded()),this,SLOT(cloningEndedSlot()));
-        connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SLOT(copyWorkareasSlot(QString,QString)));
+        connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SIGNAL(cloningCopyWorkareas(QString,QString)));
         connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SLOT(updateWallpaper(QString)));
 
         m_plCloneActivity->execute(actId);

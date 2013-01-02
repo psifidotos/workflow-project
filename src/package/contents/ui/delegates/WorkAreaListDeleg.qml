@@ -27,8 +27,7 @@ Item{
 
     property int bWidth: mainView.workareaWidth
 
-    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.01)
-
+    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.02)
 
     //    width: bWidth
     height: bHeight+addedHeight

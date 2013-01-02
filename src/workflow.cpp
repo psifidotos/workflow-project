@@ -64,7 +64,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     setHasConfigurationInterface(true);
     setPopupIcon("preferences-activities");
 
-    m_actManager = new ActivityManager(this);
     m_taskManager = new PTaskManager(this);
 
     m_findPopupWid = false;
@@ -118,6 +117,7 @@ void WorkFlow::init()
 
         m_activitiesModel = new ActivitiesEnhancedModel(qApp);
 
+        m_actManager = new ActivityManager(m_activitiesModel,this);
         m_workareasManager = new WorkareasManager(m_activitiesModel, this);
 
         ctxt->setContextProperty("activitiesModelNew",m_activitiesModel);
@@ -135,7 +135,7 @@ void WorkFlow::init()
         if(qmlActEng){
             connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
                     this, SLOT(setActivityNameIconSlot(QString,QString)));
-            m_actManager->setQMlObject(qmlActEng, containment(),m_activitiesModel);
+            m_actManager->setQMlObject(qmlActEng, containment());
             connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
             connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
         }

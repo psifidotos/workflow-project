@@ -26,52 +26,37 @@ Item{
 
 
     //Cloning Signals for interaction with the interface
-    function copyWorkareasSlot(from, to){
-        instanceOfWorkAreasList.copyWorkareas(from,to);
-    }
+    Connections{
+        target:activityManager
+        onCloningStarted:{
+            if(storedParameters.windowsPreviews === true){
+                previewsWereEnabled = true;
+                storedParameters.windowsPreviews = false;
+            }
+            else
+                previewsWereEnabled = false;
 
-    function cloningStartedSlot(){
-        if(storedParameters.windowsPreviews === true){
-            previewsWereEnabled = true;
-            storedParameters.windowsPreviews = false;
+            mainView.getDynLib().showBusyIndicatorDialog();
         }
-        else
-            previewsWereEnabled = false;
 
-        mainView.getDynLib().showBusyIndicatorDialog();
+        onCloningCopyWorkareas:workareasManager.cloneWorkareas(from,to);
+
+        onCloningEnded:{
+            mainView.getDynLib().deleteBusyIndicatorDialog();
+
+            if(previewsWereEnabled === true)
+                storedParameters.windowsPreviews = true;
+            else
+                storedParameters.windowsPreviews = false;
+        }
     }
 
-    function cloningEndedSlot(){
-        mainView.getDynLib().deleteBusyIndicatorDialog();
 
-        if(previewsWereEnabled === true)
-            storedParameters.windowsPreviews = true;
-        else
-            storedParameters.windowsPreviews = false;
-    }
-    /////////////////////////////////////////////
-
-
-    function setCState(cod, val){
-       /* var ind = getIndexFor(cod);
-        if (ind>-1){
-
-            model.setProperty(ind,"CState",val);
-
-            instanceOfWorkAreasList.setCState(cod,val);
-        }*/
-    }
 
     function activityAddedIn(source,title,icon,stat,cur)
     {
         if (stat === "")
             stat = "Running";
-
-     /*   model.append( {  "code": source,
-                         "Current":cur,
-                         "Name":title,
-                         "Icon":icon,
-                         "CState":stat} );*/
 
         if((!isAddingNewActivity)&&(workareasManager.activityExists(source)))
             instanceOfWorkAreasList.addActivityOnLoading(source);
@@ -89,9 +74,6 @@ Item{
 
         }
 
-        //////
-
-      //  setCState(source,stat);
     }
 
     function setIcon(cod, val){
@@ -101,21 +83,6 @@ Item{
 
     function chooseIcon(cod){
         activityManager.chooseIcon(cod);
-    }
-
-    function activityUpdatedIn(source,title,icon,stat,cur)
-    {
-        if (stat === "")
-            stat = "Running";
-
-        var ind = getIndexFor(source);
-        if(ind>-1){
-            model.setProperty(ind,"Name",title);
-            model.setProperty(ind,"Icon",icon);
-            setCState(source,stat);
-            //   setCurrentIns(source,cur);
-        }
-
     }
 
     function activityRemovedIn(cod){
@@ -155,65 +122,6 @@ Item{
         activityManager.setName(cod,title);
     }
 
-    function getFirstRunningActivityId(){
-        for(var i=0; i<model.count; ++i){
-            var obj = model.get(i);
-            if (obj.CState === "Running")
-                return obj.code;
-        }
-
-        return "";
-    }
-
-    function getFirstRunningIdAfter(cd){
-        var ind = getIndexFor(cd);
-        if(ind>-1){
-            for(var i=ind+1; i<model.count; ++i){
-                var obj = model.get(i);
-                if (obj.CState === "Running")
-                    return obj.code;
-            }
-            for(var j=0; j<ind; ++j){
-                var obj2 = model.get(j);
-                if (obj2.CState === "Running")
-                    return obj2.code;
-            }
-        }
-
-        return "";
-    }
-
-    function getFirstRunningIdBefore(cd){
-        var ind = getIndexFor(cd);
-        if(ind>-1){
-            for(var i=ind-1; i>=0; i--){
-                var obj = model.get(i);
-                if (obj.CState === "Running")
-                    return obj.code;
-            }
-            for(var j=model.count-1; j>ind; j--){
-                var obj2 = model.get(j);
-                if (obj2.CState === "Running")
-                    return obj2.code;
-            }
-        }
-
-        return "";
-    }
-
-    function slotSetCurrentNextActivity(){
-        var nId = getFirstRunningIdAfter(sessionParameters.currentActivity);
-
-        if(nId !== "")
-            activityManager.setCurrent(nId);
-    }
-
-    function slotSetCurrentPreviousActivity(){
-        var nId = getFirstRunningIdBefore(sessionParameters.currentActivity);
-
-        if(nId !== "")
-            activityManager.setCurrent(nId);
-    }
 
     function getCState(cod){
         var ind = getIndexFor(cod);

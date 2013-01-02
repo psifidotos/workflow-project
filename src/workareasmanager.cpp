@@ -8,9 +8,11 @@
 
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
-    m_actModel(model)
+    m_actModel(model),
+    m_maxWorkareas(0)
 {
     loadWorkareas();
+    init();
 }
 
 WorkareasManager::~WorkareasManager()
@@ -31,6 +33,11 @@ WorkareasManager::~WorkareasManager()
 
 }
 
+void WorkareasManager::init()
+{
+   // not correct it must be the workareas list model maybe onactivityadded signal
+   // connect(m_actModel,SIGNAL(countChanged(int)), this, SLOT(setMaxWorkareas()));
+}
 
 QStringList WorkareasManager::getWorkAreaNames(QString id)
 {
@@ -202,5 +209,24 @@ void WorkareasManager::setWorkAreaWasClicked()
     emit workAreaWasClicked();
 }
 
+
+void WorkareasManager::setMaxWorkareas()
+{
+    int prevmax = m_maxWorkareas;
+    int max = 0;
+
+    for(int i=0; i<m_actModel->getCount(); i++){
+        ListItem *item = m_actModel->at(i);
+        ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(item->id()));
+        if(max<workareas->getCount())
+            max = workareas->getCount();
+    }
+
+    if (max != prevmax){
+        m_maxWorkareas = max;
+        emit maxWorkareasChanged(m_maxWorkareas);
+    }
+
+}
 
 #include "workareasmanager.moc"
