@@ -49,7 +49,7 @@ DialogTemplate2{
     Connections {
         target: clonDialog
         onClickedOk:{
-            instanceOfActivitiesList.cloneActivity(activityCode);
+            activityManager.cloneActivity(activityCode);
             completed();
         }
 

@@ -41,7 +41,7 @@ void WorkareasManager::init()
    // connect(m_actModel,SIGNAL(countChanged(int)), this, SLOT(setMaxWorkareas()));
 }
 
-QStringList WorkareasManager::getWorkAreaNames(QString id)
+/*QStringList WorkareasManager::getWorkAreaNames(QString id)
 {
     QStringList *ret = m_storedWorkareas[id];
 
@@ -51,7 +51,7 @@ QStringList WorkareasManager::getWorkAreaNames(QString id)
             ret2.append(ret->value(i));
     }
     return ret2;
-}
+}*/
 
 void WorkareasManager::addWorkArea(QString id, QString name)
 {
@@ -79,27 +79,17 @@ void WorkareasManager::addWorkareaInLoading(QString id, QString name)
         model->appendRow(new WorkareaItem(name,name,true,model));
 }
 
-/*
-void WorkareasManager::addEmptyActivity(QString id)
+QString WorkareasManager::name(QString id, int desktop)
 {
-    QStringList *newLst = new QStringList();
-    m_storedWorkareas[id] = newLst;
-}
-
-void WorkareasManager::removeActivity(QString id)
-{
-    if (m_storedWorkareas.contains(id)){
-        QStringList *ret = m_storedWorkareas[id];
-        if(ret){
-            ret->clear();
-            delete ret;
-        }
-
-        m_storedWorkareas.remove(id);
-
+    ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
+    if(model){
+        WorkareaItem *workarea = static_cast<WorkareaItem *>(model->at(desktop-1));
+        return workarea->title();
     }
+
+    return "";
 }
-*/
+
 
 void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
 {

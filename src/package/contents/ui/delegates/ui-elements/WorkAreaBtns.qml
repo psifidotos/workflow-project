@@ -35,7 +35,7 @@ Item{
         }
 
         onClicked: {
-            instanceOfWorkAreasList.removeWorkArea(mainWorkArea.actCode,mainWorkArea.desktop);
+            workareasManager.removeWorkarea(mainWorkArea.actCode,mainWorkArea.desktop);
         }
 
         onEntered: {

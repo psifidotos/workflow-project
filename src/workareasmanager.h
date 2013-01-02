@@ -9,26 +9,25 @@ class WorkareasManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(int maxWorkareas READ maxWorkareas NOTIFY maxWorkareasChanged)
-public:
 
+public:
     explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
 
     ///Workareas Storing/Accessing
-    Q_INVOKABLE void loadWorkareas();
-    Q_INVOKABLE void saveWorkareas();
-    Q_INVOKABLE QStringList getWorkAreaNames(QString);
+    void loadWorkareas();
+    void saveWorkareas();
+
+
     Q_INVOKABLE void addWorkArea(QString id, QString name);
-//    Q_INVOKABLE void addEmptyActivity(QString id);
-//    Q_INVOKABLE void removeActivity(QString id);
-    Q_INVOKABLE bool activityExists(QString id);
+
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
-    Q_INVOKABLE int activitySize(QString id);
 
     Q_INVOKABLE void setWorkAreaWasClicked();
     Q_INVOKABLE void addWorkareaInLoading(QString, QString);
-    Q_INVOKABLE void cloneWorkareas(QString, QString);
+
+    Q_INVOKABLE QString name(QString, int);
 
     void init();
 
@@ -41,6 +40,7 @@ signals:
 public slots:
     void activityAddedSlot(QString);
     void activityRemovedSlot(QString);
+    void cloneWorkareas(QString, QString);
 
 private slots:
     void setMaxWorkareas();
@@ -52,7 +52,8 @@ private:
 
     int m_maxWorkareas;
 
-
+    bool activityExists(QString id);
+    int activitySize(QString id);
 };
 
 #endif // WORKAREASMANAGER_H

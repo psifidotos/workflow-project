@@ -116,7 +116,7 @@ Item{
 
             onClicked: {
                 if (storedParameters.lockActivities === false)
-                    instanceOfActivitiesList.chooseIcon(ccode);
+                    activityManager.chooseIcon(ccode);
                 else
                     activityManager.setCurrent(ccode);
             }

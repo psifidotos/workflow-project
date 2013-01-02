@@ -52,7 +52,7 @@ Item{
 
         interactive:false
 
-        model:instanceOfWorkAreasList.model.workareas(code)
+        model: activitiesModelEnhanced.workareas(code)
 
         orientation:ListView.Vertical
 
@@ -77,7 +77,7 @@ Item{
             anchors.fill: parent
 
             onClicked:{
-                instanceOfWorkAreasList.addWorkarea(code);
+                workareasManager.addWorkArea(code,"");
             }
         }
 

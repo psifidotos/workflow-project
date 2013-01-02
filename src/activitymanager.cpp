@@ -224,6 +224,23 @@ void ActivityManager::currentActivityChangedSlot(const QString &id)
                                            activity->icon());
 }
 
+
+QString ActivityManager::name(QString id)
+{
+    ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(id));
+    if(activityObj)
+        return activityObj->name();
+    return "";
+}
+
+QString ActivityManager::cstate(QString id)
+{
+    ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(id));
+    if(activityObj)
+        return activityObj->cstate();
+    return "";
+}
+
 /////////SLOTS
 
 QString ActivityManager::getCurrentActivityName()

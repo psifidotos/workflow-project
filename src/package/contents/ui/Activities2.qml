@@ -69,10 +69,6 @@ Rectangle {
         objectName: "instActivitiesEngine"
     }
 
-    SharedWorkareasList{
-        id:instanceOfWorkAreasList
-    }
-
     SharedTasksList{
         id:instanceOfTasksList
         objectName: "instTasksEngine"

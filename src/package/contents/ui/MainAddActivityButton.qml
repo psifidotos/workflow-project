@@ -120,7 +120,7 @@ Rectangle{
         }
 
         onClicked: {
-            instanceOfActivitiesList.addNewActivity();
+            activityManager.add(i18n("New Activity"));
         }
 
     }

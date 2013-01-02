@@ -196,7 +196,7 @@ Item{
     function setMaxDesktops(v){
         //it is called consequently for example to go from 2VDs to 4 VDs, it is going
         //2-3-4 from the relevant signals
-        console.log(v + " - "+workareasManager.maxWorkareas);
+
         var mxs = workareasManager.maxWorkareas;
         if (mxs>v)
             taskManager.slotAddDesktop();
@@ -204,11 +204,11 @@ Item{
             taskManager.slotRemoveDesktop();
 
         //It is used when adding a Workarea in bigger length than the VDs
-        if(instanceOfWorkAreasList.activitysNewWorkAreaName !== ""){
+/*        if(instanceOfWorkAreasList.activitysNewWorkAreaName !== ""){
             var ndesk = taskManager.getDesktopName(v);
             instanceOfWorkAreasList.setWorkareaTitle(instanceOfWorkAreasList.activitysNewWorkAreaName,v,ndesk);
             instanceOfWorkAreasList.activitysNewWorkAreaName = "";
-        }
+        }*/
 
     }
 

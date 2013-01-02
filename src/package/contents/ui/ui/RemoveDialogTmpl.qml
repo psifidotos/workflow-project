@@ -50,15 +50,12 @@ DialogTemplate2{
     Connections {
         target: rmvDialog
         onClickedOk:{
-       //     activityManager.remove(rmvDialog.activityCode);
-       //     instanceOfActivitiesList.activityRemovedIn(rmvDialog.activityCode);
-            instanceOfActivitiesList.removeActivity(activityCode);
+            activityManager.remove(activityCode);;
             completed();
         }
 
         onClickedCancel:{
             completed();
-            ///
         }
     }
 }

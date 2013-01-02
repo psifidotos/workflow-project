@@ -163,7 +163,7 @@ Rectangle {
             property int shownActivities: 0
 
             interactive:false
-            model: instanceOfActivitiesList.model
+            model: activitiesModelEnhanced
 
             delegate: ActivityStoppedDeleg{
             }

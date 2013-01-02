@@ -331,8 +331,8 @@ DialogTemplate2{
         activityCode = act;
         desktop = desk;
 
-        deskDialog.dialogTitle = instanceOfActivitiesList.getActivityName(act) + " - "+
-                instanceOfWorkAreasList.getWorkareaName(act,desk);
+        deskDialog.dialogTitle = activityManager.name(act) + " - "+
+                workareasManager.name(act,desk);
 
         instanceOfTasksDesktopList.loadDesktop(act,desk);
 

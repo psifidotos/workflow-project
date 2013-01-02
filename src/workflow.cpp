@@ -136,7 +136,7 @@ void WorkFlow::init()
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
-        ctxt->setContextProperty("activitiesModelNew",m_workflowManager->model());
+        ctxt->setContextProperty("activitiesModelEnhanced",m_workflowManager->model());
         ctxt->setContextProperty("activityManager", m_workflowManager->activityManager());
         ctxt->setContextProperty("workareasManager", m_workflowManager->workareasManager());
         ctxt->setContextProperty("taskManager", m_taskManager);

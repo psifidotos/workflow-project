@@ -73,7 +73,7 @@ QIconItem{
             if (desktopPos < 0)
                 desktopPos = sessionParameters.currentDesktop - 1;
 
-            var actCState = instanceOfActivitiesList.getCState(activityCode);
+            var actCState = activityManager.cstate(activityCode);
 /*
             if (actCState === "Stopped"){
 
