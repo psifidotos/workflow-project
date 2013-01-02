@@ -19,8 +19,8 @@ public:
     Q_INVOKABLE void saveWorkareas();
     Q_INVOKABLE QStringList getWorkAreaNames(QString);
     Q_INVOKABLE void addWorkArea(QString id, QString name);
-    Q_INVOKABLE void addEmptyActivity(QString id);
-    Q_INVOKABLE void removeActivity(QString id);
+//    Q_INVOKABLE void addEmptyActivity(QString id);
+//    Q_INVOKABLE void removeActivity(QString id);
     Q_INVOKABLE bool activityExists(QString id);
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
@@ -37,6 +37,10 @@ public:
 signals:
     void workAreaWasClicked();
     void maxWorkareasChanged(int);
+
+public slots:
+    void activityAddedSlot(QString);
+    void activityRemovedSlot(QString);
 
 private slots:
     void setMaxWorkareas();

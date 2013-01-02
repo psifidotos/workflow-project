@@ -46,6 +46,7 @@ ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent)
     m_plChangeWorkarea(0),
     m_plAddActivity(0),
     m_firstTime(true),
+    m_nextDefaultWallpaper(0),
     m_actModel(model)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
@@ -65,19 +66,14 @@ ActivityManager::~ActivityManager()
         delete m_plAddActivity;
 }
 
-void ActivityManager::setQMlObject(QObject *obj,Plasma::Containment *containment)
+void ActivityManager::setContainment(Plasma::Containment *containment)
 {
-    qmlActEngine = obj;
-
     m_mainContainment = containment;
 
     if(m_mainContainment)
         if(m_mainContainment->corona())
             m_corona = m_mainContainment->corona();
 
-
-    connect(this, SIGNAL(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlActEngine,SLOT(activityAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant)));
 
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
@@ -148,13 +144,11 @@ void ActivityManager::activityAddedSlot(QString id) {
 
     QString state = stateToString(activity->state());
 
-    m_actModel->appendRow(new ActivityItem(id,activity->name(),activity->icon(),state,"",m_actModel));
-
-    emit activityAddedIn(QVariant(id),
-                         QVariant(activity->name()),
-                         QVariant(activity->icon()),
-                         QVariant(state),
-                         QVariant(m_activitiesCtrl->currentActivity() == id));
+    m_actModel->appendRow(new ActivityItem(id,activity->name(),
+                                           activity->icon(),
+                                           state,
+                                           getNextDefWallpaper(),
+                                           m_actModel));
 
 
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityUpdatedSlot()));
@@ -175,10 +169,13 @@ void ActivityManager::activityAddedSlot(QString id) {
 
 void ActivityManager::activityRemovedSlot(QString id) {
 
-    QMetaObject::invokeMethod(qmlActEngine, "activityRemovedIn",
-                              Q_ARG(QVariant, id));
+    ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->find(id));
+    if(activity){
+        QModelIndex ind = m_actModel->indexFromItem(activity);
+        m_actModel->removeRow(ind.row(), QModelIndex());
 
-    emit activityRemoved(id);
+        emit activityRemoved(id);
+    }
 }
 
 void ActivityManager::activityUpdatedSlot()
@@ -353,6 +350,22 @@ Plasma::Containment *ActivityManager::getContainment(QString actId)
     return 0;
 }
 
+QString ActivityManager::getNextDefWallpaper(){
+    QString newwall="";
+    if (m_nextDefaultWallpaper % 4 == 0)
+        newwall = "../../Images/backgrounds/emptydesk1.png";
+    else if (m_nextDefaultWallpaper % 4 == 1)
+        newwall = "../../Images/backgrounds/emptydesk2.png";
+    else if (m_nextDefaultWallpaper % 4 == 2)
+        newwall = "../../Images/backgrounds/emptydesk3.png";
+    else if (m_nextDefaultWallpaper % 4 == 3)
+        newwall = "../../Images/backgrounds/emptydesk4.png";
+
+    m_nextDefaultWallpaper++;
+
+    return newwall;
+}
+
 
 QString ActivityManager::stateToString(int stateNum)
 {
@@ -479,8 +492,6 @@ void ActivityManager::setCurrentActivityAndDesktop(QString actId, int desktop)
         m_plChangeWorkarea->execute(actId, desktop);
 
 }
-
-
 
 
 #include "activitymanager.moc"

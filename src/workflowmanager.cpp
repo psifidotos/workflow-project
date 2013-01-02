@@ -6,16 +6,16 @@
 
 #include "models/activityitem.h"
 
-void WorkflowManager::WorkflowManager(QObject *parent):
+WorkflowManager::WorkflowManager(ActivitiesEnhancedModel * model,QObject *parent) :
     QObject(parent),
     m_activityManager(0),
     m_workareasManager(0),
-    m_model(0)
+    m_model(model)
 {
-    m_model = new ActivitiesEnhancedModel(new ActivityItem,this);
-
     m_activityManager = new ActivityManager(m_model,this);
     m_workareasManager = new WorkareasManager(m_model, this);
+
+    init();
 }
 
 WorkflowManager::~WorkflowManager()
@@ -24,8 +24,12 @@ WorkflowManager::~WorkflowManager()
         delete m_activityManager;
     if(m_workareasManager)
         delete m_workareasManager;
-    if(m_model)
-        delete m_model;
+}
+
+void WorkflowManager::init()
+{
+    connect(m_activityManager, SIGNAL(activityAdded(QString)), m_workareasManager, SLOT(activityAddedSlot(QString)) );
+    connect(m_activityManager, SIGNAL(activityRemoved(QString)), m_workareasManager, SLOT(activityRemovedSlot(QString)) );
 }
 
 ActivityManager *WorkflowManager::activityManager()

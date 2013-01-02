@@ -13,17 +13,6 @@ Item{
     //disable previews
     property bool previewsWereEnabled:false
 
-    property bool isAddingNewActivity:false
-
-    function printModel(){
-        console.debug("---- Activities Model -----");
-        for(var i=0; i<model.count; ++i){
-            var obj = model.get(i);
-            console.debug(obj.code + " - " + obj.Name + " - " +obj.Icon + " - " +obj.Current + " - " +obj.CState);
-        }
-        console.debug("----  -----");
-    }
-
 
     //Cloning Signals for interaction with the interface
     Connections{
@@ -52,30 +41,6 @@ Item{
     }
 
 
-
-    function activityAddedIn(source,title,icon,stat,cur)
-    {
-        if (stat === "")
-            stat = "Running";
-
-        if((!isAddingNewActivity)&&(workareasManager.activityExists(source)))
-            instanceOfWorkAreasList.addActivityOnLoading(source);
-        else{
-
-            instanceOfWorkAreasList.addNewActivity(source);
-
-            isAddingNewActivity = false;
-
-            for(var j=0; j<sessionParameters.numberOfDesktops; ++j){
-                instanceOfWorkAreasList.addWorkarea(source);
-            }
-
-            isAddingNewActivity = false;
-
-        }
-
-    }
-
     function setIcon(cod, val){
         activityManager.setIcon(cod, val);
     }
@@ -85,32 +50,9 @@ Item{
         activityManager.chooseIcon(cod);
     }
 
-    function activityRemovedIn(cod){
-        var p = getIndexFor(cod);
-        if (p>-1){
-
-            //Be careful there is probably a bug in removing the first element in ListModel, crashed KDE
-            model.remove(p);
-
-            workareasManager.removeActivity(cod);
-
-            //instanceOfWorkAreasList.removeActivity(cod);
-        }
-
-    }
 
     function stopActivity(cod){
-
-        if(cod=== sessionParameters.currentActivity){
-            var nId = getFirstRunningIdAfter(cod);
-
-            var nextDesk = sessionParameters.currentDesktop;
-
-            activityManager.setCurrentActivityAndDesktop(nId,nextDesk);
-        }
-
         activityManager.stop(cod);
-
     }
 
 
@@ -184,7 +126,6 @@ Item{
 
 
     function addNewActivity(){
-        isAddingNewActivity = true;
         activityManager.add(i18n("New Activity"));
     }
 

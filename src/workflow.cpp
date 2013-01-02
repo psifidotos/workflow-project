@@ -49,16 +49,37 @@
 #include <iostream>
 
 #include "models/activitiesenhancedmodel.h"
+#include "workflowmanager.h"
+#include "activitymanager.h"
+#include "workareasmanager.h"
 
+bool m_isOnDashboard;
+bool m_findPopupWid;
+QString m_activityIcon;
+QString m_activityName;
+
+QObject *m_rootQMLObject;
+QDesktopWidget *m_desktopWidget;
+Plasma::Svg *m_theme;
+
+QGraphicsWidget *m_mainWidget;
+Plasma::DeclarativeWidget *declarativeWidget;
+
+ActivitiesEnhancedModel *m_activitiesModel;
+WorkflowManager *m_workflowManager;
+StoredParameters *m_storedParams;
+PTaskManager *m_taskManager;
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
-    m_mainWidget(0),
-    m_actManager(0),
-    m_taskManager(0),
-    m_theme(0),
+    m_isOnDashboard(false),
+    m_findPopupWid(false),
     m_activityIcon("preferences-activities"),
-    m_activityName("")
+    m_activityName(""),
+    m_theme(0),
+    m_mainWidget(0),
+    m_activitiesModel(0),
+    m_taskManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(true);
@@ -66,10 +87,10 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_taskManager = new PTaskManager(this);
 
-    m_findPopupWid = false;
-
-    m_isOnDashboard = false;
     m_desktopWidget = qApp->desktop();
+
+    m_activitiesModel = new ActivitiesEnhancedModel(this);
+    m_workflowManager = new WorkflowManager(m_activitiesModel, this);
 }
 
 WorkFlow::~WorkFlow()
@@ -78,12 +99,12 @@ WorkFlow::~WorkFlow()
 
     if (m_activitiesModel)
         delete m_activitiesModel;
-    if (m_actManager)
-        delete m_actManager;
+    if (m_workflowManager)
+        delete m_workflowManager;
+
     if (m_taskManager)
         delete m_taskManager;
-    if (m_workareasManager)
-        delete m_workareasManager;
+
     if (m_storedParams)
         delete m_storedParams;
     if (m_theme)
@@ -115,36 +136,30 @@ void WorkFlow::init()
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
-        m_activitiesModel = new ActivitiesEnhancedModel(qApp);
-
-        m_actManager = new ActivityManager(m_activitiesModel,this);
-        m_workareasManager = new WorkareasManager(m_activitiesModel, this);
-
-        ctxt->setContextProperty("activitiesModelNew",m_activitiesModel);
-        ctxt->setContextProperty("storedParameters",m_storedParams);
-        ctxt->setContextProperty("activityManager", m_actManager);
+        ctxt->setContextProperty("activitiesModelNew",m_workflowManager->model());
+        ctxt->setContextProperty("activityManager", m_workflowManager->activityManager());
+        ctxt->setContextProperty("workareasManager", m_workflowManager->workareasManager());
         ctxt->setContextProperty("taskManager", m_taskManager);
-        ctxt->setContextProperty("workareasManager", m_workareasManager);
+        ctxt->setContextProperty("storedParameters",m_storedParams);
 
         declarativeWidget->setQmlPath(path);
 
         m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
-        QObject *qmlActEng = m_rootQMLObject->findChild<QObject*>("instActivitiesEngine");
-        QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
 
-        if(qmlActEng){
-            connect(m_actManager, SIGNAL(currentActivityInformationChanged(QString,QString)),
-                    this, SLOT(setActivityNameIconSlot(QString,QString)));
-            m_actManager->setQMlObject(qmlActEng, containment());
-            connect(m_actManager,SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
-            connect(m_actManager,SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
-        }
+        connect(m_workflowManager->activityManager(), SIGNAL(currentActivityInformationChanged(QString,QString)),
+                this, SLOT(setActivityNameIconSlot(QString,QString)));
+        connect(m_workflowManager->activityManager(),SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
+        connect(m_workflowManager->activityManager(),SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
+
+        QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
         if(qmlTaskEng){
             m_taskManager->setQMlObject(qmlTaskEng);
         }
 
-        if(containment())
+        if(containment()){
+            m_workflowManager->activityManager()->setContainment(containment());
             m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
+        }
 
     }
 
@@ -165,12 +180,12 @@ void WorkFlow::init()
     connect(m_storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
     connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SLOT(configAccepted()));
 
-    connect(m_workareasManager, SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
+    connect(m_workflowManager->workareasManager(), SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
 
     connect(m_taskManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
     connect(m_taskManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
-    connect(m_actManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
+    connect(m_workflowManager->activityManager(), SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
     setGraphicsWidget(m_mainWidget);
 
@@ -360,7 +375,8 @@ void WorkFlow::configAccepted()
     m_storedParams->setCurrentTheme(ui.themesCmb->currentText());
 
     m_storedParams->setUseActivityIcon(ui.currentActivityIconCheckBox->isChecked());
-    setActivityNameIconSlot(m_actManager->getCurrentActivityName(), m_actManager->getCurrentActivityIcon());
+    setActivityNameIconSlot(m_workflowManager->activityManager()->getCurrentActivityName(),
+                            m_workflowManager->activityManager()->getCurrentActivityIcon());
 
     cg.writeEntry("LockActivities",m_storedParams->lockActivities());
     cg.writeEntry("ShowWindows",m_storedParams->showWindows());
@@ -430,9 +446,9 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
 {
     if(e->delta() < 0)
-        m_actManager->setCurrentNextActivity();
+        m_workflowManager->activityManager()->setCurrentNextActivity();
     else
-        m_actManager->setCurrentPreviousActivity();
+        m_workflowManager->activityManager()->setCurrentPreviousActivity();
 }
 
 

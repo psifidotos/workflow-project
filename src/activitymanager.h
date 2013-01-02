@@ -50,7 +50,7 @@ public:
 
     void loadActivitiesInModel();
 
-    void setQMlObject(QObject *,Plasma::Containment *);
+    void setContainment(Plasma::Containment *);
     void setCurrentNextActivity();
     void setCurrentPreviousActivity();
 
@@ -58,7 +58,6 @@ public:
     QString getCurrentActivityIcon();
 
 signals:
-    void activityAddedIn(QVariant id, QVariant title, QVariant icon, QVariant stat, QVariant cur);
     void showedIconDialog();
     void answeredIconDialog();
     void hidePopup();
@@ -97,8 +96,6 @@ private:
     Plasma::Containment *m_mainContainment;
     Plasma::Corona *m_corona;
 
-    QObject *qmlActEngine;
-
     QString activityForDelete;
 
     PluginShowWidgets *m_plShowWidgets;
@@ -109,12 +106,14 @@ private:
     Plasma::Containment *getContainment(QString actId);
 
     bool m_firstTime;
+    int m_nextDefaultWallpaper;
 
     ActivitiesEnhancedModel *m_actModel;
 
     QString stateToString(int);
     QString nextRunningActivity();
     QString previousRunningActivity();
+    QString getNextDefWallpaper();
 };
 
 #endif // ACTIVITYMANAGER_H

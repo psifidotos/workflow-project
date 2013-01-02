@@ -32,14 +32,14 @@
 #include <KStandardDirs>
 #include <KConfigGroup>
 
-#include "activitymanager.h"
+
 #include "ptaskmanager.h"
-#include "workareasmanager.h"
 #include "ui_workflowConfig.h"
 
 class QDesktopWidget;
 class StoredParameters;
 class ActivitiesEnhancedModel;
+class WorkflowManager;
 
 namespace Plasma {
 class ExtenderItem;
@@ -95,33 +95,27 @@ protected slots:
     void configAccepted();
 
 private:
-    bool m_isOnDashboard;
+    Ui::workflowConfig ui;
 
+    bool m_isOnDashboard;
     bool m_findPopupWid;
+    QString m_activityIcon;
+    QString m_activityName;
+
+    QObject *m_rootQMLObject;
+    QDesktopWidget *m_desktopWidget;
+    Plasma::Svg *m_theme;
 
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    QDesktopWidget *m_desktopWidget;
-
-    ActivityManager *m_actManager;
-    PTaskManager *m_taskManager;
-    WorkareasManager *m_workareasManager;
+    ActivitiesEnhancedModel *m_activitiesModel;
+    WorkflowManager *m_workflowManager;
     StoredParameters *m_storedParams;
-
-    QObject *m_rootQMLObject;
-
-    Ui::workflowConfig ui;
-
-    Plasma::Svg *m_theme;
-
-    QString m_activityIcon;
-    QString m_activityName;
+    PTaskManager *m_taskManager;
 
     void paintIcon();
     void initTooltip();
-
-    ActivitiesEnhancedModel *m_activitiesModel;
 
 };
 

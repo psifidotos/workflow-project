@@ -6,6 +6,8 @@
 #include "models/workareaitem.h"
 #include "models/listmodel.h"
 
+#include <taskmanager/task.h>
+
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_actModel(model),
@@ -56,6 +58,12 @@ void WorkareasManager::addWorkArea(QString id, QString name)
     QStringList *ret = m_storedWorkareas[id];
 
     if (ret){
+
+        if(name==""){
+            int counter = ret->size();
+            name = TaskManager::TaskManager::self()->desktopName(counter+1);
+        }
+
         ret->append(name);
 
         ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
@@ -71,6 +79,7 @@ void WorkareasManager::addWorkareaInLoading(QString id, QString name)
         model->appendRow(new WorkareaItem(name,name,true,model));
 }
 
+/*
 void WorkareasManager::addEmptyActivity(QString id)
 {
     QStringList *newLst = new QStringList();
@@ -90,6 +99,7 @@ void WorkareasManager::removeActivity(QString id)
 
     }
 }
+*/
 
 void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
 {
@@ -153,6 +163,76 @@ bool WorkareasManager::activityExists(QString id)
     return m_storedWorkareas.contains(id);
 }
 
+void WorkareasManager::setWorkAreaWasClicked()
+{
+    emit workAreaWasClicked();
+}
+
+
+void WorkareasManager::setMaxWorkareas()
+{
+    int prevmax = m_maxWorkareas;
+    int max = 0;
+
+    for(int i=0; i<m_actModel->getCount(); i++){
+        ListItem *item = m_actModel->at(i);
+        ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(item->id()));
+        if(max<workareas->getCount())
+            max = workareas->getCount();
+    }
+
+    if (max != prevmax){
+        m_maxWorkareas = max;
+        emit maxWorkareasChanged(m_maxWorkareas);
+    }
+
+}
+
+
+void WorkareasManager::activityAddedSlot(QString id)
+{
+    ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(id));
+
+    if (workareasModel)
+        connect(workareasModel, SIGNAL(countChanged(int)),
+                this, SLOT(setMaxWorkareas()) );
+
+    ///There is already a workareas record e.g. inloading the plasmoid
+    if (activityExists(id)){
+        QStringList *ret = m_storedWorkareas[id];
+
+        for(int i=0; i<ret->size(); i++)
+            addWorkareaInLoading(id,ret->value(i));
+    }
+    else{//a new activity is added, so the workareas records must be updated
+        QStringList *newLst = new QStringList();
+        m_storedWorkareas[id] = newLst;
+
+        for(int j=0; j<maxWorkareas(); j++)
+            addWorkArea(id, "");
+
+    }
+
+}
+
+void WorkareasManager::activityRemovedSlot(QString id)
+{
+    if (m_storedWorkareas.contains(id)){
+        QStringList *ret = m_storedWorkareas[id];
+        if(ret){
+            ret->clear();
+            delete ret;
+        }
+
+        m_storedWorkareas.remove(id);
+
+    }
+}
+
+
+
+
+
 void WorkareasManager::saveWorkareas()
 {
     QHashIterator<QString, QStringList *> i(m_storedWorkareas);
@@ -188,6 +268,8 @@ void WorkareasManager::loadWorkareas()
     QStringList lengths = WorkareasData::noOfWorkareas();
     QStringList wnames = WorkareasData::workareasNames();
 
+    int max = 0;
+
     for(int i=0; i<acts.size(); i++){
         QString activit = acts[i];
 
@@ -201,32 +283,13 @@ void WorkareasManager::loadWorkareas()
             foundWorkAreas->append(wnames[intpos+k]);
 
         m_storedWorkareas[activit] = foundWorkAreas;
-    }
-}
 
-void WorkareasManager::setWorkAreaWasClicked()
-{
-    emit workAreaWasClicked();
-}
-
-
-void WorkareasManager::setMaxWorkareas()
-{
-    int prevmax = m_maxWorkareas;
-    int max = 0;
-
-    for(int i=0; i<m_actModel->getCount(); i++){
-        ListItem *item = m_actModel->at(i);
-        ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(item->id()));
-        if(max<workareas->getCount())
-            max = workareas->getCount();
+        if (foundWorkAreas->size() > max)
+            max = foundWorkAreas->size();
     }
 
-    if (max != prevmax){
-        m_maxWorkareas = max;
-        emit maxWorkareasChanged(m_maxWorkareas);
-    }
-
+    m_maxWorkareas = max;
 }
+
 
 #include "workareasmanager.moc"
