@@ -7,6 +7,8 @@ class ActivityManager;
 class WorkareasManager;
 class ActivitiesEnhancedModel;
 
+class PluginSyncActivitiesWorkareas;
+
 class WorkflowManager : public QObject
 {
     Q_OBJECT
@@ -26,7 +28,7 @@ private:
     WorkareasManager *m_workareasManager;
     ActivitiesEnhancedModel *m_model;
 
-
+    PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
 };
 
 

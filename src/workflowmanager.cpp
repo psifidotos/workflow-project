@@ -6,14 +6,19 @@
 
 #include "models/activityitem.h"
 
+#include "plugins/pluginsyncactivitiesworkareas.h"
+
 WorkflowManager::WorkflowManager(ActivitiesEnhancedModel * model,QObject *parent) :
     QObject(parent),
     m_activityManager(0),
     m_workareasManager(0),
-    m_model(model)
+    m_model(model),
+    m_plgSyncActivitiesWorkareas(0)
 {
     m_activityManager = new ActivityManager(m_model,this);
     m_workareasManager = new WorkareasManager(m_model, this);
+
+    m_plgSyncActivitiesWorkareas = new PluginSyncActivitiesWorkareas(this);
 
     init();
 }
@@ -24,6 +29,8 @@ WorkflowManager::~WorkflowManager()
         delete m_activityManager;
     if(m_workareasManager)
         delete m_workareasManager;
+    if(m_plgSyncActivitiesWorkareas)
+        delete m_plgSyncActivitiesWorkareas;
 }
 
 void WorkflowManager::init()
@@ -33,6 +40,9 @@ void WorkflowManager::init()
 
     connect(m_activityManager, SIGNAL(cloningCopyWorkareas(QString,QString)),
             m_workareasManager, SLOT(cloneWorkareas(QString,QString)) );
+
+    connect(m_workareasManager, SIGNAL(maxWorkareasChanged(int)),
+            m_plgSyncActivitiesWorkareas, SLOT(maxWorkareasUpdated(int)) );
 
 }
 
