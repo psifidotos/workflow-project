@@ -34,13 +34,16 @@ public:
   ListItem* takeRow(int row);
   ListItem* find(const QString &id) const;
   QModelIndex indexFromItem( const ListItem* item) const;
+
   void clear();
 
   int getCount() { this->m_count = this->rowCount(); return m_count; }
 
   Q_INVOKABLE QVariant get(int row);
+  Q_INVOKABLE int getIndexFor(const QString &id);
   Q_INVOKABLE void remove(int row);
   Q_INVOKABLE void setProperty(int row, QString role, QVariant value);
+
 
 signals:
   void countChanged(int);

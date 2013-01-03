@@ -217,6 +217,10 @@ Item{
         }
     }
 
+    function getIcon(){
+        return activityIcon;
+    }
+
 
 }
 

@@ -85,6 +85,15 @@ QModelIndex ListModel::indexFromItem(const ListItem *item) const
     return QModelIndex();
 }
 
+int ListModel::getIndexFor(const QString &id)
+{
+    for(int row=0; row<m_list.size(); ++row) {
+        if(m_list.at(row)->id() == id) return row;
+    }
+
+    return -1;
+}
+
 void ListModel::clear()
 {
     removeRows(0,m_list.size(), QModelIndex());
