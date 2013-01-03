@@ -12,7 +12,10 @@ class Controller;
 class Info;
 }
 
-
+//DEPRECATED PLUGIN. This class was fixing the issue
+//in which a running activity couldnt be deleted if
+//it wasnt stopped. Ghosts activities were shown in
+//the activities lists
 class PluginRemoveActivity : public QObject
 {
     Q_OBJECT

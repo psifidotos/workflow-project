@@ -21,7 +21,6 @@ public:
     Q_INVOKABLE void activateTask(QString id);
     Q_INVOKABLE void minimizeTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
-    Q_INVOKABLE QString getDesktopName(int n);
 
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
     Q_INVOKABLE void hideDashboard();
@@ -54,7 +53,6 @@ signals:
     void taskRemovedIn(QVariant);
     void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
 
-    void numberOfDesktopsChanged(QVariant);
     Q_INVOKABLE void updatePopWindowWId();
     void hidePopup();
 
@@ -65,7 +63,6 @@ public slots:
   void taskRemoved(::TaskManager::Task *);
   void taskUpdated(::TaskManager::TaskChanges changes);
 
-  void changeNumberOfDesktops(int);
 
 private:
     TaskManager::TaskManager *taskMainM;

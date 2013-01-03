@@ -280,7 +280,7 @@ Item{
 
     function clickedWorkarea(){
         activityManager.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-        workareasManager.setWorkAreaWasClicked();
+        workareasManager.workAreaWasClicked();
     }
 
     function getBorderRectangle(){

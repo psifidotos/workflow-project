@@ -12,7 +12,8 @@ class Controller;
 class Info;
 }
 
-
+//Adds a new activity but creates signals to update the workreas
+//in the process and to update the wallpaper
 class PluginAddActivity : public QObject
 {
     Q_OBJECT

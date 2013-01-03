@@ -10,6 +10,7 @@ namespace Plasma {
     class Containment;
 }
 
+//Tries to find the wallpaper for an activity
 class PluginFindWallpaper{
   public:
     explicit PluginFindWallpaper(Plasma::Containment *);

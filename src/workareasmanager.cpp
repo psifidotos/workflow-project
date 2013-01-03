@@ -8,10 +8,13 @@
 
 #include <taskmanager/task.h>
 
+#include "plugins/pluginupdateworkareasname.h"
+
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
+    m_maxWorkareas(0),
     m_actModel(model),
-    m_maxWorkareas(0)
+    m_plgUpdateWorkareasName(0)
 {
     loadWorkareas();
     init();
@@ -33,25 +36,17 @@ WorkareasManager::~WorkareasManager()
     }
     m_storedWorkareas.clear();
 
+    if(m_plgUpdateWorkareasName)
+        delete m_plgUpdateWorkareasName;
 }
 
 void WorkareasManager::init()
 {
-   // not correct it must be the workareas list model maybe onactivityadded signal
-   // connect(m_actModel,SIGNAL(countChanged(int)), this, SLOT(setMaxWorkareas()));
+    m_plgUpdateWorkareasName = new PluginUpdateWorkareasName(this);
+    connect(m_plgUpdateWorkareasName, SIGNAL(updateWorkareasName(int)),
+            this, SLOT(pluginUpdateWorkareasNameSlot(int)) );
 }
 
-/*QStringList WorkareasManager::getWorkAreaNames(QString id)
-{
-    QStringList *ret = m_storedWorkareas[id];
-
-    QStringList ret2;
-    if(ret){
-        for(int i=0; i<ret->size(); i++)
-            ret2.append(ret->value(i));
-    }
-    return ret2;
-}*/
 
 void WorkareasManager::addWorkArea(QString id, QString name)
 {
@@ -66,9 +61,8 @@ void WorkareasManager::addWorkArea(QString id, QString name)
 
         ret->append(name);
 
-        ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
-        if(model)
-            model->appendRow(new WorkareaItem(name,name,true,model));
+        addWorkareaInLoading(id, name);
+        m_plgUpdateWorkareasName->checkFlag(ret->size());
     }
 }
 
@@ -96,6 +90,9 @@ void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
     QStringList *ret = m_storedWorkareas[id];
 
     if (ret){
+        if(name == "")
+            name = TaskManager::TaskManager::self()->desktopName(desktop);
+
         ret->replace(desktop-1,name);
         ListModel *model = static_cast<ListModel *>(m_actModel->workareas(id));
         if(model)
@@ -151,11 +148,6 @@ void WorkareasManager::cloneWorkareas(QString from, QString to)
 bool WorkareasManager::activityExists(QString id)
 {
     return m_storedWorkareas.contains(id);
-}
-
-void WorkareasManager::setWorkAreaWasClicked()
-{
-    emit workAreaWasClicked();
 }
 
 
@@ -281,5 +273,20 @@ void WorkareasManager::loadWorkareas()
     m_maxWorkareas = max;
 }
 
+
+//PLUGINS
+
+void WorkareasManager::pluginUpdateWorkareasNameSlot(int w_pos)
+{
+    for(int i=0; i<m_actModel->getCount(); i++)
+    {
+        ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->at(i));
+        ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(activity->id()));
+
+        if (workareas->getCount() == w_pos)
+            renameWorkarea(activity->id(), w_pos, "");
+    }
+
+}
 
 #include "workareasmanager.moc"

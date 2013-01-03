@@ -16,6 +16,11 @@ namespace Plasma {
     class PopupApplet;
 }
 
+//It shows the widgets explorer for an activity
+//many signals were necessary because there were many
+//heterogenous behaviors when the plasmoid was in
+//the panel or in the dashboard and if the explorer
+//had to be shown in the current activity
 class PluginShowWidgets : public QObject
 {
     Q_OBJECT

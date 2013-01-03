@@ -13,6 +13,7 @@ set(workflow_SRCS
                   plugins/pluginchangeworkarea.cpp
                   plugins/pluginaddactivity.cpp
                   plugins/pluginsyncactivitiesworkareas.cpp
+                  plugins/pluginupdateworkareasname.cpp
                   models/listitem.cpp
                   models/listmodel.cpp
                   models/activityitem.cpp

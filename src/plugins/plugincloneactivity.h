@@ -13,6 +13,9 @@ namespace KActivities
     class Controller;
 }
 
+//Clones an activity and creates many signals
+//in the process in order to update the workareas and
+//the backgrounds of the relevant activities
 class PluginCloneActivity : public QObject
 {
     Q_OBJECT

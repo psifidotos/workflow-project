@@ -4,6 +4,9 @@
 #include <QHash>
 
 class ActivitiesEnhancedModel;
+class PluginUpdateWorkareasName;
+
+
 
 class WorkareasManager : public QObject
 {
@@ -14,27 +17,16 @@ public:
     explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
 
-    ///Workareas Storing/Accessing
-    void loadWorkareas();
-    void saveWorkareas();
-
-
     Q_INVOKABLE void addWorkArea(QString id, QString name);
-
-    Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
-
-    Q_INVOKABLE void setWorkAreaWasClicked();
-    Q_INVOKABLE void addWorkareaInLoading(QString, QString);
+    Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
 
     Q_INVOKABLE QString name(QString, int);
-
-    void init();
 
     inline int maxWorkareas(){return m_maxWorkareas;}
 
 signals:
-    void workAreaWasClicked();
+    Q_INVOKABLE void workAreaWasClicked();
     void maxWorkareasChanged(int);
 
 public slots:
@@ -44,16 +36,26 @@ public slots:
 
 private slots:
     void setMaxWorkareas();
+    void pluginUpdateWorkareasNameSlot(int);
+
+protected:
+    void init();
 
 private:
     QHash <QString,QStringList *> m_storedWorkareas;
 
+    int m_maxWorkareas;
     ActivitiesEnhancedModel *m_actModel;
 
-    int m_maxWorkareas;
+    PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
 
     bool activityExists(QString id);
     int activitySize(QString id);
+    void addWorkareaInLoading(QString, QString);
+
+    ///Workareas Storing/Accessing
+    void loadWorkareas();
+    void saveWorkareas();
 };
 
 #endif // WORKAREASMANAGER_H

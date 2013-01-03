@@ -193,24 +193,6 @@ Item{
     }
 
 
-    function setMaxDesktops(v){
-        //it is called consequently for example to go from 2VDs to 4 VDs, it is going
-        //2-3-4 from the relevant signals
-
-        var mxs = workareasManager.maxWorkareas;
-        if (mxs>v)
-            taskManager.slotAddDesktop();
-        else if(mxs<v)
-            taskManager.slotRemoveDesktop();
-
-        //It is used when adding a Workarea in bigger length than the VDs
-/*        if(instanceOfWorkAreasList.activitysNewWorkAreaName !== ""){
-            var ndesk = taskManager.getDesktopName(v);
-            instanceOfWorkAreasList.setWorkareaTitle(instanceOfWorkAreasList.activitysNewWorkAreaName,v,ndesk);
-            instanceOfWorkAreasList.activitysNewWorkAreaName = "";
-        }*/
-
-    }
 
     function minimizeWindowsIn(actId,desk){
         for(var i=0; i<model.count; i++){

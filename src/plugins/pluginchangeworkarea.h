@@ -13,7 +13,11 @@ class Controller;
 class Info;
 }
 
-
+//Helps in going to a workarea. Problem was that
+//the movement could not be made at the same time
+//for changing activity and the workarea (desktop)
+//the solution is to be sequential. First we change
+//activity and when we change desktop
 class PluginChangeWorkarea : public QObject
 {
     Q_OBJECT

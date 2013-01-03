@@ -57,12 +57,6 @@ void PTaskManager::setQMlObject(QObject *obj)
             qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
 
-    //This is used in qml in order for consistency with workareas numbers
-    connect(this, SIGNAL(numberOfDesktopsChanged(QVariant)),
-            qmlTaskEngine, SLOT(setMaxDesktops(QVariant)));
-    connect(kwinSystem, SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(changeNumberOfDesktops(int)));
-
-
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
 
@@ -82,11 +76,6 @@ void PTaskManager::showDashboard()
 {
     QDBusInterface remoteApp( "org.kde.plasma-desktop", "/App" );
     remoteApp.call( "showDashboard", true );
-}
-
-void PTaskManager::changeNumberOfDesktops(int v)
-{
-    emit numberOfDesktopsChanged(QVariant(v));
 }
 
 bool PTaskManager::mainWindowIdisSet()
@@ -333,10 +322,6 @@ void PTaskManager::removeWindowPreview(QString win)
 }
 
 ///INVOKES
-QString PTaskManager::getDesktopName(int n)
-{
-    return taskMainM->desktopName(n);
-}
 
 void PTaskManager::setOnDesktop(QString id, int desk)
 {
