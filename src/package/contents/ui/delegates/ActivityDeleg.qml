@@ -24,13 +24,6 @@ Item{
 
     property bool shown: CState === neededState
 
-    onShownChanged:{
-        if(shown)
-            activitiesList.shownActivities++;
-        else
-            activitiesList.shownActivities--;
-    }
-
     Behavior on opacity{
         NumberAnimation {
             duration: 2*storedParameters.animationsStep;

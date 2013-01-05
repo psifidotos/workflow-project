@@ -166,6 +166,7 @@ Rectangle {
             model: activitiesModelEnhanced
 
             delegate: ActivityStoppedDeleg{
+                onShownChanged:stoppedActivitiesList.countActivities()
             }
 
             Behavior on height{
@@ -180,6 +181,18 @@ Rectangle {
                     duration: 2*storedParameters.animationsStep2;
                     easing.type: Easing.InOutQuad;
                 }
+            }
+
+            function countActivities(){
+                var counter = 0;
+
+                var slist = stoppedActivitiesList.children[0];
+
+                for(var i=0; i < slist.children.length; ++i)
+                    if (slist.children[i].shown === true)
+                        counter++;
+
+                shownActivities = counter;
             }
 
         }

@@ -106,8 +106,25 @@ Item{
                 width: allareas.width
                 interactive:false
                 model: activitiesModelEnhanced
-                delegate: ActivityDeleg{}
+
                 property int shownActivities: 0
+
+                delegate: ActivityDeleg{
+                    onShownChanged:activitiesList.countActivities();
+                }
+
+
+                function countActivities(){
+                    var counter = 0;
+
+                    var slist = activitiesList.children[0];
+
+                    for(var i=0; i < slist.children.length; ++i)
+                        if (slist.children[i].shown === true)
+                            counter++;
+
+                    shownActivities = counter;
+                }
 
             }
         }

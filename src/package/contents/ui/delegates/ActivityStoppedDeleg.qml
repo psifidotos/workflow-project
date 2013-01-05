@@ -28,12 +28,6 @@ Item{
 
     property bool containsMouse: (deleteActivityBtn.containsMouse) ||
                                  (mouseArea.containsMouse)
-    onShownChanged:{
-        if(shown)
-            stoppedActivitiesList.shownActivities++;
-        else
-            stoppedActivitiesList.shownActivities--;
-    }
 
     /*
         onCStateChanged:{
