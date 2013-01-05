@@ -63,7 +63,7 @@ QIconItem{
             var rchild = lst.children[0];
 
             for(var i=0; i < rchild.children.length; ++i){
-                console.debug(rchild.children[i].ccode + " - "+cod);
+                //console.debug(rchild.children[i].ccode + " - "+cod);
                 if (rchild.children[i].ccode === cod)
                 {
                     //newPosElem = rchild.children[i].children[1]; //the icon position

@@ -27,14 +27,14 @@ Item{
     property real defOpacity  : 0.6
 
     property bool containsMouse: (deleteActivityBtn.containsMouse) ||
-                                 (playActivity.containsMouse) ||
-                                 (backgroundArea.containsMouse)
+                                 (mouseArea.containsMouse)
     onShownChanged:{
         if(shown)
             stoppedActivitiesList.shownActivities++;
         else
             stoppedActivitiesList.shownActivities--;
     }
+
     /*
         onCStateChanged:{
             //stoppedPanel.changedChildState();
@@ -58,12 +58,6 @@ Item{
     Item{
         ///Ghost Element in order for the activityIcon to be the
         ///second children
-    }
-
-    MouseArea{
-        id: backgroundArea
-        anchors.fill: parent
-        hoverEnabled: true
     }
 
 
@@ -156,20 +150,16 @@ Item{
     }
 
 
-    IconButton{
+    QIconItem{
         id:playActivity
         opacity:stpActivity.containsMouse ? 1 : 0
-        icon: instanceOfThemeList.icons.RunActivity
+        icon: QIcon(instanceOfThemeList.icons.RunActivity)
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
         width: stpActivity.width/2
         height: width
-
-        tooltipTitle: i18n("Restore Activity")
-        tooltipText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
-
 
         Behavior on opacity{
             NumberAnimation {
@@ -178,6 +168,12 @@ Item{
             }
         }
 
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
         onClicked: {
             activityManager.start(ccode);
 
@@ -188,10 +184,7 @@ Item{
                 //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
                 mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
             }
-            //instanceOfActivitiesList.setCState(ccode,"Running");
-
         }
-
     }
 
     IconButton {
@@ -201,7 +194,7 @@ Item{
         anchors.top:parent.top
         width: buttonsSize
         height: buttonsSize
-        opacity: stpActivity.containsMouse ? 1 : 0
+        opacity: (stpActivity.containsMouse && !storedParameters.lockActivities) ? 1 : 0
         onClicked: {
             mainView.getDynLib().showRemoveDialog(ccode,activityManager.name(ccode));
         }
@@ -215,6 +208,13 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
+    }
+
+    DToolTip {
+        target: mouseArea
+        title: i18n("Restore Activity")
+        mainText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
+        icon: instanceOfThemeList.icons.RunActivity
     }
 
     function getIcon(){
