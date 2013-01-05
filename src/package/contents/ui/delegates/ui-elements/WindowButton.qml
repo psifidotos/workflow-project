@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import ".."
+import "../../tooltips"
 
 Item{
     id:mainBtn
@@ -29,6 +30,10 @@ Item{
     property alias borderColorHovC: mainBtnGrad.borderCHov
 
     property bool containsMouse:buttonArea.containsMouse
+
+    property string icon: ""
+    property string tooltipText: ""
+    property string tooltipTitle: ""
 
     signal entered;
     signal clicked;
@@ -239,6 +244,13 @@ Item{
         }
 
 
+    }
+
+    DToolTip{
+        target:buttonArea
+        title:mainBtn.tooltipTitle
+        mainText: mainBtn.tooltipText
+        icon:mainBtn.icon
     }
 
 }

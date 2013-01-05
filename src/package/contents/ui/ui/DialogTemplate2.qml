@@ -230,6 +230,7 @@ PlasmaCore.FrameSvgItem{
             templDialog.close();
         }
 
+
     }
 
     function open(){

@@ -26,6 +26,8 @@ Item{
         width: parent.buttonsSize
         height: width
 
+        tooltipTitle: i18n("Delete Workarea")
+        tooltipText: i18n("You can delete this WorkArea if you want to.")
 
         Behavior on scale{
             NumberAnimation {
@@ -48,12 +50,6 @@ Item{
             deleteWorkareaBtn.scale = 1;
         }
 
-        DToolTip{
-            title:i18n("Delete Workarea")
-            mainText: i18n("You can delete this WorkArea if you want to.")
-            target:deleteWorkareaBtn
-            //icon:instanceOfThemeList.icons.RunActivity
-        }
     }
 
 

@@ -21,6 +21,10 @@ Item{
     signal pressAndHold;
     signal released;
 
+    property alias icon: winStateBtn.icon
+    property alias tooltipText: winStateBtn.tooltipText
+    property alias tooltipTitle: winStateBtn.tooltipTitle
+
     WindowButton{
         id:winStateBtn
 

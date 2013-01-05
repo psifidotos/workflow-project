@@ -79,7 +79,8 @@ PlasmaCore.FrameSvgItem{
         elide: Text.ElideRight
         color: mainView.defaultFontColor
         font.family: mainView.defaultFont.family
-        font.pixelSize: 0.34 * mainView.scaleMeter
+        //font.pixelSize: 0.34 * mainView.scaleMeter
+        font.pointSize: theme.defaultFont.pointSize
         font.bold: true
         font.italic: true
 
@@ -101,7 +102,8 @@ PlasmaCore.FrameSvgItem{
 
         color: mainView.defaultFontColor
         font.family: mainView.defaultFont.family
-        font.pixelSize: 0.34 * mainView.scaleMeter
+        //font.pixelSize: 0.34 * mainView.scaleMeter
+        font.pointSize: theme.defaultFont.pointSize
 
         font.bold: true
         font.italic: true
@@ -118,13 +120,13 @@ PlasmaCore.FrameSvgItem{
         text: container.mainText
         color: mainView.defaultFontColor
         font.family: mainView.defaultFont.family
-
-        font.pixelSize: 0.32 * mainView.scaleMeter
+        font.pointSize: theme.defaultFont.pointSize
+        // font.pixelSize: 0.32 * mainView.scaleMeter
 
         property int findWidth: shadowMainTxt.width - parent.iconWidth - fullWidthMargins
         width: findWidth < parent.maxHorSizeNoMargins - parent.iconWidth - 3 ?
-                                  Math.max(findWidth, minHorSize) :
-                                  maxHorSizeNoMargins - parent.iconWidth - 3
+                   Math.max(findWidth, minHorSize) :
+                   maxHorSizeNoMargins - parent.iconWidth - 3
 
         wrapMode:Text.WordWrap
     }
@@ -139,7 +141,8 @@ PlasmaCore.FrameSvgItem{
         color: mainView.defaultFontColor
         font.family: mainView.defaultFont.family
 
-        font.pixelSize: 0.32 * mainView.scaleMeter
+        font.pointSize: theme.defaultFont.pointSize
+        //font.pixelSize: 0.32 * mainView.scaleMeter
     }
 
     //for not appearing errors
@@ -151,7 +154,7 @@ PlasmaCore.FrameSvgItem{
     }
 
     Component.onCompleted: {
-//        target.hoverEnabled = true;
+        //        target.hoverEnabled = true;
     }
 
     Connections{
@@ -179,27 +182,29 @@ PlasmaCore.FrameSvgItem{
         repeat: false
 
         onTriggered: {
-            var newC = target.mapToItem(mainView, target.x + target.width, target.y + target.height);
-            var newC2 = target.mapToItem(mainView, target.x, target.y);
+            if(title !== ""){
+                var newC = target.mapToItem(mainView, target.x + target.width, target.y + target.height);
+                var newC2 = target.mapToItem(mainView, target.x, target.y);
 
-            var maxX = mainView.width - container.width;
-            var maxY = mainView.height - container.height;
+                var maxX = mainView.width - container.width;
+                var maxY = mainView.height - container.height;
 
-            if (newC.x < maxX)
-                container.x = newC.x + 3;
-            else
-                container.x = newC2.x - 3 - container.width;
-
-
-            if (newC.y < maxY)
-                if(newC.x < maxX)
-                    container.y = newC.y + 3;
+                if (newC.x < maxX)
+                    container.x = newC.x + 3;
                 else
-                    container.y = newC2.y + 3;
-            else
-                container.y = newC2.y - 3 - container.height;
+                    container.x = newC2.x - 3 - container.width;
 
-            container.opacity = 1;
+
+                if (newC.y < maxY)
+                    if(newC.x < maxX)
+                        container.y = newC.y + 3;
+                    else
+                        container.y = newC2.y + 3;
+                else
+                    container.y = newC2.y - 3 - container.height;
+
+                container.opacity = 1;
+            }
         }
     }
 
