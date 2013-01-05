@@ -17,7 +17,7 @@ class StoredParameters : public QObject
     Q_PROPERTY(bool firstRunCalibrationPreviews READ firstRunCalibrationPreviews WRITE setFirstRunCalibrationPreviews NOTIFY firstRunCalibrationPreviewsChanged)
 
     Q_PROPERTY(bool hideOnClick READ hideOnClick WRITE setHideOnClick NOTIFY hideOnClickChanged)
-    Q_PROPERTY(bool toolTipsDelay READ toolTipsDelay WRITE setToolTipsDelay NOTIFY toolTipsDelayChanged)
+    Q_PROPERTY(int toolTipsDelay READ toolTipsDelay WRITE setToolTipsDelay NOTIFY toolTipsDelayChanged)
 
     Q_PROPERTY(QString currentTheme READ currentTheme WRITE setCurrentTheme NOTIFY currentThemeChanged)
 
