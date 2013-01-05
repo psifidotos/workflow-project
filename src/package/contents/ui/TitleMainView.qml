@@ -99,6 +99,7 @@ Rectangle{
                 MouseArea{
                     id:lockerToolBtnMouseArea
                     anchors.fill:parent
+                    hoverEnabled: true
 
                     onClicked:{
                         //lockerToolBtn.checked = !lockerToolBtn.checked;
@@ -149,6 +150,7 @@ Rectangle{
                 MouseArea{
                     id:windowsToolBtnMouseArea
                     anchors.fill:parent
+                    hoverEnabled: true
 
                     onClicked:{
                         //windowsToolBtn.checked = !windowsToolBtn.checked;
@@ -215,6 +217,8 @@ Rectangle{
                 MouseArea{
                     id:effectsToolBtnMouseArea
                     anchors.fill:parent
+                    hoverEnabled: true
+
                     onClicked:{
                         storedParameters.windowsPreviews = !storedParameters.windowsPreviews;
                         if(storedParameters.windowsPreviews){
