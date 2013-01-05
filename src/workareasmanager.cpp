@@ -163,6 +163,7 @@ void WorkareasManager::setMaxWorkareas()
             max = workareas->getCount();
     }
 
+
     if (max != prevmax){
         m_maxWorkareas = max;
         emit maxWorkareasChanged(m_maxWorkareas);
@@ -190,9 +191,10 @@ void WorkareasManager::activityAddedSlot(QString id)
         QStringList *newLst = new QStringList();
         m_storedWorkareas[id] = newLst;
 
-        for(int j=0; j<maxWorkareas(); j++)
-            addWorkArea(id, "");
+        int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
 
+        for(int j=0; j<numberOfDesktops; j++)
+            addWorkArea(id, "");
     }
 
 }
@@ -210,10 +212,6 @@ void WorkareasManager::activityRemovedSlot(QString id)
 
     }
 }
-
-
-
-
 
 void WorkareasManager::saveWorkareas()
 {

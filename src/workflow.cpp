@@ -97,10 +97,15 @@ WorkFlow::~WorkFlow()
 {
     emit configNeedsSaving();
 
-    if (m_activitiesModel)
-        delete m_activitiesModel;
+
     if (m_workflowManager)
         delete m_workflowManager;
+
+    //Delete model after you delete workflowManager in order to save
+    //workareas correctly, otherwise the countChanged signals from
+    //workareas models create issues
+    if (m_activitiesModel)
+        delete m_activitiesModel;
 
     if (m_taskManager)
         delete m_taskManager;
