@@ -1,3 +1,13 @@
+0.2.2
+=====
+-- window previews when the plasmoid is in the panel
+-- use the current activity's icon in the panel (you can enable it from the configuration dialog)
+-- Tooltip for the plasmoid when used in the panel
+-- new zoom slider
+-- delete activity button moved to the stopped activities
+-- various bug fixes
+-- added french translation
+
 0.2.1
 =====
 -- added spanish and german translation
@@ -7,6 +17,7 @@
 -- fixed:workarea name when adding a new VD
 -- improved windows dragging (remake)
 -- load properly default openSUSE wallpaper
+-- added greek translation
 
 0.1.99
 =====
@@ -28,7 +39,7 @@
 -- Rename Activity
 -- Change icon for Activity
 -- Clone Activity (this is not from generic library, maybe there are some missing
-   characteristics)
+-- characteristics)
 -- Add plasmoids in any Activity (unlocks widgets and opens widgets explorer)
 -- Fetch background for Activity (it works only for single image backgrounds)
 -- Lock/Unlock Activities

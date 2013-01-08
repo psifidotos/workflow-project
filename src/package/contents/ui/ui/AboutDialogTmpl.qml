@@ -251,7 +251,8 @@ DialogTemplate2{
 
         AnimatedText{
             id:translatorsTxt
-            fullText: "Michail Vourlakos(Greek)\nAnthony David Atencio Moscote(Spanish)\nOpen Source Community(German)"
+            fullText: "Open Source Community(French)\nOpen Source Community(German)"+
+                      "\nMichail Vourlakos(Greek)\nAnthony David Atencio Moscote(Spanish)"
 
             font.pixelSize: smallFont
             font.italic: true

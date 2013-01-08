@@ -24,7 +24,7 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property string version:"v0.2.2b1"
+    property string version:"v0.2.2"
 
     property int scaleMeter: zoomSlider.value
 
