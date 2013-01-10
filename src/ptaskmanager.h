@@ -7,6 +7,8 @@
 #include <KWindowSystem>
 #include <KTempDir>
 
+#include "models/listmodel.h"
+
 
 class PTaskManager : public QObject
 {
@@ -69,6 +71,8 @@ private:
     KWindowSystem *kwinSystem;
     
     QObject *qmlTaskEngine;
+
+    ListModel *tasksModel;
 
     QList<QRect> previewsRects;
     QList<WId> previewsIds;

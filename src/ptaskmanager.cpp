@@ -23,6 +23,9 @@
 
 #include <Plasma/WindowEffects>
 
+#include "models/taskitem.h"
+#include "models/listmodel.h"
+
 
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),

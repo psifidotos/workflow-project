@@ -18,6 +18,7 @@ set(workflow_SRCS
                   models/listmodel.cpp
                   models/activityitem.cpp
                   models/workareaitem.cpp
+                  models/taskitem.cpp
                   models/activitiesenhancedmodel.cpp
 )
 

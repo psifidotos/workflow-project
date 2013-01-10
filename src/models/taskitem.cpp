@@ -2,14 +2,14 @@
 #include "listitem.h"
 
 TaskItem::TaskItem(const QString &code,
-                   const bool &onAllDesktops = false,
-                   const bool &onAllActivities = false,
+                   const bool &onAllDesktops,
+                   const bool &onAllActivities,
                    const QString &classClass,
                    const QString &name,
                    const QString &icon,
-                   const int &desktop = -1,
+                   const int &desktop,
                    const QStringList &activities,
-                   QObject *parent = 0):
+                   QObject *parent):
     ListItem(parent),
     m_code(code),
     m_onAllDesktops(onAllDesktops),
@@ -32,14 +32,20 @@ void TaskItem::setProperty(QString role,QVariant value)
 
     if(role == names[CodeRole])
         setCode(value.toString());
+    else if(role == names[OnAllDesktopsRole])
+        setOnAllDesktops(value.toBool());
+    else if(role == names[OnAllActivitiesRole])
+        setOnAllActivities(value.toBool());
+    else if(role == names[ClassClassRole])
+        setClassClass(value.toString());
     else if(role == names[NameRole])
         setName(value.toString());
     else if(role == names[IconRole])
         setIcon(value.toString());
-    else if(role == names[CStateRole])
-        setCState(value.toString());
-    else if(role == names[BackgroundRole])
-        setBackground(value.toString());
+    else if(role == names[DesktopRole])
+        setDesktop(value.toInt());
+    else if(role == names[ActivitiesRole])
+        setActivities(value.toStringList());
 }
 
 void TaskItem::setCode(QString code)
