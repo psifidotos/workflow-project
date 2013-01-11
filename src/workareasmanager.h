@@ -35,6 +35,8 @@ public slots:
     void activityRemovedSlot(QString);
     void cloneWorkareas(QString, QString);
 
+    inline void activitiesLoadingSlot(bool flag){m_activitiesLoadingFlag = flag;}
+
 private slots:
     void setMaxWorkareas();
     void pluginUpdateWorkareasNameSlot(int);
@@ -57,6 +59,8 @@ private:
     ///Workareas Storing/Accessing
     void loadWorkareas();
     void saveWorkareas();
+
+    bool m_activitiesLoadingFlag;
 };
 
 #endif // WORKAREASMANAGER_H

@@ -86,8 +86,12 @@ void ActivityManager::loadActivitiesInModel()
 {
     QStringList activities = m_activitiesCtrl->listActivities();
 
+    emit activitiesLoading(true);
+
     foreach (const QString &id, activities)
         activityAddedSlot(id);
+
+    emit activitiesLoading(false);
 }
 
 QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)

@@ -14,7 +14,8 @@ WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *paren
     QObject(parent),
     m_maxWorkareas(0),
     m_actModel(model),
-    m_plgUpdateWorkareasName(0)
+    m_plgUpdateWorkareasName(0),
+    m_activitiesLoadingFlag(false)
 {
     loadWorkareas();
     init();
@@ -132,8 +133,8 @@ void WorkareasManager::cloneWorkareas(QString from, QString to)
     if(modelFrom && modelTo && toAreas){
         modelTo->clear();
         toAreas->clear();   ///This must be replaced in the future, all the model
-                            ///will be stored in xml file without QStringLists in RAM
-                            ///only an xml DOM model should only exist if any
+        ///will be stored in xml file without QStringLists in RAM
+        ///only an xml DOM model should only exist if any
 
         for(int i=0; i<modelFrom->getCount(); i++){
             WorkareaItem *res = static_cast<WorkareaItem *>(modelFrom->at(i));
@@ -153,22 +154,23 @@ bool WorkareasManager::activityExists(QString id)
 
 void WorkareasManager::setMaxWorkareas()
 {
-    int prevmax = m_maxWorkareas;
-    int max = 0;
+    if(!m_activitiesLoadingFlag){
+        int prevmax = m_maxWorkareas;
+        int max = 0;
 
-    for(int i=0; i<m_actModel->getCount(); i++){
-        ListItem *item = m_actModel->at(i);
-        ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(item->id()));
-        if(max<workareas->getCount())
-            max = workareas->getCount();
+        for(int i=0; i<m_actModel->getCount(); i++){
+            ListItem *item = m_actModel->at(i);
+            ListModel *workareas = static_cast<ListModel *>(m_actModel->workareas(item->id()));
+            if(max<workareas->getCount())
+                max = workareas->getCount();
+        }
+
+
+        if (max != prevmax){
+            m_maxWorkareas = max;
+            emit maxWorkareasChanged(m_maxWorkareas);
+        }
     }
-
-
-    if (max != prevmax){
-        m_maxWorkareas = max;
-        emit maxWorkareasChanged(m_maxWorkareas);
-    }
-
 }
 
 

@@ -38,6 +38,8 @@ void WorkflowManager::init()
     connect(m_activityManager, SIGNAL(activityAdded(QString)), m_workareasManager, SLOT(activityAddedSlot(QString)) );
     connect(m_activityManager, SIGNAL(activityRemoved(QString)), m_workareasManager, SLOT(activityRemovedSlot(QString)) );
 
+    connect(m_activityManager, SIGNAL(activitiesLoading(bool)), m_workareasManager, SLOT(activitiesLoadingSlot(bool)) );
+
     connect(m_activityManager, SIGNAL(cloningCopyWorkareas(QString,QString)),
             m_workareasManager, SLOT(cloneWorkareas(QString,QString)) );
 

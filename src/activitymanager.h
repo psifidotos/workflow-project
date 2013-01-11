@@ -72,6 +72,8 @@ signals:
     void cloningEnded();
     void cloningCopyWorkareas(QString from, QString to);
 
+    void activitiesLoading(bool);
+
 public slots:
     void activityAddedSlot(QString id);
     void activityRemovedSlot(QString id);
