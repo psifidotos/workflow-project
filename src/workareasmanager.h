@@ -22,6 +22,7 @@ public:
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
 
     Q_INVOKABLE QString name(QString, int);
+    Q_INVOKABLE int numberOfWorkareas(QString);
 
     inline int maxWorkareas(){return m_maxWorkareas;}
 

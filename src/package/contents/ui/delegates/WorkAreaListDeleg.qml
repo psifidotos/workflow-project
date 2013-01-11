@@ -165,7 +165,7 @@ Item{
         interactive:false
 
 
-        model:instanceOfTasksList.model
+        model: taskManager.model()
 
         delegate:WorkAreaOrphanTaskDeleg{
         }

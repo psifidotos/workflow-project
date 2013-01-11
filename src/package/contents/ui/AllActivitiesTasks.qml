@@ -87,7 +87,7 @@ Item{
             width:allActRect.width
             height:mainView.workareaHeight / 2
 
-            model:instanceOfTasksList.model
+            model: taskManager.model()
 
             orientation: ListView.Horizontal
             interactive:false
@@ -132,13 +132,11 @@ Item{
             function countTasks(){
                 var counter = 0;
 
-                for (var i=0; i<model.count; ++i)
-                {
-                    var elem = model.get(i);
+                var slist = allActTaskL.children[0];
 
-                    if (elem.onAllActivities === true)
+                for(var i=0; i < slist.children.length; ++i)
+                    if (slist.children[i].mustBeShown === true)
                         counter++;
-                }
 
                 shownTasks = counter;
             }

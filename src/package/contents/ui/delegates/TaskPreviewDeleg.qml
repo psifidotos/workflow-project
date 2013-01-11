@@ -34,7 +34,7 @@ Item{
 
     property bool mustBeShown: showAllActivities === true ?
                                    ( (onAllActivities === true )&&(isPressed === false) ):
-                                   (code !== 'DontShow')&&(isPressed === false)
+                                   (isPressed === false)
 
     property bool showPreviews: ((storedParameters.showWindows === true)&&
                                  (storedParameters.windowsPreviews === true)&&
@@ -58,7 +58,8 @@ Item{
     opacity: mustBeShown === true ? 1 : 0
 
     property string ccode: code
-    property string cActCode: activities === undefined ? sessionParameters.currentActivity : activities
+    property string cActCode: ((activities === undefined) || (activities[0] === undefined) ) ?
+                                  sessionParameters.currentActivity : activities[0]
     property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
     property bool isPressed:false
 

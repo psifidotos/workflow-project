@@ -39,7 +39,7 @@ Item {
         tooltipText: ("You can close this window if you want to.")
 
         onClicked: {
-            instanceOfTasksList.removeTask(taskDeleg1.ccode);
+            taskManager.removeTask(taskDeleg1.ccode);
         }
 
     }
@@ -61,7 +61,7 @@ Item {
         onPressAndHold: {
             placeStateBtn.previousState();
             placeStateBtn.informState();
-            instanceOfTasksList.setTaskDesktop(taskDeleg1.ccode,desktop+1);
+            taskManager.setTaskDesktop(taskDeleg1.ccode,desktop+1);
             toEveryWhereAnimation();
         }
 
@@ -88,13 +88,13 @@ Item {
         function informState(){
 
             if (placeStateBtn.state === "one"){
-                instanceOfTasksList.setTaskState(taskDeleg1.ccode,"oneDesktop");
-                instanceOfTasksList.setTaskDesktopForAnimation(taskDeleg1.ccode,mainWorkArea.desktop-1)
+                taskManager.setTaskState(taskDeleg1.ccode,"oneDesktop");
+                taskManager.setTaskDesktopForAnimation(taskDeleg1.ccode,mainWorkArea.desktop-1)
             }
             else if (placeStateBtn.state === "allDesktops")
-                instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allDesktops");
+                taskManager.setTaskState(taskDeleg1.ccode,"allDesktops");
             else if (placeStateBtn.state === "everywhere")
-                instanceOfTasksList.setTaskState(taskDeleg1.ccode,"allActivities");
+                taskManager.setTaskState(taskDeleg1.ccode,"allActivities");
         }
 
     }

@@ -106,10 +106,10 @@ Rectangle{
                     (mainDraggingItem.intIsEverywhere === true)){
 
 
-                instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+                taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
 
-                instanceOfTasksList.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
-                instanceOfTasksList.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+                taskManager.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
+                taskManager.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
 
                 if(storedParameters.animationsStep2!==0){
                     var co1 = mainView.mapToItem(mainView,iX1,iY1);
@@ -121,14 +121,14 @@ Rectangle{
             }
         }
         else if (mainDraggingItem.lastSelection === 1){
-            instanceOfWorkAreasList.addWorkarea(mainDraggingItem.drActiv);
+            workareasManager.addWorkArea(mainDraggingItem.drActiv, "");
 
-            var works=instanceOfWorkAreasList.getActivitySize(mainDraggingItem.drActiv);
+            var works = workareasManager.numberOfWorkareas(mainDraggingItem.drActiv);
 
-            instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+            taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
 
-            instanceOfTasksList.setTaskActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
-            instanceOfTasksList.setTaskDesktop(mainDraggingItem.intTaskId,works);
+            taskManager.setOnlyOnActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+            taskManager.setOnDesktop(mainDraggingItem.intTaskId,works);
 
             if(storedParameters.animationsStep2!==0){
                 var co14 = mainView.mapToItem(mainView,iX1,iY1);
@@ -145,7 +145,7 @@ Rectangle{
         }
         else if (mainDraggingItem.lastSelection === 2){
 
-            instanceOfTasksList.setTaskState(mainDraggingItem.intTaskId,"allActivities");
+            taskManager.setTaskState(mainDraggingItem.intTaskId,"allActivities");
 
             if(storedParameters.animationsStep2!==0){
                 var co13 = mainView.mapToItem(mainView,iX1,iY1);

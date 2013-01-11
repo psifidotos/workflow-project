@@ -28,121 +28,95 @@ QIconItem{
     }
 
     function animateEverywhereToXY(cid, coord1, coord2, anim){
-        var pos = instanceOfTasksList.getIndexFor(cid);
+        var pos = taskManager.model().getIndexFor(cid);
         console.debug("animateEverywhereToXY:"+pos);
-        if (pos>=0){
-            taskAnimation.x = coord1.x
-            taskAnimation.y = coord1.y
 
-            var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.Icon;
+        taskAnimation.x = coord1.x
+        taskAnimation.y = coord1.y
 
-            taskAnimation.toX = coord2.x;
-            taskAnimation.toY = coord2.y;
+        taskAnimation.icon = taskManager.getTaskIcon(cid);
 
-            if (anim===1)
-                playTaskAnimation.start();
-            else if (anim===2)
-                playTaskAnimation2.start();
-        }
+        taskAnimation.toX = coord2.x;
+        taskAnimation.toY = coord2.y;
+
+        if (anim===1)
+            playTaskAnimation.start();
+        else if (anim===2)
+            playTaskAnimation2.start();
 
     }
 
     function animateEverywhereToActivity(cid, coord, anim){
-        //ListView of stopped activities
-        //animateActivity(cod,coord,stoppedPanel.getList());
-        var pos = instanceOfTasksList.getIndexFor(cid);
+
+        var pos = taskManager.model().getIndexFor(cid);
         console.debug("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
-        if (pos>=0){
-            taskAnimation.x = coord.x
-            taskAnimation.y = coord.y
 
-            var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.Icon;
+        taskAnimation.x = coord.x
+        taskAnimation.y = coord.y
 
-            var activityCode
 
-            if((elem.activities === undefined) ||
-               (elem.activities === "") )
-                activityCode = sessionParameters.currentActivity;
-            else
-                activityCode = elem.activities;
+        var activities = taskManager.getTaskActivities(cid);
+        var activityCode
 
-            console.debug("Element Desktop:"+elem.desktop);
-            var desktopPos = elem.desktop - 1;//desktops count from 0?
-            if (desktopPos < 0)
-                desktopPos = sessionParameters.currentDesktop - 1;
+        if((activities.length === 0) ||
+                (activities[0] === "") )
+            activityCode = sessionParameters.currentActivity;
+        else
+            activityCode = activities[0];
 
-            var actCState = activityManager.cstate(activityCode);
-/*
-            if (actCState === "Stopped"){
+        var elem = taskManager.model().get(pos);
+        var desktopPos = elem.desktop - 1;//desktops count from 0?
 
-                var toCoord = mainView.getDynLib().getActivityCoord(activityCode,stoppedPanel.getList());
+        console.debug("Element Desktop:"+elem.desktop+" Element activity:"+activities[0]);
 
-                taskAnimation.toX = toCoord.x;
-                taskAnimation.toY = toCoord.y;
+        if (desktopPos < 0)
+            desktopPos = sessionParameters.currentDesktop - 1;
 
-                if (anim===1)
-                    playTaskAnimation.start();
-                else if (anim===2)
-                    playTaskAnimation2.start();
-            }
-            else if (desktopPos > instanceOfWorkAreasList.getActivitySize(activityCode) ) {
 
-                var col = allWorkareas.getActivityColumn(activityCode);
+        var col2 = allWorkareas.getActivityColumn(activityCode);
 
-                animateTask(cid,coord,col.getOrphanList(),anim);
-            }
-            else{*/
-                var col2 = allWorkareas.getActivityColumn(activityCode);
+        console.debug("Desktop:"+desktopPos);
 
-                console.debug("Desktop:"+desktopPos);
+        var work = col2.getWorkarea(desktopPos);
 
-                var work = col2.getWorkarea(desktopPos);
+        animateTask(cid,coord,work.getTasksList(),anim);
 
-                animateTask(cid,coord,work.getTasksList(),anim);
-
-//            }
-
-        }
     }
 
     function animateTask(cid,coord,lst,anim){
-        var pos = instanceOfTasksList.getIndexFor(cid);
+        //var pos = taskManager.model().getIndexFor(cid);
 
-        if (pos>=0){
-            taskAnimation.x = coord.x
-            taskAnimation.y = coord.y
+        taskAnimation.x = coord.x
+        taskAnimation.y = coord.y
 
-            var elem = instanceOfTasksList.model.get(pos);
-            taskAnimation.icon = elem.Icon
+        //  var elem = taskManager.model().get(pos);
+        taskAnimation.icon = taskManager.getTaskIcon(cid);
 
-            var newPosElem=lst; // if no child found
+        var newPosElem=lst; // if no child found
 
-            var rchild = lst.children[0];
+        var rchild = lst.children[0];
 
-            for(var i=0; i < rchild.children.length; ++i){
+        for(var i=0; i < rchild.children.length; ++i){
 
-                if (rchild.children[i].ccode === cid)
-                {
-                    if (lst === allActT.getList())
-                        newPosElem = rchild.children[i].getIcon();
-                    else
-                        newPosElem = rchild.children[i].children[0]; //the icon position
-                }
+            if (rchild.children[i].ccode === cid)
+            {
+                if (lst === allActT.getList())
+                    newPosElem = rchild.children[i].getIcon();
+                else
+                    newPosElem = rchild.children[i].children[0]; //the icon position
             }
-
-            var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
-
-            taskAnimation.toX = fixPosElem.x;
-            taskAnimation.toY = fixPosElem.y;
-
-            if (anim===1)
-                playTaskAnimation.start();
-            else if (anim===2)
-                playTaskAnimation2.start();
-
         }
+
+        var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
+
+        taskAnimation.toX = fixPosElem.x;
+        taskAnimation.toY = fixPosElem.y;
+
+        if (anim===1)
+            playTaskAnimation.start();
+        else if (anim===2)
+            playTaskAnimation2.start();
+
     }
 
     ParallelAnimation{

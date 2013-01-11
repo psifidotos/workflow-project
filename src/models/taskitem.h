@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QByteArray>
 #include <QStringList>
+#include <QIcon>
 
 #include "listitem.h"
 
@@ -31,7 +32,7 @@ public:
                     const bool &onAllActivities,
                     const QString &classClass,
                     const QString &name,
-                    const QString &icon,
+                    const QIcon &icon,
                     const int &desktop,
                     const QStringList &activities,
                     QObject *parent = 0);
@@ -46,7 +47,7 @@ public:
   inline bool onAllActivities() const { return m_onAllActivities; }
   inline QString classClass() const { return m_classClass; }
   inline QString name() const { return m_name; }
-  inline QString icon() const { return m_icon; }
+  inline QIcon icon() const { return m_icon; }
   inline int desktop() const { return m_desktop; }
   inline QStringList activities() const { return m_activities; }
 
@@ -56,7 +57,7 @@ public:
   void setOnAllActivities(bool);
   void setClassClass(QString);
   void setName(QString);
-  void setIcon(QString);
+  void setIcon(QIcon);
   void setDesktop(int);
   void setActivities(QStringList);
 
@@ -66,7 +67,7 @@ private:
   bool m_onAllActivities;
   QString m_classClass;
   QString m_name;
-  QString m_icon;
+  QIcon m_icon;
   int m_desktop;
   QStringList m_activities;
 };

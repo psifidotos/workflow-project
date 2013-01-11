@@ -6,7 +6,8 @@ import "../models"
 Item{
     id:sharedTasksListTempl
 
-    property variant model: TasksList{}
+    //property variant model: TasksList{}
+//    property variant model: taskManager.model()
 
     signal tasksChanged();
 
@@ -18,7 +19,7 @@ Item{
         }
         console.debug("----  -----");
     }
-
+/*
     function setTaskState(cod, val){
         var ind = getIndexFor(cod);
         if(ind>-1){
@@ -27,7 +28,7 @@ Item{
             var fActivity;
 
             if ((obj.activities === undefined)||
-                    (obj.activities === ""))
+                    (obj.activities[0] === ""))
                 fActivity = sessionParameters.currentActivity;
             else
                 fActivity = obj.activities;
@@ -38,7 +39,7 @@ Item{
                 //   if (obj.onAllDesktops !== false )
 
 
-                if(obj.activities !== fActivity)
+                if(obj.activities[0] !== fActivity)
                     setTaskActivity(obj.code,fActivity);
 
                 if (obj.onAllDesktops !== false)
@@ -215,5 +216,5 @@ Item{
         activityManager.setCurrentActivityAndDesktop(activ,desk);
         setCurrentTask(cod);
     }
-
+*/
 }

@@ -19,7 +19,7 @@ public:
 
     Q_INVOKABLE void setOnDesktop(QString id, int desk);
     Q_INVOKABLE void setOnAllDesktops(QString id, bool b);
-    Q_INVOKABLE void closeTask(QString id);
+    Q_INVOKABLE void removeTask(QString id);
     Q_INVOKABLE void activateTask(QString id);
     Q_INVOKABLE void minimizeTask(QString id);
     Q_INVOKABLE void setCurrentDesktop(int desk);
@@ -27,6 +27,12 @@ public:
     Q_INVOKABLE QPixmap disabledPixmapForIcon(const QIcon &ic);
     Q_INVOKABLE void hideDashboard();
     Q_INVOKABLE void showDashboard();
+
+    Q_INVOKABLE void setTaskState(QString, QString);
+    Q_INVOKABLE void setTaskActivityForAnimation(QString, QString);
+    Q_INVOKABLE void setTaskDesktopForAnimation(QString, int);
+    Q_INVOKABLE QStringList getTaskActivities(QString);
+    Q_INVOKABLE QIcon getTaskIcon(QString);
 
 #ifdef Q_WS_X11
     Q_INVOKABLE void slotAddDesktop();
@@ -43,6 +49,8 @@ public:
     Q_INVOKABLE float getWindowRatio(QString win);
     Q_INVOKABLE bool mainWindowIdisSet();
 #endif
+
+    Q_INVOKABLE inline QObject *model(){return m_taskModel;}
 
     void setMainWindowId(WId win);
     void setQMlObject(QObject *obj);
@@ -72,7 +80,7 @@ private:
     
     QObject *qmlTaskEngine;
 
-    ListModel *tasksModel;
+    ListModel *m_taskModel;
 
     QList<QRect> previewsRects;
     QList<WId> previewsIds;

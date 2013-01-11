@@ -96,7 +96,7 @@ Item{
             property bool hasChildren:childrenRect.height > 1
             property bool isClipped:childrenRect.height > height
 
-            model:instanceOfTasksList.model
+            model: taskManager.model()
 
             property int shownTasks:0
 

@@ -6,7 +6,7 @@ TaskItem::TaskItem(const QString &code,
                    const bool &onAllActivities,
                    const QString &classClass,
                    const QString &name,
-                   const QString &icon,
+                   const QIcon &icon,
                    const int &desktop,
                    const QStringList &activities,
                    QObject *parent):
@@ -30,22 +30,22 @@ void TaskItem::setProperty(QString role,QVariant value)
 {
     QHash<int, QByteArray> names = roleNames();
 
-    if(role == names[CodeRole])
-        setCode(value.toString());
-    else if(role == names[OnAllDesktopsRole])
-        setOnAllDesktops(value.toBool());
-    else if(role == names[OnAllActivitiesRole])
-        setOnAllActivities(value.toBool());
-    else if(role == names[ClassClassRole])
-        setClassClass(value.toString());
-    else if(role == names[NameRole])
-        setName(value.toString());
-    else if(role == names[IconRole])
-        setIcon(value.toString());
-    else if(role == names[DesktopRole])
-        setDesktop(value.toInt());
-    else if(role == names[ActivitiesRole])
-        setActivities(value.toStringList());
+//    if(role == names[CodeRole])
+//        setCode(value.toString());
+//    if(role == names[OnAllDesktopsRole])
+//        setOnAllDesktops(value.toBool());
+//    else if(role == names[OnAllActivitiesRole])
+ //       setOnAllActivities(value.toBool());
+//    else if(role == names[ClassClassRole])
+ //       setClassClass(value.toString());
+//    else if(role == names[NameRole])
+//        setName(value.toString());
+//    else if(role == names[IconRole])
+//        setIcon(value.toString());
+//    else if(role == names[DesktopRole])
+//        setDesktop(value.toInt());
+//    else if(role == names[ActivitiesRole])
+//        setActivities(value.toStringList());
 }
 
 void TaskItem::setCode(QString code)
@@ -63,12 +63,12 @@ void TaskItem::setName(QString name)
     }
 }
 
-void TaskItem::setIcon(QString icon)
+void TaskItem::setIcon(QIcon icon)
 {
-    if(m_icon != icon){
+    //if(m_icon != icon){
         m_icon = icon;
         emit dataChanged();
-    }
+    //}
 }
 
 void TaskItem::setOnAllDesktops(bool onAllDesktops)
@@ -119,7 +119,7 @@ QHash<int, QByteArray> TaskItem::roleNames() const
     names[OnAllDesktopsRole] = "onAllDesktops";
     names[OnAllActivitiesRole] = "onAllActivities";
     names[ClassClassRole] = "classClass";
-    names[NameRole] = "Name";
+    names[NameRole] = "name";
     names[IconRole] = "Icon";
     names[DesktopRole] = "desktop";
     names[ActivitiesRole] = "activities";

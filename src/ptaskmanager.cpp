@@ -29,6 +29,7 @@
 
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),
+    m_taskModel(0),
     m_mainWindowId(0)
 {
     taskMainM = TaskManager::TaskManager::self();
@@ -37,6 +38,7 @@ PTaskManager::PTaskManager(QObject *parent) :
 
     clearedPreviewsList = true;
 
+    m_taskModel = new ListModel(new TaskItem, this);
 }
 
 
@@ -44,13 +46,16 @@ PTaskManager::~PTaskManager(){
     //  foreach (const QString source, plasmaTaskEngine->sources())
     //     plasmaTaskEngine->disconnectSource(source, this);
     hideWindowsPreviews();
+
+    if(m_taskModel)
+        delete m_taskModel;
 }
 
 void PTaskManager::setQMlObject(QObject *obj)
 {
     qmlTaskEngine = obj;
 
-    connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
+    /*  connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlTaskEngine,SLOT(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
 
     connect(this, SIGNAL(taskRemovedIn(QVariant)),
@@ -58,7 +63,7 @@ void PTaskManager::setQMlObject(QObject *obj)
 
     connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
             qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
-
+*/
 
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
@@ -99,7 +104,7 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
     //  qDebug()<<"WinAdded:"<<wId;
     QPixmap tempIcn = task->icon(256,256,true);
 
-    emit taskAddedIn(QVariant(wId),
+    /*   emit taskAddedIn(QVariant(wId),
                      QVariant(task->isOnAllDesktops()),
                      QVariant(task->isOnAllActivities()),
                      QVariant(task->classClass()),
@@ -107,9 +112,25 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
                      QVariant(QIcon(tempIcn)),
               //       QVariant(false),
                      QVariant(task->desktop()),
-                     QVariant(task->activities()));
+                     QVariant(task->activities()));*/
+
+    TaskItem *taskI = new TaskItem(wId,
+                                   task->isOnAllDesktops(),
+                                   task->isOnAllActivities(),
+                                   task->classClass(),
+                                   task->name(),
+                                   QIcon(tempIcn),
+                                   task->desktop(),
+                                   task->activities(),
+                                   m_taskModel
+                                   );
+    m_taskModel->appendRow(taskI);
 
     connect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
+
+    if(task->isOnAllActivities())
+        if(!task->isOnAllDesktops())
+            setOnAllDesktops(wId,true);
 }
 
 void PTaskManager::taskRemoved(::TaskManager::Task *task) {
@@ -121,7 +142,15 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
     // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
     //                         Q_ARG(QVariant, wId));
 
-    emit taskRemovedIn(QVariant(wId));
+    TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(taskI){
+        QModelIndex ind = m_taskModel->indexFromItem(taskI);
+        m_taskModel->removeRow(ind.row());
+
+        ///emit activityRemoved(id);
+    }
+
+    //emit taskRemovedIn(QVariant(wId));
 
     disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
@@ -142,16 +171,24 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
     if((changes != TaskManager::TaskUnchanged) ||
             (changes != TaskManager::GeometryChanged) ||
             (changes != TaskManager::AttentionChanged)){
-        QPixmap tempIcn = task->icon(256,256,true);
-        emit taskUpdatedIn(QVariant(wId),
-                           QVariant(task->isOnAllDesktops()),
-                           QVariant(task->isOnAllActivities()),
-                           QVariant(task->classClass()),
-                           QVariant(task->name()),
-                           QVariant(QIcon(tempIcn)),
-                           QVariant(task->desktop()),
-                           QVariant(task->activities()),
-                           QVariant(typeOfMessage));
+
+        TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
+        if(taskI){
+            QPixmap tempIcn = task->icon(256,256,true);
+            taskI->setCode(wId);
+            taskI->setOnAllDesktops(task->isOnAllDesktops());
+            taskI->setOnAllActivities(task->isOnAllActivities());
+            taskI->setClassClass(task->classClass());
+            taskI->setName(task->name());
+            taskI->setIcon(QIcon(tempIcn));
+            taskI->setDesktop(task->desktop());
+            taskI->setActivities(task->activities());
+
+            if(task->isOnAllActivities())
+                if(!task->isOnAllDesktops())
+                    setOnAllDesktops(wId,true);
+            //                           QVariant(typeOfMessage));
+        }
 
     }
 
@@ -326,19 +363,21 @@ void PTaskManager::removeWindowPreview(QString win)
 
 ///INVOKES
 
-void PTaskManager::setOnDesktop(QString id, int desk)
+void PTaskManager::setOnDesktop(QString id, int desktop)
 {
-    TaskManager::Task *t = taskMainM->findTask(id.toULong());
-    t->toDesktop(desk);
-    kwinSystem->setOnDesktop(id.toULong(),desk);
+    //TaskManager::Task *t = taskMainM->findTask(id.toULong());
+    //t->toDesktop(desk);
+    kwinSystem->setOnDesktop(id.toULong(),desktop);
+
 }
 
 void PTaskManager::setOnAllDesktops(QString id, bool b)
 {
+
     kwinSystem->setOnAllDesktops(id.toULong(), b);
 }
 
-void PTaskManager::closeTask(QString id)
+void PTaskManager::removeTask(QString id)
 {
     TaskManager::Task *t = taskMainM->findTask(id.toULong());
     t->close();
@@ -368,5 +407,112 @@ void PTaskManager::setCurrentDesktop(int desk)
     kwinSystem->setCurrentDesktop(desk);
 }
 
+/*
+ *Three states are supported
+ *
+ *"oneDesktop" : single workarea
+ *
+ *"allDesktops" : all workareas in one Activity
+ *
+ *"allActivities" : all workareas in all Activities
+ *
+ */
+void PTaskManager::setTaskState(QString wId, QString state)
+{
+
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(task){
+        //var obj = model.get(ind);
+
+        QString fActivity = "";
+
+        if ((task->activities().count() == 0)||
+                (task->activities().at(0) == ""))
+            fActivity = taskMainM->currentActivity();
+        else
+            fActivity = task->activities().at(0);
+
+        //     console.debug("setTaskState:"+cod+"-"+val);
+
+        if (state == "oneDesktop"){
+
+            if( (task->activities().count() == 0) ||
+                    (task->activities().at(0) != fActivity) )
+                setOnlyOnActivity(wId, fActivity);
+
+            if (task->onAllDesktops() != false)
+                setOnAllDesktops(wId, false);
+        }
+        else if (state == "allDesktops"){
+            setOnlyOnActivity(wId, fActivity);
+
+            setOnAllDesktops(wId ,true);
+        }
+        else if (state == "allActivities"){
+            setOnAllDesktops(wId, true);
+            setOnAllActivities(wId);
+
+            //instanceOfTasksDesktopList.removeTask(cod);
+        }
+
+        //sharedTasksListTempl.tasksChanged();
+    }
+}
+
+
+/*
+ *This is used to update first the model and then send the signal to KDE
+ *in  order to achieve the animation effect
+ *
+ */
+void PTaskManager::setTaskActivityForAnimation(QString wId, QString activityId){
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(task){
+        QStringList list;
+        list.append(activityId);
+        task->setActivities(list);
+        setOnlyOnActivity(wId, activityId);
+    }
+}
+
+
+/*
+ *This is used to update first the model and then send the signal to KDE
+ *in  order to achieve the animation effect
+ *
+ */
+void PTaskManager::setTaskDesktopForAnimation(QString wId, int desktop){
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(task){
+        task->setDesktop(desktop);
+        setOnDesktop(wId, desktop);
+    }
+}
+
+
+/*
+ *This is used mainly in the tasks animation
+ */
+QStringList PTaskManager::getTaskActivities(QString wId)
+{
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(task)
+        return task->activities();
+
+    return QStringList();
+}
+
+
+/*
+ *This is used mainly in the tasks animation
+ */
+QIcon PTaskManager::getTaskIcon(QString wId)
+{
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if(task)
+        return task->icon();
+
+    return QIcon();
+}
 
 #include "ptaskmanager.moc"

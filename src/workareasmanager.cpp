@@ -272,6 +272,16 @@ void WorkareasManager::loadWorkareas()
 }
 
 
+int WorkareasManager::numberOfWorkareas(QString actId)
+{
+    ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(actId));
+
+    if (workareasModel)
+        return workareasModel->getCount();
+
+    return 0;
+}
+
 //PLUGINS
 
 void WorkareasManager::pluginUpdateWorkareasNameSlot(int w_pos)

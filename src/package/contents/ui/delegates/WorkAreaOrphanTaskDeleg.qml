@@ -10,7 +10,7 @@ Item{
 
     property bool shown: ( (onAllActivities !== true)&&
                           ((desktop > workalist.model.count)&&
-                           (workList.ccode === activities)) &&
+                           (workList.ccode === activities[0])) &&
                           (onAllDesktops !== true) )
 
 

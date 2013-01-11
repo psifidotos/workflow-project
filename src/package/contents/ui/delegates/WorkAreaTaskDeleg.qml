@@ -6,18 +6,15 @@ import "ui-elements"
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
-
-
-
 Item{
     id: taskDeleg1
 
     property bool shown: ( (((onAllActivities !== true)&&
                              ((mainWorkArea.desktop === desktop)&&
-                              (actCode === activities))) ||
+                              (actCode === activities[0]))) ||
                             ((onAllActivities !== true)&&
                              ((onAllDesktops === true)&&
-                              (actCode === activities))))
+                              (actCode === activities[0]))))
                           && (isPressed === false) ) //hide it in dragging
 
     width:mainWorkArea.imagewidth - imageTask.width - 5
