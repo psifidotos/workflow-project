@@ -36,10 +36,8 @@ DialogTemplate2{
     property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
-        target:instanceOfTasksDesktopList.model
-        onCountChanged:{
-            deskDialog.initInterface();
-        }
+        target: taskManager.subModel()
+        onCountChanged: deskDialog.initInterface();
     }
 
 
@@ -143,7 +141,8 @@ DialogTemplate2{
 
         GridView{
             id:desksTasksList
-            model:instanceOfTasksDesktopList.model
+            //model:instanceOfTasksDesktopList.model
+            model:taskManager.subModel()
 
             width: columns*cellWidth
             height: realRows*cellHeight
@@ -320,7 +319,7 @@ DialogTemplate2{
     }
 
     function emptyDialog(){
-        instanceOfTasksDesktopList.emptyList();
+        taskManager.emptySubModel();
         allActT.unForceState1();
 
         activityCode = "";
@@ -334,7 +333,7 @@ DialogTemplate2{
         deskDialog.dialogTitle = activityManager.name(act) + " - "+
                 workareasManager.name(act,desk);
 
-        instanceOfTasksDesktopList.loadDesktop(act,desk);
+        taskManager.setSubModel(act,desk);
 
         initInterface();
 
@@ -360,7 +359,7 @@ DialogTemplate2{
     }
 
     function clearList(){
-        instanceOfTasksDesktopList.emptyList();
+        taskManager.emptySubModel();
     }
 
     Connections {

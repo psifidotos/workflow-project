@@ -51,9 +51,11 @@ public:
 #endif
 
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
+    Q_INVOKABLE inline QObject *subModel(){return m_taskSubModel;}
+    Q_INVOKABLE void setSubModel(QString, int);
+    Q_INVOKABLE void emptySubModel();
 
     void setMainWindowId(WId win);
-    void setQMlObject(QObject *obj);
 
     void setTopXY(int,int);
     WId getMainWindowId();
@@ -66,6 +68,8 @@ signals:
     Q_INVOKABLE void updatePopWindowWId();
     void hidePopup();
 
+protected:
+    void init();
 
 public slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
@@ -81,6 +85,7 @@ private:
     QObject *qmlTaskEngine;
 
     ListModel *m_taskModel;
+    ListModel *m_taskSubModel;
 
     QList<QRect> previewsRects;
     QList<WId> previewsIds;

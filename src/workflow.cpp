@@ -156,10 +156,11 @@ void WorkFlow::init()
         connect(m_workflowManager->activityManager(),SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
         connect(m_workflowManager->activityManager(),SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
 
+        /*
         QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
         if(qmlTaskEng){
             m_taskManager->setQMlObject(qmlTaskEng);
-        }
+        }*/
 
         if(containment()){
             m_workflowManager->activityManager()->setContainment(containment());

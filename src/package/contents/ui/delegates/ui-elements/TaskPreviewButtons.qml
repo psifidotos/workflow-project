@@ -48,7 +48,7 @@ Item {
         }
 
         onClicked: {
-            instanceOfTasksList.removeTask(taskDeleg2.ccode);
+            taskManager.removeTask(taskDeleg2.ccode);
         }
 
     }
@@ -105,14 +105,14 @@ Item {
 
         function informState(){
             if (placeStateBtn.state === "one"){
-                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"oneDesktop");
+                taskManager.setTaskState(taskDeleg2.ccode,"oneDesktop");
                 if(taskDeleg2.dialogType === taskDeleg2.dTypes[1])
-                    instanceOfTasksList.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
+                    taskManager.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
             }
             else if (placeStateBtn.state === "allDesktops")
-                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allDesktops");
+                taskManager.setTaskState(taskDeleg2.ccode,"allDesktops");
             else if (placeStateBtn.state === "everywhere")
-                instanceOfTasksList.setTaskState(taskDeleg2.ccode,"allActivities");
+                taskManager.setTaskState(taskDeleg2.ccode,"allActivities");
         }
 
         function toDesktopAnimation(){

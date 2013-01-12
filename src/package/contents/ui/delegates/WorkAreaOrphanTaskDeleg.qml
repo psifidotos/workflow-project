@@ -120,7 +120,7 @@ Item{
         y: - height/4
 
         onClicked: {
-            instanceOfTasksList.removeTask(code);
+            taskManager.removeTask(code);
             orphansList.changedOrphansWindows();
         }
 

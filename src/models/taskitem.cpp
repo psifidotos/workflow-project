@@ -26,26 +26,40 @@ TaskItem::~TaskItem()
 {
 }
 
+TaskItem *TaskItem::copy(QObject *parent)
+{
+    TaskItem *res = new TaskItem(code(),
+                                 onAllDesktops(),
+                                 onAllActivities(),
+                                 classClass(),
+                                 name(),
+                                 icon(),
+                                 desktop(),
+                                 activities(),
+                                 parent);
+    return res;
+}
+
 void TaskItem::setProperty(QString role,QVariant value)
 {
     QHash<int, QByteArray> names = roleNames();
 
-//    if(role == names[CodeRole])
-//        setCode(value.toString());
-//    if(role == names[OnAllDesktopsRole])
-//        setOnAllDesktops(value.toBool());
-//    else if(role == names[OnAllActivitiesRole])
- //       setOnAllActivities(value.toBool());
-//    else if(role == names[ClassClassRole])
- //       setClassClass(value.toString());
-//    else if(role == names[NameRole])
-//        setName(value.toString());
-//    else if(role == names[IconRole])
-//        setIcon(value.toString());
-//    else if(role == names[DesktopRole])
-//        setDesktop(value.toInt());
-//    else if(role == names[ActivitiesRole])
-//        setActivities(value.toStringList());
+    //    if(role == names[CodeRole])
+    //        setCode(value.toString());
+    //    if(role == names[OnAllDesktopsRole])
+    //        setOnAllDesktops(value.toBool());
+    //    else if(role == names[OnAllActivitiesRole])
+    //       setOnAllActivities(value.toBool());
+    //    else if(role == names[ClassClassRole])
+    //       setClassClass(value.toString());
+    //    else if(role == names[NameRole])
+    //        setName(value.toString());
+    //    else if(role == names[IconRole])
+    //        setIcon(value.toString());
+    //    else if(role == names[DesktopRole])
+    //        setDesktop(value.toInt());
+    //    else if(role == names[ActivitiesRole])
+    //        setActivities(value.toStringList());
 }
 
 void TaskItem::setCode(QString code)
@@ -66,8 +80,8 @@ void TaskItem::setName(QString name)
 void TaskItem::setIcon(QIcon icon)
 {
     //if(m_icon != icon){
-        m_icon = icon;
-        emit dataChanged();
+    m_icon = icon;
+    emit dataChanged();
     //}
 }
 

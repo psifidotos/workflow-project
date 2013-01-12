@@ -39,6 +39,9 @@ PTaskManager::PTaskManager(QObject *parent) :
     clearedPreviewsList = true;
 
     m_taskModel = new ListModel(new TaskItem, this);
+    m_taskSubModel = new ListModel(new TaskItem, this);
+
+    init();
 }
 
 
@@ -49,22 +52,12 @@ PTaskManager::~PTaskManager(){
 
     if(m_taskModel)
         delete m_taskModel;
+    if(m_taskSubModel)
+        delete m_taskSubModel;
 }
 
-void PTaskManager::setQMlObject(QObject *obj)
+void PTaskManager::init()
 {
-    qmlTaskEngine = obj;
-
-    /*  connect(this, SIGNAL(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlTaskEngine,SLOT(taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
-
-    connect(this, SIGNAL(taskRemovedIn(QVariant)),
-            qmlTaskEngine,SLOT(taskRemovedIn(QVariant)));
-
-    connect(this, SIGNAL(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)),
-            qmlTaskEngine,SLOT(taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant)));
-*/
-
     foreach (TaskManager::Task *source, taskMainM->tasks())
         taskAdded(source);
 
@@ -101,18 +94,7 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
     QString wId;
     wId.setNum(task->window());
 
-    //  qDebug()<<"WinAdded:"<<wId;
     QPixmap tempIcn = task->icon(256,256,true);
-
-    /*   emit taskAddedIn(QVariant(wId),
-                     QVariant(task->isOnAllDesktops()),
-                     QVariant(task->isOnAllActivities()),
-                     QVariant(task->classClass()),
-                     QVariant(task->name()),
-                     QVariant(QIcon(tempIcn)),
-              //       QVariant(false),
-                     QVariant(task->desktop()),
-                     QVariant(task->activities()));*/
 
     TaskItem *taskI = new TaskItem(wId,
                                    task->isOnAllDesktops(),
@@ -139,18 +121,18 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
     wId.setNum(task->window());
 
     removeTaskFromPreviewsLists(task->window());
-    // QMetaObject::invokeMethod(qmlTaskEngine, "taskRemovedIn",
-    //                         Q_ARG(QVariant, wId));
 
     TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
     if(taskI){
         QModelIndex ind = m_taskModel->indexFromItem(taskI);
         m_taskModel->removeRow(ind.row());
-
-        ///emit activityRemoved(id);
     }
 
-    //emit taskRemovedIn(QVariant(wId));
+    TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
+    if(taskISub){
+        QModelIndex inds = m_taskSubModel->indexFromItem(taskISub);
+        m_taskSubModel->removeRow(inds.row());
+    }
 
     disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
@@ -166,7 +148,6 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
 
     // only a subset of task information is exported
     QString typeOfMessage="";
-
 
     if((changes != TaskManager::TaskUnchanged) ||
             (changes != TaskManager::GeometryChanged) ||
@@ -187,7 +168,19 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
             if(task->isOnAllActivities())
                 if(!task->isOnAllDesktops())
                     setOnAllDesktops(wId,true);
-            //                           QVariant(typeOfMessage));
+        }
+
+        TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
+        if(taskISub){
+            QPixmap tempIcn = task->icon(256,256,true);
+            taskISub->setCode(wId);
+            taskISub->setOnAllDesktops(task->isOnAllDesktops());
+            taskISub->setOnAllActivities(task->isOnAllActivities());
+            taskISub->setClassClass(task->classClass());
+            taskISub->setName(task->name());
+            taskISub->setIcon(QIcon(tempIcn));
+            taskISub->setDesktop(task->desktop());
+            taskISub->setActivities(task->activities());
         }
 
     }
@@ -513,6 +506,39 @@ QIcon PTaskManager::getTaskIcon(QString wId)
         return task->icon();
 
     return QIcon();
+}
+
+/*
+ * This is used to load the correct tasks in the
+ * submodel
+ *
+ */
+void PTaskManager::setSubModel(QString activity, int desktop)
+{
+    m_taskSubModel->clear();
+
+    for(int i=0; i<m_taskModel->getCount(); i++)
+    {
+        TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
+
+        if(task && task->activities().size() != 0)
+        {
+            if ( (task->activities().at(0) == activity)&&
+                 ((task->desktop() == desktop)||(task->onAllDesktops()==true)) ){
+                TaskItem *taskCopy = task->copy(m_taskSubModel);
+                m_taskSubModel->appendRow(taskCopy);
+            }
+        }
+    }
+}
+
+/*
+ * This is used to empty the tasks submodel mainly
+ * in order to support dragging of window previews *
+ */
+void PTaskManager::emptySubModel()
+{
+    m_taskSubModel->clear();
 }
 
 #include "ptaskmanager.moc"

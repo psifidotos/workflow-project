@@ -69,15 +69,6 @@ Rectangle {
         objectName: "instActivitiesEngine"
     }
 
-    SharedTasksList{
-        id:instanceOfTasksList
-        objectName: "instTasksEngine"
-    }
-
-    SharedTasksDesktopList{
-        id:instanceOfTasksDesktopList
-    }
-
     SharedThemeList{
         id:instanceOfThemeList
     }

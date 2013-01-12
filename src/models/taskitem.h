@@ -61,6 +61,7 @@ public:
   void setDesktop(int);
   void setActivities(QStringList);
 
+  TaskItem *copy(QObject *parent);
 private:
   QString m_code;
   bool m_onAllDesktops;
