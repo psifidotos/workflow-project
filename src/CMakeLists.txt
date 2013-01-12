@@ -6,6 +6,7 @@ set(workflow_SRCS
                   ptaskmanager.cpp
                   workareasmanager.cpp
                   workflowmanager.cpp
+                  previewsmanager.cpp
                   plugins/pluginfindwallpaper.cpp
                   plugins/pluginshowwidgets.cpp
                   plugins/plugincloneactivity.cpp

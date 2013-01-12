@@ -53,22 +53,6 @@
 #include "activitymanager.h"
 #include "workareasmanager.h"
 
-bool m_isOnDashboard;
-bool m_findPopupWid;
-QString m_activityIcon;
-QString m_activityName;
-
-QObject *m_rootQMLObject;
-QDesktopWidget *m_desktopWidget;
-Plasma::Svg *m_theme;
-
-QGraphicsWidget *m_mainWidget;
-Plasma::DeclarativeWidget *declarativeWidget;
-
-ActivitiesEnhancedModel *m_activitiesModel;
-WorkflowManager *m_workflowManager;
-StoredParameters *m_storedParams;
-PTaskManager *m_taskManager;
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
