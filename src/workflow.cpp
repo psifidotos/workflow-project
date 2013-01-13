@@ -182,10 +182,10 @@ void WorkFlow::init()
 
     connect(m_workflowManager->activityManager(), SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
-    connect(this, SIGNAL(updateMarginForPreviews(int,int)), m_previewManager, SLOT(setTopXY(int,int)) );
-    connect(this, SIGNAL(updateWindowIDForPreviews(QString)), m_previewManager, SLOT(setMainWindowId(QString)));
-    connect(m_taskManager, SIGNAL(taskRemoved(QString)), m_previewManager, SLOT(removeWindowPreview(QString)) );
-    connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
+    //connect(this, SIGNAL(updateMarginForPreviews(int,int)), m_previewManager, SLOT(setTopXY(int,int)) );
+    //connect(this, SIGNAL(updateWindowIDForPreviews(QString)), m_previewManager, SLOT(setMainWindowId(QString)));
+    //connect(m_taskManager, SIGNAL(taskRemoved(QString)), m_previewManager, SLOT(removeWindowPreview(QString)) );
+    //connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
 
 
     setGraphicsWidget(m_mainWidget);

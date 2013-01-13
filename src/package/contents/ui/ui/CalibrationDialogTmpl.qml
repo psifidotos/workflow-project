@@ -73,7 +73,7 @@ DialogTemplate2{
 
             GridView{
                 id:calibsTasksList
-                model:instanceOfTasksList.model
+                model: taskManager.model()
 
                 x:3
                 width: calibrView.width-14
