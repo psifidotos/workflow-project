@@ -48,11 +48,8 @@
 
 #include <iostream>
 
-#include "workflowmanager.h"
-//#include "activitymanager.h"
 #include "environmentmanager.h"
-//#include "workareasmanager.h"
-#include "previewsmanager.h"
+
 
 const QString WorkFlow::DEFAULTICON = "preferences-activities";
 
@@ -65,41 +62,38 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_windowID(""),
     m_theme(0),
     m_mainWidget(0),
-    m_workflowManager(0),
-    m_environmentManager(0),
-    m_taskManager(0),
-    m_previewManager(0)
+    m_environmentManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(true);
     setPopupIcon(WorkFlow::DEFAULTICON);
 
-    m_taskManager = new PTaskManager(this);
+   // m_taskManager = new PTaskManager(this);
 
     m_desktopWidget = qApp->desktop();
 
     m_environmentManager = new EnvironmentManager(this);
-    m_workflowManager = new WorkflowManager(this);
-    m_previewManager = new PreviewsManager(this);
+  //  m_workflowManager = new WorkflowManager(this);
+   // m_previewManager = new PreviewsManager(this);
 }
 
 WorkFlow::~WorkFlow()
 {
     emit configNeedsSaving();
 
-    if (m_workflowManager)
-        delete m_workflowManager;
+ //   if (m_workflowManager)
+ //       delete m_workflowManager;
 
-    if (m_taskManager)
-        delete m_taskManager;
+   // if (m_taskManager)
+   //     delete m_taskManager;
 
     if (m_storedParams)
         delete m_storedParams;
     if (m_theme)
         delete m_theme;
 
-    if (m_previewManager)
-        delete m_previewManager;
+   // if (m_previewManager)
+   //     delete m_previewManager;
 
     if (m_environmentManager)
         delete m_environmentManager;
@@ -137,9 +131,9 @@ void WorkFlow::init()
 
         ctxt->setContextProperty("plasmoidWrapper", this);
         ctxt->setContextProperty("environmentManager", m_environmentManager);
-        ctxt->setContextProperty("workflowManager", m_workflowManager);
-        ctxt->setContextProperty("taskManager", m_taskManager);
-        ctxt->setContextProperty("previewManager",m_previewManager);
+   //     ctxt->setContextProperty("workflowManager", m_workflowManager);
+   //     ctxt->setContextProperty("taskManager", m_taskManager);
+   //     ctxt->setContextProperty("previewManager",m_previewManager);
         ctxt->setContextProperty("storedParameters",m_storedParams);
 
         declarativeWidget->setQmlPath(path);

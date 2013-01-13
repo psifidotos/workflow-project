@@ -32,15 +32,13 @@
 #include <KStandardDirs>
 #include <KConfigGroup>
 
-
-#include "ptaskmanager.h"
 #include "ui_workflowConfig.h"
 
 class QDesktopWidget;
 class StoredParameters;
-class WorkflowManager;
+//class WorkflowManager;
 class EnvironmentManager;
-class PreviewsManager;
+//class PreviewsManager;
 
 namespace Plasma {
 class ExtenderItem;
@@ -118,11 +116,11 @@ private:
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    WorkflowManager *m_workflowManager;
+ //   WorkflowManager *m_workflowManager;
     EnvironmentManager *m_environmentManager;
     StoredParameters *m_storedParams;
-    PTaskManager *m_taskManager;
-    PreviewsManager *m_previewManager;
+ //   PTaskManager *m_taskManager;
+ //   PreviewsManager *m_previewManager;
 
     void paintIcon();
     void initTooltip();

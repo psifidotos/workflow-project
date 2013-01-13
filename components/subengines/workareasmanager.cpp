@@ -2,9 +2,9 @@
 
 #include <QHash>
 #include "workareasdata.h"
-#include "models/activitiesenhancedmodel.h"
-#include "models/workareaitem.h"
-#include "models/listmodel.h"
+#include "../models/activitiesenhancedmodel.h"
+#include "../models/workareaitem.h"
+#include "../models/listmodel.h"
 
 #include <taskmanager/task.h>
 

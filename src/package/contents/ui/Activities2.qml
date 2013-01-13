@@ -64,6 +64,18 @@ Rectangle {
         objectName:"sessionParameters"
     }
 
+    WorkFlowComponents.WorkflowManager {
+        id: workflowManager
+    }
+
+    WorkFlowComponents.TaskManager {
+        id: taskManager
+    }
+
+    WorkFlowComponents.PreviewsManager {
+        id: previewManager
+    }
+
     QMLPluginsConnections{}
 
 

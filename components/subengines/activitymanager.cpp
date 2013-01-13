@@ -22,9 +22,9 @@
 #include "plugins/pluginchangeworkarea.h"
 #include "plugins/pluginaddactivity.h"
 
-#include "models/activitiesenhancedmodel.h"
-#include "models/activityitem.h"
-#include "models/listitem.h"
+#include "../models/activitiesenhancedmodel.h"
+#include "../models/activityitem.h"
+#include "../models/listitem.h"
 
 ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),

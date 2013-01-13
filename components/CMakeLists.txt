@@ -3,11 +3,18 @@ project(workflowcomponents)
 set(components_SRCS
     workflowcomponentsplugin.cpp
     sessionparameters.cpp
-    activitymanager.cpp
-    icondialog.cpp
+    workflowmanager.cpp
+    ptaskmanager.cpp
+    previewsmanager.cpp
+#    icondialog.cpp
 )
 
-qt4_automoc(${components_SRCS})
+add_subdirectory(models)
+add_subdirectory(subengines)
+
+kde4_add_kcfg_files(components_SRCS GENERATE_MOC subengines/workareasdata.kcfgc)
+
+#qt4_automoc(${components_SRCS})
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/internal
@@ -23,6 +30,8 @@ target_link_libraries(workflowcomponentsplugin
         ${KDE4_KIO_LIBS}
         ${KDE4_KFILE_LIBS}
         ${KDE4WORKSPACE_KWORKSPACE_LIBS}
+        ${X11_LIBRARIES}
+        taskmanager
 )
 
 install(TARGETS workflowcomponentsplugin DESTINATION ${IMPORTS_INSTALL_DIR}/org/kde/workflow/components)
@@ -31,4 +40,8 @@ install(DIRECTORY qml/
     PATTERN "*.qml"
     PATTERN "qmldir"
     PATTERN "*.js"
+)
+
+install(FILES subengines/workareas.kcfg
+        DESTINATION ${KCFG_INSTALL_DIR}
 )

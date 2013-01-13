@@ -1,12 +1,12 @@
 #include "workflowmanager.h"
 
-#include "activitymanager.h"
-#include "workareasmanager.h"
+#include "subengines/activitymanager.h"
+#include "subengines/workareasmanager.h"
 #include "models/activitiesenhancedmodel.h"
 
 #include "models/activityitem.h"
 
-#include "plugins/pluginsyncactivitiesworkareas.h"
+#include "subengines/plugins/pluginsyncactivitiesworkareas.h"
 
 WorkflowManager::WorkflowManager(QObject *parent) :
     QObject(parent),
