@@ -39,15 +39,6 @@ public:
     Q_INVOKABLE void slotRemoveDesktop();
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
-
-    Q_INVOKABLE void setWindowPreview(QString win,int x, int y, int width, int height);
-    Q_INVOKABLE void removeWindowPreview(QString win);
-
-    Q_INVOKABLE void showWindowsPreviews();
-    Q_INVOKABLE void hideWindowsPreviews();
-
-    Q_INVOKABLE float getWindowRatio(QString win);
-    Q_INVOKABLE bool mainWindowIdisSet();
 #endif
 
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
@@ -55,17 +46,8 @@ public:
     Q_INVOKABLE void setSubModel(QString, int);
     Q_INVOKABLE void emptySubModel();
 
-    void setMainWindowId(WId win);
-
-    void setTopXY(int,int);
-    WId getMainWindowId();
-
 signals:
-    void taskAddedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
-    void taskRemovedIn(QVariant);
-    void taskUpdatedIn(QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant,QVariant);
-
-    Q_INVOKABLE void updatePopWindowWId();
+    void taskRemoved(QString);
     void hidePopup();
 
 protected:
@@ -77,7 +59,6 @@ public slots:
   void taskRemoved(::TaskManager::Task *);
   void taskUpdated(::TaskManager::TaskChanges changes);
 
-
 private:
     TaskManager::TaskManager *taskMainM;
     KWindowSystem *kwinSystem;
@@ -86,20 +67,6 @@ private:
 
     ListModel *m_taskModel;
     ListModel *m_taskSubModel;
-
-    QList<QRect> previewsRects;
-    QList<WId> previewsIds;
-
-    WId m_mainWindowId;
-
-    int topX;
-    int topY;
-
-    bool clearedPreviewsList;
-
-    int indexOfPreview(WId window);
-
-    void removeTaskFromPreviewsLists(WId window);
 
 };
 

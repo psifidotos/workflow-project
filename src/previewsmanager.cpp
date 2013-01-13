@@ -64,8 +64,10 @@ void PreviewsManager::hideWindowsPreviews()
     showWindowsPreviews();
 }
 
-void PreviewsManager::setMainWindowId(WId win)
+void PreviewsManager::setMainWindowId(QString w)
 {
+    WId win = w.toULong();
+
     if(m_mainWindowId != win){
         m_mainWindowId = win;
         showWindowsPreviews();

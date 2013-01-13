@@ -52,6 +52,7 @@
 #include "workflowmanager.h"
 #include "activitymanager.h"
 #include "workareasmanager.h"
+#include "previewsmanager.h"
 
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
@@ -60,10 +61,12 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_findPopupWid(false),
     m_activityIcon("preferences-activities"),
     m_activityName(""),
+    m_windowID(""),
     m_theme(0),
     m_mainWidget(0),
     m_activitiesModel(0),
-    m_taskManager(0)
+    m_taskManager(0),
+    m_previewManager(0)
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(true);
@@ -75,6 +78,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_activitiesModel = new ActivitiesEnhancedModel(this);
     m_workflowManager = new WorkflowManager(m_activitiesModel, this);
+    m_previewManager = new PreviewsManager(this);
 }
 
 WorkFlow::~WorkFlow()
@@ -98,6 +102,9 @@ WorkFlow::~WorkFlow()
         delete m_storedParams;
     if (m_theme)
         delete m_theme;
+
+    if (m_previewManager)
+        delete m_previewManager;
 
 }
 
@@ -130,6 +137,7 @@ void WorkFlow::init()
         ctxt->setContextProperty("workareasManager", m_workflowManager->workareasManager());
         ctxt->setContextProperty("taskManager", m_taskManager);
         ctxt->setContextProperty("storedParameters",m_storedParams);
+        ctxt->setContextProperty("previewManager",m_previewManager);
 
         declarativeWidget->setQmlPath(path);
 
@@ -169,10 +177,14 @@ void WorkFlow::init()
 
     connect(m_workflowManager->workareasManager(), SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
 
-    connect(m_taskManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
     connect(m_taskManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
     connect(m_workflowManager->activityManager(), SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
+
+    connect(this, SIGNAL(updateMarginForPreviews(int,int)), m_previewManager, SLOT(setTopXY(int,int)) );
+    connect(this, SIGNAL(updateWindowIDForPreviews(QString)), m_previewManager, SLOT(setMainWindowId(QString)));
+    connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
+    connect(m_taskManager, SIGNAL(taskRemoved(QString)), m_previewManager, SLOT(removeWindowPreview(QString)) );
 
     setGraphicsWidget(m_mainWidget);
 
@@ -204,11 +216,15 @@ void WorkFlow::setMainWindowId()
     QRectF rf = this->geometry();
 
     if(m_isOnDashboard)
-        m_taskManager->setTopXY(rf.x(),rf.y());
+        emit updateMarginForPreviews(rf.x(),rf.y());
+        //m_taskManager->setTopXY(rf.x(),rf.y());
     else
-        m_taskManager->setTopXY(0,0);
+        emit updateMarginForPreviews(0,0);
+        //m_taskManager->setTopXY(0,0);
 
-    m_taskManager->setMainWindowId(view()->effectiveWinId());
+    m_windowID = QString::number(view()->effectiveWinId());
+    emit updateWindowIDForPreviews( m_windowID );
+  //  m_taskManager->setMainWindowId(view()->effectiveWinId());
 }
 
 void WorkFlow::geomChanged()
@@ -216,14 +232,14 @@ void WorkFlow::geomChanged()
     QRectF rf = this->geometry();
 
     if(m_isOnDashboard)
-        m_taskManager->setTopXY(rf.x(),rf.y());
+        emit updateMarginForPreviews(rf.x(),rf.y());
     else
-        m_taskManager->setTopXY(0,0);
+        emit updateMarginForPreviews(0,0);
 }
 
 void WorkFlow::updatePopWindowWIdSlot()
 {
-    if(m_taskManager->getMainWindowId() == 0){
+    if(m_windowID == ""){
         WId lastWindow = 0;
 
         QList<WId>::ConstIterator it;
@@ -237,8 +253,9 @@ void WorkFlow::updatePopWindowWIdSlot()
         }
 
         m_findPopupWid = true;
-        m_taskManager->setMainWindowId(lastWindow);
-        m_taskManager->setTopXY(0,0);
+        m_windowID = QString::number(lastWindow);
+        emit updateWindowIDForPreviews(m_windowID);
+        emit updateMarginForPreviews(0,0);
     }
 }
 
@@ -249,9 +266,8 @@ void WorkFlow::setPassivePopupSlot(bool passive)
 
 void WorkFlow::popupEvent(bool show)
 {
-    if((!show)&&(!m_findPopupWid)){
+    if((!show)&&(!m_findPopupWid))
         updatePopWindowWIdSlot();
-    }
 }
 
 //This slot is just to check the id for the dashboard
@@ -262,9 +278,8 @@ void WorkFlow::activeWindowChanged(WId w)
     Q_UNUSED(w);
 
     if( m_isOnDashboard && view() && containment()){
-        if(view()->effectiveWinId() != m_taskManager->getMainWindowId()){
-            this->setMainWindowId();
-        }
+        if(QString::number(view()->effectiveWinId()) != m_windowID )
+            setMainWindowId();
     }
 }
 

@@ -30,13 +30,11 @@
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),
     m_taskModel(0),
-    m_mainWindowId(0)
+    m_taskSubModel(0)
 {
     taskMainM = TaskManager::TaskManager::self();
 
     kwinSystem = KWindowSystem::KWindowSystem::self();
-
-    clearedPreviewsList = true;
 
     m_taskModel = new ListModel(new TaskItem, this);
     m_taskSubModel = new ListModel(new TaskItem, this);
@@ -48,7 +46,6 @@ PTaskManager::PTaskManager(QObject *parent) :
 PTaskManager::~PTaskManager(){
     //  foreach (const QString source, plasmaTaskEngine->sources())
     //     plasmaTaskEngine->disconnectSource(source, this);
-    hideWindowsPreviews();
 
     if(m_taskModel)
         delete m_taskModel;
@@ -79,15 +76,6 @@ void PTaskManager::showDashboard()
     remoteApp.call( "showDashboard", true );
 }
 
-bool PTaskManager::mainWindowIdisSet()
-{
-    return (m_mainWindowId>0);
-}
-
-
-WId PTaskManager::getMainWindowId(){
-    return m_mainWindowId;
-}
 
 void PTaskManager::taskAdded(::TaskManager::Task *task)
 {
@@ -119,8 +107,9 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
 
     QString wId;
     wId.setNum(task->window());
+    emit taskRemoved(wId);
 
-    removeTaskFromPreviewsLists(task->window());
+    //removeTaskFromPreviewsLists(task->window());
 
     TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
     if(taskI){
@@ -233,126 +222,7 @@ QPixmap PTaskManager::disabledPixmapForIcon(const QIcon &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
-void PTaskManager::setTopXY(int x1,int y1)
-{
-    topX = x1;
-    topY = y1;
-}
 
-
-void PTaskManager::showWindowsPreviews()
-{
-
-    //    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
-    //    qDebug() << m_mainWindowId;
-    if (previewsIds.size()>0) {
-        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
-        clearedPreviewsList = false;
-    }
-
-    if ((previewsIds.size() == 0)&&(clearedPreviewsList == false)) {
-        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
-        clearedPreviewsList = true;
-    }
-
-}
-
-void PTaskManager::hideWindowsPreviews()
-{
-    previewsIds.clear();
-    previewsRects.clear();
-    showWindowsPreviews();
-}
-
-void PTaskManager::setMainWindowId(WId win)
-{
-    if(m_mainWindowId != win){
-        m_mainWindowId = win;
-        showWindowsPreviews();
-
-
-    }
-}
-
-
-float PTaskManager::getWindowRatio(QString win)
-{
-    WId winId = win.toULong();
-
-    QList<WId> wList;
-    wList.append(winId);
-
-    QList<QSize> sList;
-    sList = Plasma::WindowEffects::windowSizes(wList);
-
-    if (sList.size()>0){
-        QSize wSz = sList.at(0);
-
-        return (float)(wSz.rheight())/(float)(wSz.rwidth());
-    }
-
-    return 0;
-}
-
-int PTaskManager::indexOfPreview(WId window)
-{
-
-    for (int i=0; i<previewsIds.size(); i++)
-        if ( previewsIds.at(i) == window )
-            return i;
-
-    return -1;
-}
-
-void PTaskManager::setWindowPreview(QString win,int x, int y, int width, int height)
-{
-    //int xEr = topX + 12;
-    //int yEr = topY + 75;
-    //  int xEr = topX+13;
-    //  int yEr = topY+42;
-
-    //QRect prSize(x+xEr,y+yEr,width,height);
-    //   QRect prSize(x,y,width,height);
-    QRect prSize(topX+x,topY+y,width,height);
-    WId winId = win.toULong();
-
-    int pos = indexOfPreview(winId);
-
-    if (pos>-1){
-        previewsRects[pos] = prSize;
-
-        if(pos>0){
-            previewsRects.move(pos,0);
-            previewsIds.move(pos,0);
-        }
-    }
-    else{
-        previewsRects.insert(0, prSize);
-        previewsIds.insert(0, winId);
-        //   previewsRects << prSize;
-        //  previewsIds << winId;
-    }
-
-    showWindowsPreviews();
-}
-
-void PTaskManager::removeTaskFromPreviewsLists(WId window){
-    int pos = indexOfPreview(window);
-
-    if (pos>-1){
-        previewsRects.removeAt(pos);
-        previewsIds.removeAt(pos);
-    }
-}
-
-void PTaskManager::removeWindowPreview(QString win)
-{
-    WId winId = win.toULong();
-
-    removeTaskFromPreviewsLists(winId);
-
-    showWindowsPreviews();
-}
 
 ///INVOKES
 

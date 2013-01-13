@@ -206,12 +206,12 @@ Item{
 
 
     ListView.onRemove:{
-        taskManager.removeWindowPreview(taskDeleg2.ccode);
+        previewManager.removeWindowPreview(taskDeleg2.ccode);
     }
 
 
     GridView.onRemove:{
-        taskManager.removeWindowPreview(taskDeleg2.ccode);
+        previewManager.removeWindowPreview(taskDeleg2.ccode);
     }
 
 
@@ -854,7 +854,7 @@ Item{
             //This is a way to change position to allTasksBtns
             //according to window previews size
             if (showPreviewsFound ===  true){
-                var ratioWin = taskManager.getWindowRatio(taskDeleg2.ccode);
+                var ratioWin = previewManager.getWindowRatio(taskDeleg2.ccode);
 
                 if (ratioWin<1){
                     var offY = (1 - ratioWin)/2
@@ -989,7 +989,7 @@ Item{
             var y1 = 0;
             var obj = previewRect.mapToItem(mainView,x1,y1);
 
-            taskManager.setWindowPreview(taskDeleg2.ccode,
+            previewManager.setWindowPreview(taskDeleg2.ccode,
                                          obj.x+storedParameters.windowsPreviewsOffsetX,
                                          obj.y+storedParameters.windowsPreviewsOffsetY,
                                          previewRect.width-(2*previewRect.border.width),
@@ -1002,7 +1002,7 @@ Item{
             //  if (calibrationDialog.getTasksList() !== centralListView)
             //if(dialogType !== dTypes[2])
             if(!isSelected)
-                taskManager.removeWindowPreview(taskDeleg2.ccode);
+                previewManager.removeWindowPreview(taskDeleg2.ccode);
         }
     }
 

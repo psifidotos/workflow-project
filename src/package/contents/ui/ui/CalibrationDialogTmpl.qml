@@ -92,7 +92,7 @@ DialogTemplate2{
 
                 onSelectedWinChanged: {
                     if (calibsTasksList.prevWin !== "")
-                        taskManager.removeWindowPreview(calibsTasksList.prevWin);
+                        previewManager.removeWindowPreview(calibsTasksList.prevWin);
 
                     calibDialog.updatePreview();
 
@@ -514,7 +514,7 @@ DialogTemplate2{
             var y1 = 0;
             var obj = tasksPreviewRect.mapToItem(mainView,x1,y1);
 
-            taskManager.setWindowPreview(calibsTasksList.selectedWin,
+            previewManager.setWindowPreview(calibsTasksList.selectedWin,
                                          obj.x+xValueText.val,
                                          obj.y+yValueText.val,
                                          tasksPreviewRect.width-(2*tasksPreviewRect.border.width),

@@ -15,7 +15,7 @@ public:
 
 #ifdef Q_WS_X11
     Q_INVOKABLE void setWindowPreview(QString win,int x, int y, int width, int height);
-    Q_INVOKABLE void removeWindowPreview(QString win);
+
 
     Q_INVOKABLE void showWindowsPreviews();
     Q_INVOKABLE void hideWindowsPreviews();
@@ -23,7 +23,7 @@ public:
     Q_INVOKABLE float getWindowRatio(QString win);
     Q_INVOKABLE bool mainWindowIdisSet();
 #endif
-    void setTopXY(int,int);
+
     WId getMainWindowId();
 
 signals:
@@ -33,7 +33,9 @@ protected:
     void init();
 
 public slots:
-    void setMainWindowId(WId win);
+    void setMainWindowId(QString);
+    void setTopXY(int,int);
+    Q_INVOKABLE void removeWindowPreview(QString win);
 
 private:
     QList<QRect> previewsRects;

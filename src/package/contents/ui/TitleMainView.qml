@@ -227,9 +227,9 @@ Rectangle{
                                 storedParameters.firstRunCalibrationPreviews = true;
                             }
 
-                            if(taskManager.mainWindowIdisSet() === false){
-                                taskManager.updatePopWindowWId();
-                            }
+                            if(previewManager.mainWindowIdisSet() === false)
+                                previewManager.updatePopWindowWId();
+
                         }
                     }
 

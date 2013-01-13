@@ -40,6 +40,7 @@ class QDesktopWidget;
 class StoredParameters;
 class ActivitiesEnhancedModel;
 class WorkflowManager;
+class PreviewsManager;
 
 namespace Plasma {
 class ExtenderItem;
@@ -59,6 +60,10 @@ public:
 
     //QGraphicsWidget *graphicsWidget();
     void init();
+
+signals:
+    void updateMarginForPreviews(int, int);
+    void updateWindowIDForPreviews(QString);
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);
@@ -81,7 +86,7 @@ public slots:
     void configChanged();
 
     void workAreaWasClickedSlot();
-    void updatePopWindowWIdSlot();
+    Q_INVOKABLE void updatePopWindowWIdSlot();
 
     void hidePopupDialogSlot();
     void showPopupDialogSlot();
@@ -99,6 +104,7 @@ private:
     bool m_findPopupWid;
     QString m_activityIcon;
     QString m_activityName;
+    QString m_windowID;
 
     QObject *m_rootQMLObject;
     QDesktopWidget *m_desktopWidget;
@@ -111,6 +117,7 @@ private:
     WorkflowManager *m_workflowManager;
     StoredParameters *m_storedParams;
     PTaskManager *m_taskManager;
+    PreviewsManager *m_previewManager;
 
     void paintIcon();
     void initTooltip();
