@@ -192,7 +192,8 @@ Item{
     function onClicked(mouse) {
         // mainWorkArea.clickedWorkarea();
         if(taskDeleg1.isPressed !== true){
-            instanceOfTasksList.setCurrentTaskInWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,taskDeleg1.ccode);
+            activityManager.setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
+            taskManager.activateTask(taskDeleg1.ccode);
         }
 
     }

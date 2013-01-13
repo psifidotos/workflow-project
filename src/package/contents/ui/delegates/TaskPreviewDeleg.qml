@@ -892,7 +892,7 @@ Item{
         //                (taskDeleg2.centralListView === allActT.getTasksList()) )
         if((dialogType === dTypes[0]) ||
                 (dialogType === dTypes[1]))
-            instanceOfTasksList.setCurrentTask(taskDeleg2.ccode);
+             taskManager.activateTask(taskDeleg2.ccode);
         //        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
         else if (dialogType === dTypes[2])
             calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
