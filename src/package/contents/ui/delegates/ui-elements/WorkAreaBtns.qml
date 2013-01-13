@@ -37,7 +37,7 @@ Item{
         }
 
         onClicked: {
-            workareasManager.removeWorkarea(mainWorkArea.actCode,mainWorkArea.desktop);
+            workflowManager.workareaManager().removeWorkarea(mainWorkArea.actCode,mainWorkArea.desktop);
         }
 
         onEntered: {

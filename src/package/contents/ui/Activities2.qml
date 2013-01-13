@@ -59,20 +59,12 @@ Rectangle {
     signal preferredHeightChanged;
 
 
-
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
         objectName:"sessionParameters"
     }
 
-    PreviewManagerConnections{
-    }
-
-    SharedActivitiesList{
-        id:instanceOfActivitiesList
-        objectName: "instActivitiesEngine"
-    }
-
+    QMLPluginsConnections{}
 
 
     SharedThemeList{

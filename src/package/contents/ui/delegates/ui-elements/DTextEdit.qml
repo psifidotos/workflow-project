@@ -339,7 +339,7 @@ Item{
         dTextItem.acceptedText = dTextItem.text;
         dTextItem.state = "inactive";
         mainView.forceActiveFocus();
-        activityManager.setName(dTextItem.actCode,dTextItem.acceptedText);
+        workflowManager.activityManager().setName(dTextItem.actCode,dTextItem.acceptedText);
         mainTextLabel2.opacity = 1;
     }
 

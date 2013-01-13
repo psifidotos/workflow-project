@@ -163,7 +163,7 @@ Rectangle {
             property int shownActivities: 0
 
             interactive:false
-            model: activitiesModelEnhanced
+            model: workflowManager.model()
 
             delegate: ActivityStoppedDeleg{
                 onShownChanged:stoppedActivitiesList.countActivities()

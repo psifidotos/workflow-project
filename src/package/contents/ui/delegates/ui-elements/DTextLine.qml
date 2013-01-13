@@ -342,7 +342,7 @@ Item{
         dTextIItem.acceptedText = dTextIItem.text;
         dTextIItem.state = "inactive";
 
-        workareasManager.renameWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
+        workflowManager.workareaManager().renameWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
 
         mainView.forceActiveFocus();
 

@@ -52,7 +52,7 @@ Item{
 
         interactive:false
 
-        model: activitiesModelEnhanced.workareas(code)
+        model: workflowManager.model().workareas(code)
 
         orientation:ListView.Vertical
 
@@ -77,7 +77,7 @@ Item{
             anchors.fill: parent
 
             onClicked:{
-                workareasManager.addWorkArea(code,"");
+                workflowManager.workareaManager().addWorkArea(code,"");
             }
         }
 

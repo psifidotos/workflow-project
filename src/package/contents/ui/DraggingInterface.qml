@@ -121,9 +121,9 @@ Rectangle{
             }
         }
         else if (mainDraggingItem.lastSelection === 1){
-            workareasManager.addWorkArea(mainDraggingItem.drActiv, "");
+            workflowManager.workareaManager().addWorkArea(mainDraggingItem.drActiv, "");
 
-            var works = workareasManager.numberOfWorkareas(mainDraggingItem.drActiv);
+            var works = workflowManager.workareaManager().numberOfWorkareas(mainDraggingItem.drActiv);
 
             taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
 

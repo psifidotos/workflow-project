@@ -27,12 +27,12 @@ QIconItem{
     }
 
     function animateActivity(cod,coord,lst){
-        var pos = activitiesModelEnhanced.getIndexFor(cod);
+        var pos = workflowManager.model().getIndexFor(cod);
         if (pos>=0){
             activityAnimation.x = coord.x
             activityAnimation.y = coord.y
 
-            var elem=activitiesModelEnhanced.get(pos);
+            var elem=workflowManager.model().get(pos);
 
             if (elem.Icon === "")
                 activityAnimation.icon = QIcon("plasma");
@@ -52,11 +52,11 @@ QIconItem{
     }
 
     function getActivityCoord(cod,lst){
-        var pos = activitiesModelEnhanced.getIndexFor(cod);
+        var pos = workflowManager.model().getIndexFor(cod);
         var fixPosElem;
         if (pos>=0){
 
-            var elem=activitiesModelEnhanced.get(pos);
+            var elem=workflowManager.model().get(pos);
 
             var newPosElem=lst; // if no child found
 

@@ -169,7 +169,7 @@ Item{
         anchors.fill: parent
         hoverEnabled: true
         onClicked: {
-            activityManager.start(ccode);
+            workflowManager.activityManager().start(ccode);
 
             if(storedParameters.animationsStep2!==0){
                 var x1 = activityIcon.x;
@@ -190,7 +190,7 @@ Item{
         height: buttonsSize
         opacity: (stpActivity.containsMouse && !storedParameters.lockActivities) ? 1 : 0
         onClicked: {
-            mainView.getDynLib().showRemoveDialog(ccode,activityManager.name(ccode));
+            mainView.getDynLib().showRemoveDialog(ccode,workflowManager.activityManager().name(ccode));
         }
 
         tooltipTitle: i18n("Delete Activity")

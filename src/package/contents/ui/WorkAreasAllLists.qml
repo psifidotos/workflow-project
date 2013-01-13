@@ -54,7 +54,7 @@ Item{
 
             property int maxWorkAreasHeight: 0
 
-            model:activitiesModelEnhanced
+            model:workflowManager.model()
 
             delegate: WorkAreaListDeleg{}
 
@@ -105,7 +105,7 @@ Item{
                 height:parent.height
                 width: allareas.width
                 interactive:false
-                model: activitiesModelEnhanced
+                model: workflowManager.model()
 
                 property int shownActivities: 0
 

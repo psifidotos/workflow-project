@@ -44,6 +44,8 @@ public:
     Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE QString name(QString id);
     Q_INVOKABLE QString cstate(QString id);
+    Q_INVOKABLE void setCurrentNextActivity();
+    Q_INVOKABLE void setCurrentPreviousActivity();
 
     //    Q_INVOKABLE int askForDelete(QString activityName);
 
@@ -53,8 +55,6 @@ public:
     void loadActivitiesInModel();
 
     void setContainment(Plasma::Containment *);
-    void setCurrentNextActivity();
-    void setCurrentPreviousActivity();
 
     QString getCurrentActivityName();
     QString getCurrentActivityIcon();

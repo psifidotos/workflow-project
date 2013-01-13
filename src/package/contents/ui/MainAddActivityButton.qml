@@ -120,7 +120,7 @@ Rectangle{
         }
 
         onClicked: {
-            activityManager.add(i18n("New Activity"));
+            workflowManager.activityManager().add(i18n("New Activity"));
         }
 
     }

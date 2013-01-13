@@ -7,21 +7,10 @@ set(workflow_SRCS
                   workareasmanager.cpp
                   workflowmanager.cpp
                   previewsmanager.cpp
-                  plugins/pluginfindwallpaper.cpp
-                  plugins/pluginshowwidgets.cpp
-                  plugins/plugincloneactivity.cpp
-                  plugins/pluginremoveactivity.cpp
-                  plugins/pluginchangeworkarea.cpp
-                  plugins/pluginaddactivity.cpp
-                  plugins/pluginsyncactivitiesworkareas.cpp
-                  plugins/pluginupdateworkareasname.cpp
-                  models/listitem.cpp
-                  models/listmodel.cpp
-                  models/activityitem.cpp
-                  models/workareaitem.cpp
-                  models/taskitem.cpp
-                  models/activitiesenhancedmodel.cpp
 )
+
+add_subdirectory(models)
+add_subdirectory(plugins)
 
 # Now make sure all files get to the right place
 kde4_add_ui_files(workflow_SRCS workflowConfig.ui)
@@ -46,4 +35,6 @@ install(FILES workareas.kcfg
         DESTINATION ${KCFG_INSTALL_DIR}
 )
 
+
 add_subdirectory(package)
+

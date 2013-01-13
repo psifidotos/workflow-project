@@ -109,9 +109,9 @@ Item{
 
             onClicked: {
                 if (storedParameters.lockActivities === false)
-                    activityManager.chooseIcon(ccode);
+                    workflowManager.activityManager().chooseIcon(ccode);
                 else
-                    activityManager.setCurrent(ccode);
+                    workflowManager.activityManager().setCurrent(ccode);
             }
 
 
@@ -224,7 +224,7 @@ Item{
             }
 
             onClicked: {
-                activityManager.setCurrent(ccode);
+                workflowManager.activityManager().setCurrent(ccode);
             }
 
             onDoubleClicked: {

@@ -48,7 +48,6 @@
 
 #include <iostream>
 
-#include "models/activitiesenhancedmodel.h"
 #include "workflowmanager.h"
 #include "activitymanager.h"
 #include "workareasmanager.h"
@@ -64,7 +63,6 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_windowID(""),
     m_theme(0),
     m_mainWidget(0),
-    m_activitiesModel(0),
     m_taskManager(0),
     m_previewManager(0)
 {
@@ -76,8 +74,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_desktopWidget = qApp->desktop();
 
-    m_activitiesModel = new ActivitiesEnhancedModel(this);
-    m_workflowManager = new WorkflowManager(m_activitiesModel, this);
+    m_workflowManager = new WorkflowManager(this);
     m_previewManager = new PreviewsManager(this);
 }
 
@@ -85,15 +82,8 @@ WorkFlow::~WorkFlow()
 {
     emit configNeedsSaving();
 
-
     if (m_workflowManager)
         delete m_workflowManager;
-
-    //Delete model after you delete workflowManager in order to save
-    //workareas correctly, otherwise the countChanged signals from
-    //workareas models create issues
-    if (m_activitiesModel)
-        delete m_activitiesModel;
 
     if (m_taskManager)
         delete m_taskManager;
@@ -133,24 +123,17 @@ void WorkFlow::init()
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
         ctxt->setContextProperty("plasmoidWrapper", this);
-        ctxt->setContextProperty("activitiesModelEnhanced", m_workflowManager->model());
-        ctxt->setContextProperty("activityManager", m_workflowManager->activityManager());
-        ctxt->setContextProperty("workareasManager", m_workflowManager->workareasManager());
+        ctxt->setContextProperty("workflowManager", m_workflowManager);
         ctxt->setContextProperty("taskManager", m_taskManager);
-        ctxt->setContextProperty("storedParameters",m_storedParams);
         ctxt->setContextProperty("previewManager",m_previewManager);
+        ctxt->setContextProperty("storedParameters",m_storedParams);
 
         declarativeWidget->setQmlPath(path);
 
         m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
 
-        connect(m_workflowManager->activityManager(), SIGNAL(currentActivityInformationChanged(QString,QString)),
-                this, SLOT(setActivityNameIconSlot(QString,QString)));
-        connect(m_workflowManager->activityManager(),SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
-        connect(m_workflowManager->activityManager(),SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
-
         if(containment()){
-            m_workflowManager->activityManager()->setContainment(containment());
+            (static_cast<ActivityManager *>(m_workflowManager->activityManager()))->setContainment(containment());
             m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
         }
 
@@ -169,9 +152,6 @@ void WorkFlow::init()
 
     connect(m_storedParams,SIGNAL(hideOnClickChanged(bool)), this, SLOT(setPassivePopupSlot(bool)));
     connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SLOT(configAccepted()));
-
-    connect(m_workflowManager->workareasManager(), SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
-    connect(m_workflowManager->activityManager(), SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
 
     setGraphicsWidget(m_mainWidget);
 
@@ -278,27 +258,22 @@ void WorkFlow::workAreaWasClickedSlot()
 
 void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
 {
-    bool updateIcon = false;
-
-    QString tempIcon = icon;
-
-    if(!m_storedParams->useActivityIcon())
-        tempIcon = "preferences-activities";
-
-    if(m_activityIcon != tempIcon){
+    if(m_activityIcon != icon){
         if(icon == "")
             m_activityIcon = "plasma";
         else
-            m_activityIcon = tempIcon;
-        updateIcon = true;
-    }
-    if(m_activityName != name){
-        m_activityName = name;
-        updateIcon = true;
+            m_activityIcon = icon;
     }
 
-    if(updateIcon)
-        paintIcon();
+    if(m_activityName != name)
+        m_activityName = name;
+
+    if(!m_storedParams->useActivityIcon())
+        m_paintIcon = "preferences-activities";
+    else
+        m_paintIcon = m_activityIcon;
+
+    paintIcon();
 }
 
 
@@ -352,8 +327,7 @@ void WorkFlow::configAccepted()
     m_storedParams->setCurrentTheme(ui.themesCmb->currentText());
 
     m_storedParams->setUseActivityIcon(ui.currentActivityIconCheckBox->isChecked());
-    setActivityNameIconSlot(m_workflowManager->activityManager()->getCurrentActivityName(),
-                            m_workflowManager->activityManager()->getCurrentActivityIcon());
+    setActivityNameIconSlot(m_activityName, m_activityIcon);
 
     cg.writeEntry("LockActivities",m_storedParams->lockActivities());
     cg.writeEntry("ShowWindows",m_storedParams->showWindows());
@@ -423,9 +397,9 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
 void WorkFlow::wheelEvent(QGraphicsSceneWheelEvent *e)
 {
     if(e->delta() < 0)
-        m_workflowManager->activityManager()->setCurrentNextActivity();
+        emit setCurrentNextActivity();
     else
-        m_workflowManager->activityManager()->setCurrentPreviousActivity();
+        emit setCurrentPreviousActivity();
 }
 
 
@@ -437,7 +411,7 @@ void WorkFlow::paintIcon()
         return;
     }
 
-    KIcon icon3(m_activityIcon);
+    KIcon icon3(m_paintIcon);
     QPixmap icon = icon3.pixmap(iconSize, iconSize);
     /*
     if (!m_theme) {

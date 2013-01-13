@@ -38,7 +38,6 @@
 
 class QDesktopWidget;
 class StoredParameters;
-class ActivitiesEnhancedModel;
 class WorkflowManager;
 class PreviewsManager;
 
@@ -66,6 +65,8 @@ signals:
     void updateWindowIDForPreviews(QString win);
     void hideDashboard();
     void showDashboard();
+    void setCurrentNextActivity();
+    void setCurrentPreviousActivity();
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);
@@ -81,19 +82,19 @@ public slots:
 
     void activeWindowChanged(WId);
 
-    void showingIconsDialog();
-    void answeredIconDialog();
-
     void configDialogFinished();
     void configChanged();
 
-    void workAreaWasClickedSlot();
+    Q_INVOKABLE void workAreaWasClickedSlot();
     Q_INVOKABLE void updatePopWindowWIdSlot();
 
-    void hidePopupDialogSlot();
-    void showPopupDialogSlot();
+    Q_INVOKABLE void hidePopupDialogSlot();
+    Q_INVOKABLE void showPopupDialogSlot();
 
-    void setActivityNameIconSlot(QString, QString);
+    Q_INVOKABLE void showingIconsDialog();
+    Q_INVOKABLE void answeredIconDialog();
+
+    Q_INVOKABLE void setActivityNameIconSlot(QString, QString);
 
 protected slots:
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
@@ -106,6 +107,7 @@ private:
     bool m_findPopupWid;
     QString m_activityIcon;
     QString m_activityName;
+    QString m_paintIcon;
     QString m_windowID;
 
     QObject *m_rootQMLObject;
@@ -115,7 +117,6 @@ private:
     QGraphicsWidget *m_mainWidget;
     Plasma::DeclarativeWidget *declarativeWidget;
 
-    ActivitiesEnhancedModel *m_activitiesModel;
     WorkflowManager *m_workflowManager;
     StoredParameters *m_storedParams;
     PTaskManager *m_taskManager;

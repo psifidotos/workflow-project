@@ -50,7 +50,7 @@ DialogTemplate2{
     Connections {
         target: rmvDialog
         onClickedOk:{
-            activityManager.remove(activityCode);;
+            workflowManager.activityManager().remove(activityCode);;
             completed();
         }
 

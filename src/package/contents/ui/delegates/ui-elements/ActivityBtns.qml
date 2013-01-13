@@ -36,7 +36,7 @@ Item{
             anchors.centerIn: parent
 
             onClicked: {
-                activityManager.showWidgetsExplorer(ccode);
+                workflowManager.activityManager().showWidgetsExplorer(ccode);
             }
 
             tooltipTitle: i18n("Add Plasmoids")
@@ -73,7 +73,7 @@ Item{
                 height: buttonsSize
                 opacity: storedParameters.lockActivities ? 0 : 1
                 onClicked: {
-                    mainView.getDynLib().showCloneDialog(ccode,activityManager.name(ccode));
+                    mainView.getDynLib().showCloneDialog(ccode,workflowManager.activityManager().name(ccode));
                 }
                 tooltipTitle: i18n("Clone Activity")
                 tooltipText: i18n("You can clone an Activity.")
@@ -98,7 +98,7 @@ Item{
     }
 
     function clickedStopped(){
-        activityManager.stop(ccode);
+        workflowManager.activityManager().stop(ccode);
 
         if(storedParameters.animationsStep2!==0){
             var x1 = activityIcon.x;

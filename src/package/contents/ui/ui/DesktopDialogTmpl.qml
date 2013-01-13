@@ -330,8 +330,8 @@ DialogTemplate2{
         activityCode = act;
         desktop = desk;
 
-        deskDialog.dialogTitle = activityManager.name(act) + " - "+
-                workareasManager.name(act,desk);
+        deskDialog.dialogTitle = workflowManager.activityManager().name(act) + " - "+
+                workflowManager.workareaManager().name(act,desk);
 
         taskManager.setSubModel(act,desk);
 
