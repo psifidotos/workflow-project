@@ -127,6 +127,8 @@ private:
     void paintIcon();
     void initTooltip();
 
+    static const QString DEFAULTICON;
+
 };
 
 // This is the command that links your applet to the .desktop file

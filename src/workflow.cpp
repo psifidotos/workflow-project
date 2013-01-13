@@ -54,12 +54,13 @@
 //#include "workareasmanager.h"
 #include "previewsmanager.h"
 
+const QString WorkFlow::DEFAULTICON = "preferences-activities";
 
 WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     Plasma::PopupApplet(parent, args),
     m_isOnDashboard(false),
     m_findPopupWid(false),
-    m_activityIcon("preferences-activities"),
+    m_activityIcon(WorkFlow::DEFAULTICON),
     m_activityName(""),
     m_windowID(""),
     m_theme(0),
@@ -71,7 +72,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 {
     setAspectRatioMode(Plasma::IgnoreAspectRatio);
     setHasConfigurationInterface(true);
-    setPopupIcon("preferences-activities");
+    setPopupIcon(WorkFlow::DEFAULTICON);
 
     m_taskManager = new PTaskManager(this);
 
@@ -162,7 +163,7 @@ void WorkFlow::init()
 
     setGraphicsWidget(m_mainWidget);
 
-    Plasma::ToolTipManager::self()->registerWidget(this);
+    Plasma::ToolTipManager::self()->registerWidget(this);    
 }
 
 
@@ -276,7 +277,7 @@ void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
         m_activityName = name;
 
     if(!m_storedParams->useActivityIcon())
-        m_paintIcon = "preferences-activities";
+        m_paintIcon = WorkFlow::DEFAULTICON;
     else
         m_paintIcon = m_activityIcon;
 
@@ -419,7 +420,24 @@ void WorkFlow::paintIcon()
     }
 
     KIcon icon3(m_paintIcon);
-    QPixmap icon = icon3.pixmap(iconSize, iconSize);
+    int newSize = (1.3*iconSize);
+    QPixmap icon(newSize, newSize);
+    icon.fill(Qt::transparent);
+
+    QPainter p(&icon);
+
+    int newPos = ((icon.width()/2)-iconSize/2);
+    p.drawPixmap(newPos,
+                 newPos,
+                 icon3.pixmap(iconSize, iconSize));
+
+    if(m_paintIcon != WorkFlow::DEFAULTICON){
+        KIcon indicatorIcon(WorkFlow::DEFAULTICON);
+        QPixmap indicatorPixmap = indicatorIcon.pixmap(iconSize/2, iconSize/2);
+
+        p.drawPixmap(0,0, indicatorPixmap);
+    }
+
     /*
     if (!m_theme) {
         m_theme = new Plasma::Svg(this);
