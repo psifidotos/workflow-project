@@ -149,12 +149,6 @@ void WorkFlow::init()
         connect(m_workflowManager->activityManager(),SIGNAL(showedIconDialog()),this,SLOT(showingIconsDialog()));
         connect(m_workflowManager->activityManager(),SIGNAL(answeredIconDialog()),this,SLOT(answeredIconDialog()));
 
-        /*
-        QObject *qmlTaskEng = m_rootQMLObject->findChild<QObject*>("instTasksEngine");
-        if(qmlTaskEng){
-            m_taskManager->setQMlObject(qmlTaskEng);
-        }*/
-
         if(containment()){
             m_workflowManager->activityManager()->setContainment(containment());
             m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
@@ -177,16 +171,7 @@ void WorkFlow::init()
     connect(m_storedParams, SIGNAL(configNeedsSaving()), this, SLOT(configAccepted()));
 
     connect(m_workflowManager->workareasManager(), SIGNAL(workAreaWasClicked()), this, SLOT(workAreaWasClickedSlot()) );
-
-    connect(m_taskManager, SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
-
     connect(m_workflowManager->activityManager(), SIGNAL(hidePopup()), this, SLOT(hidePopupDialogSlot()));
-
-    //connect(this, SIGNAL(updateMarginForPreviews(int,int)), m_previewManager, SLOT(setTopXY(int,int)) );
-    //connect(this, SIGNAL(updateWindowIDForPreviews(QString)), m_previewManager, SLOT(setMainWindowId(QString)));
-    //connect(m_taskManager, SIGNAL(taskRemoved(QString)), m_previewManager, SLOT(removeWindowPreview(QString)) );
-    //connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
-
 
     setGraphicsWidget(m_mainWidget);
 
@@ -219,14 +204,11 @@ void WorkFlow::setMainWindowId()
 
     if(m_isOnDashboard)
         emit updateMarginForPreviews(rf.x(),rf.y());
-        //m_taskManager->setTopXY(rf.x(),rf.y());
     else
         emit updateMarginForPreviews(0,0);
-        //m_taskManager->setTopXY(0,0);
 
     m_windowID = QString::number(view()->effectiveWinId());
     emit updateWindowIDForPreviews( m_windowID );
-  //  m_taskManager->setMainWindowId(view()->effectiveWinId());
 }
 
 void WorkFlow::geomChanged()
@@ -291,7 +273,7 @@ void WorkFlow::workAreaWasClickedSlot()
         this->hidePopup();
 
     if(m_isOnDashboard)
-        m_taskManager->hideDashboard();
+        emit hideDashboard();
 }
 
 void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
@@ -323,7 +305,7 @@ void WorkFlow::setActivityNameIconSlot(QString name, QString icon)
 void WorkFlow::configDialogFinished()
 {
     if(m_isOnDashboard)
-        m_taskManager->showDashboard();
+        emit showDashboard();
 }
 
 

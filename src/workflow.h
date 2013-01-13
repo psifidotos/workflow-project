@@ -64,6 +64,8 @@ public:
 signals:
     void updateMarginForPreviews(int x, int y);
     void updateWindowIDForPreviews(QString win);
+    void hideDashboard();
+    void showDashboard();
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);
