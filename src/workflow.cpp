@@ -132,7 +132,8 @@ void WorkFlow::init()
     if (declarativeWidget->engine()) {
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
-        ctxt->setContextProperty("activitiesModelEnhanced",m_workflowManager->model());
+        ctxt->setContextProperty("plasmoidWrapper", this);
+        ctxt->setContextProperty("activitiesModelEnhanced", m_workflowManager->model());
         ctxt->setContextProperty("activityManager", m_workflowManager->activityManager());
         ctxt->setContextProperty("workareasManager", m_workflowManager->workareasManager());
         ctxt->setContextProperty("taskManager", m_taskManager);
@@ -183,8 +184,9 @@ void WorkFlow::init()
 
     connect(this, SIGNAL(updateMarginForPreviews(int,int)), m_previewManager, SLOT(setTopXY(int,int)) );
     connect(this, SIGNAL(updateWindowIDForPreviews(QString)), m_previewManager, SLOT(setMainWindowId(QString)));
-    connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
     connect(m_taskManager, SIGNAL(taskRemoved(QString)), m_previewManager, SLOT(removeWindowPreview(QString)) );
+    connect(m_previewManager, SIGNAL(updatePopWindowWId()), this, SLOT(updatePopWindowWIdSlot()));
+
 
     setGraphicsWidget(m_mainWidget);
 

@@ -10,6 +10,7 @@ import "delegates"
 import "delegates/ui-elements"
 import "instances"
 import "helptour"
+import "connections"
 
 //import "ui"
 
@@ -64,10 +65,15 @@ Rectangle {
         objectName:"sessionParameters"
     }
 
+    PreviewManagerConnections{
+    }
+
     SharedActivitiesList{
         id:instanceOfActivitiesList
         objectName: "instActivitiesEngine"
     }
+
+
 
     SharedThemeList{
         id:instanceOfThemeList

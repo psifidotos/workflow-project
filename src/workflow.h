@@ -62,8 +62,8 @@ public:
     void init();
 
 signals:
-    void updateMarginForPreviews(int, int);
-    void updateWindowIDForPreviews(QString);
+    void updateMarginForPreviews(int x, int y);
+    void updateWindowIDForPreviews(QString win);
 
 protected:
     void createConfigurationInterface(KConfigDialog *parent);

@@ -47,7 +47,7 @@ public:
     Q_INVOKABLE void emptySubModel();
 
 signals:
-    void taskRemoved(QString);
+    void taskRemoved(QString win);
     void hidePopup();
 
 protected:

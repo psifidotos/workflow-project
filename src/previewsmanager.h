@@ -27,7 +27,7 @@ public:
     WId getMainWindowId();
 
 signals:
-    Q_INVOKABLE void updatePopWindowWId();
+    void updatePopWindowWId();
 
 protected:
     void init();
