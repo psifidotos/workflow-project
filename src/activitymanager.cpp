@@ -2,22 +2,14 @@
 
 #include <QDir>
 #include <QDebug>
-#include <QFile>
-#include <QTextStream>
-#include <QIODevice>
-#include <QAction>
-#include <QGraphicsView>
-#include <QModelIndex>
 
+#include <QModelIndex>
 
 #include <KIconDialog>
 #include <KIcon>
 #include <KWindowSystem>
-#include <KConfigGroup>
-#include <KConfig>
 #include <KMessageBox>
 #include <KStandardDirs>
-
 
 #include <KActivities/Controller>
 #include <KActivities/Info>
@@ -26,8 +18,6 @@
 #include <Plasma/Corona>
 
 ////Plugins/////
-#include "plugins/pluginfindwallpaper.h"
-#include "plugins/pluginshowwidgets.h"
 #include "plugins/plugincloneactivity.h"
 #include "plugins/pluginchangeworkarea.h"
 #include "plugins/pluginaddactivity.h"
@@ -39,9 +29,6 @@
 ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
-    m_mainContainment(0),
-    m_corona(0),
-    m_plShowWidgets(0),
     m_plCloneActivity(0),
     m_plChangeWorkarea(0),
     m_plAddActivity(0),
@@ -50,14 +37,14 @@ ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent)
     m_actModel(model)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
+
+    init();
 }
 
 ActivityManager::~ActivityManager()
 {
     if (m_activitiesCtrl)
         delete m_activitiesCtrl;
-    if (m_plShowWidgets)
-        delete m_plShowWidgets;
     if (m_plCloneActivity)
         delete m_plCloneActivity;
     if (m_plChangeWorkarea)
@@ -66,20 +53,11 @@ ActivityManager::~ActivityManager()
         delete m_plAddActivity;
 }
 
-void ActivityManager::setContainment(Plasma::Containment *containment)
+void ActivityManager::init()
 {
-    m_mainContainment = containment;
-
-    if(m_mainContainment)
-        if(m_mainContainment->corona())
-            m_corona = m_mainContainment->corona();
-
-
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
-
-    loadActivitiesInModel();
 }
 
 void ActivityManager::loadActivitiesInModel()
@@ -100,16 +78,13 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
-
-void ActivityManager::showWidgetsEndedSlot()
+void ActivityManager::updateAllWallpapers()
 {
-    if (m_plShowWidgets){
-        delete m_plShowWidgets;
-        m_plShowWidgets = 0;
-    }
+    QStringList activities = m_activitiesCtrl->listActivities();
+
+    foreach (const QString &id, activities)
+        emit updateWallpaper (id);
 }
-
-
 
 void ActivityManager::cloningEndedSlot()
 {
@@ -166,7 +141,7 @@ void ActivityManager::activityAddedSlot(QString id) {
                                                activity->icon());
     }
 
-    updateWallpaper(id);
+    emit updateWallpaper(id);
 
     emit activityAdded(id);
 }
@@ -215,13 +190,13 @@ void ActivityManager::activityStateChangedSlot()
     if(activityObj)
         activityObj->setCState(state);
 
-    updateWallpaper(id);
+    emit updateWallpaper(id);
 }
 
 
 void ActivityManager::currentActivityChangedSlot(const QString &id)
 {
-    updateWallpaper(id);
+    emit updateWallpaper(id);
 
     KActivities::Info *activity = new KActivities::Info(id, this);
     emit currentActivityInformationChanged(activity->name(),
@@ -339,38 +314,6 @@ void ActivityManager::remove(QString id) {
     m_activitiesCtrl->removeActivity(id);
 }
 
-/*
- int ActivityManager::askForDelete(QString activityName)
-{
-    QString question("Do you yeally want to delete activity ");
-    question.append(activityName);
-    question.append(" ?");
-    int responce =  KMessageBox::questionYesNo(0,question,"Delete Activity");
-    return responce;
-}
-*/
-
-Plasma::Containment *ActivityManager::getContainment(QString actId)
-{
-        if(m_corona){
-            for(int j=0; j<m_corona->containments().size(); j++){
-                Plasma::Containment *tC = m_corona->containments().at(j);
-
-                if (tC->containmentType() == Plasma::Containment::DesktopContainment){
-
-                    if((tC->config().readEntry("activityId","") == actId)&&
-                            (tC->config().readEntry("plugin","") != "desktopDashboard")){
-                            return tC;
-                    }
-
-                }
-
-            }
-        }
-
-    return 0;
-}
-
 QString ActivityManager::getNextDefWallpaper(){
     QString newwall="";
     if (m_nextDefaultWallpaper % 4 == 0)
@@ -455,11 +398,8 @@ QString ActivityManager::previousRunningActivity()
     return "";
 }
 
-///////////////Plugins
-
-void  ActivityManager::updateWallpaper(QString actId)
+void  ActivityManager::setWallpaper(QString actId, QString background)
 {
-    QString background = getWallpaper(actId);
     if(background != ""){
         ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(actId));
         if(activityObj)
@@ -467,24 +407,8 @@ void  ActivityManager::updateWallpaper(QString actId)
     }
 }
 
+///////////////Plugins
 
-QString ActivityManager::getWallpaper(QString source)
-{
-    PluginFindWallpaper plg(getContainment(source));
-    return plg.getWallpaper(source);
-}
-
-void ActivityManager::showWidgetsExplorer(QString actId)
-{
-    if(!m_plShowWidgets){
-        m_plShowWidgets = new PluginShowWidgets(this,m_mainContainment, m_activitiesCtrl);
-
-        connect(m_plShowWidgets, SIGNAL(showWidgetsEnded()), this, SLOT(showWidgetsEndedSlot()));
-        connect(m_plShowWidgets, SIGNAL(hidePopup()), this, SIGNAL(hidePopup()));
-
-        m_plShowWidgets->execute(actId);
-    }
-}
 
 void ActivityManager::cloneActivity(QString actId)
 {
@@ -494,7 +418,7 @@ void ActivityManager::cloneActivity(QString actId)
         connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SIGNAL(cloningStarted()));
         connect(m_plCloneActivity, SIGNAL(cloningEnded()),this,SLOT(cloningEndedSlot()));
         connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SIGNAL(cloningCopyWorkareas(QString,QString)));
-        connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SLOT(updateWallpaper(QString)));
+        connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SIGNAL(updateWallpaper(QString)));
 
         m_plCloneActivity->execute(actId);
     }

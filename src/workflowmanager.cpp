@@ -16,6 +16,7 @@ WorkflowManager::WorkflowManager(QObject *parent) :
     m_plgSyncActivitiesWorkareas(0)
 {
     m_model = new ActivitiesEnhancedModel(this);
+
     m_activityManager = new ActivityManager(m_model,this);
     m_workareaManager = new WorkareasManager(m_model, this);
 
@@ -50,6 +51,8 @@ void WorkflowManager::init()
 
     connect(m_workareaManager, SIGNAL(maxWorkareasChanged(int)),
             m_plgSyncActivitiesWorkareas, SLOT(maxWorkareasUpdated(int)) );
+
+    m_activityManager->loadActivitiesInModel();
 
 }
 /*

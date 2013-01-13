@@ -3,6 +3,7 @@ set(workflow_SRCS
                   workflow.cpp
                   storedparameters.cpp
                   activitymanager.cpp
+                  environmentmanager.cpp
                   ptaskmanager.cpp
                   workareasmanager.cpp
                   workflowmanager.cpp

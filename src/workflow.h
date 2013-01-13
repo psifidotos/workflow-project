@@ -39,6 +39,7 @@
 class QDesktopWidget;
 class StoredParameters;
 class WorkflowManager;
+class EnvironmentManager;
 class PreviewsManager;
 
 namespace Plasma {
@@ -118,6 +119,7 @@ private:
     Plasma::DeclarativeWidget *declarativeWidget;
 
     WorkflowManager *m_workflowManager;
+    EnvironmentManager *m_environmentManager;
     StoredParameters *m_storedParams;
     PTaskManager *m_taskManager;
     PreviewsManager *m_previewManager;

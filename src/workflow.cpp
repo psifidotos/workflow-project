@@ -49,8 +49,9 @@
 #include <iostream>
 
 #include "workflowmanager.h"
-#include "activitymanager.h"
-#include "workareasmanager.h"
+//#include "activitymanager.h"
+#include "environmentmanager.h"
+//#include "workareasmanager.h"
 #include "previewsmanager.h"
 
 
@@ -63,6 +64,8 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
     m_windowID(""),
     m_theme(0),
     m_mainWidget(0),
+    m_workflowManager(0),
+    m_environmentManager(0),
     m_taskManager(0),
     m_previewManager(0)
 {
@@ -74,6 +77,7 @@ WorkFlow::WorkFlow(QObject *parent, const QVariantList &args):
 
     m_desktopWidget = qApp->desktop();
 
+    m_environmentManager = new EnvironmentManager(this);
     m_workflowManager = new WorkflowManager(this);
     m_previewManager = new PreviewsManager(this);
 }
@@ -96,6 +100,8 @@ WorkFlow::~WorkFlow()
     if (m_previewManager)
         delete m_previewManager;
 
+    if (m_environmentManager)
+        delete m_environmentManager;
 }
 
 void WorkFlow::init()
@@ -120,9 +126,16 @@ void WorkFlow::init()
 
     declarativeWidget = new Plasma::DeclarativeWidget();
     if (declarativeWidget->engine()) {
+
+        if(containment()){
+            m_environmentManager->setContainment(containment());
+            m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
+        }
+
         QDeclarativeContext *ctxt = declarativeWidget->engine()->rootContext();
 
         ctxt->setContextProperty("plasmoidWrapper", this);
+        ctxt->setContextProperty("environmentManager", m_environmentManager);
         ctxt->setContextProperty("workflowManager", m_workflowManager);
         ctxt->setContextProperty("taskManager", m_taskManager);
         ctxt->setContextProperty("previewManager",m_previewManager);
@@ -131,12 +144,6 @@ void WorkFlow::init()
         declarativeWidget->setQmlPath(path);
 
         m_rootQMLObject = dynamic_cast<QObject *>(declarativeWidget->rootObject());
-
-        if(containment()){
-            (static_cast<ActivityManager *>(m_workflowManager->activityManager()))->setContainment(containment());
-            m_isOnDashboard = !(containment()->containmentType() == Plasma::Containment::PanelContainment);
-        }
-
     }
 
     mainLayout->addItem(declarativeWidget);

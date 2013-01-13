@@ -36,7 +36,7 @@ Item{
             anchors.centerIn: parent
 
             onClicked: {
-                workflowManager.activityManager().showWidgetsExplorer(ccode);
+                environmentManager.showWidgetsExplorer(ccode);
             }
 
             tooltipTitle: i18n("Add Plasmoids")

@@ -36,12 +36,23 @@ Item{
                 storedParameters.windowsPreviews = false;
         }
 
+        //Update Wallpaper signal
+
+        onUpdateWallpaper:{
+            var wall = environmentManager.getWallpaper(activity);
+            workflowManager.activityManager().setWallpaper(activity, wall);
+        }
+
     }
 
     Connections{
         target: plasmoidWrapper
         onSetCurrentNextActivity: workflowManager.activityManager().setCurrentNextActivity();
         onSetCurrentPreviousActivity: workflowManager.activityManager().setCurrentPreviousActivity();
+    }
+
+    Component.onCompleted: {
+        workflowManager.activityManager().updateAllWallpapers();
     }
 
 }
