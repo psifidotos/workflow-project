@@ -61,19 +61,40 @@ Item {
         onPressAndHold: {
             placeStateBtn.previousState();
             placeStateBtn.informState();
-            taskManager.setTaskDesktop(taskDeleg1.ccode,desktop+1);
-            toEveryWhereAnimation();
+        //    taskManager.setTaskDesktop(taskDeleg1.ccode,desktop+1);
+       //     toEveryWhereAnimation();
         }
 
         onClicked: {
             placeStateBtn.nextState();
             placeStateBtn.informState();
 
-            toEveryWhereAnimation();
+         //   toEveryWhereAnimation();
         }
 
+        function informState()
+        {
+            taskManager.setTaskState(taskDeleg1.ccode, state, mainWorkArea.desktop);
 
-        function toEveryWhereAnimation(){
+            console.log(state);
+
+            if (state === "oneDesktop"){
+                taskManager.setTaskDesktopForAnimation(taskDeleg1.ccode, mainWorkArea.desktop-1)
+            }
+            else if (state === "everywhere"){
+                taskManager.setTaskState(taskDeleg1.ccode,"allActivities");
+
+                if(storedParameters.animationsStep2!==0){
+                    var x1 = imageTask.x;
+                    var y1 = imageTask.y;
+
+                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                }
+            }
+
+        }
+
+/*        function toEveryWhereAnimation(){
             if (placeStateBtn.state === "everywhere"){
                 if(storedParameters.animationsStep2!==0){
                     var x1 = imageTask.x;
@@ -82,20 +103,8 @@ Item {
                     mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
                 }
             }
-        }
+        }*/
 
-
-        function informState(){
-
-            if (placeStateBtn.state === "one"){
-                taskManager.setTaskState(taskDeleg1.ccode,"oneDesktop");
-                taskManager.setTaskDesktopForAnimation(taskDeleg1.ccode,mainWorkArea.desktop-1)
-            }
-            else if (placeStateBtn.state === "allDesktops")
-                taskManager.setTaskState(taskDeleg1.ccode,"allDesktops");
-            else if (placeStateBtn.state === "everywhere")
-                taskManager.setTaskState(taskDeleg1.ccode,"allActivities");
-        }
 
     }
 

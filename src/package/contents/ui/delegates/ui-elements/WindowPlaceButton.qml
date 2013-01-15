@@ -47,13 +47,11 @@ Item{
         onPressAndHold: winStateItem.pressAndHold();
     }
 
-    state:"one"
-
-
+    state:"oneDesktop"
 
     states: [
         State {
-            name: "one"
+            name: "oneDesktop"
             when:(!allDesks) && (!allActiv)
             PropertyChanges {
                 target: winStateBtn
@@ -64,19 +62,19 @@ Item{
             }
         },
         State {
-            name: "everywhere"
-            when: allActiv
+            name: "allDesktops"
+            when: (allDesks) && (!allActiv)
             PropertyChanges {
                 target: winStateBtn
-                imgIcon:"../../Images/buttons/plasma_ui/oneDesktop.png"
-                imgIconHov:"../../Images/buttons/plasma_ui/oneDesktopHov.png"
-                mainIconWidth: 0.45 * winStateItem.width
-                mainIconHeight: 0.85 * mainIconWidth
+                imgIcon:"../../Images/buttons/plasma_ui/sameDesktops.png"
+                imgIconHov:"../../Images/buttons/plasma_ui/sameDesktopsHov.png"
+                mainIconWidth: 0.55 * winStateItem.width
+                mainIconHeight: 0.4 * mainIconWidth
             }
         },
         State {
-            name: "allDesktops"
-            when: allDesks
+            name: "sameDesktops"
+            when: (!allDesks) && (allActiv)
             PropertyChanges {
                 target: winStateBtn
                 imgIcon:"../../Images/buttons/plasma_ui/everywhereW.png"
@@ -84,27 +82,42 @@ Item{
                 mainIconWidth: 0.35 * winStateItem.width
                 mainIconHeight: 1.55 * mainIconWidth
             }
+        },
+
+        State {
+            name: "allActivities"
+            when: (allDesks) && (allActiv)
+            PropertyChanges {
+                target: winStateBtn
+                imgIcon:"../../Images/buttons/plasma_ui/oneDesktop.png"
+                imgIconHov:"../../Images/buttons/plasma_ui/oneDesktopHov.png"
+                mainIconWidth: 0.45 * winStateItem.width
+                mainIconHeight: 0.85 * mainIconWidth
+            }
         }
 
     ]
 
     function nextState(){
-        if (winStateItem.state === "one")
+        if (winStateItem.state === "oneDesktop")
             winStateItem.state = "allDesktops";
         else if (winStateItem.state === "allDesktops")
-     //       winStateItem.state = "one";
-            winStateItem.state = "everywhere";
-        else if (winStateItem.state === "everywhere")
-            winStateItem.state = "one";
+            winStateItem.state = "sameDesktops";
+        else if (winStateItem.state === "sameDesktops")
+            winStateItem.state = "allActivities";
+        else if (winStateItem.state === "allActivities")
+            winStateItem.state = "oneDesktop";
     }
 
     function previousState(){
-        if (winStateItem.state === "one")
-            winStateItem.state = "everywhere";
+        if (winStateItem.state === "oneDesktop")
+            winStateItem.state = "allActivities";
         else if (winStateItem.state === "allDesktops")
-            winStateItem.state = "one";
-        else if (winStateItem.state === "everywhere")
+            winStateItem.state = "oneDesktop";
+        else if (winStateItem.state === "sameDesktops")
             winStateItem.state = "allDesktops";
+        else if (winStateItem.state === "allActivities")
+            winStateItem.state = "sameDesktops";
     }
 
 }

@@ -98,9 +98,9 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
 
     connect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 
-    if(task->isOnAllActivities())
-        if(!task->isOnAllDesktops())
-            setOnAllDesktops(wId,true);
+   // if(task->isOnAllActivities())
+     //   if(!task->isOnAllDesktops())
+      //      setOnAllDesktops(wId,true);
 }
 
 void PTaskManager::taskRemoved(::TaskManager::Task *task) {
@@ -154,9 +154,9 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
             taskI->setDesktop(task->desktop());
             taskI->setActivities(task->activities());
 
-            if(task->isOnAllActivities())
-                if(!task->isOnAllDesktops())
-                    setOnAllDesktops(wId,true);
+            //if(task->isOnAllActivities())
+              //  if(!task->isOnAllDesktops())
+                //    setOnAllDesktops(wId,true);
         }
 
         TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
@@ -280,7 +280,7 @@ void PTaskManager::setCurrentDesktop(int desk)
  *"allActivities" : all workareas in all Activities
  *
  */
-void PTaskManager::setTaskState(QString wId, QString state)
+void PTaskManager::setTaskState(QString wId, QString state, int desktop)
 {
 
     TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
@@ -307,18 +307,19 @@ void PTaskManager::setTaskState(QString wId, QString state)
                 setOnAllDesktops(wId, false);
         }
         else if (state == "allDesktops"){
-            setOnlyOnActivity(wId, fActivity);
-
             setOnAllDesktops(wId ,true);
+            setOnlyOnActivity(wId, fActivity);
+        }
+        else if (state == "sameDesktops"){
+            setOnAllDesktops(wId ,false);
+            setOnDesktop(wId, desktop);
+            setOnAllActivities(wId);
         }
         else if (state == "allActivities"){
             setOnAllDesktops(wId, true);
             setOnAllActivities(wId);
-
-            //instanceOfTasksDesktopList.removeTask(cod);
         }
 
-        //sharedTasksListTempl.tasksChanged();
     }
 }
 
@@ -391,10 +392,11 @@ void PTaskManager::setSubModel(QString activity, int desktop)
     {
         TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
 
-        if(task && task->activities().size() != 0)
-        {
-            if ( (task->activities().at(0) == activity)&&
-                 ((task->desktop() == desktop)||(task->onAllDesktops()==true)) ){
+        if(task)
+        {            
+            if ( ( (task->activities().size() != 0) && (task->activities().at(0) == activity)&&
+                  ((task->desktop() == desktop) || task->onAllDesktops()) ) ||
+                 ((task->desktop() == desktop) && task->onAllActivities() ) ){
                 TaskItem *taskCopy = task->copy(m_taskSubModel);
                 m_taskSubModel->appendRow(taskCopy);
             }

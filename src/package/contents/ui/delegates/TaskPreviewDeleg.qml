@@ -33,7 +33,9 @@ Item{
     property bool inShownArea:true
 
     property bool mustBeShown: showAllActivities === true ?
-                                   ( (onAllActivities === true )&&(isPressed === false) ):
+                                   ( (onAllActivities === true )&&
+                                     (onAllDesktops === true) &&
+                                     (isPressed === false) ):
                                    (isPressed === false)
 
     property bool showPreviews: ((storedParameters.showWindows === true)&&

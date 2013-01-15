@@ -104,15 +104,12 @@ Item {
         }
 
         function informState(){
-            if (placeStateBtn.state === "one"){
-                taskManager.setTaskState(taskDeleg2.ccode,"oneDesktop");
+            taskManager.setTaskState(taskDeleg2.ccode,state);
+
+            if (state === "one"){
                 if(taskDeleg2.dialogType === taskDeleg2.dTypes[1])
                     taskManager.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
             }
-            else if (placeStateBtn.state === "allDesktops")
-                taskManager.setTaskState(taskDeleg2.ccode,"allDesktops");
-            else if (placeStateBtn.state === "everywhere")
-                taskManager.setTaskState(taskDeleg2.ccode,"allActivities");
         }
 
         function toDesktopAnimation(){

@@ -14,7 +14,10 @@ Item{
                               (actCode === activities[0]))) ||
                             ((onAllActivities !== true)&&
                              ((onAllDesktops === true)&&
-                              (actCode === activities[0]))))
+                              (actCode === activities[0])))) ||
+                            ((onAllActivities === true)&&
+                             (onAllDesktops === false)&&
+                             (mainWorkArea.desktop === desktop))
                           && (isPressed === false) ) //hide it in dragging
 
     width:mainWorkArea.imagewidth - imageTask.width - 5
@@ -30,7 +33,7 @@ Item{
     property alias taskTitleRecColor : taskTitleRec.color
     property alias taskTitleColor: taskTitle.color
 
-    property color taskTitleRecColorD : onAllDesktops === false ? "#eee2e2e2" : "#f7f7f7";
+    property color taskTitleRecColorD : ((onAllDesktops === false)&&(onAllActivities === false)) ? "#eee2e2e2" : "#f7f7f7";
     property color taskTitleRecColorH : "#ff00b110";
     property color taskTitleColorD : "#333333";
     property color taskTitleColorH : "#ffffff";
