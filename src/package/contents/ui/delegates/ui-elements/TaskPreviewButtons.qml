@@ -63,9 +63,6 @@ Item {
         allDesks: onAllDesktops || 0 ? true : false
         allActiv: onAllActivities || 0 ? true : false
 
-        tooltipTitle: i18n("Change Window State")
-        tooltipText: i18n("You can change the window's state, there are three states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
-
         onEntered: {
             buttonsArea.state = "show";
             buttonsArea.status = "hover"
@@ -79,23 +76,13 @@ Item {
         }
 
         onPressAndHold:{
-            //if (placeStateBtn.state === "allDesktops"){
-            //    toAllDesktopsAnimation();
-            // if(taskDeleg2.centralListView === desktopDialog.getTasksList())
-
             placeStateBtn.previousState();
             placeStateBtn.informState();
-            //    }
-            //  }
 
             toDesktopAnimation();
-
         }
 
         onClicked: {
-            //Animation must start before changing state
-            toAllDesktopsAnimation();
-
             placeStateBtn.nextState();
             placeStateBtn.informState();
 
@@ -104,34 +91,22 @@ Item {
         }
 
         function informState(){
-            taskManager.setTaskState(taskDeleg2.ccode,state);
+            taskManager.setTaskState(taskDeleg2.ccode, state, taskDeleg2.dialogActivity, taskDeleg2.dialogDesktop);
 
-            if (state === "one"){
+            if (state === "oneDesktop"){
                 if(taskDeleg2.dialogType === taskDeleg2.dTypes[1])
                     taskManager.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
             }
         }
 
         function toDesktopAnimation(){
-            if (placeStateBtn.state !== "everywhere"){
+            if (state !== "allActivities"){
                 if(storedParameters.animationsStep2!==0){
                     var x1 = imageTask2.x;
                     var y1 = imageTask2.y;
 
-                    mainView.getDynLib().animateEverywhereToActivity(code,imageTask2.mapToItem(mainView,x1, y1),1);
+                    mainView.getDynLib().animateEverywhereToActivity(taskDeleg2.ccode,imageTask2.mapToItem(mainView,x1, y1),1);
                 }
-            }
-        }
-
-        function toAllDesktopsAnimation(){
-            if (placeStateBtn.state === "allDesktops"){
-                if(storedParameters.animationsStep2!==0){
-                    var x3 = imageTask2.x;
-                    var y3 = imageTask2.y;
-
-                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask2.mapToItem(mainView,x3, y3),1);
-                }
-
             }
         }
 

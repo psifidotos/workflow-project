@@ -28,7 +28,7 @@ public:
     Q_INVOKABLE void hideDashboard();
     Q_INVOKABLE void showDashboard();
 
-    Q_INVOKABLE void setTaskState(QString wId, QString state, int desktop = -1);
+    Q_INVOKABLE void setTaskState(QString wId, QString state, QString activity="", int desktop = -1);
     Q_INVOKABLE void setTaskActivityForAnimation(QString, QString);
     Q_INVOKABLE void setTaskDesktopForAnimation(QString, int);
     Q_INVOKABLE QStringList getTaskActivities(QString);

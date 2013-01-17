@@ -11,7 +11,7 @@ Item{
 
     property bool shown: ( (((onAllActivities !== true)&&
                              ((mainWorkArea.desktop === desktop)&&
-                              (actCode === activities[0]))) ||
+                              (activities[0] === actCode))) ||
                             ((onAllActivities !== true)&&
                              ((onAllDesktops === true)&&
                               (actCode === activities[0])))) ||
@@ -19,6 +19,7 @@ Item{
                              (onAllDesktops === false)&&
                              (mainWorkArea.desktop === desktop))
                           && (isPressed === false) ) //hide it in dragging
+
 
     width:mainWorkArea.imagewidth - imageTask.width - 5
     //height: shown ? 1.1 * imageTask.height : 0
@@ -40,6 +41,7 @@ Item{
 
     property bool containsMouse: mstArea.containsMouse ||
                                  tasksBtns.containsMouse
+
 
 
     Behavior on height{

@@ -52,7 +52,8 @@ TourPage{
 
     WindowPlaceButton{
         id:singleState
-        allActiv: true
+        allDesks:true
+        allActiv:true
         width:0.15*insideHeight
         height:width
         y:0.32*insideHeight
@@ -62,7 +63,8 @@ TourPage{
 
     WindowPlaceButton{
         id:allDesksState
-
+        allActiv: false
+        allDesks: false
         width:0.15*insideHeight
         height:width
         anchors.left: singleState.left
@@ -72,12 +74,25 @@ TourPage{
     }
 
     WindowPlaceButton{
-        id:everywhereState
-        allDesks:true
+        id:sameWorksState
+        allActiv: false
+        allDesks: true
         width:0.15*insideHeight
         height:width
         anchors.left: allDesksState.left
         anchors.top: allDesksState.top
+        anchors.topMargin:height
+        enabled:false
+    }
+
+    WindowPlaceButton{
+        id:everywhereState
+        allActiv: true
+        allDesks: false
+        width:0.15*insideHeight
+        height:width
+        anchors.left: sameWorksState.left
+        anchors.top: sameWorksState.top
         anchors.topMargin:height
         enabled:false
     }
@@ -131,6 +146,21 @@ TourPage{
     }
 
     AnimatedText{
+        id:sameWorksExplaination
+        x:separationLine2.x+20
+        anchors.verticalCenter: sameWorksState.verticalCenter
+
+        width:0.6*parent.width
+
+        font.bold:true
+        font.pixelSize: mediumFont
+
+        onlyOpacity: false
+
+        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the window will be available in the same WorkAreas (position) in all Activities.")
+    }
+
+    AnimatedText{
         id:everyExplaination
         x:separationLine2.x+20
         anchors.verticalCenter: everywhereState.verticalCenter
@@ -142,7 +172,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("3. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window will be available in every WorkArea and every Activity.")
+        fullText:i18n("4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window will be available in every WorkArea and every Activity.")
     }
 
 }

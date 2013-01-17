@@ -27,6 +27,9 @@ Item{
 
     property string dialogType
 
+    property string dialogActivity: ""
+    property int dialogDesktop: -1
+
     property bool forceState1:false
     property bool forcedState1InDialog:false
 

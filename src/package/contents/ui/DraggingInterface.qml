@@ -106,10 +106,10 @@ Rectangle{
                     (mainDraggingItem.intIsEverywhere === true)){
 
 
-                taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+                taskManager.setTaskState( intTaskId, "oneDesktop", drActiv, drDesktop);
 
-                taskManager.setTaskDesktopForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drDesktop);
-                taskManager.setTaskActivityForAnimation(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+                taskManager.setTaskDesktopForAnimation( intTaskId, drDesktop);
+                taskManager.setTaskActivityForAnimation( intTaskId, drActiv);
 
                 if(storedParameters.animationsStep2!==0){
                     var co1 = mainView.mapToItem(mainView,iX1,iY1);
@@ -123,12 +123,12 @@ Rectangle{
         else if (mainDraggingItem.lastSelection === 1){
             workflowManager.workareaManager().addWorkArea(mainDraggingItem.drActiv, "");
 
-            var works = workflowManager.workareaManager().numberOfWorkareas(mainDraggingItem.drActiv);
+            var works = workflowManager.workareaManager().numberOfWorkareas( drActiv );
 
-            taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop");
+            taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop", drActiv, works);
 
-            taskManager.setOnlyOnActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
-            taskManager.setOnDesktop(mainDraggingItem.intTaskId,works);
+            //taskManager.setOnlyOnActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
+            //taskManager.setOnDesktop(mainDraggingItem.intTaskId,works);
 
             if(storedParameters.animationsStep2!==0){
                 var co14 = mainView.mapToItem(mainView,iX1,iY1);

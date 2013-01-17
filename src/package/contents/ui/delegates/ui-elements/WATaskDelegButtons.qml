@@ -55,61 +55,39 @@ Item {
         allDesks: onAllDesktops || 0 ? true : false
         allActiv: onAllActivities || 0 ? true : false
 
-        tooltipTitle: i18n("Change Window State")
-        tooltipText: i18n("You can change the window's state, there are three states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
-
         onPressAndHold: {
             placeStateBtn.previousState();
             placeStateBtn.informState();
-        //    taskManager.setTaskDesktop(taskDeleg1.ccode,desktop+1);
-       //     toEveryWhereAnimation();
         }
 
         onClicked: {
             placeStateBtn.nextState();
             placeStateBtn.informState();
-
-         //   toEveryWhereAnimation();
         }
 
         function informState()
         {
-            taskManager.setTaskState(taskDeleg1.ccode, state, mainWorkArea.desktop);
+            taskManager.setTaskState(taskDeleg1.ccode, state, mainWorkArea.actCode, mainWorkArea.desktop);
 
             console.log(state);
 
             if (state === "oneDesktop"){
                 taskManager.setTaskDesktopForAnimation(taskDeleg1.ccode, mainWorkArea.desktop-1)
             }
-            else if (state === "everywhere"){
+            else if (state === "allActivities"){
                 taskManager.setTaskState(taskDeleg1.ccode,"allActivities");
 
                 if(storedParameters.animationsStep2!==0){
                     var x1 = imageTask.x;
                     var y1 = imageTask.y;
 
-                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
+                    mainView.getDynLib().animateDesktopToEverywhere(taskDeleg1.ccode,imageTask.mapToItem(mainView,x1, y1),1);
                 }
             }
 
         }
 
-/*        function toEveryWhereAnimation(){
-            if (placeStateBtn.state === "everywhere"){
-                if(storedParameters.animationsStep2!==0){
-                    var x1 = imageTask.x;
-                    var y1 = imageTask.y;
-
-                    mainView.getDynLib().animateDesktopToEverywhere(code,imageTask.mapToItem(mainView,x1, y1),1);
-                }
-            }
-        }*/
-
-
     }
-
-
-
 
     states: [
         State {

@@ -34,6 +34,9 @@ Item{
         imgShadow:"../../Images/buttons/plasma_ui/greyShadow.png"
         imgShadowHov: "../../Images/buttons/plasma_ui/blueShadow.png"
 
+        tooltipTitle: i18n("Change Window State")
+        tooltipText: i18n("You can change the window's state, there are four states available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in that Activity<br/><br/>3.<b>\"Same Workareas\"</b>,is shown in the same Workareas (position) in all Activities.<br/><br/>4.<b>\"Everywhere\"</b>, is shown on all WorkAreas.")
+
         onEntered: winStateItem.entered();
         onExited: winStateItem.exited();
 
@@ -69,7 +72,7 @@ Item{
                 imgIcon:"../../Images/buttons/plasma_ui/sameDesktops.png"
                 imgIconHov:"../../Images/buttons/plasma_ui/sameDesktopsHov.png"
                 mainIconWidth: 0.55 * winStateItem.width
-                mainIconHeight: 0.4 * mainIconWidth
+                mainIconHeight: 0.36 * mainIconWidth
             }
         },
         State {

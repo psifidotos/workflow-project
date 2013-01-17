@@ -98,9 +98,9 @@ void PTaskManager::taskAdded(::TaskManager::Task *task)
 
     connect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 
-   // if(task->isOnAllActivities())
-     //   if(!task->isOnAllDesktops())
-      //      setOnAllDesktops(wId,true);
+    // if(task->isOnAllActivities())
+    //   if(!task->isOnAllDesktops())
+    //      setOnAllDesktops(wId,true);
 }
 
 void PTaskManager::taskRemoved(::TaskManager::Task *task) {
@@ -155,8 +155,8 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
             taskI->setActivities(task->activities());
 
             //if(task->isOnAllActivities())
-              //  if(!task->isOnAllDesktops())
-                //    setOnAllDesktops(wId,true);
+            //  if(!task->isOnAllDesktops())
+            //    setOnAllDesktops(wId,true);
         }
 
         TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
@@ -196,21 +196,31 @@ void PTaskManager::slotRemoveDesktop()
 
 void PTaskManager::setOnlyOnActivity(QString wd, QString activity)
 {
-    Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wd));
+    if(task){
+        if((task->activities().count() == 0) ||
+                (task->activities().at(0) != activity) ){
+            Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
 
-    QByteArray joined = activity.toAscii();
-    char *data = joined.data();
+            QByteArray joined = activity.toAscii();
+            char *data = joined.data();
 
-    XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
-                    PropModeReplace, (unsigned char *)data, joined.size());
+            XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
+                            PropModeReplace, (unsigned char *)data, joined.size());
+        }
+    }
 }
 
 void PTaskManager::setOnAllActivities(QString wd)
 {
-    Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wd));
+    if(task && !task->onAllActivities()){
 
-    XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
-                    PropModeReplace, (const unsigned char *)"ALL", 3);
+        Atom activities = XInternAtom(QX11Info::display(), (char *) "_KDE_NET_WM_ACTIVITIES", true);
+
+        XChangeProperty(QX11Info::display(), wd.toULong(), activities, XA_STRING, 8,
+                        PropModeReplace, (const unsigned char *)"ALL", 3);
+    }
 }
 
 
@@ -223,21 +233,20 @@ QPixmap PTaskManager::disabledPixmapForIcon(const QIcon &ic)
 }
 
 
-
 ///INVOKES
 
 void PTaskManager::setOnDesktop(QString id, int desktop)
 {
-    //TaskManager::Task *t = taskMainM->findTask(id.toULong());
-    //t->toDesktop(desk);
-    kwinSystem->setOnDesktop(id.toULong(),desktop);
-
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(id));
+    if(task && task->desktop() != desktop)
+        kwinSystem->setOnDesktop(id.toULong(),desktop);
 }
 
 void PTaskManager::setOnAllDesktops(QString id, bool b)
 {
-
-    kwinSystem->setOnAllDesktops(id.toULong(), b);
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(id));
+    if(task && task->onAllDesktops() != b)
+        kwinSystem->setOnAllDesktops(id.toULong(), b);
 }
 
 void PTaskManager::removeTask(QString id)
@@ -280,42 +289,36 @@ void PTaskManager::setCurrentDesktop(int desk)
  *"allActivities" : all workareas in all Activities
  *
  */
-void PTaskManager::setTaskState(QString wId, QString state, int desktop)
+void PTaskManager::setTaskState(QString wId, QString state, QString activity, int desktop)
 {
 
     TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
     if(task){
-        //var obj = model.get(ind);
 
         QString fActivity = "";
 
-        if ((task->activities().count() == 0)||
-                (task->activities().at(0) == ""))
+        if(activity == "")
             fActivity = taskMainM->currentActivity();
         else
-            fActivity = task->activities().at(0);
+            fActivity = activity;
 
         //     console.debug("setTaskState:"+cod+"-"+val);
 
         if (state == "oneDesktop"){
-
-            if( (task->activities().count() == 0) ||
-                    (task->activities().at(0) != fActivity) )
-                setOnlyOnActivity(wId, fActivity);
-
-            if (task->onAllDesktops() != false)
-                setOnAllDesktops(wId, false);
+            setOnAllDesktops(wId, false);
+            setOnDesktop(wId, desktop);
+            setOnlyOnActivity(wId, fActivity);
         }
         else if (state == "allDesktops"){
             setOnAllDesktops(wId ,true);
             setOnlyOnActivity(wId, fActivity);
         }
         else if (state == "sameDesktops"){
-            setOnAllDesktops(wId ,false);
             setOnDesktop(wId, desktop);
             setOnAllActivities(wId);
         }
         else if (state == "allActivities"){
+
             setOnAllDesktops(wId, true);
             setOnAllActivities(wId);
         }
@@ -335,7 +338,7 @@ void PTaskManager::setTaskActivityForAnimation(QString wId, QString activityId){
         QStringList list;
         list.append(activityId);
         task->setActivities(list);
-        setOnlyOnActivity(wId, activityId);
+        // setOnlyOnActivity(wId, activityId);
     }
 }
 
@@ -349,7 +352,7 @@ void PTaskManager::setTaskDesktopForAnimation(QString wId, int desktop){
     TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(wId));
     if(task){
         task->setDesktop(desktop);
-        setOnDesktop(wId, desktop);
+        //  setOnDesktop(wId, desktop);
     }
 }
 
@@ -393,9 +396,9 @@ void PTaskManager::setSubModel(QString activity, int desktop)
         TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
 
         if(task)
-        {            
+        {
             if ( ( (task->activities().size() != 0) && (task->activities().at(0) == activity)&&
-                  ((task->desktop() == desktop) || task->onAllDesktops()) ) ||
+                   ((task->desktop() == desktop) || task->onAllDesktops()) ) ||
                  ((task->desktop() == desktop) && task->onAllActivities() ) ){
                 TaskItem *taskCopy = task->copy(m_taskSubModel);
                 m_taskSubModel->appendRow(taskCopy);

@@ -181,6 +181,10 @@ DialogTemplate2{
 
                 scrollingView: desktopView
                 centralListView: desksTasksList
+
+                dialogActivity: deskDialog.activityCode
+                dialogDesktop: deskDialog.desktop
+
             }
 
 
