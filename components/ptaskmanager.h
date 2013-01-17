@@ -43,7 +43,7 @@ public:
 
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
     Q_INVOKABLE inline QObject *subModel(){return m_taskSubModel;}
-    Q_INVOKABLE void setSubModel(QString, int);
+    Q_INVOKABLE void setSubModel(QString, int, bool everywhere = false);
     Q_INVOKABLE void emptySubModel();
 
 signals:

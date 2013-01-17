@@ -337,7 +337,7 @@ DialogTemplate2{
         deskDialog.dialogTitle = workflowManager.activityManager().name(act) + " - "+
                 workflowManager.workareaManager().name(act,desk);
 
-        taskManager.setSubModel(act,desk);
+        taskManager.setSubModel(act,desk,storedParameters.disableEverywherePanel);
 
         initInterface();
 

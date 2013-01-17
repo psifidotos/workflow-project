@@ -30,6 +30,7 @@ class StoredParameters : public QObject
     Q_PROPERTY(int windowsPreviewsOffsetY READ windowsPreviewsOffsetY WRITE setWindowsPreviewsOffsetY NOTIFY windowsPreviewsOffsetYChanged)
 
     Q_PROPERTY(bool useActivityIcon READ useActivityIcon WRITE setUseActivityIcon NOTIFY useActivityIconChanged)
+    Q_PROPERTY(bool disableEverywherePanel READ disableEverywherePanel WRITE setDisableEverywherePanel NOTIFY disableEverywherePanelChanged)
 public:
     /*
     enum AnimationsLevel {
@@ -94,6 +95,9 @@ public:
     void setUseActivityIcon(bool);
     bool useActivityIcon() const;
 
+    void setDisableEverywherePanel(bool);
+    bool disableEverywherePanel() const;
+
 signals:
     void configNeedsSaving();
 
@@ -117,6 +121,7 @@ signals:
     void windowsPreviewsOffsetYChanged(int);
 
     void useActivityIconChanged(bool);
+    void disableEverywherePanelChanged(bool);
 
 private:
    bool m_lockActivities;
@@ -141,6 +146,7 @@ private:
    int m_windowsPreviewsOffsetY; // Y Offset for Windows previews
 
    bool m_useActivityIcon;
+   bool m_disableEverywherePanel;
 
    void updateAnimationsSteps();
 };

@@ -11,7 +11,10 @@ Item{
     width:allActTaskL.shownTasks * allActRect.taskWidth+50
     height:allActRectShad.height+allActRect.height
 
-    x: storedParameters.showWindows && (allActTaskL.shownTasks>0) ? 0 : -width
+    x: showEverywhereWindowsPanel ? 0 : -width
+
+    property bool showEverywhereWindowsPanel : storedParameters.showWindows &&
+                                               (allActTaskL.shownTasks>0)
 
     property string typeId:"allActivitiesTasks"
 
@@ -76,6 +79,10 @@ Item{
         //property int taskWidth: 0.75 * mainView.workareaWidth
         property int taskWidth: mainView.workareaWidth
 
+        ListModel{
+            id:emptyModel
+        }
+
         ListView{
             id:allActTaskL
 
@@ -87,7 +94,8 @@ Item{
             width:allActRect.width
             height:mainView.workareaHeight / 2
 
-            model: taskManager.model()
+            //model: taskManager.model()
+            model: storedParameters.disableEverywherePanel ? emptyModel : taskManager.model()
 
             orientation: ListView.Horizontal
             interactive:false
@@ -123,6 +131,8 @@ Item{
 
                 onMustBeShownChanged:allActTaskL.countTasks();
             }
+
+            onModelChanged: countTasks();
 
             Connections{
                 target:allActTaskL.model

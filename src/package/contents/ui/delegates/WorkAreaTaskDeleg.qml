@@ -17,9 +17,14 @@ Item{
                               (actCode === activities[0])))) ||
                             ((onAllActivities === true)&&
                              (onAllDesktops === false)&&
-                             (mainWorkArea.desktop === desktop))
+                             (mainWorkArea.desktop === desktop)) ||
+                            (onEverywhereAndMustBeShown)
                           && (isPressed === false) ) //hide it in dragging
 
+
+    property bool onEverywhereAndMustBeShown:((storedParameters.disableEverywherePanel)&&
+                                              (onAllActivities)&&
+                                              (onAllDesktops))
 
     width:mainWorkArea.imagewidth - imageTask.width - 5
     //height: shown ? 1.1 * imageTask.height : 0
@@ -69,8 +74,17 @@ Item{
         height:width
         y:0.1 * taskDeleg1.height
 
+        opacity: ((onEverywhereAndMustBeShown)&(taskDeleg1.state=="def")) ? 0.4 : 1
+
         property int toRX:x
         property int toRY:y
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*storedParameters.animationsStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
 
     }
 
@@ -88,9 +102,18 @@ Item{
         y:0.1 * taskDeleg1.height
         clip:true
 
+        opacity: ((onEverywhereAndMustBeShown)&(taskDeleg1.state=="def")) ? 0.4 : 1
+
         Behavior on color{
             ColorAnimation {
                 duration: 3*storedParameters.animationsStep
+            }
+        }
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*storedParameters.animationsStep;
+                easing.type: Easing.InOutQuad;
             }
         }
 

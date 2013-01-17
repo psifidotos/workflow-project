@@ -386,8 +386,10 @@ QIcon PTaskManager::getTaskIcon(QString wId)
  * This is used to load the correct tasks in the
  * submodel
  *
+ * everywhere is used to include windows in Everywhere state
+ *
  */
-void PTaskManager::setSubModel(QString activity, int desktop)
+void PTaskManager::setSubModel(QString activity, int desktop, bool everywhere)
 {
     m_taskSubModel->clear();
 
@@ -397,9 +399,11 @@ void PTaskManager::setSubModel(QString activity, int desktop)
 
         if(task)
         {
-            if ( ( (task->activities().size() != 0) && (task->activities().at(0) == activity)&&
+            if ( ((task->activities().size() != 0) && (task->activities().at(0) == activity)&&
                    ((task->desktop() == desktop) || task->onAllDesktops()) ) ||
-                 ((task->desktop() == desktop) && task->onAllActivities() ) ){
+                 ((task->desktop() == desktop) && task->onAllActivities()) ||
+                 ((everywhere) && task->onAllActivities() && task->onAllDesktops())
+                 ){
                 TaskItem *taskCopy = task->copy(m_taskSubModel);
                 m_taskSubModel->appendRow(taskCopy);
             }

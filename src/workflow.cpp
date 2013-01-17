@@ -313,6 +313,7 @@ void WorkFlow::configChanged()
     m_storedParams->setCurrentTheme(cg.readEntry("CurrentTheme", "Oxygen"));
 
     m_storedParams->setUseActivityIcon(cg.readEntry("UseCurrentActivityIcon", false));
+    m_storedParams->setDisableEverywherePanel(cg.readEntry("DisableEverywherePanel",false));
 
     /*
     ui.animationsLevelSlider->setValue(m_storedParams->animations());
@@ -334,6 +335,8 @@ void WorkFlow::configAccepted()
     m_storedParams->setUseActivityIcon(ui.currentActivityIconCheckBox->isChecked());
     setActivityNameIconSlot(m_activityName, m_activityIcon);
 
+    m_storedParams->setDisableEverywherePanel(ui.disableEverywherePanelCheckBox->isChecked());
+
     cg.writeEntry("LockActivities",m_storedParams->lockActivities());
     cg.writeEntry("ShowWindows",m_storedParams->showWindows());
     cg.writeEntry("ZoomFactor",m_storedParams->zoomFactor());
@@ -349,6 +352,7 @@ void WorkFlow::configAccepted()
     cg.writeEntry("ToolTipsDelay",m_storedParams->toolTipsDelay());
     cg.writeEntry("CurrentTheme",m_storedParams->currentTheme());
     cg.writeEntry("UseCurrentActivityIcon",m_storedParams->useActivityIcon());
+    cg.writeEntry("DisableEverywherePanel",m_storedParams->disableEverywherePanel());
 
     emit configNeedsSaving();
 }
@@ -388,12 +392,14 @@ void WorkFlow::createConfigurationInterface(KConfigDialog *parent)
         ui.hideOnClickCheckBox->setEnabled(false);
 
     ui.currentActivityIconCheckBox->setChecked(m_storedParams->useActivityIcon());
+    ui.disableEverywherePanelCheckBox->setChecked(m_storedParams->disableEverywherePanel());
 
     connect(ui.themesCmb, SIGNAL(activated(int)), parent, SLOT(settingsModified()));
     connect(ui.hideOnClickCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
     connect(ui.tooltipsSpinBox, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
     connect(ui.animationsLevelSlider, SIGNAL(valueChanged(int)), parent, SLOT(settingsModified()));
     connect(ui.currentActivityIconCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
+    connect(ui.disableEverywherePanelCheckBox, SIGNAL(stateChanged(int)), parent, SLOT(settingsModified()));
 
     //  parent->setModal(true);
 

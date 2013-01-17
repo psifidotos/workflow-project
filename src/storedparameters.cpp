@@ -5,6 +5,7 @@ StoredParameters::StoredParameters(QObject *parent):
     m_animationsStep(0),
     m_animationsStep2(0)
 {
+
 }
 
 StoredParameters::~StoredParameters()
@@ -274,5 +275,18 @@ bool StoredParameters::useActivityIcon() const
     return m_useActivityIcon;
 }
 
+
+void StoredParameters::setDisableEverywherePanel(bool state)
+{
+    if(m_disableEverywherePanel != state){
+        m_disableEverywherePanel = state;
+        emit disableEverywherePanelChanged(m_disableEverywherePanel);
+    }
+}
+
+bool StoredParameters::disableEverywherePanel() const
+{
+    return m_disableEverywherePanel;
+}
 
 #include "storedparameters.moc"
