@@ -36,10 +36,10 @@ Item{
     property bool inShownArea:true
 
     property bool mustBeShown: showAllActivities === true ?
-                                   ( (onAllActivities === true )&&
-                                     (onAllDesktops === true) &&
-                                     (isPressed === false) ):
-                                   (isPressed === false)
+                                   ( onAllActivities &&
+                                     onAllDesktops &&
+                                     !isPressed ):
+                                   (!isPressed)
 
     property bool showPreviews: ((storedParameters.showWindows === true)&&
                                  (storedParameters.windowsPreviews === true)&&
@@ -97,23 +97,20 @@ Item{
     state: state1
 
     onShowPreviewsChanged:{
-
         if (showPreviews === true){
-            taskDeleg2.state = taskDeleg2.state2;
-            //          taskDeleg2.updatePreview();
+            state = state2;
+            updatePreview();
         }
-        else{
-            taskDeleg2.state = taskDeleg2.state1;
-            //            taskManager.removeWindowPreview(taskDeleg2.ccode);
+        else if(state !== state1){
+            state = state1;
+            updatePreview();
         }
-        taskDeleg2.updatePreview();
     }
 
 
     onInShownAreaChanged:{
-
-        taskDeleg2.updatePreview();
-
+        if(state == state2)
+            updatePreview();
     }
 
     /*

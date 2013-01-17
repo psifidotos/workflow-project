@@ -318,7 +318,6 @@ void PTaskManager::setTaskState(QString wId, QString state, QString activity, in
             setOnAllActivities(wId);
         }
         else if (state == "allActivities"){
-
             setOnAllDesktops(wId, true);
             setOnAllActivities(wId);
         }

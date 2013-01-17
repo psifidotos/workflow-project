@@ -8,7 +8,7 @@ Item{
 
     //anchors.bottom: mainView.bottom
     y:mainView.height-height
-    width:allActTaskL.shownTasks * allActRect.taskWidth+50
+    width:(allActTaskL.shownTasks+0.4) * allActRect.taskWidth
     height:allActRectShad.height+allActRect.height
 
     x: showEverywhereWindowsPanel ? 0 : -width
@@ -89,8 +89,6 @@ Item{
             anchors.bottom: allActRect.bottom
             anchors.left: allActRect.left
 
-            //width:model.count * allActRect.taskWidth
-            //width:(shownTasks+1) * allActRect.taskWidth
             width:allActRect.width
             height:mainView.workareaHeight / 2
 
@@ -131,6 +129,7 @@ Item{
 
                 onMustBeShownChanged:allActTaskL.countTasks();
             }
+
 
             onModelChanged: countTasks();
 
