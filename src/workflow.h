@@ -51,15 +51,18 @@ class Svg;
 class WorkFlow : public Plasma::PopupApplet
 {
     Q_OBJECT
+    Q_PROPERTY(QString version READ version NOTIFY versionChanged)
 
 public:
     WorkFlow(QObject *parent, const QVariantList &args);
     ~WorkFlow();
 
-    //QGraphicsWidget *graphicsWidget();
     void init();
 
+    inline QString version(){return m_version;}
+
 signals:
+    void versionChanged(QString);
     void updateMarginForPreviews(int x, int y);
     void updateWindowIDForPreviews(QString win);
     void hideDashboard();
@@ -108,6 +111,7 @@ private:
     QString m_activityName;
     QString m_paintIcon;
     QString m_windowID;
+    QString m_version;
 
     QObject *m_rootQMLObject;
     QDesktopWidget *m_desktopWidget;

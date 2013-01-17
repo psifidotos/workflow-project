@@ -25,7 +25,7 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property string version:"v0.2.2"
+    property string version: plasmoidWrapper.version
 
     property int scaleMeter: zoomSlider.value
 

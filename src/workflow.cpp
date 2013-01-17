@@ -26,6 +26,7 @@
 #include <KGlobalSettings>
 #include <KConfigGroup>
 #include <KConfigDialog>
+#include <KPluginInfo>
 #include <KSharedConfig>
 #include <KWindowSystem>
 
@@ -116,6 +117,8 @@ void WorkFlow::init()
     Plasma::Package package(workflowPath, structure);
     QString path = package.filePath("mainscript");
 
+    m_version = package.metadata().version();
+    emit versionChanged(m_version);
     //kDebug() << "Path: " << path << endl;
     configChanged();
 
