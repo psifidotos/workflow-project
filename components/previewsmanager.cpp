@@ -1,8 +1,8 @@
 #include "previewsmanager.h"
 
+#include <KWindowSystem>
 
 #include <Plasma/WindowEffects>
-
 
 PreviewsManager::PreviewsManager(QObject *parent) :
     QObject(parent),
@@ -43,16 +43,20 @@ void PreviewsManager::setTopXY(int x1,int y1)
 
 void PreviewsManager::showWindowsPreviews()
 {
-    //    m_mainWindowId = RootWindow (QX11Info::display(), DefaultScreen (QX11Info::display()));
     //    qDebug() << m_mainWindowId;
-    if (previewsIds.size()>0) {
-        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
-        clearedPreviewsList = false;
-    }
 
-    if ((previewsIds.size() == 0)&&(clearedPreviewsList == false)) {
-        Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
-        clearedPreviewsList = true;
+    // This must be checked for the clean qml plasmoid...
+    bool idExists = KWindowSystem::KWindowSystem::self()->hasWId(m_mainWindowId);
+    if(idExists){
+        if (previewsIds.size()>0) {
+            Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+            clearedPreviewsList = false;
+        }
+
+        if ((previewsIds.size() == 0)&&(clearedPreviewsList == false)) {
+            Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
+            clearedPreviewsList = true;
+        }
     }
 
 }

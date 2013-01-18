@@ -5,6 +5,7 @@
 #include "workflowmanager.h"
 #include "ptaskmanager.h"
 #include "previewsmanager.h"
+#include "environmentmanager.h"
 //#include "icondialog.h"
 
 void WorkflowComponentsPlugin::registerTypes(const char *uri)
@@ -14,6 +15,7 @@ void WorkflowComponentsPlugin::registerTypes(const char *uri)
     qmlRegisterType<WorkflowManager>(uri, 0, 1, "WorkflowManager");
     qmlRegisterType<PTaskManager>(uri, 0, 1, "TaskManager");
     qmlRegisterType<PreviewsManager>(uri, 0, 1, "PreviewsManager");
+    qmlRegisterType<EnvironmentManager>(uri, 0, 1, "EnvironmentManager");
     //qmlRegisterType<IconDialog>(uri, 0, 1, "IconDialog");
 }
 

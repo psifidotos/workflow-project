@@ -1,6 +1,13 @@
 # Project Needs a name ofcourse
 project(plasma_applet_workflow)
 
+set(NAME workflow)
+set(VERSION 0.2.3a2)
+set(AUTHOR "Michail Vourlakos")
+set(EMAIL "psifidotos@users.sf.net")
+set(WEBSITE "http://workflow.opentoolsandspace.org/")
+set(ICON "preferences-activities")
+
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
 find_package(KActivities REQUIRED)
@@ -15,7 +22,7 @@ include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_subdirectory(src)
 add_subdirectory(components)
+add_subdirectory(package)
 add_subdirectory(po)
 

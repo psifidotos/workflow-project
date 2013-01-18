@@ -6,6 +6,7 @@ set(components_SRCS
     workflowmanager.cpp
     ptaskmanager.cpp
     previewsmanager.cpp
+    environmentmanager.cpp
 #    icondialog.cpp
 )
 

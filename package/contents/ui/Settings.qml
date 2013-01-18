@@ -1,0 +1,80 @@
+import QtQuick 1.1
+import "../code/settings.js" as Settings
+
+QtObject {
+    property bool lockActivities: plasmoid.readConfig("LockActivities")
+    property bool showWindows: plasmoid.readConfig("ShowWindows")
+    property int scale: plasmoid.readConfig("Scale")
+    property int animations: plasmoid.readConfig("Animations")
+    property int animationSpeed: plasmoid.readConfig("AnimationSpeed")
+    property int animationStep: animations >= 1 ? animationSpeed:0
+    property int animationStep2: animations >= 2 ? animationSpeed:0
+    property bool windowPreviews: plasmoid.readConfig("WindowPreviews")
+    property int windowPreviewsOffsetX: plasmoid.readConfig("WindowPreviewsOffsetX")
+    property int windowPreviewsOffsetY: plasmoid.readConfig("WindowPreviewsOffsetY")
+    property int fontRelevance: plasmoid.readConfig("FontRelevance")
+    property bool showStoppedPanel: plasmoid.readConfig("ShowStoppedPanel")
+    property bool firstRunTour: plasmoid.readConfig("FirstRunTour")
+    property bool firstRunCalibration: plasmoid.readConfig("FirstRunCalibration")
+    property bool hideOnClick: plasmoid.readConfig("HideOnClick")
+    property string currentTheme: plasmoid.readConfig("CurrentTheme")
+    property int toolTipsDelay: plasmoid.readConfig("ToolTipsDelay")
+    property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
+    property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
+
+    // Small hack to make sure the global settings object is set
+    property bool setAsGlobal: false
+    onSetAsGlobalChanged: {
+        if (setAsGlobal) 
+            Settings.global = settings
+    }
+    
+    onLockActivitiesChanged: { plasmoid.writeConfig("LockActivities", lockActivities) ; console.log("LockActivities: " + lockActivities) }
+    onShowWindowsChanged: { plasmoid.writeConfig("ShowWindows", showWindows) ; console.log("ShowWindows: " + showWindows) }
+    onScaleChanged: { plasmoid.writeConfig("Scale", scale) ; console.log("Scale: " + scale) }
+    onAnimationsChanged: { plasmoid.writeConfig("Animations", animations) ; console.log("Animations: " + animations) }
+    onAnimationSpeedChanged: { plasmoid.writeConfig("AnimationSpeed", animationSpeed) ; console.log("AnimationSpeed: " + animationSpeed) }
+    onWindowPreviewsChanged: { plasmoid.writeConfig("WindowPreviews", windowPreviews) ; console.log("WindowPreviews: " + windowPreviews) }
+    onWindowPreviewsOffsetXChanged: { plasmoid.writeConfig("WindowPreviewsOffsetX", windowPreviewsOffsetX) ; console.log("WindowPreviewsOffsetX: " + windowPreviewsOffsetX) }
+    onWindowPreviewsOffsetYChanged: { plasmoid.writeConfig("WindowPreviewsOffsetY", windowPreviewsOffsetY) ; console.log("WindowPreviewsOffsetY: " + windowPreviewsOffsetY) }
+    onFontRelevanceChanged: { plasmoid.writeConfig("FontRelevance", fontRelevance) ; console.log("FontRelevance: " + fontRelevance) }
+    onShowStoppedPanelChanged: { plasmoid.writeConfig("ShowStoppedPanel", showStoppedPanel) ; console.log("ShowStoppedPanel: " + showStoppedPanel) }
+    onFirstRunTourChanged: { plasmoid.writeConfig("FirstRunTour", firstRunTour) ; console.log("FirstRunTour: " + firstRunTour) }
+    onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; console.log("FirstRunCalibration: " + firstRunCalibration) }
+    onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; console.log("HideOnClick: " + hideOnClick) }
+    onCurrentThemeChanged: { plasmoid.writeConfig("CurrentTheme", currentTheme) ; console.log("CurrentTheme: " + currentTheme) }
+    onToolTipsDelayChanged: { plasmoid.writeConfig("ToolTipsDelay", toolTipsDelay) ; console.log("ToolTipsDelay: " + toolTipsDelay) }
+    onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; console.log("UseCurrentActivityIcon: " + useCurrentActivityIcon) }
+    onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; console.log("DisableEverywherePanel: " + disableEverywherePanel) }
+    
+
+    function configChanged() {
+        hideOnClick = plasmoid.readConfig("HideOnClick");
+        currentTheme = plasmoid.readConfig("CurrentTheme");
+        animations = plasmoid.readConfig("Animations");
+        toolTipsDelay = plasmoid.readConfig("ToolTipsDelay");
+        useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
+        disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
+    }
+
+    Component.onCompleted: {
+/*        console.log("lockActivities: " + lockActivities)
+        console.log("showWindows: " + showWindows)
+        console.log("scale: " + scale)
+        console.log("animations: " + animations)
+        console.log("animationSpeed: " + animationSpeed)
+        console.log("windowPreviews: " + windowPreviews)
+        console.log("windowPreviewsOffsetX: " + windowPreviewsOffsetX)
+        console.log("windowPreviewsOffsetY: " + windowPreviewsOffsetY)
+        console.log("fontRelevance: " + fontRelevance)
+        console.log("showStoppedPanel: " + showStoppedPanel)
+        console.log("firstRunTour: " + firstRunTour)
+        console.log("firstRunCalibration: " + firstRunCalibration)
+        console.log("hideOnClick: " + hideOnClick)
+        console.log("currentTheme: " + currentTheme)
+        console.log("toolTipsDelay: " + toolTipsDelay)
+      //  console.log("Theme size: " + theme.iconSizes.dialog)
+        console.log("useCurrentActivityIcon: " + useCurrentActivityIcon)
+        console.log("disableEverywherePanel: " + disableEverywherePanel)*/
+    }
+}

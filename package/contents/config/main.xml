@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+     http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+
+<kcfgfile name=""/>
+<group name="General">
+    <entry name="LockActivities" type="bool">
+        <default>true</default>
+    </entry>
+    <entry name="ShowWindows" type="bool">
+        <default>true</default>
+    </entry>
+    <entry name="Scale" type="int">
+        <default>50</default>
+    </entry>
+    <entry name="Animations" type="int">
+        <default>1</default>
+    </entry>
+    <entry name="AnimationSpeed" type="int">
+        <default>200</default>
+    </entry>
+    <entry name="WindowPreviews" type="bool">
+        <default>false</default>
+    </entry>
+    <entry name="WindowPreviewsOffsetX" type="int">
+        <default>0</default>
+    </entry>
+    <entry name="WindowPreviewsOffsetY" type="int">
+        <default>0</default>
+    </entry>
+    <entry name="FontRelevance" type="int">
+        <default>0</default>
+    </entry>
+    <entry name="ShowStoppedPanel" type="bool">
+        <default>true</default>
+    </entry>
+    <entry name="FirstRunTour" type="bool">
+        <default>false</default>
+    </entry>
+    <entry name="FirstRunCalibration" type="bool">
+        <default>false</default>                                                                                                      
+    </entry>
+    <entry name="HideOnClick" type="bool">
+        <default>false</default>
+    </entry>
+    <entry name="CurrentTheme" type="string">
+        <default>"Oxygen"</default>
+    </entry>
+    <entry name="ToolTipsDelay" type="int">
+        <default>300</default>
+    </entry>
+    <entry name="UseCurrentActivityIcon" type="bool">
+        <default>false</default>
+    </entry>
+    <entry name="DisableEverywherePanel" type="bool">
+        <default>false</default>
+    </entry>
+</group>
+</kcfg>
