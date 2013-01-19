@@ -6,15 +6,17 @@ import "tooltips"
 import "components"
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
 import "../code/settings.js" as Settings
 
-Rectangle{
+PlasmaComponents.ToolBar {
+//Rectangle{
     id:oxygenTitle
     anchors.top:parent.top
     width:mainView.width
-    color:"#dcdcdc"
+//    color:"#dcdcdc"
     height: workareaY/3
 
     property alias lockerChecked:lockerToolBtn.checked
@@ -36,6 +38,7 @@ Rectangle{
         }
     }
 
+    /*
     Rectangle{
         y:parent.height
 
@@ -52,7 +55,7 @@ Rectangle{
             GradientStop { position: 1.0; color: "#00ffffff" }
         }
 
-    }
+    }*/
 
     Text{
         anchors.top:oxygenTitle.top
@@ -280,3 +283,4 @@ Rectangle{
     }
 
 }
+
