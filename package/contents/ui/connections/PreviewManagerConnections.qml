@@ -6,11 +6,11 @@ Item{
    //Signals that are needed from previewManager in order to update
    //whatever is needed
 
-/*    Connections{
+    Connections{
         target: plasmoidWrapper
         onUpdateMarginForPreviews: previewManager.setTopXY(x,y);
         onUpdateWindowIDForPreviews: previewManager.setMainWindowId(win);
-    }*/
+    }
 
 
     Connections{
@@ -18,8 +18,8 @@ Item{
         onTaskRemoved: previewManager.removeWindowPreview(win);
     }
 
- /*   Connections{
+    Connections{
         target: previewManager
         onUpdatePopWindowWId: plasmoidWrapper.updatePopWindowWIdSlot();
-    }*/
+    }
 }

@@ -15,10 +15,13 @@ SessionParameters::SessionParameters(QObject *parent)
       m_controller(new KActivities::Controller(this)),
       m_kwindowSystem(KWindowSystem::KWindowSystem::self()),
       m_dbus(0),
+      m_currentActivityName(""),
+      m_currentActivityIcon(""),
       m_screenRatio(1),
       m_isInPanel(0)
 {
     m_currentActivity = m_controller->currentActivity();
+    loadActivityIconAndName(m_currentActivity);
     m_currentDesktop = m_kwindowSystem->currentDesktop();
     m_numberOfDesktops = m_kwindowSystem->numberOfDesktops();
     m_effectsSystemEnabled = m_kwindowSystem->compositingActive();
@@ -69,11 +72,38 @@ void SessionParameters::setCurrentActivitySlot(QString curAct)
         m_currentActivity = curAct;
         emit currentActivityChanged(m_currentActivity);
     }
+
+    loadActivityIconAndName(curAct);
 }
 
 QString SessionParameters::currentActivity()
 {
     return m_currentActivity;
+}
+
+void SessionParameters::setCurrentActivityName(QString name)
+{
+    if(m_currentActivityName != name){
+        m_currentActivityName = name;
+        emit currentActivityNameChanged(m_currentActivityName);
+    }
+}
+
+void SessionParameters::setCurrentActivityIcon(QString icon)
+{
+    if(m_currentActivityIcon != icon){
+        m_currentActivityIcon = icon;
+        emit currentActivityIconChanged(m_currentActivityIcon);
+    }
+}
+
+
+void SessionParameters::loadActivityIconAndName(QString actId)
+{
+    KActivities::Info *activity = new KActivities::Info(actId, this);
+    setCurrentActivityName(activity->name());
+    setCurrentActivityIcon(activity->icon());
+    delete activity;
 }
 
 void SessionParameters::setCurrentDesktopSlot(int desktop)
@@ -150,3 +180,4 @@ bool SessionParameters::isInPanel()
 }
 
 #include <sessionparameters.moc>
+

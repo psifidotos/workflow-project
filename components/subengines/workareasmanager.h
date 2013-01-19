@@ -27,7 +27,6 @@ public:
     inline int maxWorkareas(){return m_maxWorkareas;}
 
 signals:
-    Q_INVOKABLE void workAreaWasClicked();
     void maxWorkareasChanged(int);
 
 public slots:

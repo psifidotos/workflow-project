@@ -5,13 +5,10 @@ Item{
     //All the qml plugins Connections especially between
     //the PlasmoidWrapper and the plugins
 
-
-    //    id:instanceOfActivitiesList
-   //     objectName: "instActivitiesEngine"
-   // }
-
     ActivityManagerConnections{}
     WorkareaManagerConnections{}
     TaskManagerConnections{}
     PreviewManagerConnections{}
+    EnvironmentManagerConnections{}
+    PlasmoidWrapperConnections{}
 }

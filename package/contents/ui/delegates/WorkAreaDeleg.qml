@@ -281,7 +281,7 @@ Item{
 
     function clickedWorkarea(){
         workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-        workflowManager.workareaManager().workAreaWasClicked();
+        plasmoidWrapper.workareaWasClicked();
     }
 
     function getBorderRectangle(){

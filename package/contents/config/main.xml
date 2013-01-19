@@ -45,9 +45,6 @@
     <entry name="HideOnClick" type="bool">
         <default>false</default>
     </entry>
-    <entry name="CurrentTheme" type="string">
-        <default>"Oxygen"</default>
-    </entry>
     <entry name="ToolTipsDelay" type="int">
         <default>300</default>
     </entry>

@@ -7,6 +7,7 @@ set(components_SRCS
     ptaskmanager.cpp
     previewsmanager.cpp
     environmentmanager.cpp
+    plasmoidwrapper.cpp
 #    icondialog.cpp
 )
 

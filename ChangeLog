@@ -1,3 +1,14 @@
+0.2.3a2
+=====
+-- Change the plasmoid to clean qml plasmoid
+-- Create a 4th state for windows (sameWorkareas - a window exists in all same
+Workrareas(position) for all Activities)
+-- The default kde behavior for windows is not altered any more
+-- Create a disable state for Everywhere Panel, the bottom panel is hidden
+and allActivities windows appear in all the Workareas
+-- fixed the shortcut issue (it couldnt be saved from the configuration dialog)
+-- droppe themes support (they werent themes just aliases)
+
 0.2.2
 =====
 -- window previews when the plasmoid is in the panel

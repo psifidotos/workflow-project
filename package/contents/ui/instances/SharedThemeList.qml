@@ -15,14 +15,11 @@ Item{
 
     property int themePos:0
 
-    property string currentTheme:Settings.global.currentTheme
+    property string currentTheme: "Oxygen"
 
     onCurrentThemeChanged: themePos = getIndexFor(currentTheme);
 
-   // function getIcons(){
-    //    return model.get(mainView.themePos).icons.get(0);
-   // }
-
+/*
     function getIndexFor(nam){
         for(var i=0; i<model.count; ++i){
             var obj = model.get(i);
@@ -32,12 +29,6 @@ Item{
 
         return 0;
     }
+*/
 
-   /* function loadThemes() {
-        for(var i=0; i<model.count; i++){
-            Settings.global.addTheme(model.get(i).name);
-        }
-    }
-
-    Component.onCompleted: loadThemes();*/
 }

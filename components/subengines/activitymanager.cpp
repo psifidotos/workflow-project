@@ -134,13 +134,6 @@ void ActivityManager::activityAddedSlot(QString id) {
     connect(activity, SIGNAL(stateChanged(KActivities::Info::State)),
             this, SLOT(activityStateChangedSlot()) );
 
-    if((m_activitiesCtrl->currentActivity() == id) &&
-            (m_firstTime)){
-        m_firstTime = false;
-        emit currentActivityInformationChanged(activity->name(),
-                                               activity->icon());
-    }
-
     emit updateWallpaper(id);
 
     emit activityAdded(id);
@@ -173,8 +166,6 @@ void ActivityManager::activityUpdatedSlot()
         activityObj->setCState(state);
     }
 
-    emit currentActivityInformationChanged(activity->name(),
-                                           activity->icon());
 }
 
 void ActivityManager::activityStateChangedSlot()
@@ -197,10 +188,6 @@ void ActivityManager::activityStateChangedSlot()
 void ActivityManager::currentActivityChangedSlot(const QString &id)
 {
     emit updateWallpaper(id);
-
-    KActivities::Info *activity = new KActivities::Info(id, this);
-    emit currentActivityInformationChanged(activity->name(),
-                                           activity->icon());
 }
 
 
@@ -270,15 +257,11 @@ QString ActivityManager::chooseIcon(QString id)
     dialog->showDialog();
     KWindowSystem::forceActiveWindow(dialog->winId());
 
-    emit showedIconDialog();
-
     QString icon = dialog->openDialog();
     dialog->deleteLater();
 
     if (icon != "")
         setIcon(id,icon);
-
-    emit answeredIconDialog();
 
     return icon;
 }

@@ -18,7 +18,6 @@ import "DynamicAnimations.js" as DynamAnim
 
 import "../code/settings.js" as Settings
 
-
 Rectangle {
     id:mainView
     objectName: "instMainView"
@@ -29,6 +28,13 @@ Rectangle {
     property int maximumHeight
     property int preferredWidth: 500
     property int preferredHeight: 350
+
+    property Component compactRepresentationEmpty: undefined
+    property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
+
+    property Component compactRepresentation: plasmoidWrapper.isInPanel ?
+                                                  compactRepresentationPanel :
+                                                  compactRepresentationEmpty
 
     Settings {
         id: settings
@@ -94,6 +100,10 @@ Rectangle {
 
     WorkFlowComponents.EnvironmentManager {
         id: environmentManager
+    }
+
+    WorkFlowComponents.PlasmoidWrapper {
+        id: plasmoidWrapper
     }
 
 
@@ -198,28 +208,30 @@ Rectangle {
         id:mDragInt
     }
 
-    Component.onCompleted:{
 
+    Connections{
+        target:Settings.global
+        onHideOnClickChanged: plasmoid.passivePopup = !Settings.global.hideOnClick;
+    }
+
+    Component.onCompleted:{
         DynamAnim.createComponents();
 
         if(Settings.global.firstRunLiveTour === false)
-                getDynLib().showFirstHelpTourDialog();
+            getDynLib().showFirstHelpTourDialog();
 
-        environmentManager.setApplet(plasmoid.extender());
-
-        // plasmoid look
-        if (plasmoid.formFactor == Horizontal || plasmoid.formFactor == Vertical) {
-            var toolTipData = new Object;
-            toolTipData["image"] = "preferences-activities"; // same as in .desktop file
-            toolTipData["mainText"] = i18n("WorkFlow Plasmoid"); // same as in .desktop file
-            toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
-            plasmoid.popupIconToolTip = toolTipData;
-        }
+        var toolTipData = new Object;
+        toolTipData["image"] = "preferences-activities"; // same as in .desktop file
+        toolTipData["mainText"] = i18n("WorkFlow Plasmoid"); // same as in .desktop file
+        toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
+        plasmoid.popupIconToolTip = toolTipData;
 
         plasmoid.popupIcon = QIcon("preferences-activities");
         plasmoid.aspectRatioMode = IgnoreAspectRatio;
 
         plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
+
+        plasmoid.passivePopup = !Settings.global.hideOnClick;
     }
 
     function getDynLib(){
@@ -283,11 +295,11 @@ Rectangle {
     property variant firstHelpTourDialog:mainView
     property variant firstCalibrationDialog:mainView
 
-  /************* Deleteing Dialogs  ***********************/
+    /************* Deleteing Dialogs  ***********************/
     Connections{
         target:removeDialog
         onCompleted:{
-         //   console.debug("Delete Remove...");
+            //   console.debug("Delete Remove...");
             mainView.getDynLib().deleteRemoveDialog();
         }
     }
@@ -295,7 +307,7 @@ Rectangle {
     Connections{
         target:cloningDialog
         onCompleted:{
-        //    console.debug("Delete Cloning...");
+            //    console.debug("Delete Cloning...");
             mainView.getDynLib().deleteCloneDialog();
         }
     }
@@ -303,7 +315,7 @@ Rectangle {
     Connections{
         target:desktopDialog
         onCompleted:{
-          //  console.debug("Delete Desktop Dialog...");
+            //  console.debug("Delete Desktop Dialog...");
             mainView.getDynLib().deleteDesktopDialog();
         }
 
@@ -315,7 +327,7 @@ Rectangle {
     Connections{
         target:calibrationDialog
         onCompleted:{
-          //  console.debug("Delete Calibration Dialog...");
+            //  console.debug("Delete Calibration Dialog...");
             mainView.getDynLib().deleteCalibrationDialog();
         }
     }
@@ -323,7 +335,7 @@ Rectangle {
     Connections{
         target:liveTourDialog
         onCompleted:{
-           // console.debug("Delete Livetour Dialog...");
+            // console.debug("Delete Livetour Dialog...");
             mainView.getDynLib().deleteLiveTourDialog();
         }
     }
@@ -354,7 +366,7 @@ Rectangle {
         }
     }
 
-//    TourDialog{
+    //    TourDialog{
     //}
 
 }

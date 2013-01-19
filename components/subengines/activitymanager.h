@@ -60,11 +60,6 @@ protected:
     void init();
 
 signals:
-    void showedIconDialog();
-    void answeredIconDialog();
-    void hidePopup();
-    void currentActivityInformationChanged(QString name, QString icon);
-
     void activityAdded(QString);
     void activityRemoved(QString);
 

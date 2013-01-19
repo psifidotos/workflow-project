@@ -3,9 +3,4 @@ import QtQuick 1.1
 
 Item{
 
-  /*  Connections{
-        target: workflowManager.workareaManager()
-
-        onWorkAreaWasClicked: plasmoidWrapper.workAreaWasClickedSlot();
-    }*/
 }

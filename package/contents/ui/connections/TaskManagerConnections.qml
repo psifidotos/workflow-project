@@ -6,15 +6,4 @@ Item{
    //Signals that are needed from taskManager in order to update
    //whatever is needed
 
-  /*  Connections{
-        target: plasmoidWrapper
-        onHideDashboard: taskManager.hideDashboard();
-        onShowDashboard: taskManager.showDashboard();
-    }*/
-/*
-    Connections{
-        target: taskManager
-        onHidePopup: plasmoidWrapper.hidePopupDialogSlot();
-    }*/
-
 }

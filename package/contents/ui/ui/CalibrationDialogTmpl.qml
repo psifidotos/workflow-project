@@ -496,8 +496,8 @@ DialogTemplate2{
     function openD(){
         calibrationDialog.open();
 
-        xOffsetSlider.value = Settings.global.windowsPreviewsOffsetX;
-        yOffsetSlider.value = Settings.global.windowsPreviewsOffsetY;
+        xOffsetSlider.value = Settings.global.windowPreviewsOffsetX;
+        yOffsetSlider.value = Settings.global.windowPreviewsOffsetY;
 
         allWorkareas.flickableV = false;
         allActT.forceState1();
@@ -526,8 +526,8 @@ DialogTemplate2{
     Connections {
         target: calibDialog
         onClickedOk:{
-            Settings.global.windowsPreviewsOffsetX = xValueText.val;
-            Settings.global.windowsPreviewsOffsetY = yValueText.val
+            Settings.global.windowPreviewsOffsetX = xValueText.val;
+            Settings.global.windowPreviewsOffsetY = yValueText.val
             calibDialog.clickedCancel();
 
             completed();

@@ -12,11 +12,6 @@ Item{
 
         target: workflowManager.activityManager()
 
-   //     onCurrentActivityInformationChanged: plasmoidWrapper.setActivityNameIconSlot(name, icon);
-  //      onShowedIconDialog: plasmoidWrapper.showingIconsDialog();
-  //      onAnsweredIconDialog: plasmoidWrapper.answeredIconDialog();
-  //      onHidePopup: plasmoidWrapper.hidePopupDialogSlot();
-
         //Cloning Signals for interaction with the interface
         onCloningStarted:{
             if(Settings.global.windowsPreviews === true){

@@ -6,6 +6,7 @@
 #include "ptaskmanager.h"
 #include "previewsmanager.h"
 #include "environmentmanager.h"
+#include "plasmoidwrapper.h"
 //#include "icondialog.h"
 
 void WorkflowComponentsPlugin::registerTypes(const char *uri)
@@ -16,6 +17,7 @@ void WorkflowComponentsPlugin::registerTypes(const char *uri)
     qmlRegisterType<PTaskManager>(uri, 0, 1, "TaskManager");
     qmlRegisterType<PreviewsManager>(uri, 0, 1, "PreviewsManager");
     qmlRegisterType<EnvironmentManager>(uri, 0, 1, "EnvironmentManager");
+    qmlRegisterType<PlasmoidWrapper>(uri, 0, 1, "PlasmoidWrapper");
     //qmlRegisterType<IconDialog>(uri, 0, 1, "IconDialog");
 }
 
