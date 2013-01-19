@@ -1,6 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import "../../../code/settings.js" as Settings
+
 Rectangle {
 
     id:mRect
@@ -38,7 +40,7 @@ Rectangle {
             from:"backward"; to:"forward"
             SequentialAnimation{
                 id:playRectAnimation1
-                property int animationDur:750
+                property int animationDur: 2*Settings.global.animationStep2
 
                 NumberAnimation {
                     target: mRect

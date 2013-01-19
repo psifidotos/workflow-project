@@ -6,7 +6,7 @@ import "../../../code/settings.js" as Settings
 TextB {
     Timer{
         id:txtTimer
-        interval:20
+        interval: 10
         repeat:true
         onTriggered: {
             parent.stepAnimation();
@@ -18,11 +18,11 @@ TextB {
     property int stpCounter:0
     property bool onlyOpacity:false
 
-    opacity:0
+    opacity: 0
 
     Behavior on opacity{
         NumberAnimation {
-            duration: 2*Settings.global.animationStep;
+            duration: 2*Settings.global.animationStep2;
             easing.type: Easing.InOutQuad;
         }
     }
@@ -45,7 +45,11 @@ TextB {
     }
 
     function startAnimation(){
-        txtTimer.start();
+        if(Settings.global.animationStep2 > 0)
+            txtTimer.start();
+        else
+            text = fullText;
+
         opacity=1;
     }
 
