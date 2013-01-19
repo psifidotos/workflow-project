@@ -56,14 +56,8 @@ Item{
     }
 
 
-    QIconItem{
-        id:activityIcon
-        rotation:-20
-        opacity:stpActivity.containsMouse ? 1 : parent.defOpacity
-        smooth:true
-
-        icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
-        enabled:stpActivity.containsMouse ? true : false
+    Item{
+        id:activityIconContainer
 
         x:stpActivity.width/2
         width:5+0.9*mainView.scaleMeter
@@ -78,20 +72,59 @@ Item{
         property int toRX:stopActBack.shownActivities > 0 ? x - width:x - width- stopActBack.width
         property int toRY:stopActBack.shownActivities > 0 ? y : -height
 
+        QIconItem{
+            id:activityIconEnabled
+            opacity:stpActivity.containsMouse ? 1 : 0
+            smooth:true
+            rotation:-20
 
-        Behavior on rotation{
-            NumberAnimation {
-                duration: 2*Settings.global.animationStep;
-                easing.type: Easing.InOutQuad;
+            icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
+            enabled:true
+
+            anchors.fill: parent
+
+            Behavior on rotation{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep;
+                    easing.type: Easing.InOutQuad;
+                }
             }
         }
 
-        Behavior on opacity{
-            NumberAnimation {
-                duration: 2*Settings.global.animationStep;
-                easing.type: Easing.InOutQuad;
+        QIconItem{
+            id:activityIconDisabled
+            rotation:-20
+            opacity:stpActivity.containsMouse ? 0 : stpActivity.defOpacity
+            smooth:true
+
+            icon: Icon == "" ? QIcon("plasma") : QIcon(Icon)
+            enabled:false
+
+            anchors.fill: parent
+
+            Behavior on rotation{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep;
+                    easing.type: Easing.InOutQuad;
+                }
             }
         }
+
+
 
     }
 
@@ -112,8 +145,8 @@ Item{
 
         color:"#4d4b4b"
 
-        anchors.top: activityIcon.bottom
-        anchors.topMargin: activityIcon.height/8
+        anchors.top: activityIconContainer.bottom
+        anchors.topMargin: activityIconContainer.height/8
         anchors.right: parent.right
         anchors.rightMargin: 5
 
@@ -173,11 +206,11 @@ Item{
             workflowManager.activityManager().start(ccode);
 
             if(Settings.global.animationStep2!==0){
-                var x1 = activityIcon.x;
-                var y1 = activityIcon.y;
+                var x1 = activityIconDisabled.x;
+                var y1 = activityIconDisabled.y;
 
                 //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-                mainView.getDynLib().animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+                mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainView,x1, y1));
             }
         }
     }
@@ -213,7 +246,7 @@ Item{
     }
 
     function getIcon(){
-        return activityIcon;
+        return activityIconDisabled;
     }
 
 
