@@ -7,7 +7,7 @@ Item{
     QIconItem{
         width:parent.width
         height:parent.height
-        rotation:-30
+        rotation:-20
         icon: QIcon(iconPath)
         smooth:true
 
@@ -19,7 +19,7 @@ Item{
 
             width:parent.width/2
             height:parent.height/2
-            rotation:30
+            rotation:20
             icon: QIcon("preferences-activities")
             smooth:true
             visible: Settings.global.useCurrentActivityIcon

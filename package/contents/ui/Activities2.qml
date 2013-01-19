@@ -46,9 +46,6 @@ Rectangle {
     clip:true
     anchors.fill: parent
 
-    property string version: "v0.2.3a2"
-
-
     property int scaleMeter: zoomSlider.value
 
     //property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
