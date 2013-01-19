@@ -66,7 +66,7 @@ Item{
 
     QIconItem{
         id:activityIcon
-        rotation:-20
+        rotation: 0
         opacity: CState===neededState ? 1:0
 
         icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
@@ -98,14 +98,14 @@ Item{
                 if((activityName.state === "inactive")&&
                    (!Settings.global.lockActivities)){
                     fadeIcon.opacity = 0;
-                    activityIcon.rotation = 0;
+                    activityIcon.rotation = -20;
 
                 }
             }
 
             onExited: {
                 fadeIcon.opacity = 1;
-                activityIcon.rotation = -20;
+                activityIcon.rotation = 0;
             }
 
             onClicked: {

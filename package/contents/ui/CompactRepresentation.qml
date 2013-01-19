@@ -7,19 +7,17 @@ Item{
     QIconItem{
         width:parent.width
         height:parent.height
-        rotation:-20
         icon: QIcon(iconPath)
         smooth:true
 
         property string iconPath: Settings.global.useCurrentActivityIcon ? sessionParameters.currentActivityIcon:
                                                                            "preferences-activities"
         QIconItem{
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.top
+            anchors.right: parent.horizontalCenter
+            anchors.bottom: parent.verticalCenter
 
             width:parent.width/2
             height:parent.height/2
-            rotation:20
             icon: QIcon("preferences-activities")
             smooth:true
             visible: Settings.global.useCurrentActivityIcon
