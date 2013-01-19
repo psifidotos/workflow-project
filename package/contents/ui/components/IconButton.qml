@@ -4,12 +4,13 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 import "../tooltips"
 
+import "../../code/settings.js" as Settings
 
 Item {
     id: container
     property real hoverScale: 1.3
     property string icon: ""
-    property int animationSpeed: 200
+    property int animationSpeed: 2*Settings.global.animationStep
     property string tooltipText: ""
     property string tooltipTitle: ""
     property alias containsMouse: mouseArea.containsMouse
