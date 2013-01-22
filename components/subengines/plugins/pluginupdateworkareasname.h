@@ -13,7 +13,7 @@ public:
     explicit PluginUpdateWorkareasName(QObject *);
     ~PluginUpdateWorkareasName();
 
-    void checkFlag(int);
+//    void checkFlag(int);
 
 signals:
     void updateWorkareasName(int);

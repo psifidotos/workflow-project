@@ -53,13 +53,13 @@ void Store::init()
     connect(m_activitiesController, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesController, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
 
-    m_plgUpdateWorkareasName = new PluginUpdateWorkareasName(this);
-    connect(m_plgUpdateWorkareasName, SIGNAL(updateWorkareasName(int)),
-            this, SLOT(pluginUpdateWorkareasNameSlot(int)) );
-
     m_plgSyncActivitiesWorkareas = new PluginSyncActivitiesWorkareas(this);
     connect(this, SIGNAL(maxWorkareasChanged(int)),
             m_plgSyncActivitiesWorkareas, SLOT(maxWorkareasUpdated(int)) );
+
+    m_plgUpdateWorkareasName = new PluginUpdateWorkareasName(this);
+    connect(m_plgUpdateWorkareasName, SIGNAL(updateWorkareasName(int)),
+            this, SLOT(pluginUpdateWorkareasNameSlot(int)) );
 }
 
 
@@ -110,7 +110,7 @@ void Store::addWorkArea(QString id, QString name)
 
         info->addWorkArea(name);
 
-        m_plgUpdateWorkareasName->checkFlag(info->m_workareas.size());
+       // m_plgUpdateWorkareasName->checkFlag(info->m_workareas.size());
     }
 }
 

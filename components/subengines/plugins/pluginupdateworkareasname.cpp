@@ -28,23 +28,25 @@ void PluginUpdateWorkareasName::init()
             this, SLOT(numberOfDesktopsChangedSlot(int)) );
 }
 
+/*
 void PluginUpdateWorkareasName::checkFlag(int workarea)
 {
     if (workarea>m_desktops)
         m_awaitingName = true;
     else
         m_awaitingName = false;
-}
+}*/
 
 void PluginUpdateWorkareasName::numberOfDesktopsChangedSlot(int desktops)
 {
 
-    if( (m_awaitingName) &&
-        (desktops > m_desktops))
-    {
+ //   if( (m_awaitingName) &&
+  //      (desktops > m_desktops))
+  //  {
+    if(desktops > m_desktops)
         emit updateWorkareasName(desktops);
-        m_awaitingName = false;
-    }
+   //     m_awaitingName = false;
+  //  }
 
     m_desktops = desktops;
 

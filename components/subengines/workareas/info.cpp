@@ -15,7 +15,7 @@ Info::~Info()
 
 QString Info::id() const
 {
-    return id();
+    return m_id;
 }
 
 QString Info::background() const
