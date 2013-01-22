@@ -91,6 +91,11 @@ void SessionParameters::setCurrentActivityName(QString name)
 
 void SessionParameters::setCurrentActivityIcon(QString icon)
 {
+    //fixes bug of not showing icon in activities that do not have one
+    //and use the default one
+    if (icon == "")
+        icon = "plasma";
+
     if(m_currentActivityIcon != icon){
         m_currentActivityIcon = icon;
         emit currentActivityIconChanged(m_currentActivityIcon);
