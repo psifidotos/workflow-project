@@ -4,9 +4,10 @@
 #include <QHash>
 
 class ActivitiesEnhancedModel;
-class PluginUpdateWorkareasName;
 
-
+namespace Workareas{
+class Store;
+}
 
 class WorkareasManager : public QObject
 {
@@ -30,34 +31,35 @@ signals:
     void maxWorkareasChanged(int);
 
 public slots:
-    void activityAddedSlot(QString);
-    void activityRemovedSlot(QString);
+    //void activityAddedSlot(QString);
     void cloneWorkareas(QString, QString);
 
-    inline void activitiesLoadingSlot(bool flag){m_activitiesLoadingFlag = flag;}
-
-private slots:
-    void setMaxWorkareas();
-    void pluginUpdateWorkareasNameSlot(int);
+    //inline void activitiesLoadingSlot(bool flag){m_activitiesLoadingFlag = flag;}
 
 protected:
     void init();
 
-private:
-    QHash <QString,QStringList *> m_storedWorkareas;
 
+private slots:
+    void activityAddedSlot(QString id);
+
+    void workareaAddedSlot(QString id, QString name);
+    void workareaRemovedSlot(QString id, int position);
+    void workareaInfoUpdatedSlot(QString id);
+
+    void maxWorkareasChangedSlot(int);
+
+private:
     int m_maxWorkareas;
     ActivitiesEnhancedModel *m_actModel;
+    Workareas::Store *m_store;
 
-    PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
-
-    bool activityExists(QString id);
-    int activitySize(QString id);
-    void addWorkareaInLoading(QString, QString);
+ //   bool activityExists(QString id);
+    void addWorkareaInModel(QString, QString);
+    void removeWorkareaInModel(QString id, int desktop);
 
     ///Workareas Storing/Accessing
     void loadWorkareas();
-    void saveWorkareas();
 
     bool m_activitiesLoadingFlag;
 };

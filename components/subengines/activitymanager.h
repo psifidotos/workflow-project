@@ -1,7 +1,6 @@
 #ifndef ACTIVITYMANAGER_H
 #define ACTIVITYMANAGER_H
 
-
 #include <KActivities/Controller>
 
 //class PluginShowWidgets;
@@ -51,8 +50,6 @@ public:
 
     //    Q_INVOKABLE int askForDelete(QString activityName);
 
-    void loadActivitiesInModel();
-
     QString getCurrentActivityName();
     QString getCurrentActivityIcon();
 
@@ -67,9 +64,7 @@ signals:
 
     void cloningStarted();
     void cloningEnded();
-    void cloningCopyWorkareas(QString from, QString to);
-
-    void activitiesLoading(bool);
+    void cloningCopyWorkareas(QString from, QString to);    
 
 public slots:
     void activityAddedSlot(QString id);

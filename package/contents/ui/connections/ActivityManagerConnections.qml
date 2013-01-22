@@ -14,9 +14,9 @@ Item{
 
         //Cloning Signals for interaction with the interface
         onCloningStarted:{
-            if(Settings.global.windowsPreviews === true){
+            if(Settings.global.windowPreviews === true){
                 previewsWereEnabled = true;
-                Settings.global.windowsPreviews = false;
+                Settings.global.windowPreviews = false;
             }
             else
                 previewsWereEnabled = false;
@@ -28,9 +28,9 @@ Item{
             mainView.getDynLib().deleteBusyIndicatorDialog();
 
             if(previewsWereEnabled === true)
-                Settings.global.windowsPreviews = true;
+                Settings.global.windowPreviews = true;
             else
-                Settings.global.windowsPreviews = false;
+                Settings.global.windowPreviews = false;
         }
 
         //Update Wallpaper signal

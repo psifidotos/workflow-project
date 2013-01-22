@@ -58,18 +58,11 @@ void ActivityManager::init()
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
-}
 
-void ActivityManager::loadActivitiesInModel()
-{
     QStringList activities = m_activitiesCtrl->listActivities();
-
-    emit activitiesLoading(true);
 
     foreach (const QString &id, activities)
         activityAddedSlot(id);
-
-    emit activitiesLoading(false);
 }
 
 QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)

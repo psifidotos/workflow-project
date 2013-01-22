@@ -1,6 +1,7 @@
 # We add our source code here
 
 add_subdirectory(plugins)
+add_subdirectory(workareas)
 
 set(components_SRCS
     ${components_SRCS}
