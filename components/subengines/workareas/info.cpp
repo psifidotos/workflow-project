@@ -20,7 +20,7 @@ QString Info::id() const
 
 QString Info::background() const
 {
-    return background();
+    return m_background;
 }
 
 QString Info::name(int desktop) const
@@ -78,7 +78,7 @@ Workareas::Info *Info::copy(QObject *parent)
 {
     Workareas::Info *copy = new Workareas::Info(m_id, parent);
 
-    copy->m_background = m_background;
+    copy->setBackground(m_background);
     foreach (const QString &name, m_workareas)
         copy->m_workareas.append(name);
 

@@ -374,15 +374,6 @@ QString ActivityManager::previousRunningActivity()
     return "";
 }
 
-void  ActivityManager::setWallpaper(QString actId, QString background)
-{
-    if(background != ""){
-        ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(actId));
-        if(activityObj)
-            activityObj->setBackground(background);
-    }
-}
-
 ///////////////Plugins
 
 

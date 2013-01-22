@@ -37,7 +37,7 @@ Item{
 
         onUpdateWallpaper:{
             var wall = environmentManager.getWallpaper(activity);
-            workflowManager.activityManager().setWallpaper(activity, wall);
+            workflowManager.workareaManager().setWallpaper(activity, wall);
         }
 
     }

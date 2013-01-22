@@ -12,8 +12,6 @@ WorkflowManager::WorkflowManager(QObject *parent) :
     m_workareaManager(0),
     m_model(0)
 {
-
-
     init();
 }
 
@@ -44,20 +42,5 @@ void WorkflowManager::init()
             m_workareaManager, SLOT(cloneWorkareas(QString,QString)) );
 
 }
-/*
-ActivityManager *WorkflowManager::activityManager()
-{
-    return m_activityManager;
-}
-
-WorkareasManager *WorkflowManager::workareaManager()
-{
-    return m_workareaManager;
-}
-
-ActivitiesEnhancedModel *WorkflowManager::model()
-{
-    return m_model;
-}*/
 
 #include "workflowmanager.moc"

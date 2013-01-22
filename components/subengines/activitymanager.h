@@ -44,7 +44,6 @@ public:
     Q_INVOKABLE QString cstate(QString id);
     Q_INVOKABLE void setCurrentNextActivity();
     Q_INVOKABLE void setCurrentPreviousActivity();
-    Q_INVOKABLE void setWallpaper(QString, QString);
     Q_INVOKABLE void updateAllWallpapers();
     Q_INVOKABLE void cloneActivity(QString);
 

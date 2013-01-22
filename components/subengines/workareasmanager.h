@@ -25,6 +25,8 @@ public:
     Q_INVOKABLE QString name(QString, int);
     Q_INVOKABLE int numberOfWorkareas(QString);
 
+    Q_INVOKABLE void setWallpaper(QString, QString);
+
     inline int maxWorkareas(){return m_maxWorkareas;}
 
 signals:
@@ -42,9 +44,10 @@ protected:
 
 private slots:
     void activityAddedSlot(QString id);
+    void activityRemovedSlot(QString id);
 
     void workareaAddedSlot(QString id, QString name);
-    void workareaRemovedSlot(QString id, int position);
+    void workareaRemovedSlot(QString id, int desktop);
     void workareaInfoUpdatedSlot(QString id);
 
     void maxWorkareasChangedSlot(int);
