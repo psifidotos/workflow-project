@@ -9,7 +9,6 @@
 namespace KActivities
 {
 class Controller;
-class Info;
 }
 
 //Adds a new activity but creates signals to update the workreas

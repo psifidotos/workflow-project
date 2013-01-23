@@ -33,10 +33,8 @@ signals:
     void maxWorkareasChanged(int);
 
 public slots:
-    //void activityAddedSlot(QString);
     void cloneWorkareas(QString, QString);
-
-    //inline void activitiesLoadingSlot(bool flag){m_activitiesLoadingFlag = flag;}
+    void setUpdateBackgrounds(bool active);
 
 protected:
     void init();

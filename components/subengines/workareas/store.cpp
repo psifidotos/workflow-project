@@ -9,6 +9,7 @@
 #include <taskmanager/task.h>
 #include "../plugins/pluginupdateworkareasname.h"
 #include "../plugins/pluginsyncactivitiesworkareas.h"
+#include "../plugins/pluginfindwallpaper.h"
 
 #include "info.h"
 
@@ -19,8 +20,10 @@ Store::Store(QObject *parent) :
     m_activitiesController(new KActivities::Controller(this)),
     m_loading(false),
     m_maxWorkareas(0),
+    m_nextDefaultWallpaper(0),
     m_plgUpdateWorkareasName(0),
-    m_plgSyncActivitiesWorkareas(0)
+    m_plgSyncActivitiesWorkareas(0),
+    m_plgFindWallpaper(0)
 {
     init();
 
@@ -46,6 +49,9 @@ Store::~Store()
 
     if(m_plgSyncActivitiesWorkareas)
         delete m_plgSyncActivitiesWorkareas;
+
+    if(m_plgFindWallpaper)
+        delete m_plgFindWallpaper;
 }
 
 void Store::init()
@@ -60,6 +66,14 @@ void Store::init()
     m_plgUpdateWorkareasName = new PluginUpdateWorkareasName(this);
     connect(m_plgUpdateWorkareasName, SIGNAL(updateWorkareasName(int)),
             this, SLOT(pluginUpdateWorkareasNameSlot(int)) );
+
+    m_plgFindWallpaper = new PluginFindWallpaper(m_activitiesController, this);
+    connect(m_plgFindWallpaper, SIGNAL(updateWallpaper(QString,QString)), this, SLOT(setBackground(QString,QString)));
+}
+
+void Store::initBackgrounds()
+{
+    m_plgFindWallpaper->initBackgrounds();
 }
 
 
@@ -172,8 +186,12 @@ void Store::setBackground(QString id, QString background)
 {
     Workareas::Info *info = m_workareasHash[id];
 
-    if(info && (background != ""))
-        info->setBackground(background);
+    if(info){
+        if (background != "")
+            info->setBackground(background);
+        else
+            info->setBackground(getNextDefWallpaper());
+    }
 }
 
 
@@ -364,6 +382,22 @@ void Store::setMaxWorkareas()
     }
 }
 
+QString Store::getNextDefWallpaper(){
+    QString newwall="";
+    if (m_nextDefaultWallpaper % 4 == 0)
+        newwall = "../../Images/backgrounds/emptydesk1.png";
+    else if (m_nextDefaultWallpaper % 4 == 1)
+        newwall = "../../Images/backgrounds/emptydesk2.png";
+    else if (m_nextDefaultWallpaper % 4 == 2)
+        newwall = "../../Images/backgrounds/emptydesk3.png";
+    else if (m_nextDefaultWallpaper % 4 == 3)
+        newwall = "../../Images/backgrounds/emptydesk4.png";
+
+    m_nextDefaultWallpaper++;
+
+    return newwall;
+}
+
 
 //PLUGINS
 
@@ -379,6 +413,12 @@ void Store::pluginUpdateWorkareasNameSlot(int w_pos)
             renameWorkarea(curWorks->id(), w_pos, "");
     }
 
+}
+
+void Store::setUpdateBackgrounds(bool active)
+{
+    if(m_plgFindWallpaper)
+        m_plgFindWallpaper->setPluginActive(active);
 }
 
 

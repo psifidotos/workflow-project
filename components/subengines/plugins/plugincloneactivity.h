@@ -29,10 +29,10 @@ protected:
     void init();
 
 signals:
-    void cloningStarted();
+    void cloningStarted(bool updateWallpapers);
     void copyWorkareas(QString,QString);
-    void updateWallpaper(QString);
-    void cloningEnded();
+    //void updateWallpaper(QString);
+    void cloningEnded(bool updateWallpapers);
 
 protected slots:
     void activityAddedSlot(QString);

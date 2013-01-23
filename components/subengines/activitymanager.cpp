@@ -33,7 +33,6 @@ ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent)
     m_plChangeWorkarea(0),
     m_plAddActivity(0),
     m_firstTime(true),
-    m_nextDefaultWallpaper(0),
     m_actModel(model)
 {
     m_activitiesCtrl = new KActivities::Controller(this);
@@ -57,7 +56,6 @@ void ActivityManager::init()
 {
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
-    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
 
     QStringList activities = m_activitiesCtrl->listActivities();
 
@@ -71,17 +69,9 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
-void ActivityManager::updateAllWallpapers()
+void ActivityManager::cloningEndedSlot(bool updateWallpapers)
 {
-    QStringList activities = m_activitiesCtrl->listActivities();
-
-    foreach (const QString &id, activities)
-        emit updateWallpaper (id);
-}
-
-void ActivityManager::cloningEndedSlot()
-{
-    emit cloningEnded();
+    emit cloningEnded(updateWallpapers);
 
     if(m_plCloneActivity){
         delete m_plCloneActivity;
@@ -119,15 +109,13 @@ void ActivityManager::activityAddedSlot(QString id) {
     m_actModel->appendRow(new ActivityItem(id,activity->name(),
                                            activity->icon(),
                                            state,
-                                           getNextDefWallpaper(),
+                                           "",
                                            m_actModel));
 
 
     connect(activity, SIGNAL(infoChanged()), this, SLOT(activityUpdatedSlot()));
     connect(activity, SIGNAL(stateChanged(KActivities::Info::State)),
             this, SLOT(activityStateChangedSlot()) );
-
-    emit updateWallpaper(id);
 
     emit activityAdded(id);
 }
@@ -174,15 +162,7 @@ void ActivityManager::activityStateChangedSlot()
     if(activityObj)
         activityObj->setCState(state);
 
-    emit updateWallpaper(id);
 }
-
-
-void ActivityManager::currentActivityChangedSlot(const QString &id)
-{
-    emit updateWallpaper(id);
-}
-
 
 QString ActivityManager::name(QString id)
 {
@@ -290,21 +270,6 @@ void ActivityManager::remove(QString id) {
     m_activitiesCtrl->removeActivity(id);
 }
 
-QString ActivityManager::getNextDefWallpaper(){
-    QString newwall="";
-    if (m_nextDefaultWallpaper % 4 == 0)
-        newwall = "../../Images/backgrounds/emptydesk1.png";
-    else if (m_nextDefaultWallpaper % 4 == 1)
-        newwall = "../../Images/backgrounds/emptydesk2.png";
-    else if (m_nextDefaultWallpaper % 4 == 2)
-        newwall = "../../Images/backgrounds/emptydesk3.png";
-    else if (m_nextDefaultWallpaper % 4 == 3)
-        newwall = "../../Images/backgrounds/emptydesk4.png";
-
-    m_nextDefaultWallpaper++;
-
-    return newwall;
-}
 
 
 QString ActivityManager::stateToString(int stateNum)
@@ -382,10 +347,10 @@ void ActivityManager::cloneActivity(QString actId)
     if(!m_plCloneActivity){
         m_plCloneActivity = new PluginCloneActivity(this, m_activitiesCtrl);
 
-        connect(m_plCloneActivity, SIGNAL(cloningStarted()),this,SIGNAL(cloningStarted()));
-        connect(m_plCloneActivity, SIGNAL(cloningEnded()),this,SLOT(cloningEndedSlot()));
+        connect(m_plCloneActivity, SIGNAL(cloningStarted(bool)),this,SIGNAL(cloningStarted(bool)));
+        connect(m_plCloneActivity, SIGNAL(cloningEnded(bool)),this,SLOT(cloningEndedSlot(bool)));
         connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SIGNAL(cloningCopyWorkareas(QString,QString)));
-        connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SIGNAL(updateWallpaper(QString)));
+        //connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SIGNAL(updateWallpaper(QString)));
 
         m_plCloneActivity->execute(actId);
     }

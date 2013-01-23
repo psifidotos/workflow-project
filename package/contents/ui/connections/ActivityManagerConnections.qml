@@ -35,10 +35,10 @@ Item{
 
         //Update Wallpaper signal
 
-        onUpdateWallpaper:{
+/*        onUpdateWallpaper:{
             var wall = environmentManager.getWallpaper(activity);
             workflowManager.workareaManager().setWallpaper(activity, wall);
-        }
+        }*/
 
     }
 
@@ -48,9 +48,9 @@ Item{
         onSetCurrentPreviousActivity: workflowManager.activityManager().setCurrentPreviousActivity();
     }*/
 
-    Component.onCompleted: {
+  /*  Component.onCompleted: {
         workflowManager.activityManager().updateAllWallpapers();
-    }
+    }*/
 
 }
 

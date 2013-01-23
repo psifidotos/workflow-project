@@ -44,7 +44,6 @@ public:
     Q_INVOKABLE QString cstate(QString id);
     Q_INVOKABLE void setCurrentNextActivity();
     Q_INVOKABLE void setCurrentPreviousActivity();
-    Q_INVOKABLE void updateAllWallpapers();
     Q_INVOKABLE void cloneActivity(QString);
 
     //    Q_INVOKABLE int askForDelete(QString activityName);
@@ -59,29 +58,22 @@ signals:
     void activityAdded(QString);
     void activityRemoved(QString);
 
-    void updateWallpaper(QString activity);
-
-    void cloningStarted();
-    void cloningEnded();
-    void cloningCopyWorkareas(QString from, QString to);    
+    void cloningStarted(bool updateBackgrounds);
+    void cloningEnded(bool updateBackgrounds);
+    void cloningCopyWorkareas(QString from, QString to);        
 
 public slots:
     void activityAddedSlot(QString id);
     void activityRemovedSlot(QString id);
     void activityUpdatedSlot();
     void activityStateChangedSlot();
-    void currentActivityChangedSlot(const QString &);
 
     //SIGNALS FROM THE PLUGINS
-
-    void cloningEndedSlot();
-
+    void cloningEndedSlot(bool updateWallpapers);
     void changeWorkareaEnded(QString, int);
-
     void addActivityEnded();
 
     Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
-
 private:
 
     KActivities::Controller *m_activitiesCtrl;
@@ -91,14 +83,12 @@ private:
     PluginAddActivity *m_plAddActivity;
 
     bool m_firstTime;
-    int m_nextDefaultWallpaper;
 
     ActivitiesEnhancedModel *m_actModel;
 
     QString stateToString(int);
     QString nextRunningActivity();
     QString previousRunningActivity();
-    QString getNextDefWallpaper();
 };
 
 #endif // ACTIVITYMANAGER_H

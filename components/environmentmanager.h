@@ -27,7 +27,7 @@ public:
     explicit EnvironmentManager(QObject *parent = 0);
     ~EnvironmentManager();
 
-    Q_INVOKABLE QString getWallpaper(QString source);
+//    Q_INVOKABLE QString getWallpaper(QString source);
     Q_INVOKABLE void showWidgetsExplorer(QString);
 
     //void setContainment(Plasma::Containment *);

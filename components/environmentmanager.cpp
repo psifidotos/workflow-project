@@ -8,7 +8,7 @@
 #include <Plasma/Applet>
 
 ////Plugins/////
-#include "subengines/plugins/pluginfindwallpaper.h"
+//#include "subengines/plugins/pluginfindwallpaper.h"
 #include "subengines/plugins/pluginshowwidgets.h"
 
 EnvironmentManager::EnvironmentManager(QObject *parent) :
@@ -92,11 +92,11 @@ Plasma::Containment *EnvironmentManager::getContainment(QString actId)
 
 ///////////////Plugins
 
-QString EnvironmentManager::getWallpaper(QString source)
+/*QString EnvironmentManager::getWallpaper(QString source)
 {
     PluginFindWallpaper plg(getContainment(source));
     return plg.getWallpaper(source);
-}
+}*/
 
 void EnvironmentManager::showWidgetsExplorer(QString actId)
 {

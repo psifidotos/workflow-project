@@ -98,12 +98,12 @@ void PluginCloneActivity::initCloningPhase04()
 
 void PluginCloneActivity::initCloningPhase05()
 {
-    emit updateWallpaper(m_toActivity);
+  //  emit updateWallpaper(m_toActivity);
 
     m_fromActivity = "";
     m_toActivity = "";
 
-    emit cloningEnded();
+    emit cloningEnded(true);
 }
 
 QString PluginCloneActivity::getContainmentId(QString txt) const
@@ -327,7 +327,7 @@ void PluginCloneActivity::execute(QString actId)
 {
     m_currentActivityInBegin = m_activitiesCtrl->currentActivity();
 
-    emit cloningStarted();
+    emit cloningStarted(false);
 
     m_fromActivity = actId;
 

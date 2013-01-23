@@ -8,6 +8,7 @@
 
 class PluginUpdateWorkareasName;
 class PluginSyncActivitiesWorkareas;
+class PluginFindWallpaper;
 
 namespace Workareas{
 class Info;
@@ -20,15 +21,22 @@ public:
     explicit Store(QObject *parent = 0);
     ~Store();
 
+    void initBackgrounds();
+
     void addWorkArea(QString id, QString name);
     void removeWorkarea(QString id, int desktop);
     void renameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models
     void cloneActivity(QString, QString);
-    void setBackground(QString, QString);
+
+    void setUpdateBackgrounds(bool);
+
     Workareas::Info *get(QString);
     int maxWorkareas() const;
-    QStringList activities() const;
+    QStringList activities() const;   
+
+public slots:
+    void setBackground(QString, QString);
 
 signals:
     void activityAdded(QString id);
@@ -60,14 +68,18 @@ private:
 
     bool m_loading;
     int m_maxWorkareas;
+    int m_nextDefaultWallpaper;
 
     PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
     PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
+    PluginFindWallpaper *m_plgFindWallpaper;
 
     ///Workareas Storing/Accessing
     void loadWorkareas();
     void saveWorkareas();
     void setMaxWorkareas();
+
+    QString getNextDefWallpaper();
 };
 
 }

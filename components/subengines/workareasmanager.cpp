@@ -40,6 +40,8 @@ void WorkareasManager::init()
     connect(m_store, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
 
     connect(m_store, SIGNAL(maxWorkareasChanged(int)), this, SLOT(maxWorkareasChangedSlot(int)));
+
+    m_store->initBackgrounds();
 }
 
 QString WorkareasManager::name(QString id, int desktop)
@@ -181,6 +183,12 @@ void WorkareasManager::loadWorkareas()
 
     foreach(const QString &activity, activities)
         activityAddedSlot(activity);
+}
+
+void WorkareasManager::setUpdateBackgrounds(bool active)
+{
+    if(m_store)
+        m_store->setUpdateBackgrounds(active);
 }
 
 

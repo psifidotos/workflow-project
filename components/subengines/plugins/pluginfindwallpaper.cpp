@@ -7,13 +7,35 @@
 
 #include <Plasma/Containment>
 
-PluginFindWallpaper::PluginFindWallpaper(QObject *parent):
-    QObject(parent)
+#include <KActivities/Controller>
+
+PluginFindWallpaper::PluginFindWallpaper(KActivities::Controller *actControl, QObject *parent):
+    QObject(parent),
+    m_activitiesCtrl(actControl),
+    m_active(true)
 {
 }
 
 PluginFindWallpaper::~PluginFindWallpaper()
 {
+}
+
+void PluginFindWallpaper::initBackgrounds()
+{
+    connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
+    connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
+
+    //Load backgrounds in the beginning
+    QStringList activities = m_activitiesCtrl->listActivities();
+
+    foreach (const QString &id, activities)
+        activityAddedSlot(id);
+}
+
+
+void PluginFindWallpaper::setPluginActive(bool active)
+{
+    m_active = active;
 }
 
 QString PluginFindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
@@ -132,5 +154,37 @@ QString PluginFindWallpaper::getWallpaper(QString source)
     //qDebug()<<"From Running:"<<res;
     return res;
 }
+//////////////////////////////////
 
+void PluginFindWallpaper::activityAddedSlot(QString id)
+{
+    KActivities::Info *activity = new KActivities::Info(id, this);
+
+    connect(activity, SIGNAL(stateChanged(KActivities::Info::State)),
+            this, SLOT(activityStateChangedSlot()) );
+
+    if(m_active){
+        QString wallpaper = getWallpaper(id);
+        emit updateWallpaper( id, wallpaper );
+    }
+}
+
+void PluginFindWallpaper::activityStateChangedSlot()
+{
+    if(m_active){
+        KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
+        const QString id = activity->id();
+
+        QString wallpaper = getWallpaper(id);
+        emit updateWallpaper( id, wallpaper );
+    }
+}
+
+void PluginFindWallpaper::currentActivityChangedSlot(QString id)
+{
+    if(m_active){
+        QString wallpaper = getWallpaper(id);
+        emit updateWallpaper( id, wallpaper );
+    }
+}
 
