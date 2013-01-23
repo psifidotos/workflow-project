@@ -7,8 +7,8 @@
 
 #include <Plasma/Containment>
 
-PluginFindWallpaper::PluginFindWallpaper(Plasma::Containment *con) :
-    m_mainContainment(con)
+PluginFindWallpaper::PluginFindWallpaper(QObject *parent):
+    QObject(parent)
 {
 }
 
@@ -80,7 +80,7 @@ QString PluginFindWallpaper::getWallpaperFromFile(QString source, QString file)
     return "";
 
 }
-
+/*
 QString PluginFindWallpaper::getWallpaperFromContainment(Plasma::Containment *actContainment)
 {
     //QString fpath = QDir::home().filePath(file);
@@ -91,7 +91,7 @@ QString PluginFindWallpaper::getWallpaperFromContainment(Plasma::Containment *ac
         return res1;
     else
         return "";
-}
+}*/
 
 
 QString  PluginFindWallpaper::getWallpaperForRunning(QString source)
@@ -116,13 +116,13 @@ QString PluginFindWallpaper::getWallpaper(QString source)
 {
     QString res = "";
 
-    Plasma::Containment *currentContainment = m_mainContainment;
+    /* Plasma::Containment *currentContainment = m_mainContainment;
     if(currentContainment){
         res = getWallpaperFromContainment(currentContainment);
     //    qDebug()<<"From Containment:"<<res;
         if(res != "")
             return res;
-    }
+    }*/
 
     res = getWallpaperForStopped(source);
     //qDebug()<<"From Stopped:"<<res;

@@ -6,14 +6,16 @@
 #include <KConfigGroup>
 #include <KStandardDirs>
 
+/*
 namespace Plasma {
     class Containment;
-}
+}*/
 
 //Tries to find the wallpaper for an activity
-class PluginFindWallpaper{
+class PluginFindWallpaper : public QObject{
+  Q_OBJECT
   public:
-    explicit PluginFindWallpaper(Plasma::Containment *);
+    explicit PluginFindWallpaper(QObject *parent = 0);
     ~PluginFindWallpaper();
 
     QString getWallpaper(QString source);
@@ -22,11 +24,11 @@ class PluginFindWallpaper{
     QString getWallpaperForRunning(QString source);
     QString getWallpaperForStopped(QString source);
     QString getWallpaperFromFile(QString source,QString file);
-    QString getWallpaperFromContainment(Plasma::Containment *actContainment);
+  //  QString getWallpaperFromContainment(Plasma::Containment *actContainment);
     QString getWallpaperForSingleImage(KConfigGroup &);
 
     KStandardDirs kStdDrs;
-    Plasma::Containment *m_mainContainment;
+  //  Plasma::Containment *m_mainContainment;
 };
 
 #endif

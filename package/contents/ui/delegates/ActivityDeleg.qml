@@ -49,7 +49,7 @@ Item{
         y:-activitiesList.y+actImag1.height-1
 
         height:parent.width
-        width:actImag1.height
+        width:actImag1.height - 2
 
         rotation: -90
         transformOrigin: Item.TopLeft
@@ -73,6 +73,8 @@ Item{
 
         anchors.bottom:parent.bottom
         anchors.bottomMargin: 3
+        anchors.left: parent.left
+        anchors.leftMargin: 8
 
         width: 5+mainView.scaleMeter
         height:width
