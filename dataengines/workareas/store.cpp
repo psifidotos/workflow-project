@@ -7,9 +7,9 @@
 
 #include "workareasdata.h"
 #include <taskmanager/task.h>
-#include "../plugins/pluginupdateworkareasname.h"
-#include "../plugins/pluginsyncactivitiesworkareas.h"
-#include "../plugins/pluginfindwallpaper.h"
+#include "plugins/pluginupdateworkareasname.h"
+#include "plugins/pluginsyncactivitiesworkareas.h"
+#include "plugins/pluginfindwallpaper.h"
 
 #include "info.h"
 
@@ -112,7 +112,7 @@ QStringList Store::activities() const
     return result;
 }
 
-void Store::addWorkArea(QString id, QString name)
+void Store::addWorkarea(QString id, QString name)
 {
     Workareas::Info *info = m_workareasHash[id];
 

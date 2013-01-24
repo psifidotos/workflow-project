@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kcfg SYSTEM
+    "http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+<kcfg>
+    <group name="addWorkarea">
+        <entry name="Name" type="String">
+            <label>The name to give the new workarea.</label>
+        </entry>
+    </group>
+    <group name="removeWorkarea">
+        <entry name="Desktop" type="Int">
+            <label>The workarea which must be removed.</label>
+        </entry>
+    </group>
+    <group name="renameWorkarea">
+        <entry name="Desktop" type="Int">
+            <label>The workarea which must be renamed.</label>
+        </entry>
+        <entry name="Name" type="String">
+            <label>The name to give the workarea.</label>
+        </entry>
+    </group>
+    <group name="cloneWorkareas">
+        <entry name="Activity" type="String">
+            <label>The Activity into which the workareas will be cloned.</label>
+        </entry>
+    </group>
+</kcfg>

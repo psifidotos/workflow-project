@@ -24,5 +24,5 @@ include_directories(
 
 add_subdirectory(components)
 add_subdirectory(package)
+add_subdirectory(dataengines)
 add_subdirectory(po)
-

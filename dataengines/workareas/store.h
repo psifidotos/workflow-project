@@ -23,7 +23,7 @@ public:
 
     void initBackgrounds();
 
-    void addWorkArea(QString id, QString name);
+    void addWorkarea(QString id, QString name);
     void removeWorkarea(QString id, int desktop);
     void renameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models

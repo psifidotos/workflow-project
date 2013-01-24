@@ -14,7 +14,7 @@ set(components_SRCS
 add_subdirectory(models)
 add_subdirectory(subengines)
 
-kde4_add_kcfg_files(components_SRCS GENERATE_MOC subengines/workareasdata.kcfgc)
+#kde4_add_kcfg_files(components_SRCS GENERATE_MOC subengines/workareasdata.kcfgc)
 
 #qt4_automoc(${components_SRCS})
 
@@ -44,6 +44,6 @@ install(DIRECTORY qml/
     PATTERN "*.js"
 )
 
-install(FILES subengines/workareas.kcfg
-        DESTINATION ${KCFG_INSTALL_DIR}
-)
+#install(FILES subengines/workareas.kcfg
+#        DESTINATION ${KCFG_INSTALL_DIR}
+#)

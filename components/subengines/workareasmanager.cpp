@@ -2,6 +2,12 @@
 
 #include <QHash>
 #include <QDebug>
+
+#include <Plasma/Applet>
+#include <Plasma/Extender>
+#include <Plasma/Service>
+#include <Plasma/ServiceJob>
+
 #include "../models/activitiesenhancedmodel.h"
 #include "../models/workareaitem.h"
 #include "../models/activityitem.h"
@@ -9,39 +15,39 @@
 
 #include <taskmanager/task.h>
 
+/*
 #include "workareas/store.h"
-#include "workareas/info.h"
+#include "workareas/info.h"*/
 
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_maxWorkareas(0),
     m_actModel(model),
-    m_store(0),
-    m_activitiesLoadingFlag(false)
+    m_dataEngine(0)
 {
-    m_store = new Workareas::Store(this);
-
-    loadWorkareas();
-    init();
 }
 
 WorkareasManager::~WorkareasManager()
 {
-    if(m_store)
-        delete m_store;
 }
 
-void WorkareasManager::init()
+void WorkareasManager::init(QObject *extender)
 {
-    connect(m_store, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
-    //connect(m_store, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
-    connect(m_store, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)));
-    connect(m_store, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)));
-    connect(m_store, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
+    Plasma::Extender *appletExtender = static_cast<Plasma::Extender *>(extender);
 
-    connect(m_store, SIGNAL(maxWorkareasChanged(int)), this, SLOT(maxWorkareasChangedSlot(int)));
+    if(appletExtender){
+        Plasma::Applet *applet = appletExtender->applet();
+        if(applet)
+            m_dataEngine = applet->dataEngine("workareas");
+        delete extender;
+    }
 
-    m_store->initBackgrounds();
+    foreach (const QString source, m_dataEngine->sources())
+      activityAddedSlot(source);
+
+    // activity addition and removal
+    connect(m_dataEngine, SIGNAL(sourceAdded(QString)), this, SLOT(activityAddedSlot(QString)));
+    connect(m_dataEngine, SIGNAL(sourceRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
 }
 
 QString WorkareasManager::name(QString id, int desktop)
@@ -65,28 +71,19 @@ int WorkareasManager::numberOfWorkareas(QString actId)
     return 0;
 }
 
-
-
-void WorkareasManager::addWorkArea(QString id, QString name)
+void WorkareasManager::activityAddedSlot(QString id)
 {
-    m_store->addWorkArea(id, name);
+    if(id == "Settings")
+        return;
+
+    m_dataEngine->connectSource(id, this);
 }
 
-void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
+void WorkareasManager::activityRemovedSlot(QString id)
 {
-    m_store->renameWorkarea(id, desktop, name);
+    Q_UNUSED(id);
+    //The removal of activity in the model is done from the activitymanager
 }
-
-void WorkareasManager::removeWorkarea(QString id, int desktop)
-{
-    m_store->removeWorkarea(id, desktop);
-}
-
-void WorkareasManager::setWallpaper(QString id, QString background)
-{
-    m_store->setBackground(id, background);
-}
-
 
 void WorkareasManager::addWorkareaInModel(QString id, QString name)
 {
@@ -102,71 +99,36 @@ void WorkareasManager::removeWorkareaInModel(QString id, int desktop)
         model->removeRow(desktop-1);
 }
 
+void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
+  ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(source));
+  ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->find(source));
 
-void WorkareasManager::cloneWorkareas(QString from, QString to)
-{
-    m_store->cloneActivity(from, to);
+  if(workareasModel && activity ){
+      //update background
+      activity->setBackground(data["Background"].toString());
+
+      //update workareas
+      int prevSize = workareasModel->getCount();
+
+      QStringList newWorkareas = data["Workareas"].toStringList();
+      int newSize = newWorkareas.size();
+
+      for(int i=0; i<newSize; ++i )
+      {
+          WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
+
+          if (i<prevSize)
+              workarea->setTitle(newWorkareas.at(i));
+          else
+              addWorkareaInModel(source, newWorkareas.at(i));
+      }
+
+      if(prevSize > newSize)
+          for(int j=newSize; j<prevSize; ++j )
+              removeWorkareaInModel(source, j+1);
+      //////
+  }
 }
-
-void WorkareasManager::activityAddedSlot(QString id)
-{
-    //ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(id));
-
-    if(m_store->activities().contains(id)){
-        Workareas::Info *info = m_store->get(id);
-        foreach(const QString &workarea, info->workareas())
-            addWorkareaInModel(id, workarea);
-    }
-}
-
-void WorkareasManager::activityRemovedSlot(QString id)
-{
-    Q_UNUSED(id);
-    //The removal of activity in the model is done from the activitymanager
-}
-
-void WorkareasManager::workareaAddedSlot(QString id, QString name)
-{
-    addWorkareaInModel(id, name);
-}
-
-void WorkareasManager::workareaRemovedSlot(QString id, int desktop)
-{
-    removeWorkareaInModel(id, desktop);
-}
-
-void WorkareasManager::workareaInfoUpdatedSlot(QString id)
-{
-    ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(id));
-    ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->find(id));
-    Workareas::Info *info = m_store->get(id);
-
-    if(workareasModel && activity && info){
-        //update background
-        activity->setBackground(info->background());
-
-        //update workareas
-        int prevSize = workareasModel->getCount();
-        int newSize = info->workareas().size();
-
-        for(int i=0; i<newSize; ++i )
-        {
-            WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
-
-            if (i<prevSize)
-                workarea->setTitle(info->workareas().at(i));
-            else
-                addWorkareaInModel(id, info->workareas().at(i));
-        }
-
-        if(prevSize > newSize)
-            for(int j=newSize; j<prevSize; ++j )
-                removeWorkareaInModel(id, j+1);
-        //////
-
-    }
-}
-
 
 void WorkareasManager::maxWorkareasChangedSlot(int size)
 {
@@ -176,21 +138,41 @@ void WorkareasManager::maxWorkareasChangedSlot(int size)
     }
 }
 
-
-void WorkareasManager::loadWorkareas()
+void WorkareasManager::addWorkArea(QString id, QString name)
 {
-    QStringList activities = m_store->activities();
-
-    foreach(const QString &activity, activities)
-        activityAddedSlot(activity);
+    Plasma::Service *service = m_dataEngine->serviceForSource(id);
+    KConfigGroup op = service->operationDescription("addWorkarea");
+    op.writeEntry("Name", name);
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }
 
-void WorkareasManager::setUpdateBackgrounds(bool active)
+void WorkareasManager::renameWorkarea(QString id, int desktop, QString name)
 {
-    if(m_store)
-        m_store->setUpdateBackgrounds(active);
+    Plasma::Service *service = m_dataEngine->serviceForSource(id);
+    KConfigGroup op = service->operationDescription("renameWorkarea");
+    op.writeEntry("Desktop", desktop);
+    op.writeEntry("Name", name);
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }
 
+void WorkareasManager::removeWorkarea(QString id, int desktop)
+{
+    Plasma::Service *service = m_dataEngine->serviceForSource(id);
+    KConfigGroup op = service->operationDescription("removeWorkarea");
+    op.writeEntry("Desktop", desktop);
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
 
+void WorkareasManager::cloneWorkareas(QString from, QString to)
+{
+    Plasma::Service *service = m_dataEngine->serviceForSource(from);
+    KConfigGroup op = service->operationDescription("cloneWorkareas");
+    op.writeEntry("Activity", to);
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
 
 #include "workareasmanager.moc"
