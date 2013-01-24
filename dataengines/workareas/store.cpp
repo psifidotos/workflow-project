@@ -354,6 +354,7 @@ void Store::loadWorkareas()
 
     m_loading = false;
     m_maxWorkareas = max;
+    emit maxWorkareasChanged(m_maxWorkareas);
 }
 
 
