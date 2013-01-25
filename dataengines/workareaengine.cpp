@@ -53,6 +53,7 @@ void WorkareaEngine::activityAddedSlot(QString id)
 void WorkareaEngine::activityRemovedSlot(QString id)
 {
     removeSource(id);
+    updateOrders();
 }
 
 void WorkareaEngine::workareaAddedSlot(QString id,QString name)
@@ -80,11 +81,22 @@ void WorkareaEngine::maxWorkareasChangedSlot(int size)
 
 void WorkareaEngine::loadActivity(QString id)
 {
-    if(m_store->activities().contains(id)){
+    QStringList storeActivities = m_store->activities();
+    if(storeActivities.contains(id)){
         Workareas::Info *info = m_store->get(id);
+        int pos = storeActivities.indexOf(id);
 
         setData(id, "Background", info->background());
+        setData(id, "Order", pos+1);
         setData(id, "Workareas", info->workareas());
+    }
+}
+
+void WorkareaEngine::updateOrders()
+{
+    QStringList storeActivities = m_store->activities();
+    for(int i=0; storeActivities.size(); i++){
+        setData(storeActivities[i], "Order", i+1);
     }
 }
 

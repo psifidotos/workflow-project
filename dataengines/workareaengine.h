@@ -33,7 +33,7 @@ private:
     //void insertDesktop(const int id, const QString activity);
 
     void loadActivity(QString);
-
+    void updateOrders();
 };
 
 #endif /*WORKAREAENGINE_H */
