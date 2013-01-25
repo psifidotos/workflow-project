@@ -15,8 +15,6 @@ public:
     explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
 
-    Q_INVOKABLE void init(QObject *);
-
     Q_INVOKABLE void addWorkArea(QString id, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);
@@ -35,6 +33,9 @@ public slots:
     void cloneWorkareas(QString, QString);
 
     void dataUpdated(QString source, Plasma::DataEngine::Data data);
+
+protected:
+    void init();
 
 private slots:
     void activityAddedSlot(QString id);

@@ -1,10 +1,8 @@
 #include "workareasmanager.h"
 
-#include <QHash>
 #include <QDebug>
 
-#include <Plasma/Applet>
-#include <Plasma/Extender>
+#include <Plasma/DataEngineManager>
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
 
@@ -15,32 +13,23 @@
 
 #include <taskmanager/task.h>
 
-/*
-#include "workareas/store.h"
-#include "workareas/info.h"*/
-
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_maxWorkareas(0),
     m_actModel(model),
     m_dataEngine(0)
 {
+    init();
 }
 
 WorkareasManager::~WorkareasManager()
 {
+    Plasma::DataEngineManager::self()->unloadEngine("workareas");
 }
 
-void WorkareasManager::init(QObject *extender)
+void WorkareasManager::init()
 {
-    Plasma::Extender *appletExtender = static_cast<Plasma::Extender *>(extender);
-
-    if(appletExtender){
-        Plasma::Applet *applet = appletExtender->applet();
-        if(applet)
-            m_dataEngine = applet->dataEngine("workareas");
-        delete extender;
-    }
+    m_dataEngine = Plasma::DataEngineManager::self()->loadEngine("workareas");
 
     foreach (const QString source, m_dataEngine->sources())
       activityAddedSlot(source);
