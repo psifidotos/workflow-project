@@ -85,14 +85,6 @@ Workareas::Info *Info::copy(QObject *parent)
     return copy;
 }
 
-bool Info::operator==(const QString &id)
-{
-    if (m_id == id)
-        return true;
-
-    return false;
-}
-
 }
 
 #include "info.moc"

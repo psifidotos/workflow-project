@@ -1,6 +1,7 @@
 #include "store.h"
 
 #include <QHash>
+#include <QList>
 
 #include <KActivities/Controller>
 #include <KActivities/Info>
@@ -34,15 +35,15 @@ Store::~Store()
 {
     saveWorkareas();
 
-    QHashIterator<QString, Workareas::Info *> i(m_workareasHash);
+    QListIterator<Workareas::Info *> i(m_workareasList);
+
     while (i.hasNext()) {
-        i.next();
-        Workareas::Info *curWorks = i.value();
+        Workareas::Info *curWorks = i.next();
         if(curWorks)
             delete curWorks;
     }
 
-    m_workareasHash.clear();
+    m_workareasList.clear();
 
     if(m_plgUpdateWorkareasName)
         delete m_plgUpdateWorkareasName;
@@ -79,7 +80,8 @@ void Store::initBackgrounds()
 
 Workareas::Info *Store::get(QString id)
 {
-    return ((Workareas::Info *)m_workareasHash[id]);
+    int pos = findActivity(id);
+    return ((Workareas::Info *)m_workareasList[pos]);
 }
 
 int Store::maxWorkareas() const
@@ -91,22 +93,11 @@ QStringList Store::activities() const
 {
     QStringList result;
 
-    QHashIterator<QString, Workareas::Info *> i(m_workareasHash);
+    QListIterator<Workareas::Info *> i(m_workareasList);
 
     while (i.hasNext()) {
-        i.next();
-
-        QString key = i.key();
-        result.append(key);
-        /*        Workareas::Info *curWorks = i.value();
-
-        if(curWorks){
-            writeActivities.append(i.key());
-            writeSizes.append(QString::number(curWorks->workareas().size()));
-
-            for(int j=0; j<curWorks->workareas().size(); j++)
-                writeWorkareas.append(curWorks->name(j+1));
-        }*/
+        Workareas::Info *info = i.next();
+        result.append(info->id());
     }
 
     return result;
@@ -114,9 +105,11 @@ QStringList Store::activities() const
 
 void Store::addWorkarea(QString id, QString name)
 {
-    Workareas::Info *info = m_workareasHash[id];
+    int pos = findActivity(id);
 
-    if (info){
+    if (pos>=0 && pos<m_workareasList.size()){
+        Workareas::Info *info = m_workareasList[pos];
+
         if(name==""){
             int counter = info->m_workareas.size();
             name = TaskManager::TaskManager::self()->desktopName(counter+1);
@@ -124,17 +117,19 @@ void Store::addWorkarea(QString id, QString name)
 
         info->addWorkArea(name);
 
-       // m_plgUpdateWorkareasName->checkFlag(info->m_workareas.size());
+        // m_plgUpdateWorkareasName->checkFlag(info->m_workareas.size());
     }
 }
 
 void Store::renameWorkarea(QString id, int desktop, QString name)
 {
-    Workareas::Info *info = m_workareasHash[id];
+    int pos = findActivity(id);
 
-    if (info){
-        if(name == "")
+    if (pos>=0 && pos<m_workareasList.size()){
+        Workareas::Info *info = m_workareasList[pos];
+        if(name == ""){
             name = TaskManager::TaskManager::self()->desktopName(desktop);
+        }
 
         info->renameWorkarea(desktop, name);
     }
@@ -143,39 +138,49 @@ void Store::renameWorkarea(QString id, int desktop, QString name)
 
 void Store::removeWorkarea(QString id, int desktop)
 {
-    Workareas::Info *info = m_workareasHash[id];
+    int pos = findActivity(id);
 
-    if (info)
+    if (pos>=0 && pos<m_workareasList.size()){
+        Workareas::Info *info = m_workareasList[pos];
         info->removeWorkarea(desktop);
+    }
 }
 
 
 void Store::cloneActivity(QString from, QString to)
 {
-    Workareas::Info *infoFrom = m_workareasHash[from];
-    Workareas::Info *infoTo = m_workareasHash[to];
+    int posFrom = findActivity(from);
+    int posTo = findActivity(to);
+
+    Workareas::Info *infoFrom = 0;
+    Workareas::Info *infoTo = 0;
+
+    if (posFrom>=0 && posFrom<m_workareasList.size()){
+        infoFrom = m_workareasList[posFrom];
+    }
 
     //The signal to clone comes earlier than the activityAdded one
-    if(!infoTo){
+    if (posTo<0 || posTo>=m_workareasList.size()){
         activityAddedSlot(to);
-        infoTo = m_workareasHash[to];
+        posTo = findActivity(to);
+        infoTo = m_workareasList[posTo];
     }
 
     if(infoFrom && infoTo){
         Workareas::Info *copy = infoFrom->copy(this);
         copy->m_id = infoTo->m_id;
 
-        disconnect( m_workareasHash[to], SIGNAL(workareaAdded(QString,QString)) );
-        disconnect( m_workareasHash[to], SIGNAL(workareaRemoved(QString,int)) );
-        disconnect( m_workareasHash[to], SIGNAL(workareaInfoUpdated(QString)) );
+        disconnect( m_workareasList[posTo], SIGNAL(workareaAdded(QString,QString)) );
+        disconnect( m_workareasList[posTo], SIGNAL(workareaRemoved(QString,int)) );
+        disconnect( m_workareasList[posTo], SIGNAL(workareaInfoUpdated(QString)) );
 
-        m_workareasHash.remove(to);
+        m_workareasList.removeAt(posTo);
 
         connect(copy, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
         connect(copy, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)) );
         connect(copy, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
 
-        m_workareasHash[to] = copy;
+        m_workareasList.append(copy);
 
         workareaInfoUpdatedSlot(to);
     }
@@ -184,9 +189,10 @@ void Store::cloneActivity(QString from, QString to)
 
 void Store::setBackground(QString id, QString background)
 {
-    Workareas::Info *info = m_workareasHash[id];
+    int pos = findActivity(id);
 
-    if(info){
+    if(pos>=0 && pos<m_workareasList.size() ){
+        Workareas::Info *info = m_workareasList[pos];
         if (background != "")
             info->setBackground(background);
         else
@@ -197,16 +203,18 @@ void Store::setBackground(QString id, QString background)
 
 void Store::activityAddedSlot(QString id)
 {
-    Workareas::Info *info = m_workareasHash[id];
-    if(!info){
-        info = new Workareas::Info(id, this);
+    int pos = findActivity(id);
+
+    if(pos<0 || pos>=m_workareasList.size() ){
+        Workareas::Info *info = new Workareas::Info(id, this);
 
         int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
 
         for(int j=0; j<numberOfDesktops; j++)
             info->addWorkArea(TaskManager::TaskManager::self()->desktopName(j+1));
 
-        m_workareasHash[id] = info;
+        m_workareasList.append(info);
+        //m_workareasHash[id] = info;
 
         connect(info, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
         connect(info, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)) );
@@ -220,12 +228,14 @@ void Store::activityAddedSlot(QString id)
 
 void Store::activityRemovedSlot(QString id)
 {
-    if ( m_workareasHash.contains(id) ){
-        disconnect( m_workareasHash[id], SIGNAL(workareaAdded(QString,QString)) );
-        disconnect( m_workareasHash[id], SIGNAL(workareaRemoved(QString,int)) );
-        disconnect( m_workareasHash[id], SIGNAL(workareaInfoUpdated(QString)) );
+    int pos = findActivity(id);
 
-        m_workareasHash.remove(id);
+    if(pos>=0 || pos<m_workareasList.size() ){
+        disconnect( m_workareasList[pos], SIGNAL(workareaAdded(QString,QString)) );
+        disconnect( m_workareasList[pos], SIGNAL(workareaRemoved(QString,int)) );
+        disconnect( m_workareasList[pos], SIGNAL(workareaInfoUpdated(QString)) );
+
+        m_workareasList.removeAt(pos);
 
         saveWorkareas();
         emit activityRemoved(id);
@@ -255,17 +265,15 @@ void Store::workareaInfoUpdatedSlot(QString id)
 
 void Store::saveWorkareas()
 {
-    QHashIterator<QString, Workareas::Info *> i(m_workareasHash);
+    QListIterator<Workareas::Info *> i(m_workareasList);
     QStringList writeActivities;
     QStringList writeSizes;
     QStringList writeWorkareas;
 
     while (i.hasNext()) {
-        i.next();
-
-        Workareas::Info *curWorks = i.value();
+        Workareas::Info *curWorks = i.next();
         if(curWorks){
-            writeActivities.append(i.key());
+            writeActivities.append(curWorks->id());
             writeSizes.append(QString::number(curWorks->workareas().size()));
 
             for(int j=0; j<curWorks->workareas().size(); j++)
@@ -282,22 +290,22 @@ void Store::saveWorkareas()
 
 void Store::loadWorkareas()
 {
-    m_workareasHash.clear();
+    m_workareasList.clear();
 
-    QStringList acts = WorkareasData::activities();
+    QStringList activitiesStorred = WorkareasData::activities();
     QStringList lengths = WorkareasData::noOfWorkareas();
     QStringList wnames = WorkareasData::workareasNames();
 
-    QStringList activities = m_activitiesController->listActivities();
+    QStringList activitiesRunning = m_activitiesController->listActivities();
 
     int max = 0;
     m_loading = true;
 
-    foreach(const QString &id, activities)
+    foreach(const QString &id, activitiesStorred)
     {
-        if (acts.contains(id)){
+        if (activitiesRunning.contains(id)){
             //find activity's position in stored file
-            int pos = acts.indexOf(id);
+            int pos = activitiesStorred.indexOf(id);
 
             //calculate the workareas position for this activity
             int fixedpos = 0;
@@ -315,7 +323,8 @@ void Store::loadWorkareas()
             for(int k=0; k<foundWorkAreas.size(); ++k)
                 info->addWorkArea(foundWorkAreas[k]);
 
-            m_workareasHash[id] = info;
+            m_workareasList.append(info);
+            //m_workareasHash[id] = info;
 
             //INFO CONNECTIONS
             connect(info, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
@@ -328,28 +337,35 @@ void Store::loadWorkareas()
             //use it to find maxWorkareas
             if (foundWorkAreas.size() > max)
                 max = foundWorkAreas.size();
+
+            //remove that id from running activities
+            activitiesRunning.removeAll(id);
         }
-        else{
-            Workareas::Info *info = new Workareas::Info(id, this);
+    }
 
-            int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
+    //all the activities that didnt exist in the storing file
+    foreach(const QString &id, activitiesRunning){
+        Workareas::Info *info = new Workareas::Info(id, this);
 
-            for(int j=0; j<numberOfDesktops; j++)
-                info->addWorkArea(TaskManager::TaskManager::self()->desktopName(j+1));
+        int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
 
-            m_workareasHash[id] = info;
+        for(int j=0; j<numberOfDesktops; j++)
+            info->addWorkArea(TaskManager::TaskManager::self()->desktopName(j+1));
 
-            connect(info, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
-            connect(info, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)) );
-            connect(info, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
+        m_workareasList.append(info);
 
-            //SIGNALS
-            emit activityAdded(id);
+        //m_workareasHash[id] = info;
 
-            //use it to find maxWorkareas
-            if (numberOfDesktops > max)
-                max = numberOfDesktops;
-        }
+        connect(info, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
+        connect(info, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)) );
+        connect(info, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
+
+        //SIGNALS
+        emit activityAdded(id);
+
+        //use it to find maxWorkareas
+        if (numberOfDesktops > max)
+            max = numberOfDesktops;
     }
 
     m_loading = false;
@@ -364,12 +380,10 @@ void Store::setMaxWorkareas()
         int prevmax = m_maxWorkareas;
         int max = 0;
 
-        QHashIterator<QString, Workareas::Info *> i(m_workareasHash);
+        QListIterator<Workareas::Info *> i(m_workareasList);
 
         while (i.hasNext()) {
-            i.next();
-
-            Workareas::Info *curWorks = i.value();
+            Workareas::Info *curWorks = i.next();
             if(curWorks){
                 if(curWorks->workareas().count() > max)
                     max = curWorks->workareas().count();
@@ -404,12 +418,10 @@ QString Store::getNextDefWallpaper(){
 
 void Store::pluginUpdateWorkareasNameSlot(int w_pos)
 {   
-    QHashIterator<QString, Workareas::Info *> i(m_workareasHash);
+    QListIterator<Workareas::Info *> i(m_workareasList);
 
     while (i.hasNext()) {
-        i.next();
-
-        Workareas::Info *curWorks = i.value();
+        Workareas::Info *curWorks = i.next();
         if(curWorks && (curWorks->workareas().size() == w_pos) )
             renameWorkarea(curWorks->id(), w_pos, "");
     }
@@ -420,6 +432,17 @@ void Store::setUpdateBackgrounds(bool active)
 {
     if(m_plgFindWallpaper)
         m_plgFindWallpaper->setPluginActive(active);
+}
+
+int Store::findActivity(QString activityId)
+{
+    for(int i=0; i<m_workareasList.size(); ++i){
+        Workareas::Info *info = m_workareasList[i];
+        if(info->id() == activityId)
+            return i;
+    }
+
+    return -1;
 }
 
 

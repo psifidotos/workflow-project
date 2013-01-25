@@ -62,7 +62,8 @@ protected:
     void init();
 
 private:
-    QHash <QString, Workareas::Info *> m_workareasHash;
+  //  QHash <QString, Workareas::Info *> m_workareasHash;
+    QList <Workareas::Info *> m_workareasList;
 
     KActivities::Controller *m_activitiesController;
 
@@ -80,6 +81,7 @@ private:
     void setMaxWorkareas();
 
     QString getNextDefWallpaper();
+    int findActivity(QString activityId);
 };
 
 }
