@@ -19,6 +19,8 @@ public:
     int numberOfWorkareas() const;
     QStringList workareas() const;
 
+    bool operator==(const QString &id);
+
 signals:
     void workareaAdded(QString id, QString name);
     void workareaRemoved(QString id, int desktop);
