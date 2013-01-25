@@ -5,6 +5,7 @@ import ".."
 import "../delegates"
 import "../../code/settings.js" as Settings
 
+import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
@@ -37,7 +38,7 @@ DialogTemplate2{
     property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
-        target: taskManager.subModel()
+        target: taskModel
         onCountChanged: deskDialog.initInterface();
     }
 
@@ -140,10 +141,18 @@ DialogTemplate2{
             }
         }
 
+        WorkFlowComponents.FilterTaskModel{
+            id:taskModel
+            sourceTaskModel: taskManager.model()
+            activity:activityCode
+            desktop:deskDialog.desktop
+            everywhereState: Settings.global.disableEverywherePanel
+        }
+
         GridView{
             id:desksTasksList
-            //model:instanceOfTasksDesktopList.model
-            model:taskManager.subModel()
+
+            model:taskModel
 
             width: columns*cellWidth
             height: realRows*cellHeight
@@ -324,7 +333,6 @@ DialogTemplate2{
     }
 
     function emptyDialog(){
-        taskManager.emptySubModel();
         allActT.unForceState1();
 
         activityCode = "";
@@ -337,8 +345,6 @@ DialogTemplate2{
 
         deskDialog.dialogTitle = workflowManager.activityManager().name(act) + " - "+
                 workflowManager.workareaManager().name(act,desk);
-
-        taskManager.setSubModel(act,desk,Settings.global.disableEverywherePanel);
 
         initInterface();
 
@@ -364,7 +370,7 @@ DialogTemplate2{
     }
 
     function clearList(){
-        taskManager.emptySubModel();
+
     }
 
     Connections {

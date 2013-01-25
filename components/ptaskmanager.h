@@ -42,9 +42,6 @@ public:
 #endif
 
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
-    Q_INVOKABLE inline QObject *subModel(){return m_taskSubModel;}
-    Q_INVOKABLE void setSubModel(QString, int, bool everywhere = false);
-    Q_INVOKABLE void emptySubModel();
 
 signals:
     void taskRemoved(QString win);
@@ -66,8 +63,6 @@ private:
     QObject *qmlTaskEngine;
 
     ListModel *m_taskModel;
-    ListModel *m_taskSubModel;
-
 };
 
 #endif // PTASKMANAGER_H

@@ -29,28 +29,21 @@
 
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),
-    m_taskModel(0),
-    m_taskSubModel(0)
+    m_taskModel(0)
 {
     taskMainM = TaskManager::TaskManager::self();
 
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
     m_taskModel = new ListModel(new TaskItem, this);
-    m_taskSubModel = new ListModel(new TaskItem, this);
 
     init();
 }
 
 
 PTaskManager::~PTaskManager(){
-    //  foreach (const QString source, plasmaTaskEngine->sources())
-    //     plasmaTaskEngine->disconnectSource(source, this);
-
     if(m_taskModel)
         delete m_taskModel;
-    if(m_taskSubModel)
-        delete m_taskSubModel;
 }
 
 void PTaskManager::init()
@@ -117,12 +110,6 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
         m_taskModel->removeRow(ind.row());
     }
 
-    TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
-    if(taskISub){
-        QModelIndex inds = m_taskSubModel->indexFromItem(taskISub);
-        m_taskSubModel->removeRow(inds.row());
-    }
-
     disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
 
@@ -157,19 +144,6 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
             //if(task->isOnAllActivities())
             //  if(!task->isOnAllDesktops())
             //    setOnAllDesktops(wId,true);
-        }
-
-        TaskItem *taskISub = static_cast<TaskItem *>(m_taskSubModel->find(wId));
-        if(taskISub){
-            QPixmap tempIcn = task->icon(256,256,true);
-            taskISub->setCode(wId);
-            taskISub->setOnAllDesktops(task->isOnAllDesktops());
-            taskISub->setOnAllActivities(task->isOnAllActivities());
-            taskISub->setClassClass(task->classClass());
-            taskISub->setName(task->name());
-            taskISub->setIcon(QIcon(tempIcn));
-            taskISub->setDesktop(task->desktop());
-            taskISub->setActivities(task->activities());
         }
 
     }
@@ -379,44 +353,6 @@ QIcon PTaskManager::getTaskIcon(QString wId)
         return task->icon();
 
     return QIcon();
-}
-
-/*
- * This is used to load the correct tasks in the
- * submodel
- *
- * everywhere is used to include windows in Everywhere state
- *
- */
-void PTaskManager::setSubModel(QString activity, int desktop, bool everywhere)
-{
-    m_taskSubModel->clear();
-
-    for(int i=0; i<m_taskModel->getCount(); i++)
-    {
-        TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
-
-        if(task)
-        {
-            if ( ((task->activities().size() != 0) && (task->activities().at(0) == activity)&&
-                   ((task->desktop() == desktop) || task->onAllDesktops()) ) ||
-                 ((task->desktop() == desktop) && task->onAllActivities()) ||
-                 ((everywhere) && task->onAllActivities() && task->onAllDesktops())
-                 ){
-                TaskItem *taskCopy = task->copy(m_taskSubModel);
-                m_taskSubModel->appendRow(taskCopy);
-            }
-        }
-    }
-}
-
-/*
- * This is used to empty the tasks submodel mainly
- * in order to support dragging of window previews *
- */
-void PTaskManager::emptySubModel()
-{
-    m_taskSubModel->clear();
 }
 
 #include "ptaskmanager.moc"

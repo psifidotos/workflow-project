@@ -7,5 +7,6 @@ set(components_SRCS
         ${CMAKE_CURRENT_SOURCE_DIR}/workareaitem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/taskitem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/activitiesenhancedmodel.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/filtertaskmodel.cpp
         PARENT_SCOPE
 )
