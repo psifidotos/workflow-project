@@ -9,6 +9,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 
 Rectangle {
     id: stopActBack
+    property alias flickableV : stopActivitiesView.interactive
 
     property alias shownActivities:stoppedActivitiesList.shownActivities
 

@@ -25,10 +25,14 @@ Item{
     property real basicHeight:0.62*mainView.workareaHeight
     property int buttonsSize:0.5 * mainView.scaleMeter
 
-    property real defOpacity  : 0.6
+    property real defOpacity: activityDragged ? 0 : 0.6
 
-    property bool containsMouse: (deleteActivityBtn.containsMouse) ||
-                                 (mouseArea.containsMouse)
+    property bool containsMouse:( ((deleteActivityBtn.containsMouse) ||
+                                  (mouseArea.containsMouse))&&
+                                 (!activityDragged))
+
+    property bool activityDragged: (draggingActivities.activityId === code) &&
+                                   (draggingActivities.activityStatus === "Stopped")
 
     /*
         onCStateChanged:{
@@ -50,10 +54,20 @@ Item{
         }
     }
 
-    Item{
+    Rectangle{
+        id:draggingRectangle
+        anchors.centerIn: parent
+        width:0.9 * parent.width
+        height: 0.9 * parent.height
+        radius:10
+        color: "#333333"
+        opacity:activityDragged ? 0.10 : 0
+    }
+
+    //Item{
         ///Ghost Element in order for the activityIcon to be the
         ///second children
-    }
+   // }
 
 
     Item{
@@ -71,6 +85,8 @@ Item{
         //for the animation to be precise
         property int toRX:stopActBack.shownActivities > 0 ? x - width:x - width- stopActBack.width
         property int toRY:stopActBack.shownActivities > 0 ? y : -height
+
+        opacity: !activityDragged
 
         QIconItem{
             id:activityIconEnabled
@@ -123,9 +139,6 @@ Item{
                 }
             }
         }
-
-
-
     }
 
     Text{
@@ -141,7 +154,7 @@ Item{
 
         font.pixelSize: (0.13+mainView.defFontRelStep)*parent.height
 
-        opacity:stpActivity.containsMouse ? 1 : stpActivity.defOpacity
+        opacity: stpActivity.containsMouse ? 1 : stpActivity.defOpacity
 
         color:"#4d4b4b"
 
@@ -213,6 +226,14 @@ Item{
                 mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainView,x1, y1));
             }
         }
+
+        onPressed:{
+            stpActivity.onPressed(mouse, mouseArea);
+        }
+
+        onReleased:{
+            stpActivity.onReleased(mouse);
+        }
     }
 
     IconButton {
@@ -249,6 +270,16 @@ Item{
         return activityIconDisabled;
     }
 
+
+    ////////////////Dragging Functions/////////////////////////////
+    function onPressed(mouse, area){
+        var coords = area.mapToItem(mainView, mouse.x, mouse.y);
+        draggingActivities.enableDragging(mouse, coords, code, "Stopped", Icon);
+    }
+
+    function onReleased(mouse){
+        draggingActivities.disableDragging();
+    }
 
 }
 

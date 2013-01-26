@@ -204,6 +204,10 @@ Rectangle {
         id:mDragInt
     }
 
+    DraggingInterfaceActivities{
+        id:draggingActivities
+    }
+
 
     Connections{
         target:Settings.global

@@ -33,12 +33,24 @@ Item{
     //    width: bWidth
     height: bHeight+addedHeight
 
+    property bool activityDragged: (draggingActivities.activityId === code) &&
+                                   (draggingActivities.activityStatus === "Running")
 
     onHeightChanged: allareas.changedChildHeight();
 
     onAddedHeightChanged: allareas.changedChildHeight();
 
     onStateChanged: allareas.changedChildHeight();
+
+    Rectangle{
+        id:draggingRectangle
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:workalist.width - 10
+        height:workalist.height - 10
+        radius:10
+        color: "#333333"
+        opacity:activityDragged ? 0.15 : 0
+    }
 
     ListView{
         id:workalist
@@ -49,6 +61,7 @@ Item{
 
         property int addedHeightForCurrent:(sessionParameters.screenRatio*0.2*mainView.scaleMeter)
 
+        opacity:activityDragged ? 0 : 1
         z:5
 
         interactive:false
@@ -72,7 +85,7 @@ Item{
 
         width:0.9*parent.width
 
-        opacity: workList.tCState === workList.neededState ? 1 : 0
+        opacity: (workList.tCState === workList.neededState)&&(!activityDragged) ? 1 : 0
 
         MouseArea {
             anchors.fill: parent

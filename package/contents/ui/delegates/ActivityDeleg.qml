@@ -25,6 +25,9 @@ Item{
 
     property bool shown: CState === neededState
 
+    property bool activityDragged: (draggingActivities.activityId === code) &&
+                                   (draggingActivities.activityStatus === "Running")
+
     Behavior on opacity{
         NumberAnimation {
             duration: 2*Settings.global.animationStep;
@@ -46,6 +49,16 @@ Item{
     }
 
     Rectangle{
+        id:draggingRectangle
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:parent.width - 10
+        height:parent.height - 10
+        radius:10
+        color: "#333333"
+        opacity:activityDragged ? 0.5 : 0
+    }
+
+    Rectangle{
         y:-activitiesList.y+actImag1.height-1
 
         height:parent.width
@@ -61,13 +74,13 @@ Item{
             GradientStop { position: 1.0; color: actImag1.color }
         }
 
-        opacity:ccode === sessionParameters.currentActivity ? 1 : 0
+        opacity:((ccode === sessionParameters.currentActivity)&&(!activityDragged))
     }
 
     QIconItem{
         id:activityIcon
         rotation: 0
-        opacity: CState===neededState ? 1:0
+        opacity: ((CState===neededState)&&(!activityDragged))
 
         icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
 
@@ -113,9 +126,18 @@ Item{
             onClicked: {
                 if (Settings.global.lockActivities === false)
                     workflowManager.activityManager().chooseIcon(ccode);
-                else
+                else{
+                    workflowManager.activityManager().setCurrent(ccode);
                     workflowManager.workareaManager().setActivityFirst(ccode);
-                    //workflowManager.activityManager().setCurrent(ccode);
+                }
+            }
+
+            onPressed:{
+                  mainActivity.onPressed(mouse, activityIconMouseArea);
+            }
+
+            onReleased:{
+                  mainActivity.onReleased(mouse);
             }
 
         }
@@ -136,7 +158,7 @@ Item{
     Rectangle{
         id:fadeIcon
 
-        opacity: CState===neededState ? 1:0
+        opacity: ((CState===neededState)&&(!activityDragged)) ? 1:0
 
         x:activityIcon.x+0.15*activityIcon.width
         y:activityIcon.y
@@ -173,7 +195,7 @@ Item{
         anchors.bottom: separatorLine.bottom
         anchors.bottomMargin: 1
 
-        opacity: CState===neededState ? 1:0
+        opacity: ((CState===neededState)&&(!activityDragged)) ? 1:0
 
         enableEditing: !Settings.global.lockActivities
 
@@ -251,7 +273,10 @@ Item{
         width:parent.width
         height:mainView.scaleMeter - 15
 
-        opacity: editActivityNameMouseArea.containsMouse || activityIconMouseArea.containsMouse || globalMouseArea.containsMouse || activityBtnsI.containsMouse
+        opacity: ((editActivityNameMouseArea.containsMouse ||
+                 activityIconMouseArea.containsMouse ||
+                 globalMouseArea.containsMouse ||
+                  activityBtnsI.containsMouse)&&(!activityDragged))
         z:40
 
         Behavior on opacity {
@@ -317,8 +342,14 @@ Item{
         }
     }
 
+    ////////////////Dragging Functions/////////////////////////////
+    function onPressed(mouse, area){
+        var coords = area.mapToItem(mainView, mouse.x, mouse.y);
+        draggingActivities.enableDragging(mouse, coords, code, "Running", Icon);
+    }
+
+    function onReleased(mouse){
+        draggingActivities.disableDragging();
+    }
 }
-
-
-//}
 
