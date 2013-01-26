@@ -21,18 +21,21 @@ public:
 
     Q_INVOKABLE QString name(QString, int);
     Q_INVOKABLE int numberOfWorkareas(QString);
+    Q_INVOKABLE void setActivityFirst(QString);
 
     //Q_INVOKABLE void setWallpaper(QString, QString);
 
     inline int maxWorkareas(){return m_maxWorkareas;}
 
+    //Q_INVOKABLE void sortModel();
+    //Q_INVOKABLE void init(QObject *extender);
 signals:
     void maxWorkareasChanged(int);
 
 public slots:
     void cloneWorkareas(QString, QString);
 
-    void dataUpdated(QString source, Plasma::DataEngine::Data data);
+    void dataUpdated(QString source, Plasma::DataEngine::Data data);   
 
 protected:
     void init();

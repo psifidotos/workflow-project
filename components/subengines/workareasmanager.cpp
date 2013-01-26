@@ -2,7 +2,9 @@
 
 #include <QDebug>
 
+#include <Plasma/Applet>
 #include <Plasma/DataEngineManager>
+#include <Plasma/Extender>
 #include <Plasma/Service>
 #include <Plasma/ServiceJob>
 
@@ -30,6 +32,16 @@ WorkareasManager::~WorkareasManager()
 void WorkareasManager::init()
 {
     m_dataEngine = Plasma::DataEngineManager::self()->loadEngine("workareas");
+   /* Plasma::Extender *appletExtender = static_cast<Plasma::Extender *>(extender);
+
+    if(appletExtender){
+        Plasma::Applet *applet = appletExtender->applet();
+        if(applet){
+            m_dataEngine = applet->dataEngine("workareas");
+        }
+        delete extender;
+    }*/
+
 
     foreach (const QString source, m_dataEngine->sources())
       activityAddedSlot(source);
@@ -116,6 +128,14 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
           for(int j=newSize; j<prevSize; ++j )
               removeWorkareaInModel(source, j+1);
       //////
+
+      //update order
+      int nOrder = data["Order"].toInt();
+
+      if(activity->order() != nOrder ){
+            activity->setOrder(nOrder);
+            m_actModel->sortModel();
+      }
   }
 }
 
@@ -160,6 +180,15 @@ void WorkareasManager::cloneWorkareas(QString from, QString to)
     Plasma::Service *service = m_dataEngine->serviceForSource(from);
     KConfigGroup op = service->operationDescription("cloneWorkareas");
     op.writeEntry("Activity", to);
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
+
+void WorkareasManager::setActivityFirst(QString id)
+{
+    Plasma::Service *service = m_dataEngine->serviceForSource(id);
+    KConfigGroup op = service->operationDescription("setOrder");
+    op.writeEntry("Order", 1);
     Plasma::ServiceJob *job = service->startOperationCall(op);
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }

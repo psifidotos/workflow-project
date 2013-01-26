@@ -43,7 +43,7 @@ Item{
 
             y: 2.2 * allwlists.scale
             //+1, for not creating a visual issue...
-            width: (activitiesList.shownActivities + 1) * allwlists.workareaWidth
+            width: (activitiesList.shownActivities+1) * allwlists.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height
 
             orientation: ListView.Horizontal
@@ -54,7 +54,7 @@ Item{
 
             property int maxWorkAreasHeight: 0
 
-            model:workflowManager.model()
+            model: workflowManager.model()
 
             delegate: WorkAreaListDeleg{}
 

@@ -25,4 +25,9 @@
             <label>The Activity into which the workareas will be cloned.</label>
         </entry>
     </group>
+    <group name="setOrder">
+        <entry name="Order" type="Int">
+            <label>The new activity order (Orders from 1 to length).</label>
+        </entry>
+    </group>
 </kcfg>

@@ -103,7 +103,6 @@ Rectangle {
         id: plasmoidWrapper
     }
 
-
     QMLPluginsConnections{}
 
 

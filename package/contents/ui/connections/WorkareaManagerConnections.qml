@@ -2,5 +2,5 @@
 import QtQuick 1.1
 
 Item{
-
+   // Component.onCompleted: workflowManager.workareaManager().init(plasmoid.extender());
 }

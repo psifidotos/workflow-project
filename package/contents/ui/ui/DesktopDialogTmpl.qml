@@ -108,7 +108,7 @@ DialogTemplate2{
         y:deskDialog.insideY
 
         width:insideWidth
-        height:(shownRows)*cHeight
+        height:(shownRows)*cHeight+10
 
         contentWidth: desksTasksList.width-40
         contentHeight: desksTasksList.height
@@ -143,7 +143,7 @@ DialogTemplate2{
 
         WorkFlowComponents.FilterTaskModel{
             id:taskModel
-            sourceTaskModel: taskManager.model()
+            sourceMainModel: taskManager.model()
             activity:activityCode
             desktop:deskDialog.desktop
             everywhereState: Settings.global.disableEverywherePanel
@@ -328,8 +328,8 @@ DialogTemplate2{
         allWorkareas.flickableV = true;
         deskDialog.close();
 
-        activityCode = "";
-        desktop = -1;
+       // activityCode = "";
+       // desktop = -1;
     }
 
     function emptyDialog(){

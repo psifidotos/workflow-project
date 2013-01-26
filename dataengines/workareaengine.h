@@ -27,6 +27,8 @@ private slots:
     void workareaRemovedSlot(QString,int);
     void workareaInfoUpdatedSlot(QString);
 
+    void activitiesOrderChangedSlot();
+
     void maxWorkareasChangedSlot(int);
 private:
     Workareas::Store *m_store;

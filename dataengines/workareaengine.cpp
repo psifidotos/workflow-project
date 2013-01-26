@@ -30,6 +30,8 @@ void WorkareaEngine::init()
     connect(m_store, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)));
     connect(m_store, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
 
+    connect(m_store, SIGNAL(activityOrdersChanged()), this, SLOT(activitiesOrderChangedSlot()));
+
     connect(m_store, SIGNAL(maxWorkareasChanged(int)), this, SLOT(maxWorkareasChangedSlot(int)));
 
     m_store->initBackgrounds();
@@ -78,6 +80,11 @@ void WorkareaEngine::maxWorkareasChangedSlot(int size)
     setData("Settings", "MaxWorkareas", size);
 }
 
+void WorkareaEngine::activitiesOrderChangedSlot()
+{
+    updateOrders();
+}
+
 
 void WorkareaEngine::loadActivity(QString id)
 {
@@ -95,7 +102,7 @@ void WorkareaEngine::loadActivity(QString id)
 void WorkareaEngine::updateOrders()
 {
     QStringList storeActivities = m_store->activities();
-    for(int i=0; storeActivities.size(); i++){
+    for(int i=0; i<storeActivities.size(); ++i){
         setData(storeActivities[i], "Order", i+1);
     }
 }

@@ -19,7 +19,12 @@ WorkareaJob::~WorkareaJob()
 
 void WorkareaJob::start()
 {
-    const QString operation = operationName();
+    const QString operation = operationName();    
+    if(m_id == "Settings"){
+        setResult(false);
+        return;
+    }
+
     if (operation == "addWorkarea") {
 
         QString name = parameters()["Name"].toString();
@@ -59,6 +64,16 @@ void WorkareaJob::start()
             m_store->cloneActivity(m_id, activity);
 
         setResult("clone activity: " + activity);
+        return;
+    }
+    else if (operation == "setOrder") {
+
+        int order = parameters()["Order"].toInt();
+
+        if(m_store)
+            m_store->moveActivity(m_id, order-1);
+
+        setResult("activity order: " + QString::number(order));
         return;
     }
 

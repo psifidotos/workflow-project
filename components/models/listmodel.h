@@ -48,12 +48,15 @@ public:
 signals:
   void countChanged(int);
 
+protected:
+  QList<ListItem*> m_list;
+
 private slots:
   void handleItemChange();
 
 private:
   ListItem* m_prototype;
-  QList<ListItem*> m_list;
+
 
   int m_count;
 };

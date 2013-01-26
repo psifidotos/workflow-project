@@ -5,13 +5,14 @@
 ActivityItem::ActivityItem(const QString &code, const QString &name,
                            const QString &icon, const QString &cstate,
                            const QString &background, QObject *parent) :
-  ListItem(parent),
-  m_code(code),
-  m_name(name),
-  m_icon(icon),
-  m_cstate(cstate),
-  m_background(background),
-  m_workareas(0)
+    ListItem(parent),
+    m_code(code),
+    m_name(name),
+    m_icon(icon),
+    m_cstate(cstate),
+    m_background(background),
+    m_order(0),
+    m_workareas(0)
 {
     m_workareas = new ListModel(new WorkareaItem,this);
 }
@@ -19,10 +20,10 @@ ActivityItem::ActivityItem(const QString &code, const QString &name,
 ActivityItem::~ActivityItem()
 {
     //It crashes the model for some reason when closing the application...
-   // if(m_workareas){
+    // if(m_workareas){
     //    m_workareas->clear();
     //   delete m_workareas;
-   //}
+    //}
 }
 
 void ActivityItem::setProperty(QString role,QVariant value)
@@ -39,6 +40,8 @@ void ActivityItem::setProperty(QString role,QVariant value)
         setCState(value.toString());
     else if(role == names[BackgroundRole])
         setBackground(value.toString());
+    else if(role == names[OrderRole])
+        setOrder(value.toInt());
 }
 
 void ActivityItem::setCode(QString code)
@@ -80,34 +83,45 @@ void ActivityItem::setBackground(QString background)
     }
 }
 
+void ActivityItem::setOrder(int order)
+{
+    if(m_order != order){
+        m_order = order;
+        emit dataChanged();
+    }
+}
+
 
 QHash<int, QByteArray> ActivityItem::roleNames() const
 {
-  QHash<int, QByteArray> names;
-  names[CodeRole] = "code";
-  names[NameRole] = "Name";
-  names[IconRole] = "Icon";
-  names[CStateRole] = "CState";
-  names[BackgroundRole] = "background";
-  return names;
+    QHash<int, QByteArray> names;
+    names[CodeRole] = "code";
+    names[NameRole] = "Name";
+    names[IconRole] = "Icon";
+    names[CStateRole] = "CState";
+    names[BackgroundRole] = "background";
+    names[OrderRole] = "Order";
+    return names;
 }
 
 QVariant ActivityItem::data(int role) const
 {
-  switch(role) {
-  case CodeRole:
-    return code();
-  case NameRole:
-    return name();
-  case IconRole:
-    return icon();
-  case CStateRole:
-    return cstate();
-  case BackgroundRole:
-    return background();
-  default:
-    return QVariant();
-  }
+    switch(role) {
+    case CodeRole:
+        return code();
+    case NameRole:
+        return name();
+    case IconRole:
+        return icon();
+    case CStateRole:
+        return cstate();
+    case BackgroundRole:
+        return background();
+    case OrderRole:
+        return order();
+    default:
+        return QVariant();
+    }
 }
 
 #include "activityitem.moc"

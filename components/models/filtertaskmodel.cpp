@@ -1,13 +1,11 @@
 #include "filtertaskmodel.h"
 
-#include <QDebug>
-#include <QSortFilterProxyModel>
-
-#include "listmodel.h"
 #include "taskitem.h"
 
+#include <QDebug>
+
 FilterTaskModel::FilterTaskModel(QObject *parent):
-    QSortFilterProxyModel(parent),
+    QmlSortFilterProxyModel(parent),
     m_activity(""),
     m_desktop(0),
     m_everywhereState(false)
@@ -32,16 +30,6 @@ bool FilterTaskModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceP
     return result;
 }
 
-void FilterTaskModel::setSourceTaskModel(QObject *model)
-{
-    ListModel *listModel = static_cast<ListModel *>(model);
-    if(listModel != sourceModel()){
-        setSourceModel(listModel);
-
-        emit sourceTaskModelChanged(listModel);
-    }
-
-}
 
 void FilterTaskModel::setActivity(QString activity)
 {
@@ -60,7 +48,6 @@ void FilterTaskModel::setDesktop(int desktop)
         emit desktopChanged(m_desktop);
         invalidate();
     }
-
 }
 
 
@@ -68,14 +55,9 @@ void FilterTaskModel::setEverywhereState(bool state)
 {
     if(m_everywhereState != state){
         m_everywhereState = state;
-        emit everywhereStateChanged(state);
         invalidate();
+        emit everywhereStateChanged(state);
     }
-}
-
-int FilterTaskModel::getCount()
-{
-    return rowCount();
 }
 
 #include "filtertaskmodel.moc"

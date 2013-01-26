@@ -1,6 +1,6 @@
 #include "store.h"
 
-#include <QHash>
+#include <QDebug>
 #include <QList>
 
 #include <KActivities/Controller>
@@ -185,6 +185,22 @@ void Store::cloneActivity(QString from, QString to)
         workareaInfoUpdatedSlot(to);
     }
 
+}
+
+void Store::moveActivity(QString id, int toPosition)
+{
+    int fromPosition = findActivity(id);
+
+    if (toPosition>=m_workareasList.size())
+        toPosition = m_workareasList.size()-1;
+
+    if (toPosition>=0 && toPosition<m_workareasList.size() &&
+            fromPosition>=0 && fromPosition<m_workareasList.size() &&
+            fromPosition != toPosition){
+        m_workareasList.move(fromPosition, toPosition);
+        saveWorkareas();
+        emit activityOrdersChanged();
+    }
 }
 
 void Store::setBackground(QString id, QString background)

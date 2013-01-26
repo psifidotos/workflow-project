@@ -118,6 +118,7 @@ void ActivityManager::activityAddedSlot(QString id) {
             this, SLOT(activityStateChangedSlot()) );
 
     emit activityAdded(id);
+
 }
 
 void ActivityManager::activityRemovedSlot(QString id) {

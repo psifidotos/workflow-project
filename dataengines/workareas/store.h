@@ -28,6 +28,7 @@ public:
     void renameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models
     void cloneActivity(QString, QString);
+    void moveActivity(QString, int);
 
     void setUpdateBackgrounds(bool);
 
@@ -45,6 +46,8 @@ signals:
     void workareaAdded(QString id, QString name);
     void workareaRemoved(QString id, int position);
     void workareaInfoUpdated(QString id);
+
+    void activityOrdersChanged();
 
     void maxWorkareasChanged(int);
 

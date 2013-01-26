@@ -114,11 +114,9 @@ Item{
                 if (Settings.global.lockActivities === false)
                     workflowManager.activityManager().chooseIcon(ccode);
                 else
-                    workflowManager.activityManager().setCurrent(ccode);
+                    workflowManager.workareaManager().setActivityFirst(ccode);
+                    //workflowManager.activityManager().setCurrent(ccode);
             }
-
-
-
 
         }
 
