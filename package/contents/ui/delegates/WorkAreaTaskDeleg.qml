@@ -1,6 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 import ".."
+import "../components/"
 import "ui-elements"
 import "../../code/settings.js" as Settings
 
@@ -11,15 +12,15 @@ Item{
     id: taskDeleg1
 
     property bool shown: (( (((onAllActivities !== true)&&
-                             ((mainWorkArea.desktop === desktop)&&
-                              (activities[0] === actCode))) ||
-                            ((onAllActivities !== true)&&
-                             ((onAllDesktops === true)&&
-                              (actCode === activities[0])))) ||
-                            ((onAllActivities === true)&&
-                             (onAllDesktops === false)&&
-                             (mainWorkArea.desktop === desktop)) ||
-                            onEverywhereAndMustBeShown )
+                              ((mainWorkArea.desktop === desktop)&&
+                               (activities[0] === actCode))) ||
+                             ((onAllActivities !== true)&&
+                              ((onAllDesktops === true)&&
+                               (actCode === activities[0])))) ||
+                           ((onAllActivities === true)&&
+                            (onAllDesktops === false)&&
+                            (mainWorkArea.desktop === desktop)) ||
+                           onEverywhereAndMustBeShown )
                           && (!isPressed) ) //hide it in dragging
 
     property bool onEverywhereAndMustBeShown:((Settings.global.disableEverywherePanel)&&
@@ -32,7 +33,7 @@ Item{
     opacity: shown ? 1 : 0
 
     property string ccode: code
-    property bool isPressed:false
+    property bool isPressed: mstArea.isPressed
     property int rHeight:10
 
 
@@ -144,53 +145,28 @@ Item{
         z:5
     }
 
-
-    MouseArea {
+    DraggingMouseArea{
         id:mstArea
 
         anchors.fill: parent
-        hoverEnabled: true
-
-        property int px1:0
-        property int py1:0
-        property bool tempPressed:false
-        property int draggingSpace:2
 
         onClicked: {
-            tempPressed = false;
-            taskDeleg1.onClicked(mouse);
+            workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
+            taskManager.activateTask(taskDeleg1.ccode);
         }
 
-        onPressed:{
-            px1 = mouse.x;
-            py1 = mouse.y;
-
-            tempPressed = true;
+        onDraggingStarted: {
+            taskDeleg1.draggingStarted(mouse, mstArea);
         }
 
-        function outOfInnerLimits(ms){
-            if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
-                    (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
-                return true;
-            else
-                return false;
+        onDraggingMovement: {
+            taskDeleg1.draggingMovement(mouse, mstArea);
         }
 
-        onPositionChanged: {
-            if(outOfInnerLimits(mouse)&&(tempPressed)){
-                taskDeleg1.onPressed(mouse.x,mouse.y,mstArea);
-                tempPressed = false;
-            }
-
-            if(taskDeleg1.isPressed)
-                taskDeleg1.onPositionChanged(mouse,mstArea);
-        }
-
-        onReleased:{
-            taskDeleg1.onReleased(mouse, mstArea);
+        onDraggingEnded: {
+            taskDeleg1.draggingEnded(mouse, mstArea);
         }
     }
-
 
     states:[
         State {
@@ -215,20 +191,10 @@ Item{
 
     ]
 
+    /////////////////*Dragging functions*///////////////////////
 
-    function onClicked(mouse) {
-        // mainWorkArea.clickedWorkarea();
-        if(taskDeleg1.isPressed !== true){
-            workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-            taskManager.activateTask(taskDeleg1.ccode);
-        }
-
-    }
-
-    function onPressed(x1,y1,obj) {
-        taskDeleg1.isPressed = true;
-
-        var nCor = obj.mapToItem(mainView,x1,y1);
+    function draggingStarted(mouse, obj){
+        var nCor = obj.mapToItem(mainView, mouse.x, mouse.y);
 
         var coord1 = imageTask.mapToItem(mainView,imageTask.x, imageTask.y);
 
@@ -241,25 +207,19 @@ Item{
                                 mainWorkArea.desktop,
                                 coord1,
                                 everySt);
-
     }
 
-    function onPositionChanged(mouse,obj) {
-        if (taskDeleg1.isPressed === true){
-            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-            mDragInt.onPstChanged(nCor);
-        }
+    function draggingMovement(mouse, obj){
+        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+        mDragInt.onPstChanged(nCor);
     }
 
-    function onReleased(mouse, obj) {
-        if (taskDeleg1.isPressed === true){
-            var mouseV = obj.mapToItem(mainView,mouse.x,mouse.y);
+    function draggingEnded(mouse, obj){
+        var mouseV = obj.mapToItem(mainView,mouse.x,mouse.y);
 
-            mDragInt.onMReleased(mouse,mouseV);
-        }
-
-        taskDeleg1.isPressed = false;
+        mDragInt.onMReleased(mouse,mouseV);
     }
+
 }
 
 
