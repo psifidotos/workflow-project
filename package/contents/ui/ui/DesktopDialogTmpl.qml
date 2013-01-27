@@ -33,9 +33,10 @@ DialogTemplate2{
     property int cWidth: 0
     property int cHeight: 0
 
+    //This is used to track user preference on show/hide previews in the dialog
     property bool disablePreviewsWasForced:false
+    property bool disablePreviews :false
 
-    property alias disablePreviews:desksTasksList.onlyState1
 
     Connections{
         target: taskModel
@@ -67,6 +68,7 @@ DialogTemplate2{
                 hoveredIcon.opacity = 0;
             }
             onClicked: {
+                deskDialog.disablePreviewsWasForced = !deskDialog.disablePreviewsWasForced
                 deskDialog.disablePreviews = !deskDialog.disablePreviews
 
                 if (deskDialog.disablePreviews===true)
@@ -114,7 +116,8 @@ DialogTemplate2{
         contentHeight: desksTasksList.height
 
         boundsBehavior: Flickable.StopAtBounds
-        clip:desksTasksList.model.count <= 9 ? false : true
+       // clip:desksTasksList.model.count <= 9 ? false : true
+        clip:true
 
         Row{
             //width:parent.width
@@ -165,7 +168,8 @@ DialogTemplate2{
             property int delegHeight:150
 
 
-            property bool onlyState1: false
+            //property bool onlyState1: false
+            property bool onlyState1: deskDialog.disablePreviews
             property string selectedWin:""
 
             property alias desktopInd: deskDialog.desktop
@@ -203,7 +207,7 @@ DialogTemplate2{
         function forceState1(){
             if(deskDialog.disablePreviews === false){
                 deskDialog.disablePreviews = true;
-                deskDialog.disablePreviewsWasForced = true;
+           //     deskDialog.disablePreviewsWasForced = true;
             }
             else{
                 deskDialog.disablePreviewsWasForced = false;
@@ -326,14 +330,13 @@ DialogTemplate2{
 
     function closeD(){
         allWorkareas.flickableV = true;
+        emptyDialog();
         deskDialog.close();
-
-       // activityCode = "";
-       // desktop = -1;
     }
 
     function emptyDialog(){
         allActT.unForceState1();
+        disablePreviews = true;
 
         activityCode = "";
         desktop = -1;
@@ -347,11 +350,11 @@ DialogTemplate2{
                 workflowManager.workareaManager().name(act,desk);
 
         initInterface();
-
+/*
         if (deskDialog.disablePreviews===true)
             desktopView.forceState1();
         else
-            desktopView.unForceState1();
+            desktopView.unForceState1();*/
 
         deskDialog.open();
         allWorkareas.flickableV = false;
@@ -369,9 +372,10 @@ DialogTemplate2{
         return desksTasksList;
     }
 
-    function clearList(){
-
-    }
+   /* function clearList(){
+        activityCode = "";
+        desktop = -1;
+    }*/
 
     Connections {
         target: deskDialog

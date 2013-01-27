@@ -38,8 +38,8 @@ Item{
 
     property bool mustBeShown: showAllActivities === true ?
                                    ( onAllActivities &&
-                                     onAllDesktops &&
-                                     !isPressed ):
+                                    onAllDesktops &&
+                                    !isPressed ):
                                    (!isPressed)
 
     property bool showPreviews: ((Settings.global.showWindows === true)&&
@@ -53,7 +53,7 @@ Item{
 
     property bool showPreviewsFound: (showPreviews === true)
 
-  //  property bool containsMouse:
+    //  property bool containsMouse:
 
     property int rWidth:100
     property int rHeight:100
@@ -69,11 +69,8 @@ Item{
     property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
     property bool isPressed:false
 
-    property string currentNoHovered: showPreviewsFound === true ? state2 : state1
-
     property string selectedWin: ""
     property bool isSelected: selectedWin === ccode
-
 
     property color taskTitleTextDef
     property color taskTitleTextHov
@@ -85,27 +82,23 @@ Item{
 
     property int iconWidth:80
 
+    property variant scrollingView
+    property variant centralListView
+    property variant oldParent
 
     property string state1: showAllActivities === true ? "nohovered1" : "listnohovered1"
     property string state2: showAllActivities === true ? "nohovered2" : "listnohovered2"
     property string stateHov1: showAllActivities === true ? "hovered1" : "listhovered1"
+    property string currentNoHovered: showPreviewsFound === true ? state2 : state1
 
-    property variant scrollingView
-    property variant centralListView
+    state: containsMouse ? stateHov1 : currentNoHovered
 
-    property variant oldParent
-
-    state: state1
+    property bool containsMouse: ((hoverArea.containsMouse ||
+                                   previewMouseArea.containsMouse ||
+                                   allTasksBtns.containsMouse) && (!isPressed))
 
     onShowPreviewsChanged:{
-        if (showPreviews === true){
-            state = state2;
-            updatePreview();
-        }
-        else if(state !== state1){
-            state = state1;
-            updatePreview();
-        }
+        updatePreview();
     }
 
 
@@ -113,19 +106,6 @@ Item{
         if(state == state2)
             updatePreview();
     }
-
-    /*
-
-    onShowPreviewsFoundChanged:{
-        if (showPreviewsFound === true){
-            taskDeleg2.state = taskDeleg2.state2;
-            taskDeleg2.updatePreview();
-        }
-        else{
-            taskDeleg2.state = taskDeleg2.state1;
-            taskManager.removeWindowPreview(taskDeleg2.ccode);
-        }
-    }*/
 
     onWidthChanged: {
         if(state === state2)
@@ -253,15 +233,6 @@ Item{
         property int py1:0
         property bool tempPressed:false
         property int draggingSpace:2
-
-
-        onEntered: {
-            taskDeleg2.onEntered();
-        }
-
-        onExited: {
-            taskDeleg2.onExited();
-        }
 
         onClicked: {
             tempPressed = false;
@@ -411,14 +382,6 @@ Item{
             property bool tempPressed:false
             property int draggingSpace:2
 
-            onEntered: {
-                taskDeleg2.onEntered();
-            }
-
-            onExited: {
-                taskDeleg2.onExited();
-            }
-
             onClicked: {
                 tempPressed = false;
                 taskDeleg2.onClicked(mouse);
@@ -472,8 +435,6 @@ Item{
         height:taskTitle2.height
         color:"#00e2e2e2"
 
-
-
         Text{
             id:taskTitle2
 
@@ -499,24 +460,18 @@ Item{
 
         z:5
 
+        state: (taskDeleg2.containsMouse && (dialogType !== dTypes[2])) ? "show" : "hide"
 
-    }
-
-    Connections {
-        target: allTasksBtns
-        onChangedStatus:{
-            if (allTasksBtns.status === "hover"){
-                taskDeleg2.onEntered();
-                //taskDeleg2.state = "hovered";
-            }
-            else{
-                //   taskDeleg2.state =  taskDeleg2.currentNoHovered;
-                taskDeleg2.onExited();
+        onStateChanged:{
+            if (allTasksBtns.state === "show"){
+                //This is a way to change position to allTasksBtns
+                //according to window previews size
+                taskDeleg2.computeButtonsPosition();
             }
         }
     }
 
-
+    /////////////////////////////////////////The various states for appearance///////////////////////////////////////
     states: [
         State {
             name: "nohovered1"
@@ -850,68 +805,25 @@ Item{
 
     ]
 
-    function onEntered() {
-        if (taskDeleg2.isPressed === false){
-            taskDeleg2.state = taskDeleg2.stateHov1;
-
-            //This is a way to change position to allTasksBtns
-            //according to window previews size
-            if (showPreviewsFound ===  true){
-                var ratioWin = previewManager.getWindowRatio(taskDeleg2.ccode);
-
-                if (ratioWin<1){
-                    var offY = (1 - ratioWin)/2
-
-                    allTasksBtns.offsety = offY;
-                    allTasksBtns.offsetx = 0;
-                }
-                else if(ratioWin>1){
-                    var offX = (1-(1/ratioWin))/2;
-
-                    allTasksBtns.offsety = 0;
-                    allTasksBtns.offsetx = offX;
-                }
-                else{
-                    allTasksBtns.offsety = 0;
-                    allTasksBtns.offsetx = 0;
-                }
-
-            }
-
-            //if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-            //        (taskDeleg2.centralListView === allActT.getTasksList()) )
-            if(dialogType !== dTypes[2])
-                allTasksBtns.state = "show";
-        }
-    }
-
-    function onExited() {
-        taskDeleg2.state =  taskDeleg2.currentNoHovered;
-        allTasksBtns.state = "hide";
-    }
-
     function onClicked(mouse) {
-        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-        //                (taskDeleg2.centralListView === allActT.getTasksList()) )
+
         if((dialogType === dTypes[0]) ||
                 (dialogType === dTypes[1]))
-             taskManager.activateTask(taskDeleg2.ccode);
-        //        else if (taskDeleg2.centralListView === calibrationDialog.getTasksList())
+            taskManager.activateTask(taskDeleg2.ccode);
         else if (dialogType === dTypes[2])
             calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
-
 
         if(dialogType === dTypes[1])
             desktopDialog.clickedCancel();
     }
 
+    ////////////////////// Dragging support///////////////////////////////////
+
     function onPressed(x1,y1,obj) {
-        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-        //                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+
         if((dialogType === dTypes[0]) ||
                 (dialogType === dTypes[1]))  {
             taskDeleg2.isPressed = true;
-            taskDeleg2.state =  taskDeleg2.currentNoHovered;
 
             if (taskDeleg2.showAllActivities === false){
 
@@ -921,8 +833,6 @@ Item{
                 taskDeleg2.x = nC.x;
                 taskDeleg2.y = nC.y;
             }
-
-            allTasksBtns.state = "hide";
 
             var nCor = obj.mapToItem(mainView,x1,y1);
 
@@ -936,7 +846,6 @@ Item{
                                     coord1,
                                     true);
 
-            //if(scrollingView === desktopDialog.getDeskView()){
             if (dialogType === dTypes[1]){
                 desktopView.forceState1();
                 taskDeleg2.forcedState1InDialog = true;
@@ -948,8 +857,6 @@ Item{
     }
 
     function onPositionChanged(mouse,obj) {
-        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-        //               (taskDeleg2.centralListView === allActT.getTasksList()) )
         if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
                 var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
@@ -959,13 +866,11 @@ Item{
     }
 
     function onReleased(mouse) {
-        //        if( (taskDeleg2.centralListView === desktopDialog.getTasksList()) ||
-        //                (taskDeleg2.centralListView === allActT.getTasksList()) ){
+
         if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
                 mDragInt.onMReleased(mouse);
 
-                //if(desktopDialog.getTasksList() === centralListView){
                 if (dialogType === dTypes[1]){
                     desktopDialog.emptyDialog();
                     if (taskDeleg2.forcedState1InDialog === true){
@@ -975,11 +880,15 @@ Item{
                     desktopDialog.completed();
                 }
 
-                taskDeleg2.isPressed = false;
+//                taskDeleg2.isPressed = false;
             }
         }
+        taskDeleg2.isPressed = false;
     }
 
+
+
+    ////////////////////////// Functions that provide important functionality/////////////////
 
     function updatePreview(){
 
@@ -993,10 +902,10 @@ Item{
             var obj = previewRect.mapToItem(mainView,x1,y1);
 
             previewManager.setWindowPreview(taskDeleg2.ccode,
-                                         obj.x+Settings.global.windowPreviewsOffsetX,
-                                         obj.y+Settings.global.windowPreviewsOffsetY,
-                                         previewRect.width-(2*previewRect.border.width),
-                                         previewRect.height-(2*previewRect.border.width));
+                                            obj.x+Settings.global.windowPreviewsOffsetX,
+                                            obj.y+Settings.global.windowPreviewsOffsetY,
+                                            previewRect.width-(2*previewRect.border.width),
+                                            previewRect.height-(2*previewRect.border.width));
         }
 
         if((taskDeleg2.inShownArea === false)||
@@ -1031,6 +940,32 @@ Item{
             taskDeleg2.inShownArea = true;
 
     }
+
+
+    function computeButtonsPosition(){
+        if (showPreviewsFound ===  true){
+            var ratioWin = previewManager.getWindowRatio(taskDeleg2.ccode);
+
+            if (ratioWin<1){
+                var offY = (1 - ratioWin)/2
+
+                allTasksBtns.offsety = offY;
+                allTasksBtns.offsetx = 0;
+            }
+            else if(ratioWin>1){
+                var offX = (1-(1/ratioWin))/2;
+
+                allTasksBtns.offsety = 0;
+                allTasksBtns.offsetx = offX;
+            }
+            else{
+                allTasksBtns.offsety = 0;
+                allTasksBtns.offsetx = 0;
+            }
+
+        }
+    }
+
 
     function getIcon(){
         return imageTask2;

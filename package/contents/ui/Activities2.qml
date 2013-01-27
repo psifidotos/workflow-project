@@ -320,7 +320,7 @@ Rectangle {
         }
 
         onDisablePreviewsChanged:{
-            mainView.disablePreviewsWasForcedInDesktopDialog = desktopDialog.disablePreviews;
+            mainView.disablePreviewsWasForcedInDesktopDialog = desktopDialog.disablePreviewsWasForced;
         }
     }
 

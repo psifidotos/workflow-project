@@ -11,10 +11,7 @@ Item {
 
     state: "hide"
 
-    property string status:"nothover"
-
-
-    signal changedStatus();
+    property bool containsMouse: (closeBtn.containsMouse || placeStateBtn.containsMouse)
 
     property alias opacityClose: closeBtn.opacity
     property alias yClose: closeBtn.y
@@ -24,8 +21,6 @@ Item {
     property int buttonsSize
     property int buttonsSpace: -buttonsSize/8
 
-    property bool containsMouse: closeBtn.containsMouse ||
-                                 placeStateBtn.containsMouse
 
     CloseWindowButton{
         id:closeBtn
@@ -37,22 +32,9 @@ Item {
         tooltipTitle: i18n("Close Window")
         tooltipText: i18n("You can close this window if you want to.")
 
-        onEntered: {
-            buttonsArea.state = "show"
-            buttonsArea.status = "hover"
-            changedStatus();
-        }
-
-        onExited: {
-            buttonsArea.state = "hide"
-            buttonsArea.status = "nothover"
-            changedStatus();
-        }
-
         onClicked: {
             taskManager.removeTask(taskDeleg2.ccode);
         }
-
     }
 
     WindowPlaceButton{
@@ -64,18 +46,6 @@ Item {
 
         allDesks: onAllDesktops || 0 ? true : false
         allActiv: onAllActivities || 0 ? true : false
-
-        onEntered: {
-            buttonsArea.state = "show";
-            buttonsArea.status = "hover"
-            changedStatus();
-        }
-
-        onExited: {
-            buttonsArea.state = "hide";
-            buttonsArea.status = "nothover"
-            changedStatus();
-        }
 
         onPressAndHold:{
             placeStateBtn.previousState();
@@ -111,16 +81,13 @@ Item {
                 }
             }
         }
-
     }
 
     states: [
         State {
-            name: "show"
-
+            name: "show"            
             PropertyChanges {
                 target: buttonsArea
-
                 opacityClose: 1
                 opacityWSt: 1
             }
@@ -137,7 +104,6 @@ Item {
     ]
 
     transitions: [
-
         Transition {
             from:"hide"; to:"show"
             reversible: false
