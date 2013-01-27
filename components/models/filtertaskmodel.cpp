@@ -37,6 +37,7 @@ void FilterTaskModel::setActivity(QString activity)
         m_activity = activity;
         emit activityChanged(activity);
         invalidate();
+        setCount(rowCount());
     }
 }
 
@@ -47,6 +48,7 @@ void FilterTaskModel::setDesktop(int desktop)
         m_desktop = desktop;
         emit desktopChanged(m_desktop);
         invalidate();
+        setCount(rowCount());
     }
 }
 
@@ -55,8 +57,9 @@ void FilterTaskModel::setEverywhereState(bool state)
 {
     if(m_everywhereState != state){
         m_everywhereState = state;
-        invalidate();
         emit everywhereStateChanged(state);
+        invalidate();
+        setCount(rowCount());
     }
 }
 

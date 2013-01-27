@@ -5,6 +5,7 @@ import "ui-elements"
 import "../tooltips"
 import "../../code/settings.js" as Settings
 
+import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 //Component{
 
@@ -73,12 +74,20 @@ Item{
                     mainWorkArea.clickedWorkarea();
                 }
 
-
-
             }//image mousearea
 
         }
 
+        /////Testing if this can be used in Workareas
+        /////problem is that may things are not updated correctly
+        ////Leave it for the future
+        /*WorkFlowComponents.FilterTaskModel{
+            id:taskModel
+            sourceMainModel: taskManager.model()
+            activity: workList.ccode
+            desktop: mainWorkArea.desktop
+            everywhereState: Settings.global.disableEverywherePanel
+        }*/
 
         ListView{
 
@@ -100,6 +109,7 @@ Item{
             model: taskManager.model()
 
             property int shownTasks:0
+            //property int shownTasks:taskModel.count
 
             delegate:WorkAreaTaskDeleg{
                 rHeight:Math.max(tasksSList.height/6,18)
@@ -127,6 +137,8 @@ Item{
                 onCountChanged: tasksSList.countTasks();
             }
 
+            //Problem is that when tasks delegates are out of range
+            //are not counted
             function countTasks(){
                 var counter = 0;
 

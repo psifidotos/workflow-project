@@ -2,10 +2,10 @@
 import QtQuick 1.1
 
 import ".."
-import "ui-elements"
+import "../components"
 import "../ui"
+import "ui-elements"
 import "../../code/settings.js" as Settings
-
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
@@ -221,51 +221,24 @@ Item{
         }
     }
 
-
-
-
-    MouseArea {
+    DraggingMouseArea{
         id:hoverArea
         anchors.fill: parent
-        hoverEnabled: true
-
-        property int px1:0
-        property int py1:0
-        property bool tempPressed:false
-        property int draggingSpace:2
 
         onClicked: {
-            tempPressed = false;
             taskDeleg2.onClicked(mouse);
         }
 
-        onPressed:{
-            px1 = mouse.x;
-            py1 = mouse.y;
-
-            tempPressed = true;
+        onDraggingStarted:{
+            taskDeleg2.onDraggingStarted(mouse, hoverArea);
         }
 
-        function outOfInnerLimits(ms){
-            if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
-                    (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
-                return true;
-            else
-                return false;
+        onDraggingMovement:{
+            taskDeleg2.onDraggingMovement(mouse, hoverArea);
         }
 
-        onPositionChanged: {
-            if(outOfInnerLimits(mouse)&&(tempPressed)){
-                taskDeleg2.onPressed(mouse.x,mouse.y,hoverArea);
-                tempPressed = false;
-            }
-
-            if(taskDeleg2.isPressed)
-                taskDeleg2.onPositionChanged(mouse,hoverArea);
-        }
-
-        onReleased:{
-            taskDeleg2.onReleased(mouse);
+        onDraggingEnded:{
+            taskDeleg2.onDraggingEnded(mouse);
         }
     }
 
@@ -372,48 +345,24 @@ Item{
         }
 
 
-        MouseArea {
+        DraggingMouseArea {
             id:previewMouseArea
             anchors.fill: parent
-            hoverEnabled: true
-
-            property int px1:0
-            property int py1:0
-            property bool tempPressed:false
-            property int draggingSpace:2
 
             onClicked: {
-                tempPressed = false;
                 taskDeleg2.onClicked(mouse);
             }
 
-            onPressed:{
-                px1 = mouse.x;
-                py1 = mouse.y;
-
-                tempPressed = true;
+            onDraggingStarted:{
+                taskDeleg2.onDraggingStarted(mouse, hoverArea);
             }
 
-            function outOfInnerLimits(ms){
-                if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
-                        (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
-                    return true;
-                else
-                    return false;
+            onDraggingMovement:{
+                taskDeleg2.onDraggingMovement(mouse, hoverArea);
             }
 
-            onPositionChanged: {
-                if(outOfInnerLimits(mouse)&&(tempPressed)){
-                    taskDeleg2.onPressed(mouse.x,mouse.y,previewMouseArea);
-                    tempPressed = false;
-                }
-
-                if(taskDeleg2.isPressed)
-                    taskDeleg2.onPositionChanged(mouse,previewMouseArea);
-            }
-
-            onReleased:{
-                taskDeleg2.onReleased(mouse);
+            onDraggingEnded:{
+                taskDeleg2.onDraggingEnded(mouse);
             }
         }
     }
@@ -819,7 +768,7 @@ Item{
 
     ////////////////////// Dragging support///////////////////////////////////
 
-    function onPressed(x1,y1,obj) {
+    function onDraggingStarted(mouse, obj) {
 
         if((dialogType === dTypes[0]) ||
                 (dialogType === dTypes[1]))  {
@@ -834,7 +783,7 @@ Item{
                 taskDeleg2.y = nC.y;
             }
 
-            var nCor = obj.mapToItem(mainView,x1,y1);
+            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
 
             var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
 
@@ -856,7 +805,7 @@ Item{
 
     }
 
-    function onPositionChanged(mouse,obj) {
+    function onDraggingMovement(mouse,obj) {
         if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
                 var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
@@ -865,7 +814,7 @@ Item{
         }
     }
 
-    function onReleased(mouse) {
+    function onDraggingEnded(mouse) {
 
         if(dialogType !== dTypes[2]){
             if (taskDeleg2.isPressed === true){
@@ -880,7 +829,7 @@ Item{
                     desktopDialog.completed();
                 }
 
-//                taskDeleg2.isPressed = false;
+                //                taskDeleg2.isPressed = false;
             }
         }
         taskDeleg2.isPressed = false;
