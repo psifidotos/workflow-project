@@ -10,7 +10,7 @@ import org.kde.qtextracomponents 0.1
 Item{
     id: taskDeleg1
 
-    property bool shown: ( (((onAllActivities !== true)&&
+    property bool shown: (( (((onAllActivities !== true)&&
                              ((mainWorkArea.desktop === desktop)&&
                               (activities[0] === actCode))) ||
                             ((onAllActivities !== true)&&
@@ -19,9 +19,8 @@ Item{
                             ((onAllActivities === true)&&
                              (onAllDesktops === false)&&
                              (mainWorkArea.desktop === desktop)) ||
-                            (onEverywhereAndMustBeShown)
-                          && (isPressed === false) ) //hide it in dragging
-
+                            onEverywhereAndMustBeShown )
+                          && (!isPressed) ) //hide it in dragging
 
     property bool onEverywhereAndMustBeShown:((Settings.global.disableEverywherePanel)&&
                                               (onAllActivities)&&
@@ -47,7 +46,6 @@ Item{
 
     property bool containsMouse: mstArea.containsMouse ||
                                  tasksBtns.containsMouse
-
 
 
     Behavior on height{

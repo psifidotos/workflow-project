@@ -80,6 +80,9 @@ Item{
 
         property string typeId : "addWorkArea"
 
+        property string activityCode: workList.ccode
+        property int newDesktop: workalist.model.count + 1
+
         anchors.top: workalist.bottom
         anchors.horizontalCenter: workalist.horizontalCenter
 
