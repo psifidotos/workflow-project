@@ -34,6 +34,8 @@ public:
     Q_INVOKABLE QStringList getTaskActivities(QString);
     Q_INVOKABLE QIcon getTaskIcon(QString);
 
+    Q_INVOKABLE int tasksNumber(QString activity, int desktop, bool everywhereEnabled);
+
 #ifdef Q_WS_X11
     Q_INVOKABLE void slotAddDesktop();
     Q_INVOKABLE void slotRemoveDesktop();

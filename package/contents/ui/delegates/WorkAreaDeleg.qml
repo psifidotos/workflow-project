@@ -140,15 +140,9 @@ Item{
             //Problem is that when tasks delegates are out of range
             //are not counted
             function countTasks(){
-                var counter = 0;
-
-                var tlist = tasksSList.children[0];
-
-                for(var i=0; i < tlist.children.length; ++i)
-                    if (tlist.children[i].shown === true)
-                        counter++;
-
-                shownTasks = counter;
+                shownTasks = taskManager.tasksNumber(mainWorkArea.actCode,
+                                                     mainWorkArea.desktop,
+                                                     Settings.global.disableEverywherePanel);
             }
 
         }
@@ -165,7 +159,7 @@ Item{
             x:3+offset
 
             opacity: ((tasksSList.shownTasks>0)&&(Settings.global.showWindows === true)) ?
-                       1 : 0
+                         1 : 0
 
             property color defTextColor:"#d9FFF0B6"
             property color hovTextColor:"#f8f8f8f8"
@@ -268,7 +262,7 @@ Item{
     ListView.onRemove: SequentialAnimation {
         PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: true }
         PropertyAction { target: workAreaButtons; property: "visible"; value: false }
-       // PropertyAction { target: workAreaMoreBtn; property: "visible"; value: false }
+        // PropertyAction { target: workAreaMoreBtn; property: "visible"; value: false }
         PropertyAction { target: tasksSList; property: "visible"; value: false }
 
         ParallelAnimation{
@@ -306,13 +300,13 @@ Item{
 
     function showButtons(){
         workAreaButtons.state="show";
-  //      workAreaMoreBtn.opacity = 1;
+        //      workAreaMoreBtn.opacity = 1;
         workareasSignals.calledWorkArea(actCode,desktop);
     }
 
     function hideButtons(){
         workAreaButtons.state="hide";
-    //    workAreaMoreBtn.opacity = 0;
+        //    workAreaMoreBtn.opacity = 0;
     }
 
     Connections{

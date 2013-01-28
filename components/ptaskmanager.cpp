@@ -355,4 +355,44 @@ QIcon PTaskManager::getTaskIcon(QString wId)
     return QIcon();
 }
 
+
+/*
+ *This is used to count the windows shown in a workareas
+ */
+int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnabled)
+{
+    int counter = 0;
+    for(int i=0; i<m_taskModel->getCount(); ++i){
+        TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
+        if(task){
+
+            QString taskActivity = "";
+            if (task->activities().size() > 0){
+                taskActivity = task->activities()[0];
+            }
+
+            bool oneWorkarea = (!task->onAllActivities()&&
+                                 !task->onAllDesktops()&&
+                                 (task->desktop() == desktop)&&
+                                 (taskActivity == activity));
+
+            bool allWorkareas = ( !task->onAllActivities()&&
+                                   (task->onAllDesktops()&&
+                                    (taskActivity == activity)));
+
+            bool sameWorkareas = (task->onAllActivities()&&
+                                 !task->onAllDesktops()&&
+                                 (task->desktop() == desktop));
+
+            bool everywhere = (task->onAllActivities() &&
+                               task->onAllDesktops() &&
+                               everywhereEnabled);
+
+            if(oneWorkarea || allWorkareas || sameWorkareas || everywhere)
+                counter++;
+        }
+    }
+    return counter;
+}
+
 #include "ptaskmanager.moc"
