@@ -13,7 +13,7 @@ Item{
     property color actImagBordColor: "#77ffffff"
     property alias activitiesShown:activitiesList.shownActivities
     property alias flickableV:view.interactive
-    property string typeId : "workareasMainView"
+    property string typeId : "WorkareasMainView"
     property int workareaWidth: 0
     property int workareaHeight: 0
     property int animationsStep: 0
@@ -28,7 +28,7 @@ Item{
 
         boundsBehavior: Flickable.StopAtBounds
 
-        property string typeId : "workareasFlick"
+        property string typeId : "WorkareasMainViewFlickable"
 
         Image{
             width:mainView.width<allareas.width ? allareas.width : mainView.width
@@ -50,7 +50,7 @@ Item{
 
             anchors.left: parent.left
             interactive:false
-            property string typeId : "workareasFlickList1"
+            property string typeId : "WorkareasColumnAppearance"
 
             property int maxWorkAreasHeight: 0
 

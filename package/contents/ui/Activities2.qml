@@ -200,7 +200,7 @@ Rectangle {
         }
     }
 
-    DraggingInterface{
+    DraggingInterfaceTasks{
         id:mDragInt
     }
 

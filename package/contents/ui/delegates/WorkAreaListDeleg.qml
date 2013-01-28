@@ -17,7 +17,7 @@ Item{
 
     property bool showWindowsSection:(orphansList.shownOrphanWindows > 0) && (Settings.global.showWindows  === true)
 
-    property string typeId : "workareasActItem"
+    property string typeId : "WorkareasColumnAppearanceDelegate"
 
     //   state: tCState === neededState ? "show" : "hide"
     state:"hide"
@@ -57,7 +57,7 @@ Item{
 
         height:workList.bHeight
        // width: workList.tCState === workList.neededState ? workList.bWidth : 0
-        property string typeId : "workalistForActivity"
+        property string typeId : "WorkareasListView"
 
         property int addedHeightForCurrent:(sessionParameters.screenRatio*0.2*mainView.scaleMeter)
 
@@ -78,7 +78,7 @@ Item{
     AddWorkAreaButton{
         id:addWorkArea
 
-        property string typeId : "addWorkArea"
+        property string typeId : "AddWorkareaButton"
 
         property string activityCode: workList.ccode
         property int newDesktop: workalist.model.count + 1

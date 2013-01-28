@@ -4,6 +4,7 @@ import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 import "../code/settings.js" as Settings
+import "../code/dragginghelpers.js" as Helper
 
 Rectangle{
     id:mainDraggingItem
@@ -96,30 +97,28 @@ Rectangle{
         //    mainDraggingItem.drDesktop = -1;
     }
 
-
-
     //PATHS IN ORDER TO FIND ELEMENTS IN QML STRUCTURE
     //the number indicates the children, 0-no children, 1-first child, 2-second etc...
     property variant workareaPath:[
-        "workareasMainView",0,
-        "workareasFlick",1,
-        "workareasFlickList1",1,
-        "workareasActItem",0,
-        "workalistForActivity",1,
-        "workareaDeleg",0]
+        "WorkareasMainView",0,
+        "WorkareasMainViewFlickable",1,
+        "WorkareasColumnAppearance",1,
+        "WorkareasColumnAppearanceDelegate",0,
+        "WorkareasListView",1,
+        "WorkareaDelegate",0]
 
     property variant addWorkareaPath:[
-        "workareasMainView",0,
-        "workareasFlick",1,
-        "workareasFlickList1",1,
-        "workareasActItem",0,
-        "addWorkArea",2]
+        "WorkareasMainView",0,
+        "WorkareasMainViewFlickable",1,
+        "WorkareasColumnAppearance",1,
+        "WorkareasColumnAppearanceDelegate",0,
+        "AddWorkareaButton",2]
 
     property variant workareasActPath:[
-        "workareasMainView",0,
-        "workareasFlick",1,
-        "workareasFlickList1",1,
-        "workareasActItem",0]
+        "WorkareasMainView",0,
+        "WorkareasMainViewFlickable",1,
+        "WorkareasColumnAppearance",1,
+        "WorkareasColumnAppearanceDelegate",0]
 
     property variant everywhereTasksPath:[
         "allActivitiesTasks", 3]
@@ -129,16 +128,16 @@ Rectangle{
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
-        var workarea = followPath(centralArea, mouse, workareaPath, 0);
+        var workarea = Helper.followPath(centralArea, mouse, workareaPath, 0);
 
         if(workarea !== false)
             hoveringWorkarea(workarea);
         else{
-            var addWorkarea = followPath(centralArea, mouse, addWorkareaPath, 0);
+            var addWorkarea = Helper.followPath(centralArea, mouse, addWorkareaPath, 0);
             if(addWorkarea !== false)
                 hoveringAddWorkarea(addWorkarea, mouse);
             else{
-                var allTasks = followPath(centralArea, mouse, everywhereTasksPath, 0);
+                var allTasks = Helper.followPath(centralArea, mouse, everywhereTasksPath, 0);
                 if(allTasks !== false){
                     hoveringEverywhereTasks(allTasks);
                 }
@@ -168,7 +167,7 @@ Rectangle{
     }
 
     function hoveringAddWorkarea(addworkarea, mouse){
-        var father = followPath(centralArea, mouse, workareasActPath, 0);
+        var father = Helper.followPath(centralArea, mouse, workareasActPath, 0);
         var activityCode = "";
         var desktopsNum = 0;
 
@@ -271,49 +270,6 @@ Rectangle{
                                                             co13,
                                                             2);
         }
-    }
-
-
-
-/////////////////*Functions that do the search in the models*////////////////////////////////
-    function followPath(currentObject, mouse, table, position)
-    {
-        var coordsN = mapToItem(currentObject, mouse.x, mouse.y);
-        if (position===(table.length-2)){
-            if (checkTypeId(currentObject.childAt(coordsN.x, coordsN.y), table[position])){
-                ///console.log(table[position]);
-                return getCorrectChild(currentObject, coordsN, table[position+1])
-            }
-            else
-                return false;
-        }
-        else{
-
-            if (checkTypeId(currentObject.childAt(coordsN.x, coordsN.y),table[position])){
-                var nextObject = getCorrectChild(currentObject, coordsN, table[position+1]);
-                return followPath(nextObject, mouse, table, position+2);
-            }
-            else
-                return false;
-        }
-    }
-
-    function getCorrectChild(currentObject, coords, state)
-    {
-        if (state>0)
-            return currentObject.childAt(coords.x,coords.y).children[state-1];
-        else
-            return currentObject.childAt(coords.x,coords.y);
-    }
-
-    function checkTypeId(obj,name){
-        //console.debug(obj.typeId+"-"+name);
-        if (obj === null)
-            return false;
-        else if (obj.typeId === name)
-            return true;
-        else
-            return false;
     }
 }
 

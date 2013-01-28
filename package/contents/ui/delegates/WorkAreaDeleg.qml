@@ -24,7 +24,7 @@ Item{
 
     x:isCurrentW !== true ? 0.1*mainView.scaleMeter:0
 
-    property string typeId : "workareaDeleg"
+    property string typeId : "WorkareaDelegate"
 
     property string actCode: workList.ccode
     //property int desktop: gridRow
