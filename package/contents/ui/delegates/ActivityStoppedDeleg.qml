@@ -208,13 +208,13 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
-
     }
 
-    MouseArea {
+    DraggingMouseArea{
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
+        draggingInterface: draggingActivities
+
         onClicked: {
             workflowManager.activityManager().start(ccode);
 
@@ -227,14 +227,16 @@ Item{
             }
         }
 
-        onPressed:{
-            stpActivity.onPressed(mouse, mouseArea);
+        onDraggingStarted: {
+            if(!Settings.global.lockActivities){
+                var coords = area.mapToItem(mainView, mouse.x, mouse.y);
+                draggingActivities.enableDragging(mouse, coords, code, "Stopped", Icon);
+            }
         }
 
-        onReleased:{
-            stpActivity.onReleased(mouse);
-        }
     }
+
+
 
     IconButton {
         id:deleteActivityBtn
@@ -268,17 +270,6 @@ Item{
 
     function getIcon(){
         return activityIconDisabled;
-    }
-
-
-    ////////////////Dragging Functions/////////////////////////////
-    function onPressed(mouse, area){
-        var coords = area.mapToItem(mainView, mouse.x, mouse.y);
-        draggingActivities.enableDragging(mouse, coords, code, "Stopped", Icon);
-    }
-
-    function onReleased(mouse){
-        draggingActivities.disableDragging();
     }
 
 }

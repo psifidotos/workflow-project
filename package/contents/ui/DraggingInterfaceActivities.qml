@@ -75,7 +75,6 @@ Rectangle{
     }
 
     function disableDragging(){
-
         container.activityId = "";
         container.activityStatus = "";
 
@@ -95,64 +94,8 @@ Rectangle{
     }
 
     function onMReleased(mouse, viewXY){
-
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
-
-        if (mainDraggingItem.lastSelection === 0){
-            if ( (mainDraggingItem.intActId !== mainDraggingItem.drActiv) ||
-                    (mainDraggingItem.intDesktop !== mainDraggingItem.drDesktop) ||
-                    (mainDraggingItem.intIsEverywhere === true)){
-
-
-                taskManager.setTaskState( intTaskId, "oneDesktop", drActiv, drDesktop);
-
-                taskManager.setTaskDesktopForAnimation( intTaskId, drDesktop);
-                taskManager.setTaskActivityForAnimation( intTaskId, drActiv);
-
-                if(Settings.global.animationStep2!==0){
-                    var co1 = mainView.mapToItem(mainView,iX1,iY1);
-                    mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
-                                                                     co1,
-                                                                     2);
-                }
-
-            }
-        }
-        else if (mainDraggingItem.lastSelection === 1){
-            workflowManager.workareaManager().addWorkArea(mainDraggingItem.drActiv, "");
-
-            var works = workflowManager.workareaManager().numberOfWorkareas( drActiv );
-
-            taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop", drActiv, works);
-
-            //taskManager.setOnlyOnActivity(mainDraggingItem.intTaskId,mainDraggingItem.drActiv);
-            //taskManager.setOnDesktop(mainDraggingItem.intTaskId,works);
-
-            if(Settings.global.animationStep2!==0){
-                var co14 = mainView.mapToItem(mainView,iX1,iY1);
-                var toCol4 = mainView.mapToItem(mainView,mouse.x,mouse.y);
-
-                viewXY.x = viewXY.x-30;
-
-                mainView.getDynLib().animateEverywhereToXY(mainDraggingItem.intTaskId,
-                                                           co14,
-                                                           viewXY,
-                                                           2);
-            }
-
-        }
-        else if (mainDraggingItem.lastSelection === 2){
-
-            taskManager.setTaskState(mainDraggingItem.intTaskId,"allActivities");
-
-            if(Settings.global.animationStep2!==0){
-                var co13 = mainView.mapToItem(mainView,iX1,iY1);
-                mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,
-                                                                co13,
-                                                                2);
-            }
-        }
 
         disableDragging();
     }
@@ -162,118 +105,9 @@ Rectangle{
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
-        var fixCC = mapToItem(centralArea,mouse.x,mouse.y);
-
-        if(mainDraggingItem.checkTypeId(centralArea.childAt(fixCC.x,fixCC.y),"workareasMainView")){
-            var mainCentralItem = centralArea.childAt(fixCC.x,fixCC.y);
-
-            //var fixCC2 = mapToItem(mainCentralItem,fixCC.x,fixCC.y);
-            var fixCC2 = mapToItem(mainCentralItem,mouse.x,mouse.y);
-
-            if(mainDraggingItem.checkTypeId(mainCentralItem.childAt(fixCC2.x,fixCC2.y),"workareasFlick")){
-
-                var flickTrace = mainCentralItem.childAt(fixCC2.x,fixCC2.y).children[0];
-
-                //var fixC2 = mapToItem(flickTrace,mouse.x,mouse.y);
-                var fixC2 = mapToItem(flickTrace,mouse.x,mouse.y);
-
-                if(mainDraggingItem.checkTypeId(flickTrace.childAt(fixC2.x,fixC2.y),"workareasFlickList1")){
-                    var listViewAct = flickTrace.childAt(fixC2.x,fixC2.y).children[0];
-
-                    var fixC3 = mapToItem(listViewAct,mouse.x,mouse.y);
-
-                    if(mainDraggingItem.checkTypeId(listViewAct.childAt(fixC3.x,fixC3.y),"workareasActItem")){
-                        var listViewTot = listViewAct.childAt(fixC3.x,fixC3.y);
-
-                        var activityCode = listViewTot.ccode;
-                        var desktopsNum = listViewTot.getWorkareaSize();
-
-                        var fixC4 = mapToItem(listViewTot,mouse.x,mouse.y);
-
-                        if(mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"workalistForActivity")){
-                            var onlyWorkArList = listViewTot.childAt(fixC4.x,fixC4.y).children[0];
-
-                            var fixC5 = mapToItem(onlyWorkArList,mouse.x,mouse.y);
-
-                            if(mainDraggingItem.checkTypeId(onlyWorkArList.childAt(fixC5.x,fixC5.y),"workareaDeleg")){
-                                var workAreaD = onlyWorkArList.childAt(fixC5.x,fixC5.y);
-
-                                if((mainDraggingItem.drActiv!==workAreaD.actCode)||
-                                        (mainDraggingItem.drDesktop!==workAreaD.desktop) ||
-                                        (mainDraggingItem.firsttime === true)){
-
-                                    var bordRect = workAreaD.getBorderRectangle();
-                                    var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
-
-                                    //selectionImage.setLocation(fixBCoord.x-4,fixBCoord.y-4,0.95*workAreaD.width,0.98*workAreaD.height);
-                                    //selectionImage.setLocation(fixBCoord.x,fixBCoord.y,workAreaD.width,workAreaD.height);
-                                    selectionImage.setLocation(fixBCoord.x-2,fixBCoord.y-4,bordRect.width-2,bordRect.height+8);
-                                    selectionImage.opacity = 1;
-
-                                    mainDraggingItem.drActiv = workAreaD.actCode;
-                                    mainDraggingItem.drDesktop = workAreaD.desktop;
-
-                                    mainDraggingItem.lastSelection = 0;
-                                    mainDraggingItem.firsttime = false;
-
-                                }
-
-                            }
-                        }//workalistForActivity
-                        else if (mainDraggingItem.checkTypeId(listViewTot.childAt(fixC4.x,fixC4.y),"addWorkArea")){
-                            var addArea = listViewTot.childAt(fixC4.x,fixC4.y).children[1];
-
-                            if((mainDraggingItem.drActiv!== activityCode) ||
-                                    (mainDraggingItem.drDesktop!==desktopsNum+1) ||
-                                    (mainDraggingItem.firsttime === true)){
-
-                                var fixBCoord2 = addArea.mapToItem(mainDraggingItem,addArea.x, addArea.y);
-
-                                selectionImage.setLocation(fixBCoord2.x,fixBCoord2.y-5,addArea.width,1.3 * addArea.height);
-                                selectionImage.opacity = 1;
-
-                                mainDraggingItem.drActiv = activityCode;
-                                mainDraggingItem.drDesktop = desktopsNum+1;
-
-                                mainDraggingItem.lastSelection = 1;
-                      //          mainDraggingItem.firsttime = false;
-
-                            }
-
-                        }
-                    }
-                }
-
-            }//Flickable area
-
-        }
-        else if(mainDraggingItem.checkTypeId(centralArea.childAt(fixCC.x,fixCC.y),"allActivitiesTasks")){
-           // var allTaskPO = centralArea.childAt(fixCC.x,fixCC.y);
-            var allTaskPO = centralArea.childAt(fixCC.x,fixCC.y).children[2];
-
-            //var fixBCoord3 = allTaskP.mapToItem(mainDraggingItem,allTaskP.x, allTaskP.y);
-            var fixBCoord3 = allTaskPO.mapToItem(mainDraggingItem,allTaskPO.x, allTaskPO.y);
-
-            var offX=13
-            var offY=15
-
-            selectionImage.setLocation(fixBCoord3.x-offX,fixBCoord3.y-offY, allTaskPO.width+1.4*offX, allTaskPO.height+1.8*offY);
-            selectionImage.opacity = 1;
-
-            mainDraggingItem.lastSelection = 2;
-         //   mainDraggingItem.firsttime = false;
-        }
 
     }
 
-    function checkTypeId(obj,name){
-//console.debug(obj.typeId+"-"+name);
-        if (obj === null)
-            return false;
-        else if (obj.typeId === name)
-            return true;
-        else
-            return false;
-    }
+
 }
 

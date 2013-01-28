@@ -5,6 +5,7 @@ import org.kde.qtextracomponents 0.1
 
 import "ui-elements"
 import "../tooltips"
+import "../components"
 import "../../code/settings.js" as Settings
 
 Item{
@@ -79,7 +80,7 @@ Item{
 
     QIconItem{
         id:activityIcon
-        rotation: 0
+        //rotation: 0
         opacity: ((CState===neededState)&&(!activityDragged))
 
         icon: Icon === "" ? QIcon("plasma") : QIcon(Icon)
@@ -93,6 +94,10 @@ Item{
         height:width
         smooth:true
 
+        rotation: (activityIconMouseArea.containsMouse &&
+                   (activityName.state === "inactive")&&
+                   (!Settings.global.lockActivities)) ? -20 : 0
+
         //for the animation to be precise
         property int toRX:x - width/2
         property int toRY:y - height/2
@@ -104,40 +109,26 @@ Item{
             }
         }
 
-        MouseArea {
+        DraggingMouseArea{
             id:activityIconMouseArea
             anchors.fill: parent
-            hoverEnabled: true
 
-            onEntered: {
-                if((activityName.state === "inactive")&&
-                   (!Settings.global.lockActivities)){
-                    fadeIcon.opacity = 0;
-                    activityIcon.rotation = -20;
-
-                }
-            }
-
-            onExited: {
-                fadeIcon.opacity = 1;
-                activityIcon.rotation = 0;
-            }
+            draggingInterface: draggingActivities
 
             onClicked: {
                 if (Settings.global.lockActivities === false)
                     workflowManager.activityManager().chooseIcon(ccode);
                 else{
                     workflowManager.activityManager().setCurrent(ccode);
-                    workflowManager.workareaManager().setActivityFirst(ccode);
+                 //   workflowManager.workareaManager().setActivityFirst(ccode);
                 }
             }
 
-            onPressed:{
-                  mainActivity.onPressed(mouse, activityIconMouseArea);
-            }
-
-            onReleased:{
-                  mainActivity.onReleased(mouse);
+            onDraggingStarted: {
+                if(!Settings.global.lockActivities){
+                    var coords = mapToItem(mainView, mouse.x, mouse.y);
+                    draggingActivities.enableDragging(mouse, coords, code, "Running", Icon);
+                }
             }
 
         }
@@ -158,7 +149,11 @@ Item{
     Rectangle{
         id:fadeIcon
 
-        opacity: ((CState===neededState)&&(!activityDragged)) ? 1:0
+        opacity: ((CState===neededState) &&
+                  !activityDragged &&
+                  activityIconMouseArea.containsMouse &&
+                  !activityIconMouseArea.inDragging &&
+                  !Settings.global.lockActivities) ? 1:0
 
         x:activityIcon.x+0.15*activityIcon.width
         y:activityIcon.y
@@ -217,41 +212,11 @@ Item{
             height:parent.height
             width:activityName.state === "active" ? parent.width - 40 : parent.width
 
-            hoverEnabled: true
-
-            onEntered: {
-                if(activityName.state === "inactive"){
-
-                    activityBtnsI.state="show";
-
-                    if (Settings.global.lockActivities === false)
-                        activityName.entered();
-
-                }
-                else
-                    activityBtnsI.state="hide";
-
-
-
-            }
-
-            onExited: {
-                if (Settings.global.lockActivities === false){
-                    activityBtnsI.state="hide";
-
-                    activityName.exited();
-                }
-                else
-                    activityBtnsI.state="hide";
-
-            }
-
             onClicked: {
-                workflowManager.activityManager().setCurrent(ccode);
-            }
-
-            onDoubleClicked: {
-                if (Settings.global.lockActivities === false){
+                if (Settings.global.lockActivities){
+                    workflowManager.activityManager().setCurrent(ccode);
+                }
+                else{
                     activityName.clicked(mouse);
                 }
             }
@@ -261,8 +226,8 @@ Item{
             //visible:!mainView.lockActivities
             id:activityTooltip
             title:Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            mainText: Settings.global.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
-                                                          i18n("You can enable this Activity by clicking on the Activity name or icon")
+            mainText: Settings.global.lockActivities === false ? i18n("You can enable this Activity by clicking in locked Activities state or edit its name in unlocked Activities state."):
+                                                          i18n("You can enable/edit this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
         }
     }
@@ -274,9 +239,15 @@ Item{
         height:mainView.scaleMeter - 15
 
         opacity: ((editActivityNameMouseArea.containsMouse ||
-                 activityIconMouseArea.containsMouse ||
-                 globalMouseArea.containsMouse ||
-                  activityBtnsI.containsMouse)&&(!activityDragged))
+                   activityIconMouseArea.containsMouse ||
+                   globalMouseArea.containsMouse ||
+                   activityBtnsI.containsMouse)&&
+                   (!activityDragged))
+
+        state: (editActivityNameMouseArea.containsMouse &&
+                (activityName.state === "inactive") &&
+                (!Settings.global.lockActivities) )
+
         z:40
 
         Behavior on opacity {
@@ -328,7 +299,7 @@ Item{
         return activityIcon;
     }
 
-    Connections{
+   /* Connections{
         target:activitiesSignals
         onShowButtons:{
             if(CState === neededState)
@@ -340,16 +311,8 @@ Item{
                 activityBtnsI.state="hide";
 
         }
-    }
+    }*/
 
-    ////////////////Dragging Functions/////////////////////////////
-    function onPressed(mouse, area){
-        var coords = area.mapToItem(mainView, mouse.x, mouse.y);
-        draggingActivities.enableDragging(mouse, coords, code, "Running", Icon);
-    }
 
-    function onReleased(mouse){
-        draggingActivities.disableDragging();
-    }
 }
 

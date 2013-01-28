@@ -147,8 +147,8 @@ Item{
 
     DraggingMouseArea{
         id:mstArea
-
         anchors.fill: parent
+        draggingInterface: mDragInt
 
         onClicked: {
             workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
@@ -157,14 +157,6 @@ Item{
 
         onDraggingStarted: {
             taskDeleg1.draggingStarted(mouse, mstArea);
-        }
-
-        onDraggingMovement: {
-            taskDeleg1.draggingMovement(mouse, mstArea);
-        }
-
-        onDraggingEnded: {
-            taskDeleg1.draggingEnded(mouse, mstArea);
         }
     }
 
@@ -207,17 +199,6 @@ Item{
                                 mainWorkArea.desktop,
                                 coord1,
                                 everySt);
-    }
-
-    function draggingMovement(mouse, obj){
-        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-        mDragInt.onPstChanged(nCor);
-    }
-
-    function draggingEnded(mouse, obj){
-        var mouseV = obj.mapToItem(mainView,mouse.x,mouse.y);
-
-        mDragInt.onMReleased(mouse,mouseV);
     }
 
 }
