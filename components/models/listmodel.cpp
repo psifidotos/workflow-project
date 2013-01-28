@@ -144,17 +144,21 @@ ListItem * ListModel::at(int row)
 QVariant ListModel::get(int row)
 {
     ListItem * item = m_list.at(row);
-    QMap<QString, QVariant> itemData;
-    QHashIterator<int, QByteArray> hashItr(item->roleNames());
-    while(hashItr.hasNext()){
-        hashItr.next();
-        itemData.insert(hashItr.value(),item->data(hashItr.key()).toString());
+    if (item){
+        QMap<QString, QVariant> itemData;
+        QHashIterator<int, QByteArray> hashItr(item->roleNames());
+        while(hashItr.hasNext()){
+            hashItr.next();
+            itemData.insert(hashItr.value(),item->data(hashItr.key()).toString());
+        }
+        // Edit:
+        // My C++ is sometimes a bit rusty, I was deleting item...
+        // DO NOT delete item... otherwise you remove the item from the ListModel
+        // delete item;
+        return QVariant(itemData);
     }
-    // Edit:
-    // My C++ is sometimes a bit rusty, I was deleting item...
-    // DO NOT delete item... otherwise you remove the item from the ListModel
-    // delete item;
-    return QVariant(itemData);
+    else
+        return QVariant();
 }
 
 

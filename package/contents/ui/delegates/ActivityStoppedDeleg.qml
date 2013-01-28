@@ -229,7 +229,7 @@ Item{
 
         onDraggingStarted: {
             if(!Settings.global.lockActivities){
-                var coords = area.mapToItem(mainView, mouse.x, mouse.y);
+                var coords = mapToItem(mainView, mouse.x, mouse.y);
                 draggingActivities.enableDragging(mouse, coords, code, "Stopped", Icon);
             }
         }
