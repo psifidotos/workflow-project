@@ -12,7 +12,7 @@ import "instances"
 import "helptour"
 import "connections"
 
-import "ui"
+//import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
 
@@ -365,9 +365,6 @@ Rectangle {
             }
         }
     }
-
-
-    CalibrationDialogTmpl{}
 
     //    TourDialog{
     //}

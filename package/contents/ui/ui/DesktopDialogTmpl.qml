@@ -174,7 +174,7 @@ DialogTemplate2{
 
             property alias desktopInd: deskDialog.desktop
 
-            delegate: TaskPreviewDeleg{
+            delegate: ScrolledTaskPreviewDeleg{
 
                 dialogType:deskDialog.dialogType
 
