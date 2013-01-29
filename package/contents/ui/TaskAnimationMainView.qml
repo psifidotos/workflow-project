@@ -49,7 +49,7 @@ QIconItem{
     function animateEverywhereToActivity(cid, coord, anim){
 
         var pos = taskManager.model().getIndexFor(cid);
-        console.debug("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
+        console.log("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
 
         taskAnimation.x = coord.x
         taskAnimation.y = coord.y
@@ -67,7 +67,7 @@ QIconItem{
         var elem = taskManager.model().get(pos);
         var desktopPos = elem.desktop - 1;//desktops count from 0?
 
-        console.debug("Element Desktop:"+elem.desktop+" Element activity:"+activities[0]);
+        console.log("Element Desktop:"+elem.desktop+" Element activity:"+activities[0]);
 
         if (desktopPos < 0)
             desktopPos = sessionParameters.currentDesktop - 1;

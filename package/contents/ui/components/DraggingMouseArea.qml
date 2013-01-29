@@ -43,8 +43,10 @@ MouseArea {
     }
 
     onReleased:{
-        draggingEndedActions(mouse);
-        isPressed = false;
+        if(isPressed){
+            draggingEndedActions(mouse);
+            isPressed = false;
+        }
     }
 
     function outOfInnerLimits(ms){
