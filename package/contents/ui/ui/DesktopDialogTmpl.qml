@@ -175,9 +175,6 @@ DialogTemplate2{
             property alias desktopInd: deskDialog.desktop
 
             delegate: ScrolledTaskPreviewDeleg{
-
-                dialogType:deskDialog.dialogType
-
                 showOnlyAllActivities: false
 
                 rWidth: desksTasksList.cellWidth-9
@@ -188,8 +185,6 @@ DialogTemplate2{
                 defPreviewWidth: 0.7*desksTasksList.cellHeight
                 defHovPreviewWidth: 1.3*defPreviewWidth
 
-               // taskTitleTextDef: "#ffffff"
-               // taskTitleTextHov: "#ffffff"
                 taskTitleTextDef: defColor
                 taskTitleTextHov: defColor
 

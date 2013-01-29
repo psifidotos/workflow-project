@@ -6,7 +6,6 @@ import "../../code/settings.js" as Settings
 Item{
     id: container
 
-    property alias dialogType: task.dialogType
     property alias showOnlyAllActivities: task.showOnlyAllActivities
 
     property alias rWidth: task.rWidth
@@ -19,12 +18,71 @@ Item{
     property alias taskTitleTextDef: task.taskTitleTextDef
     property alias taskTitleTextHov: task.taskTitleTextHov
 
-    property alias scrollingView: task.scrollingView
-    property alias centralListView: task.centralListView
+    property variant scrollingView
+    property variant centralListView
 
     width: task.width
     height: task.height
 
+    property bool inShownArea:true
+    property bool forcedState1InDialog:false
+
+    onInShownAreaChanged:{
+        if(task.state == task.state2)
+            updatePreview();
+    }
+
+    //This is scrolling support in the dialogs
+    Connections{
+        target:scrollingView
+        onContentYChanged:{
+            countInScrollingArea();
+
+            updatePreview();
+        }
+
+
+        onXChanged:{
+            if(task.state === task.state2)
+                updatePreview();
+        }
+        onYChanged:{
+            if(task.state === task.state2)
+                updatePreview();
+        }
+        onWidthChanged:{
+            if(task.state === task.state2)
+                updatePreview();
+        }
+        onHeightChanged:{
+            if(task.state === task.state2)
+                updatePreview();
+        }
+
+    }
+
+    Connections{
+        target:centralListView
+
+        onOnlyState1Changed:{
+            task.forceState1 = centralListView.onlyState1;
+        }
+    }
+
+    Component.onCompleted: {
+        task.forceState1 = centralListView.onlyState1;
+    }
+
+    GridView.onAdd: {
+        if (task.showPreviews === true)
+            updatePreview();
+    }
+
+    GridView.onRemove:{
+        previewManager.removeWindowPreview(task.ccode);
+    }
+
+    ///////////////////////////////Graphic Items///////////////////////////////////////
     Rectangle{
         id:taskHoverRectFrame
         width:task.width-2*border.width
@@ -41,7 +99,7 @@ Item{
 
         ccode: code
         cActCode: ((activities === undefined) || (activities[0] === undefined) ) ?
-                        sessionParameters.currentActivity : activities[0]
+                      sessionParameters.currentActivity : activities[0]
         cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
 
         state1: "listnohovered1"
@@ -49,6 +107,21 @@ Item{
         stateHov1: "listhovered1"
 
         taskHoverRect: taskHoverRectFrame
+
+        overrideUpdatePreview: true
+        overrideDraggingSupport: true
+
+        onHeightChanged: {
+            if((container.centralListView !== undefined)&&
+                    (task.mustBeShown)){
+                centralListView.delegHeight = task.height;
+            }
+        }
+
+        onClickedSignal: container.onClicked();
+        onUpdatePreviewSignal: container.updatePreview();
+        onDraggingStartedSignal: container.onDraggingStarted(mouse, obj);
+        onDraggingEndedSignal: container.onDraggingEnded(mouse);
 
         states:[
             State {
@@ -165,7 +238,7 @@ Item{
                 PropertyChanges{
                     target:task.taskTitleRecAlias
                     y: task.showPreviewsFound===false ? (((task.height - task.imageTask2Alias.height) / 2)+task.imageTask2Alias.height-height)
-                                                 : task.previewRectAlias.y+task.previewRectAlias.height
+                                                      : task.previewRectAlias.y+task.previewRectAlias.height
                     x: task.showPreviewsFound===false ? (task.imageTask2Alias.x+task.imageTask2Alias.width) : 0
                     width: task.showPreviewsFound===false ? task.width - task.imageTask2Alias.width - 10 : task.width
                     opacity: task.showPreviewsFound===false ? 1 : 1
@@ -191,7 +264,88 @@ Item{
         ]
     }
 
+    ////////////////Functionality///////////////////////
+    function onClicked(){
+        desktopDialog.clickedCancel();
+    }
+
+    function onDraggingStarted(mouse, obj) {
+        var nC = task.mapToItem(mainView,0,0);
+
+        task.parent=mainView;
+        task.x = nC.x;
+        task.y = nC.y;
+
+        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+
+        var coord1 = task.imageTask2Alias.mapToItem(mainView,task.imageTask2Alias.x, task.imageTask2Alias.y);
+
+        mDragInt.enableDragging(nCor,
+                                task.imageTask2Alias.icon,
+                                task.ccode,
+                                task.cActCode,
+                                task.cDesktop,
+                                coord1,
+                                true);
+
+        desktopView.forceState1();
+        forcedState1InDialog = true;
+        desktopDialog.closeD();
+    }
+
+    function onDraggingEnded(mouse){
+        desktopDialog.emptyDialog();
+        if (forcedState1InDialog === true){
+            desktopView.unForceState1();
+            forcedState1InDialog=false;
+        }
+        desktopDialog.completed();
+    }
+
+    function updatePreview(){
+        countInScrollingArea();
+
+        if((task.showPreviews === true)&&
+                (inShownArea === true))  {
+            var x1 = 0;
+            var y1 = 0;
+            var obj = task.previewRectAlias.mapToItem(mainView,x1,y1);
+
+            previewManager.setWindowPreview(task.ccode,
+                                            obj.x+Settings.global.windowPreviewsOffsetX,
+                                            obj.y+Settings.global.windowPreviewsOffsetY,
+                                            task.previewRectAlias.width-(2*task.previewRectAlias.border.width),
+                                            task.previewRectAlias.height-(2*task.previewRectAlias.border.width));
+        }
+
+        if((inShownArea === false)||
+                (task.showPreviews===false)){
+            previewManager.removeWindowPreview(task.ccode);
+        }
+    }
 
 
+    function countInScrollingArea(){
+        if((task.showPreviews === true)&&
+                (task.previewRectAlias.width === task.defPreviewWidth)){
+
+            var previewRelX = task.previewRectAlias.mapToItem(centralListView,0,0).x;
+            var previewRelY = task.previewRectAlias.mapToItem(centralListView,0,0).y;
+
+            var fixY = previewRelY - scrollingView.contentY;
+
+            if ((fixY>=0) &&
+                    ((fixY+task.previewRectAlias.height) <= scrollingView.height))
+                inShownArea = true;
+            else
+                inShownArea = false;
+        }
+        else
+            inShownArea = true;
+    }
+
+    function getIcon(){
+        return task.imageTask2Alias;
+    }
 }
 

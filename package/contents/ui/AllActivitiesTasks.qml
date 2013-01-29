@@ -112,7 +112,6 @@ Item{
 
             delegate: TaskPreviewDeleg{
                 showOnlyAllActivities: true
-                dialogType: allActTasksPanel.typeId
 
                 rWidth: allActRect.taskWidth
                 rHeight: allActTaskL.height
@@ -123,11 +122,6 @@ Item{
 
                 taskTitleTextDef: "#333333"
                 taskTitleTextHov: "#333333"
-
-                //Not Used//
-                scrollingView: allActTaskL // just to skip the warnings
-                centralListView: allActTaskL // just to skip the warnings
-                //Not Used//
 
                 onMustBeShownChanged:allActTaskL.countTasks();
             }

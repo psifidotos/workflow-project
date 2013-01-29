@@ -13,24 +13,12 @@ import org.kde.qtextracomponents 0.1
 Item{
     id: taskDeleg2
 
-    // This delegate is used in two situations,
-    //
-    // 1.onAllActivities where the ListView contains all the tasks
-    //  so the delegate must be shown for only the allActivities tasks,
-    //
-    // 2.for tasks in spesific desktop and activity
+    width: mustBeShown === true ? rWidth-2 : 0
+    height: mustBeShown === true ? rHeight : 0
+    opacity: mustBeShown === true ? 1 : 0
 
     property bool showOnlyAllActivities:true
-
-    property variant dTypes:["allActivitiesTasks",
-        "DesktopDialog"]
-
-    property string dialogType
-
     property bool forceState1:false
-    property bool forcedState1InDialog:false
-
-    property bool inShownArea:true
 
     property bool mustBeShown: showOnlyAllActivities === true ?
                                    ( onAllActivities &&
@@ -44,20 +32,10 @@ Item{
                                  (mustBeShown === true)&&
                                  (forceState1 === false))
 
-    //     property bool showPreviewsFound: ((showPreviews === true) &&
-    //                                       (previewRect.ratio > 0))
-
     property bool showPreviewsFound: (showPreviews === true)
-
-    //  property bool containsMouse:
 
     property int rWidth:100
     property int rHeight:100
-
-    width: mustBeShown === true ? rWidth-2 : 0
-    height: mustBeShown === true ? rHeight : 0
-
-    opacity: mustBeShown === true ? 1 : 0
 
     property string ccode: code
     property string cActCode: ((activities === undefined) || (activities[0] === undefined) ) ?
@@ -65,7 +43,6 @@ Item{
     property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
 
     property bool isPressed: hoverArea.isPressed || previewMouseArea.isPressed
-
 
     property color taskTitleTextDef
     property color taskTitleTextHov
@@ -76,10 +53,6 @@ Item{
     property int defHovPreviewWidth:100
 
     property int iconWidth:80
-
-    property variant scrollingView
-    property variant centralListView
-    property variant oldParent
 
     property string state1: "nohovered1"
     property string state2: "nohovered2"
@@ -92,6 +65,11 @@ Item{
                                    previewMouseArea.containsMouse ||
                                    allTasksBtns.containsMouse) && (!isPressed))
 
+    //This is used from ScrolledTaskPreviewDeleg in order to differentiate
+    //its behavior a bit
+    property bool overrideUpdatePreview: false;
+    property bool overrideDraggingSupport: false;
+
     /*Aliases*/
     property alias previewRectAlias : previewRect
     property alias imageTask2Alias : imageTask2
@@ -102,15 +80,14 @@ Item{
     //just for smooth animation of showing hovered task rectangle
     property Item taskHoverRect
 
+    //Signals
+    signal updatePreviewSignal();
+    signal draggingStartedSignal(variant mouse, variant obj);
+    signal draggingEndedSignal(variant mouse);
+    signal clickedSignal(variant mouse);
 
     onShowPreviewsChanged:{
         updatePreview();
-    }
-
-
-    onInShownAreaChanged:{
-        if(state == state2)
-            updatePreview();
     }
 
     onWidthChanged: {
@@ -121,82 +98,20 @@ Item{
     onHeightChanged: {
         if(state === state2)
             updatePreview();
-
-
-        if((centralListView !== undefined)&&
-                (taskDeleg2.mustBeShown)){
-            centralListView.delegHeight = height;
-        }
     }
-
-    //This is scrolling support in the dialogs
-    Connections{
-        target:scrollingView
-        onContentYChanged:{
-            countInScrollingArea();
-
-            updatePreview();
-        }
-
-
-        onXChanged:{
-            if(state === state2)
-                updatePreview();
-        }
-        onYChanged:{
-            if(state === state2)
-                updatePreview();
-        }
-        onWidthChanged:{
-            if(state === state2)
-                updatePreview();
-        }
-        onHeightChanged:{
-            if(state === state2)
-                updatePreview();
-        }
-
-    }
-
-    Connections{
-        target:centralListView
-
-        onOnlyState1Changed:{
-            taskDeleg2.forceState1 = centralListView.onlyState1;
-        }
-    }
-
 
     Component.onCompleted: {
-        taskDeleg2.forceState1 = centralListView.onlyState1;
-
         taskDeleg2.updatePreview();
     }
-
 
     ListView.onAdd: {
         if (showPreviews === true)
             taskDeleg2.updatePreview();
     }
 
-    GridView.onAdd: {
-        if (showPreviews === true)
-            taskDeleg2.updatePreview();
-
-    }
-
-
     ListView.onRemove:{
         previewManager.removeWindowPreview(taskDeleg2.ccode);
     }
-
-
-    GridView.onRemove:{
-        previewManager.removeWindowPreview(taskDeleg2.ccode);
-    }
-
-
-
 
     Behavior on height{
         NumberAnimation {
@@ -222,6 +137,7 @@ Item{
     DraggingMouseArea{
         id:hoverArea
         anchors.fill: parent
+        draggingInterface: mDragInt
 
         onClicked: {
             taskDeleg2.onClicked(mouse);
@@ -231,13 +147,7 @@ Item{
             taskDeleg2.onDraggingStarted(mouse, hoverArea);
         }
 
-        onDraggingMovement:{
-            taskDeleg2.onDraggingMovement(mouse, hoverArea);
-        }
-
-        onDraggingEnded:{
-            taskDeleg2.onDraggingEnded(mouse);
-        }
+        onDraggingEnded: taskDeleg2.draggingEndedSignal(mouse);
     }
 
     ////////////////////////////Main Elements//////////////////////////////
@@ -245,18 +155,13 @@ Item{
 
     QIconItem{
         id:imageTask2
-
         smooth:true
         icon: Icon
-
         height:width
 
         //correcting the animation
         property int toRX:taskDeleg2.rWidth/2
         property int toRY:y
-
-        //  width:taskDeleg2.defWidth
-
     }
 
     QIconItem{
@@ -265,18 +170,14 @@ Item{
 
         width:imageTask2.width
         height:imageTask2.height
-
         x:imageTask2.x
         y:imageTask2.y+2*imageTask2.height
-
 
         transform: Rotation {  axis { x: 1; y: 0; z: 0 } angle: 180 }
 
         opacity:0.15
         visible: !showPreviewsFound
-
     }
-
 
     Rectangle{
         id:previewRect
@@ -294,9 +195,7 @@ Item{
         //QPixmapItem{
         QIconItem{
             id:previewPix
-
             smooth:true
-
             icon: Icon
             enabled: false
 
@@ -305,10 +204,7 @@ Item{
             width:(parent.width) / 2
             height:(parent.height) / 2
 
-            //opacity:parent.opacity === 0 ? 0:0.6
-            //      opacity:parent.opacity === 0 ? 0.6:0.6
             opacity: 0.6
-
         }
 
         onWidthChanged: {
@@ -327,6 +223,7 @@ Item{
         DraggingMouseArea {
             id:previewMouseArea
             anchors.fill: parent
+            draggingInterface: mDragInt
 
             onClicked: {
                 taskDeleg2.onClicked(mouse);
@@ -336,13 +233,7 @@ Item{
                 taskDeleg2.onDraggingStarted(mouse, hoverArea);
             }
 
-            onDraggingMovement:{
-                taskDeleg2.onDraggingMovement(mouse, hoverArea);
-            }
-
-            onDraggingEnded:{
-                taskDeleg2.onDraggingEnded(mouse);
-            }
+            onDraggingEnded: taskDeleg2.draggingEndedSignal(mouse);
         }
     }
 
@@ -378,8 +269,7 @@ Item{
         property real offsetx:0
 
         z:5
-
-        state: (taskDeleg2.containsMouse && (dialogType !== dTypes[2])) ? "show" : "hide"
+        state: (taskDeleg2.containsMouse) ? "show" : "hide"
 
         onStateChanged:{
             if (allTasksBtns.state === "show"){
@@ -570,114 +460,48 @@ Item{
 
     function onClicked(mouse) {
         taskManager.activateTask(taskDeleg2.ccode);
-
-        if(dialogType === dTypes[1])
-            desktopDialog.clickedCancel();
     }
 
     ////////////////////// Dragging support///////////////////////////////////
 
     function onDraggingStarted(mouse, obj) {
-        taskDeleg2.isPressed = true;
-
-        if (taskDeleg2.showOnlyAllActivities === false){
-            var nC = taskDeleg2.mapToItem(mainView,0,0);
-
-            taskDeleg2.parent=mainView;
-            taskDeleg2.x = nC.x;
-            taskDeleg2.y = nC.y;
-        }
-
-        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-
-        var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
-
-        mDragInt.enableDragging(nCor,
-                                imageTask2.icon,
-                                taskDeleg2.ccode,
-                                taskDeleg2.cActCode,
-                                taskDeleg2.cDesktop,
-                                coord1,
-                                true);
-
-        if (dialogType === dTypes[1]){
-            desktopView.forceState1();
-            taskDeleg2.forcedState1InDialog = true;
-            desktopDialog.closeD();
-        }
-    }
-
-    function onDraggingMovement(mouse,obj) {
-        if (taskDeleg2.isPressed === true){
+        draggingStartedSignal(mouse,obj);
+        if(!overrideDraggingSupport){
             var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-            mDragInt.onPstChanged(nCor);
+
+            var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
+
+            mDragInt.enableDragging(nCor,
+                                    imageTask2.icon,
+                                    taskDeleg2.ccode,
+                                    taskDeleg2.cActCode,
+                                    taskDeleg2.cDesktop,
+                                    coord1,
+                                    true);
         }
     }
-
-    function onDraggingEnded(mouse) {
-        if (taskDeleg2.isPressed === true){
-            mDragInt.onMReleased(mouse);
-
-            if (dialogType === dTypes[1]){
-                desktopDialog.emptyDialog();
-                if (taskDeleg2.forcedState1InDialog === true){
-                    desktopView.unForceState1();
-                    taskDeleg2.forcedState1InDialog=false;
-                }
-                desktopDialog.completed();
-            }
-        }
-
-        taskDeleg2.isPressed = false;
-    }
-
-
 
     ////////////////////////// Functions that provide important functionality/////////////////
 
     function updatePreview(){
-        countInScrollingArea();
+        updatePreviewSignal();
+        if(!overrideUpdatePreview){
 
-        if((taskDeleg2.showPreviews === true)&&
-                (taskDeleg2.inShownArea === true))  {
-            var x1 = 0;
-            var y1 = 0;
-            var obj = previewRect.mapToItem(mainView,x1,y1);
+            if(taskDeleg2.showPreviews)  {
+                var x1 = 0;
+                var y1 = 0;
+                var obj = previewRect.mapToItem(mainView,x1,y1);
 
-            previewManager.setWindowPreview(taskDeleg2.ccode,
-                                            obj.x+Settings.global.windowPreviewsOffsetX,
-                                            obj.y+Settings.global.windowPreviewsOffsetY,
-                                            previewRect.width-(2*previewRect.border.width),
-                                            previewRect.height-(2*previewRect.border.width));
-        }
-
-        if((taskDeleg2.inShownArea === false)||
-                (taskDeleg2.showPreviews===false)){
-            previewManager.removeWindowPreview(taskDeleg2.ccode);
-        }
-    }
-
-
-    function countInScrollingArea(){
-
-        if((taskDeleg2.showPreviews === true)&&
-                (previewRect.width===taskDeleg2.defPreviewWidth)&&
-                (dialogType === dTypes[1])){
-
-            var previewRelX = previewRect.mapToItem(centralListView,0,0).x;
-            var previewRelY = previewRect.mapToItem(centralListView,0,0).y;
-
-            var fixY = previewRelY - scrollingView.contentY;
-
-            if ((fixY>=0) &&
-                    ((fixY+previewRect.height) <= scrollingView.height))
-                taskDeleg2.inShownArea = true;
+                previewManager.setWindowPreview(taskDeleg2.ccode,
+                                                obj.x+Settings.global.windowPreviewsOffsetX,
+                                                obj.y+Settings.global.windowPreviewsOffsetY,
+                                                previewRect.width-(2*previewRect.border.width),
+                                                previewRect.height-(2*previewRect.border.width));
+            }
             else
-                taskDeleg2.inShownArea = false;
-        }
-        else
-            taskDeleg2.inShownArea = true;
+                previewManager.removeWindowPreview(taskDeleg2.ccode);
 
+        }
     }
 
 
@@ -705,10 +529,8 @@ Item{
         }
     }
 
-
     function getIcon(){
         return imageTask2;
     }
-
 }
 
