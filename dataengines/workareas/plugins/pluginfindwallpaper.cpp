@@ -83,9 +83,13 @@ QString PluginFindWallpaper::getWallpaperFromFile(QString source, QString file)
         KConfigGroup tempG = conGps.group(gps);
 
         if(tempG.readPathEntry("activityId",QString("null")) == source){
-
             //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
-            if(tempG.readEntry("lastScreen",-1)==0){
+
+            int desktop = tempG.readEntry("desktop",-1);
+            int screen = tempG.readEntry("screen",-1);
+
+            if( (desktop == -1) &&
+                ((screen == -1)||(screen == 0)) ){
                 found = true;
 
                 QString res1 = getWallpaperForSingleImage(tempG);
