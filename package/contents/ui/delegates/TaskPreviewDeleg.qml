@@ -27,9 +27,6 @@ Item{
 
     property string dialogType
 
-    //   property string dialogActivity: ""
-    //   property int dialogDesktop: -1
-
     property bool forceState1:false
     property bool forcedState1InDialog:false
 
@@ -84,9 +81,9 @@ Item{
     property variant centralListView
     property variant oldParent
 
-    property string state1: showOnlyAllActivities === true ? "nohovered1" : "listnohovered1"
-    property string state2: showOnlyAllActivities === true ? "nohovered2" : "listnohovered2"
-    property string stateHov1: showOnlyAllActivities === true ? "hovered1" : "listhovered1"
+    property string state1: "nohovered1"
+    property string state2: "nohovered2"
+    property string stateHov1: "hovered1"
     property string currentNoHovered: showPreviewsFound === true ? state2 : state1
 
     state: containsMouse ? stateHov1 : currentNoHovered
@@ -96,11 +93,14 @@ Item{
                                    allTasksBtns.containsMouse) && (!isPressed))
 
     /*Aliases*/
-    property alias previewRect : previewRect
-    property alias taskTitleRec : taskTitleRec
-    property alias taskTitle2 : taskTitle2
-    property alias taskHoverRect : taskHoverRect
-    property alias allTasksBtns : allTasksBtns
+    property alias previewRectAlias : previewRect
+    property alias imageTask2Alias : imageTask2
+    property alias taskTitleRecAlias : taskTitleRec
+    property alias taskTitle2Alias : taskTitle2
+    property alias allTasksBtnsAlias : allTasksBtns
+
+    //just for smooth animation of showing hovered task rectangle
+    property Item taskHoverRect
 
 
     onShowPreviewsChanged:{
@@ -243,18 +243,6 @@ Item{
     ////////////////////////////Main Elements//////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 
-
-    Rectangle{
-        id:taskHoverRect
-        width:parent.width-2*border.width
-        height:parent.height
-        radius:5
-        color:"#30ffffff"
-        border.width: 1
-        border.color: "#aaffffff"
-    }
-
-
     QIconItem{
         id:imageTask2
 
@@ -292,21 +280,16 @@ Item{
 
     Rectangle{
         id:previewRect
-        //color:"#05666666"
         border.width: 1
-        //border.color: "#15555555"
 
         property color darkColor:"#05666666"
         property color darkBorder:"#15555555"
         property color lightColor:"#15f4f4f4"
         property color lightBorder:"#85ffffff"
 
-        // anchors.horizontalCenter: parent.horizontalCenter
-
         //should be 0 but I use 1 for the live previews
         property real ratio:1
         property real revRatio: ratio > 0 ? 1/ratio : 0
-
 
         //QPixmapItem{
         QIconItem{
@@ -327,7 +310,6 @@ Item{
             opacity: 0.6
 
         }
-
 
         onWidthChanged: {
             taskDeleg2.updatePreview();
@@ -439,11 +421,6 @@ Item{
                 color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
-
-            PropertyChanges{
-                target:taskHoverRect
-                opacity:0
-            }
             PropertyChanges{
                 target:allTasksBtns
                 x:imageTask2.x+0.9*imageTask2.width
@@ -488,10 +465,6 @@ Item{
                 target:taskTitle2
                 color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
-            }
-            PropertyChanges{
-                target:taskHoverRect
-                opacity:0
             }
             PropertyChanges{
                 target:allTasksBtns
@@ -542,154 +515,10 @@ Item{
                 border.color: previewRect.darkBorder
             }
             PropertyChanges{
-                target:taskHoverRect
-                opacity:0
-            }
-            PropertyChanges{
                 target:allTasksBtns
                 x:showPreviewsFound===false ? imageTask2.x+0.9*imageTask2.width : previewRect.x + previewRect.width - (offsetx*previewRect.width)
                 y:showPreviewsFound===false ? imageTask2.y-0.6*buttonsSize : previewRect.y - 0.5*buttonsSize + (offsety*previewRect.height)
                 buttonsSize:0.8*taskDeleg2.defWidth
-            }
-        },///STATES FOR LISTS//////////////////////////////////////
-        State {
-            name: "listnohovered1"
-            PropertyChanges{
-                target:previewRect
-                opacity:0
-                width:5
-                height:5
-                x:taskDeleg2.width/2
-                y:taskDeleg2.height/2
-            }
-            PropertyChanges{
-                target:imageTask2
-                width: taskDeleg2.defWidth
-                x:10
-                y:(taskDeleg2.height - height) / 2
-                opacity:1
-            }
-            PropertyChanges{
-                target:taskTitleRec
-                y: (((taskDeleg2.height - imageTask2.height) / 2)+imageTask2.height-height)
-                x: (imageTask2.x+imageTask2.width)
-                width: taskDeleg2.width - imageTask2.width - 10
-                opacity:taskDeleg2.isSelected === false ? 0.7 : 1
-            }
-            PropertyChanges{
-                target:taskTitle2
-                color:taskDeleg2.taskTitleTextDef
-                font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*taskDeleg2.height,15)
-            }
-            PropertyChanges{
-                target:taskHoverRect
-                opacity:0.001
-            }
-            PropertyChanges{
-                target:allTasksBtns
-                x:taskHoverRect.width - width-5
-                y:0
-                buttonsSize:0.5*taskDeleg2.height
-            }
-        },
-        State {
-            name: "listnohovered2"
-            PropertyChanges{
-                target:previewRect
-
-                opacity:0.6
-
-                width:taskDeleg2.defPreviewWidth
-                height:taskDeleg2.defPreviewWidth
-
-                // y:(taskDeleg2.defPreviewWidth - height)
-                y:0
-                x:(taskDeleg2.width - taskDeleg2.defPreviewWidth)/2
-
-                // color: previewRect.lightColor
-                // border.color: previewRect.lightBorder
-                color:"#00000000"
-                border.color:"#00000000"
-
-            }
-            PropertyChanges{
-                target:imageTask2
-                width: 1.4*taskTitleRec.height
-                x:0
-                //     y: previewRect.y+previewRect.height-height
-                y:taskTitleRec.y-height
-                opacity:1
-            }
-            PropertyChanges{
-                target:taskTitleRec
-                y: previewRect.y+previewRect.height
-                opacity:0.7
-                width:taskDeleg2.width
-            }
-            PropertyChanges{
-                target:taskTitle2
-                color:taskDeleg2.taskTitleTextDef
-                font.pixelSize: Math.max((0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
-            }
-            PropertyChanges{
-                target:taskHoverRect
-                opacity:0
-            }
-            PropertyChanges{
-                target:allTasksBtns
-                x:previewRect.x + previewRect.width - (offsetx*previewRect.width)
-                y:previewRect.y - 0.5*buttonsSize + (offsety*previewRect.height)
-                buttonsSize:0.2*taskDeleg2.defPreviewWidth
-            }
-
-        },
-        State {
-            name: "listhovered1"
-            PropertyChanges{
-                target:previewRect
-
-                width:showPreviewsFound===false ? 5 : taskDeleg2.defHovPreviewWidth
-                height:showPreviewsFound===false ? 5 : taskDeleg2.defHovPreviewWidth
-
-                y:showPreviewsFound===false ? height/2:(taskDeleg2.height-height)/2
-                x:showPreviewsFound===false ? width/2:(taskDeleg2.width-width)/2
-
-                color: showPreviewsFound===false ? lightColor : "#00000000"
-                border.color: showPreviewsFound===false ? lightBorder : "#00000000"
-
-                opacity:showPreviewsFound===false ? 0 : 0.6
-            }
-            PropertyChanges{
-                target:imageTask2
-                width: showPreviewsFound===false ? 1.4*taskDeleg2.defWidth : 1.4*taskTitleRec.height
-                x:showPreviewsFound===false ? 10 : 0
-                y:showPreviewsFound===false ? (taskDeleg2.height - height) / 2 : taskTitleRec.y-height
-                opacity: 1
-            }
-
-            PropertyChanges{
-                target:taskTitleRec
-                y: showPreviewsFound===false ? (((taskDeleg2.height - imageTask2.height) / 2)+imageTask2.height-height)
-                                             : previewRect.y+previewRect.height
-                x: showPreviewsFound===false ? (imageTask2.x+imageTask2.width) : 0
-                width: showPreviewsFound===false ? taskDeleg2.width - imageTask2.width - 10 : taskDeleg2.width
-                opacity: showPreviewsFound===false ? 1 : 1
-            }
-            PropertyChanges{
-                target:taskTitle2
-                color:taskDeleg2.taskTitleTextHov
-                font.pixelSize: Math.max(showPreviewsFound===false ? (0.28+mainView.defFontRelStep)*taskDeleg2.height : (0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
-            }
-            PropertyChanges{
-                target:taskHoverRect
-                opacity:showPreviewsFound===false ? 1 : 0.001
-            }
-            PropertyChanges{
-                target:allTasksBtns
-                x:showPreviewsFound===false ? taskHoverRect.width - width-5 : previewRect.x + previewRect.width - (offsetx*previewRect.width)
-
-                buttonsSize: showPreviewsFound===false ? 0.5*taskDeleg2.height:0.2*taskDeleg2.defHovPreviewWidth
-                y:showPreviewsFound===false ? 0 : previewRect.y -buttonsSize + previewRect.height/2
             }
         }
 
