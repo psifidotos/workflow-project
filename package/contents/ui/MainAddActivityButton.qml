@@ -1,8 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-import "tooltips"
 import "../code/settings.js" as Settings
+import org.kde.plasma.core 0.1 as PlasmaCore
 
 Rectangle{
     id: addActivityBtn
@@ -126,11 +126,11 @@ Rectangle{
 
     }
 
-    DToolTip{
-        title:i18n("Add Activity")
-        mainText: i18n("You can add an Activity if you want to with default settings.")
-        target:addActivityMouseArea
-        localIcon:plusIcon.source
+    PlasmaCore.ToolTip{
+        mainText: i18n("Add Activity")
+        subText: i18n("You can add an Activity if you want to with default settings.")
+        target: addActivityMouseArea
+        //image: plusIcon.source
     }
 }
 

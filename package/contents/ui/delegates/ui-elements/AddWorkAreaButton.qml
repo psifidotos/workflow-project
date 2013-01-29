@@ -1,6 +1,6 @@
 import QtQuick 1.0
 
-import "../../tooltips"
+import org.kde.plasma.core 0.1 as PlasmaCore
 import "../../../code/settings.js" as Settings
 
 Rectangle{
@@ -60,11 +60,11 @@ Rectangle{
 
     }
 
-    DToolTip{
-        title:i18n("Add WorkArea")
-        mainText: i18n("You can add a Workarea in order to sub-organize better your work.")
+    PlasmaCore.ToolTip{
+        mainText: i18n("Add WorkArea")
+        subText: i18n("You can add a Workarea in order to sub-organize better your work.")
         target:addWorkareaMouseArea
-        localIcon:addButtonImage.source
+        //localIcon:addButtonImage.source
     }
 
 }

@@ -4,7 +4,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
 import "ui-elements"
-import "../tooltips"
 import "../../code/settings.js" as Settings
 
 Item{
@@ -122,15 +121,15 @@ Item{
 
         }
 
-        DToolTip{
+        PlasmaCore.ToolTip{
            // visible:!mainView.lockActivities
             id:activityIconTooltip
 
-            title:Settings.global.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
-            mainText: Settings.global.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
+            mainText: Settings.global.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
+            subText: Settings.global.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
-            target:activityIconMouseArea
-            icon:Icon === "" ? "plasma" : Icon
+            target: activityIconMouseArea
+            image: Icon === "" ? "plasma" : Icon
         }
 
     }
@@ -237,11 +236,11 @@ Item{
             }
         }
 
-        DToolTip{
+        PlasmaCore.ToolTip{
             //visible:!mainView.lockActivities
-            id:activityTooltip
-            title:Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            mainText: Settings.global.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
+            id: activityTooltip
+            mainText: Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
+            subText: Settings.global.lockActivities === false ? i18n("You can enable this Activity by clicking or edit its name with double-clicking in order to represent your work."):
                                                           i18n("You can enable this Activity by clicking on the Activity name or icon")
             target:editActivityNameMouseArea
         }

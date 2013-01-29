@@ -2,7 +2,7 @@
 import QtQuick 1.1
 
 import ".."
-import "../../tooltips"
+import org.kde.plasma.core 0.1 as PlasmaCore
 import "../../../code/settings.js" as Settings
 
 Item{
@@ -247,11 +247,11 @@ Item{
 
     }
 
-    DToolTip{
-        target:buttonArea
-        title:mainBtn.tooltipTitle
-        mainText: mainBtn.tooltipText
-        icon:mainBtn.icon
+    PlasmaCore.ToolTip{
+        target: buttonArea
+        mainText: mainBtn.tooltipTitle
+        subText: mainBtn.tooltipText
+        image: mainBtn.icon
     }
 
 }

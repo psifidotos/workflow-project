@@ -4,7 +4,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
 import "ui-elements"
-import "../tooltips"
 import "../components"
 import "../../code/settings.js" as Settings
 
@@ -123,9 +122,6 @@ Item{
                 }
             }
         }
-
-
-
     }
 
     Text{
@@ -238,17 +234,15 @@ Item{
         }
     }
 
-    DToolTip {
+    PlasmaCore.ToolTip {
         target: mouseArea
-        title: i18n("Restore Activity")
-        mainText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
-        icon: instanceOfThemeList.icons.RunActivity
+        mainText: i18n("Restore Activity")
+        subText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
+        image: instanceOfThemeList.icons.RunActivity
     }
 
     function getIcon(){
         return activityIconDisabled;
     }
-
-
 }
 
