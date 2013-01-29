@@ -20,23 +20,22 @@ Item{
     //
     // 2.for tasks in spesific desktop and activity
 
-    property bool showAllActivities:true
+    property bool showOnlyAllActivities:true
 
     property variant dTypes:["allActivitiesTasks",
-        "DesktopDialog",
-        "CalibrationDialog"]
+        "DesktopDialog"]
 
     property string dialogType
 
-    property string dialogActivity: ""
-    property int dialogDesktop: -1
+    //   property string dialogActivity: ""
+    //   property int dialogDesktop: -1
 
     property bool forceState1:false
     property bool forcedState1InDialog:false
 
     property bool inShownArea:true
 
-    property bool mustBeShown: showAllActivities === true ?
+    property bool mustBeShown: showOnlyAllActivities === true ?
                                    ( onAllActivities &&
                                     onAllDesktops &&
                                     !isPressed ):
@@ -67,10 +66,9 @@ Item{
     property string cActCode: ((activities === undefined) || (activities[0] === undefined) ) ?
                                   sessionParameters.currentActivity : activities[0]
     property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
-    property bool isPressed:false
 
-    property string selectedWin: ""
-    property bool isSelected: selectedWin === ccode
+    property bool isPressed: hoverArea.isPressed || previewMouseArea.isPressed
+
 
     property color taskTitleTextDef
     property color taskTitleTextHov
@@ -86,9 +84,9 @@ Item{
     property variant centralListView
     property variant oldParent
 
-    property string state1: showAllActivities === true ? "nohovered1" : "listnohovered1"
-    property string state2: showAllActivities === true ? "nohovered2" : "listnohovered2"
-    property string stateHov1: showAllActivities === true ? "hovered1" : "listhovered1"
+    property string state1: showOnlyAllActivities === true ? "nohovered1" : "listnohovered1"
+    property string state2: showOnlyAllActivities === true ? "nohovered2" : "listnohovered2"
+    property string stateHov1: showOnlyAllActivities === true ? "hovered1" : "listhovered1"
     property string currentNoHovered: showPreviewsFound === true ? state2 : state1
 
     state: containsMouse ? stateHov1 : currentNoHovered
@@ -96,6 +94,14 @@ Item{
     property bool containsMouse: ((hoverArea.containsMouse ||
                                    previewMouseArea.containsMouse ||
                                    allTasksBtns.containsMouse) && (!isPressed))
+
+    /*Aliases*/
+    property alias previewRect : previewRect
+    property alias taskTitleRec : taskTitleRec
+    property alias taskTitle2 : taskTitle2
+    property alias taskHoverRect : taskHoverRect
+    property alias allTasksBtns : allTasksBtns
+
 
     onShowPreviewsChanged:{
         updatePreview();
@@ -158,19 +164,11 @@ Item{
         onOnlyState1Changed:{
             taskDeleg2.forceState1 = centralListView.onlyState1;
         }
-        onSelectedWinChanged:{
-            if(centralListView === calibrationDialog.getTasksList())
-                taskDeleg2.selectedWin = centralListView.selectedWin;
-        }
     }
 
 
     Component.onCompleted: {
         taskDeleg2.forceState1 = centralListView.onlyState1;
-
-        //if(centralListView === calibrationDialog.getTasksList())
-        if(dialogType === dTypes[2])
-            taskDeleg2.selectedWin = centralListView.selectedWin;
 
         taskDeleg2.updatePreview();
     }
@@ -251,7 +249,7 @@ Item{
         width:parent.width-2*border.width
         height:parent.height
         radius:5
-        color:taskDeleg2.isSelected === false ? "#30ffffff" : "#a2222222"
+        color:"#30ffffff"
         border.width: 1
         border.color: "#aaffffff"
     }
@@ -344,7 +342,6 @@ Item{
             taskDeleg2.updatePreview();
         }
 
-
         DraggingMouseArea {
             id:previewMouseArea
             anchors.fill: parent
@@ -367,38 +364,29 @@ Item{
         }
     }
 
-
     onXChanged: {
         taskDeleg2.updatePreview();
     }
+
     ////Preview State///////////
-
-
 
     Rectangle{
         id: taskTitleRec
 
-        //   anchors.horizontalCenter: parent.horizontalCenter
-
-        //   width:taskDeleg2.width
         height:taskTitle2.height
         color:"#00e2e2e2"
 
         Text{
             id:taskTitle2
-
             anchors.horizontalCenter: parent.horizontalCenter
-
 
             text:name === undefined ? "" : name
             font.family: mainView.defaultFont.family
-            font.italic: taskDeleg2.isSelected === true ? true : false
             font.bold: true
 
             elide:Text.ElideRight
             width:parent.width
         }
-
     }
 
     TaskPreviewButtons{
@@ -448,7 +436,7 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
 
@@ -498,7 +486,7 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
@@ -532,7 +520,7 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextHov
                 font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
@@ -590,12 +578,12 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
                 target:taskHoverRect
-                opacity:taskDeleg2.isSelected===false? 0.001 : 1
+                opacity:0.001
             }
             PropertyChanges{
                 target:allTasksBtns
@@ -640,7 +628,7 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextDef:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextDef
                 font.pixelSize: Math.max((0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
@@ -689,7 +677,7 @@ Item{
             }
             PropertyChanges{
                 target:taskTitle2
-                color:taskDeleg2.isSelected===false?taskDeleg2.taskTitleTextHov:taskDeleg2.taskTitleTextSel
+                color:taskDeleg2.taskTitleTextHov
                 font.pixelSize: Math.max(showPreviewsFound===false ? (0.28+mainView.defFontRelStep)*taskDeleg2.height : (0.09+mainView.defFontRelStep)*taskDeleg2.height,15)
             }
             PropertyChanges{
@@ -749,18 +737,10 @@ Item{
             TaskPreviewDelegAnimations{
             }
         }
-
-
-
     ]
 
     function onClicked(mouse) {
-
-        if((dialogType === dTypes[0]) ||
-                (dialogType === dTypes[1]))
-            taskManager.activateTask(taskDeleg2.ccode);
-        else if (dialogType === dTypes[2])
-            calibrationDialog.setSelectedWindow(taskDeleg2.ccode);
+        taskManager.activateTask(taskDeleg2.ccode);
 
         if(dialogType === dTypes[1])
             desktopDialog.clickedCancel();
@@ -769,69 +749,56 @@ Item{
     ////////////////////// Dragging support///////////////////////////////////
 
     function onDraggingStarted(mouse, obj) {
+        taskDeleg2.isPressed = true;
 
-        if((dialogType === dTypes[0]) ||
-                (dialogType === dTypes[1]))  {
-            taskDeleg2.isPressed = true;
+        if (taskDeleg2.showOnlyAllActivities === false){
+            var nC = taskDeleg2.mapToItem(mainView,0,0);
 
-            if (taskDeleg2.showAllActivities === false){
-
-                var nC = taskDeleg2.mapToItem(mainView,0,0);
-
-                taskDeleg2.parent=mainView;
-                taskDeleg2.x = nC.x;
-                taskDeleg2.y = nC.y;
-            }
-
-            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-
-            var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
-
-            mDragInt.enableDragging(nCor,
-                                    imageTask2.icon,
-                                    taskDeleg2.ccode,
-                                    taskDeleg2.cActCode,
-                                    taskDeleg2.cDesktop,
-                                    coord1,
-                                    true);
-
-            if (dialogType === dTypes[1]){
-                desktopView.forceState1();
-                taskDeleg2.forcedState1InDialog = true;
-                desktopDialog.closeD();
-            }
-
+            taskDeleg2.parent=mainView;
+            taskDeleg2.x = nC.x;
+            taskDeleg2.y = nC.y;
         }
 
+        var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+
+        var coord1 = imageTask2.mapToItem(mainView,imageTask2.x, imageTask2.y);
+
+        mDragInt.enableDragging(nCor,
+                                imageTask2.icon,
+                                taskDeleg2.ccode,
+                                taskDeleg2.cActCode,
+                                taskDeleg2.cDesktop,
+                                coord1,
+                                true);
+
+        if (dialogType === dTypes[1]){
+            desktopView.forceState1();
+            taskDeleg2.forcedState1InDialog = true;
+            desktopDialog.closeD();
+        }
     }
 
     function onDraggingMovement(mouse,obj) {
-        if(dialogType !== dTypes[2]){
-            if (taskDeleg2.isPressed === true){
-                var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
-                mDragInt.onPstChanged(nCor);
-            }
+        if (taskDeleg2.isPressed === true){
+            var nCor = obj.mapToItem(mainView,mouse.x,mouse.y);
+            mDragInt.onPstChanged(nCor);
         }
     }
 
     function onDraggingEnded(mouse) {
+        if (taskDeleg2.isPressed === true){
+            mDragInt.onMReleased(mouse);
 
-        if(dialogType !== dTypes[2]){
-            if (taskDeleg2.isPressed === true){
-                mDragInt.onMReleased(mouse);
-
-                if (dialogType === dTypes[1]){
-                    desktopDialog.emptyDialog();
-                    if (taskDeleg2.forcedState1InDialog === true){
-                        desktopView.unForceState1();
-                        taskDeleg2.forcedState1InDialog=false;
-                    }
-                    desktopDialog.completed();
+            if (dialogType === dTypes[1]){
+                desktopDialog.emptyDialog();
+                if (taskDeleg2.forcedState1InDialog === true){
+                    desktopView.unForceState1();
+                    taskDeleg2.forcedState1InDialog=false;
                 }
-
-                //                taskDeleg2.isPressed = false;
+                desktopDialog.completed();
             }
         }
+
         taskDeleg2.isPressed = false;
     }
 
@@ -840,9 +807,7 @@ Item{
     ////////////////////////// Functions that provide important functionality/////////////////
 
     function updatePreview(){
-
         countInScrollingArea();
-
 
         if((taskDeleg2.showPreviews === true)&&
                 (taskDeleg2.inShownArea === true))  {
@@ -859,11 +824,7 @@ Item{
 
         if((taskDeleg2.inShownArea === false)||
                 (taskDeleg2.showPreviews===false)){
-
-            //  if (calibrationDialog.getTasksList() !== centralListView)
-            //if(dialogType !== dTypes[2])
-            if(!isSelected)
-                previewManager.removeWindowPreview(taskDeleg2.ccode);
+            previewManager.removeWindowPreview(taskDeleg2.ccode);
         }
     }
 

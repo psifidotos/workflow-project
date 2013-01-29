@@ -111,7 +111,7 @@ Item{
             //Not Used//
 
             delegate: TaskPreviewDeleg{
-                showAllActivities: true
+                showOnlyAllActivities: true
                 dialogType: allActTasksPanel.typeId
 
                 rWidth: allActRect.taskWidth

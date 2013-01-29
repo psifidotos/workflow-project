@@ -366,6 +366,7 @@ Rectangle {
         }
     }
 
+    //DesktopDialogTmpl{}
     //    TourDialog{
     //}
 

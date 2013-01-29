@@ -178,7 +178,7 @@ DialogTemplate2{
 
                 dialogType:deskDialog.dialogType
 
-                showAllActivities: false
+                showOnlyAllActivities: false
 
                 rWidth: desksTasksList.cellWidth-9
                 rHeight: desksTasksList.cellHeight
@@ -195,13 +195,7 @@ DialogTemplate2{
 
                 scrollingView: desktopView
                 centralListView: desksTasksList
-
-                dialogActivity: deskDialog.activityCode
-                dialogDesktop: deskDialog.desktop
-
             }
-
-
         }
 
         function forceState1(){
@@ -212,7 +206,6 @@ DialogTemplate2{
             else{
                 deskDialog.disablePreviewsWasForced = false;
             }
-
         }
 
         function unForceState1(){
