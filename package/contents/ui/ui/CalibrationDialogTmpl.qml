@@ -100,25 +100,23 @@ DialogTemplate2{
                     calibsTasksList.prevWin = calibsTasksList.selectedWin;
                 }
 
-                delegate: TaskPreviewDeleg{
-                    showAllActivities: false
-                    dialogType:calibDialog.dialogType
-
-                    rWidth: calibsTasksList.cellWidth
-                    rHeight: calibsTasksList.cellHeight
-
-                    defWidth: 0.7*mainView.scaleMeter
-
-                    defPreviewWidth: 0.8*calibsTasksList.cellHeight
-                    defHovPreviewWidth: 1.4*defPreviewWidth
+                delegate: BasicTaskDeleg{
+                    width: calibsTasksList.cellWidth
+                    height: calibsTasksList.cellHeight
 
                     taskTitleTextDef: defColor
                     taskTitleTextHov: defColor
-                    //taskTitleTextDef: "#ffffff"
-                    //taskTitleTextHov: "#ffffff"
+                    taskTitleTextSel: "#afc6ff"
 
-                    scrollingView: calibrView
-                    centralListView: calibsTasksList
+                    selectedWin: calibsTasksList.selectedWin;
+
+                    onTaskClicked:{
+                        calibsTasksList.selectedWin = win;
+                    }
+                }
+
+                Component.onCompleted: {
+                    calibsTasksList.selectedWin = model.get(0).code;
                 }
 
 
@@ -246,7 +244,7 @@ DialogTemplate2{
                 font.family: mainView.defaultFont.family
                 font.bold: true
                 font.italic: true
-                font.pixelSize: calibDialog.fontsSize
+                font.pixelSize: 0
 
                 //color: "#f4f4f4"
                 color:defColor
