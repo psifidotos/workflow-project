@@ -21,7 +21,7 @@ Item{
                             (onAllDesktops === false)&&
                             (mainWorkArea.desktop === desktop)) ||
                            onEverywhereAndMustBeShown )
-                          && (!isPressed) ) //hide it in dragging
+                          && (!inDragging) ) //hide it in dragging
 
     property bool onEverywhereAndMustBeShown:((Settings.global.disableEverywherePanel)&&
                                               (onAllActivities)&&
@@ -33,7 +33,8 @@ Item{
     opacity: shown ? 1 : 0
 
     property string ccode: code
-    property bool isPressed: mstArea.isPressed
+    property bool inDragging: code === mDragInt.intTaskId
+//    property bool isPressed: mstArea.isPresse
     property int rHeight:10
 
 

@@ -114,7 +114,7 @@ Item{
             delegate:WorkAreaTaskDeleg{
                 rHeight:Math.max(tasksSList.height/6,18)
 
-                onShownChanged:tasksSList.countTasks();
+                onShownChanged:tasksSList.countTasks(ccode, inDragging);
             }
 
 
@@ -134,15 +134,25 @@ Item{
 
             Connections{
                 target:tasksSList.model
-                onCountChanged: tasksSList.countTasks();
+                onCountChanged: tasksSList.countTasks("", false);
             }
 
-            //Problem is that when tasks delegates are out of range
-            //are not counted
-            function countTasks(){
-                shownTasks = taskManager.tasksNumber(mainWorkArea.actCode,
-                                                     mainWorkArea.desktop,
-                                                     Settings.global.disableEverywherePanel);
+            function countTasks(wId, dragged){
+                var counter;
+
+                if(dragged){
+                    counter = taskManager.tasksNumber(mainWorkArea.actCode,
+                                                      mainWorkArea.desktop,
+                                                      Settings.global.disableEverywherePanel,
+                                                      wId);
+                }
+                else{
+                    counter = taskManager.tasksNumber(mainWorkArea.actCode,
+                                                      mainWorkArea.desktop,
+                                                      Settings.global.disableEverywherePanel);
+                }
+
+                shownTasks = counter;
             }
 
         }

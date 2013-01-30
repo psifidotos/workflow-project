@@ -91,6 +91,9 @@ Rectangle{
 
         mainDraggingItem.lastSelection = -1;
 
+        mainDraggingItem.intActId = "";
+        mainDraggingItem.intDesktop = -1;
+        mainDraggingItem.intTaskId = "";
         //It creates a confusion when releasing
         //must be fixed with a flag initialiazing properly
         //    mainDraggingItem.drActiv = "";

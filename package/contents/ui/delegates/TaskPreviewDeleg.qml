@@ -23,8 +23,8 @@ Item{
     property bool mustBeShown: showOnlyAllActivities === true ?
                                    ( onAllActivities &&
                                     onAllDesktops &&
-                                    !isPressed ):
-                                   (!isPressed)
+                                    !inDragging ):
+                                   (!inDragging)
 
     property bool showPreviews: ((Settings.global.showWindows === true)&&
                                  (Settings.global.windowPreviews === true)&&
@@ -42,7 +42,7 @@ Item{
                                   sessionParameters.currentActivity : activities[0]
     property int cDesktop:desktop === undefined ? sessionParameters.currentDesktop : desktop
 
-    property bool isPressed: hoverArea.isPressed || previewMouseArea.isPressed
+    property bool inDragging: mDragInt.intTaskId === ccode
 
     property color taskTitleTextDef
     property color taskTitleTextHov
@@ -63,7 +63,7 @@ Item{
 
     property bool containsMouse: ((hoverArea.containsMouse ||
                                    previewMouseArea.containsMouse ||
-                                   allTasksBtns.containsMouse) && (!isPressed))
+                                   allTasksBtns.containsMouse) && (!inDragging))
 
     //This is used from ScrolledTaskPreviewDeleg in order to differentiate
     //its behavior a bit
