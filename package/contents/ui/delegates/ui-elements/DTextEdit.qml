@@ -4,31 +4,46 @@ import QtQuick 1.1
 import "../../../code/settings.js" as Settings
 
 Item{
+    id:container
 
-    id:dTextItem
-
-    state: "inactive"
     property alias text : mainText.text
 
-    property bool firstrun: true
-
-    property bool enableEditing
     property string acceptedText : ""
-    property string actCode: ""
+    property bool containsMouse: (tickMouseArea.containsMouse ||
+                                  mainTextMouseArea.containsMouse)
+
+    property bool enableEditing: !Settings.global.lockActivities
+    property alias focused : mainText.activeFocus
+    property alias tooltipItem : mainTextMouseArea
 
     property int nHeight
 
-    property bool containsMouse: tickMouseArea.containsMouse ||
-                                 mainTextMouseArea.containsMouse ||
-                                 pencilMouseArea.containsMouse
+    signal entered();
+    signal exited();
+    signal textAcceptedSignal(string finalText);
+
+    onFocusedChanged: {
+        if(!focused){
+            textWasNotAccepted();
+        }
+    }
+
+    onEnableEditingChanged:{
+        if (container.focused){
+            container.textWasNotAccepted();
+        }
+    }
+
+    Component.onCompleted: {
+        acceptedText = container.text;
+    }
 
     BorderImage{
         id:backImage
-
-        opacity:0
-        source:"../../Images/buttons/editBox2.png"
-
         y:3
+        source: tickMouseArea.containsMouse ? hoverSource : initSource
+        opacity: container.focused ? 1 : 0.001
+
 
         border.left: 15; border.top: 15;
         border.right: 40; border.bottom: 15;
@@ -54,17 +69,17 @@ Item{
             height: parent.height
             anchors.right: parent.right
 
-
             Image{
                 id:tickImage;
-
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
-                source: initTick
                 width: parent.width - 15
                 height: 0.75*width
                 smooth:true
+
+                source: tickMouseArea.containsMouse ? hoverTick : initTick
+                opacity: container.focused ? 1 : 0
 
                 property string initTick:"../../Images/buttons/darkTick.png"
                 property string hoverTick:"../../Images/buttons/lightTick.png"
@@ -74,24 +89,13 @@ Item{
                 id:tickMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                z:15
 
-                onEntered:{
-                    if(dTextItem.enableEditing === true){
-                        backImage.source = backImage.hoverSource;
-                        tickImage.source = tickImage.hoverTick;
-                    }
-                }
-                onExited:{
-                    if(dTextItem.enableEditing === true){
-                        backImage.source = backImage.initSource;
-                        tickImage.source = tickImage.initTick;
-                    }
-                }
+                onEntered: container.entered();
+                onExited: container.exited();
 
                 onClicked: {
-                    if(dTextItem.enableEditing === true)
-                        dTextItem.textAccepted();
+                    if (container.enableEditing)
+                        container.textWasAccepted();
                 }
             }
         }
@@ -102,14 +106,14 @@ Item{
 
         text:mainText.text
 
-        width: dTextItem.width-5
-        height: dTextItem.nHeight
-        //      height:mainText.height
-        //      y:-mainText.space
+        width: container.width-5
+        height: container.nHeight
+        opacity: container.focused ? 0 : 1
 
         font.family: mainText.font.family
         font.bold: mainText.font.bold
         font.italic: mainText.font.italic
+        font.pointSize: 4
 
         font.pixelSize: (0.22+mainView.defFontRelStep)*actImag1.height
         color:mainText.color
@@ -118,26 +122,19 @@ Item{
         anchors.leftMargin: 8
         anchors.bottom: backImage.bottom
         anchors.bottomMargin: 8
-        //anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: mainText.verticalAlignment
-
 
         wrapMode: Text.Wrap
         maximumLineCount: 2
         elide:Text.ElideRight
-
     }
 
     TextEdit {
         id:mainText
         property int space:0;
-        //property int spaceN:
 
-        //   width:dTextItem.width - 30 - space;
-        width:dTextItem.width - 36;
-
-        height: dTextItem.nHeight - 30;
-        //   height: dTextItem.height - space;
+        width:container.width - 36;
+        height: container.nHeight - 30;
 
         wrapMode: TextEdit.Wrap
 
@@ -147,22 +144,21 @@ Item{
 
         font.pixelSize: 0.9*mainTextLabel2.font.pixelSize
 
-        color: origColor
+        color: activeFocus ? activColor : origColor
         verticalAlignment: TextEdit.AlignBottom
 
-        opacity:mainTextLabel2.opacity === 0 ? 1 : 0
-        visible:mainTextLabel2.opacity === 0 ? 1 : 0
+        opacity: activeFocus ? 1 : 0.001
+        visible: container.enableEditing ? true : false
+        //visible: mainTextLabel2.opacity === 0 ? 1 : 0
 
         anchors.left: parent.left
         anchors.leftMargin: 8
         anchors.bottom: backImage.bottom
         anchors.bottomMargin: 8
 
-
         focus:true
-        readOnly: !dTextItem.enableEditing
-        enabled: dTextItem.enableEditing
-
+        //  readOnly: !container.enableEditing
+        //   enabled: container.enableEditing
 
         property color origColor: "#f0f0f0"
         property color activColor: "#444444"
@@ -195,30 +191,9 @@ Item{
             return mainText.positionAt(mappedMouse.x, mappedMouse.y);
         }
 
-        MouseArea{
-            id:mainTextMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-
-            onEntered:{
-                if(dTextItem.enableEditing === true)
-                    dTextItem.enteredFunction();
-            }
-            onExited:{
-                if(dTextItem.enableEditing === true)
-                    dTextItem.exitedFunction();
-            }
-
-            onClicked: {
-                if(dTextItem.enableEditing === true)
-                    dTextItem.clickedFunction(mouse);
-            }
-        }
-
         Keys.onPressed: {
             if ((event.key === Qt.Key_Enter)||(event.key === Qt.Key_Return)) {
-                dTextItem.textAccepted();
+                container.textWasAccepted();
                 event.accepted = true;
             }
             else if (event.key === Qt.Key_Escape){
@@ -229,15 +204,15 @@ Item{
 
     Image{
         id:pencilImg
-        anchors.right: dTextItem.right
+        anchors.right: container.right
         anchors.rightMargin: 10
-        anchors.bottom: dTextItem.bottom
+        anchors.bottom: container.bottom
         anchors.bottomMargin: 3
 
-        width:0.4*dTextItem.height
-        height:dTextItem.height / 2
+        width:0.4*container.height
+        height:container.height / 2
         source:"../../Images/buttons/listPencil.png"
-        opacity: dTextItem.containsMouse && (dTextItem.state === "inactive") && dTextItem.enableEditing ? 1 : 0
+        opacity: container.containsMouse && !container.focused && container.enableEditing ? 1 : 0
         smooth:true
 
         Behavior on opacity{
@@ -246,113 +221,39 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
-        MouseArea{
-            id:pencilMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-
-
-            onEntered:{
-                if(dTextItem.enableEditing === true)
-                    dTextItem.enteredFunction();
-            }
-            onExited:{
-                if(dTextItem.enableEditing === true)
-                    dTextItem.exitedFunction();
-            }
-
-            onClicked: {
-                if(dTextItem.enableEditing  === true)
-                    dTextItem.clickedFunction(mouse);
-            }
-        }
     }
 
+    MouseArea{
+        id:mainTextMouseArea
+        width: container.focused ? parent.width - 40 : parent.width
+        height: parent.height
+        hoverEnabled: true
 
-    states: [
-        State {
-            name: "active"
-            when: ((mainText.activeFocus===true) &&
-                   (dTextItem.enableEditing===true))
-            PropertyChanges{
-                target:backImage
-                opacity:1
-            }
-            PropertyChanges{
-                target:mainText
-                space:21
-                color:mainText.activColor
-            }
-            PropertyChanges{
-                target:pencilImg
-                opacity:0
-            }
+        onEntered: container.entered();
+        onExited: container.exited();
 
-        },
-        State{
-            name: "inactive"
-            when: mainText.activeFocus === false
-            PropertyChanges{
-                target:backImage
-                opacity:0
-            }
-            PropertyChanges{
-                target:mainText
-                color:mainText.origColor
-            }
-            PropertyChanges{
-                target:pencilImg
-                opacity:0
-            }
-            StateChangeScript {
-                name: "checkFirstRun"
-                script: {
-                    if (dTextItem.firstrun)
-                        dTextItem.acceptedText = dTextItem.text
-                    else
-                        textNotAccepted();
-                }
-            }
+        onClicked: {
+            if(container.enableEditing)
+                container.clickedFunction(mouse);
         }
-    ]
-
-    function enteredFunction(){
-        if(dTextItem.state==="inactive")
-            pencilImg.opacity = 1;
-    }
-
-    function exitedFunction(){
-        pencilImg.opacity = 0;
     }
 
     function clickedFunction(mouse){
-        dTextItem.firstrun = false;
-
         mainText.forceActiveFocus();
         var pos = mainText.characterPositionAt(mouse);
         mainText.cursorPosition = pos;
-
-        pencilImg.opacity = 0;
-
-        dTextItem.acceptedText = dTextItem.text
-        mainTextLabel2.opacity = 0;
-      //  activityBtnsI.state="hide";
+        container.acceptedText = container.text
     }
 
-    function textAccepted(){
-        dTextItem.acceptedText = dTextItem.text;
-        dTextItem.state = "inactive";
+    function textWasAccepted(){
+        container.acceptedText = container.text;
         mainView.forceActiveFocus();
-        workflowManager.activityManager().setName(dTextItem.actCode,dTextItem.acceptedText);
-        mainTextLabel2.opacity = 1;
+        container.textAcceptedSignal(container.acceptedText);
     }
 
-    function textNotAccepted(){
-        //dTextItem.acceptedText = dTextItem.text;
-        dTextItem.text = dTextItem.acceptedText;
-        dTextItem.state = "inactive";
+    function textWasNotAccepted(){
+        container.text = container.acceptedText;
         mainView.forceActiveFocus();
-        mainTextLabel2.opacity = 1;
     }
 
 

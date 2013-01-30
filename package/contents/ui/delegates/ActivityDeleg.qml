@@ -188,10 +188,6 @@ Item{
 
         opacity: ((CState===neededState)&&(!activityDragged)) ? 1:0
 
-        enableEditing: !Settings.global.lockActivities
-
-        actCode: mainActivity.ccode
-
         Connections{
             target:Settings.global
             onLockActivitiesChanged:{
@@ -201,29 +197,12 @@ Item{
             }
         }
 
-
-        MouseArea {
-            id:editActivityNameMouseArea
-            anchors.left: parent.left
-            height:parent.height
-            width:activityName.state === "active" ? parent.width - 40 : parent.width
-            hoverEnabled: true
-
-            onClicked: {
-                if (Settings.global.lockActivities){
-                    workflowManager.activityManager().setCurrent(ccode);
-                }
-                else{
-                    activityName.clickedFunction(mouse);
-                }
-            }
-
-            onEntered: activityName.enteredFunction();
-            onExited: activityName.exitedFunction();
+        onTextAcceptedSignal: {
+            workflowManager.activityManager().setName(mainActivity.ccode, finalText);
         }
 
         PlasmaCore.ToolTip {
-            target:editActivityNameMouseArea
+            target:activityName.tooltipItem
             mainText: Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
             subText: Settings.global.lockActivities === false ? i18n("You can edit the Activity name by clicking on it."):
                                                                 i18n("You can enable this Activity by clicking on the Activity name or icon")
@@ -238,12 +217,12 @@ Item{
         width:parent.width
         height:mainView.scaleMeter - 15
 
-        opacity: ((editActivityNameMouseArea.containsMouse ||
+        opacity: ((activityName.containsMouse ||
                    activityIconMouseArea.containsMouse ||
                    globalMouseArea.containsMouse ||
                    activityBtnsI.containsMouse)&&
                    (!activityDragged)&&
-                  (activityName.state === "inactive"))
+                  (!activityName.focused))
 
 /*        state: (editActivityNameMouseArea.containsMouse &&
                 (activityName.state === "inactive") &&

@@ -14,12 +14,11 @@ Item{
                                  tick2MouseArea.containsMouse)
 
     property alias focused: mainIText.activeFocus
+    property alias tooltipItem: mouseAreaFull
 
     signal entered();
     signal exited();
     signal textAcceptedSignal(string finalText);
-
-    property alias tooltipItem: mouseAreaFull
 
     onFocusedChanged: {
         if(!focused){
