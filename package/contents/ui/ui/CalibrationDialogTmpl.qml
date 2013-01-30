@@ -2,7 +2,6 @@
 import QtQuick 1.1
 
 import ".."
-import "../tooltips"
 import "../delegates"
 import "../../code/settings.js" as Settings
 
@@ -305,11 +304,11 @@ DialogTemplate2{
                     }
                 }
 
-                DToolTip{
-                    title:i18n("Reduce X")
-                    mainText: i18n("You can reduce X offset for the window previews.")
-                    target:xMinMouseArea
-                    icon:instanceOfThemeList.icons.MinusValue
+                PlasmaCore.ToolTip{
+                    mainText: i18n("Reduce X")
+                    subText: i18n("You can reduce X offset for the window previews.")
+                    target: xMinMouseArea
+                    image: instanceOfThemeList.icons.MinusValue
                 }
 
                 PlasmaComponents.Slider {
@@ -347,11 +346,11 @@ DialogTemplate2{
 
                 }
 
-                DToolTip{
-                    title:i18n("Increase X")
-                    mainText: i18n("You can increase X offset for the window previews.")
-                    target:xAddMouseArea
-                    icon:instanceOfThemeList.icons.AddValue
+                PlasmaCore.ToolTip{
+                    mainText: i18n("Increase X")
+                    subText: i18n("You can increase X offset for the window previews.")
+                    target: xAddMouseArea
+                    image: instanceOfThemeList.icons.AddValue
                 }
 
             }
@@ -405,11 +404,11 @@ DialogTemplate2{
 
                 }
 
-                DToolTip{
-                    title:i18n("Reduce Y")
-                    mainText: i18n("You can reduce Y offset for the window previews.")
-                    target:yMinMouseArea
-                    icon:instanceOfThemeList.icons.MinusValue
+                PlasmaCore.ToolTip{
+                    mainText: i18n("Reduce Y")
+                    subText: i18n("You can reduce Y offset for the window previews.")
+                    target: yMinMouseArea
+                    image: instanceOfThemeList.icons.MinusValue
                 }
 
                 PlasmaComponents.Slider {
@@ -448,11 +447,11 @@ DialogTemplate2{
                     }
                 }
 
-                DToolTip{
-                    title:i18n("Increase Y")
-                    mainText: i18n("You can increase Y offset for the window previews.")
-                    target:yAddMouseArea
-                    icon:instanceOfThemeList.icons.AddValue
+                PlasmaCore.ToolTip{
+                    mainText: i18n("Increase Y")
+                    subText: i18n("You can increase Y offset for the window previews.")
+                    target: yAddMouseArea
+                    image: instanceOfThemeList.icons.AddValue
                 }
 
             }

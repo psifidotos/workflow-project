@@ -56,10 +56,10 @@ Item {
         }
     }
 
-    DToolTip{
-        title: tooltipTitle
-        mainText: tooltipText
+    PlasmaCore.ToolTip{
+        mainText: tooltipTitle
+        subText: tooltipText
         target: mouseArea
-        icon: container.icon
+        image: container.icon
     }
 }

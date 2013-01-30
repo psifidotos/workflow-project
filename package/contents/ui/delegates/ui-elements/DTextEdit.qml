@@ -20,6 +20,10 @@ Item{
 
     property int nHeight
 
+    property bool containsMouse: tickMouseArea.containsMouse ||
+                                 mainTextMouseArea.containsMouse ||
+                                 pencilMouseArea.containsMouse
+
     BorderImage{
         id:backImage
 
@@ -69,6 +73,7 @@ Item{
             }
 
             MouseArea{
+                id:tickMouseArea
                 anchors.fill: parent
                 hoverEnabled: true
                 z:15
@@ -101,8 +106,8 @@ Item{
 
         width: dTextItem.width-5
         height: dTextItem.nHeight
-  //      height:mainText.height
-  //      y:-mainText.space
+        //      height:mainText.height
+        //      y:-mainText.space
 
         font.family: mainText.font.family
         font.bold: mainText.font.bold
@@ -130,11 +135,11 @@ Item{
         property int space:0;
         //property int spaceN:
 
-     //   width:dTextItem.width - 30 - space;
+        //   width:dTextItem.width - 30 - space;
         width:dTextItem.width - 36;
 
         height: dTextItem.nHeight - 30;
-     //   height: dTextItem.height - space;
+        //   height: dTextItem.height - space;
 
         wrapMode: TextEdit.Wrap
 
@@ -193,22 +198,23 @@ Item{
         }
 
         MouseArea{
+            id:mainTextMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
 
             onEntered:{
                 if(dTextItem.enableEditing === true)
-                    dTextItem.entered();
+                    dTextItem.enteredFunction();
             }
             onExited:{
                 if(dTextItem.enableEditing === true)
-                    dTextItem.exited();
+                    dTextItem.exitedFunction();
             }
 
             onClicked: {
                 if(dTextItem.enableEditing === true)
-                    dTextItem.clicked(mouse);
+                    dTextItem.clickedFunction(mouse);
             }
         }
 
@@ -233,7 +239,7 @@ Item{
         width:0.4*dTextItem.height
         height:dTextItem.height / 2
         source:"../../Images/buttons/listPencil.png"
-        opacity: 0
+        opacity: dTextItem.containsMouse && (dTextItem.state === "inactive") && dTextItem.enableEditing ? 1 : 0
         smooth:true
 
         Behavior on opacity{
@@ -243,22 +249,23 @@ Item{
             }
         }
         MouseArea{
+            id:pencilMouseArea
             anchors.fill: parent
             hoverEnabled: true
 
 
             onEntered:{
                 if(dTextItem.enableEditing === true)
-                    dTextItem.entered();
+                    dTextItem.enteredFunction();
             }
             onExited:{
                 if(dTextItem.enableEditing === true)
-                    dTextItem.exited();
+                    dTextItem.exitedFunction();
             }
 
             onClicked: {
                 if(dTextItem.enableEditing  === true)
-                    dTextItem.clicked(mouse);
+                    dTextItem.clickedFunction(mouse);
             }
         }
     }
@@ -313,17 +320,16 @@ Item{
 
     ]
 
-    function entered(){
+    function enteredFunction(){
         if(dTextItem.state==="inactive")
             pencilImg.opacity = 1;
-
     }
 
-    function exited(){
+    function exitedFunction(){
         pencilImg.opacity = 0;
     }
 
-    function clicked(mouse){
+    function clickedFunction(mouse){
         dTextItem.firstrun = false;
 
         mainText.forceActiveFocus();
@@ -334,7 +340,7 @@ Item{
 
         dTextItem.acceptedText = dTextItem.text
         mainTextLabel2.opacity = 0;
-        activityBtnsI.state="hide";
+      //  activityBtnsI.state="hide";
     }
 
     function textAccepted(){

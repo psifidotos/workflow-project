@@ -1,7 +1,7 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
-import "../../tooltips"
+import org.kde.plasma.core 0.1 as PlasmaCore
 import "../../../code/settings.js" as Settings
 
 Item{
@@ -19,11 +19,11 @@ Item{
     property string toolTipText: i18n("You can edit the Workarea name in order to personalize more your work.")
 
 
-    DToolTip{
+    PlasmaCore.ToolTip{
         id:toolTip
-        title:dTextIItem.toolTipTitle
-        mainText:dTextIItem.toolTipText
-        target:borderImageMouseArea
+        mainText: dTextIItem.toolTipTitle
+        subText: dTextIItem.toolTipText
+        target: borderImageMouseArea
     }
 
     BorderImage{
@@ -79,16 +79,10 @@ Item{
                 onEntered:{
                     backIImage.source = backIImage.hoverSource;
                     tickIImage.source = tickIImage.hoverTick;
-                    toolTip.showToolTip();
                 }
                 onExited:{
                     backIImage.source = backIImage.initSource;
                     tickIImage.source = tickIImage.initTick;
-                    toolTip.hideToolTip();
-                }
-
-                onPressAndHold: {
-                    toolTip.hideToolTip();
                 }
 
                 onClicked: {
@@ -202,15 +196,9 @@ Item{
 
             onEntered:{
                 dTextIItem.entered();
-                toolTip.showToolTip();
             }
             onExited:{
                 dTextIItem.exited();
-                toolTip.hideToolTip();
-            }
-
-            onPressAndHold: {
-                toolTip.hideToolTip();
             }
 
             onClicked: {

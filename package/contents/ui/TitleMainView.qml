@@ -2,7 +2,6 @@
 import QtQuick 1.1
 
 import "ui"
-import "tooltips"
 import "components"
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
@@ -113,11 +112,11 @@ PlasmaComponents.ToolBar {
                 }
             }
 
-            DToolTip{
-                title:i18n("Lock Activities")
-                mainText: i18n("You can lock your Activities if you want. In Locked state only Pause and Restore actions are enabled.")
+            PlasmaCore.ToolTip{
+                mainText: i18n("Lock Activities")
+                subText: i18n("You can lock your Activities if you want. In Locked state only Pause and Restore actions are enabled.")
                 target:lockerToolBtnMouseArea
-                localIcon:lockerImg.source
+                //localIcon:lockerImg.source
             }
 
         }
@@ -164,11 +163,11 @@ PlasmaComponents.ToolBar {
                 }
             }
 
-            DToolTip{
-                title:i18n("Show/Hide Windows")
-                mainText: i18n("You can show or hide all the windows shown in order to enhance your workflow.")
+            PlasmaCore.ToolTip{
+                mainText: i18n("Show/Hide Windows")
+                subText: i18n("You can show or hide all the windows shown in order to enhance your workflow.")
                 target:windowsToolBtnMouseArea
-                localIcon:windowsImg.source
+                //localIcon:windowsImg.source
             }
 
         }
@@ -250,11 +249,11 @@ PlasmaComponents.ToolBar {
 
             }
 
-            DToolTip{
-                title:i18n("Enable/Disable Previews")
-                mainText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
+            PlasmaCore.ToolTip{
+                mainText: i18n("Enable/Disable Previews")
+                subText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
-                localIcon:effectsImg.source
+                //localIcon:effectsImg.source
             }
 
         }

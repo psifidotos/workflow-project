@@ -2,10 +2,10 @@
 import QtQuick 1.1
 
 import "delegates"
-import "tooltips"
 import "../code/settings.js" as Settings
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.core 0.1 as PlasmaCore
 
 Rectangle {
     id: stopActBack
@@ -96,10 +96,10 @@ Rectangle {
 
     }
 
-    DToolTip{
-        title:i18n("Show/Hide Stopped Activities")
-        mainText: i18n("Show or Hide the Stopped Activities in order to enhance your workflow.")
+    PlasmaCore.ToolTip{
         target:showHideStoppedMouseArea
+        mainText:i18n("Show/Hide Stopped Activities")
+        subText: i18n("Show or Hide the Stopped Activities in order to enhance your workflow.")
     }
 
     Rectangle{

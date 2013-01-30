@@ -4,7 +4,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 
 import "ui-elements"
-import "../tooltips"
 import "../components"
 import "../../code/settings.js" as Settings
 
@@ -133,15 +132,12 @@ Item{
 
         }
 
-        DToolTip{
-           // visible:!mainView.lockActivities
-            id:activityIconTooltip
-
-            title:Settings.global.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
-            mainText: Settings.global.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
-                                                          i18n("You can enable this Activity by clicking on the Activity name or icon")
+        PlasmaCore.ToolTip {
             target:activityIconMouseArea
-            icon:Icon === "" ? "plasma" : Icon
+            mainText: Settings.global.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
+            subText:Settings.global.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
+                                                               i18n("You can enable this Activity by clicking on the Activity name or icon")
+            image: Icon === "" ? "plasma" : Icon
         }
 
     }
@@ -211,25 +207,29 @@ Item{
             anchors.left: parent.left
             height:parent.height
             width:activityName.state === "active" ? parent.width - 40 : parent.width
+            hoverEnabled: true
 
             onClicked: {
                 if (Settings.global.lockActivities){
                     workflowManager.activityManager().setCurrent(ccode);
                 }
                 else{
-                    activityName.clicked(mouse);
+                    activityName.clickedFunction(mouse);
                 }
             }
+
+            onEntered: activityName.enteredFunction();
+            onExited: activityName.exitedFunction();
         }
 
-        DToolTip{
-            //visible:!mainView.lockActivities
-            id:activityTooltip
-            title:Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            mainText: Settings.global.lockActivities === false ? i18n("You can enable this Activity by clicking in locked Activities state or edit its name in unlocked Activities state."):
-                                                          i18n("You can enable/edit this Activity by clicking on the Activity name or icon")
+        PlasmaCore.ToolTip {
             target:editActivityNameMouseArea
+            mainText: Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
+            subText: Settings.global.lockActivities === false ? i18n("You can edit the Activity name by clicking on it."):
+                                                                i18n("You can enable this Activity by clicking on the Activity name or icon")
+            image: Icon === "" ? "plasma" : Icon
         }
+
     }
 
     ActivityBtns{
@@ -242,11 +242,12 @@ Item{
                    activityIconMouseArea.containsMouse ||
                    globalMouseArea.containsMouse ||
                    activityBtnsI.containsMouse)&&
-                   (!activityDragged))
+                   (!activityDragged)&&
+                  (activityName.state === "inactive"))
 
-        state: (editActivityNameMouseArea.containsMouse &&
+/*        state: (editActivityNameMouseArea.containsMouse &&
                 (activityName.state === "inactive") &&
-                (!Settings.global.lockActivities) )
+                (!Settings.global.lockActivities) )*/
 
         z:40
 

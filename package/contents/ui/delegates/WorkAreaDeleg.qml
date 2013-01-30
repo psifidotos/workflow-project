@@ -1,8 +1,6 @@
 import QtQuick 1.0
 
-
 import "ui-elements"
-import "../tooltips"
 import "../../code/settings.js" as Settings
 
 import org.kde.workflow.components 0.1 as WorkFlowComponents
@@ -200,10 +198,10 @@ Item{
                 }
             }
 
-            DToolTip{
-                title:i18n("Show Windows")
-                mainText: i18n("You can see the windows from that spesific Workarea if you want. The counter shows their number.")
+            PlasmaCore.ToolTip{
                 target:cornerImageMouseArea
+                mainText: i18n("Show Windows")
+                subText: i18n("You can see the windows from that spesific Workarea if you want. The counter shows their number.")
                 //icon:instanceOfThemeList.icons.RunActivity
             }
 
