@@ -10,9 +10,11 @@ import "../../code/settings.js" as Settings
 Item{
     id:mainActivity
     property string neededState:"Running"
+    property string typeId : "RunningActivityDelegate"
 
     property string ccode:code
     property string tCState: CState
+    property string activityName: Name
 
     opacity: CState === neededState ? 1 : 0
 
@@ -114,17 +116,19 @@ Item{
 
             draggingInterface: draggingActivities
 
-            onClicked: {
-                if (Settings.global.lockActivities === false)
-                    workflowManager.activityManager().chooseIcon(ccode);
-                else{
-                    workflowManager.activityManager().setCurrent(ccode);
-                 //   workflowManager.workareaManager().setActivityFirst(ccode);
+            onClickedOverrideSignal: {
+                if(!inDragging){
+                    if (!Settings.global.lockActivities)
+                        workflowManager.activityManager().chooseIcon(ccode);
+                    else{
+                        workflowManager.activityManager().setCurrent(ccode);
+                    }
                 }
             }
 
             onDraggingStarted: {
                 if(!Settings.global.lockActivities){
+                    wasDragged = true;
                     var coords = mapToItem(mainView, mouse.x, mouse.y);
                     draggingActivities.enableDragging(mouse, coords, code, "Running", Icon);
                 }

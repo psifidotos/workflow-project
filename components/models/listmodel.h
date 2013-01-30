@@ -30,6 +30,7 @@ public:
   void insertRow(int row, ListItem* item);
   bool removeRow(int row, const QModelIndex &parent = QModelIndex());
   bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+  void moveRow(int from, int to);
   ListItem* at(int row);
   ListItem* takeRow(int row);
   ListItem* find(const QString &id) const;

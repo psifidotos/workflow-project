@@ -43,7 +43,7 @@ Item{
 
             y: 2.2 * allwlists.scale
             //+1, for not creating a visual issue...
-            width: (activitiesList.shownActivities+1) * allwlists.workareaWidth
+            width: (activitiesList.shownActivities+0.1) * allwlists.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height
 
             orientation: ListView.Horizontal
@@ -97,6 +97,7 @@ Item{
             color: "#646464"
             border.color: allwlists.actImagBordColor
             border.width:1
+            property string typeId : "RunningActivitiesFrame"
 
             ListView {
                 id: activitiesList
@@ -108,6 +109,7 @@ Item{
                 model: workflowManager.model()
 
                 property int shownActivities: 0
+                property string typeId : "RunningActivitiesList"
 
                 delegate: ActivityDeleg{
                     onShownChanged:activitiesList.countActivities();

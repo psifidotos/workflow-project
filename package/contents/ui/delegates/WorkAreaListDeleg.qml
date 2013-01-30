@@ -20,6 +20,7 @@ Item{
     property string typeId : "WorkareasColumnAppearanceDelegate"
 
     //   state: tCState === neededState ? "show" : "hide"
+    property string activityName: Name
     state:"hide"
 
     property int workAreaImageHeight: sessionParameters.screenRatio*bWidth
@@ -41,6 +42,7 @@ Item{
     onAddedHeightChanged: allareas.changedChildHeight();
 
     onStateChanged: allareas.changedChildHeight();
+
 
     Rectangle{
         id:draggingRectangle
@@ -245,7 +247,7 @@ Item{
             PropertyChanges {
                 target: workList
 
-                opacity: 0
+                opacity: 0.001
                 width: 0
             }
             PropertyChanges {

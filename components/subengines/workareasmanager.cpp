@@ -131,7 +131,6 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
 
       //update order
       int nOrder = data["Order"].toInt();
-
       if(activity->order() != nOrder ){
             activity->setOrder(nOrder);
             m_actModel->sortModel();
@@ -184,11 +183,11 @@ void WorkareasManager::cloneWorkareas(QString from, QString to)
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }
 
-void WorkareasManager::setActivityFirst(QString id)
+void WorkareasManager::moveActivity(QString id, int position)
 {
     Plasma::Service *service = m_dataEngine->serviceForSource(id);
     KConfigGroup op = service->operationDescription("setOrder");
-    op.writeEntry("Order", 1);
+    op.writeEntry("Order", position+1);
     Plasma::ServiceJob *job = service->startOperationCall(op);
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }

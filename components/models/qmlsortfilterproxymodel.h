@@ -24,7 +24,7 @@ protected:
 private slots:
     void rowsInsertedSlot ( const QModelIndex & parent, int start, int end );
     void rowsRemovedSlot ( const QModelIndex & parent, int start, int end );
-    void dataChangedSlot ( const QModelIndex & topLeft, const QModelIndex & bottomRight );
+ //   void dataChangedSlot ( const QModelIndex & topLeft, const QModelIndex & bottomRight );
 
 signals:
     void sourceMainModelChanged(QObject *);

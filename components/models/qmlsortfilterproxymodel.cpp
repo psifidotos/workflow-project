@@ -11,7 +11,7 @@ QmlSortFilterProxyModel::QmlSortFilterProxyModel(QObject *parent):
 {
     connect(this, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(rowsInsertedSlot(QModelIndex,int,int)));
     connect(this, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(rowsRemovedSlot(QModelIndex,int,int)));
-    connect(this, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataChangedSlot(QModelIndex,QModelIndex)));
+//    connect(this, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(dataChangedSlot(QModelIndex,QModelIndex)));
     setDynamicSortFilter(true);
 }
 
@@ -55,13 +55,13 @@ void QmlSortFilterProxyModel::rowsRemovedSlot ( const QModelIndex & parent, int 
     Q_UNUSED(end);
     setCount(rowCount());
 }
-
+/*
 void QmlSortFilterProxyModel::dataChangedSlot ( const QModelIndex & topLeft, const QModelIndex & bottomRight )
 {
-/*    Q_UNUSED(topLeft);
-    Q_UNUSED(bottomRight);*/
+    Q_UNUSED(topLeft);
+    Q_UNUSED(bottomRight);
     //emit countChanged(rowCount());
-}
+}*/
 
 
 #include "qmlsortfilterproxymodel.moc"

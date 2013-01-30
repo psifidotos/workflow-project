@@ -21,7 +21,7 @@ public:
 
     Q_INVOKABLE QString name(QString, int);
     Q_INVOKABLE int numberOfWorkareas(QString);
-    Q_INVOKABLE void setActivityFirst(QString);
+    Q_INVOKABLE void moveActivity(QString id, int position);
 
     //Q_INVOKABLE void setWallpaper(QString, QString);
 

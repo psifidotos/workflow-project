@@ -9,6 +9,7 @@ import "../../code/settings.js" as Settings
 
 Item{
     id: stpActivity
+    property string typeId : "StoppedActivityDelegate"
 
     property string neededState: "Stopped"
     property string ccode: code
@@ -16,7 +17,7 @@ Item{
 
     property bool shown: CState === neededState
 
-    opacity: shown ? 1 : 0
+    opacity: shown ? 1 : 0.001
 
     width: stoppedActivitiesList.width
     height: shown ? basicHeight : 0
@@ -24,7 +25,7 @@ Item{
     property real basicHeight:0.62*mainView.workareaHeight
     property int buttonsSize:0.5 * mainView.scaleMeter
 
-    property real defOpacity: activityDragged ? 0 : 0.6
+    property real defOpacity: activityDragged ? 0.001 : 0.6
 
     property bool containsMouse:( ((deleteActivityBtn.containsMouse) ||
                                   (mouseArea.containsMouse))&&
@@ -214,7 +215,7 @@ Item{
         anchors.fill: parent
         draggingInterface: draggingActivities
 
-        onClicked: {
+         onClickedOverrideSignal: {
             workflowManager.activityManager().start(ccode);
 
             if(Settings.global.animationStep2!==0){

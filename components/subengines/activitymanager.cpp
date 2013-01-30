@@ -340,9 +340,22 @@ QString ActivityManager::previousRunningActivity()
     return "";
 }
 
+void ActivityManager::setCurrentInModel(QString activity, QString status)
+{
+    ActivityItem *activityObj= static_cast<ActivityItem *>(m_actModel->find(activity));
+    if(activityObj)
+        return activityObj->setCState(status);
+}
+
+void ActivityManager::moveActivityInModel(QString activity, int position)
+{
+    int posModel = m_actModel->getIndexFor(activity);
+//    qDebug() << posModel << " ***** " <<position;
+    if(posModel != position)
+        m_actModel->moveRow(posModel, position);
+}
+
 ///////////////Plugins
-
-
 void ActivityManager::cloneActivity(QString actId)
 {
     if(!m_plCloneActivity){
@@ -370,6 +383,5 @@ void ActivityManager::setCurrentActivityAndDesktop(QString actId, int desktop)
         m_plChangeWorkarea->execute(actId, desktop);
 
 }
-
 
 #include "activitymanager.moc"

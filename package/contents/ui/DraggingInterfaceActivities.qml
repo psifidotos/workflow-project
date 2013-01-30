@@ -4,6 +4,7 @@ import QtQuick 1.1
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 import "../code/settings.js" as Settings
+import "../code/dragginghelpers.js" as Helper
 
 Rectangle{
     id:container
@@ -14,20 +15,11 @@ Rectangle{
 
     property string activityId: ""
     property string activityStatus: ""
+    property int intIndex: -1
+    property int currentIndex: -1
 
     property int intX1
     property int intY1
-
-
-    property string drActiv: ""
-    property int drDesktop: -1
-
-    //0 - over a Workarea
-    //1 - over an AddWorkarea button
-    //2 - over everywhere tasks
-    property int lastSelection
-
-    property bool firsttime:true
 
     QIconItem{
         id:iconImg
@@ -61,17 +53,18 @@ Rectangle{
 
         container.activityId = activity;
         container.activityStatus = status;
+        currentIndex = workflowManager.model().getIndexFor(activity)
+        intIndex = currentIndex;
+
+        console.log("----- Dragging Starting Current Index: "+currentIndex);
 
         container.intX1 = coords.x;
         container.intY1 = coords.y;
 
-        container.lastSelection = -1;
-
-        container.firsttime = true;
-
         iconImg.x = coords.x + 1;
         iconImg.y = coords.y + 1;
-//        onPstChanged(ms);
+
+        onPstChanged(mouse);
     }
 
     function disableDragging(){
@@ -84,29 +77,97 @@ Rectangle{
         allWorkareas.flickableV = true;
         stoppedPanel.flickableV = true;
 
-
-        container.lastSelection = -1;
-
         //It creates a confusion when releasing
         //must be fixed with a flag initialiazing properly
         //    mainDraggingItem.drActiv = "";
         //    mainDraggingItem.drDesktop = -1;
     }
 
-    function onMReleased(mouse, viewXY){
-        var iX1 = iconImg.x;
-        var iY1 = iconImg.y;
+    //PATHS IN ORDER TO FIND ELEMENTS IN QML STRUCTURE
+    //the number indicates the children, 0-no children, 1-first child, 2-second etc...
+    property variant runningActivityPath:[
+        "WorkareasMainView",0,
+        "WorkareasMainViewFlickable",1,
+        "RunningActivitiesFrame",0,
+        "RunningActivitiesList",1,
+        "RunningActivityDelegate",0]
 
-        disableDragging();
-    }
+    property variant runningActivityWorkListPath:[
+        "WorkareasMainView",0,
+        "WorkareasMainViewFlickable",1,
+        "WorkareasColumnAppearance",1,
+        "WorkareasColumnAppearanceDelegate",0]
+
+    property variant stoppedActivitiesPath:[
+        "StoppedActivitiesPanel",0,
+        "StoppedActivitiesFlickable",1,
+        "StoppedActivitiesList",1,
+        "StoppedActivityDelegate",0]
+
 
     function onPstChanged(mouse){
 
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
+        var runningActivity = Helper.followPath(centralArea, mouse, runningActivityPath, 0);
+        if(runningActivity !== false)
+            hoveringRunningActivity(runningActivity);
+        else{
+            var runningActivityWorkList = Helper.followPath(centralArea, mouse, runningActivityWorkListPath, 0);
+            if(runningActivityWorkList !== false)
+                hoveringRunningActivity(runningActivityWorkList);
+            else{
+                var stoppedActivity = Helper.followPath(centralArea, mouse, stoppedActivitiesPath, 0);
+                if(stoppedActivity !== false)
+                    hoveringStoppedActivity(stoppedActivity);
+            }
+        }
 
     }
+
+    function hoveringRunningActivity(activity){
+
+        if(activity.ccode !== container.activityId){
+       //     console.log("----- "+activity.ccode + " - "+activity.activityName);
+            var newIndex = workflowManager.model().getIndexFor(activity.ccode);
+      //      console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
+
+            if((currentIndex !== newIndex)&&(newIndex>0)&&(activityStatus === "Running")){
+                currentIndex = newIndex;
+                workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
+                //if (activityStatus !== "Running")
+                  // workflowManager.activityManager().setCurrentInModel(container.activityId, "Running");
+            }
+        }
+    }
+
+    function hoveringStoppedActivity(activity){
+        if(activity.ccode !== container.activityId){
+       //     console.log("----- "+activity.ccode + " - "+activity.activityName);
+            var newIndex = workflowManager.model().getIndexFor(activity.ccode);
+        //    console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
+
+            if((currentIndex !== newIndex)&&(newIndex>0)&&(activityStatus === "Stopped")){
+                currentIndex = newIndex;
+                workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
+                //if (activityStatus !== "Stopped")
+                  //  workflowManager.activityManager().setCurrentInModel(container.activityId, "Stopped");
+            }
+        }
+    }
+
+    function onMReleased(mouse, viewXY){
+        var iX1 = iconImg.x;
+        var iY1 = iconImg.y;
+
+        console.log("Data Engine Move - "+container.activityId + " - "+intIndex + " - " + currentIndex);
+        if(intIndex !== currentIndex)
+            workflowManager.workareaManager().moveActivity(container.activityId, currentIndex);
+
+        disableDragging();
+    }
+
 
 
 }

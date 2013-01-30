@@ -60,6 +60,22 @@ void ListModel::insertRow(int row, ListItem *item)
     emit countChanged(getCount());
 }
 
+void ListModel::moveRow(int from, int to)
+{
+    if((from>=0) && (from<m_list.size()) &&
+            (to>=0) && (to<m_list.size()) ){
+        int newTo = to;
+        if (to == (from+1))
+            newTo++;
+     //   else if (to ==(from-1))
+      //      newTo--;
+        beginMoveRows (QModelIndex(), from, from, QModelIndex(), newTo);
+        m_list.move(from, to);
+        endMoveRows();
+    }
+}
+
+
 void ListModel::handleItemChange()
 {
     ListItem* item = static_cast<ListItem*>(sender());

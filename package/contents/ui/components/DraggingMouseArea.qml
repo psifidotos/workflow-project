@@ -1,5 +1,7 @@
 import QtQuick 1.1
 
+import ".."
+
 MouseArea {
     id:container
     anchors.fill: parent
@@ -18,6 +20,9 @@ MouseArea {
     signal draggingStarted(variant mouse);
     signal draggingMovement(variant mouse);
     signal draggingEnded(variant mouse);
+    signal clickedOverrideSignal(variant mouse);
+
+    property Item previousParent
 
     onClicked: {
         tempPressed = false;
@@ -32,6 +37,8 @@ MouseArea {
 
     onPositionChanged: {
         if(outOfInnerLimits(mouse)&&(tempPressed)){
+            previousParent = parent;
+            parent = mainView;
             draggingStarted(mouse);
             tempPressed = false;
             isPressed = true;
@@ -46,6 +53,9 @@ MouseArea {
         if(isPressed){
             draggingEndedActions(mouse);
             isPressed = false;
+        }
+        else{
+            clickedOverrideSignal(mouse);
         }
     }
 
@@ -67,6 +77,7 @@ MouseArea {
 
     function draggingEndedActions(mouse){
         draggingEnded(mouse);
+        parent = previousParent;
         if( draggingInterface !== null ){
             draggingInterface.onMReleased(mouse);
         }

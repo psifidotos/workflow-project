@@ -12,6 +12,7 @@ Rectangle {
     property alias flickableV : stopActivitiesView.interactive
 
     property alias shownActivities:stoppedActivitiesList.shownActivities
+    property string typeId : "StoppedActivitiesPanel"
 
     x:((stoppedActivitiesList.shownActivities > 0)&&(doNotShow === false)) ?
           mainView.width - width : mainView.width - 2
@@ -137,7 +138,7 @@ Rectangle {
 
     Flickable{
         id: stopActivitiesView
-
+        property string typeId : "StoppedActivitiesFlickable"
         width: stopActBack.width
         height: stopActBack.height - y
 
@@ -160,7 +161,7 @@ Rectangle {
             // height: shownActivities !==0 ? shownActivities * ((0.66*workareaHeight)+spacing) : workareaHeight
             height: shownActivities * ((0.62*mainView.workareaHeight)+spacing) + 30
             width: stopActBack.width - spacing
-
+            property string typeId : "StoppedActivitiesList"
             anchors.right: parent.right
 
             property int shownActivities: 0

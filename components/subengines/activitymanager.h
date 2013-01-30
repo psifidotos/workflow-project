@@ -45,6 +45,8 @@ public:
     Q_INVOKABLE void setCurrentNextActivity();
     Q_INVOKABLE void setCurrentPreviousActivity();
     Q_INVOKABLE void cloneActivity(QString);
+    Q_INVOKABLE void moveActivityInModel(QString activity, int position);
+    Q_INVOKABLE void setCurrentInModel(QString activity, QString status);
 
     //    Q_INVOKABLE int askForDelete(QString activityName);
 
