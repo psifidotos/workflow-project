@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>545</width>
-    <height>372</height>
+    <width>555</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -130,35 +130,6 @@
      </property>
      <property name="text">
       <string>Disable &quot;Everywhere&quot; windows panel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Tooltips Delay</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QSpinBox" name="kcfg_ToolTipsDelay">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The delay for showing a tooltip. With 0 tooltips are disabled&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="suffix">
-      <string>ms</string>
-     </property>
-     <property name="prefix">
-      <string/>
-     </property>
-     <property name="maximum">
-      <number>1000</number>
-     </property>
-     <property name="singleStep">
-      <number>50</number>
-     </property>
-     <property name="value">
-      <number>250</number>
      </property>
     </widget>
    </item>

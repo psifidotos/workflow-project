@@ -13,9 +13,7 @@ Item{
     property bool firstrun: true
 
     property bool enableEditing
-
     property string acceptedText : ""
-
     property string actCode: ""
 
     property int nHeight
@@ -315,9 +313,7 @@ Item{
                         textNotAccepted();
                 }
             }
-
         }
-
     ]
 
     function enteredFunction(){

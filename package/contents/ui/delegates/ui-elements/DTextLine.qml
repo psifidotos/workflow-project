@@ -5,31 +5,35 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import "../../../code/settings.js" as Settings
 
 Item{
+    id:container
 
-    id:dTextIItem
-
-    state: "inactive"
     property alias text : mainIText.text
 
-    property bool firstrun:true
-
     property string acceptedText : ""
+    property bool containsMouse: (mouseAreaFull.containsMouse ||
+                                 tick2MouseArea.containsMouse)
 
-    property string toolTipTitle:i18n("Edit WorkArea")
-    property string toolTipText: i18n("You can edit the Workarea name in order to personalize more your work.")
+    property alias focused: mainIText.activeFocus
 
+    signal entered();
+    signal exited();
+    signal textAcceptedSignal(string finalText);
 
-    PlasmaCore.ToolTip{
-        id:toolTip
-        mainText: dTextIItem.toolTipTitle
-        subText: dTextIItem.toolTipText
-        target: borderImageMouseArea
+    property alias tooltipItem: mouseAreaFull
+
+    onFocusedChanged: {
+        if(!focused){
+                textWasNotAccepted();
+        }
+    }
+
+    Component.onCompleted: {
+        acceptedText = container.text;
     }
 
     BorderImage{
         id:backIImage
-
-        source: initSource
+        source: tick2MouseArea.containsMouse ? hoverSource : initSource
 
         border.left: 15; border.top: 15;
         border.right: 40; border.bottom: 15;
@@ -38,6 +42,8 @@ Item{
 
         width:parent.width
         height:parent.height
+
+        opacity: container.focused ? 1 : 0.001
 
         property string initSource:"../../Images/buttons/editBox2.png"
         property string hoverSource:"../../Images/buttons/editBoxHover2.png"
@@ -49,67 +55,6 @@ Item{
             }
         }
 
-        Item{
-            id:tickRectangleI
-            width: 40
-            height: parent.height
-            anchors.right: parent.right
-            z:9
-
-            Image{
-                id:tickIImage;
-
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
-                source: initTick
-                width: parent.width - 15
-                height: 0.75*width
-                smooth:true
-
-                property string initTick:"../../Images/buttons/darkTick.png"
-                property string hoverTick:"../../Images/buttons/lightTick.png"
-            }
-
-            MouseArea{
-                id:tick2MouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-
-                onEntered:{
-                    backIImage.source = backIImage.hoverSource;
-                    tickIImage.source = tickIImage.hoverTick;
-                }
-                onExited:{
-                    backIImage.source = backIImage.initSource;
-                    tickIImage.source = tickIImage.initTick;
-                }
-
-                onClicked: {
-                    dTextIItem.textAccepted();
-                }
-            }
-
-        }
-
-        MouseArea{
-            id:borderImageMouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            z:4
-
-            onEntered:{
-                dTextIItem.entered();
-            }
-            onExited:{
-                dTextIItem.exited();
-            }
-
-            onClicked: {
-                dTextIItem.clicked(mouse);
-            }
-        }
-
     }
 
     Text{
@@ -117,11 +62,10 @@ Item{
 
         text:mainIText.text
         width:mainIText.width+17
-   //     height:parent.height-10
         font.family: mainIText.font.family
         font.italic: mainIText.font.italic
 
-        font.pixelSize: mainIText.font.pixelSize
+        font.pixelSize: 0
 
         color:mainIText.color
         elide:Text.ElideRight
@@ -130,14 +74,12 @@ Item{
         anchors.top: parent.top
         anchors.topMargin: 5
 
+        opacity: container.focused ? 0 : 1
     }
-
 
     TextInput {
         id:mainIText
-
-        width:dTextIItem.width - 45
-     //   height: dTextIItem.height-vspace;
+        width:container.width - 45
 
         property int space:0
         property int vspace:15
@@ -147,15 +89,14 @@ Item{
 
         font.pixelSize: (0.35+mainView.defFontRelStep)*parent.height
 
-        color: origColor
+        color: activeFocus ? activColor : origColor
 
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.verticalCenter: backIImage.verticalCenter
 
         focus:true
-        opacity:mainTextLabel.opacity === 0 ? 1 : 0.001
-
+        opacity: activeFocus ? 1 : 0.001
 
         property color origColor: "#323232"
         property color activColor: "#444444"
@@ -181,7 +122,6 @@ Item{
             }
         }
 
-
         //from: http://qt.gitorious.org/qt-components/qt-components/blobs/1be426261941ce4751dbda11b3a6c2b974646225/components/behaviors/TextEditMouseBehavior.qml
         function characterPositionAt(mouse) {
             var mappedMouse = mapToItem(mainIText, mouse.x, mouse.y);
@@ -189,26 +129,9 @@ Item{
             return mainIText.positionAt(mappedMouse.x, mappedMouse.y);
         }
 
-        MouseArea{
-            id:mouseAr3
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered:{
-                dTextIItem.entered();
-            }
-            onExited:{
-                dTextIItem.exited();
-            }
-
-            onClicked: {
-                dTextIItem.clicked(mouse);
-            }
-        }
-
         Keys.onPressed: {
             if ((event.key === Qt.Key_Enter)||(event.key === Qt.Key_Return)) {
-                dTextIItem.textAccepted();
+                container.textWasAccepted();
                 event.accepted = true;
             }
             else if (event.key === Qt.Key_Escape){
@@ -218,13 +141,50 @@ Item{
 
     }
 
+    Item{
+        id:tickRectangleI
+        width: 40
+        height: parent.height
+        anchors.right: parent.right
+
+        Image{
+            id:tickIImage;
+
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            source: tick2MouseArea.containsMouse ? hoverTick : initTick
+            opacity: container.focused ? 1 : 0
+            width: parent.width - 15
+            height: 0.75*width
+            smooth:true
+
+            property string initTick:"../../Images/buttons/darkTick.png"
+            property string hoverTick:"../../Images/buttons/lightTick.png"
+        }
+
+        MouseArea{
+            id:tick2MouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: container.entered();
+            onExited: container.exited();
+
+            onClicked: {
+                container.textWasAccepted();
+            }
+        }
+
+    }
+
     Image{
         id:pencilI
-        anchors.right: dTextIItem.right
-        width: 0.6 * dTextIItem.height
-        height:0.66 * dTextIItem.height
+        anchors.right: container.right
+        width: 0.6 * container.height
+        height:0.66 * container.height
         source:"../../Images/buttons/darkPencil.png"
-        opacity: 0
+        opacity: container.containsMouse && (!container.focused) ? 1 : 0
         smooth:true
 
         Behavior on opacity{
@@ -233,117 +193,41 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
+    }
 
-        MouseArea{
-            id:mouseAr4
-            anchors.fill: parent
-            hoverEnabled: true
+    MouseArea{
+        id:mouseAreaFull
+        width: container.focused ? parent.width - 40 : parent.width
+        height: parent.height
 
-            onEntered:{
-                dTextIItem.entered();                
-            }
-            onExited:{
-                dTextIItem.exited();
-            }
+        hoverEnabled: true
 
-            onClicked: {
-                dTextIItem.clicked(mouse);
-            }
+        onEntered: container.entered();
+        onExited: container.exited();
+
+        onClicked: {
+            container.clickedFunction(mouse);
         }
-
     }
 
-
-
-    states: [
-        State {
-            name: "active"
-            when: mainIText.activeFocus
-            PropertyChanges{
-                target:backIImage
-                opacity:1
-            }
-            PropertyChanges{
-                target:mainIText
-                color:mainIText.activColor
-               // space:17
-            }
-            PropertyChanges{
-                target:pencilI
-                opacity:0
-            }
-
-        },
-        State{
-            name: "inactive"
-            when: (mainIText.activeFocus === false)
-            PropertyChanges{
-                target:backIImage
-                opacity:0.001
-            }
-            PropertyChanges{
-                target:mainIText
-                color:mainIText.origColor
-            }
-            PropertyChanges{
-                target:pencilI
-                opacity:0
-            }
-            StateChangeScript {
-                name: "checkFirstRun"
-                script: {
-                    if (dTextIItem.firstrun)
-                        dTextIItem.acceptedText = dTextIItem.text
-                    else
-                        textUnaccepted();
-
-                }
-            }
-
-        }
-
-    ]
-
-    function entered(){
-        if(dTextIItem.state=="inactive")
-            pencilI.opacity = 1;        
-    }
-
-    function exited(){
-        pencilI.opacity = 0;
-    }
-
-    function clicked(mouse){
-
-        dTextIItem.firstrun = false;
-
+    function clickedFunction(mouse){
         var pos = mainIText.characterPositionAt(mouse);
         mainIText.cursorPosition = pos;
         mainIText.forceActiveFocus();
-        pencilI.opacity = 0;
 
-        mainTextLabel.opacity = 0;
-
-        dTextIItem.acceptedText = dTextIItem.text
+        container.acceptedText = container.text
     }
 
-    function textAccepted(){
-        dTextIItem.acceptedText = dTextIItem.text;
-        dTextIItem.state = "inactive";
-
-        workflowManager.workareaManager().renameWorkarea(mainWorkArea.actCode,mainWorkArea.desktop,dTextIItem.acceptedText);
-
+    function textWasAccepted(){
+        container.acceptedText = container.text;
         mainView.forceActiveFocus();
-
-        mainTextLabel.opacity = 1;
+        container.textAcceptedSignal(container.acceptedText);
     }
 
 
-    function textUnaccepted(){
-        dTextIItem.text = dTextIItem.acceptedText
-        dTextIItem.state = "inactive";
-
-        mainTextLabel.opacity = 1;
+    function textWasNotAccepted(){
+        container.text = container.acceptedText
+        mainView.forceActiveFocus();
     }
 
 }

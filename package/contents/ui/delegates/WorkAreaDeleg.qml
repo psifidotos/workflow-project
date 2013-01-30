@@ -237,7 +237,6 @@ Item{
             }
         }
 
-
         WorkAreaBtns{
             id:workAreaButtons
 
@@ -246,7 +245,6 @@ Item{
             opacity: mainWorkArea.ListView.view.model.count>1 ? 1 : 0
         }
 
-
         DTextLine{
             id:workAreaName
 
@@ -254,8 +252,19 @@ Item{
             width: mainWorkArea.width
             height: workList.workAreaNameHeight
             text: title
+
+            onTextAcceptedSignal: {
+                workflowManager.workareaManager().renameWorkarea(mainWorkArea.actCode,mainWorkArea.desktop, finalText);
+            }
         }
 
+        PlasmaCore.ToolTip{
+            mainText: i18n("Edit WorkArea")
+            subText: i18n("You can edit the Workarea name in order to personalize more your work.")
+            //This is a workaround because if workAreaName was used the containsMouse does not work
+            //at all inside DTextLine
+            target: workAreaName.tooltipItem
+        }
 
     } //normalWorkArea Item
 

@@ -45,9 +45,6 @@
     <entry name="HideOnClick" type="bool">
         <default>false</default>
     </entry>
-    <entry name="ToolTipsDelay" type="int">
-        <default>300</default>
-    </entry>
     <entry name="UseCurrentActivityIcon" type="bool">
         <default>false</default>
     </entry>
