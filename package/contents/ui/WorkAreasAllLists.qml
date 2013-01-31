@@ -43,7 +43,7 @@ Item{
 
             y: 2.2 * allwlists.scale
             //+1, for not creating a visual issue...
-            width: (activitiesList.shownActivities+0.1) * allwlists.workareaWidth
+            width: (activitiesList.shownActivities+1) * allwlists.workareaWidth
             height: maxWorkAreasHeight + actImag1.height + actImag1Shad.height
 
             orientation: ListView.Horizontal
@@ -112,7 +112,48 @@ Item{
                 property string typeId : "RunningActivitiesList"
 
                 delegate: ActivityDeleg{
+                    id: activityInstance
                     onShownChanged:activitiesList.countActivities();
+
+                    MouseArea{
+                        id:draggingReceiver
+
+                        property string typeId: "activityReceiver"
+
+                        width: activityInstance.width-5
+                        height: 0.8 * mainView.height
+                        visible: (draggingActivities.activityId !== "")
+
+                        property string activityCode : ccode
+                        property string activityName : Name
+
+
+                        hoverEnabled: true
+                        property int oldX
+                        property int oldY
+
+                        onVisibleChanged:{
+                            if(visible){
+                                oldX = x;
+                                oldY = y;
+                                var coord = mapToItem(draggingActivities, x, y);
+                                parent = draggingActivities;
+                                x = coord.x;
+                                y = coord.y;
+                            }
+                            else{
+                                parent = activityInstance;
+                                x = oldX;
+                                y = oldY;
+                            }
+                        }
+
+            //     //       Rectangle{
+                   //         anchors.fill: parent
+                  //          color:"#0000e3"
+                    //    }
+
+                    }
                 }
 
 

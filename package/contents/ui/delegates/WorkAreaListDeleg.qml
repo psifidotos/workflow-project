@@ -217,14 +217,14 @@ Item{
         }*/
 
 
-    ListView.onRemove: SequentialAnimation {
+    /*ListView.onRemove: SequentialAnimation {
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
         NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
 
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
-    }
+    }*/
 
     states: [
         State {

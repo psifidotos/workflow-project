@@ -8,7 +8,7 @@ import "../code/dragginghelpers.js" as Helper
 
 Rectangle{
     id:container
-    anchors.fill: mainView
+    anchors.fill: parent
     color:"#05000000"
     opacity:0
     z:-1
@@ -16,10 +16,17 @@ Rectangle{
     property string activityId: ""
     property string activityStatus: ""
     property int intIndex: -1
+
+    property string currentActivity: ""
     property int currentIndex: -1
 
     property int intX1
     property int intY1
+
+    signal updateReceiversPlace();
+
+    property Item movingActivity
+    property Item secondActivity
 
     QIconItem{
         id:iconImg
@@ -54,6 +61,7 @@ Rectangle{
         container.activityId = activity;
         container.activityStatus = status;
         currentIndex = workflowManager.model().getIndexFor(activity)
+        currentActivity = activity;
         intIndex = currentIndex;
 
         console.log("----- Dragging Starting Current Index: "+currentIndex);
@@ -70,6 +78,7 @@ Rectangle{
     function disableDragging(){
         container.activityId = "";
         container.activityStatus = "";
+        currentActivity = "";
 
         container.opacity = 0;
         container.enabled = false;
@@ -104,13 +113,47 @@ Rectangle{
         "StoppedActivitiesList",1,
         "StoppedActivityDelegate",0]
 
+    function swapActivities(){
+        var x1 = secondActivity.x;
+        var y1 = secondActivity.y;
+        secondActivity.x = movingActivity.x;
+        secondActivity.y = movingActivity.y;
+        movingActivity.x = x1;
+        movingActivity.y = y1;
+    }
 
     function onPstChanged(mouse){
 
         iconImg.x = mouse.x + 1;
         iconImg.y = mouse.y + 1;
 
-        var runningActivity = Helper.followPath(centralArea, mouse, runningActivityPath, 0);
+        var activity = childAt ( mouse.x, mouse.y);
+        if((activity !== null)&&(activity.typeId === "activityReceiver")){
+            if(activity.activityCode !== container.activityId){
+                console.log("----- "+activity.activityCode + " - "+activity.activityName);
+                var newIndex = workflowManager.model().getIndexFor(activity.activityCode);
+                console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
+
+               // if((currentIndex !== newIndex)&&(newIndex>=0)&&(activityStatus === "Running")){
+                 if((currentIndex !== newIndex)&&(newIndex>=0)){
+                    secondActivity = activity;
+                    swapActivities();
+                    currentActivity = activity.activityCode;
+                    currentIndex = newIndex;
+                    workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
+                    //if (activityStatus !== "Running")
+                      // workflowManager.activityManager().setCurrentInModel(container.activityId, "Running");
+                }
+            }
+            else
+                movingActivity = activity
+
+//            console.log(activity.activityCode);
+        }
+
+
+
+    /*    var runningActivity = Helper.followPath(centralArea, mouse, runningActivityPath, 0);
         if(runningActivity !== false)
             hoveringRunningActivity(runningActivity);
         else{
@@ -122,7 +165,7 @@ Rectangle{
                 if(stoppedActivity !== false)
                     hoveringStoppedActivity(stoppedActivity);
             }
-        }
+        }*/
 
     }
 
@@ -153,6 +196,7 @@ Rectangle{
                 workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
                 //if (activityStatus !== "Stopped")
                   //  workflowManager.activityManager().setCurrentInModel(container.activityId, "Stopped");
+                container.updateReceiversPlace();
             }
         }
     }

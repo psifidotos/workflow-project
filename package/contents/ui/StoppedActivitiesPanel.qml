@@ -170,7 +170,48 @@ Rectangle {
             model: workflowManager.model()
 
             delegate: ActivityStoppedDeleg{
+                id:activityInstance
                 onShownChanged:stoppedActivitiesList.countActivities()
+
+                MouseArea{
+                    id:draggingReceiver
+
+                    property string typeId: "activityReceiver"
+
+                    width: activityInstance.width
+                    height:activityInstance.height-5
+                    visible: (draggingActivities.activityId !== "")
+
+                    property string activityCode : ccode
+                    property string activityName : Name
+
+
+                    hoverEnabled: true
+                    property int oldX
+                    property int oldY
+
+                    onVisibleChanged:{
+                        if(visible){
+                            oldX = x;
+                            oldY = y;
+                            var coord = mapToItem(draggingActivities, x, y);
+                            parent = draggingActivities;
+                            x = coord.x;
+                            y = coord.y;
+                        }
+                        else{
+                            parent = activityInstance;
+                            x = oldX;
+                            y = oldY;
+                        }
+                    }
+
+        //     //       Rectangle{
+               //         anchors.fill: parent
+              //          color:"#0000e3"
+                //    }
+
+                }
             }
 
             Behavior on height{
