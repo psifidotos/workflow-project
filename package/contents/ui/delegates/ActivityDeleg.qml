@@ -27,8 +27,10 @@ Item{
 
     property bool shown: CState === neededState
 
-    property bool activityDragged: (draggingActivities.activityId === code) &&
+    property bool activityDragged2: (draggingActivities.activityId === code) &&
                                    (draggingActivities.activityStatus === "Running")
+
+    property bool activityDragged: false
 
     Behavior on opacity{
         NumberAnimation {
@@ -51,16 +53,6 @@ Item{
     }
 
     Rectangle{
-        id:draggingRectangle
-        anchors.horizontalCenter: parent.horizontalCenter
-        width:parent.width - 10
-        height:parent.height - 10
-        radius:10
-        color: "#333333"
-        opacity:activityDragged ? 0.5 : 0
-    }
-
-    Rectangle{
         y:-activitiesList.y+actImag1.height-1
 
         height:parent.width
@@ -77,6 +69,16 @@ Item{
         }
 
         opacity:((ccode === sessionParameters.currentActivity)&&(!activityDragged))
+    }
+
+    Rectangle{
+        id:draggingRectangle
+        anchors.horizontalCenter: parent.horizontalCenter
+        width:parent.width - 10
+        height:parent.height - 10
+        radius:10
+        color: "#333333"
+        opacity:activityDragged2 ? 0.5 : 0
     }
 
     QIconItem{
@@ -225,7 +227,7 @@ Item{
                    activityIconMouseArea.containsMouse ||
                    globalMouseArea.containsMouse ||
                    activityBtnsI.containsMouse)&&
-                   (!activityDragged)&&
+                   (!activityDragged2)&&
                   (!activityName.focused))
 
 /*        state: (editActivityNameMouseArea.containsMouse &&
@@ -249,7 +251,7 @@ Item{
         color:"#15222222"
         z:10
     }
-
+/*
     ListView.onAdd: ParallelAnimation {
         PropertyAction { target: mainActivity; property: "width"; value: 0 }
         PropertyAction { target: mainActivity; property: "opacity"; value: 0 }
@@ -267,7 +269,7 @@ Item{
         }
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }
-    }
+    }*/
 
 
     function getCurrentIndex(){

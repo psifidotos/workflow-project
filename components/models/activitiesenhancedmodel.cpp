@@ -1,5 +1,6 @@
 #include "activitiesenhancedmodel.h"
 #include <QtAlgorithms>
+#include <QDebug>
 
 QObject* ActivitiesEnhancedModel::workareas(const QString &id) const
 {

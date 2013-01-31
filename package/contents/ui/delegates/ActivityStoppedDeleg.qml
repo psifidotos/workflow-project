@@ -47,6 +47,13 @@ Item{
         }
     }
 
+    Behavior on y{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep;
+            easing.type: Easing.InOutQuad;
+        }
+    }
+
     Behavior on width{
         NumberAnimation {
             duration: 2*Settings.global.animationStep;
@@ -236,8 +243,6 @@ Item{
 
     }
 
-
-
     IconButton {
         id:deleteActivityBtn
         icon: instanceOfThemeList.icons.DeleteActivity
@@ -259,6 +264,15 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
+    }
+
+    Rectangle{
+        width:parent.width -2
+        radius:10
+        height:parent.height - 2
+        anchors.centerIn: parent
+        color:"#995879c0"
+        visible: draggingActivities.currentActivity === ccode
     }
 
     PlasmaCore.ToolTip {

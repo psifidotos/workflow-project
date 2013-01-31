@@ -180,11 +180,11 @@ Rectangle {
 
                     width: activityInstance.width
                     height:activityInstance.height-5
-                    visible: (draggingActivities.activityId !== "")
+                    visible: ((draggingActivities.activityId !== "") &&
+                              (draggingActivities.activityStatus === "Stopped"))
 
                     property string activityCode : ccode
                     property string activityName : Name
-
 
                     hoverEnabled: true
                     property int oldX

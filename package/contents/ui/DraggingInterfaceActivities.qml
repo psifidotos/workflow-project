@@ -20,14 +20,6 @@ Rectangle{
     property string currentActivity: ""
     property int currentIndex: -1
 
-    property int intX1
-    property int intY1
-
-    signal updateReceiversPlace();
-
-    property Item movingActivity
-    property Item secondActivity
-
     QIconItem{
         id:iconImg
         width:mainView.scaleMeter
@@ -66,9 +58,6 @@ Rectangle{
 
         console.log("----- Dragging Starting Current Index: "+currentIndex);
 
-        container.intX1 = coords.x;
-        container.intY1 = coords.y;
-
         iconImg.x = coords.x + 1;
         iconImg.y = coords.y + 1;
 
@@ -92,36 +81,6 @@ Rectangle{
         //    mainDraggingItem.drDesktop = -1;
     }
 
-    //PATHS IN ORDER TO FIND ELEMENTS IN QML STRUCTURE
-    //the number indicates the children, 0-no children, 1-first child, 2-second etc...
-    property variant runningActivityPath:[
-        "WorkareasMainView",0,
-        "WorkareasMainViewFlickable",1,
-        "RunningActivitiesFrame",0,
-        "RunningActivitiesList",1,
-        "RunningActivityDelegate",0]
-
-    property variant runningActivityWorkListPath:[
-        "WorkareasMainView",0,
-        "WorkareasMainViewFlickable",1,
-        "WorkareasColumnAppearance",1,
-        "WorkareasColumnAppearanceDelegate",0]
-
-    property variant stoppedActivitiesPath:[
-        "StoppedActivitiesPanel",0,
-        "StoppedActivitiesFlickable",1,
-        "StoppedActivitiesList",1,
-        "StoppedActivityDelegate",0]
-
-    function swapActivities(){
-        var x1 = secondActivity.x;
-        var y1 = secondActivity.y;
-        secondActivity.x = movingActivity.x;
-        secondActivity.y = movingActivity.y;
-        movingActivity.x = x1;
-        movingActivity.y = y1;
-    }
-
     function onPstChanged(mouse){
 
         iconImg.x = mouse.x + 1;
@@ -129,76 +88,13 @@ Rectangle{
 
         var activity = childAt ( mouse.x, mouse.y);
         if((activity !== null)&&(activity.typeId === "activityReceiver")){
-            if(activity.activityCode !== container.activityId){
-                console.log("----- "+activity.activityCode + " - "+activity.activityName);
-                var newIndex = workflowManager.model().getIndexFor(activity.activityCode);
-                console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
-
-               // if((currentIndex !== newIndex)&&(newIndex>=0)&&(activityStatus === "Running")){
-                 if((currentIndex !== newIndex)&&(newIndex>=0)){
-                    secondActivity = activity;
-                    swapActivities();
-                    currentActivity = activity.activityCode;
-                    currentIndex = newIndex;
-                    workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
-                    //if (activityStatus !== "Running")
-                      // workflowManager.activityManager().setCurrentInModel(container.activityId, "Running");
-                }
-            }
-            else
-                movingActivity = activity
-
-//            console.log(activity.activityCode);
+            currentActivity = activity.activityCode;
+            var newIndex = workflowManager.model().getIndexFor(activity.activityCode);
+            currentIndex = newIndex;
+      //      console.log("----- "+activity.activityCode + " - "+activity.activityName);
+          //  console.log("----- Current Index: "+currentIndex+" - New Index for "+activity.activityName+" :"+newIndex);
         }
 
-
-
-    /*    var runningActivity = Helper.followPath(centralArea, mouse, runningActivityPath, 0);
-        if(runningActivity !== false)
-            hoveringRunningActivity(runningActivity);
-        else{
-            var runningActivityWorkList = Helper.followPath(centralArea, mouse, runningActivityWorkListPath, 0);
-            if(runningActivityWorkList !== false)
-                hoveringRunningActivity(runningActivityWorkList);
-            else{
-                var stoppedActivity = Helper.followPath(centralArea, mouse, stoppedActivitiesPath, 0);
-                if(stoppedActivity !== false)
-                    hoveringStoppedActivity(stoppedActivity);
-            }
-        }*/
-
-    }
-
-    function hoveringRunningActivity(activity){
-
-        if(activity.ccode !== container.activityId){
-       //     console.log("----- "+activity.ccode + " - "+activity.activityName);
-            var newIndex = workflowManager.model().getIndexFor(activity.ccode);
-      //      console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
-
-            if((currentIndex !== newIndex)&&(newIndex>0)&&(activityStatus === "Running")){
-                currentIndex = newIndex;
-                workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
-                //if (activityStatus !== "Running")
-                  // workflowManager.activityManager().setCurrentInModel(container.activityId, "Running");
-            }
-        }
-    }
-
-    function hoveringStoppedActivity(activity){
-        if(activity.ccode !== container.activityId){
-       //     console.log("----- "+activity.ccode + " - "+activity.activityName);
-            var newIndex = workflowManager.model().getIndexFor(activity.ccode);
-        //    console.log("----- Current Index: "+currentIndex+" - New Index:"+newIndex);
-
-            if((currentIndex !== newIndex)&&(newIndex>0)&&(activityStatus === "Stopped")){
-                currentIndex = newIndex;
-                workflowManager.activityManager().moveActivityInModel(container.activityId, newIndex);
-                //if (activityStatus !== "Stopped")
-                  //  workflowManager.activityManager().setCurrentInModel(container.activityId, "Stopped");
-                container.updateReceiversPlace();
-            }
-        }
     }
 
     function onMReleased(mouse, viewXY){
@@ -206,13 +102,13 @@ Rectangle{
         var iY1 = iconImg.y;
 
         console.log("Data Engine Move - "+container.activityId + " - "+intIndex + " - " + currentIndex);
-        if(intIndex !== currentIndex)
+        if(intIndex !== currentIndex){
+            workflowManager.activityManager().moveActivityInModel(container.activityId, currentIndex);
             workflowManager.workareaManager().moveActivity(container.activityId, currentIndex);
+        }
 
         disableDragging();
     }
-
-
 
 }
 

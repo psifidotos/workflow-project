@@ -65,12 +65,32 @@ void ListModel::moveRow(int from, int to)
     if((from>=0) && (from<m_list.size()) &&
             (to>=0) && (to<m_list.size()) ){
         int newTo = to;
-        if (to == (from+1))
+
+        //fix from http://stackoverflow.com/questions/12267620/qml-gridview-does-not-update-after-change-its-model-in-c
+        if (from < to)
             newTo++;
-     //   else if (to ==(from-1))
-      //      newTo--;
+
+//        if (to == (from+1))
+  //          newTo++;
+
         beginMoveRows (QModelIndex(), from, from, QModelIndex(), newTo);
+
         m_list.move(from, to);
+        //ListItem *tmp1 = takeRow(from);
+   /*     if (from<to) {
+            for (int i=from; i<to; i++) {
+                ListItem *tmp2 = takeRow(i+1);
+                insertRow(i, tmp2);
+            }
+        } else if (from>to) {
+            for (int i=from; i>to; i--) {
+                ListItem *tmp2 = takeRow(i-1);
+                insertRow(i, tmp2);
+            }
+        }*/
+        //insertRow(newTo, tmp1);
+        //setItem(inx2,tmp1);
+
         endMoveRows();
     }
 }
@@ -103,8 +123,8 @@ QModelIndex ListModel::indexFromItem(const ListItem *item) const
 
 int ListModel::getIndexFor(const QString &id)
 {
-    for(int row=0; row<m_list.size(); ++row) {
-        if(m_list.at(row)->id() == id) return row;
+    for(int row=0; row<m_list.size(); row++) {
+        if((m_list[row])->id() == id) return row;
     }
 
     return -1;

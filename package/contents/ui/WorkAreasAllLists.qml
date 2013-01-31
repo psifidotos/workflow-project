@@ -122,7 +122,8 @@ Item{
 
                         width: activityInstance.width-5
                         height: 0.8 * mainView.height
-                        visible: (draggingActivities.activityId !== "")
+                        visible: ((draggingActivities.activityId !== "") &&
+                                  (draggingActivities.activityStatus === "Running"))
 
                         property string activityCode : ccode
                         property string activityName : Name

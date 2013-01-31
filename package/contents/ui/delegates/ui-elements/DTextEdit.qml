@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import "../../../code/settings.js" as Settings
+import "../../components"
 
 Item{
     id:container
@@ -212,7 +213,7 @@ Item{
         width:0.4*container.height
         height:container.height / 2
         source:"../../Images/buttons/listPencil.png"
-        opacity: container.containsMouse && !container.focused && container.enableEditing ? 1 : 0
+        opacity: container.containsMouse && !container.focused && !mainTextMouseArea.inDragging && container.enableEditing ? 1 : 0
         smooth:true
 
         Behavior on opacity{
@@ -223,20 +224,39 @@ Item{
         }
     }
 
-    MouseArea{
+    DraggingMouseArea{
         id:mainTextMouseArea
-        width: container.focused ? parent.width - 40 : parent.width
+        anchors.left: parent.left
+        width: container.focused ? parent.width - 35 : parent.width
         height: parent.height
-        hoverEnabled: true
+
+        draggingInterface: draggingActivities
 
         onEntered: container.entered();
         onExited: container.exited();
 
-        onClicked: {
-            if(container.enableEditing)
-                container.clickedFunction(mouse);
+        onInDraggingChanged: {
+            if(inDragging)
+                textWasNotAccepted();
+        }
+
+        onClickedOverrideSignal: {
+            if(!inDragging){
+                if(container.enableEditing)
+                    container.clickedFunction(mouse);
+                else
+                    workflowManager.activityManager().setCurrent(code);
+            }
+        }
+
+        onDraggingStarted: {
+            if(!Settings.global.lockActivities){
+                var coords = mapToItem(mainView, mouse.x, mouse.y);
+                draggingActivities.enableDragging(mouse, coords, code, "Running", Icon);
+            }
         }
     }
+
 
     function clickedFunction(mouse){
         mainText.forceActiveFocus();

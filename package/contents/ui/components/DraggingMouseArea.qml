@@ -4,7 +4,7 @@ import ".."
 
 MouseArea {
     id:container
-    anchors.fill: parent
+//    anchors.fill: parent
     hoverEnabled: true
 
     property Item draggingInterface

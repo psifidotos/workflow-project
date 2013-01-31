@@ -31,9 +31,12 @@ Item{
 
     property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.02)
 
+    visible: CState === neededState
     //    width: bWidth
     height: bHeight+addedHeight
 
+    property bool activityDragged2: (draggingActivities.activityId === code) &&
+                                   (draggingActivities.activityStatus === "Running")
     property bool activityDragged: (draggingActivities.activityId === code) &&
                                    (draggingActivities.activityStatus === "Running")
 
@@ -43,7 +46,6 @@ Item{
 
     onStateChanged: allareas.changedChildHeight();
 
-
     Rectangle{
         id:draggingRectangle
         anchors.horizontalCenter: parent.horizontalCenter
@@ -51,7 +53,14 @@ Item{
         height:workalist.height - 10
         radius:10
         color: "#333333"
-        opacity:activityDragged ? 0.15 : 0
+        opacity:activityDragged2 ? 0.15 : 0
+
+        Behavior on opacity{
+            NumberAnimation{
+                duration: 3*Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
     }
 
     ListView{
@@ -75,6 +84,12 @@ Item{
         delegate:WorkAreaDeleg{
         }
 
+        Behavior on opacity{
+            NumberAnimation{
+                duration: 3*Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
     }
 
     AddWorkAreaButton{
@@ -97,6 +112,13 @@ Item{
 
             onClicked:{
                 workflowManager.workareaManager().addWorkArea(code,"");
+            }
+        }
+
+        Behavior on opacity{
+            NumberAnimation{
+                duration: 3*Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
             }
         }
 
@@ -207,6 +229,16 @@ Item{
 
     }
 
+    Rectangle{
+        width:parent.width -2
+        radius:15
+        height:0.8 *mainView.height
+        anchors.top:parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        color:"#995879c0"
+        visible: draggingActivities.currentActivity === ccode
+    }
+
     /*
         ListView.onAdd:
             NumberAnimation { target: workList;
@@ -216,16 +248,16 @@ Item{
                 easing.type: Easing.InOutQuad
         }*/
 
-
-    /*ListView.onRemove: SequentialAnimation {
+/*
+    ListView.onRemove: SequentialAnimation {
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
         NumberAnimation { target: workList; property: "opacity"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
 
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
-    }*/
-
+    }
+*/
     states: [
         State {
             name: "show"
