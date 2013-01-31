@@ -5,6 +5,7 @@
 #include <Plasma/DataEngine>
 
 class ActivitiesEnhancedModel;
+class PluginDelayActivitiesOrdering;
 
 class WorkareasManager : public QObject
 {
@@ -45,11 +46,13 @@ private slots:
     void activityRemovedSlot(QString id);
 
     void maxWorkareasChangedSlot(int);
+    void orderActivitiesSlot();
 
 private:
     int m_maxWorkareas;
     ActivitiesEnhancedModel *m_actModel;
     Plasma::DataEngine *m_dataEngine;
+    PluginDelayActivitiesOrdering *m_plgActOrdering;
 
     void addWorkareaInModel(QString, QString);
     void removeWorkareaInModel(QString id, int desktop);

@@ -15,36 +15,36 @@
 
 #include <taskmanager/task.h>
 
+#include "plugins/plugindelayactivitiesordering.h"
+
 WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_maxWorkareas(0),
     m_actModel(model),
-    m_dataEngine(0)
+    m_dataEngine(0),
+    m_plgActOrdering(0)
 {
-    init();
+    init();    
 }
 
 WorkareasManager::~WorkareasManager()
 {
     Plasma::DataEngineManager::self()->unloadEngine("workareas");
+
+    if(m_plgActOrdering)
+        delete m_plgActOrdering;
 }
 
 void WorkareasManager::init()
 {
     m_dataEngine = Plasma::DataEngineManager::self()->loadEngine("workareas");
-   /* Plasma::Extender *appletExtender = static_cast<Plasma::Extender *>(extender);
-
-    if(appletExtender){
-        Plasma::Applet *applet = appletExtender->applet();
-        if(applet){
-            m_dataEngine = applet->dataEngine("workareas");
-        }
-        delete extender;
-    }*/
-
+    m_plgActOrdering = new PluginDelayActivitiesOrdering(this);
+    connect(m_plgActOrdering, SIGNAL(orderActivitiesTriggered()), this, SLOT(orderActivitiesSlot()));
 
     foreach (const QString source, m_dataEngine->sources())
-      activityAddedSlot(source);
+        activityAddedSlot(source);
+
+    m_actModel->sortModel();
 
     // activity addition and removal
     connect(m_dataEngine, SIGNAL(sourceAdded(QString)), this, SLOT(activityAddedSlot(QString)));
@@ -74,8 +74,8 @@ int WorkareasManager::numberOfWorkareas(QString actId)
 
 void WorkareasManager::activityAddedSlot(QString id)
 {
-    if(id == "Settings")
-        return;
+   // if(id == "Settings")
+     //   return;
 
     m_dataEngine->connectSource(id, this);
 }
@@ -101,41 +101,49 @@ void WorkareasManager::removeWorkareaInModel(QString id, int desktop)
 }
 
 void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data) {
-  ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(source));
-  ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->find(source));
+    //qDebug() << source;
+    if (source != "Settings"){
+        ListModel *workareasModel = static_cast<ListModel *>(m_actModel->workareas(source));
+        ActivityItem *activity = static_cast<ActivityItem *>(m_actModel->find(source));
 
-  if(workareasModel && activity ){
-      //update background
-      activity->setBackground(data["Background"].toString());
+        if(workareasModel && activity ){
+            //update background
+            activity->setBackground(data["Background"].toString());
 
-      //update workareas
-      int prevSize = workareasModel->getCount();
+            //update workareas
+            int prevSize = workareasModel->getCount();
 
-      QStringList newWorkareas = data["Workareas"].toStringList();
-      int newSize = newWorkareas.size();
+            QStringList newWorkareas = data["Workareas"].toStringList();
+            int newSize = newWorkareas.size();
 
-      for(int i=0; i<newSize; ++i )
-      {
-          WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
+            for(int i=0; i<newSize; ++i )
+            {
+                WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
 
-          if (i<prevSize)
-              workarea->setTitle(newWorkareas.at(i));
-          else
-              addWorkareaInModel(source, newWorkareas.at(i));
-      }
+                if (i<prevSize)
+                    workarea->setTitle(newWorkareas.at(i));
+                else
+                    addWorkareaInModel(source, newWorkareas.at(i));
+            }
 
-      if(prevSize > newSize)
-          for(int j=newSize; j<prevSize; ++j )
-              removeWorkareaInModel(source, j+1);
-      //////
+            if(prevSize > newSize)
+                for(int j=newSize; j<prevSize; ++j )
+                    removeWorkareaInModel(source, j+1);
+            //////
 
-      //update order
-      int nOrder = data["Order"].toInt();
-      if(activity->order() != nOrder ){
-            activity->setOrder(nOrder);
-            m_actModel->sortModel();
-      }
-  }
+            //update order
+            int nOrder = data["Order"].toInt();
+            if(activity->order() != nOrder ){
+                activity->setOrder(nOrder);
+                m_plgActOrdering->execute();
+               // m_actModel->sortModel();
+            }
+        }
+    }
+    else{//Settings Changes
+        int maxWorkareas = data["MaxWorkareas"].toInt();
+        Q_UNUSED(maxWorkareas);
+    }
 }
 
 void WorkareasManager::maxWorkareasChangedSlot(int size)
@@ -144,6 +152,12 @@ void WorkareasManager::maxWorkareasChangedSlot(int size)
         m_maxWorkareas = size;
         emit maxWorkareasChanged(m_maxWorkareas);
     }
+}
+
+void WorkareasManager::orderActivitiesSlot()
+{
+ //   qDebug() << "Order Activities triggered...";
+    m_actModel->sortModel();
 }
 
 void WorkareasManager::addWorkArea(QString id, QString name)
