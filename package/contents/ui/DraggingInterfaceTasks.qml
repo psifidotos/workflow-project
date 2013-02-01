@@ -231,7 +231,6 @@ Rectangle{
                 (mainDraggingItem.intIsEverywhere === true)){
 
             var windowsState = taskManager.windowState(intTaskId);
-            console.log ("--------"+windowsState);
 
             if (windowsState === "allDesktops"){
                 taskManager.setOnlyOnActivity(intTaskId, drActiv);

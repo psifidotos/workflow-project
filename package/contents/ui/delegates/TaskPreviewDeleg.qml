@@ -139,7 +139,7 @@ Item{
         anchors.fill: parent
         draggingInterface: mDragInt
 
-        onClicked: {
+        onClickedOverrideSignal:{
             taskDeleg2.onClicked(mouse);
         }
 
@@ -225,7 +225,7 @@ Item{
             anchors.fill: parent
             draggingInterface: mDragInt
 
-            onClicked: {
+            onClickedOverrideSignal: {
                 taskDeleg2.onClicked(mouse);
             }
 
