@@ -230,10 +230,22 @@ Rectangle{
                 (mainDraggingItem.intDesktop !== mainDraggingItem.drDesktop) ||
                 (mainDraggingItem.intIsEverywhere === true)){
 
-            taskManager.setTaskState( intTaskId, "oneDesktop", drActiv, drDesktop);
+            var windowsState = taskManager.windowState(intTaskId);
+            console.log ("--------"+windowsState);
 
-            taskManager.setTaskDesktopForAnimation( intTaskId, drDesktop);
-            taskManager.setTaskActivityForAnimation( intTaskId, drActiv);
+            if (windowsState === "allDesktops"){
+                taskManager.setOnlyOnActivity(intTaskId, drActiv);
+                taskManager.setTaskActivityForAnimation( intTaskId, drActiv);
+            }
+            else if(windowsState === "sameDesktops"){
+                taskManager.setOnDesktop(intTaskId, drDesktop);
+                taskManager.setTaskDesktopForAnimation( intTaskId, drDesktop)
+            }
+            else{
+                taskManager.setTaskState( intTaskId, "oneDesktop", drActiv, drDesktop);
+                taskManager.setTaskDesktopForAnimation( intTaskId, drDesktop);
+                taskManager.setTaskActivityForAnimation( intTaskId, drActiv);
+            }
 
             if(Settings.global.animationStep2!==0){
                 var co1 = mainView.mapToItem(mainView, iconImg.x, iconImg.y);

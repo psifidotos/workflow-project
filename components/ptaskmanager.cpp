@@ -395,4 +395,30 @@ int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnab
     return counter;
 }
 
+/*
+ *This is used to return a windows state
+ *
+ * "oneDesktop"
+ * "allDesktops"
+ * "sameDesktops"
+ * "allActivities"
+ *
+ */
+QString PTaskManager::windowState(QString window)
+{
+    TaskItem *task = static_cast<TaskItem *>(m_taskModel->find(window));
+    if(task){
+        if(!task->onAllActivities() && !task->onAllDesktops())
+            return "oneDesktop";
+        else if(task->onAllDesktops() && !task->onAllActivities())
+            return "allDesktops";
+        else if(task->onAllActivities() && !task->onAllDesktops())
+            return "sameDesktops";
+        else if(task->onAllActivities() && task->onAllDesktops())
+            return "allActivities";
+    }
+    return "";
+}
+
+
 #include "ptaskmanager.moc"
