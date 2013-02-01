@@ -164,7 +164,7 @@ Rectangle {
             property string typeId : "StoppedActivitiesList"
             anchors.right: parent.right
 
-            property int shownActivities: 0
+            property int shownActivities: model.count
 
             interactive:false
             model: PlasmaCore.SortFilterModel {
@@ -175,7 +175,6 @@ Rectangle {
 
             delegate: ActivityStoppedDeleg{
                 id:activityInstance
-                onShownChanged:stoppedActivitiesList.countActivities()
 
                 MouseArea{
                     id:draggingReceiver
@@ -231,19 +230,6 @@ Rectangle {
                     easing.type: Easing.InOutQuad;
                 }
             }
-
-            function countActivities(){
-                var counter = 0;
-
-                var slist = stoppedActivitiesList.children[0];
-
-                for(var i=0; i < slist.children.length; ++i)
-                    if (slist.children[i].shown === true)
-                        counter++;
-
-                shownActivities = counter;
-            }
-
         }
 
         states: State {

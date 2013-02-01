@@ -52,15 +52,14 @@ Item{
             interactive:false
             property string typeId : "WorkareasColumnAppearance"
 
-            property int maxWorkAreasHeight: 0
+           // property int maxWorkAreasHeight: (workflowManager.workareaManager().maxWorkareas *
+            property int maxWorkAreasHeight:0
 
             model:PlasmaCore.SortFilterModel {
                 filterRole: "CState"
                 filterRegExp: "Running"
                 sourceModel: workflowManager.model()
             }
-
-
 
             delegate: WorkAreaListDeleg{}
 
@@ -118,12 +117,12 @@ Item{
                     sourceModel: workflowManager.model()
                 }
 
-                property int shownActivities: 0
+                //property int shownActivities: 0
+                property int shownActivities: model.count
                 property string typeId : "RunningActivitiesList"
 
                 delegate: ActivityDeleg{
                     id: activityInstance
-                    onShownChanged:activitiesList.countActivities();
 
                     MouseArea{
                         id:draggingReceiver
@@ -165,19 +164,6 @@ Item{
                     //    }
 
                     }
-                }
-
-
-                function countActivities(){
-                    var counter = 0;
-
-                    var slist = activitiesList.children[0];
-
-                    for(var i=0; i < slist.children.length; ++i)
-                        if (slist.children[i].shown === true)
-                            counter++;
-
-                    shownActivities = counter;
                 }
 
             }

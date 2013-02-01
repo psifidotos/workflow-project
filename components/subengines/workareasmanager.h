@@ -45,9 +45,7 @@ private slots:
     void activityAddedSlot(QString id);
     void activityRemovedSlot(QString id);
 
-    void maxWorkareasChangedSlot(int);
     void orderActivitiesSlot();
-
 private:
     int m_maxWorkareas;
     ActivitiesEnhancedModel *m_actModel;

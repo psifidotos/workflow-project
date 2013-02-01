@@ -141,16 +141,11 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
         }
     }
     else{//Settings Changes
-        int maxWorkareas = data["MaxWorkareas"].toInt();
-        Q_UNUSED(maxWorkareas);
-    }
-}
-
-void WorkareasManager::maxWorkareasChangedSlot(int size)
-{
-    if(m_maxWorkareas != size){
-        m_maxWorkareas = size;
-        emit maxWorkareasChanged(m_maxWorkareas);
+        int mxWorkareas = data["MaxWorkareas"].toInt();
+        if(mxWorkareas != m_maxWorkareas){
+            m_maxWorkareas = mxWorkareas;
+            emit maxWorkareasChanged(m_maxWorkareas);
+        }
     }
 }
 
