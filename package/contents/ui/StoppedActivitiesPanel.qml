@@ -167,7 +167,11 @@ Rectangle {
             property int shownActivities: 0
 
             interactive:false
-            model: workflowManager.model()
+            model: PlasmaCore.SortFilterModel {
+                filterRole: "CState"
+                filterRegExp: "Stopped"
+                sourceModel: workflowManager.model()
+            }
 
             delegate: ActivityStoppedDeleg{
                 id:activityInstance

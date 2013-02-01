@@ -39,7 +39,7 @@ Item{
             //stoppedPanel.changedChildState();
         }*/
 
-
+/*
     Behavior on opacity{
         NumberAnimation {
             duration: 2*Settings.global.animationStep;
@@ -59,7 +59,7 @@ Item{
             duration: 2*Settings.global.animationStep;
             easing.type: Easing.InOutQuad;
         }
-    }
+    }*/
 
     Rectangle{
         id:draggingRectangle
@@ -280,6 +280,25 @@ Item{
         mainText: i18n("Restore Activity")
         subText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
         image: instanceOfThemeList.icons.RunActivity
+    }
+
+    ListView.onAdd: ParallelAnimation {
+        PropertyAction { target: stpActivity; property: "width"; value: 0 }
+        PropertyAction { target: stpActivity; property: "opacity"; value: 0 }
+
+        NumberAnimation { target: stpActivity; property: "width"; to: stoppedActivitiesList.width; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: stpActivity; property: "opacity"; to: 1; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+    }
+
+    ListView.onRemove: SequentialAnimation {
+        PropertyAction { target: stpActivity; property: "ListView.delayRemove"; value: true }
+
+        ParallelAnimation{
+            NumberAnimation { target: stpActivity; property: "width"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: stpActivity; property: "opacity"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        }
+        // Make sure delayRemove is set back to false so that the item can be destroyed
+        PropertyAction { target: stpActivity; property: "ListView.delayRemove"; value: false }
     }
 
     function getIcon(){

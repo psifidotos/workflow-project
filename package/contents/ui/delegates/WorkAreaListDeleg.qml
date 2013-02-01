@@ -36,7 +36,7 @@ Item{
     height: bHeight+addedHeight
 
     property bool activityDragged2: (draggingActivities.activityId === code) &&
-                                   (draggingActivities.activityStatus === "Running")
+                                    (draggingActivities.activityStatus === "Running")
     property bool activityDragged: (draggingActivities.activityId === code) &&
                                    (draggingActivities.activityStatus === "Running")
 
@@ -67,7 +67,7 @@ Item{
         id:workalist
 
         height:workList.bHeight
-       // width: workList.tCState === workList.neededState ? workList.bWidth : 0
+        // width: workList.tCState === workList.neededState ? workList.bWidth : 0
         property string typeId : "WorkareasListView"
 
         property int addedHeightForCurrent:(sessionParameters.screenRatio*0.2*mainView.scaleMeter)
@@ -239,16 +239,16 @@ Item{
         visible: draggingActivities.currentActivity === ccode
     }
 
-    /*
-        ListView.onAdd:
-            NumberAnimation { target: workList;
-                property: "opacity";
-                to: 1;
-                duration: 2*Settings.global.animationStep;
-                easing.type: Easing.InOutQuad
-        }*/
 
-/*
+    ListView.onAdd:
+        NumberAnimation { target: workList;
+        property: "opacity";
+        to: 1;
+        duration: 2*Settings.global.animationStep;
+        easing.type: Easing.InOutQuad
+    }
+
+
     ListView.onRemove: SequentialAnimation {
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: true }
 
@@ -257,7 +257,7 @@ Item{
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: workList; property: "ListView.delayRemove"; value: false }
     }
-*/
+
     states: [
         State {
             name: "show"

@@ -251,7 +251,7 @@ Item{
         color:"#15222222"
         z:10
     }
-/*
+
     ListView.onAdd: ParallelAnimation {
         PropertyAction { target: mainActivity; property: "width"; value: 0 }
         PropertyAction { target: mainActivity; property: "opacity"; value: 0 }
@@ -269,7 +269,7 @@ Item{
         }
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainActivity; property: "ListView.delayRemove"; value: false }
-    }*/
+    }
 
 
     function getCurrentIndex(){
