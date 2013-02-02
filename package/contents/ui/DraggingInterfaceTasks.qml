@@ -23,6 +23,8 @@ Rectangle{
 
     property string drActiv: ""
     property int drDesktop: -1
+    property bool isActive: false
+    property bool onEverywhere: false
 
     //0 - over a Workarea
     //1 - over an AddWorkarea button
@@ -52,10 +54,6 @@ Rectangle{
     }
 
     function enableDragging(ms,src,taskI,actI,deskI,coord1,everywhere){
-
-        //if(desktopDialog !== mainView)
-        //   desktopDialog.closeD();
-
         allWorkareas.flickableV = false;
 
         mainDraggingItem.opacity = 1;
@@ -71,11 +69,11 @@ Rectangle{
         mainDraggingItem.intY1 = coord1.y;
         mainDraggingItem.intIsEverywhere = everywhere;
 
-        //  iconImg.icon = instanceOfTasksList.getTasksIcon(taskI);
-
         mainDraggingItem.lastSelection = -1;
 
         mainDraggingItem.firsttime = true;
+        isActive = true;
+        onEverywhere = false;
 
         onPstChanged(ms);
     }
@@ -85,19 +83,20 @@ Rectangle{
         mainDraggingItem.enabled = false;
         mainDraggingItem.z = -1;
         allWorkareas.flickableV = true;
-        selectionImage.opacity = 0;
-
-        selectionImage.setLocation(-1,-1,1,1);
 
         mainDraggingItem.lastSelection = -1;
 
         mainDraggingItem.intActId = "";
         mainDraggingItem.intDesktop = -1;
         mainDraggingItem.intTaskId = "";
+
+
         //It creates a confusion when releasing
         //must be fixed with a flag initialiazing properly
-        //    mainDraggingItem.drActiv = "";
-        //    mainDraggingItem.drDesktop = -1;
+        mainDraggingItem.drActiv = "";
+        mainDraggingItem.drDesktop = -1;
+        isActive = false;
+        onEverywhere = false;
     }
 
     //PATHS IN ORDER TO FIND ELEMENTS IN QML STRUCTURE
@@ -154,18 +153,12 @@ Rectangle{
                 (mainDraggingItem.drDesktop!==workarea.desktop) ||
                 (mainDraggingItem.firsttime === true)){
 
-            var bordRect = workarea.getBorderRectangle();
-            var fixBCoord = bordRect.mapToItem(mainDraggingItem,bordRect.x, bordRect.y);
-
-            selectionImage.setLocation(fixBCoord.x-2,fixBCoord.y-4,bordRect.width-2,bordRect.height+8);
-            selectionImage.opacity = 1;
-
             mainDraggingItem.drActiv = workarea.actCode;
             mainDraggingItem.drDesktop = workarea.desktop;
+            mainDraggingItem.onEverywhere = false;
 
             mainDraggingItem.lastSelection = 0;
             mainDraggingItem.firsttime = false;
-
         }
     }
 
@@ -182,14 +175,9 @@ Rectangle{
         if((mainDraggingItem.drActiv !== activityCode) ||
                 (mainDraggingItem.drDesktop !== (desktopsNum+1) ) ||
                 (mainDraggingItem.firsttime === true) ){
-
-            var fixBCoord2 = addworkarea.mapToItem(mainDraggingItem,addworkarea.x, addworkarea.y);
-
-            selectionImage.setLocation(fixBCoord2.x,fixBCoord2.y-5,addworkarea.width,1.3 * addworkarea.height);
-            selectionImage.opacity = 1;
-
             mainDraggingItem.drActiv = activityCode;
             mainDraggingItem.drDesktop = desktopsNum+1;
+            mainDraggingItem.onEverywhere = false;
 
             mainDraggingItem.lastSelection = 1;
             //          mainDraggingItem.firsttime = false;
@@ -198,14 +186,7 @@ Rectangle{
     }
 
     function hoveringEverywhereTasks(allTasks){
-        var fixBCoord3 = allTasks.mapToItem(mainDraggingItem,allTasks.x, allTasks.y);
-
-        var offX=13
-        var offY=15
-
-        selectionImage.setLocation(fixBCoord3.x-offX,fixBCoord3.y-offY, allTasks.width+1.4*offX, allTasks.height+1.8*offY);
-        selectionImage.opacity = 1;
-
+        mainDraggingItem.onEverywhere = true;
         mainDraggingItem.lastSelection = 2;
     }
 

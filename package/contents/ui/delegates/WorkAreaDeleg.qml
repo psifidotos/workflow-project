@@ -51,17 +51,20 @@ Item{
                                (keyNavigation.selectedActivity === actCode) &&
                                (keyNavigation.selectedWorkarea === desktop) )
 
+    property bool isHoveredFromDragging: ( mDragInt.isActive &&
+                                          (mDragInt.drActiv === actCode) &&
+                                          (mDragInt.drDesktop === desktop) )
 
     SelectedArea{
         x: normalWorkArea.x - marginLeft
         y: normalWorkArea.y - marginTop - 3
         width: normalWorkArea.width + marginWidth - 3
         height: normalWorkArea.height + marginHeight + 7
-        opacity:isSelected
+        opacity:isSelected || isHoveredFromDragging
 
         Behavior on opacity{
             NumberAnimation {
-                duration: 2*Settings.global.animationStep
+                duration: Settings.global.animationStep
                 easing.type: Easing.InOutQuad;
             }
         }

@@ -3,6 +3,7 @@ import QtQuick 1.1
 import "delegates"
 
 import "../code/settings.js" as Settings
+import "components"
 
 Item{
 
@@ -18,6 +19,8 @@ Item{
     property bool showEverywhereWindowsPanel : Settings.global.showWindows &&
                                                (allActTaskL.shownTasks>0)
 
+    property bool isHoveredFromDragging: (mDragInt.isActive && mDragInt.onEverywhere)
+
     property string typeId:"allActivitiesTasks"
 
     Behavior on x{
@@ -31,6 +34,21 @@ Item{
         NumberAnimation {
             duration: 3*Settings.global.animationStep;
             easing.type: Easing.InOutQuad;
+        }
+    }
+
+    SelectedArea{
+        x:allActRect.x - 40
+        y:allActRect.y - 35
+        width:parent.width+75
+        height:parent.height+65
+        opacity: isHoveredFromDragging
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
         }
     }
 

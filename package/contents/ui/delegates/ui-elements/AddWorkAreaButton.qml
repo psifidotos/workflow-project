@@ -18,13 +18,17 @@ Rectangle{
     radius: 4
     z:6
 
+    property int addWorkareaPosition : workflowManager.model().workareas(workList.ccode).count + 1
+
     property bool isKeysSelected: ( (keyNavigation.isActive) &&
                                    (keyNavigation.selectedActivity === workList.ccode) &&
                                    (keyNavigation.selectedWorkarea === addWorkareaPosition) )
 
+    property bool isHoveredFromDragging: ( mDragInt.isActive &&
+                                          (mDragInt.drActiv === workList.ccode) &&
+                                          (mDragInt.drDesktop === addWorkareaPosition) )
 
-    property int addWorkareaPosition : workflowManager.model().workareas(workList.ccode).count + 1
-    property bool showSelection : addWorkareaMouseArea.containsMouse || isKeysSelected
+    property bool showSelection : addWorkareaMouseArea.containsMouse || isKeysSelected || isHoveredFromDragging
 
     Rectangle{
         width:20

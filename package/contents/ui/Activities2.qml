@@ -133,9 +133,6 @@ Rectangle {
         anchors.fill: parent
 
         property string typeId: "centralArea"
-        SelectedArea {
-            id:selectionImage
-        }
 
         WorkAreasAllLists{
             id: allWorkareas

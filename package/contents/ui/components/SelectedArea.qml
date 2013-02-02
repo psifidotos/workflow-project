@@ -20,8 +20,6 @@ BorderImage {
     width:0
     height:0
 
-    z:5
-
     opacity:0
 
     property int marginLeft: 25
