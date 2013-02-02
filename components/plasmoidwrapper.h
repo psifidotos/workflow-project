@@ -45,9 +45,7 @@ private slots:
     void activeWindowChangedSlot(WId);
     void geometryChangedSlot();
 
-
 private:
-
     bool m_isInPanel;
     bool m_findPopupWid;
     QString m_windowID;

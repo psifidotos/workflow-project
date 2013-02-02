@@ -23,6 +23,7 @@ import "../code/settings.js" as Settings
 Rectangle {
     id:mainView
     objectName: "instMainView"
+    focus:true
 
     property int minimumWidth: 100
     property int minimumHeight: 100
@@ -79,7 +80,6 @@ Rectangle {
     signal maximumHeightChanged;
     signal preferredWidthChanged;
     signal preferredHeightChanged;
-
 
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
@@ -197,10 +197,8 @@ Rectangle {
         id:draggingActivities
     }
 
-
     KeyNavigation{
         id:keyNavigation
-        focus:true
     }
 
     Keys.forwardTo: [keyNavigation]
@@ -226,8 +224,14 @@ Rectangle {
         plasmoid.aspectRatioMode = IgnoreAspectRatio;
 
         plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
+        plasmoid.popupEvent.connect(popupEventSlot);
 
         plasmoid.passivePopup = !Settings.global.hideOnClick;
+    }
+
+    function popupEventSlot(show){
+        if(show)
+            mainView.forceActiveFocus();
     }
 
     function getDynLib(){
