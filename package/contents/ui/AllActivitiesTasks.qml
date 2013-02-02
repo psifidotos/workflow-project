@@ -113,7 +113,7 @@ Item{
             height:mainView.workareaHeight / 2
 
             //model: taskManager.model()
-            model: Settings.global.disableEverywherePanel ? emptyModel : taskManager.model()
+            model: Settings.global.disableEverywherePanel ? emptyModel : filteredTasksModel
 
             orientation: ListView.Horizontal
             interactive:false

@@ -109,10 +109,10 @@ Rectangle {
     QMLPluginsConnections{}
 
     PlasmaCore.SortFilterModel {
-        id:runningActivitiesModel
-        filterRole: "CState"
-        filterRegExp: "Running"
-        sourceModel: workflowManager.model()
+        id:filteredTasksModel
+        //filterRole: "CState"
+        //filterRegExp: "Running"
+        sourceModel: taskManager.model()
     }
 
     PlasmaCore.SortFilterModel {
@@ -122,7 +122,12 @@ Rectangle {
         sourceModel: workflowManager.model()
     }
 
-
+    PlasmaCore.SortFilterModel {
+        id:runningActivitiesModel
+        filterRole: "CState"
+        filterRegExp: "Running"
+        sourceModel: workflowManager.model()
+    }
 
     SharedThemeList{
         id:instanceOfThemeList

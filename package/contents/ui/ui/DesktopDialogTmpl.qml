@@ -146,7 +146,7 @@ DialogTemplate2{
 
         WorkFlowComponents.FilterTaskModel{
             id:taskModel
-            sourceMainModel: taskManager.model()
+            sourceMainModel: filteredTasksModel
             activity:activityCode
             desktop:deskDialog.desktop
             everywhereState: Settings.global.disableEverywherePanel

@@ -129,7 +129,7 @@ Item{
             property bool hasChildren:childrenRect.height > 1
             property bool isClipped:childrenRect.height > height
 
-            model: taskManager.model()
+            model: filteredTasksModel
 
             property int shownTasks:0
             //property int shownTasks:taskModel.count

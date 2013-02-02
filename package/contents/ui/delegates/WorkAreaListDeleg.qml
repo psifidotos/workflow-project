@@ -217,8 +217,7 @@ Item{
 
         interactive:false
 
-
-        model: taskManager.model()
+        model: filteredTasksModel
 
         delegate:WorkAreaOrphanTaskDeleg{
         }
