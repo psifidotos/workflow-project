@@ -55,11 +55,7 @@ Item{
            // property int maxWorkAreasHeight: (workflowManager.workareaManager().maxWorkareas *
             property int maxWorkAreasHeight:0
 
-            model:PlasmaCore.SortFilterModel {
-                filterRole: "CState"
-                filterRegExp: "Running"
-                sourceModel: workflowManager.model()
-            }
+            model:runningActivitiesModel
 
             delegate: WorkAreaListDeleg{}
 
@@ -111,11 +107,7 @@ Item{
                 height:parent.height
                 width: allareas.width
                 interactive:false
-                model: PlasmaCore.SortFilterModel {
-                    filterRole: "CState"
-                    filterRegExp: "Running"
-                    sourceModel: workflowManager.model()
-                }
+                model: runningActivitiesModel
 
                 //property int shownActivities: 0
                 property int shownActivities: model.count

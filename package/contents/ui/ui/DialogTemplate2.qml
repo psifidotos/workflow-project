@@ -13,7 +13,6 @@ PlasmaCore.FrameSvgItem{
     imagePath:"opaque/dialogs/background"
     id:templDialog
 
-
     /*property alias insideWidth: dialogInsideRect.width
     property alias insideHeight: dialogInsideRect.height*/
 

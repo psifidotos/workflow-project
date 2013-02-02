@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import ".."
+import "../components"
 import "ui-elements"
 import "../tooltips"
 import "../../code/settings.js" as Settings
@@ -69,17 +70,15 @@ Item{
         height:workList.bHeight
         // width: workList.tCState === workList.neededState ? workList.bWidth : 0
         property string typeId : "WorkareasListView"
-
         property int addedHeightForCurrent:(sessionParameters.screenRatio*0.2*mainView.scaleMeter)
 
         opacity:activityDragged ? 0 : 1
-        z:5
 
         interactive:false
 
         model: workflowManager.model().workareas(code)
-
         orientation:ListView.Vertical
+        z:5
 
         delegate:WorkAreaDeleg{
         }
@@ -90,6 +89,7 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
+
     }
 
     AddWorkAreaButton{
@@ -119,6 +119,18 @@ Item{
             NumberAnimation{
                 duration: 3*Settings.global.animationStep;
                 easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Connections{
+            target:keyNavigation
+            onActionActivated:{
+                if(addWorkArea.isKeysSelected){
+                    if(key==="Pause")
+                        workflowManager.activityManager().stop(workList.ccode);
+                    else
+                        workflowManager.workareaManager().addWorkArea(code,"");
+                }
             }
         }
 

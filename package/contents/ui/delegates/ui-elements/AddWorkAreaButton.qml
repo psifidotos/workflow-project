@@ -4,17 +4,27 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import "../../../code/settings.js" as Settings
 
 Rectangle{
-    height:40
-    color: fromColor
+
     property color fromColor:"#00c9c9c9"
     property color toColor:"#ccfafafa"
     property color borderFromColor:"#00686868"
     property color borderToColor:"#ff686868"
 
-    border.color: borderFromColor
+    height:40
+    color: showSelection ? toColor : fromColor
+    border.color: showSelection ? borderToColor : borderFromColor
+
     border.width: 2
     radius: 4
     z:6
+
+    property bool isKeysSelected: ( (keyNavigation.isActive) &&
+                                   (keyNavigation.selectedActivity === workList.ccode) &&
+                                   (keyNavigation.selectedWorkarea === addWorkareaPosition) )
+
+
+    property int addWorkareaPosition : workflowManager.model().workareas(workList.ccode).count + 1
+    property bool showSelection : addWorkareaMouseArea.containsMouse || isKeysSelected
 
     Rectangle{
         width:20
@@ -45,23 +55,10 @@ Rectangle{
         ColorAnimation { from: addWorkArea.border.color; duration: 3*Settings.global.animationStep }
     }
 
-
     MouseArea {
         id:addWorkareaMouseArea
-
         anchors.fill: parent
         hoverEnabled: true
-
-        onEntered: {
-            addWorkArea.color = addWorkArea.toColor;
-            addWorkArea.border.color = addWorkArea.borderToColor;
-        }
-
-        onExited: {
-            addWorkArea.color = addWorkArea.fromColor;
-            addWorkArea.border.color = addWorkArea.borderFromColor;
-        }
-
     }
 
     PlasmaCore.ToolTip{

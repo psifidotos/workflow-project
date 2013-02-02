@@ -39,6 +39,7 @@ Item {
             value: 50
             width: container.width - zoomOutButton.width * 2
             anchors.verticalCenter: parent.verticalCenter
+            onValueChanged:mainView.forceActiveFocus();
         }
 
         IconButton {

@@ -34,6 +34,19 @@ Item{
     property bool activityDragged: (draggingActivities.activityId === code) &&
                                    (draggingActivities.activityStatus === "Stopped")
 
+    property bool isSelected: ( (keyNavigation.isActive) &&
+                               (keyNavigation.selectedActivity === ccode) )
+
+
+    Rectangle{
+        id:draggingRectangle
+        anchors.centerIn: parent
+        width:0.9 * parent.width
+        height: 0.9 * parent.height
+        radius:10
+        color: "#333333"
+        opacity:(activityDragged || isSelected) ? 0.20 : 0
+    }
     /*
         onCStateChanged:{
             //stoppedPanel.changedChildState();
@@ -61,15 +74,7 @@ Item{
         }
     }*/
 
-    Rectangle{
-        id:draggingRectangle
-        anchors.centerIn: parent
-        width:0.9 * parent.width
-        height: 0.9 * parent.height
-        radius:10
-        color: "#333333"
-        opacity:activityDragged ? 0.10 : 0
-    }
+
 
     //Item{
         ///Ghost Element in order for the activityIcon to be the
@@ -223,15 +228,7 @@ Item{
         draggingInterface: draggingActivities
 
          onClickedOverrideSignal: {
-            workflowManager.activityManager().start(ccode);
-
-            if(Settings.global.animationStep2!==0){
-                var x1 = activityIconDisabled.x;
-                var y1 = activityIconDisabled.y;
-
-                //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-                mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainView,x1, y1));
-            }
+             activateActivity();
         }
 
         onDraggingStarted: {
@@ -299,6 +296,26 @@ Item{
         }
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: stpActivity; property: "ListView.delayRemove"; value: false }
+    }
+
+    Connections{
+        target:keyNavigation
+        onActionActivated:{
+            if(isSelected)
+                activateActivity();
+        }
+    }
+
+    function activateActivity(){
+        workflowManager.activityManager().start(ccode);
+
+        if(Settings.global.animationStep2!==0){
+            var x1 = activityIconDisabled.x;
+            var y1 = activityIconDisabled.y;
+
+            //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
+            mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainView,x1, y1));
+        }
     }
 
     function getIcon(){

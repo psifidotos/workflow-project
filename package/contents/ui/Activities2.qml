@@ -11,6 +11,8 @@ import "delegates/ui-elements"
 import "instances"
 import "helptour"
 import "connections"
+import "components"
+import "interfaces"
 
 //import "ui"
 
@@ -41,7 +43,7 @@ Rectangle {
         setAsGlobal: true
     }
 
- //   color:"#000000ff"
+    //   color:"#000000ff"
     color: "#dcdcdc"
 
     clip:true
@@ -106,6 +108,21 @@ Rectangle {
 
     QMLPluginsConnections{}
 
+    PlasmaCore.SortFilterModel {
+        id:runningActivitiesModel
+        filterRole: "CState"
+        filterRegExp: "Running"
+        sourceModel: workflowManager.model()
+    }
+
+    PlasmaCore.SortFilterModel {
+        id:stoppedActivitiesModel
+        filterRole: "CState"
+        filterRegExp: "Stopped"
+        sourceModel: workflowManager.model()
+    }
+
+
 
     SharedThemeList{
         id:instanceOfThemeList
@@ -116,37 +133,8 @@ Rectangle {
         anchors.fill: parent
 
         property string typeId: "centralArea"
-        BorderImage {
+        SelectedArea {
             id:selectionImage
-            source: "Images/buttons/selectedBlue.png"
-
-            border.left: 50; border.top: 50;
-            border.right: 60; border.bottom: 50;
-            horizontalTileMode: BorderImage.Repeat
-            verticalTileMode: BorderImage.Repeat
-
-            x:0
-            y:0
-            width:0
-            height:0
-
-            z:5
-
-            opacity:0
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 500;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-
-            function setLocation(x1,y1,w1,h1){
-                x= x1-25;
-                y= y1-25;
-                width=w1+55;
-                height=h1+50;
-            }
         }
 
         WorkAreasAllLists{
@@ -209,6 +197,13 @@ Rectangle {
         id:draggingActivities
     }
 
+
+    KeyNavigation{
+        id:keyNavigation
+        focus:true
+    }
+
+    Keys.forwardTo: [keyNavigation]
 
     Connections{
         target:Settings.global

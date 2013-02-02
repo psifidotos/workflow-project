@@ -1,6 +1,7 @@
 import QtQuick 1.0
 
 import "ui-elements"
+import "../components"
 import "../../code/settings.js" as Settings
 
 import org.kde.workflow.components 0.1 as WorkFlowComponents
@@ -15,7 +16,6 @@ Item{
 
     property int classicW:mainView.workareaWidth - 0.2*mainView.scaleMeter
     property int classicH:workList.workAreaImageHeight+workList.realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent
-
 
     width: isCurrentW === true?classicW+0.2*mainView.scaleMeter:classicW
     height: classicH
@@ -37,12 +37,34 @@ Item{
     property bool isCurrentW:((mainWorkArea.actCode === sessionParameters.currentActivity) &&
                               (mainWorkArea.desktop === sessionParameters.currentDesktop))
 
+    property bool current: isCurrentW
+
     //In order to fix the height because of increasing size for current workarea
     onIsCurrentWChanged:{
         if(isCurrentW)
             y=y-workalist.addedHeightForCurrent/2
         else
             y=y+workalist.addedHeightForCurrent/2
+    }
+
+    property bool isSelected: ( (keyNavigation.isActive) &&
+                               (keyNavigation.selectedActivity === actCode) &&
+                               (keyNavigation.selectedWorkarea === desktop) )
+
+
+    SelectedArea{
+        x: normalWorkArea.x - marginLeft
+        y: normalWorkArea.y - marginTop - 3
+        width: normalWorkArea.width + marginWidth - 3
+        height: normalWorkArea.height + marginHeight + 7
+        opacity:isSelected
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*Settings.global.animationStep
+                easing.type: Easing.InOutQuad;
+            }
+        }
     }
 
     Item{
@@ -297,6 +319,18 @@ Item{
 
         // Make sure delayRemove is set back to false so that the item can be destroyed
         PropertyAction { target: mainWorkArea; property: "ListView.delayRemove"; value: false }
+    }
+
+    Connections{
+        target:keyNavigation
+        onActionActivated:{
+            if(isSelected){
+                if(key==="Pause")
+                    workflowManager.activityManager().stop(actCode);
+                else
+                    clickedWorkarea();
+            }
+        }
     }
 
     function getTasksList(){
