@@ -210,14 +210,14 @@ Rectangle{
     }
 
     ///////////////////Releasing Section//////////////////
-    function onMReleased(mouse, viewXY){
+    function onMReleased(mouse){
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
 
         if (mainDraggingItem.lastSelection === 0)
             releasedOnWorkarea();
         else if (mainDraggingItem.lastSelection === 1)
-            releasedOnAddWorkarea(mouse, viewXY);
+            releasedOnAddWorkarea(mouse);
         else if (mainDraggingItem.lastSelection === 2)
             releasedOnEverywherePanel();
 
@@ -255,7 +255,7 @@ Rectangle{
         }
     }
 
-    function releasedOnAddWorkarea(mouse, viewXY){
+    function releasedOnAddWorkarea(mouse){
         workflowManager.workareaManager().addWorkArea(mainDraggingItem.drActiv, "");
 
         //var works = workflowManager.workareaManager().numberOfWorkareas( drActiv );
@@ -264,13 +264,11 @@ Rectangle{
 
         if(Settings.global.animationStep2!==0){
             var co14 = mainView.mapToItem(mainView, iconImg.x, iconImg.y);
-            var toCol4 = mainView.mapToItem(mainView,mouse.x,mouse.y);
-
-            viewXY.x = viewXY.x-30;
+            var toCol4 = mainView.mapToItem(mainView,co14.x - 65,co14.y);
 
             mainView.getDynLib().animateEverywhereToXY(mainDraggingItem.intTaskId,
                                                        co14,
-                                                       viewXY,
+                                                       toCol4,
                                                        2);
         }
     }

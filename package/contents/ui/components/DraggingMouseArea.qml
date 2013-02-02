@@ -79,6 +79,7 @@ MouseArea {
         draggingEnded(mouse);
         parent = previousParent;
         if( draggingInterface !== null ){
+            //var nCor = container.mapToItem(mainView,mouse.x,mouse.y);
             draggingInterface.onMReleased(mouse);
         }
     }
