@@ -212,7 +212,9 @@ Item{
             mainText: Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
             subText: Settings.global.lockActivities === false ? i18n("You can edit the Activity name by clicking on it."):
                                                                 i18n("You can enable this Activity by clicking on the Activity name or icon")
-            image: Icon === "" ? "plasma" : Icon
+
+            property string actIcon: Icon === "" ? "plasma" : Icon
+            image: Settings.global.lockActivities ? actIcon : "im-status-message-edit"
         }
 
     }

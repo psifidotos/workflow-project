@@ -41,6 +41,7 @@ Rectangle {
         setAsGlobal: true
     }
 
+ //   color:"#000000ff"
     color: "#dcdcdc"
 
     clip:true

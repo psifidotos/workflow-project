@@ -1,6 +1,8 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.1
 
+import org.kde.qtextracomponents 0.1
+
 import "../../../code/settings.js" as Settings
 import "../../components"
 
@@ -102,6 +104,28 @@ Item{
         }
     }
 
+    QIconItem {
+        id:pencilImg
+        anchors.right: container.right
+        anchors.rightMargin: 10
+        anchors.bottom: container.bottom
+        anchors.bottomMargin: 3
+
+        width:0.4*container.height
+        height:1.15*width
+        //height:container.height / 2
+        icon: QIcon("im-status-message-edit")
+        opacity: container.containsMouse && !container.focused && !mainTextMouseArea.inDragging && container.enableEditing ? 1 : 0
+        smooth:true
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+    }
+
     Text{
         id:mainTextLabel2
 
@@ -199,27 +223,6 @@ Item{
             }
             else if (event.key === Qt.Key_Escape){
                 mainView.forceActiveFocus();
-            }
-        }
-    }
-
-    Image{
-        id:pencilImg
-        anchors.right: container.right
-        anchors.rightMargin: 10
-        anchors.bottom: container.bottom
-        anchors.bottomMargin: 3
-
-        width:0.4*container.height
-        height:container.height / 2
-        source:"../../Images/buttons/listPencil.png"
-        opacity: container.containsMouse && !container.focused && !mainTextMouseArea.inDragging && container.enableEditing ? 1 : 0
-        smooth:true
-
-        Behavior on opacity{
-            NumberAnimation {
-                duration: 2*Settings.global.animationStep;
-                easing.type: Easing.InOutQuad;
             }
         }
     }

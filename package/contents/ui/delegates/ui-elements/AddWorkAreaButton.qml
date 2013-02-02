@@ -23,15 +23,19 @@ Rectangle{
         anchors.verticalCenter: parent.verticalCenter
         color:"transparent"
 
-        Image {
-            id:addButtonImage
-            source:"../../Images/addWorkAreaBtn.png"
+        Rectangle{
             width:parent.width
-            height:parent.height
-
-
+            height:3
+            anchors.centerIn: parent
+            color:"#777777"
         }
 
+        Rectangle{
+            height:parent.height
+            width:3
+            anchors.horizontalCenter: parent.horizontalCenter
+            color:"#777777"
+        }
     }
 
     Behavior on color{

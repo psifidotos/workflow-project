@@ -263,6 +263,7 @@ Item{
             subText: i18n("You can edit the Workarea name in order to personalize more your work.")
             //This is a workaround because if workAreaName was used the containsMouse does not work
             //at all inside DTextLine
+            image: "im-status-message-edit"
             target: workAreaName.tooltipItem
         }
 

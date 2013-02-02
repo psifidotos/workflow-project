@@ -2,6 +2,8 @@
 import QtQuick 1.1
 
 import org.kde.plasma.core 0.1 as PlasmaCore
+import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.qtextracomponents 0.1
 import "../../../code/settings.js" as Settings
 
 Item{
@@ -56,24 +58,16 @@ Item{
 
     }
 
-    Text{
-        id:mainTextLabel
+    PlasmaComponents.Label {
+         id:mainTextLabel
+         text:mainIText.text
+         width:mainIText.width+17
+         font.italic: mainIText.font.italic
 
-        text:mainIText.text
-        width:mainIText.width+17
-        font.family: mainIText.font.family
-        font.italic: mainIText.font.italic
-
-        font.pixelSize: 0
-
-        color:mainIText.color
-        elide:Text.ElideRight
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 5
-
-        opacity: container.focused ? 0 : 1
+         color:mainIText.color
+         elide:Text.ElideRight
+         anchors {left:parent.left; top: parent.top; leftMargin:10; topMargin:5}
+         opacity: container.focused ? 0 : 1
     }
 
     TextInput {
@@ -177,12 +171,12 @@ Item{
 
     }
 
-    Image{
+    QIconItem {
         id:pencilI
         anchors.right: container.right
         width: 0.6 * container.height
         height:0.66 * container.height
-        source:"../../Images/buttons/darkPencil.png"
+        icon: QIcon("im-status-message-edit")
         opacity: container.containsMouse && (!container.focused) ? 1 : 0
         smooth:true
 
@@ -192,6 +186,7 @@ Item{
                 easing.type: Easing.InOutQuad;
             }
         }
+
     }
 
     MouseArea{
