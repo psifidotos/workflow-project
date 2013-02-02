@@ -130,28 +130,17 @@ Item{
         id:mainTextLabel2
 
         text:mainText.text
-
         width: container.width-5
         height: container.nHeight
         opacity: container.focused ? 0 : 1
-
-        font.family: mainText.font.family
-        font.bold: mainText.font.bold
-        font.italic: mainText.font.italic
-        font.pointSize: 4
-
-        font.pixelSize: (0.22+mainView.defFontRelStep)*actImag1.height
-        color:mainText.color
-
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-        anchors.bottom: backImage.bottom
-        anchors.bottomMargin: 8
+        color: mainText.color
         verticalAlignment: mainText.verticalAlignment
-
         wrapMode: Text.Wrap
         maximumLineCount: 2
         elide:Text.ElideRight
+
+        font{family: mainText.font.family; pixelSize: (0.22+mainView.defFontRelStep)*actImag1.height; bold: mainText.font.bold; italic: mainText.font.italic}
+        anchors{left:parent.left; bottom: backImage.bottom; leftMargin: 8; bottomMargin: 8}
     }
 
     TextEdit {

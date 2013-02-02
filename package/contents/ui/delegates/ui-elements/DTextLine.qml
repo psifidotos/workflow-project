@@ -63,6 +63,7 @@ Item{
          text:mainIText.text
          width:mainIText.width+17
          font.italic: mainIText.font.italic
+         font.pixelSize: 1.1 * mainIText.font.pixelSize
 
          color:mainIText.color
          elide:Text.ElideRight
