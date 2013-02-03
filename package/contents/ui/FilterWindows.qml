@@ -21,6 +21,9 @@ PlasmaComponents.TextField{
         text="";
         mainView.forceActiveFocus();
     }
+
+    Keys.onUpPressed: { }
+    Keys.onDownPressed: { }
     Keys.onEscapePressed: {
         keyNavigation.filterCalled = false;
         text="";

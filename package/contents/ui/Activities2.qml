@@ -234,6 +234,7 @@ Rectangle {
         plasmoid.popupEvent.connect(popupEventSlot);
 
         plasmoid.passivePopup = !Settings.global.hideOnClick;
+        mainView.forceActiveFocus();
     }
 
     function popupEventSlot(show){

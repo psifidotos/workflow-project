@@ -10,8 +10,8 @@ import org.kde.qtextracomponents 0.1
 
 
 PlasmaCore.FrameSvgItem{
-    imagePath:"opaque/dialogs/background"
     id:templDialog
+    imagePath:"opaque/dialogs/background"
 
     /*property alias insideWidth: dialogInsideRect.width
     property alias insideHeight: dialogInsideRect.height*/
@@ -78,13 +78,11 @@ PlasmaCore.FrameSvgItem{
     }
 
     Item{
-
         id:templMainDialog
-
 
         width:templDialog.insideWidth+2*templDialog.spaceX
         height:templDialog.insideHeight+2*templDialog.spaceY
-
+        focus:true
 
         Behavior on width{
             NumberAnimation {
@@ -235,9 +233,29 @@ PlasmaCore.FrameSvgItem{
 
     function open(){
         templDialog.visible = true;
+        templDialog.forceActiveFocus();
     }
     function close(){
         templDialog.visible = false;
+        mainView.forceActiveFocus();
+    }
+
+    /*******************/
+
+    Keys.onLeftPressed: { }
+    Keys.onRightPressed: { }
+    Keys.onUpPressed: { }
+    Keys.onDownPressed: { }
+    Keys.onReturnPressed: { }
+    Keys.onEnterPressed: { }
+    Keys.onEscapePressed: { }
+    Keys.onPressed: {
+        if(event.key === Qt.Key_H){}
+        else if(event.key === Qt.Key_J){}
+        else if(event.key === Qt.Key_K){}
+        else if(event.key === Qt.Key_L){}
+        else if(event.key === Qt.Key_Pause){}
+        else if(event.key === Qt.Key_Slash){}
     }
 
 }
