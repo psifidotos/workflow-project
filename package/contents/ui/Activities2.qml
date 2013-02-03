@@ -110,8 +110,8 @@ Rectangle {
 
     PlasmaCore.SortFilterModel {
         id:filteredTasksModel
-        //filterRole: "CState"
-        //filterRegExp: "Running"
+        filterRole: "name"
+        filterRegExp: filterWindows.text
         sourceModel: taskManager.model()
     }
 
@@ -189,6 +189,11 @@ Rectangle {
 
             Component.onCompleted: value = Settings.global.scale;
         }
+    }
+
+    FilterWindows{
+        id:filterWindows
+        width:Math.max(0.3*parent.width,250)
     }
 
     DraggingInterfaceTasks{

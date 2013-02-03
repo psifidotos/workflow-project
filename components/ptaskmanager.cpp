@@ -359,12 +359,12 @@ QIcon PTaskManager::getTaskIcon(QString wId)
 /*
  *This is used to count the windows shown in a workareas
  */
-int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnabled, QString excludeWindow)
+int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnabled, QString excludeWindow, QString filter)
 {
     int counter = 0;
     for(int i=0; i<m_taskModel->getCount(); ++i){
         TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
-        if(task && (task->code() != excludeWindow)){
+        if(task && (task->code() != excludeWindow) && task->name().toUpper().contains(filter.toUpper())){
 
             QString taskActivity = "";
             if (task->activities().size() > 0){

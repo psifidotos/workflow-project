@@ -104,9 +104,9 @@ Item{
         /////Testing if this can be used in Workareas
         /////problem is that may things are not updated correctly
         ////Leave it for the future
-        /*WorkFlowComponents.FilterTaskModel{
+        /*  WorkFlowComponents.FilterTaskModel{
             id:taskModel
-            sourceMainModel: taskManager.model()
+            sourceMainModel: filteredTasksModel
             activity: workList.ccode
             desktop: mainWorkArea.desktop
             everywhereState: Settings.global.disableEverywherePanel
@@ -130,9 +130,10 @@ Item{
             property bool isClipped:childrenRect.height > height
 
             model: filteredTasksModel
+            //  model: taskModel
 
             property int shownTasks:0
-            //property int shownTasks:taskModel.count
+           // property int shownTasks:taskModel.count
 
             delegate:WorkAreaTaskDeleg{
                 rHeight:Math.max(tasksSList.height/6,18)
@@ -161,18 +162,21 @@ Item{
             }
 
             function countTasks(wId, dragged){
-                var counter;
+                var counter = 0;
 
                 if(dragged){
                     counter = taskManager.tasksNumber(mainWorkArea.actCode,
                                                       mainWorkArea.desktop,
                                                       Settings.global.disableEverywherePanel,
-                                                      wId);
+                                                      wId,
+                                                      filterWindows.text);
                 }
                 else{
                     counter = taskManager.tasksNumber(mainWorkArea.actCode,
                                                       mainWorkArea.desktop,
-                                                      Settings.global.disableEverywherePanel);
+                                                      Settings.global.disableEverywherePanel,
+                                                      "",
+                                                      filterWindows.text);
                 }
 
                 shownTasks = counter;

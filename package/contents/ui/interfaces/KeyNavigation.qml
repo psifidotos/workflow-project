@@ -12,6 +12,9 @@ Item{
 
     property bool isActive: false
 
+    //this is used to show the windows filter frame
+    property bool filterCalled:false
+
     focus: true
 
     signal actionActivated(string key);
@@ -19,6 +22,7 @@ Item{
     Component.onCompleted: {
         selectedActivity = sessionParameters.currentActivity;
         selectedWorkarea = sessionParameters.currentDesktop;
+        filterCalled = false;
     }
 
 
@@ -28,7 +32,7 @@ Item{
     Keys.onDownPressed: {downPressed(); }
     Keys.onReturnPressed: returnPressed();
     Keys.onEnterPressed: returnPressed();
-    Keys.onEscapePressed: isActive = false;
+    Keys.onEscapePressed: {isActive = false; filterCalled = false;}
     Keys.onPressed: {
         if(event.key === Qt.Key_H)
             leftPressed();
@@ -43,6 +47,11 @@ Item{
                 container.actionActivated("Pause");
                 inRunning = false;
             }
+        }
+        else if(event.key === Qt.Key_Slash){
+            if(filterCalled === true)
+                filterWindows.forceActiveFocus();
+            filterCalled = true;
         }
     }
 

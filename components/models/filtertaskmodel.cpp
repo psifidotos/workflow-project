@@ -21,11 +21,11 @@ bool FilterTaskModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceP
     bool onAllActivities = sourceModel()->data(index, TaskItem::OnAllActivitiesRole).toBool();
     bool onAllDesktops = sourceModel()->data(index, TaskItem::OnAllDesktopsRole).toBool();
 
-    bool result = ( ((activities.size() != 0) && (activities[0] == m_activity)&&
-                     ((desktop == m_desktop) || onAllDesktops) ) ||
-                   ((desktop == m_desktop) && onAllActivities) ||
-                   ((m_everywhereState) && onAllActivities && onAllDesktops)
-                   );
+    bool result = ( ( ((activities.size() != 0) && (activities[0] == m_activity)&&
+                      ((desktop == m_desktop) || onAllDesktops) ) ||
+                    ((desktop == m_desktop) && onAllActivities) ||
+                    (m_everywhereState && onAllActivities && onAllDesktops)
+                    ) && (!m_clear) );
 
     return result;
 }
@@ -58,6 +58,16 @@ void FilterTaskModel::setEverywhereState(bool state)
     if(m_everywhereState != state){
         m_everywhereState = state;
         emit everywhereStateChanged(state);
+        invalidate();
+        setCount(rowCount());
+    }
+}
+
+void FilterTaskModel::setClear(bool clear)
+{
+    if(m_clear != clear){
+        m_clear = clear;
+        emit clearChanged(m_clear);
         invalidate();
         setCount(rowCount());
     }

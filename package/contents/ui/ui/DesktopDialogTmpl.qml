@@ -150,6 +150,7 @@ DialogTemplate2{
             activity:activityCode
             desktop:deskDialog.desktop
             everywhereState: Settings.global.disableEverywherePanel
+            clear:false
         }
 
         GridView{
@@ -317,6 +318,7 @@ DialogTemplate2{
     }
 
     function closeD(){
+        taskModel.clear = true;
         allWorkareas.flickableV = true;
         emptyDialog();
         deskDialog.close();
@@ -331,6 +333,7 @@ DialogTemplate2{
     }
 
     function openD(act,desk){
+        taskModel.clear = false;
         activityCode = act;
         desktop = desk;
 
