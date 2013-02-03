@@ -362,6 +362,7 @@ QIcon PTaskManager::getTaskIcon(QString wId)
 int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnabled, QString excludeWindow, QString filter)
 {
     int counter = 0;
+    int numberOfDesktops = KWindowSystem::KWindowSystem::self()->numberOfDesktops();
     for(int i=0; i<m_taskModel->getCount(); ++i){
         TaskItem *task = static_cast<TaskItem *>(m_taskModel->at(i));
         if(task && (task->code() != excludeWindow) && task->name().toUpper().contains(filter.toUpper())){
@@ -373,7 +374,7 @@ int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnab
 
             bool oneWorkarea = (!task->onAllActivities()&&
                                  !task->onAllDesktops()&&
-                                 (task->desktop() == desktop)&&
+                                 ((task->desktop() == desktop)||(numberOfDesktops == 1))&&
                                  (taskActivity == activity));
 
             bool allWorkareas = ( !task->onAllActivities()&&

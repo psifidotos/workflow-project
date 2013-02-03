@@ -1,5 +1,6 @@
 #include "filtertaskmodel.h"
 
+#include <KWindowSystem>
 #include "taskitem.h"
 
 #include <QDebug>
@@ -8,8 +9,11 @@ FilterTaskModel::FilterTaskModel(QObject *parent):
     QmlSortFilterProxyModel(parent),
     m_activity(""),
     m_desktop(0),
-    m_everywhereState(false)
+    m_everywhereState(false),
+    m_numberOfDesktops(0)
 {
+    m_numberOfDesktops = KWindowSystem::self()->numberOfDesktops();
+    connect(KWindowSystem::self(), SIGNAL(numberOfDesktopsChanged(int)), this, SLOT(numberOfDesktopsChangedSlot(int)));
 }
 
 bool FilterTaskModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -22,14 +26,22 @@ bool FilterTaskModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceP
     bool onAllDesktops = sourceModel()->data(index, TaskItem::OnAllDesktopsRole).toBool();
 
     bool result = ( ( ((activities.size() != 0) && (activities[0] == m_activity)&&
-                      ((desktop == m_desktop) || onAllDesktops) ) ||
+                      ((desktop == m_desktop) || onAllDesktops || (m_numberOfDesktops == 1)) ) ||
                     ((desktop == m_desktop) && onAllActivities) ||
-                    (m_everywhereState && onAllActivities && onAllDesktops)
-                    ) && (!m_clear) );
+                    (m_everywhereState && onAllActivities && onAllDesktops) )
+                    && (!m_clear) );
 
     return result;
 }
 
+void FilterTaskModel::numberOfDesktopsChangedSlot(int number)
+{
+    if(m_numberOfDesktops != number){
+        m_numberOfDesktops = number;
+        invalidate();
+        setCount(rowCount());
+    }
+}
 
 void FilterTaskModel::setActivity(QString activity)
 {

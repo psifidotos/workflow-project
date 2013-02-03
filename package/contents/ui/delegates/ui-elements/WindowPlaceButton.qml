@@ -102,8 +102,12 @@ Item{
     ]
 
     function nextState(){
-        if (winStateItem.state === "oneDesktop")
-            winStateItem.state = "allDesktops";
+        if (winStateItem.state === "oneDesktop"){
+            if (sessionParameters.numberOfDesktops !== 1)
+                winStateItem.state = "allDesktops";
+            else
+                winStateItem.state = "allActivities";
+        }
         else if (winStateItem.state === "allDesktops")
             winStateItem.state = "sameDesktops";
         else if (winStateItem.state === "sameDesktops")
@@ -119,8 +123,12 @@ Item{
             winStateItem.state = "oneDesktop";
         else if (winStateItem.state === "sameDesktops")
             winStateItem.state = "allDesktops";
-        else if (winStateItem.state === "allActivities")
-            winStateItem.state = "sameDesktops";
+        else if (winStateItem.state === "allActivities"){
+            if (sessionParameters.numberOfDesktops !== 1)
+                winStateItem.state = "sameDesktops";
+            else
+                winStateItem.state = "oneDesktop";
+        }
     }
 
 }

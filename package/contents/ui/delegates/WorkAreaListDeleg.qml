@@ -36,8 +36,6 @@ Item{
     //    width: bWidth
     height: bHeight+addedHeight
 
-    property bool activityDragged2: (draggingActivities.activityId === code) &&
-                                    (draggingActivities.activityStatus === "Running")
     property bool activityDragged: (draggingActivities.activityId === code) &&
                                    (draggingActivities.activityStatus === "Running")
 
@@ -54,7 +52,7 @@ Item{
         height:workalist.height - 10
         radius:10
         color: "#333333"
-        opacity:activityDragged2 ? 0.15 : 0
+        opacity:activityDragged ? 0.15 : 0
 
         Behavior on opacity{
             NumberAnimation{

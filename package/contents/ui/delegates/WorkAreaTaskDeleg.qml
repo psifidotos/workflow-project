@@ -11,21 +11,25 @@ import org.kde.qtextracomponents 0.1
 Item{
     id: taskDeleg1
 
-    property bool shown: (( (((onAllActivities !== true)&&
-                              ((mainWorkArea.desktop === desktop)&&
-                               (activities[0] === actCode))) ||
-                             ((onAllActivities !== true)&&
-                              ((onAllDesktops === true)&&
-                               (actCode === activities[0])))) ||
-                           ((onAllActivities === true)&&
-                            (onAllDesktops === false)&&
-                            (mainWorkArea.desktop === desktop)) ||
-                           onEverywhereAndMustBeShown )
-                          && (!inDragging) ) //hide it in dragging
+    property bool oneDesktop: ((onAllActivities !== true)&&
+                               ((sessionParameters.numberOfDesktops === 1)||(mainWorkArea.desktop === desktop))&&
+                                (activities[0] === actCode))
+
+    property bool allDesktops: ((onAllActivities !== true)&&
+                                ((onAllDesktops === true)&&
+                                 (actCode === activities[0])))
+
+    property bool sameDesktops: ((onAllActivities === true)&&
+                                 (onAllDesktops === false)&&
+                                 (mainWorkArea.desktop === desktop))
 
     property bool onEverywhereAndMustBeShown:((Settings.global.disableEverywherePanel)&&
                                               (onAllActivities)&&
                                               (onAllDesktops))
+
+    property bool shown: (oneDesktop || allDesktops || sameDesktops || onEverywhereAndMustBeShown )
+                          && (!inDragging) //hide it in dragging
+
 
     width:mainWorkArea.imagewidth - imageTask.width - 5
     //height: shown ? 1.1 * imageTask.height : 0
@@ -34,7 +38,7 @@ Item{
 
     property string ccode: code
     property bool inDragging: code === mDragInt.intTaskId
-//    property bool isPressed: mstArea.isPresse
+    //    property bool isPressed: mstArea.isPresse
     property int rHeight:10
 
 

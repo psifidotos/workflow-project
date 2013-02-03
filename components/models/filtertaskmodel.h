@@ -35,11 +35,15 @@ signals:
     void everywhereStateChanged(bool);
     void clearChanged(bool);
 
+private slots:
+    void numberOfDesktopsChangedSlot(int number);
+
 private:
     QString m_activity;
     int m_desktop;
     bool m_everywhereState;
     bool m_clear;
+    int m_numberOfDesktops;
 };
 
 #endif
