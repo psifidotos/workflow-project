@@ -321,11 +321,12 @@ DialogTemplate2{
         taskModel.clear = true;
         allWorkareas.flickableV = true;
         emptyDialog();
+        allActT.unForceState1();
         deskDialog.close();
     }
 
     function emptyDialog(){
-        allActT.unForceState1();
+
         disablePreviews = true;
 
         activityCode = "";

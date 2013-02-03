@@ -131,6 +131,7 @@ Item{
             delegate: TaskPreviewDeleg{
                 showOnlyAllActivities: true
 
+                forceState1: allActTaskL.onlyState1
                 rWidth: allActRect.taskWidth
                 rHeight: allActTaskL.height
 
