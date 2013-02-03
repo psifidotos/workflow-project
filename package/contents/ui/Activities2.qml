@@ -251,6 +251,8 @@ Rectangle {
     function popupEventSlot(show){
         if(show)
             mainView.forceActiveFocus();
+        else
+            plasmoidWrapper.popupEventSlot(show);
     }
 
     function getDynLib(){
