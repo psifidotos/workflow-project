@@ -112,76 +112,88 @@ Item{
             everywhereState: Settings.global.disableEverywherePanel
         }*/
 
-        ListView{
-
-            id:tasksSList
-
+        Item{
             x:mainWorkArea.imagex+1
             y:mainWorkArea.imagey
             width:mainWorkArea.imagewidth-1
             height:Settings.global.showWindows ? workList.workAreaImageHeight-2*mainWorkArea.imagey : 0
-            opacity:Settings.global.showWindows ? 1 : 0
-
             clip:true
-            spacing:0
-            interactive:false
 
-            property bool hasChildren:childrenRect.height > 1
-            property bool isClipped:childrenRect.height > height
+            ListView{
+                id:tasksSList
 
-            model: filteredTasksModel
-            //  model: taskModel
+                width:parent.width
+                height:(shownTasks+1) * taskHeight
+                opacity:Settings.global.showWindows ? 1 : 0
 
-            property int shownTasks:0
-           // property int shownTasks:taskModel.count
+                spacing:0
+                interactive:false
 
-            delegate:WorkAreaTaskDeleg{
-                rHeight:Math.max(tasksSList.height/6,18)
+                property bool hasChildren:childrenRect.height > 1
+                property bool isClipped:childrenRect.height > height
 
-                onShownChanged:tasksSList.countTasks(ccode, inDragging);
-            }
+                property int taskHeight: Math.max(parent.height/6,18)
 
+                model: filteredTasksModel
+                //  model: taskModel
 
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 3*Settings.global.animationStep
-                    easing.type: Easing.InOutQuad;
-                }
-            }
+                property int shownTasks:0
+                // property int shownTasks:taskModel.count
 
-            Behavior on height{
-                NumberAnimation {
-                    duration: 3*Settings.global.animationStep
-                    easing.type: Easing.InOutQuad;
-                }
-            }
+                delegate:WorkAreaTaskDeleg{
+                    rHeight: tasksSList.taskHeight
 
-            Connections{
-                target:tasksSList.model
-                onCountChanged: tasksSList.countTasks("", false);
-            }
-
-            function countTasks(wId, dragged){
-                var counter = 0;
-
-                if(dragged){
-                    counter = taskManager.tasksNumber(mainWorkArea.actCode,
-                                                      mainWorkArea.desktop,
-                                                      Settings.global.disableEverywherePanel,
-                                                      wId,
-                                                      filterWindows.text);
-                }
-                else{
-                    counter = taskManager.tasksNumber(mainWorkArea.actCode,
-                                                      mainWorkArea.desktop,
-                                                      Settings.global.disableEverywherePanel,
-                                                      "",
-                                                      filterWindows.text);
+                    onShownChanged:tasksSList.countTasks(ccode, inDragging);
                 }
 
-                shownTasks = counter;
-            }
 
+                Behavior on opacity{
+                    NumberAnimation {
+                        duration: 3*Settings.global.animationStep
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+              //  Rectangle{
+                 //   color:"#660000ff"
+                //    width:parent.width
+                //    height:parent.height
+              //  }
+
+                Behavior on height{
+                    NumberAnimation {
+                        duration: 3*Settings.global.animationStep
+                        easing.type: Easing.InOutQuad;
+                    }
+                }
+
+                Connections{
+                    target:tasksSList.model
+                    onCountChanged: tasksSList.countTasks("", false);
+                }
+
+                function countTasks(wId, dragged){
+                    var counter = 0;
+
+                    if(dragged){
+                        counter = taskManager.tasksNumber(mainWorkArea.actCode,
+                                                          mainWorkArea.desktop,
+                                                          Settings.global.disableEverywherePanel,
+                                                          wId,
+                                                          filterWindows.text);
+                    }
+                    else{
+                        counter = taskManager.tasksNumber(mainWorkArea.actCode,
+                                                          mainWorkArea.desktop,
+                                                          Settings.global.disableEverywherePanel,
+                                                          "",
+                                                          filterWindows.text);
+                    }
+
+                    shownTasks = counter;
+                }
+
+            }
         }
 
         Image{
