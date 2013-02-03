@@ -53,6 +53,7 @@ PlasmaCore.FrameSvgItem{
 
     //   color:isModal === true ? "#30333333" : "#00000000"
 
+
     Behavior on opacity{
         NumberAnimation {
             duration: 2*Settings.global.animationStep;
@@ -75,6 +76,10 @@ PlasmaCore.FrameSvgItem{
                     clickedCancel();
             }
         }
+    }
+
+    MouseArea{
+        anchors.fill: parent
     }
 
     Item{
