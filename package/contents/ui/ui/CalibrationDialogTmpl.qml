@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import ".."
+import "../components"
 import "../delegates"
 import "../../code/settings.js" as Settings
 
@@ -224,6 +225,39 @@ DialogTemplate2{
                     height:1
                     width:parent.width
                     anchors.centerIn: parent
+                }
+
+                Item{
+                    id:hiddenRectangle //for Dragging
+                    width:parent.width
+                    height:parent.height
+                }
+                DraggingMouseArea{
+                    id:dragArea
+                    anchors.fill:parent
+
+                    property int firstX:0
+                    property int firstY:0
+
+                    onDraggingStarted:{
+                        firstX = mouse.x;
+                        firstY = mouse.y;
+                    }
+
+                    onDraggingMovement: {
+                        //Return Coordinates to local
+                        var fixCoord = dragArea.mapToItem(tasksPreviewRect, mouse.x, mouse.y);
+                        xOffsetSlider.value =fixCoord.x - firstX;
+                        yOffsetSlider.value = fixCoord.y - firstY;
+                    }
+
+                    onDraggingEnded: {
+                        firstX = 0;
+                        firstY = 0;
+                        hiddenRectangle.x = 0;
+                        hiddenRectangle.y = 0;
+                    }
+
                 }
             }
         }

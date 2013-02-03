@@ -36,16 +36,16 @@ MouseArea {
     }
 
     onPositionChanged: {
+        if(isPressed){
+            draggingMovementActions(mouse);
+        }
+
         if(outOfInnerLimits(mouse)&&(tempPressed)){
             previousParent = parent;
             parent = mainView;
             draggingStarted(mouse);
             tempPressed = false;
             isPressed = true;
-        }
-
-        if(isPressed){
-            draggingMovementActions(mouse);
         }
     }
 
@@ -60,8 +60,8 @@ MouseArea {
     }
 
     function outOfInnerLimits(ms){
-        if((ms.x<px1-draggingSpace)||(ms.x>px1+draggingSpace)||
-                (ms.y<py1-draggingSpace)||(ms.y>py1+draggingSpace))
+        if((ms.x<(px1-draggingSpace))||(ms.x>(px1+draggingSpace))||
+                (ms.y<(py1-draggingSpace))||(ms.y>(py1+draggingSpace)))
             return true;
         else
             return false;
