@@ -15,6 +15,9 @@ Item{
     //this is used to show the windows filter frame
     property bool filterCalled:false
 
+    //
+    property bool ctrlActive: false
+
     focus: true
 
     signal actionActivated(string key);
@@ -23,6 +26,7 @@ Item{
         selectedActivity = sessionParameters.currentActivity;
         selectedWorkarea = sessionParameters.currentDesktop;
         filterCalled = false;
+        CtrlActive = false;
     }
 
 
@@ -52,6 +56,16 @@ Item{
             if(filterCalled === true)
                 filterWindows.forceActiveFocus();
             filterCalled = true;
+        }
+        else if(event.key === Qt.Key_Control){
+            console.log("true");
+            ctrlActive = true;
+        }
+    }
+    Keys.onReleased: {
+        if(event.key === Qt.Key_Control){
+            console.log("false");
+            ctrlActive = false;
         }
     }
 
@@ -88,7 +102,7 @@ Item{
             isActive = true;
 
         timer.start();
-    //    console.log(selectedActivity+" - " +selectedWorkarea);
+        //    console.log(selectedActivity+" - " +selectedWorkarea);
     }
 
 
@@ -107,14 +121,13 @@ Item{
                 inRunning = false;
                 var stpObj = stoppedActivitiesModel.get(0);
                 selectedActivity = stpObj.code;
-
             }
         }
         else
             isActive = true;
 
         timer.start();
-    //    console.log(selectedActivity+" - " +selectedWorkarea);
+        //    console.log(selectedActivity+" - " +selectedWorkarea);
     }
 
     function upPressed(){
@@ -139,7 +152,7 @@ Item{
             isActive = true;
 
         timer.start();
-    //    console.log(selectedActivity+" - " +selectedWorkarea);
+        //    console.log(selectedActivity+" - " +selectedWorkarea);
     }
 
 
@@ -165,7 +178,7 @@ Item{
             isActive = true;
 
         timer.start();
-    //    console.log(selectedActivity+" - " +selectedWorkarea);
+        //    console.log(selectedActivity+" - " +selectedWorkarea);
     }
 
     function returnPressed(){

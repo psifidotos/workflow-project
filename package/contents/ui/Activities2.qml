@@ -52,7 +52,6 @@ Rectangle {
 
     property int scaleMeter: zoomSlider.value
 
-    //property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimum)/(zoomSlider.maximum-zoomSlider.minimum))*0.6
     property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimumValue)/(zoomSlider.maximumValue-zoomSlider.minimumValue))*0.6
 
     property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
@@ -60,10 +59,7 @@ Rectangle {
     property int workareaY:2*scaleMeter
 
     //Applications properties/////
-
-
     property variant defaultFont: theme.defaultFont
-
     property color defaultFontColor:theme.textColor
     property real defaultFontSize:theme.defaultFont.pointSize
     //property real defaultFontRelativeness: 0
@@ -210,6 +206,20 @@ Rectangle {
 
     Keys.forwardTo: [keyNavigation]
 
+    MouseEventListener {
+        id:zoomAreaListener
+        anchors.fill:parent
+        z:keyNavigation.ctrlActive ? 40 : -1
+        enabled: keyNavigation.ctrlActive
+
+        onWheelMoved:{
+            if(wheel.delta < 0)
+                zoomSlider.value=zoomSlider.value-2;
+            else
+                zoomSlider.value=zoomSlider.value+2;
+        }
+    }
+
     Connections{
         target:Settings.global
         onHideOnClickChanged: plasmoid.passivePopup = !Settings.global.hideOnClick;
@@ -235,6 +245,7 @@ Rectangle {
 
         plasmoid.passivePopup = !Settings.global.hideOnClick;
         mainView.forceActiveFocus();
+
     }
 
     function popupEventSlot(show){
@@ -245,7 +256,6 @@ Rectangle {
     function getDynLib(){
         return DynamAnim;
     }
-
 
     /*---------- Central Controllers For Signals **********/
 
@@ -377,6 +387,5 @@ Rectangle {
     //DesktopDialogTmpl{}
     //    TourDialog{
     //}
-
 }
 
