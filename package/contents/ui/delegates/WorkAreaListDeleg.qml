@@ -4,7 +4,6 @@ import QtQuick 1.1
 import ".."
 import "../components"
 import "ui-elements"
-import "../tooltips"
 import "../../code/settings.js" as Settings
 
 Item{

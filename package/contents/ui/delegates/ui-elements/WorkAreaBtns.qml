@@ -1,6 +1,5 @@
 import QtQuick 1.0
 
-import "../../tooltips"
 import "../../../code/settings.js" as Settings
 
 Item{

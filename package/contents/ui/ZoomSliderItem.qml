@@ -5,7 +5,6 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
-import "tooltips"
 import "components"
 
 Item {

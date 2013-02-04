@@ -26,7 +26,6 @@ PlasmoidWrapper::~PlasmoidWrapper()
 {
 }
 
-
 void PlasmoidWrapper::setApplet(QObject *extender)
 {
     Plasma::Extender *appletExtender = static_cast<Plasma::Extender *>(extender);
