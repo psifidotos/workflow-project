@@ -78,7 +78,7 @@ Item{
         property int space:0
         property int vspace:15
 
-        font.family: mainView.defaultFont.family
+        font.family: theme.defaultFont.family
         font.italic: true
 
         font.pixelSize: (0.35+mainView.defFontRelStep)*parent.height

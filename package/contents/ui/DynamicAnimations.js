@@ -53,7 +53,7 @@ function showCalibrationDialog(){
     var clbDialog = Qt.createComponent("ui/CalibrationDialogTmpl.qml");
 
     mainView.calibrationDialog = clbDialog.createObject(mainView);
-    mainView.calibrationDialog.defColor = mainView.defaultFontColor;
+    mainView.calibrationDialog.defColor = theme.textColor;
 
     mainView.calibrationDialog.openD();
 }

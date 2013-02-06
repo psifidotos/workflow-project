@@ -134,7 +134,7 @@ PlasmaCore.FrameSvgItem{
                 horizontalAlignment:Text.AlignHCenter
                 anchors.top:parent.top
                 anchors.topMargin: templDialog.margins.top
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
 

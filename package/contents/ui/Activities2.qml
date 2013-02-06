@@ -59,14 +59,6 @@ Rectangle {
     property int workareaY:2*scaleMeter
 
     //Applications properties/////
-    property variant defaultFont: theme.defaultFont
-    property color defaultFontColor:theme.textColor
-    property real defaultFontSize:theme.defaultFont.pointSize
-    //property real defaultFontRelativeness: 0
-
-    property real defFontRelStep: Settings.global.fontRelevance/20
-    property real fixedFontSize: defaultFontSize + Settings.global.fontRelevance
-
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
 
     //these signals remove the warnings when running the plasmoid

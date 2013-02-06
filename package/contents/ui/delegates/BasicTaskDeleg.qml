@@ -111,7 +111,7 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
 
             text:name === undefined ? "" : name
-            font.family: mainView.defaultFont.family
+            font.family: theme.defaultFont.family
             font.italic: container.isSelected === true ? true : false
             font.bold: true
 

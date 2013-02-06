@@ -86,7 +86,7 @@ Item{
             anchors.verticalCenter: parent.verticalCenter
             x : 5
             text:name || 0 ? name : ""
-            font.family: mainView.defaultFont.family
+            font.family: theme.defaultFont.family
             font.italic: true
             font.pixelSize: orphansList.fontSize
 

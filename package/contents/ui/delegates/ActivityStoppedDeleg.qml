@@ -160,7 +160,7 @@ Item{
         width:0.99*stoppedActivitiesList.width-5
         wrapMode: TextEdit.Wrap
 
-        font.family: mainView.defaultFont.family
+        font.family: theme.defaultFont.family
         font.bold: true
         font.italic: true
 

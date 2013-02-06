@@ -46,9 +46,9 @@ DialogTemplate2{
             color:defColor
             text:i18n("It is the first time you use the application,<br/>Do you want to watch a Help Tour?")
 
-            font.family:mainView.defaultFont.family
+            font.family:theme.defaultFont.family
             //font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
-            font.pointSize: mainView.defaultFontSize
+            font.pointSize: theme.defaultFontSize
             font.bold:true
             horizontalAlignment: Text.AlignHCenter
 
@@ -63,9 +63,9 @@ DialogTemplate2{
             anchors.topMargin:5
             color:defColor
             opacity:0.6
-            font.family:mainView.defaultFont.family
+            font.family:theme.defaultFont.family
             //font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
-            font.pointSize: mainView.defaultFontSize
+            font.pointSize: theme.defaultFontSize
             font.italic: true
 
         }

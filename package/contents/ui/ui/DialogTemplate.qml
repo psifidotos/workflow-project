@@ -128,7 +128,7 @@ Rectangle{
                 horizontalAlignment:Text.AlignHCenter
                 anchors.top:parent.top
                 anchors.topMargin: 5
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
 

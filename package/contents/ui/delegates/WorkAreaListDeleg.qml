@@ -144,7 +144,7 @@ Item{
         opacity: workList.showWindowsSection === true ? 1:0
 
         text:i18n("Orphaned Windows")
-        font.family: mainView.defaultFont.family
+        font.family: theme.defaultFont.family
         font.italic: true
         font.bold: true
         font.pixelSize: (0.095+mainView.defFontRelStep)*(mainView.workareaHeight)

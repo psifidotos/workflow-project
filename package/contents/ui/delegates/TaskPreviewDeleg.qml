@@ -254,7 +254,7 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
 
             text:name === undefined ? "" : name
-            font.family: mainView.defaultFont.family
+            font.family: theme.defaultFont.family
             font.bold: true
 
             elide:Text.ElideRight

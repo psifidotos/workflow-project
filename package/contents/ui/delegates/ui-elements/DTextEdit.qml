@@ -152,7 +152,7 @@ Item{
 
         wrapMode: TextEdit.Wrap
 
-        font.family: mainView.defaultFont.family
+        font.family: theme.defaultFont.family
         font.bold: true
         font.italic: true
 

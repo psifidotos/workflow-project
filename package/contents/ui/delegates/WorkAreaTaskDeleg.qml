@@ -126,7 +126,7 @@ Item{
             id:taskTitle
 
             text: name || 0 ? name : ""
-            font.family: mainView.defaultFont.family
+            font.family: theme.defaultFont.family
             font.italic: false
 
             anchors.verticalCenter: parent.verticalCenter

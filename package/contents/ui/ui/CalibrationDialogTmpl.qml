@@ -42,7 +42,7 @@ DialogTemplate2{
             anchors.left: parent.left
             anchors.leftMargin: 10
 
-            font.family: mainView.defaultFont.family
+            font.family: theme.defaultFont.family
             font.bold: true
             font.italic: true
 
@@ -274,7 +274,7 @@ DialogTemplate2{
                 anchors.left: parent.left
                 anchors.leftMargin: 10
 
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
                 font.pixelSize: 0
@@ -304,7 +304,7 @@ DialogTemplate2{
 
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
                 //color: "#f4f4f4"
@@ -406,7 +406,7 @@ DialogTemplate2{
 
                 font.bold: true
                 font.italic: true
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.pixelSize: calibDialog.fontsSize
                 color:defColor
                 //color: "#f4f4f4"
@@ -496,7 +496,7 @@ DialogTemplate2{
                 anchors.left: parent.left
                 anchors.leftMargin: 10
 
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
                 font.pixelSize: calibDialog.fontsSize

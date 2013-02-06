@@ -39,9 +39,9 @@ DialogTemplate2{
             color:defColor
             text:i18n("Are you sure you want to clone activity")+" <b>"+clonDialog.activityName+"</b> "+i18n("?")
 
-            font.family:mainView.defaultFont.family
+            font.family:theme.defaultFont.family
             //font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
-            font.pointSize: mainView.defaultFontSize
+            font.pointSize: theme.defaultFontSize
         }
 
     }

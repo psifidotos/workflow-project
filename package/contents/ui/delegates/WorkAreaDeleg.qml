@@ -258,7 +258,7 @@ Item{
 
                 font.pixelSize: 0.4*cornerImage.width
                 font.italic:true
-                font.family: mainView.defaultFont.family
+                font.family: theme.defaultFont.family
 
 
                 horizontalAlignment:Text.AlignHCenter
