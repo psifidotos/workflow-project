@@ -164,7 +164,7 @@ Item{
         font.bold: true
         font.italic: true
 
-        font.pixelSize: (0.13+mainView.defFontRelStep)*parent.height
+        font.pixelSize: 0.13 * parent.height
 
         opacity: stpActivity.containsMouse ? 1 : stpActivity.defOpacity
 

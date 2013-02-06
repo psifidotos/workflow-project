@@ -21,7 +21,7 @@ function showRemoveDialog(actId,actName){
 
     mainView.removeDialog.activityCode = actId;
     mainView.removeDialog.activityName = actName;
-    mainView.removeDialog.defColor = mainView.defaultFontColor;
+    mainView.removeDialog.defColor = theme.textColor;
 
     mainView.removeDialog.open();
 }
@@ -38,7 +38,7 @@ function showCloneDialog(actId,actName){
 
     mainView.cloningDialog.activityCode = actId;
     mainView.cloningDialog.activityName = actName;
-    mainView.cloningDialog.defColor = mainView.defaultFontColor;
+    mainView.cloningDialog.defColor = theme.textColor;
 
     mainView.cloningDialog.open();
 
@@ -68,7 +68,7 @@ function showDesktopDialog(actId,desk){
 
     mainView.desktopDialog = dskDialog.createObject(mainView);
     mainView.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
-    mainView.desktopDialog.defColor = mainView.defaultFontColor;
+    mainView.desktopDialog.defColor = theme.textColor;
 
     mainView.desktopDialog.openD(actId,desk);
 
@@ -96,7 +96,7 @@ function showLiveTourDialog(){
     var lvDialog = Qt.createComponent("helptour/TourDialog.qml");
 
     mainView.liveTourDialog = lvDialog.createObject(mainView);
-    mainView.liveTourDialog.defColor = mainView.defaultFontColor;
+    mainView.liveTourDialog.defColor = theme.textColor;
 
     mainView.liveTourDialog.openD();
 
@@ -113,7 +113,7 @@ function showAboutDialog(){
     var abDialog = Qt.createComponent("ui/AboutDialogTmpl.qml");
 
     mainView.aboutDialog = abDialog.createObject(mainView);
-    mainView.aboutDialog.defColor = mainView.defaultFontColor;
+    mainView.aboutDialog.defColor = theme.textColor;
 
     mainView.aboutDialog.openD();
     allActT.forceState1();
@@ -129,7 +129,7 @@ function showFirstHelpTourDialog(){
     var dialog = Qt.createComponent("ui/FirstRunHelpTourTmpl.qml");
 
     mainView.firstHelpTourDialog = dialog.createObject(mainView);
-    mainView.firstHelpTourDialog.defColor = mainView.defaultFontColor;
+    mainView.firstHelpTourDialog.defColor = theme.textColor;
 
     mainView.firstHelpTourDialog.open();
 }
@@ -143,7 +143,7 @@ function showFirstCalibrationDialog(){
     var dialog = Qt.createComponent("ui/FirstRunCalibrationTmpl.qml");
 
     mainView.firstCalibrationDialog = dialog.createObject(mainView);
-    mainView.firstCalibrationDialog.defColor = mainView.defaultFontColor;
+    mainView.firstCalibrationDialog.defColor = theme.textColor;
 
     mainView.firstCalibrationDialog.open();
 }
