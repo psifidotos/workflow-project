@@ -13,6 +13,7 @@ Item {
     property string tooltipText: ""
     property string tooltipTitle: ""
     property alias containsMouse: mouseArea.containsMouse
+    property bool opacityAnimation:false
 
     width: 42
     height: 42
@@ -25,11 +26,19 @@ Item {
         id: image
         icon: container.icon !== "" ? QIcon(container.icon) : QIcon()
         anchors.fill: parent
-        scale: mouseArea.containsMouse ? hoverScale : 1
-
+        property real hoverValue: !opacityAnimation ? hoverScale : 1
+        property real opacityValue: opacityAnimation ? 0.5 : 1
+        scale: mouseArea.containsMouse ? hoverValue : 1
+        opacity: mouseArea.containsMouse  ? 1 : opacityValue
         smooth:true
 
         Behavior on scale {
+            NumberAnimation {
+                duration: animationSpeed
+                easing.type: Easing.InOutQuad
+            }
+        }
+        Behavior on opacity {
             NumberAnimation {
                 duration: animationSpeed
                 easing.type: Easing.InOutQuad

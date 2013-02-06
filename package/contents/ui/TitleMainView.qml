@@ -168,7 +168,6 @@ PlasmaComponents.ToolBar {
                 target:windowsToolBtnMouseArea
                 //localIcon:windowsImg.source
             }
-
         }
 
         //Third Button
@@ -267,8 +266,8 @@ PlasmaComponents.ToolBar {
 
         width: 0.65*oxygenTitle.buttonWidth
         height: 0.75*oxygenTitle.buttonHeight
-
-        icon:instanceOfThemeList.icons.HelpTour
+        opacityAnimation: true
+        icon: "system-help"
 
         tooltipTitle: i18n("About Dialog")
         tooltipText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
@@ -276,7 +275,6 @@ PlasmaComponents.ToolBar {
         onClicked: {
             mainView.getDynLib().showAboutDialog();
         }
-
     }
 
 }
