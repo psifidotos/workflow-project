@@ -210,7 +210,8 @@ Rectangle {
         id:zoomAreaListener
         anchors.fill:parent
         z:keyNavigation.ctrlActive ? 40 : -1
-        enabled: keyNavigation.ctrlActive
+        //enabled: keyNavigation.ctrlActive
+        visible: keyNavigation.ctrlActive
 
         onWheelMoved:{
             if(wheel.delta < 0)

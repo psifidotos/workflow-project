@@ -24,13 +24,13 @@ Item {
 
     QIconItem {
         id: image
+        smooth:true
         icon: container.icon !== "" ? QIcon(container.icon) : QIcon()
         anchors.fill: parent
         property real hoverValue: !opacityAnimation ? hoverScale : 1
         property real opacityValue: opacityAnimation ? 0.5 : 1
         scale: mouseArea.containsMouse ? hoverValue : 1
         opacity: mouseArea.containsMouse  ? 1 : opacityValue
-        smooth:true
 
         Behavior on scale {
             NumberAnimation {

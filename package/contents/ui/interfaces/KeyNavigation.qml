@@ -53,9 +53,14 @@ Item{
             }
         }
         else if(event.key === Qt.Key_Slash){
-            if(filterCalled === true)
-                filterWindows.forceActiveFocus();
             filterCalled = true;
+            filterWindows.forceActiveFocus();
+        }
+        else if(event.key === Qt.Key_F){
+            if(ctrlActive){
+                filterCalled = true;
+                filterWindows.forceActiveFocus();
+            }
         }
         else if(event.key === Qt.Key_Control){
             console.log("true");
@@ -68,8 +73,6 @@ Item{
             ctrlActive = false;
         }
     }
-
-
 
     //"h" = "left", "j" = "downwards", "k" = "upwards", "l" = "right" (where the latter one is an "L")
 

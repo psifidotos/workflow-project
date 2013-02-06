@@ -6,6 +6,7 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
 import "../code/settings.js" as Settings
+import "components"
 
 PlasmaComponents.TextField{
     id: container
@@ -24,11 +25,7 @@ PlasmaComponents.TextField{
 
     Keys.onUpPressed: { }
     Keys.onDownPressed: { }
-    Keys.onEscapePressed: {
-        keyNavigation.filterCalled = false;
-        text="";
-        mainView.forceActiveFocus();
-    }
+    Keys.onEscapePressed: hideFilter();
 
     Behavior on y{
         NumberAnimation {
@@ -37,4 +34,22 @@ PlasmaComponents.TextField{
         }
     }
 
+    IconButton {
+        icon: "edit-delete"
+        width: 0.65*parent.height
+        height: width
+        anchors {left: parent.right; leftMargin:5; verticalCenter: parent.verticalCenter}
+        opacityAnimation: true
+
+        onClicked: hideFilter();
+
+        tooltipTitle: i18n("Hide Search Filter")
+        tooltipText: i18n("You can hide the search filter.")
+    }
+
+    function hideFilter(){
+        keyNavigation.filterCalled = false;
+        text="";
+        mainView.forceActiveFocus();
+    }
 }

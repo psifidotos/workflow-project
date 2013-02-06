@@ -123,7 +123,7 @@ Item{
                 id:tasksSList
 
                 width:parent.width
-                height:(shownTasks+1) * taskHeight
+                height:(shownTasks+2) * taskHeight
                 opacity:Settings.global.showWindows ? 1 : 0
 
                 spacing:0
