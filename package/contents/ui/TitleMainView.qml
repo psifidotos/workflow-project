@@ -85,13 +85,13 @@ PlasmaComponents.ToolBar {
                 id:lockerToolBtn
                 anchors.centerIn: parent
 
-                Image{
-                    id:lockerImg
+                QIconItem {
+                    id: lockerImg
                     smooth:true
-                    source:"Images/buttons/Padlock-gold.png"
+                    icon: lockerToolBtn.checked ? QIcon("object-locked") : QIcon("object-unlocked")
                     anchors.centerIn: parent
-                    width:0.8*parent.height
-                    height:0.7*parent.height
+                    width:0.82*parent.height
+                    height:0.82*parent.height
                 }
 
                 width: oxygenTitle.buttonWidth
@@ -135,14 +135,13 @@ PlasmaComponents.ToolBar {
                 id:windowsToolBtn
                 anchors.centerIn: parent
 
-                Image{
+                QIconItem {
                     id:windowsImg
                     smooth:true
-                    source:"Images/buttons/blueWindowsIcon.png"
+                    icon: windowsToolBtn.checked ? QIcon("window-suppressed") : QIcon("window-new")
                     anchors.centerIn: parent
-                    width:0.80*parent.height
-                    height:0.68*parent.height
-
+                    width:0.82*parent.height
+                    height:0.82*parent.height
                 }
 
                 width: oxygenTitle.buttonWidth
@@ -187,13 +186,13 @@ PlasmaComponents.ToolBar {
 
                 anchors.centerIn: parent
 
-                Image{
+                QIconItem {
                     id:effectsImg
                     smooth:true
-                    source:"Images/buttons/tools_wizard.png"
+                    icon: QIcon("tools-wizard")
                     anchors.centerIn: parent
-                    width:0.80*parent.height
-                    height:0.65*parent.height
+                    width:0.82*parent.height
+                    height:0.82*parent.height
 
                     Image{
                         smooth:true
@@ -201,10 +200,9 @@ PlasmaComponents.ToolBar {
                         width:1.42*height
 
                         x:-width/3
-                        y:parent.height- 0.6*height
+                        y:parent.height - height
 
                         source:"Images/buttons/downIndicator.png"
-
                         opacity:0.6
                     }
                 }
