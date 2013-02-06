@@ -17,9 +17,10 @@ QtObject {
     property bool firstRunTour: plasmoid.readConfig("FirstRunTour")
     property bool firstRunCalibration: plasmoid.readConfig("FirstRunCalibration")
     property bool hideOnClick: plasmoid.readConfig("HideOnClick")
-    //property int toolTipsDelay: plasmoid.readConfig("ToolTipsDelay")
     property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
     property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
+    property bool disableBackground: plasmoid.readConfig("DisableBackground")
+
 
     // Small hack to make sure the global settings object is set
     property bool setAsGlobal: false
@@ -44,6 +45,7 @@ QtObject {
     //onToolTipsDelayChanged: { plasmoid.writeConfig("ToolTipsDelay", toolTipsDelay) ; console.log("ToolTipsDelay: " + toolTipsDelay) }
     onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; console.log("UseCurrentActivityIcon: " + useCurrentActivityIcon) }
     onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; console.log("DisableEverywherePanel: " + disableEverywherePanel) }
+    onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; console.log("DisableBackground: " + disableBackground) }
     
 
     function configChanged() {
@@ -52,6 +54,7 @@ QtObject {
      //   toolTipsDelay = plasmoid.readConfig("ToolTipsDelay");
         useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
         disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
+        disableBackground = plasmoid.readConfig("DisableBackground");
     }
 
     Component.onCompleted: {

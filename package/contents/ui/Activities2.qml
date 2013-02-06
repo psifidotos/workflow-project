@@ -45,7 +45,7 @@ Rectangle {
     }
 
     //   color:"#000000ff"
-    color: "#dcdcdc"
+    color:  Settings.global.disableBackground ? "#00dcdcdc": "#dcdcdc"
 
     clip:true
     anchors.fill: parent

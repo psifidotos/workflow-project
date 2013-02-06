@@ -6,6 +6,8 @@ import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
 
+import "../code/settings.js" as Settings
+
 Item{
     id: allwlists
     property int scale: 50
@@ -34,6 +36,7 @@ Item{
             width:mainView.width<allareas.width ? allareas.width : mainView.width
             height:mainView.height<allareas.height ? allareas.height : mainView.height
             source:"Images/greyBackground.png"
+            visible: !Settings.global.disableBackground
             fillMode: Image.Tile
             property string typeId : "workareasFlickImage1"
         }

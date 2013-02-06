@@ -114,7 +114,7 @@ Item{
 
         Behavior on opacity{
             NumberAnimation{
-                duration: 3*Settings.global.animationStep;
+                duration: 2*Settings.global.animationStep;
                 easing.type: Easing.InOutQuad;
             }
         }

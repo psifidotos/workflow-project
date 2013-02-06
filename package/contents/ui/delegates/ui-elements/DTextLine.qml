@@ -65,7 +65,7 @@ Item{
          font.italic: mainIText.font.italic
          font.pixelSize: 1.1 * mainIText.font.pixelSize
 
-         color:mainIText.color
+         color:Settings.global.disableBackground ? theme.textColor : mainIText.color
          elide:Text.ElideRight
          anchors {left:parent.left; top: parent.top; leftMargin:10; topMargin:5}
          opacity: container.focused ? 0 : 1
