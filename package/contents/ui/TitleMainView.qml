@@ -88,10 +88,12 @@ PlasmaComponents.ToolBar {
                 QIconItem {
                     id: lockerImg
                     smooth:true
-                    icon: lockerToolBtn.checked ? QIcon("object-locked") : QIcon("object-unlocked")
+                    icon: QIcon(currentIcon)
                     anchors.centerIn: parent
                     width:0.82*parent.height
                     height:0.82*parent.height
+
+                    property string currentIcon: lockerToolBtn.checked ? "object-locked" : "object-unlocked"
                 }
 
                 width: oxygenTitle.buttonWidth
@@ -116,7 +118,7 @@ PlasmaComponents.ToolBar {
                 mainText: i18n("Lock Activities")
                 subText: i18n("You can lock your Activities if you want. In Locked state only Pause and Restore actions are enabled.")
                 target:lockerToolBtnMouseArea
-                //localIcon:lockerImg.source
+                image: lockerImg.currentIcon
             }
 
         }
@@ -138,10 +140,12 @@ PlasmaComponents.ToolBar {
                 QIconItem {
                     id:windowsImg
                     smooth:true
-                    icon: windowsToolBtn.checked ? QIcon("window-suppressed") : QIcon("window-new")
+                    icon: QIcon(currentIcon)
                     anchors.centerIn: parent
                     width:0.82*parent.height
                     height:0.82*parent.height
+
+                    property string currentIcon: windowsToolBtn.checked ? "window-suppressed" : "window-new"
                 }
 
                 width: oxygenTitle.buttonWidth
@@ -166,7 +170,7 @@ PlasmaComponents.ToolBar {
                 mainText: i18n("Show/Hide Windows")
                 subText: i18n("You can show or hide all the windows shown in order to enhance your workflow.")
                 target:windowsToolBtnMouseArea
-                //localIcon:windowsImg.source
+                image: windowsImg.currentIcon
             }
         }
 
@@ -188,10 +192,11 @@ PlasmaComponents.ToolBar {
                 QIconItem {
                     id:effectsImg
                     smooth:true
-                    icon: QIcon("tools-wizard")
+                    icon: QIcon(currentIcon)
                     anchors.centerIn: parent
                     width:0.82*parent.height
                     height:0.82*parent.height
+                    property string currentIcon: "tools-wizard"
 
                     Image{
                         smooth:true
@@ -250,7 +255,7 @@ PlasmaComponents.ToolBar {
                 mainText: i18n("Enable/Disable Previews")
                 subText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
-                //localIcon:effectsImg.source
+                image: effectsImg.currentIcon
             }
 
         }

@@ -309,7 +309,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.taskTitleTextDef
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
+                font.pixelSize: Math.max((0.17+0.01)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
                 target:allTasksBtns
@@ -354,7 +354,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.taskTitleTextDef
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
+                font.pixelSize: Math.max((0.17+0.01)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
                 target:allTasksBtns
@@ -384,7 +384,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:taskDeleg2.taskTitleTextHov
-                font.pixelSize: Math.max((0.17+mainView.defFontRelStep)*taskDeleg2.rHeight,14)
+                font.pixelSize: Math.max((0.17+0.01)*taskDeleg2.rHeight,14)
             }
             PropertyChanges{
                 target:imageTask2

@@ -26,7 +26,7 @@ DialogTemplate2{
     dialogTitle: i18n("Previews Calibration Dialog")
 
 
-    property int fontsSize: (0.034+mainView.defFontRelStep)*insideHeight
+    property int fontsSize: (0.084)*insideHeight
 
     property string dialogType:"CalibrationDialog"
 
@@ -46,9 +46,6 @@ DialogTemplate2{
             font.bold: true
             font.italic: true
 
-            font.pixelSize: 0
-
-           // color: "#f4f4f4"
             color:defColor
             width:parent.width - 10
 
@@ -267,7 +264,6 @@ DialogTemplate2{
             height:0.5*parent.height
             anchors.top:rightFArea.bottom
 
-
             Text{
                 anchors.top : parent.top
                 anchors.topMargin: 10
@@ -277,9 +273,7 @@ DialogTemplate2{
                 font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
-                font.pixelSize: 0
 
-                //color: "#f4f4f4"
                 color:defColor
 
                 width:parent.width-10
@@ -309,8 +303,6 @@ DialogTemplate2{
                 font.italic: true
                 //color: "#f4f4f4"
                 color:defColor
-
-                font.pixelSize: calibDialog.fontsSize
 
             }
 
@@ -400,17 +392,12 @@ DialogTemplate2{
                     calibDialog.updatePreview();
                 }
 
-
                 y:sRightRow.y-10
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 font.bold: true
                 font.italic: true
-                font.family: theme.defaultFont.family
-                font.pixelSize: calibDialog.fontsSize
                 color:defColor
-                //color: "#f4f4f4"
-
             }
 
             Row{
@@ -499,8 +486,7 @@ DialogTemplate2{
                 font.family: theme.defaultFont.family
                 font.bold: true
                 font.italic: true
-                font.pixelSize: calibDialog.fontsSize
-                //color: "#f4f4f4"
+
                 color:defColor
 
                 width:parent.width-10

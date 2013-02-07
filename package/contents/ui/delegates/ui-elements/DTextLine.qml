@@ -63,7 +63,7 @@ Item{
          text:mainIText.text
          width:mainIText.width+17
          font.italic: mainIText.font.italic
-         font.pixelSize: 1.1 * mainIText.font.pixelSize
+         font.pixelSize: 1.02 * mainIText.font.pixelSize
 
          color:Settings.global.disableBackground ? theme.textColor : mainIText.color
          elide:Text.ElideRight
@@ -81,7 +81,7 @@ Item{
         font.family: theme.defaultFont.family
         font.italic: true
 
-        font.pixelSize: (0.35+mainView.defFontRelStep)*parent.height
+        font.pixelSize: (0.4)*parent.height
 
         color: activeFocus ? activColor : origColor
 

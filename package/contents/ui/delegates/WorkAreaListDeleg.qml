@@ -147,7 +147,7 @@ Item{
         font.family: theme.defaultFont.family
         font.italic: true
         font.bold: true
-        font.pixelSize: (0.095+mainView.defFontRelStep)*(mainView.workareaHeight)
+        font.pixelSize: (0.095+0.05)*(mainView.workareaHeight)
 
         color: "#80808c";
 
@@ -201,7 +201,7 @@ Item{
         anchors.top : taskOrFTitleL.bottom
         anchors.left: taskOrFTitleL.left
 
-        property int fontSize:(0.095+mainView.defFontRelStep)*(mainView.workareaHeight)
+        property int fontSize:(0.095+0.05)*(mainView.workareaHeight)
         property int windsHeight:1.4 * fontSize
 
         //for scrolling in vertical

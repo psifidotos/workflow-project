@@ -175,8 +175,6 @@ Item{
         anchors.right: parent.right
         anchors.rightMargin: 5
 
-
-
         horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignBottom
         maximumLineCount:2

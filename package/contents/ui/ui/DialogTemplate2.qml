@@ -138,7 +138,7 @@ PlasmaCore.FrameSvgItem{
                 font.bold: true
                 font.italic: true
 
-                font.pixelSize: (0.6+mainView.defFontRelStep)*templDialog.spaceY
+                font.pixelSize: (0.65)*templDialog.spaceY
             }
 
             Rectangle{

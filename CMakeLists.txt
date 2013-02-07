@@ -2,7 +2,7 @@
 project(plasma_applet_workflow)
 
 set(NAME workflow)
-set(VERSION 0.2.3a2)
+set(VERSION 0.3.0a1)
 set(AUTHOR "Michail Vourlakos")
 set(EMAIL "psifidotos@users.sf.net")
 set(WEBSITE "http://workflow.opentoolsandspace.org/")

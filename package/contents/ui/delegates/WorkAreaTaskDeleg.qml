@@ -131,7 +131,7 @@ Item{
 
             anchors.verticalCenter: parent.verticalCenter
 
-            font.pixelSize: (0.8+mainView.defFontRelStep)*parent.height
+            font.pixelSize: (0.8+0.05)*parent.height
             color: taskDeleg1.taskTitleColorD
             elide: Text.ElideRight
             width: parent.width

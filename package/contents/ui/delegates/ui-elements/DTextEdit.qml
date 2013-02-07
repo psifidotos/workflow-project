@@ -139,7 +139,7 @@ Item{
         maximumLineCount: 2
         elide:Text.ElideRight
 
-        font{family: mainText.font.family; pixelSize: (0.22+mainView.defFontRelStep)*actImag1.height; bold: mainText.font.bold; italic: mainText.font.italic}
+        font{family: mainText.font.family; pixelSize: 0.23*actImag1.height; bold: mainText.font.bold; italic: mainText.font.italic}
         anchors{left:parent.left; bottom: backImage.bottom; leftMargin: 8; bottomMargin: 8}
     }
 

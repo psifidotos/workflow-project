@@ -150,7 +150,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:container.isSelected===false ? container.taskTitleTextDef: container.taskTitleTextSel
-                font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*container.height,15)
+                font.pixelSize: Math.max(0.28*container.height,15)
             }
             PropertyChanges{
                 target:taskHoverRect
@@ -175,7 +175,7 @@ Item{
             PropertyChanges{
                 target:taskTitle2
                 color:container.isSelected===false ? container.taskTitleTextHov : container.taskTitleTextSel
-                font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*container.height, 15)
+                font.pixelSize: Math.max(0.28*container.height, 15)
                 opacity: 1
             }
             PropertyChanges{

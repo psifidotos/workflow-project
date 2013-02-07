@@ -132,7 +132,7 @@ Rectangle{
                 font.bold: true
                 font.italic: true
 
-                font.pixelSize: (0.3+mainView.defFontRelStep)*templMainDialog.border.top
+                font.pixelSize: (0.35)*templMainDialog.border.top
             }
 
             Rectangle{

@@ -151,7 +151,7 @@ Item{
                 PropertyChanges{
                     target:task.taskTitle2Alias
                     color:task.taskTitleTextDef
-                    font.pixelSize: Math.max((0.28+mainView.defFontRelStep)*task.height,15)
+                    font.pixelSize: Math.max((0.28+0.01)*task.height,15)
                 }
                 PropertyChanges{
                     target:taskHoverRectFrame
@@ -197,7 +197,7 @@ Item{
                 PropertyChanges{
                     target:task.taskTitle2Alias
                     color:task.taskTitleTextDef
-                    font.pixelSize: Math.max((0.09+mainView.defFontRelStep)*task.height,15)
+                    font.pixelSize: Math.max((0.08)*task.height,15)
                 }
                 PropertyChanges{
                     target:taskHoverRectFrame
@@ -246,7 +246,7 @@ Item{
                 PropertyChanges{
                     target:task.taskTitle2Alias
                     color:task.taskTitleTextHov
-                    font.pixelSize: Math.max(task.showPreviewsFound===false ? (0.28+mainView.defFontRelStep)*task.height : (0.09+mainView.defFontRelStep)*task.height,15)
+                    font.pixelSize: Math.max(task.showPreviewsFound===false ? (0.28+0.01)*task.height : (0.08)*task.height,15)
                 }
                 PropertyChanges{
                     target:taskHoverRectFrame
