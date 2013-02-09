@@ -8,7 +8,6 @@ import org.kde.qtextracomponents 0.1
 
 import "delegates"
 import "delegates/ui-elements"
-import "instances"
 import "helptour"
 import "connections"
 import "components"
