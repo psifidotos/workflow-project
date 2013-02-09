@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASEDIR="../src" # root of translatable sources
+BASEDIR="../package" # root of translatable sources
 PROJECT="plasma_applet_workflow" # project name
 BUGADDR="psifidotos@users.sf.net" # MSGID-Bugs
 WDIR="`pwd`" # working dir
@@ -30,13 +30,13 @@ xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki1
 	{ echo "error while calling xgettext. aborting."; exit 1; }
 echo "Done extracting messages"
 
-echo "Merging translations"
-catalogs=`find . -name '*.po'`
-for cat in $catalogs; do
-	echo "$cat"
-	msgmerge -o "$cat.new" "$cat" "${WDIR}/${PROJECT}.pot"
-	mv "$cat.new" "$cat"
-done
+#echo "Merging translations"
+#catalogs=`find . -name '*.po'`
+#for cat in $catalogs; do
+#	echo "$cat"
+#	msgmerge -o "$cat.new" "$cat" "${WDIR}/${PROJECT}.pot"
+#	mv "$cat.new" "$cat"
+#done
 
 echo "Done merging translations"
 echo "Cleaning up"
