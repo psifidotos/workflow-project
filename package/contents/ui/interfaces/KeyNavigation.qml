@@ -15,7 +15,6 @@ Item{
     //this is used to show the windows filter frame
     property bool filterCalled:false
 
-    //
     property bool ctrlActive: false
 
     focus: true
@@ -29,14 +28,22 @@ Item{
         CtrlActive = false;
     }
 
-
     Keys.onLeftPressed: {leftPressed(); }
     Keys.onRightPressed: {rightPressed(); }
     Keys.onUpPressed: {upPressed(); }
     Keys.onDownPressed: {downPressed(); }
     Keys.onReturnPressed: returnPressed();
     Keys.onEnterPressed: returnPressed();
-    Keys.onEscapePressed: {isActive = false; filterCalled = false;}
+    Keys.onEscapePressed: {
+        if (filterCalled) {
+            isActive = false;
+            filterCalled = false;
+        } else {
+            plasmoid.hidePopup();
+            if(!plasmoidWrapper.isInPanel)
+                taskManager.hideDashboard();
+        }
+    }
     Keys.onPressed: {
         if(event.key === Qt.Key_H)
             leftPressed();
