@@ -243,7 +243,6 @@ Item{
                 target:cornerImageMouseArea
                 mainText: i18n("Show Windows")
                 subText: i18n("You can see the windows from that spesific Workarea if you want. The counter shows their number.")
-                //icon:instanceOfThemeList.icons.RunActivity
             }
 
             Text{

@@ -31,7 +31,7 @@ DialogTemplate2{
 
             anchors.verticalCenter: parent.verticalCenter
             anchors.topMargin:10
-            icon:instanceOfThemeList.icons.DialogInformation
+            icon: "dialog-information"
             width:70
             height:70
         }

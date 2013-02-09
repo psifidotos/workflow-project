@@ -168,7 +168,7 @@ PlasmaCore.FrameSvgItem{
                     anchors.bottom: parent.bottom
                     width:100
                     text:yesNoButtons === true ? i18n("Yes") : i18n("Ok")
-                    iconSource:instanceOfThemeList.icons.DialogAccept
+                    iconSource: "dialog-ok-apply"
 
                     visible:templDialog.showButtons === true ? true : false
 
@@ -184,7 +184,7 @@ PlasmaCore.FrameSvgItem{
                     anchors.bottom: parent.bottom
                     width:100
                     text:yesNoButtons === true ? i18n("No") :i18n("Cancel")
-                    iconSource:instanceOfThemeList.icons.DialogCancel
+                    iconSource: "dialog-cancel"
 
                     visible:templDialog.showButtons === true ? true : false
 

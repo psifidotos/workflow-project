@@ -38,7 +38,7 @@ Item{
 
             IconButton {
                 id:duplicateActivityBtn
-                icon:instanceOfThemeList.icons.CloneActivity
+                icon:"tab-duplicate"
                 width: buttonsSize
                 height: buttonsSize
                 opacity: Settings.global.lockActivities ? 0 : 1
@@ -51,7 +51,7 @@ Item{
 
             IconButton {
                 id:stopActivityBtn
-                icon: instanceOfThemeList.icons.PauseActivity
+                icon: "media-playback-pause"
                 width: Settings.global.lockActivities ? 1.2 * buttonsSize : buttonsSize
                 height: width
                 opacity: allwlists.activitiesShown > 1 ? 1 : 0

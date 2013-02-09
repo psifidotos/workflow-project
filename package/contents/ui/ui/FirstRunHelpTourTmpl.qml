@@ -26,7 +26,7 @@ DialogTemplate2{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:instanceOfThemeList.icons.DialogInformation
+            icon: "dialog-information"
             width:70
             height:70
         }

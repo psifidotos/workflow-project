@@ -42,7 +42,6 @@ QtObject {
     onFirstRunTourChanged: { plasmoid.writeConfig("FirstRunTour", firstRunTour) ; console.log("FirstRunTour: " + firstRunTour) }
     onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; console.log("FirstRunCalibration: " + firstRunCalibration) }
     onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; console.log("HideOnClick: " + hideOnClick) }
-    //onToolTipsDelayChanged: { plasmoid.writeConfig("ToolTipsDelay", toolTipsDelay) ; console.log("ToolTipsDelay: " + toolTipsDelay) }
     onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; console.log("UseCurrentActivityIcon: " + useCurrentActivityIcon) }
     onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; console.log("DisableEverywherePanel: " + disableEverywherePanel) }
     onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; console.log("DisableBackground: " + disableBackground) }
@@ -51,7 +50,6 @@ QtObject {
     function configChanged() {
         hideOnClick = plasmoid.readConfig("HideOnClick");
         animations = plasmoid.readConfig("Animations");
-     //   toolTipsDelay = plasmoid.readConfig("ToolTipsDelay");
         useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
         disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
         disableBackground = plasmoid.readConfig("DisableBackground");

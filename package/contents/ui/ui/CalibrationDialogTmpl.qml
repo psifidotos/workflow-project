@@ -315,7 +315,7 @@ DialogTemplate2{
 
                 QIconItem{
 
-                    icon:instanceOfThemeList.icons.MinusValue
+                    icon: "media-seek-backward"
                     width:xOffsetSlider.height
                     height:width
                     opacity: xValueText.val > xOffsetSlider.minimumValue ? 1 : 0.5
@@ -334,7 +334,7 @@ DialogTemplate2{
                     mainText: i18n("Reduce X")
                     subText: i18n("You can reduce X offset for the window previews.")
                     target: xMinMouseArea
-                    image: instanceOfThemeList.icons.MinusValue
+                    image: "media-seek-backward"
                 }
 
                 PlasmaComponents.Slider {
@@ -356,7 +356,7 @@ DialogTemplate2{
 
                 }
                 QIconItem{
-                    icon:instanceOfThemeList.icons.AddValue
+                    icon: "media-seek-forward"
                     width:xOffsetSlider.height
                     height:width
                     opacity: xValueText.val < xOffsetSlider.maximumValue ? 1 : 0.5
@@ -376,7 +376,7 @@ DialogTemplate2{
                     mainText: i18n("Increase X")
                     subText: i18n("You can increase X offset for the window previews.")
                     target: xAddMouseArea
-                    image: instanceOfThemeList.icons.AddValue
+                    image: "media-seek-forward"
                 }
 
             }
@@ -408,7 +408,7 @@ DialogTemplate2{
                 spacing:5
 
                 QIconItem{
-                    icon:instanceOfThemeList.icons.MinusValue
+                    icon: "media-seek-backward"
                     width:yOffsetSlider.height
                     height:width
 
@@ -429,7 +429,7 @@ DialogTemplate2{
                     mainText: i18n("Reduce Y")
                     subText: i18n("You can reduce Y offset for the window previews.")
                     target: yMinMouseArea
-                    image: instanceOfThemeList.icons.MinusValue
+                    image: "media-seek-backward"
                 }
 
                 PlasmaComponents.Slider {
@@ -452,7 +452,7 @@ DialogTemplate2{
                 }
 
                 QIconItem{
-                    icon:instanceOfThemeList.icons.AddValue
+                    icon: "media-seek-forward"
                     width:yOffsetSlider.height
                     height:width
 
@@ -472,7 +472,7 @@ DialogTemplate2{
                     mainText: i18n("Increase Y")
                     subText: i18n("You can increase Y offset for the window previews.")
                     target: yAddMouseArea
-                    image: instanceOfThemeList.icons.AddValue
+                    image: "media-seek-forward"
                 }
 
             }

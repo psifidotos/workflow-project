@@ -27,7 +27,7 @@ DialogTemplate2{
             id:infIcon
 
             anchors.verticalCenter: parent.verticalCenter
-            icon:instanceOfThemeList.icons.DialogImportant
+            icon: "emblem-important"
             width:70
             height:70
         }

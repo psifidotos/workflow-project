@@ -161,7 +161,7 @@ Rectangle{
                     anchors.bottom: parent.bottom
                     width:100
                     text:i18n("Yes")
-                    iconSource:instanceOfThemeList.icons.DialogAccept
+                    iconSource: "dialog-ok-apply"
 
                     visible:templDialog.showButtons === true ? true : false
 
@@ -177,7 +177,7 @@ Rectangle{
                     anchors.bottom: parent.bottom
                     width:100
                     text:i18n("No")
-                    iconSource:instanceOfThemeList.icons.DialogCancel
+                    iconSource: "dialog-cancel"
 
                     visible:templDialog.showButtons === true ? true : false
 

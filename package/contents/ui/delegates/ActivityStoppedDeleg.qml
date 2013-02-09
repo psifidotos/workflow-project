@@ -204,7 +204,7 @@ Item{
     QIconItem{
         id:playActivity
         opacity:stpActivity.containsMouse ? 1 : 0
-        icon: QIcon(instanceOfThemeList.icons.RunActivity)
+        icon: QIcon("media-playback-start")
 
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -240,7 +240,7 @@ Item{
 
     IconButton {
         id:deleteActivityBtn
-        icon: instanceOfThemeList.icons.DeleteActivity
+        icon: "edit-delete"
         anchors.right:parent.right
         anchors.top:parent.top
         width: buttonsSize
@@ -274,7 +274,7 @@ Item{
         target: mouseArea
         mainText: i18n("Restore Activity")
         subText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
-        image: instanceOfThemeList.icons.RunActivity
+        image: "media-playback-start"
     }
 
     ListView.onAdd: ParallelAnimation {

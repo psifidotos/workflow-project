@@ -271,7 +271,7 @@ DialogTemplate2 {
         anchors.bottomMargin: parent.margins.bottom+10
         width:150
         text:i18n("Previous")
-        iconSource:instanceOfThemeList.icons.Previous
+        iconSource: "go-previous"
 
         onClicked:{
             showPage(currentPage-1);
@@ -287,7 +287,7 @@ DialogTemplate2 {
         anchors.bottomMargin: parent.margins.bottom+10
         width:150
         text:i18n("Next")
-        iconSource:instanceOfThemeList.icons.Next
+        iconSource: "go-next"
 
         onClicked:{
             showPage(currentPage+1);
@@ -302,7 +302,7 @@ DialogTemplate2 {
         anchors.bottomMargin: parent.margins.bottom+10
         width:100
         text:i18n("Close")
-        iconSource:instanceOfThemeList.icons.Exit
+        iconSource: "dialog-close"
 
         onClicked:{
             completed();

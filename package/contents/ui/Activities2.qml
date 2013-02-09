@@ -113,10 +113,6 @@ Rectangle {
         sourceModel: workflowManager.model()
     }
 
-    SharedThemeList{
-        id:instanceOfThemeList
-    }
-
     Item{
         id:centralArea
         anchors.fill: parent

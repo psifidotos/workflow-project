@@ -278,7 +278,7 @@ DialogTemplate2{
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.margins.bottom+10
         text:i18n("Close")
-        iconSource:instanceOfThemeList.icons.Exit
+        iconSource:"dialog-close"
 
         onClicked:{
             completed();
@@ -292,7 +292,7 @@ DialogTemplate2{
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.margins.bottom+10
         text:i18n("Report Bug<br/>Request Feature")
-        iconSource:instanceOfThemeList.icons.Bugs
+        iconSource:"help-hint"
 
         onClicked:{
             Qt.openUrlExternally("https://github.com/psifidotos/workflow-project/issues");
@@ -307,7 +307,7 @@ DialogTemplate2{
         anchors.bottomMargin: parent.margins.bottom+10
 
         text:i18n("Help Tour")
-        iconSource:instanceOfThemeList.icons.HelpTour
+        iconSource:"help-contents"
 
         onClicked:{
             completed();
