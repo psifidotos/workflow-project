@@ -166,7 +166,7 @@ PlasmaCore.FrameSvgItem{
                     anchors.right: button2.left
                     anchors.rightMargin: 10
                     anchors.bottom: parent.bottom
-                    width:100
+                  //  width:100
                     text:yesNoButtons === true ? i18n("Yes") : i18n("Ok")
                     iconSource: "dialog-ok-apply"
 
@@ -182,7 +182,7 @@ PlasmaCore.FrameSvgItem{
                     id:button2
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
-                    width:100
+                 //   width:100
                     text:yesNoButtons === true ? i18n("No") :i18n("Cancel")
                     iconSource: "dialog-cancel"
 
