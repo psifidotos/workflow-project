@@ -26,6 +26,8 @@ BorderImage {
 
         color:"#00000000"
 
+        opacity: (tasksSList.shownTasks === 0)&&(filterWindows.text!=="") ? 0.10 : 1
+
 
        // clip:true
         Rectangle{
