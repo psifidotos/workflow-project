@@ -1,11 +1,12 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
+import "../../../code/settings.js" as Settings
 BorderImage {
 
     id:workBordImage
 
 
-    source: isCurrentW === true ?
+    source: (isCurrentW && !isFilteredNoResults) ?
                 "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
 
     property alias mainImgP: mainImg.source
@@ -14,6 +15,21 @@ BorderImage {
     border.right: 14; border.bottom: 14;
     horizontalTileMode: BorderImage.Repeat
     verticalTileMode: BorderImage.Repeat
+
+    property bool isFilteredNoResults: (tasksSList.shownTasks === 0)&&(filterWindows.text!=="")
+
+    Rectangle{
+        x:mainWorkArea.imagex-5
+        y:mainWorkArea.imagey-6
+        width:parent.width-2*x-1+2
+        height:parent.height-2*y+2
+        radius:7
+        property real opacityForDisableBackground : mainWorkArea.isCurrentW ? 0.8 : 0.25
+        opacity: Settings.global.disableBackground ? opacityForDisableBackground : 0
+        color:Settings.global.disableBackground ?  theme.textColor : "#00000000"
+
+        visible: !isFilteredNoResults
+    }
 
     Rectangle{
 
@@ -24,17 +40,16 @@ BorderImage {
         width:parent.width-2*x-1
         height:parent.height-2*y
 
-        color:"#00000000"
+        //color:Settings.global.disableBackground ?  theme.textColor : "#00000000"
 
-        opacity: (tasksSList.shownTasks === 0)&&(filterWindows.text!=="") ? 0.10 : 1
-
+        opacity: isFilteredNoResults ? 0.10 : 1
 
        // clip:true
-        Rectangle{
+        /*Rectangle{
             width:parent.width
             height:parent.height
             color:"#ffffff"
-        }
+        }*/
 
         Image {
             id: mainImg
