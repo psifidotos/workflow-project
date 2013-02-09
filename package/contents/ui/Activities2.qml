@@ -86,10 +86,6 @@ Rectangle {
         id: previewManager
     }
 
-    WorkFlowComponents.EnvironmentManager {
-        id: environmentManager
-    }
-
     WorkFlowComponents.PlasmoidWrapper {
         id: plasmoidWrapper
     }

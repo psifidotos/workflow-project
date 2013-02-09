@@ -9,6 +9,5 @@ Item{
     WorkareaManagerConnections{}
     TaskManagerConnections{}
     PreviewManagerConnections{}
-    EnvironmentManagerConnections{}
     PlasmoidWrapperConnections{}
 }

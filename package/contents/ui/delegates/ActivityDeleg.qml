@@ -98,7 +98,7 @@ Item{
         smooth:true
 
         rotation: (activityIconMouseArea.containsMouse &&
-                   (activityName.state === "inactive")&&
+                   (!activityName.focused)&&
                    (!Settings.global.lockActivities)) ? -20 : 0
 
         //for the animation to be precise

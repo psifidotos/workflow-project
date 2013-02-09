@@ -12,38 +12,7 @@ Item{
 
     property int buttonsSize:0.5 * mainView.scaleMeter
     property int buttonsSpace:mainView.scaleMeter / 10
-    property bool containsMouse: fRect.containsMouse || sRect.containsMouse
-
-    Rectangle{
-        id:fRect
-        width:1.5*addWidgetsBtn.width
-        height:1.5*addWidgetsBtn.height
-        radius:3
-        opacity: Settings.global.lockActivities ? 0 : 1
-
-        x:buttonsSize/2
-        anchors.top: parent.top
-
-        border.color: sessionParameters.currentActivity !== ccode ? "#404040" : "#333333"
-        border.width:  1
-        color: sessionParameters.currentActivity !== ccode ? "#222222" : "#0a0a0a"
-        property alias containsMouse: addWidgetsBtn.containsMouse
-
-        IconButton {
-            id:addWidgetsBtn
-            icon: instanceOfThemeList.icons.AddWidget
-            width: buttonsSize
-            height: buttonsSize
-            anchors.centerIn: parent
-
-            onClicked: {
-                environmentManager.showWidgetsExplorer(ccode);
-            }
-
-            tooltipTitle: i18n("Add Plasmoids")
-            tooltipText: i18n("Add Plasmoids to your Activity in order to customize it more.")
-        }
-    }
+    property bool containsMouse: sRect.containsMouse
 
     Rectangle{
         id:sRect
