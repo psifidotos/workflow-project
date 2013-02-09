@@ -1,10 +1,12 @@
 import QtQuick 1.1
 
+import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
 import "../code/settings.js" as Settings
 
 Item{
     QIconItem{
+        id:mainIcon
         width:parent.width
         height:parent.height
         icon: QIcon(iconPath)
@@ -35,6 +37,7 @@ Item{
         }
 
         MouseArea{
+            id:mouseAreaContainer
             anchors.fill:parent
             onClicked:{
                 if (plasmoidWrapper.isPopupShowing())
@@ -44,6 +47,11 @@ Item{
             }
         }
 
-
+        PlasmaCore.ToolTip{
+            target:mouseAreaContainer
+            mainText: i18n("WorkFlow Plasmoid");
+            subText: i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies")
+            image: mainIcon.iconPath
+        }
     }
 }
