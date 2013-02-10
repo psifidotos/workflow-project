@@ -69,6 +69,7 @@ Item{
     //its behavior a bit
     property bool overrideUpdatePreview: false;
     property bool overrideDraggingSupport: false;
+    property bool overrideInformStateSignal: false;
 
     /*Aliases*/
     property alias previewRectAlias : previewRect
@@ -80,11 +81,13 @@ Item{
     //just for smooth animation of showing hovered task rectangle
     property Item taskHoverRect
 
+
     //Signals
     signal updatePreviewSignal();
     signal draggingStartedSignal(variant mouse, variant obj);
     signal draggingEndedSignal(variant mouse);
     signal clickedSignal(variant mouse);
+    signal informStateSignal(string nextstate);
 
     onShowPreviewsChanged:{
         updatePreview();
@@ -277,6 +280,13 @@ Item{
                 //according to window previews size
                 taskDeleg2.computeButtonsPosition();
             }
+        }
+
+        onInformStateClicked: {
+            if(!overrideInformStateSignal)
+                taskManager.setTaskState(taskDeleg2.ccode, windowState);
+            else
+                informStateSignal(windowState);
         }
     }
 

@@ -132,18 +132,15 @@ void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
         TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
         if(taskI){
             QPixmap tempIcn = task->icon(256,256,true);
-            taskI->setCode(wId);
-            taskI->setOnAllDesktops(task->isOnAllDesktops());
-            taskI->setOnAllActivities(task->isOnAllActivities());
-            taskI->setClassClass(task->classClass());
-            taskI->setName(task->name());
-            taskI->setIcon(QIcon(tempIcn));
-            taskI->setDesktop(task->desktop());
-            taskI->setActivities(task->activities());
+            taskI->setValues(wId,
+                             task->isOnAllDesktops(),
+                             task->isOnAllActivities(),
+                             task->classClass(),
+                             task->name(),
+                             task->desktop(),
+                             task->activities() );
 
-            //if(task->isOnAllActivities())
-            //  if(!task->isOnAllDesktops())
-            //    setOnAllDesktops(wId,true);
+            taskI->setIcon(QIcon(tempIcn));
         }
 
     }
@@ -288,6 +285,7 @@ void PTaskManager::setTaskState(QString wId, QString state, QString activity, in
             setOnlyOnActivity(wId, fActivity);
         }
         else if (state == "sameDesktops"){
+            setOnlyOnActivity(wId, activity);
             setOnDesktop(wId, desktop);
             setOnAllActivities(wId);
         }

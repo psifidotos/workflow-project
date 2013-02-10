@@ -79,7 +79,8 @@ QIconItem{
 
         var work = col2.getWorkarea(desktopPos);
 
-        animateTask(cid,coord,work.getTasksList(),anim);
+        if(work !== undefined)
+            animateTask(cid,coord,work.getTasksList(),anim);
 
     }
 

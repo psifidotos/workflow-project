@@ -189,6 +189,9 @@ DialogTemplate2{
                 taskTitleTextDef: defColor
                 taskTitleTextHov: defColor
 
+                dialogActivity: deskDialog.activityCode
+                dialogDesktop: deskDialog.desktop
+
                 scrollingView: desktopView
                 centralListView: desksTasksList
             }

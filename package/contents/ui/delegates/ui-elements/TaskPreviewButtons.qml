@@ -17,9 +17,12 @@ Item {
     property alias opacityWSt:  placeStateBtn.opacity
     property alias yWSt:  placeStateBtn.y
 
+    property alias windowState: placeStateBtn.state
+
     property int buttonsSize
     property int buttonsSpace: -buttonsSize/8
 
+    signal informStateClicked;
 
     CloseWindowButton{
         id:closeBtn
@@ -38,7 +41,6 @@ Item {
 
     WindowPlaceButton{
         id: placeStateBtn
-
         width: parent.buttonsSize
         height: width
         y:buttonsSize + buttonsSpace
@@ -48,26 +50,22 @@ Item {
 
         onPressAndHold:{
             placeStateBtn.previousState();
-            placeStateBtn.informState();
+            informStateClicked();
+            //placeStateBtn.informState();
 
             toDesktopAnimation();
         }
 
         onClicked: {
             placeStateBtn.nextState();
-            placeStateBtn.informState();
+            informStateClicked();
+            //placeStateBtn.informState();
 
             toDesktopAnimation();
-
         }
 
         function informState(){
             taskManager.setTaskState(taskDeleg2.ccode, state, taskDeleg2.dialogActivity, taskDeleg2.dialogDesktop);
-
-            if (state === "oneDesktop"){
-                if(taskDeleg2.dialogType === taskDeleg2.dTypes[1])
-                    taskManager.setTaskDesktopForAnimation(taskDeleg2.ccode,taskDeleg2.centralListView.desktopInd);
-            }
         }
 
         function toDesktopAnimation(){

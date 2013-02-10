@@ -125,6 +125,48 @@ void TaskItem::setActivities(QStringList activities)
     }
 }
 
+//it triggers only one signal
+void TaskItem::setValues(const QString &code,
+                         const bool &onAllDesktops,
+                         const bool &onAllActivities,
+                         const QString &classClass,
+                         const QString &name,
+                         const int &desktop,
+                         const QStringList &activities)
+{
+    bool valueWasChanged = false;
+    if(m_code != code){
+        m_code = code;
+        valueWasChanged = true;
+    }
+    if(m_onAllDesktops != onAllDesktops){
+        m_onAllDesktops = onAllDesktops;
+        valueWasChanged = true;
+    }
+    if(m_onAllActivities != onAllActivities){
+        m_onAllActivities = onAllActivities;
+        valueWasChanged = true;
+    }
+    if(m_classClass != classClass){
+        m_classClass = classClass;
+        valueWasChanged = true;
+    }
+    if(m_name != name){
+        m_name = name;
+        valueWasChanged = true;
+    }
+    if(m_desktop != desktop){
+        m_desktop = desktop;
+        valueWasChanged = true;
+    }
+    if(m_activities != activities){
+        m_activities = activities;
+        valueWasChanged = true;
+    }
+
+    if(valueWasChanged)
+        emit dataChanged();
+}
 
 QHash<int, QByteArray> TaskItem::roleNames() const
 {

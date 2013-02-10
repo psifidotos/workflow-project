@@ -28,7 +28,9 @@ bool FilterTaskModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceP
     bool result = ( ( ((activities.size() != 0) && (activities[0] == m_activity)&&
                       ((desktop == m_desktop) || onAllDesktops || (m_numberOfDesktops == 1)) ) ||
                     ((desktop == m_desktop) && onAllActivities) ||
-                    (m_everywhereState && onAllActivities && onAllDesktops) )
+                    (m_everywhereState && onAllActivities && onAllDesktops) //||
+                 //   ((onAllActivities) && onAllDesktops)) //fix for Desktop Dialog issue
+                    )
                     && (!m_clear) );
 
     return result;

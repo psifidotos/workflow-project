@@ -60,6 +60,13 @@ public:
   void setIcon(QIcon);
   void setDesktop(int);
   void setActivities(QStringList);
+  void setValues(const QString &code,
+                 const bool &onAllDesktops,
+                 const bool &onAllActivities,
+                 const QString &classClass,
+                 const QString &name,
+                 const int &desktop,
+                 const QStringList &activities);
 
   TaskItem *copy(QObject *parent);
 private:

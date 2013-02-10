@@ -21,6 +21,9 @@ Item{
     property variant scrollingView
     property variant centralListView
 
+    property string dialogActivity: ""
+    property int dialogDesktop: -1
+
     width: task.width
     height: task.height
 
@@ -110,6 +113,7 @@ Item{
 
         overrideUpdatePreview: true
         overrideDraggingSupport: true
+        overrideInformStateSignal: true
 
         onHeightChanged: {
             if((container.centralListView !== undefined)&&
@@ -122,6 +126,7 @@ Item{
         onUpdatePreviewSignal: container.updatePreview();
         onDraggingStartedSignal: container.onDraggingStarted(mouse, obj);
         onDraggingEndedSignal: container.onDraggingEnded(mouse);
+        onInformStateSignal: taskManager.setTaskState(ccode, nextstate, dialogActivity, dialogDesktop);
 
         states:[
             State {
