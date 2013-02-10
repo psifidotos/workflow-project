@@ -498,8 +498,27 @@ DialogTemplate2{
 
         }
     }
+//    Q_INVOKABLE int currentWIdPosition();
+ //   Q_INVOKABLE void nextWId();
+    PlasmaComponents.Button{
+        id:nextWIdButton
+        anchors.right: rightColumn.right
+        anchors.top: rightColumn.top
+        iconSource: "view-refresh"
+        onClicked:{
+            previewManager.removeWindowPreview(calibsTasksList.selectedWin);
+            plasmoidWrapper.nextWId();
+            updatePreview();
+            widPosition.text = plasmoidWrapper.currentWIdPosition();
+        }
+    }
 
-
+    PlasmaComponents.Label{
+        id: widPosition
+        anchors.right: nextWIdButton.left
+        anchors.rightMargin:5
+        anchors.top: nextWIdButton.top
+    }
 
     function getTasksList(){
         return calibsTasksList
@@ -523,6 +542,8 @@ DialogTemplate2{
             var obj = calibsTasksList.model.get(0);
             setSelectedWindow(obj.code);
         }
+
+        widPosition.text = plasmoidWrapper.currentWIdPosition();
     }
 
     function updatePreview(){

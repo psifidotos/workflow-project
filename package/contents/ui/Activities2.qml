@@ -13,7 +13,7 @@ import "connections"
 import "components"
 import "interfaces"
 
-//import "ui"
+import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
 
@@ -370,8 +370,8 @@ Rectangle {
         }
     }
 
-    //DesktopDialogTmpl{}
-    //    TourDialog{
-    //}
+    CalibrationDialogTmpl{}
+  //      TourDialog{
+  //  }
 }
 

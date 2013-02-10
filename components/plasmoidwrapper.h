@@ -40,6 +40,8 @@ public slots:
     Q_INVOKABLE void popupEventSlot(bool);
     Q_INVOKABLE void updatePopWindowWIdSlot();
     Q_INVOKABLE bool isPopupShowing();
+    Q_INVOKABLE int currentWIdPosition();
+    Q_INVOKABLE void nextWId();
 
 private slots:
     void activeWindowChangedSlot(WId);
@@ -50,10 +52,12 @@ private:
     bool m_findPopupWid;
     QString m_windowID;
     QString m_version;
+    int m_wPosition;
 
     Plasma::PopupApplet *m_popupApplet;
 
     void setMainWindowId();
+    void updateMainWId();
 };
 
 #endif // PlasmoidWrapper_H

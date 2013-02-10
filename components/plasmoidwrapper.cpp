@@ -1,6 +1,7 @@
 #include "plasmoidwrapper.h"
 
 #include <QGraphicsView>
+#include <QDebug>
 
 #include <KWindowSystem>
 #include <KStandardDirs>
@@ -18,6 +19,7 @@ PlasmoidWrapper::PlasmoidWrapper(QObject *parent) :
     m_findPopupWid(false),
     m_windowID(""),
     m_version(""),
+    m_wPosition(-1),
     m_popupApplet(0)
 {
 }
@@ -70,25 +72,43 @@ void PlasmoidWrapper::geometryChangedSlot()
     }
 }
 
+int PlasmoidWrapper::currentWIdPosition()
+{
+    return (m_wPosition+1);
+}
+
+void PlasmoidWrapper::nextWId()
+{
+    m_wPosition--;
+    if(m_wPosition <= -1)
+        m_wPosition = KWindowSystem::windows().size() - 1;
+
+    updateMainWId();
+}
+
+
+void PlasmoidWrapper::updateMainWId()
+{
+    WId lastWindow = 0;
+
+    //The first time the pop up is shown , then it is the last window
+    // in windows list in KWindowSystem
+    if( (m_wPosition<0) || (m_wPosition>=KWindowSystem::windows().size()) )
+        m_wPosition = KWindowSystem::windows().size() - 1;
+
+    lastWindow = KWindowSystem::windows()[m_wPosition];
+
+    m_findPopupWid = true;
+    m_windowID = QString::number(lastWindow);
+
+    emit updateWindowIDForPreviews(m_windowID);
+    emit updateMarginForPreviews(0,0);
+}
+
 void PlasmoidWrapper::updatePopWindowWIdSlot()
 {
     if(m_popupApplet && (m_windowID == "") ){
-        WId lastWindow = 0;
-
-        QList<WId>::ConstIterator it;
-        //The first time the pop up is shown , then it is the last window
-        // in windows list in KWindowSystem
-        for ( it = KWindowSystem::windows().begin();
-              it != KWindowSystem::windows().end(); ++it ) {
-            if(KWindowSystem::hasWId(*it)){
-                lastWindow = *it;
-            }
-        }
-
-        m_findPopupWid = true;
-        m_windowID = QString::number(lastWindow);
-        emit updateWindowIDForPreviews(m_windowID);
-        emit updateMarginForPreviews(0,0);
+       updateMainWId();
     }
 }
 
