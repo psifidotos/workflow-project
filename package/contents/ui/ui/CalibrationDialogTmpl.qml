@@ -498,13 +498,15 @@ DialogTemplate2{
 
         }
     }
-//    Q_INVOKABLE int currentWIdPosition();
- //   Q_INVOKABLE void nextWId();
+
     PlasmaComponents.Button{
         id:nextWIdButton
         anchors.right: rightColumn.right
         anchors.top: rightColumn.top
+        anchors.topMargin:5
+        anchors.rightMargin: 5
         iconSource: "view-refresh"
+        visible:plasmoidWrapper.isInPanel
         onClicked:{
             previewManager.removeWindowPreview(calibsTasksList.selectedWin);
             plasmoidWrapper.nextWId();
@@ -513,11 +515,20 @@ DialogTemplate2{
         }
     }
 
+    PlasmaCore.ToolTip{
+        mainText: i18n("Refresh Window Previews")
+        subText: i18n("Refresh Window Previews until you see one.")
+        target: nextWIdButton
+        image: "view-refresh"
+    }
+
     PlasmaComponents.Label{
         id: widPosition
         anchors.right: nextWIdButton.left
         anchors.rightMargin:5
         anchors.top: nextWIdButton.top
+        opacity:0.5
+        visible:plasmoidWrapper.isInPanel
     }
 
     function getTasksList(){

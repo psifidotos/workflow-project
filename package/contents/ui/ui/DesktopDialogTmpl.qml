@@ -116,8 +116,8 @@ DialogTemplate2{
         contentHeight: desksTasksList.height
 
         boundsBehavior: Flickable.StopAtBounds
-       // clip:desksTasksList.model.count <= 9 ? false : true
-        clip:true
+        //fixes appearance for just one window
+        clip:(desksTasksList.model.count > 1)
 
         Row{
             //width:parent.width
@@ -296,7 +296,11 @@ DialogTemplate2{
 
 
                 if(deskDialog.columns === 1){
-                    deskDialog.cWidth = 0.5 * w;
+                    if(counter !== 1)
+                        deskDialog.cWidth = 0.5 * w;
+                    else//fixes appearance with just one window
+                        deskDialog.cWidth = Math.min(0.7 * w, 0.6 * h);
+
                 }
                 else if(deskDialog.columns === 2){
                     deskDialog.cWidth = 0.4 * w;
