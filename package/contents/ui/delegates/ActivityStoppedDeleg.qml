@@ -41,11 +41,13 @@ Item{
     Rectangle{
         id:draggingRectangle
         anchors.centerIn: parent
-        width:0.9 * parent.width
-        height: 0.9 * parent.height
+        width:parent.width - 8
+        height: parent.height - 8
         radius:10
-        color: "#333333"
-        opacity:(activityDragged || isSelected) ? 0.20 : 0
+        color: "#aaaaaa"
+        border.width: 1
+        border.color: "#111111"
+        opacity:(activityDragged || isSelected) ? 0.30 : 0
     }
     /*
         onCStateChanged:{
@@ -262,11 +264,16 @@ Item{
     }
 
     Rectangle{
-        width:parent.width -2
-        radius:10
-        height:parent.height - 2
         anchors.centerIn: parent
-        color:"#995879c0"
+        id:draggingSelection
+        width:parent.width - 8
+        height:parent.height - 8
+        radius:10
+        color:"#C8D3FF"
+        border.width:1
+        border.color:"#6B86A7"
+        opacity: 0.6
+
         visible: draggingActivities.currentActivity === ccode
     }
 
