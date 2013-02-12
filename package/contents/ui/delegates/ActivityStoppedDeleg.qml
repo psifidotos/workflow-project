@@ -251,7 +251,7 @@ Item{
         }
 
         tooltipTitle: i18n("Delete Activity")
-        tooltipText: i18n("You can delete an Activity. Be careful, this action can not be undone.")
+        tooltipText: i18n("Delete Activity. Be careful, this action can not be undone.")
 
         Behavior on opacity{
             NumberAnimation {
@@ -273,7 +273,7 @@ Item{
     PlasmaCore.ToolTip {
         target: mouseArea
         mainText: i18n("Restore Activity")
-        subText: i18n("You can restore an Activity in order to continue your work from where you had stopped.")
+        subText: i18n("Restore Activity to continue your work from where you had stopped.")
         image: "media-playback-start"
     }
 

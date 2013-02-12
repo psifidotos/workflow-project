@@ -115,8 +115,9 @@ PlasmaComponents.ToolBar {
             }
 
             PlasmaCore.ToolTip{
-                mainText: i18n("Lock Activities")
-                subText: i18n("You can lock your Activities if you want. In Locked state only Pause and Restore actions are enabled.")
+                mainText: lockerToolBtn.checked ? i18n("Unlock Activities") : i18n("Lock Activities")
+                subText: lockerToolBtn.checked ? i18n("Unlock Activities to enable editing.") :
+                                                 i18n("Lock Activities to disable editing. In Locked state only Pause and Restore actions are enabled.")
                 target:lockerToolBtnMouseArea
                 image: lockerImg.currentIcon
             }
@@ -168,7 +169,7 @@ PlasmaComponents.ToolBar {
 
             PlasmaCore.ToolTip{
                 mainText: i18n("Show/Hide Windows")
-                subText: i18n("You can show or hide all the windows shown in order to enhance your workflow.")
+                subText: i18n("Show or hide all windows to enhance your workflow.")
                 target:windowsToolBtnMouseArea
                 image: windowsImg.currentIcon
             }
@@ -253,7 +254,7 @@ PlasmaComponents.ToolBar {
 
             PlasmaCore.ToolTip{
                 mainText: i18n("Enable/Disable Previews")
-                subText: i18n("You can enable/disable window previews only when you place the plasmoid in the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
+                subText: i18n("Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
                 image: effectsImg.currentIcon
             }

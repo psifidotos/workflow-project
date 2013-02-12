@@ -36,7 +36,7 @@ Item {
         x: buttonsArea.width - buttonsSize
 
         tooltipTitle: i18n("Close Window")
-        tooltipText: ("You can close this window if you want to.")
+        tooltipText: ("Close this window.")
 
         onClicked: {
             taskManager.removeTask(taskDeleg1.ccode);

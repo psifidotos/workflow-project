@@ -141,8 +141,8 @@ Item{
         PlasmaCore.ToolTip {
             target:activityIconMouseArea
             mainText: Settings.global.lockActivities === false ? i18n("Change Activity Icon"):i18n("Activity")
-            subText:Settings.global.lockActivities === false ? i18n("You can change your Activity Icon in order to recognize better your work."):
-                                                               i18n("You can enable this Activity by clicking on the Activity name or icon")
+            subText:Settings.global.lockActivities === false ? i18n("Change your Activity Icon to recognize better your work."):
+                                                               i18n("Enable this Activity by clicking on the Activity name or icon")
             image: Icon === "" ? "plasma" : Icon
         }
 
@@ -210,8 +210,8 @@ Item{
         PlasmaCore.ToolTip {
             target:activityName.tooltipItem
             mainText: Settings.global.lockActivities === false ? i18n("Activity Name") : i18n("Activity")
-            subText: Settings.global.lockActivities === false ? i18n("You can edit the Activity name by clicking on it."):
-                                                                i18n("You can enable this Activity by clicking on the Activity name or icon")
+            subText: Settings.global.lockActivities === false ? i18n("Edit the Activity name by clicking on it."):
+                                                                i18n("Enable this Activity by clicking on the Activity name or icon")
 
             property string actIcon: Icon === "" ? "plasma" : Icon
             image: Settings.global.lockActivities ? actIcon : "im-status-message-edit"

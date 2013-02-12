@@ -242,7 +242,7 @@ Item{
             PlasmaCore.ToolTip{
                 target:cornerImageMouseArea
                 mainText: i18n("Show Windows")
-                subText: i18n("You can see the windows from that spesific Workarea if you want. The counter shows their number.")
+                subText: i18n("Show windows from that specific Workarea. The counter shows their number.")
             }
 
             Text{
@@ -299,8 +299,8 @@ Item{
         }
 
         PlasmaCore.ToolTip{
-            mainText: i18n("Edit WorkArea")
-            subText: i18n("You can edit the Workarea name in order to personalize more your work.")
+            mainText: i18n("Edit Workarea")
+            subText: i18n("Edit the Workarea name to personalize more your work.")
             //This is a workaround because if workAreaName was used the containsMouse does not work
             //at all inside DTextLine
             image: "im-status-message-edit"

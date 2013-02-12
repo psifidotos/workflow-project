@@ -44,7 +44,7 @@ PlasmaComponents.TextField{
         onClicked: hideFilter();
 
         tooltipTitle: i18n("Hide Search Filter")
-        tooltipText: i18n("You can hide the search filter.")
+        tooltipText: i18n("Hide the search filter.")
     }
 
     function hideFilter(){

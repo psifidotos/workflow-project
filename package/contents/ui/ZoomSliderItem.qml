@@ -28,7 +28,7 @@ Item {
             onClicked: { zoomSliderIt.value--; }
 
             tooltipTitle: i18n("Zoom Out")
-            tooltipText: i18n("You can zoom out your interface in order to gain more space.")
+            tooltipText: i18n("Zoom out your interface to gain more space.")
         }
 
         PlasmaComponents.Slider {
@@ -50,7 +50,7 @@ Item {
 
             onClicked: { zoomSliderIt.value++; }
             tooltipTitle: i18n("Zoom In")
-            tooltipText: i18n("You can zoom in your interface in order to focus more on items.")
+            tooltipText: i18n("Zoom in your interface to focus more on items.")
         }
     }
 }

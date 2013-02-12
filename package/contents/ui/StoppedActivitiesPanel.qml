@@ -99,8 +99,8 @@ Rectangle {
 
     PlasmaCore.ToolTip{
         target:showHideStoppedMouseArea
-        mainText:i18n("Show/Hide Stopped Activities")
-        subText: i18n("Show or Hide the Stopped Activities in order to enhance your workflow.")
+        mainText:i18n("Show/Hide Stopped Activities List")
+        subText: i18n("Show or Hide the Stopped Activities List to enhance your workflow.")
     }
 
     Rectangle{

@@ -32,7 +32,7 @@ Item {
         y:0
 
         tooltipTitle: i18n("Close Window")
-        tooltipText: i18n("You can close this window if you want to.")
+        tooltipText: i18n("Close this window.")
 
         onClicked: {
             taskManager.removeTask(taskDeleg2.ccode);

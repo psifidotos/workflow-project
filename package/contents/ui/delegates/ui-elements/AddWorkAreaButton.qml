@@ -66,8 +66,8 @@ Rectangle{
     }
 
     PlasmaCore.ToolTip{
-        mainText: i18n("Add WorkArea")
-        subText: i18n("You can add a Workarea in order to sub-organize better your work.")
+        mainText: i18n("Add Workarea")
+        subText: i18n("Add a Workarea to sub-organize better your work.")
         target:addWorkareaMouseArea
         //localIcon:addButtonImage.source
     }

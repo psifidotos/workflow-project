@@ -50,7 +50,7 @@ Item{
         PlasmaCore.ToolTip{
             target:mouseAreaContainer
             mainText: i18n("WorkFlow Plasmoid");
-            subText: i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies")
+            subText: i18n("Activities, Workareas, Windows, organize your \n full workflow through the KDE technologies")
             image: mainIcon.iconPath
         }
     }

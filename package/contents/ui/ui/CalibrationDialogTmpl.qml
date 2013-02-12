@@ -332,7 +332,7 @@ DialogTemplate2{
 
                 PlasmaCore.ToolTip{
                     mainText: i18n("Reduce X")
-                    subText: i18n("You can reduce X offset for the window previews.")
+                    subText: i18n("Reduce X offset for the window previews.")
                     target: xMinMouseArea
                     image: "media-seek-backward"
                 }
@@ -374,7 +374,7 @@ DialogTemplate2{
 
                 PlasmaCore.ToolTip{
                     mainText: i18n("Increase X")
-                    subText: i18n("You can increase X offset for the window previews.")
+                    subText: i18n("Increase X offset for the window previews.")
                     target: xAddMouseArea
                     image: "media-seek-forward"
                 }
@@ -427,7 +427,7 @@ DialogTemplate2{
 
                 PlasmaCore.ToolTip{
                     mainText: i18n("Reduce Y")
-                    subText: i18n("You can reduce Y offset for the window previews.")
+                    subText: i18n("Reduce Y offset for the window previews.")
                     target: yMinMouseArea
                     image: "media-seek-backward"
                 }
@@ -470,7 +470,7 @@ DialogTemplate2{
 
                 PlasmaCore.ToolTip{
                     mainText: i18n("Increase Y")
-                    subText: i18n("You can increase Y offset for the window previews.")
+                    subText: i18n("Increase Y offset for the window previews.")
                     target: yAddMouseArea
                     image: "media-seek-forward"
                 }

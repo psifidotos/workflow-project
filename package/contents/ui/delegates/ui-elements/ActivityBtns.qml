@@ -46,7 +46,7 @@ Item{
                     mainView.getDynLib().showCloneDialog(ccode,workflowManager.activityManager().name(ccode));
                 }
                 tooltipTitle: i18n("Clone Activity")
-                tooltipText: i18n("You can clone an Activity.")
+                tooltipText: i18n("Clone Activity and keep its settings.")
             }
 
             IconButton {
@@ -61,7 +61,7 @@ Item{
                 }
 
                 tooltipTitle: i18n("Pause Activity")
-                tooltipText: i18n("You can pause an Activity and place it on the right panel.This way the Activity will be always available to continue your work from where you stopped.")
+                tooltipText: i18n("Pause Activity and keep it always available to continue your work from where you stopped.")
             }
 
         }
