@@ -42,8 +42,7 @@ public:
     Q_INVOKABLE QString chooseIcon(QString);
     Q_INVOKABLE QString name(QString id);
     Q_INVOKABLE QString cstate(QString id);
-    Q_INVOKABLE void setCurrentNextActivity();
-    Q_INVOKABLE void setCurrentPreviousActivity();
+
     Q_INVOKABLE void cloneActivity(QString);
     Q_INVOKABLE void moveActivityInModel(QString activity, int position);
     Q_INVOKABLE void setCurrentInModel(QString activity, QString status);
@@ -89,8 +88,6 @@ private:
     ActivitiesEnhancedModel *m_actModel;
 
     QString stateToString(int);
-    QString nextRunningActivity();
-    QString previousRunningActivity();
 };
 
 #endif // ACTIVITYMANAGER_H

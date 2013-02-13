@@ -30,4 +30,8 @@
             <label>The new activity order (Orders from 1 to length).</label>
         </entry>
     </group>
+    <group name="setCurrentNextActivity">
+    </group>
+    <group name="setCurrentPreviousActivity">
+    </group>
 </kcfg>

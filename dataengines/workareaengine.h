@@ -2,8 +2,11 @@
 #define WORKAREAENGINE_H
 
 #include <QObject>
+#include <QSignalMapper>
 
 #include <Plasma/DataEngine>
+#include <KActionCollection>
+
 namespace Workareas{
     class Store;
 }
@@ -22,6 +25,8 @@ public:
 private slots:
     void activityAddedSlot(QString id);
     void activityRemovedSlot(QString id);
+    void nextActivitySlot();
+    void previousActivitySlot();
 
     void workareaAddedSlot(QString,QString);
     void workareaRemovedSlot(QString,int);
@@ -32,6 +37,8 @@ private slots:
     void maxWorkareasChangedSlot(int);
 private:
     Workareas::Store *m_store;
+    KActionCollection *actionCollection;
+    QSignalMapper * m_signalMapper;
     //void insertDesktop(const int id, const QString activity);
 
     void loadActivity(QString);

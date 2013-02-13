@@ -155,6 +155,23 @@ void WorkareasManager::orderActivitiesSlot()
     m_actModel->sortModel();
 }
 
+void WorkareasManager::setCurrentNextActivity()
+{
+    Plasma::Service *service = m_dataEngine->serviceForSource("");
+    KConfigGroup op = service->operationDescription("setCurrentNextActivity");
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
+
+void WorkareasManager::setCurrentPreviousActivity()
+{
+    Plasma::Service *service = m_dataEngine->serviceForSource("");
+    KConfigGroup op = service->operationDescription("setCurrentPreviousActivity");
+    Plasma::ServiceJob *job = service->startOperationCall(op);
+    connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
+}
+
+
 void WorkareasManager::addWorkArea(QString id, QString name)
 {
     Plasma::Service *service = m_dataEngine->serviceForSource(id);

@@ -76,6 +76,16 @@ void WorkareaJob::start()
         setResult("activity order: " + QString::number(order));
         return;
     }
+    else if (operation == "setCurrentNextActivity") {
+        m_store->setCurrentNextActivity();
+        setResult("next activity... ");
+        return;
+    }
+    else if (operation == "setCurrentPreviousActivity") {
+        m_store->setCurrentPreviousActivity();
+        setResult("previous activity... ");
+        return;
+    }
 
 
     //m_id is needed for the rest

@@ -279,6 +279,23 @@ void Store::workareaInfoUpdatedSlot(QString id)
     emit workareaInfoUpdated(id);
 }
 
+void Store::setCurrentNextActivity()
+{
+    QString nId = nextRunningActivity();
+
+    if(nId != "")
+        m_activitiesController->setCurrentActivity(nId);
+}
+
+void Store::setCurrentPreviousActivity()
+{
+    QString pId = previousRunningActivity();
+
+    if(pId != "")
+        m_activitiesController->setCurrentActivity(pId);
+}
+
+
 void Store::saveWorkareas()
 {
     QListIterator<Workareas::Info *> i(m_workareasList);
@@ -427,6 +444,54 @@ QString Store::getNextDefWallpaper(){
     m_nextDefaultWallpaper++;
 
     return newwall;
+}
+
+QString Store::nextRunningActivity()
+{
+    int pos = findActivity(m_activitiesController->currentActivity());
+
+    if(pos>-1){
+        for(int i=pos+1; i<m_workareasList.size(); ++i){
+            Workareas::Info *info = m_workareasList[i];
+            KActivities::Info *activity = new KActivities::Info(info->id(), this);
+
+            if ( (activity) && (activity->state() == KActivities::Info::Running) )
+              return activity->id();
+        }
+
+        for(int j=0; j<pos; ++j){
+            Workareas::Info *info = m_workareasList[j];
+            KActivities::Info *activity = new KActivities::Info(info->id(), this);
+
+            if ( (activity) && (activity->state() == KActivities::Info::Running) )
+              return activity->id();
+        }
+    }
+
+    return "";
+}
+
+QString Store::previousRunningActivity()
+{
+    int pos = findActivity(m_activitiesController->currentActivity());
+
+    if(pos>-1){
+        for(int i=pos-1; i>=0; i--){
+            Workareas::Info *info = m_workareasList[i];
+            KActivities::Info *activity = new KActivities::Info(info->id(), this);
+
+            if ( (activity) && (activity->state() == KActivities::Info::Running) )
+              return activity->id();
+        }
+        for(int j=m_workareasList.size()-1; j>pos; j--){
+            Workareas::Info *info = m_workareasList[j];
+            KActivities::Info *activity = new KActivities::Info(info->id(), this);
+
+            if ( (activity) && (activity->state() == KActivities::Info::Running) )
+              return activity->id();
+        }
+    }
+    return "";
 }
 
 

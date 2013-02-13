@@ -38,6 +38,8 @@ public:
 
 public slots:
     void setBackground(QString, QString);
+    void setCurrentNextActivity();
+    void setCurrentPreviousActivity();
 
 signals:
     void activityAdded(QString id);
@@ -84,6 +86,8 @@ private:
     void setMaxWorkareas();
 
     QString getNextDefWallpaper();
+    QString nextRunningActivity();
+    QString previousRunningActivity();
     int findActivity(QString activityId);
 };
 

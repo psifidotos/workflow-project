@@ -195,25 +195,6 @@ QString ActivityManager::getCurrentActivityIcon()
     return activity->icon();
 }
 
-
-void ActivityManager::setCurrentNextActivity()
-{
-    QString nId = nextRunningActivity();
-
-    if(nId != "")
-        setCurrent(nId);
-}
-
-void ActivityManager::setCurrentPreviousActivity()
-{
-    QString pId = previousRunningActivity();
-
-    if(pId != "")
-        setCurrent(pId);
-
-}
-
-
 ////////////
 
 void ActivityManager::setIcon(QString id, QString name)
@@ -296,48 +277,6 @@ QString ActivityManager::stateToString(int stateNum)
     }
 
     return state;
-}
-
-
-QString ActivityManager::nextRunningActivity()
-{
-    ListItem *activity = m_actModel->find(m_activitiesCtrl->currentActivity());
-    int pos =  (m_actModel->indexFromItem(activity)).row();
-
-    if(pos>-1){
-        for(int i=pos+1; i<m_actModel->getCount(); ++i){
-            ActivityItem *activityTemp = static_cast<ActivityItem *>(m_actModel->at(i));
-            if ( (activityTemp) && (activityTemp->cstate() == "Running"))
-              return activityTemp->code();
-        }
-        for(int j=0; j<pos; ++j){
-            ActivityItem *activityTemp2 = static_cast<ActivityItem *>(m_actModel->at(j));
-            if ( (activityTemp2) && (activityTemp2->cstate() == "Running"))
-              return activityTemp2->code();
-        }
-    }
-
-    return "";
-}
-
-QString ActivityManager::previousRunningActivity()
-{
-    ListItem *activity = m_actModel->find(m_activitiesCtrl->currentActivity());
-    int pos =  (m_actModel->indexFromItem(activity)).row();
-
-    if(pos>-1){
-        for(int i=pos-1; i>=0; i--){
-            ActivityItem *activityTemp = static_cast<ActivityItem *>(m_actModel->at(i));
-            if ( (activityTemp) && (activityTemp->cstate() == "Running"))
-              return activityTemp->code();
-        }
-        for(int j=m_actModel->getCount()-1; j>pos; j--){
-            ActivityItem *activityTemp2 = static_cast<ActivityItem *>(m_actModel->at(j));
-            if ( (activityTemp2) && (activityTemp2->cstate() == "Running"))
-              return activityTemp2->code();
-        }
-    }
-    return "";
 }
 
 void ActivityManager::setCurrentInModel(QString activity, QString status)

@@ -16,6 +16,9 @@ public:
     explicit WorkareasManager(ActivitiesEnhancedModel *, QObject *parent = 0);
     ~WorkareasManager();
 
+    Q_INVOKABLE void setCurrentNextActivity();
+    Q_INVOKABLE void setCurrentPreviousActivity();
+
     Q_INVOKABLE void addWorkArea(QString id, QString name);
     Q_INVOKABLE void removeWorkarea(QString id, int desktop);
     Q_INVOKABLE void renameWorkarea(QString id, int desktop, QString name);

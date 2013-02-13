@@ -31,9 +31,9 @@ Item{
 
         onWheelMoved:{
             if(wheel.delta < 0)
-                workflowManager.activityManager().setCurrentNextActivity();
+                workflowManager.workareaManager().setCurrentNextActivity();
             else
-                workflowManager.activityManager().setCurrentPreviousActivity();
+                workflowManager.workareaManager().setCurrentPreviousActivity();
         }
 
         MouseArea{
