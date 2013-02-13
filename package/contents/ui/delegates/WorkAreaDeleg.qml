@@ -144,6 +144,8 @@ Item{
                     rHeight: tasksSList.taskHeight
 
                     onShownChanged:tasksSList.countTasks(ccode, inDragging);
+                    ListView.onRemove:tasksSList.countTasks(ccode, true);
+                    ListView.onAdd:tasksSList.countTasks(ccode, false);
                 }
 
 

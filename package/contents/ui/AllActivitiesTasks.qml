@@ -143,6 +143,8 @@ Item{
                 taskTitleTextHov: "#333333"
 
                 onMustBeShownChanged:allActTaskL.countTasks();
+                ListView.onAdd: allActTaskL.countTasks();
+                ListView.onRemove:allActTaskL.countTasks();
             }
 
 
