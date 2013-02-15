@@ -45,29 +45,19 @@ void WorkareaEngine::init()
 
     setData("Settings", "MaxWorkareas", m_store->maxWorkareas());
 
-    //Global Shortcuts//
 
-/*
+    //Global Shortcuts//
     actionCollection = new KActionCollection(this);
     actionCollection->setConfigGlobal(true);
     actionCollection->setConfigGroup("workareas");
 
     KAction* a;
-    //actionCollection->addAction("next-activity", this, SLOT(nextActivitySlot()));
-    //actionCollection->addAction("previous-activity", this, SLOT(previousActivitySlot()));
-    //actionCollection->readSettings();
+    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Next Activity", this, SLOT(nextActivitySlot())));
+    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Tab));
+    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Previous Activity", this, SLOT(previousActivitySlot())));
+    a->setGlobalShortcut(KShortcut( (Qt::META + Qt::SHIFT) + Qt::Key_Tab));
 
-    a = static_cast< KAction* >(actionCollection->addAction("Next-Activity", this, SLOT(nextActivitySlot())));
-    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Plus));
-    a = static_cast< KAction* >(actionCollection->addAction("Previous-Activity", this, SLOT(previousActivitySlot())));
-    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Minus));
-
-    actionCollection->writeSettings();*/
-/*    a = static_cast< KAction* >(actionCollection->addAction(KStandardAction::ActualSize, this, SLOT(toggle())));
-    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_0));
-    connect(effects, SIGNAL(mouseChanged(QPoint,QPoint,Qt::MouseButtons,Qt::MouseButtons,Qt::KeyboardModifiers,Qt::KeyboardModifiers)),
-            this, SLOT(slotMouseChanged(QPoint,QPoint,Qt::MouseButtons,Qt::MouseButtons,Qt::KeyboardModifiers,Qt::KeyboardModifiers)));
-    reconfigure(ReconfigureAll);*/
+    actionCollection->writeSettings();
 }
 
 Plasma::Service * WorkareaEngine::serviceForSource(const QString &source)
