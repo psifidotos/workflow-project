@@ -510,7 +510,6 @@ Item{
             }
             else
                 previewManager.removeWindowPreview(taskDeleg2.ccode);
-
         }
     }
 

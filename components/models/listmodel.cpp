@@ -171,9 +171,10 @@ ListItem * ListModel::takeRow(int row)
 
 ListItem * ListModel::at(int row)
 {
-    ListItem* item = m_list.at(row);
+    if(row>=0 && row<m_list.size())
+         return m_list[row];
 
-    return item;
+    return 0;
 }
 
 

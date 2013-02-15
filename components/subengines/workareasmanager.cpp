@@ -24,7 +24,7 @@ WorkareasManager::WorkareasManager(ActivitiesEnhancedModel *model,QObject *paren
     m_dataEngine(0),
     m_plgActOrdering(0)
 {
-    init();    
+    init();
 }
 
 WorkareasManager::~WorkareasManager()
@@ -74,8 +74,8 @@ int WorkareasManager::numberOfWorkareas(QString actId)
 
 void WorkareasManager::activityAddedSlot(QString id)
 {
-   // if(id == "Settings")
-     //   return;
+    // if(id == "Settings")
+    //   return;
 
     m_dataEngine->connectSource(id, this);
 }
@@ -120,7 +120,7 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
             {
                 WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
 
-                if (i<prevSize)
+                if (i>=0 && i<prevSize)
                     workarea->setTitle(newWorkareas.at(i));
                 else
                     addWorkareaInModel(source, newWorkareas.at(i));
@@ -136,7 +136,7 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
             if(activity->order() != nOrder ){
                 activity->setOrder(nOrder);
                 m_plgActOrdering->execute();
-               // m_actModel->sortModel();
+                // m_actModel->sortModel();
             }
         }
     }
@@ -151,7 +151,7 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
 
 void WorkareasManager::orderActivitiesSlot()
 {
- //   qDebug() << "Order Activities triggered...";
+    //   qDebug() << "Order Activities triggered...";
     m_actModel->sortModel();
 }
 

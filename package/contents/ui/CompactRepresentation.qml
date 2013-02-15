@@ -26,14 +26,33 @@ Item{
         }
     }
 
+    //this timer helps in order not to send too many signal
+    //of changing current activity
+    //(changing activities with not logical order fixed this way)
+    Timer {
+        id:timer
+        interval: 150; running: false; repeat: false
+        onTriggered: wheelListener.enabledTimer = false;
+    }
+
     MouseEventListener {
-        anchors.fill:parent
+        id:wheelListener
+        anchors.fill:parent       
+        property bool enabledTimer:false
 
         onWheelMoved:{
-            if(wheel.delta < 0)
-                workflowManager.workareaManager().setCurrentNextActivity();
-            else
-                workflowManager.workareaManager().setCurrentPreviousActivity();
+            if(!enabledTimer){
+                enabledTimer = true;
+                timer.start();
+                if(wheel.delta < 0)
+                    workflowManager.workareaManager().setCurrentPreviousActivity();
+                else
+                    workflowManager.workareaManager().setCurrentNextActivity();
+
+
+                //Probably not working...
+                mainView.forceActiveFocus();
+            }
         }
 
         MouseArea{

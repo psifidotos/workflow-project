@@ -52,7 +52,6 @@ signals:
     void activityOrdersChanged();
 
     void maxWorkareasChanged(int);
-
 private slots:
     void activityAddedSlot(QString);
     void activityRemovedSlot(QString);

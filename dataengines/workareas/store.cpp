@@ -456,7 +456,7 @@ QString Store::nextRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return activity->id();
+              return info->id();
         }
 
         for(int j=0; j<pos; ++j){
@@ -464,7 +464,7 @@ QString Store::nextRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return activity->id();
+              return info->id();
         }
     }
 
@@ -481,14 +481,14 @@ QString Store::previousRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return activity->id();
+              return info->id();
         }
         for(int j=m_workareasList.size()-1; j>pos; j--){
             Workareas::Info *info = m_workareasList[j];
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return activity->id();
+              return info->id();
         }
     }
     return "";

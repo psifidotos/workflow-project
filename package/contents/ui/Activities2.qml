@@ -370,8 +370,9 @@ Rectangle {
         }
     }
 
-    CalibrationDialogTmpl{}
+   // CalibrationDialogTmpl{}
   //      TourDialog{
   //  }
+
 }
 

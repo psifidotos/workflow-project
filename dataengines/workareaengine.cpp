@@ -126,7 +126,6 @@ void WorkareaEngine::activitiesOrderChangedSlot()
     updateOrders();
 }
 
-
 void WorkareaEngine::loadActivity(QString id)
 {
     QStringList storeActivities = m_store->activities();

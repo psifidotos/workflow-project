@@ -55,7 +55,7 @@ void PreviewsManager::showWindowsPreviews()
 
         if ((previewsIds.size() == 0)&&(clearedPreviewsList == false)) {
             Plasma::WindowEffects::showWindowThumbnails(m_mainWindowId,previewsIds,previewsRects);
-            clearedPreviewsList = true;
+            clearedPreviewsList = true; //this was probably used on loading
         }
     }
 
@@ -101,7 +101,7 @@ float PreviewsManager::getWindowRatio(QString win)
 int PreviewsManager::indexOfPreview(WId window)
 {
     for (int i=0; i<previewsIds.size(); i++)
-        if ( previewsIds.at(i) == window )
+        if ( previewsIds[i] == window )
             return i;
 
     return -1;
