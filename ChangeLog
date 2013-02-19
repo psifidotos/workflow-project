@@ -3,12 +3,13 @@
 -- Change the plasmoid to clean qml plasmoid
 -- added / created workareas data engine
 -- added Order activities but dragging them in unlocked state
+-- added global hotkeys to go to next/previous ordered activity
 -- added Keyboard navigation, use your keyboard to navigate through Activities and Workareas
 -- added Filtering for Windows, The user can use the following shotcuts (Ctrl+F , /)
 -- added a 4th state for windows (sameWorkareas - a window exists in all same Workrareas(position) for all Activities)
 -- added use Ctrl+Wheel to zoom-in / out
--- added feature window preview can be dragged in Calibration Dialog
--- added feature disable the default background and use the one from Plasma theme.
+-- added feature, window preview can be dragged in Calibration Dialog
+-- added feature, disable the default background and use the one from Plasma theme.
 -- added a disable state for Everywhere Panel, the bottom panel is hidden and allActivities windows appear in all the Workareas
 -- fixed not altering the default kde behavior for windows.
 -- fixed the shortcut issue (it couldnt be saved from the configuration dialog)

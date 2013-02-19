@@ -7,10 +7,10 @@ from Plasma.
 
 Differences To Default KDe Workflow
 ===================================
--  WorkAreas use Virtual Desktops, in order to be consistent between them,
-   Virtual Desktops are always that big as the maximum WorkAreas present from
+-  Workareas use Virtual Desktops, in order to be consistent between them,
+   Virtual Desktops are always that big as the maximum Workareas present from
    Activities.
-   NOTICE: You can not add a Virtual Desktop when WorkAreas are running. You
+   NOTICE: You can not add a Virtual Desktop when Workareas are running. You
    can add the Workarea needed and Virtual Desktops will be updated.
 
 Installation

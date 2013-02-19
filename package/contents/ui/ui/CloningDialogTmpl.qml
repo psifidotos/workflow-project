@@ -41,7 +41,7 @@ DialogTemplate2{
 
             font.family:theme.defaultFont.family
             //font.pixelSize: (0.14+mainView.defFontRelStep)*parent.height
-            font.pointSize: theme.defaultFontSize
+            font.pointSize: theme.defaultFont.pointSize
         }
 
     }
