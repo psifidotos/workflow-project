@@ -91,11 +91,39 @@ Rectangle {
 
     QMLPluginsConnections{}
 
+    //This a temporary solution to fix the issue with filtering windows
+    //in empty fitter text in many cases windows are not shown correctly
+    //so i reset the filter text to something not found and then again
+    //to show all windows
+    Connections{
+        target:filterWindows
+        onTextChanged:{
+            console.log(filterWindows.text);
+            if(filterWindows.text === ""){
+                filteredTasksModel.fixBugString = "'''";
+                timerBug.start();
+            }
+        }
+    }
+
+    Timer {
+        id:timerBug
+        interval: 50; running: false; repeat: false
+        onTriggered: filteredTasksModel.fixBugString = "";
+    }
+
+    ///end fix of bug
+
     PlasmaCore.SortFilterModel {
         id:filteredTasksModel
         filterRole: "name"
-        filterRegExp: filterWindows.text
+        filterRegExp:".*" + mergedString + ".*"
         sourceModel: taskManager.model()
+
+        //for fix of bug
+        property string mergedString: filterWindows.text.toLowerCase() + fixBugString
+        property string fixBugString: ""
+        //end of fix
     }
 
     PlasmaCore.SortFilterModel {

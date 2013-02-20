@@ -113,6 +113,7 @@ Item{
         }*/
 
         Item{
+            id:tasksContainer
             x:mainWorkArea.imagex+1
             y:mainWorkArea.imagey
             width:mainWorkArea.imagewidth-1
@@ -132,7 +133,7 @@ Item{
                 property bool hasChildren:childrenRect.height > 1
                 property bool isClipped:childrenRect.height > height
 
-                property int taskHeight: Math.max(parent.height/6,18)
+                property int taskHeight: Math.max(tasksContainer.height/6,18)
 
                 model: filteredTasksModel
                 //  model: taskModel
@@ -143,7 +144,8 @@ Item{
                 delegate:WorkAreaTaskDeleg{
                     rHeight: tasksSList.taskHeight
 
-                    onShownChanged:tasksSList.countTasks(ccode, inDragging);
+                    onShownChanged: tasksSList.countTasks(ccode, inDragging);
+
                     ListView.onRemove:tasksSList.countTasks(ccode, true);
                     ListView.onAdd:tasksSList.countTasks(ccode, false);
                 }

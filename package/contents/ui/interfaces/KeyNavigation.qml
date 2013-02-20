@@ -70,13 +70,13 @@ Item{
             }
         }
         else if(event.key === Qt.Key_Control){
-            console.log("true");
+         //   console.log("true");
             ctrlActive = true;
         }
     }
     Keys.onReleased: {
         if(event.key === Qt.Key_Control){
-            console.log("false");
+         //   console.log("false");
             ctrlActive = false;
         }
     }

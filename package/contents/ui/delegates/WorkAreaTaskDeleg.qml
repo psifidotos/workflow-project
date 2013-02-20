@@ -39,7 +39,7 @@ Item{
     property string ccode: code
     property bool inDragging: code === mDragInt.intTaskId
     //    property bool isPressed: mstArea.isPresse
-    property int rHeight:10
+    property int rHeight: 10
 
 
     property alias taskTitleRecColor : taskTitleRec.color
@@ -52,6 +52,26 @@ Item{
 
     property bool containsMouse: mstArea.containsMouse ||
                                  tasksBtns.containsMouse
+
+    ListView.onAdd: ParallelAnimation {
+        PropertyAction { target: taskDeleg1; property: "height"; value: 0 }
+        PropertyAction { target: taskDeleg1; property: "opacity"; value: 0 }
+
+        NumberAnimation { target: taskDeleg1; property: "height"; to: shown ? rHeight : 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        NumberAnimation { target: taskDeleg1; property: "opacity"; to: shown ? 1 : 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+    }
+
+    ListView.onRemove: SequentialAnimation {
+        PropertyAction { target: taskDeleg1; property: "ListView.delayRemove"; value: true }
+
+        ParallelAnimation{
+            NumberAnimation { target: taskDeleg1; property: "height"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: taskDeleg1; property: "opacity"; to: 0; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        }
+
+        // Make sure delayRemove is set back to false so that the item can be destroyed
+        PropertyAction { target: taskDeleg1; property: "ListView.delayRemove"; value: false }
+    }
 
 
     Behavior on height{

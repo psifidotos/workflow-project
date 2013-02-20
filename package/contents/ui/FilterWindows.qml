@@ -52,4 +52,5 @@ PlasmaComponents.TextField{
         text="";
         mainView.forceActiveFocus();
     }
+
 }
