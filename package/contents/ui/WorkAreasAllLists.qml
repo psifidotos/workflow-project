@@ -21,6 +21,13 @@ Item{
     property int animationsStep: 0
     property int verticalScrollBarLocation: view.width
 
+    Behavior on width{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep2;
+            easing.type: Easing.InOutQuad;
+        }
+    }
+
     Flickable{
         id: view
 

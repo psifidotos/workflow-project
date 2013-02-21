@@ -9,30 +9,74 @@ Rectangle{
 
     property bool showRedCross: ((stoppedPanel.shownActivities > 0)&&(stoppedPanel.doNotShow===false))
 
-    width: showRedCross===true ? stoppedPanel.width-1 : stoppedPanel.width /2
+    width: showRedCross===true ? stoppedPanel.width : stoppedPanel.width /2
     height: showRedCross===true ? allWorkareas.actImagHeight : allWorkareas.actImagHeight / 2
-    x:mainView.width - width
 
-    anchors.top: stoppedPanel.top
+    property int marginRight: showRedCross ? 0 : 7
+    x:mainView.width - width - marginRight
+    color: "#00ffffff"
+
+    y:oxygenT.height
 
     opacity: (Settings.global.lockActivities===true) ? 0 : 1
 
-    property color openStpActiv1: "#ebebeb"
-    property color openStpActiv2: "#bdbdbd"
+    property color openStpActiv1: "#77333333"
+    property color openStpActiv2: "transparent"
     property color closStpActiv1: "#77333333"
     property color closStpActiv2: "#77333333"
 
     property color currentColor1: showRedCross===true ? openStpActiv1 : closStpActiv1
     property color currentColor2: showRedCross===true ? openStpActiv2 : closStpActiv2
 
-    border.color: showRedCross===true ? "#00000000" : allWorkareas.actImagBordColor
-    border.width: showRedCross===true ? 0 : 1
+    border.color: showRedCross ? "#00000000" : allWorkareas.actImagBordColor
+    border.width: showRedCross ? 0 : 1
 
-    gradient: Gradient {
-        GradientStop { position: 0.0; color: addActivityBtn.currentColor2  }
-        GradientStop { position: 0.15; color: addActivityBtn.currentColor1 }
-        GradientStop { position: 0.85; color: addActivityBtn.currentColor1 }
-        GradientStop { position: 1.0; color: addActivityBtn.currentColor2  }
+
+    ///Left Shadow for Main Add Activity Button
+    Rectangle{
+        id:stpActShad
+        height: workareaWidth/50
+        width: parent.height+2
+        //   anchors.right: stopActBack.left
+        rotation: 90
+        transformOrigin: Item.TopLeft
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#770f0f0f" }
+            GradientStop { position: 1.0; color: "#00797979" }
+        }
+    }
+
+    Rectangle{
+        id:backgroundRectangle
+        width: parent.width
+        height: parent.height
+        opacity: Settings.global.disableBackground ? 0.1 : 1
+        color: Settings.global.disableBackground ?  theme.textColor : "#ebebeb"
+    }
+
+    Rectangle{
+        id:leftBorderRectangle
+        width:1
+        height:parent.height
+        anchors.left: parent.left
+        color: "#d9808080"
+        opacity: Settings.global.disableBackground ? 1 : 0
+    }
+
+    Rectangle{
+        id:shadowsUpDown
+        width:parent.width
+        height:parent.height
+        //visible:false
+        //color:"#00ffffff"
+        //visible: Settings.global.disableBackground ? false : true
+
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: addActivityBtn.currentColor1  }
+            GradientStop { position: 0.15; color: addActivityBtn.currentColor2 }
+            GradientStop { position: 0.85; color: addActivityBtn.currentColor2 }
+            GradientStop { position: 1.0; color: addActivityBtn.currentColor1 }
+        }
     }
 
     Behavior on x{
@@ -98,7 +142,7 @@ Rectangle{
         //y:actImag1.height
         width: addActivityBtn.width
         height: workareaY/6
-        opacity: addActivityBtn.showRedCross===true? 1:0
+        opacity: (addActivityBtn.showRedCross && !Settings.global.disableBackground)? 1:0
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#aa0f0f0f" }
             GradientStop { position: 1.0; color: "#00797979" }

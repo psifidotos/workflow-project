@@ -25,7 +25,9 @@ Item{
     property real basicHeight:0.62*mainView.workareaHeight
     property int buttonsSize:0.5 * mainView.scaleMeter
 
-    property real defOpacity: activityDragged ? 0.001 : 0.6
+    property real opacityDisBackground: Settings.global.disableBackground ? 0.85 : 0.6
+
+    property real defOpacity: activityDragged ? 0.001 : opacityDisBackground
 
     property bool containsMouse:( ((deleteActivityBtn.containsMouse) ||
                                   (mouseArea.containsMouse))&&
@@ -168,9 +170,10 @@ Item{
 
         font.pixelSize: 0.13 * parent.height
 
-        opacity: stpActivity.containsMouse ? 1 : stpActivity.defOpacity
+        property real defOpacityDisBackground : Settings.global.disableBackground ? 0.35 : stpActivity.defOpacity
+        opacity: stpActivity.containsMouse ? 1 : defOpacityDisBackground
 
-        color:"#4d4b4b"
+        color: Settings.global.disableBackground ? theme.textColor : "#4d4b4b"
 
         anchors.top: activityIconContainer.bottom
         anchors.topMargin: activityIconContainer.height/8
@@ -199,7 +202,9 @@ Item{
 
         width:0.8 * stopActBack.width
         height:2
-        color:"#d7d7d7"
+
+        opacity: Settings.global.disableBackground ? 0.20 : 1
+        color: Settings.global.disableBackground ? theme.textColor :"#d7d7d7"
     }
 
 
@@ -211,7 +216,7 @@ Item{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        width: stpActivity.width/2
+        width: 0.45 * stpActivity.width
         height: width
 
         Behavior on opacity{

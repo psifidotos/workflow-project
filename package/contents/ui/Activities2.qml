@@ -156,9 +156,10 @@ Rectangle {
             //anchors.left: mainView.left
             //anchors.right: mainView.right
             y:oxygenT.height
-            width:mainView.width
+            width:(mAddActivityBtn.showRedCross) ? mainView.width-mAddActivityBtn.width : mainView.width
             height:mainView.height - y
             verticalScrollBarLocation: stoppedPanel.x
+            clip:true
 
             workareaWidth: mainView.workareaWidth
             workareaHeight: mainView.workareaHeight

@@ -37,6 +37,8 @@ Item{
         }
     }
 
+
+
     SelectedArea{
         x:allActRect.x - 40
         y:allActRect.y - 35
@@ -87,17 +89,31 @@ Item{
 
     }
 
+
+
     Rectangle{
         id:allActRect
 
         anchors.top: allActRectShad.bottom
+        x:-1
         //y:allActRectShad.height/2
         width:parent.width
         height:0.4*workareaY
-        color:"#ebebeb"
+        color: "transparent"
+
+        border.color: "#d9808080"
+        border.width:1
 
         //property int taskWidth: 0.75 * mainView.workareaWidth
         property int taskWidth: mainView.workareaWidth
+
+        Rectangle{
+            id:backgroundRectangle
+            width: parent.width
+            height: parent.height
+            opacity: Settings.global.disableBackground ? 0.10 : 1
+            color: Settings.global.disableBackground ?  theme.textColor : "#ebebeb"
+        }
 
         ListModel{
             id:emptyModel
@@ -139,8 +155,8 @@ Item{
                 defPreviewWidth:2.8*defWidth
                 defHovPreviewWidth:6*defWidth
 
-                taskTitleTextDef: "#333333"
-                taskTitleTextHov: "#333333"
+                taskTitleTextDef: Settings.global.disableBackground ? theme.textColor : "#333333"
+                taskTitleTextHov: taskTitleTextDef
 
                 onMustBeShownChanged:allActTaskL.countTasks();
                 ListView.onAdd: allActTaskL.countTasks();

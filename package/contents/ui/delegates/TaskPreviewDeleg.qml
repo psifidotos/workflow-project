@@ -313,7 +313,7 @@ Item{
             PropertyChanges{
                 target:taskTitleRec
                 y: 1.03*(imageTask2.y+imageTask2.height)
-                opacity: 0.3
+                opacity: 0.35
                 width:taskDeleg2.width
             }
             PropertyChanges{
@@ -358,7 +358,7 @@ Item{
             PropertyChanges{
                 target:taskTitleRec
                 y: 1.03*(taskDeleg2.defPreviewWidth)
-                opacity:0.3
+                opacity:0.35
                 width:taskDeleg2.width
             }
             PropertyChanges{

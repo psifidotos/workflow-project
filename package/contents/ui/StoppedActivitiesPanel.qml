@@ -14,13 +14,21 @@ Rectangle {
     property alias shownActivities:stoppedActivitiesList.shownActivities
     property string typeId : "StoppedActivitiesPanel"
 
-    x:((stoppedActivitiesList.shownActivities > 0)&&(doNotShow === false)) ?
+    property bool hiddenList: ((shownActivities === 0) || (doNotShow))
+    property bool showAddButton: !Settings.global.lockActivities
+
+    x:((stoppedActivitiesList.shownActivities > 0)&&( !doNotShow)) ?
           mainView.width - width : mainView.width - 2
-    y:oxygenT.height
+    //y:oxygenT.height
+
+    y:((!Settings.global.lockActivities && !hiddenList) ||
+       (Settings.global.disableBackground && !hiddenList && !Settings.global.lockActivities ) )?
+          (mAddActivityBtn.height+oxygenT.height-border.width) : oxygenT.height+border.width
+
     width: 0.5*mainView.workareaWidth
     height: mainView.height - y
 
-    color: "#ebebeb"
+    color: "#00ebebeb"
     border.color: "#d9808080"
     border.width:1
 
@@ -33,26 +41,19 @@ Rectangle {
         }
     }
 
-    ///Left Shadow for Stopped Activiies Panel
-    Rectangle{
-        id:stpActShad
-        height: workareaWidth/30
-        width: stopActBack.height
-        //   anchors.right: stopActBack.left
-        rotation: 90
-        transformOrigin: Item.TopLeft
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: "#770f0f0f" }
-            GradientStop { position: 1.0; color: "#00797979" }
+    Behavior on y{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep;
+            easing.type: Easing.InOutQuad;
         }
     }
 
     ////////////Show/Hide Button////////////////
     Image{
         source: "Images/buttons/greyRectShadow2.png"
-        opacity:0.8
-        width:0.67*showStopPanelRec.width
-        height:1.55*showStopPanelRec.height
+        opacity:0.75
+        width:1.28*showStopPanelRec.width
+        height:1.43*showStopPanelRec.height
         anchors.right: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -2
@@ -61,19 +62,6 @@ Rectangle {
             id:showHideStoppedMouseArea
             anchors.fill: parent
             hoverEnabled: true
-            onEntered:{
-                stopMoreButton.source = "Images/buttons/plasma_ui/moreBlueVer.png"
-                stopMoreButton.hovered = true
-            }
-
-            onExited: {
-                //    if((stoppedActivitiesList.shownActivities>0)&&
-                //            (stopActBack.doNotShow === true))
-                //        stopMoreButton.source = "Images/buttons/plasma_ui/moreRedVer.png"
-                //    else
-                stopMoreButton.source = "Images/buttons/plasma_ui/moreGreyVer.png"
-                stopMoreButton.hovered = false
-            }
 
             onClicked:{
 
@@ -97,42 +85,100 @@ Rectangle {
 
     }
 
+    Rectangle{
+        id:showStopPanelRec
+        width:22
+        height:35
+
+        color:"transparent"
+       // radius:1
+    //    border.width: 1
+
+        x:-width+radius-1
+
+        anchors.verticalCenter: parent.verticalCenter
+
+        Rectangle{
+            width:parent.width
+            height:parent.height
+            radius: 3
+            opacity: Settings.global.disableBackground ? backgroundRectangle.opacity : 1
+            color: backgroundRectangle.color
+            border.color: "#d9808080"
+            border.width: 1
+        }
+
+        Image{
+            id: stopMoreButton
+            source: hovered ? "Images/buttons/plasma_ui/moreBlueVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
+            width:7
+            height:4.03*width
+            smooth:true
+
+            property alias hovered:showHideStoppedMouseArea.containsMouse
+
+            opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
+                     (hovered===true)) ?
+                        1 : 0.4
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible:!Settings.global.disableBackground
+        }
+
+
+        Item{
+            visible:Settings.global.disableBackground
+            width:7
+            height:parent.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: showHideStoppedMouseArea.containsMouse ? 0.8 : 0.2
+            Column{
+                spacing:3
+                anchors.verticalCenter: parent.verticalCenter
+                Repeater{
+                    model:3
+                    Rectangle{
+                        width:6
+                        height:width
+                        radius:3
+                        color: theme.textColor
+                    }
+                }
+            }
+        }
+    }
+
+    Rectangle{
+        id:backgroundRectangle
+        width: parent.width
+        height: parent.height
+        opacity: Settings.global.disableBackground ? 0.10 : 1
+        color: Settings.global.disableBackground ?  theme.textColor : "#ebebeb"
+    }
+
+    ///Left Shadow for Stopped Activiies Panel
+    Rectangle{
+        id:stpActShad
+        height: workareaWidth/50
+        width: stopActBack.height
+        //   anchors.right: stopActBack.left
+        rotation: 90
+        transformOrigin: Item.TopLeft
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#770f0f0f" }
+            GradientStop { position: 1.0; color: "#00797979" }
+        }
+    }
+
+
+
     PlasmaCore.ToolTip{
         target:showHideStoppedMouseArea
         mainText:i18n("Show/Hide Stopped Activities List")
         subText: i18n("Show or Hide the Stopped Activities List to enhance your workflow.")
     }
 
-    Rectangle{
-        id:showStopPanelRec
-        width:40
-        height:35
-        color:parent.color
-        radius:4
 
-        anchors.horizontalCenter: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-
-        Image{
-            id: stopMoreButton
-            //            source: ((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ?
-            //                        "Images/buttons/plasma_ui/moreRedVer.png" : "Images/buttons/plasma_ui/moreGreyVer.png"
-            source: "Images/buttons/plasma_ui/moreGreyVer.png"
-            width:7
-            height:4.03*width
-            smooth:true
-
-            property bool hovered:false
-
-            opacity:(((stoppedActivitiesList.shownActivities>0)&&(stopActBack.doNotShow===true)) ||
-                     (hovered===true)) ?
-                        1 : 0.4
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.horizontalCenter
-            anchors.rightMargin: 5
-
-        }
-    }
 
     ////////////End of Show/Hide Button////////////////
 
@@ -151,9 +197,9 @@ Rectangle {
         boundsBehavior: Flickable.StopAtBounds
 
         anchors.right: stopActBack.right
+        clip:true
 
-        //y:mainView.lockActivities === false ? 1.2*allWorkareas.actImagHeight : 0.3*allWorkareas.actImagHeight
-        y:Settings.global.lockActivities === false ? mAddActivityBtn.height : 0
+        //y:(!Settings.global.lockActivities) ? mAddActivityBtn.height : 0
 
         ListView {
             id: stoppedActivitiesList
@@ -204,10 +250,10 @@ Rectangle {
                         }
                     }
 
-        //     //       Rectangle{
-               //         anchors.fill: parent
-              //          color:"#0000e3"
-                //    }
+                    //     //       Rectangle{
+                    //         anchors.fill: parent
+                    //          color:"#0000e3"
+                    //    }
 
                 }
             }
