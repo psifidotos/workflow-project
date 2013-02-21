@@ -8,8 +8,6 @@ set(EMAIL "psifidotos@users.sf.net")
 set(WEBSITE "http://workflow.opentoolsandspace.org/")
 set(ICON "preferences-activities")
 
-SET(CMAKE_BUILD_TYPE debugfull)
-
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
 find_package(KActivities REQUIRED)

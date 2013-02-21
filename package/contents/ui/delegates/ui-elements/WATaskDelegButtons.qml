@@ -69,7 +69,7 @@ Item {
         {
             taskManager.setTaskState(taskDeleg1.ccode, state, mainWorkArea.actCode, mainWorkArea.desktop);
 
-            console.log(state);
+            //console.log(state);
 
             if (state === "oneDesktop"){
                 taskManager.setTaskDesktopForAnimation(taskDeleg1.ccode, mainWorkArea.desktop-1)

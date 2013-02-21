@@ -29,22 +29,22 @@ QtObject {
             Settings.global = settings
     }
     
-    onLockActivitiesChanged: { plasmoid.writeConfig("LockActivities", lockActivities) ; console.log("LockActivities: " + lockActivities) }
-    onShowWindowsChanged: { plasmoid.writeConfig("ShowWindows", showWindows) ; console.log("ShowWindows: " + showWindows) }
-    onScaleChanged: { plasmoid.writeConfig("Scale", scale) ; console.log("Scale: " + scale) }
-    onAnimationsChanged: { plasmoid.writeConfig("Animations", animations) ; console.log("Animations: " + animations) }
-    onAnimationSpeedChanged: { plasmoid.writeConfig("AnimationSpeed", animationSpeed) ; console.log("AnimationSpeed: " + animationSpeed) }
-    onWindowPreviewsChanged: { plasmoid.writeConfig("WindowPreviews", windowPreviews) ; console.log("WindowPreviews: " + windowPreviews) }
-    onWindowPreviewsOffsetXChanged: { plasmoid.writeConfig("WindowPreviewsOffsetX", windowPreviewsOffsetX) ; console.log("WindowPreviewsOffsetX: " + windowPreviewsOffsetX) }
-    onWindowPreviewsOffsetYChanged: { plasmoid.writeConfig("WindowPreviewsOffsetY", windowPreviewsOffsetY) ; console.log("WindowPreviewsOffsetY: " + windowPreviewsOffsetY) }
-    onFontRelevanceChanged: { plasmoid.writeConfig("FontRelevance", fontRelevance) ; console.log("FontRelevance: " + fontRelevance) }
-    onShowStoppedPanelChanged: { plasmoid.writeConfig("ShowStoppedPanel", showStoppedPanel) ; console.log("ShowStoppedPanel: " + showStoppedPanel) }
-    onFirstRunTourChanged: { plasmoid.writeConfig("FirstRunTour", firstRunTour) ; console.log("FirstRunTour: " + firstRunTour) }
-    onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; console.log("FirstRunCalibration: " + firstRunCalibration) }
-    onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; console.log("HideOnClick: " + hideOnClick) }
-    onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; console.log("UseCurrentActivityIcon: " + useCurrentActivityIcon) }
-    onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; console.log("DisableEverywherePanel: " + disableEverywherePanel) }
-    onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; console.log("DisableBackground: " + disableBackground) }
+    onLockActivitiesChanged: { plasmoid.writeConfig("LockActivities", lockActivities); }
+    onShowWindowsChanged: { plasmoid.writeConfig("ShowWindows", showWindows) ; }
+    onScaleChanged: { plasmoid.writeConfig("Scale", scale) ; }
+    onAnimationsChanged: { plasmoid.writeConfig("Animations", animations) ; }
+    onAnimationSpeedChanged: { plasmoid.writeConfig("AnimationSpeed", animationSpeed) ; }
+    onWindowPreviewsChanged: { plasmoid.writeConfig("WindowPreviews", windowPreviews) ; }
+    onWindowPreviewsOffsetXChanged: { plasmoid.writeConfig("WindowPreviewsOffsetX", windowPreviewsOffsetX) ; }
+    onWindowPreviewsOffsetYChanged: { plasmoid.writeConfig("WindowPreviewsOffsetY", windowPreviewsOffsetY) ; }
+    onFontRelevanceChanged: { plasmoid.writeConfig("FontRelevance", fontRelevance) ; }
+    onShowStoppedPanelChanged: { plasmoid.writeConfig("ShowStoppedPanel", showStoppedPanel) ; }
+    onFirstRunTourChanged: { plasmoid.writeConfig("FirstRunTour", firstRunTour) ; }
+    onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; }
+    onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; }
+    onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
+    onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
+    onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; }
     
 
     function configChanged() {
