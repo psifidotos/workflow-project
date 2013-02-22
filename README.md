@@ -28,6 +28,20 @@ Manual
     make
     sudo make install
 
+Important Notice
+---------
+If you upgrade from previous versions then you must
+make a relogin in order to update the data engine. 
+    
+Upgrade
+=========
+Before you install version 0.3.0 and later you must
+completely uninstall previous versions (0.2.0 - 0.2.2)
+If you had made an installation from source using the previous
+steps then an easy way to uninstall is to enter the
+build directory inside the plasmoid source directory and run:
+     sudo make uninstall
+    
 Requirements  
 ------------
 kdebase4-workspace-devel >= 4.8  

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2013-02-12 20:34+0200\n"
+"POT-Creation-Date: 2013-02-22 14:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../package/contents/ui/Activities2.qml:220
-#: ../package/contents/ui/CompactRepresentation.qml:52
+#: ../package/contents/ui/Activities2.qml:249
+#: ../package/contents/ui/CompactRepresentation.qml:71
 msgid "WorkFlow Plasmoid"
 msgstr ""
 
-#: ../package/contents/ui/Activities2.qml:221
+#: ../package/contents/ui/Activities2.qml:250
 msgid ""
 "Activities, Workareas, Windows organize your \n"
 " full workflow through the KDE technologies"
 msgstr ""
 
-#: ../package/contents/ui/CompactRepresentation.qml:53
+#: ../package/contents/ui/CompactRepresentation.qml:72
 msgid ""
 "Activities, Workareas, Windows, organize your \n"
 " full workflow through the KDE technologies"
@@ -60,19 +60,19 @@ msgstr ""
 msgid "Edit the Activity name by clicking on it."
 msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:253
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:260
 msgid "Delete Activity"
 msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:254
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:261
 msgid "Delete Activity. Be careful, this action can not be undone."
 msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:275
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:287
 msgid "Restore Activity"
 msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:276
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:288
 msgid "Restore Activity to continue your work from where you had stopped."
 msgstr ""
 
@@ -133,20 +133,20 @@ msgstr ""
 msgid "Delete WorkArea, <b>be careful</b> this action can not be undone."
 msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:244
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:248
 msgid "Show Windows"
 msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:245
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:249
 msgid ""
 "Show windows from that specific Workarea. The counter shows their number."
 msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:302
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:306
 msgid "Edit Workarea"
 msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:303
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:307
 msgid "Edit the Workarea name to personalize more your work."
 msgstr ""
 
@@ -385,23 +385,23 @@ msgstr ""
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr ""
 
-#: ../package/contents/ui/MainAddActivityButton.qml:124
+#: ../package/contents/ui/MainAddActivityButton.qml:168
 msgid "New Activity"
 msgstr ""
 
-#: ../package/contents/ui/MainAddActivityButton.qml:130
+#: ../package/contents/ui/MainAddActivityButton.qml:174
 msgid "Add Activity"
 msgstr ""
 
-#: ../package/contents/ui/MainAddActivityButton.qml:131
+#: ../package/contents/ui/MainAddActivityButton.qml:175
 msgid "Add an Activity with default settings."
 msgstr ""
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:102
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:177
 msgid "Show/Hide Stopped Activities List"
 msgstr ""
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:103
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:178
 msgid "Show or Hide the Stopped Activities List to enhance your workflow."
 msgstr ""
 
@@ -662,7 +662,7 @@ msgstr ""
 #. i18n: file: ../package/contents/ui/config.ui:102
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableBackground)
 #: rc.cpp:21
-msgid "Hide Background"
+msgid "Hide background and use plasma theme"
 msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:109
@@ -683,7 +683,7 @@ msgstr ""
 #. i18n: file: ../package/contents/ui/config.ui:122
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideOnClick)
 #: rc.cpp:30
-msgid "Hide PopUp when clicking a WorkArea"
+msgid "Hide popup when clicking a Workarea"
 msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:129

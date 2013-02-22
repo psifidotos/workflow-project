@@ -99,7 +99,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hide the background from the plasmoid and use the default one.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Hide Background</string>
+      <string>Hide background and use plasma theme</string>
      </property>
     </widget>
    </item>
@@ -119,7 +119,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option is available only when the plasmoid is in a panel. You can hide the PopUp when you click on a WorkArea&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Hide PopUp when clicking a WorkArea</string>
+      <string>Hide popup when clicking a Workarea</string>
      </property>
     </widget>
    </item>

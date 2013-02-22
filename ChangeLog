@@ -9,7 +9,7 @@
 -- added a 4th state for windows (sameWorkareas - a window exists in all same Workrareas(position) for all Activities)
 -- added use Ctrl+Wheel to zoom-in / out
 -- added feature, window preview can be dragged in Calibration Dialog
--- added feature, disable the default background and use the one from Plasma theme.
+-- added feature, disable the default background and use Plasma theme settings.
 -- added a disable state for Everywhere Panel, the bottom panel is hidden and allActivities windows appear in all the Workareas
 -- fixed not altering the default kde behavior for windows.
 -- fixed the shortcut issue (it couldnt be saved from the configuration dialog)
