@@ -5,7 +5,7 @@ trying to enhance every user's unique workflow by combining existing technologie
 from Plasma. 
 
 
-Differences To Default KDe Workflow
+Differences To Default KDE Workflow
 ===================================
 -  Workareas use Virtual Desktops, in order to be consistent between them,
    Virtual Desktops are always that big as the maximum Workareas present from
@@ -40,7 +40,8 @@ completely uninstall previous versions (0.2.0 - 0.2.2)
 If you had made an installation from source using the previous
 steps then an easy way to uninstall is to enter the
 build directory inside the plasmoid source directory and run:
-     sudo make uninstall
+
+    sudo make uninstall
     
 Requirements  
 ------------
