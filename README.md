@@ -5,7 +5,7 @@ trying to enhance every user's unique workflow by combining existing technologie
 from Plasma. 
 
 
-Differences To Default KDE Workflow
+Differences To Default KDE workflow
 ===================================
 -  Workareas use Virtual Desktops, in order to be consistent between them,
    Virtual Desktops are always that big as the maximum Workareas present from

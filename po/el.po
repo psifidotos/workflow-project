@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Michail Vourlakos <mvourlakos@gmail.com>, 2013.
 #   <mvourlakos@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2013-02-09 19:41+0200\n"
-"PO-Revision-Date: 2013-02-09 17:41+0000\n"
+"POT-Creation-Date: 2013-02-22 14:55+0200\n"
+"PO-Revision-Date: 2013-02-22 14:04+0000\n"
 "Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/WorkFlow_Project/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -18,17 +19,22 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../package/contents/ui/Activities2.qml:220
-#: ../package/contents/ui/CompactRepresentation.qml:52
+#: ../package/contents/ui/Activities2.qml:249
+#: ../package/contents/ui/CompactRepresentation.qml:71
 msgid "WorkFlow Plasmoid"
 msgstr "Συστατικό  WorkFlow"
 
-#: ../package/contents/ui/Activities2.qml:221
-#: ../package/contents/ui/CompactRepresentation.qml:53
+#: ../package/contents/ui/Activities2.qml:250
 msgid ""
 "Activities, Workareas, Windows organize your \n"
 " full workflow through the KDE technologies"
-msgstr ""
+msgstr "Δραστηριότητες, Επιφάνειες Εργασίας, Παράθυρα,⏎οργανώστε τον τρόπο εργασίας με της τεχνολογίες του KDE"
+
+#: ../package/contents/ui/CompactRepresentation.qml:72
+msgid ""
+"Activities, Workareas, Windows, organize your \n"
+" full workflow through the KDE technologies"
+msgstr "Δραστηριότητες, Επιφάνειες Εργασίας, Παράθυρα,\nοργανώστε τον τρόπο εργασίας με τις τεχνολογίες\nτου KDE"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:143
 msgid "Change Activity Icon"
@@ -40,40 +46,37 @@ msgid "Activity"
 msgstr "Δραστηριότητα"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:144
-msgid ""
-"You can change your Activity Icon in order to recognize better your work."
-msgstr "Μπορείτε να αλλάξετε το εικονίδιο της Δραστηριότητας για να ανταποκρίνεται καλύτερα στην εργασία σας."
+msgid "Change your Activity Icon to recognize better your work."
+msgstr "Αλλάξτε το Εικονίδιο Δραστηριότητας ώστε να ανταποκρίνεται περισσότερο στην εργασίας σας."
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:145
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:214
-msgid "You can enable this Activity by clicking on the Activity name or icon"
-msgstr "Μπορείτε να ενεργοποιήσετε αυτή τη Δραστηριότητα κάνοντας κλικ στο όνομα ή στο εικονίδιο."
+msgid "Enable this Activity by clicking on the Activity name or icon"
+msgstr "Ενεργοποιήστε αυτή τη Δραστηριότητα κάνοντας κλικ στο όνομα ή το εικονίδιο της."
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:212
 msgid "Activity Name"
 msgstr "Όνομα Δραστηριότητας"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:213
-msgid "You can edit the Activity name by clicking on it."
-msgstr ""
+msgid "Edit the Activity name by clicking on it."
+msgstr "Επεξεργαστείτε το όνομα της Δραστηριότητας κάνοντας κλικ πάνω του."
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:253
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:260
 msgid "Delete Activity"
 msgstr "Διαγραφή Δραστηριότητας"
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:254
-msgid "You can delete an Activity. Be careful, this action can not be undone."
-msgstr "Μπορείτε να διαγράψετε μία Δραστηριότητα. Προσοχή, αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:261
+msgid "Delete Activity. Be careful, this action can not be undone."
+msgstr "Διαγραφή Δραστηριότητας. Προσοχή, αυτή η ενέργεια δεν αναιρείται."
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:275
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:287
 msgid "Restore Activity"
 msgstr "Επαναφορά Δραστηριότητας"
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:276
-msgid ""
-"You can restore an Activity in order to continue your work from where you "
-"had stopped."
-msgstr "Μπορείτε να επαναφέρετε μία Δραστηριότητα για να συνεχίσετε την εργασία σε αυτήν από εκεί που σταματήσατε"
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:288
+msgid "Restore Activity to continue your work from where you had stopped."
+msgstr "Επαναφέρετε τη Δραστηριότητα για να συνεχίσετε την εργασίας σας από εκεί που είχατε σταματήσει."
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:48
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:15
@@ -81,8 +84,8 @@ msgid "Clone Activity"
 msgstr "Αντιγραφή Δραστηριότητας"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:49
-msgid "You can clone an Activity."
-msgstr "Μπορείτε να αντιγράψετε μία Δραστηριότητα"
+msgid "Clone Activity and keep its settings."
+msgstr "Αντιγραφή Δραστηριότητας διατηρώντας τις ρυθμίσεις της."
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:63
 msgid "Pause Activity"
@@ -90,27 +93,26 @@ msgstr "Πάγωμα Δραστηριότητας"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:64
 msgid ""
-"You can pause an Activity and place it on the right panel.This way the "
-"Activity will be always available to continue your work from where you "
-"stopped."
-msgstr "Μπορείτε να παγώσετε μία Δραστηριότητα και να την τοποθετήσετε στο δεξί πλαίσιο.Με αυτό τον τρόπο θα είναι πάντα διαθέσιμη για να συνεχίσετε την εργασία σας."
+"Pause Activity and keep it always available to continue your work from where"
+" you stopped."
+msgstr "Παύση Δραστηριότητας και διατήρηση της πάντα διαθέσιμη έτσι ώστε να συνεχίσετε την εργασίας σας αργότερα."
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:69
-msgid "Add WorkArea"
-msgstr "Προσθήκη Επιφάνειας Εργασίας"
+msgid "Add Workarea"
+msgstr "Προσθήκη Επιφάνειας"
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:70
-msgid "You can add a Workarea in order to sub-organize better your work."
-msgstr "Μπορείτε να προσθέσετε μία Επιφάνεια Εργασίας έτσι ώστε να οργανώσετε περισσότερο την εργασία σας."
+msgid "Add a Workarea to sub-organize better your work."
+msgstr "Προσθέστε μία Επιφάνεια για να οργανώσετε καλύτερα την εργασίας σας."
 
-#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:31
+#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:34
 #: ../package/contents/ui/delegates/ui-elements/WATaskDelegButtons.qml:38
 msgid "Close Window"
 msgstr "Κλείσιμο Παραθύρου"
 
-#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:32
-msgid "You can close this window if you want to."
-msgstr "Μπορείτε να κλείσετε αυτό το παράθυρο εάν θέλετε."
+#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:35
+msgid "Close this window."
+msgstr "Κλείσιμο Παραθύρου"
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:37
 msgid "Change Window State"
@@ -118,39 +120,38 @@ msgstr "Αλλαγή Κατάστασης Παραθύρου"
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:38
 msgid ""
-"You can change the window's state, there are four states "
+"Change Window state, there are four states "
 "available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that "
-"Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in "
+"Workarea<br/><br/>2.<b>\"All Workareas\"</b>, is shown on every Workarea in "
 "that Activity<br/><br/>3.<b>\"Same Workareas\"</b>,is shown in the same "
 "Workareas (position) in all Activities.<br/><br/>4.<b>\"Everywhere\"</b>, is"
-" shown on all WorkAreas."
-msgstr ""
+" shown on all Workareas."
+msgstr "Αλλαγή κατάστασης παραθύρου, υπάρχουν τέσσερις δυνατές επιλογές:<br/><br/>1.<b>\"Απλή\"</b>, εμφανίζεται μόνο σε αυτή την Επιφάνεια <br/><br/>2.<b>\"Όλες τις Επιφάνειες\"</b>, εμφανίζεται σε κάθε Επιφάνεια σε αυτή τη Δραστηριότητα<br/><br/>3.<b>\"Ίδιες Επιφάνειες\"</b>, εμφανίζεται στην ίδια σειρά Επιφανειών σε όλες τις Δραστηριότητες.<br/><br/>4.<b>\"Παντού\"</b>, εμφανίζεται σε όλες τις Επιφάνειες."
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:29
 msgid "Delete Workarea"
 msgstr "Διαγραφή Επιφάνειας Εργασίας"
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:30
-msgid "You can delete this WorkArea if you want to."
-msgstr "Μπορείτε να διαγράψετε αυτή την Επιφάνεια Εργασίας εάν θέλετε."
+msgid "Delete WorkArea, <b>be careful</b> this action can not be undone."
+msgstr "Διαγραφή Επιφάνειας, <b>προσοχή</b> αυτή η ενέργεια δεν αναιρείται."
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:244
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:248
 msgid "Show Windows"
 msgstr "Εμφάνιση Παραθύρων"
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:245
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:249
 msgid ""
-"You can see the windows from that spesific Workarea if you want. The counter"
-" shows their number."
-msgstr "Μπορείτε να δείτε τα παράθυρα της συγκεκριμένης Επιφάνειας Εργασίας εάν το θέλετε. Ο μετρητής εμφανίζει τον αριθμό τους."
+"Show windows from that specific Workarea. The counter shows their number."
+msgstr "Εμφάνιση παραθύρων αυτής της Επιφάνειας. Ο μετρητής εμφανίζει τον αριθμό τους."
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:302
-msgid "Edit WorkArea"
-msgstr "Επεξεργασία Επιφάνειας Εργασίας"
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:306
+msgid "Edit Workarea"
+msgstr "Επεξεργασία Επιφάνειας"
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:303
-msgid "You can edit the Workarea name in order to personalize more your work."
-msgstr "Μπορείτε να αλλάξετε το όνομα της Επιφάνειας Εργασίας έτσι ώστε να ανταποκρίνεται στην εργασία σας."
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:307
+msgid "Edit the Workarea name to personalize more your work."
+msgstr "Επεξεργαστείτε το όνομα της Επιφάνειας έτσι ώστε να ανταποκρίνεται στην εργασία σας."
 
 #: ../package/contents/ui/delegates/WorkAreaListDeleg.qml:146
 msgid "Orphaned Windows"
@@ -158,15 +159,15 @@ msgstr "Ορφανά Παράθυρα"
 
 #: ../package/contents/ui/FilterWindows.qml:16
 msgid "Please enter your windows filter..."
-msgstr ""
+msgstr "Παρακαλούμε εισάγετε το φίλτρο αναζήτησης..."
 
 #: ../package/contents/ui/FilterWindows.qml:46
 msgid "Hide Search Filter"
-msgstr ""
+msgstr "Απόκρυψη Φίλτρου Αναζήτησης"
 
 #: ../package/contents/ui/FilterWindows.qml:47
-msgid "You can hide the search filter."
-msgstr ""
+msgid "Hide the search filter."
+msgstr "Απόκρυψη Φίλτρου Αναζήτησης"
 
 #: ../package/contents/ui/helptour/TourDialog.qml:51
 msgid "WorkFlow Project - Tour Guide"
@@ -335,13 +336,13 @@ msgstr "2. Σε κατάσταση <font color=\"#ea7b7b\"><i>\"Όλες οι Ε
 msgid ""
 "2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the "
 "window will be available in the same WorkAreas (position) in all Activities."
-msgstr ""
+msgstr "2. Σε κατάσταση <font color=\"#ea7b7b\"><i>\"Ίδιες Επιφάνειες\"</i></font> το παράθυρο θα είναι διαθέσιμο στην ίδια σειρά Επιφανειών σε όλες τις Δραστηριότητες."
 
 #: ../package/contents/ui/helptour/TourPage3.qml:175
 msgid ""
 "4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window "
 "will be available in every WorkArea and every Activity."
-msgstr ""
+msgstr "4. Σε κατάσταση <font color=\"#ea7b7b\"><i>\"Παντού\"</i></font> το παράθυρο θα είναι διαθέσιμο σε όλες τις Επιφάνειες σε όλες τις Δραστηριότητες."
 
 #: ../package/contents/ui/helptour/TourPage4.qml:10
 msgid "Full Interface"
@@ -387,63 +388,68 @@ msgstr "Ελπίζω αυτός ο οδηγός να σας βοήθησε να 
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr "Ας γίνουμε δημιουργικοί...<br><br/>- Τέλος Οδηγού -"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:124
+#: ../package/contents/ui/MainAddActivityButton.qml:168
 msgid "New Activity"
 msgstr "Νέα Δραστηριότητα"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:130
+#: ../package/contents/ui/MainAddActivityButton.qml:174
 msgid "Add Activity"
 msgstr "Προσθήκη Δραστηριότητας"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:131
-msgid "You can add an Activity if you want to with default settings."
-msgstr "Μπορείτε να προσθέσετε μία Δραστηριότητα με τις προκαθορισμένες ρυθμίσεις"
+#: ../package/contents/ui/MainAddActivityButton.qml:175
+msgid "Add an Activity with default settings."
+msgstr "Προσθήκη Δραστηριότητας με τις προκαθορισμένες ρυθμίσεις."
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:102
-msgid "Show/Hide Stopped Activities"
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:177
+msgid "Show/Hide Stopped Activities List"
 msgstr "Εμφάνιση/Απόκρυψη Σταματημένων Δραστηριοτήτων"
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:103
-msgid "Show or Hide the Stopped Activities in order to enhance your workflow."
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:178
+msgid "Show or Hide the Stopped Activities List to enhance your workflow."
 msgstr "Εμφάνιση ή Απόκρυψη των Σταματημένων Δραστηριοτήτων για διευκόλυνση του τρόπου εργασίας σας."
+
+#: ../package/contents/ui/TitleMainView.qml:118
+msgid "Unlock Activities"
+msgstr "Ξεκλείδωμα Δραστηριοτήτων"
 
 #: ../package/contents/ui/TitleMainView.qml:118
 msgid "Lock Activities"
 msgstr "Κλείδωμα Δραστηριοτήτων"
 
 #: ../package/contents/ui/TitleMainView.qml:119
-msgid ""
-"You can lock your Activities if you want. In Locked state only Pause and "
-"Restore actions are enabled."
-msgstr "Μπορείτε να κλειδώσετε τις Δραστηριότητες. Σε αυτή την κατάσταση όμως μόνο η Παύση και η Επαναφορά είναι ενεργές."
+msgid "Unlock Activities to enable editing."
+msgstr "Ξεκλειδώστε τις Δραστηριότητες για να ενεργοποιήσετε την επεξεργασία τους."
 
-#: ../package/contents/ui/TitleMainView.qml:170
+#: ../package/contents/ui/TitleMainView.qml:120
+msgid ""
+"Lock Activities to disable editing. In Locked state only Pause and Restore "
+"actions are enabled."
+msgstr "Κλειδώστε τις Δραστηριότητες για απενεργοποίηση της επεξεργασίας. Σε αυτή την κατάσταση μόνο η Παύση και η Επαναφορά είναι ενεργές."
+
+#: ../package/contents/ui/TitleMainView.qml:171
 msgid "Show/Hide Windows"
 msgstr "Εμφάνιση/Απόκρυψη Παραθύρων"
 
-#: ../package/contents/ui/TitleMainView.qml:171
-msgid ""
-"You can show or hide all the windows shown in order to enhance your "
-"workflow."
-msgstr "Μπορείτε να εμφανίσετε ή να κρύψετε τα παράθυρα για να διευκολύνετε τον τρόπο εργασίας σας"
+#: ../package/contents/ui/TitleMainView.qml:172
+msgid "Show or hide all windows to enhance your workflow."
+msgstr "Εμφανίστε ή κρύφτε όλα τα παράθυρα για να διευκολύνετε τον τρόπο εργασίας σας."
 
-#: ../package/contents/ui/TitleMainView.qml:255
+#: ../package/contents/ui/TitleMainView.qml:256
 msgid "Enable/Disable Previews"
 msgstr "Ενεργοποίηση/Απενεργοποίηση Προεπισκοπήσεων"
 
-#: ../package/contents/ui/TitleMainView.qml:256
+#: ../package/contents/ui/TitleMainView.qml:257
 msgid ""
-"You can enable/disable window previews only when you place the plasmoid in "
-"the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration "
-"Dialog is appearing."
-msgstr "Μπορείτε να ενεργοποιήσετε/απενεργοποιήσετε τις προεπισκοπήσεις μόνο όταν η εφαρμογή είναι στο Πίνακα Συστατικών.<br/> <i>\"Πατώντας και Κρατώντας\"</i> εμφανίζεται το Παράθυρο Συντονισμού."
+"Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the "
+"Calibration Dialog is appearing."
+msgstr "Ενεργοποίηση/απενεργοποίηση προεπισκοπήσεων.<br/> <i>\"Πατώντας και Κρατώντας (Press and Hold)\"</i> εμφανίζεται το παράθυρο Συντονισμού."
 
-#: ../package/contents/ui/TitleMainView.qml:277
+#: ../package/contents/ui/TitleMainView.qml:278
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:16
 msgid "About Dialog"
 msgstr "Σχετικά με"
 
-#: ../package/contents/ui/TitleMainView.qml:278
+#: ../package/contents/ui/TitleMainView.qml:279
 msgid ""
 "This dialog contains information about the application but you can also find"
 " \"Help Tour\" and \"Report Bug\" choices."
@@ -498,36 +504,44 @@ msgid "Reduce X"
 msgstr "Μειώστε το Χ"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:335
-msgid "You can reduce X offset for the window previews."
-msgstr "Μπορείτε να μειώσετε το περιθώριο Χ των προεπισκοπήσεων"
+msgid "Reduce X offset for the window previews."
+msgstr "Μειώστε το περιθώριο Χ των προεπισκοπήσεων"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:376
 msgid "Increase X"
 msgstr "Αυξήστε το Χ"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:377
-msgid "You can increase X offset for the window previews."
-msgstr "Μπορείτε να αυξήσετε το περιθώριο Χ των προεπισκοπήσεων"
+msgid "Increase X offset for the window previews."
+msgstr "Αυξήστε το περιθώριο Χ των προεπισκοπήσεων."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:429
 msgid "Reduce Y"
 msgstr "Μειώστε το Υ"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:430
-msgid "You can reduce Y offset for the window previews."
-msgstr "Μπορείτε να μειώσετε το περιθώριο Υ των προεπισκοπήσεων"
+msgid "Reduce Y offset for the window previews."
+msgstr "Μειώστε το περιθώριο Υ των προεπισκοπήσεων."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:472
 msgid "Increase Y"
 msgstr "Αυξήστε το Υ"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:473
-msgid "You can increase Y offset for the window previews."
-msgstr "Μπορείτε να αυξήσετε το περιθώριο Υ των προεπισκοπήσεων"
+msgid "Increase Y offset for the window previews."
+msgstr "Αυξήστε το περιθώριο Υ των προεπισκοπήσεων."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:495
 msgid "Step 3: Press Ok for confirmation..."
 msgstr "Βήμα 3: Πατήστε Εντάξει για επιβεβαίωση"
+
+#: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:519
+msgid "Refresh Window Previews"
+msgstr "Ανανέωση Προεπισκοπήσεων Παραθύρων"
+
+#: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:520
+msgid "Refresh Window Previews until you see one."
+msgstr "Ανανέωση Προεπισκοπήσεων μέχρι να εμφανιστεί κάποια."
 
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:40
 msgid "Are you sure you want to clone activity"
@@ -599,16 +613,16 @@ msgid "Zoom Out"
 msgstr "Απομάκρυνση"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:31
-msgid "You can zoom out your interface in order to gain more space."
-msgstr "Μπορείτε να απομακρυνθείτε περισσότερο από το περιβάλλον σας έτσι ώστε να κερδίσετε περισσότερο χώρο."
+msgid "Zoom out your interface to gain more space."
+msgstr "Σμίκρυνση του περιβάλλοντος για αύξηση του διαθέσιμου χώρου."
 
 #: ../package/contents/ui/ZoomSliderItem.qml:52
 msgid "Zoom In"
 msgstr "Εστίαση"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:53
-msgid "You can zoom in your interface in order to focus more on items."
-msgstr "Μπορείτε να εστιάσετε περισσότερο το περιβάλλον σας έτσι ώστε να επικεντρώνεστε περισσότερο στα διάφορα στοιχεία."
+msgid "Zoom in your interface to focus more on items."
+msgstr "Μεγέθυνση του περιβάλλοντος για να εστιάσετε περισσότερο στα αντικείμενα."
 
 #. i18n: file: ../package/contents/ui/config.ui:26
 #. i18n: ectx: property (windowTitle), widget (QWidget, workflowConfig)
@@ -646,13 +660,13 @@ msgstr "Όλα"
 msgid ""
 "<html><head/><body><p>Hide the background from the plasmoid and use the "
 "default one.</p></body></html>"
-msgstr ""
+msgstr "<html><head/><body><p>Απόκρυψη του παρασκηνίου στο συστατικό έτσι ώστε να χρησιμοποιηθεί το προκαθορισμένο.</p></body></html>"
 
 #. i18n: file: ../package/contents/ui/config.ui:102
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableBackground)
 #: rc.cpp:21
-msgid "Hide Background"
-msgstr ""
+msgid "Hide background and use plasma theme"
+msgstr "Απόκρυψη παρασκηνίου και χρήση θέματος από το Plasma"
 
 #. i18n: file: ../package/contents/ui/config.ui:109
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -672,8 +686,8 @@ msgstr "<html><head/><body><p>Αυτή η επιλογή είναι διαθέσ
 #. i18n: file: ../package/contents/ui/config.ui:122
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideOnClick)
 #: rc.cpp:30
-msgid "Hide PopUp when clicking a WorkArea"
-msgstr "Απόκρυψη Αναδυόμενου στο κλικ Επιφάνειας Εργασίας"
+msgid "Hide popup when clicking a Workarea"
+msgstr "Απόκρυψη αναδυόμενου παραθύρου όταν γίνεται κλικ σε Επιφάνεια Εργασίας"
 
 #. i18n: file: ../package/contents/ui/config.ui:129
 #. i18n: ectx: property (toolTip), widget (QCheckBox,
@@ -683,7 +697,7 @@ msgid ""
 "<html><head/><body><p>By enabling this option the plasmoid's icon is using "
 "the current activity's icon every time instead of the default "
 "one.</p></body></html>"
-msgstr ""
+msgstr "<html><head/><body><p>Ενεργοποιεί την επιλογή να εμφανίζεται το εικονίδια της τρέχουσας Δραστηριότητας ως εικονίδιο του συστατικού αυτού.</p></body></html>"
 
 #. i18n: file: ../package/contents/ui/config.ui:132
 #. i18n: ectx: property (text), widget (QCheckBox,
@@ -700,20 +714,20 @@ msgid ""
 "<html><head/><body><p>It disables the panel for windows in \"Everywhere\" "
 "state (windows that are shown in all Activities and all Workareas). Instead "
 "these windows are shown in all Workareas lists.</p></body></html>"
-msgstr ""
+msgstr "<html><head/><body><p>Απενεργοποιεί το πλαίσιο των \"Παντού\" παραθύρων (παράθυρα που εμφανίζονται σε όλες τις Επιφάνειες σε όλες τις Δραστηριότητες). Σε αυτή την περίπτωση τα παράθυρα αυτά εμφανίζονται μέσα στις Επιφάνειες.</p></body></html>"
 
 #. i18n: file: ../package/contents/ui/config.ui:142
 #. i18n: ectx: property (text), widget (QCheckBox,
 #. kcfg_DisableEverywherePanel)
 #: rc.cpp:42
 msgid "Disable \"Everywhere\" windows panel"
-msgstr ""
+msgstr "Απενεργοποίηση πίνακα παραθύρων \"Παντού\""
 
 #. i18n: file: ../package/contents/ui/config.ui:149
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:45
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: rc.cpp:46
 msgctxt "NAME OF TRANSLATORS"

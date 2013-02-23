@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2013-02-09 19:41+0200\n"
-"PO-Revision-Date: 2013-02-09 17:41+0000\n"
+"POT-Creation-Date: 2013-02-22 14:55+0200\n"
+"PO-Revision-Date: 2013-02-22 12:55+0000\n"
 "Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,15 +20,20 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../package/contents/ui/Activities2.qml:220
-#: ../package/contents/ui/CompactRepresentation.qml:52
+#: ../package/contents/ui/Activities2.qml:249
+#: ../package/contents/ui/CompactRepresentation.qml:71
 msgid "WorkFlow Plasmoid"
 msgstr "Plasmoide WorkFlow"
 
-#: ../package/contents/ui/Activities2.qml:221
-#: ../package/contents/ui/CompactRepresentation.qml:53
+#: ../package/contents/ui/Activities2.qml:250
 msgid ""
 "Activities, Workareas, Windows organize your \n"
+" full workflow through the KDE technologies"
+msgstr ""
+
+#: ../package/contents/ui/CompactRepresentation.qml:72
+msgid ""
+"Activities, Workareas, Windows, organize your \n"
 " full workflow through the KDE technologies"
 msgstr ""
 
@@ -42,40 +47,37 @@ msgid "Activity"
 msgstr "Actividad"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:144
-msgid ""
-"You can change your Activity Icon in order to recognize better your work."
-msgstr "Puedes cambiar tu Icono de Actividad con el fin de reconocer mejor tu trabajo"
+msgid "Change your Activity Icon to recognize better your work."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:145
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:214
-msgid "You can enable this Activity by clicking on the Activity name or icon"
-msgstr "Puedes habilitar esta Actividad haciendo clic en el nombre o icono de la Actividad."
+msgid "Enable this Activity by clicking on the Activity name or icon"
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:212
 msgid "Activity Name"
 msgstr "Nombre de la Actividad"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:213
-msgid "You can edit the Activity name by clicking on it."
+msgid "Edit the Activity name by clicking on it."
 msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:253
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:260
 msgid "Delete Activity"
 msgstr "Borrar Actividad"
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:254
-msgid "You can delete an Activity. Be careful, this action can not be undone."
-msgstr "Puedes borrar una Actividad. Tenga cuidado, esta acción no puede deshacerse."
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:261
+msgid "Delete Activity. Be careful, this action can not be undone."
+msgstr ""
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:275
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:287
 msgid "Restore Activity"
 msgstr "Restaurar Actividad"
 
-#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:276
-msgid ""
-"You can restore an Activity in order to continue your work from where you "
-"had stopped."
-msgstr "Puedes restaurar una Actividad para continuar tu trabajo tal como estaba."
+#: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:288
+msgid "Restore Activity to continue your work from where you had stopped."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:48
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:15
@@ -83,8 +85,8 @@ msgid "Clone Activity"
 msgstr "Clonar Actividad"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:49
-msgid "You can clone an Activity."
-msgstr "Puede clonar una Actividad."
+msgid "Clone Activity and keep its settings."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:63
 msgid "Pause Activity"
@@ -92,27 +94,26 @@ msgstr "Pausar Actividad"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:64
 msgid ""
-"You can pause an Activity and place it on the right panel.This way the "
-"Activity will be always available to continue your work from where you "
-"stopped."
-msgstr "Puedes pausar una Actividad y colocarla en el panel derecho. De esta manera la Actividad estará siempre disponible para continuar con tu trabajo donde se detuvo."
+"Pause Activity and keep it always available to continue your work from where"
+" you stopped."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:69
-msgid "Add WorkArea"
-msgstr "Agregar Área de trabajo"
+msgid "Add Workarea"
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:70
-msgid "You can add a Workarea in order to sub-organize better your work."
-msgstr "Puedes agregar un Área de Trabajo para organizar mejor tu trabajo."
+msgid "Add a Workarea to sub-organize better your work."
+msgstr ""
 
-#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:31
+#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:34
 #: ../package/contents/ui/delegates/ui-elements/WATaskDelegButtons.qml:38
 msgid "Close Window"
 msgstr "Cerrar ventana"
 
-#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:32
-msgid "You can close this window if you want to."
-msgstr "Puedes  cerrar esta ventana si lo deseas."
+#: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:35
+msgid "Close this window."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:37
 msgid "Change Window State"
@@ -120,12 +121,12 @@ msgstr "Cambiar Estado de la Ventana"
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:38
 msgid ""
-"You can change the window's state, there are four states "
+"Change Window state, there are four states "
 "available:<br/><br/>1.<b>\"Single\"</b>, is shown only on that "
-"Workarea<br/><br/>2.<b>\"All WorkAreas\"</b>, is shown on every WorkArea in "
+"Workarea<br/><br/>2.<b>\"All Workareas\"</b>, is shown on every Workarea in "
 "that Activity<br/><br/>3.<b>\"Same Workareas\"</b>,is shown in the same "
 "Workareas (position) in all Activities.<br/><br/>4.<b>\"Everywhere\"</b>, is"
-" shown on all WorkAreas."
+" shown on all Workareas."
 msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:29
@@ -133,26 +134,25 @@ msgid "Delete Workarea"
 msgstr "Borrar Área de Trabajo"
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:30
-msgid "You can delete this WorkArea if you want to."
-msgstr "Puedes borrar esta Área de Trabajo si lo deseas."
+msgid "Delete WorkArea, <b>be careful</b> this action can not be undone."
+msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:244
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:248
 msgid "Show Windows"
 msgstr "Mostrar las Ventanas"
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:245
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:249
 msgid ""
-"You can see the windows from that spesific Workarea if you want. The counter"
-" shows their number."
-msgstr "Puedes ver las ventanas de una Área de trabajo si lo prefieres. El contador indicara la cantidad de ventanas."
+"Show windows from that specific Workarea. The counter shows their number."
+msgstr ""
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:302
-msgid "Edit WorkArea"
-msgstr "Editar Área de trabajo"
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:306
+msgid "Edit Workarea"
+msgstr "Editar Área de Trabajo"
 
-#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:303
-msgid "You can edit the Workarea name in order to personalize more your work."
-msgstr "Puedes editar el nombre del Área de Trabajo para personalizar tu trabajo."
+#: ../package/contents/ui/delegates/WorkAreaDeleg.qml:307
+msgid "Edit the Workarea name to personalize more your work."
+msgstr ""
 
 #: ../package/contents/ui/delegates/WorkAreaListDeleg.qml:146
 msgid "Orphaned Windows"
@@ -167,7 +167,7 @@ msgid "Hide Search Filter"
 msgstr ""
 
 #: ../package/contents/ui/FilterWindows.qml:47
-msgid "You can hide the search filter."
+msgid "Hide the search filter."
 msgstr ""
 
 #: ../package/contents/ui/helptour/TourDialog.qml:51
@@ -343,7 +343,7 @@ msgstr ""
 msgid ""
 "4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window "
 "will be available in every WorkArea and every Activity."
-msgstr ""
+msgstr "4. En el estado <font color=\"#ea7b7b\"><i>\"Siempre\"</i></font> la ventana estará disponible en cada Área de Trabajo de cada una las Actividades."
 
 #: ../package/contents/ui/helptour/TourPage4.qml:10
 msgid "Full Interface"
@@ -389,63 +389,68 @@ msgstr "Espero que este tour te haya ayudado a entender un poco el concepto de l
 msgid "Let's be creative...<br><br/>- End Of Tour -"
 msgstr "Seamos creativos...<br><br/>- Fin del Tour -"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:124
+#: ../package/contents/ui/MainAddActivityButton.qml:168
 msgid "New Activity"
 msgstr "Nueva Actividad"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:130
+#: ../package/contents/ui/MainAddActivityButton.qml:174
 msgid "Add Activity"
 msgstr "Añadir Actividad"
 
-#: ../package/contents/ui/MainAddActivityButton.qml:131
-msgid "You can add an Activity if you want to with default settings."
-msgstr "Puedes agregar una actividad si lo deseas con las configuraciones por defecto."
+#: ../package/contents/ui/MainAddActivityButton.qml:175
+msgid "Add an Activity with default settings."
+msgstr ""
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:102
-msgid "Show/Hide Stopped Activities"
-msgstr "Mostrar/Ocultar las Actividades detenidas"
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:177
+msgid "Show/Hide Stopped Activities List"
+msgstr ""
 
-#: ../package/contents/ui/StoppedActivitiesPanel.qml:103
-msgid "Show or Hide the Stopped Activities in order to enhance your workflow."
-msgstr "Mostrar u Ocultar las Actividades Detenidas para mejorar tu WorkFlow"
+#: ../package/contents/ui/StoppedActivitiesPanel.qml:178
+msgid "Show or Hide the Stopped Activities List to enhance your workflow."
+msgstr ""
+
+#: ../package/contents/ui/TitleMainView.qml:118
+msgid "Unlock Activities"
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:118
 msgid "Lock Activities"
 msgstr "Bloquear Actividades"
 
 #: ../package/contents/ui/TitleMainView.qml:119
-msgid ""
-"You can lock your Activities if you want. In Locked state only Pause and "
-"Restore actions are enabled."
-msgstr "Puedes bloquear tus actividades si lo prefieres. En el estado de bloqueo solamente las instrucciones Pausar y Restaurar están habilitadas."
+msgid "Unlock Activities to enable editing."
+msgstr ""
 
-#: ../package/contents/ui/TitleMainView.qml:170
+#: ../package/contents/ui/TitleMainView.qml:120
+msgid ""
+"Lock Activities to disable editing. In Locked state only Pause and Restore "
+"actions are enabled."
+msgstr ""
+
+#: ../package/contents/ui/TitleMainView.qml:171
 msgid "Show/Hide Windows"
 msgstr "Mostrar/Ocultar las Ventanas"
 
-#: ../package/contents/ui/TitleMainView.qml:171
-msgid ""
-"You can show or hide all the windows shown in order to enhance your "
-"workflow."
-msgstr "Puedes mostrar u ocultar todas las ventanas mostradas para aumentar tu WorkFlow."
+#: ../package/contents/ui/TitleMainView.qml:172
+msgid "Show or hide all windows to enhance your workflow."
+msgstr ""
 
-#: ../package/contents/ui/TitleMainView.qml:255
+#: ../package/contents/ui/TitleMainView.qml:256
 msgid "Enable/Disable Previews"
 msgstr "Habilitar/Deshabilitar Previsualizaciones"
 
-#: ../package/contents/ui/TitleMainView.qml:256
+#: ../package/contents/ui/TitleMainView.qml:257
 msgid ""
-"You can enable/disable window previews only when you place the plasmoid in "
-"the Dashboard.<br/> By <i>\"Pressing and Holding\"</i> the Calibration "
-"Dialog is appearing."
-msgstr "Puedes Habilitar/Deshabilitar las Vistas Previas solamente cuando el plasmoide esta en el Tablero de Mandos. <br/><i>\"Presionando y manteniendo\"</i> el dialogo de calibración esta apareciendo."
+"Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the "
+"Calibration Dialog is appearing."
+msgstr ""
 
-#: ../package/contents/ui/TitleMainView.qml:277
+#: ../package/contents/ui/TitleMainView.qml:278
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:16
 msgid "About Dialog"
 msgstr "Dialogo Acerca"
 
-#: ../package/contents/ui/TitleMainView.qml:278
+#: ../package/contents/ui/TitleMainView.qml:279
 msgid ""
 "This dialog contains information about the application but you can also find"
 " \"Help Tour\" and \"Report Bug\" choices."
@@ -500,36 +505,44 @@ msgid "Reduce X"
 msgstr "Reducir X"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:335
-msgid "You can reduce X offset for the window previews."
-msgstr "Puedes reducir la compensación en X para las Vistas Previas"
+msgid "Reduce X offset for the window previews."
+msgstr "Reducir el desplazamiento en X de las vistas previas."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:376
 msgid "Increase X"
 msgstr "Incrementar X"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:377
-msgid "You can increase X offset for the window previews."
-msgstr "Puedes aumentar la compensación en X para las Vistas Previa"
+msgid "Increase X offset for the window previews."
+msgstr "Aumentar el desplazamiento en X de las vistas previas."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:429
 msgid "Reduce Y"
 msgstr "Reducir Y"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:430
-msgid "You can reduce Y offset for the window previews."
-msgstr "Puedes reducir la compensación en Y para las Vistas Previas"
+msgid "Reduce Y offset for the window previews."
+msgstr "Reducir el desplazamiento en Y de las vistas previas."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:472
 msgid "Increase Y"
 msgstr "Incrementar Y"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:473
-msgid "You can increase Y offset for the window previews."
-msgstr "Puedes aumentar la compensación en Y para las Vistas Previas"
+msgid "Increase Y offset for the window previews."
+msgstr "Aumentar el desplazamiento en Y de las vistas previas."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:495
 msgid "Step 3: Press Ok for confirmation..."
 msgstr "Paso 3: Presiona Ok para confirmar..."
+
+#: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:519
+msgid "Refresh Window Previews"
+msgstr "Actualizar las Vistas Previas"
+
+#: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:520
+msgid "Refresh Window Previews until you see one."
+msgstr ""
 
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:40
 msgid "Are you sure you want to clone activity"
@@ -601,16 +614,16 @@ msgid "Zoom Out"
 msgstr "Alejar"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:31
-msgid "You can zoom out your interface in order to gain more space."
-msgstr "Puedes alejar la interfaz para obtener más espacio"
+msgid "Zoom out your interface to gain more space."
+msgstr "Acercar tu interfaz para ganar mas espacio."
 
 #: ../package/contents/ui/ZoomSliderItem.qml:52
 msgid "Zoom In"
 msgstr "Acercar"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:53
-msgid "You can zoom in your interface in order to focus more on items."
-msgstr "Puedes acercar la interfaz para concentrarte mas en los objetos."
+msgid "Zoom in your interface to focus more on items."
+msgstr "Aleja tu interfaz para enfocarte en más elementos."
 
 #. i18n: file: ../package/contents/ui/config.ui:26
 #. i18n: ectx: property (windowTitle), widget (QWidget, workflowConfig)
@@ -653,7 +666,7 @@ msgstr ""
 #. i18n: file: ../package/contents/ui/config.ui:102
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableBackground)
 #: rc.cpp:21
-msgid "Hide Background"
+msgid "Hide background and use plasma theme"
 msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:109
@@ -674,8 +687,8 @@ msgstr "<html><head/><body><p>Esta opción solamente esta disponible cuando el p
 #. i18n: file: ../package/contents/ui/config.ui:122
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideOnClick)
 #: rc.cpp:30
-msgid "Hide PopUp when clicking a WorkArea"
-msgstr "Ocultar mensaje emergente cuando se hace clic en una Área de Trabajo"
+msgid "Hide popup when clicking a Workarea"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:129
 #. i18n: ectx: property (toolTip), widget (QCheckBox,
@@ -715,7 +728,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:45
 msgid "Appearance"
-msgstr ""
+msgstr "Apariencia"
 
 #: rc.cpp:46
 msgctxt "NAME OF TRANSLATORS"
