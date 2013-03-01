@@ -65,6 +65,7 @@ Item{
         }
         else if(event.key === Qt.Key_F){
             if(ctrlActive){
+                ctrlActive = false;
                 filterCalled = true;
                 filterWindows.forceActiveFocus();
             }
