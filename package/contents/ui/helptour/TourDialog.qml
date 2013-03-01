@@ -8,15 +8,12 @@ import "../../code/settings.js" as Settings
 import org.kde.plasma.components 0.1 as PlasmaComponents
 
 DialogTemplate2 {
-
     id:mainTourWin
 
     //width:mainView.width
     //height:mainView.height
 
     //color: "#ca151515"
-    anchors.centerIn: mainView
-
 
     //insideWidth: mainView.width-5*margins.left-5*margins.right
     insideWidth: mainView.width-margins.left-margins.right-2*closeBtnSize

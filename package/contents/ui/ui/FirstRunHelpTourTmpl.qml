@@ -6,7 +6,6 @@ import org.kde.qtextracomponents 0.1
 
 DialogTemplate2{
     id:firHelpDialog
-    anchors.centerIn: mainView
 
     insideWidth: Math.max(mainTextInf.width,mainTextInf2.width)+110
     insideHeight: infIcon.height+60

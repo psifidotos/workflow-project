@@ -9,7 +9,6 @@ import org.kde.qtextracomponents 0.1
 
 DialogTemplate2{
     id:firCalibDialog
-    anchors.centerIn: mainView
 
     insideWidth: Math.max(mainTextInf.width,mainTextInf2.width)+110
     insideHeight: 10+infIcon.height+mainTextInf2.height+10

@@ -7,7 +7,7 @@ import org.kde.qtextracomponents 0.1
 
 DialogTemplate2{
     id:rmvDialog
-    anchors.centerIn: mainView
+
     property string activityCode
     property string activityName
 

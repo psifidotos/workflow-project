@@ -6,9 +6,6 @@ function createComponents(){
     activityAnimComp = Qt.createComponent("ActivityAnimationMainView.qml");
     taskAnimComp = Qt.createComponent("TaskAnimationMainView.qml");
     btnAnimComp = Qt.createComponent("BtnIconAnimatMainView.qml");
-  //  deskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
-
-  //  rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 }
 
 //Dialogs
@@ -17,94 +14,93 @@ function createComponents(){
 function showRemoveDialog(actId,actName){
     var rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 
-    mainView.removeDialog = rmvDialog.createObject(mainView);
+    uiConnect.removeDialog = rmvDialog.createObject(uiConnect);
 
-    mainView.removeDialog.activityCode = actId;
-    mainView.removeDialog.activityName = actName;
-    mainView.removeDialog.defColor = theme.textColor;
+    uiConnect.removeDialog.activityCode = actId;
+    uiConnect.removeDialog.activityName = actName;
+    uiConnect.removeDialog.defColor = theme.textColor;
 
-    mainView.removeDialog.open();
+    uiConnect.removeDialog.open();
 }
 
 function deleteRemoveDialog(){
-    mainView.removeDialog.destroy();
+    uiConnect.removeDialog.destroy();
 }
 
 ///////////////Clone Dialog/////////////////
 function showCloneDialog(actId,actName){
     var clnDialog = Qt.createComponent("ui/CloningDialogTmpl.qml");
 
-    mainView.cloningDialog = clnDialog.createObject(mainView);
+    uiConnect.cloningDialog = clnDialog.createObject(uiConnect);
 
-    mainView.cloningDialog.activityCode = actId;
-    mainView.cloningDialog.activityName = actName;
-    mainView.cloningDialog.defColor = theme.textColor;
+    uiConnect.cloningDialog.activityCode = actId;
+    uiConnect.cloningDialog.activityName = actName;
+    uiConnect.cloningDialog.defColor = theme.textColor;
 
-    mainView.cloningDialog.open();
+    uiConnect.cloningDialog.open();
 
 }
 
 function deleteCloneDialog(){
-    mainView.cloningDialog.destroy();
+    uiConnect.cloningDialog.destroy();
 }
 
 ///////////////Calibration Dialog/////////////////
 function showCalibrationDialog(){
     var clbDialog = Qt.createComponent("ui/CalibrationDialogTmpl.qml");
 
-    mainView.calibrationDialog = clbDialog.createObject(mainView);
-    mainView.calibrationDialog.defColor = theme.textColor;
+    uiConnect.calibrationDialog = clbDialog.createObject(uiConnect);
+    uiConnect.calibrationDialog.defColor = theme.textColor;
 
-    mainView.calibrationDialog.openD();
+    uiConnect.calibrationDialog.openD();
 }
 
 function deleteCalibrationDialog(){
-    mainView.calibrationDialog.destroy();
+    uiConnect.calibrationDialog.destroy();
 }
 
 ///////////////Desktop Dialog/////////////////
 function showDesktopDialog(actId,desk){
     var dskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
 
-    mainView.desktopDialog = dskDialog.createObject(mainView);
-    mainView.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
-    mainView.desktopDialog.defColor = theme.textColor;
+    uiConnect.desktopDialog = dskDialog.createObject(uiConnect);
+    uiConnect.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
+    uiConnect.desktopDialog.defColor = theme.textColor;
 
-    mainView.desktopDialog.openD(actId,desk);
-
+    uiConnect.desktopDialog.openD(actId,desk);
 }
 
 function deleteDesktopDialog(){
-    mainView.desktopDialog.destroy();
+    uiConnect.desktopDialog.destroy();
 }
 
 ///////////////BusyIndicator Dialog/////////////////
 function showBusyIndicatorDialog(){
     var bsDialog = Qt.createComponent("ui/BusyIndicatorDialogTmpl.qml");
 
-    mainView.busyIndicatorDialog = bsDialog.createObject(mainView);
+    uiConnect.busyIndicatorDialog = bsDialog.createObject(uiConnect);
 
-    mainView.busyIndicatorDialog.startAnimation();
+    uiConnect.busyIndicatorDialog.startAnimation();
 }
 
 function deleteBusyIndicatorDialog(){
-    mainView.busyIndicatorDialog.destroy();
+    uiConnect.busyIndicatorDialog.destroy();
 }
 
 ///////////////LiveTour Dialog/////////////////
 function showLiveTourDialog(){
     var lvDialog = Qt.createComponent("helptour/TourDialog.qml");
 
-    mainView.liveTourDialog = lvDialog.createObject(mainView);
-    mainView.liveTourDialog.defColor = theme.textColor;
+    uiConnect.liveTourDialog = lvDialog.createObject(uiConnect);
+    uiConnect.liveTourDialog.defColor = theme.textColor;
 
-    mainView.liveTourDialog.openD();
+    uiConnect.liveTourDialog.openD();
 
     allActT.forceState1();
 }
 
 function deleteLiveTourDialog(){
-    mainView.liveTourDialog.destroy();
+    uiConnect.liveTourDialog.destroy();
     allActT.unForceState1();
 }
 
@@ -112,44 +108,44 @@ function deleteLiveTourDialog(){
 function showAboutDialog(){
     var abDialog = Qt.createComponent("ui/AboutDialogTmpl.qml");
 
-    mainView.aboutDialog = abDialog.createObject(mainView);
-    mainView.aboutDialog.defColor = theme.textColor;
+    uiConnect.aboutDialog = abDialog.createObject(uiConnect);
+    uiConnect.aboutDialog.defColor = theme.textColor;
 
-    mainView.aboutDialog.openD();
+    uiConnect.aboutDialog.openD();
     allActT.forceState1();
 }
 
 function deleteAboutDialog(){
     allActT.unForceState1();
-    mainView.aboutDialog.destroy();
+    uiConnect.aboutDialog.destroy();
 }
 
 /////////////First Run Help Tour Dialog//////////////////////
 function showFirstHelpTourDialog(){
     var dialog = Qt.createComponent("ui/FirstRunHelpTourTmpl.qml");
 
-    mainView.firstHelpTourDialog = dialog.createObject(mainView);
-    mainView.firstHelpTourDialog.defColor = theme.textColor;
+    uiConnect.firstHelpTourDialog = dialog.createObject(uiConnect);
+    uiConnect.firstHelpTourDialog.defColor = theme.textColor;
 
-    mainView.firstHelpTourDialog.open();
+    uiConnect.firstHelpTourDialog.open();
 }
 
 function deleteFirstHelpTourDialog(){
-    mainView.firstHelpTourDialog.destroy();
+    uiConnect.firstHelpTourDialog.destroy();
 }
 
 /////////////First Run Calibration Dialog//////////////////////
 function showFirstCalibrationDialog(){
     var dialog = Qt.createComponent("ui/FirstRunCalibrationTmpl.qml");
 
-    mainView.firstCalibrationDialog = dialog.createObject(mainView);
-    mainView.firstCalibrationDialog.defColor = theme.textColor;
+    uiConnect.firstCalibrationDialog = dialog.createObject(uiConnect);
+    uiConnect.firstCalibrationDialog.defColor = theme.textColor;
 
-    mainView.firstCalibrationDialog.open();
+    uiConnect.firstCalibrationDialog.open();
 }
 
 function deleteFirstCalibrationDialog(){
-    mainView.firstCalibrationDialog.destroy();
+    uiConnect.firstCalibrationDialog.destroy();
 }
 
 ////////////////////////////////////

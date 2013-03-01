@@ -12,7 +12,6 @@ import org.kde.qtextracomponents 0.1
 
 DialogTemplate2{
     id:deskDialog
-    anchors.centerIn: mainView
 
     property string dialogType:"DesktopDialog"
 

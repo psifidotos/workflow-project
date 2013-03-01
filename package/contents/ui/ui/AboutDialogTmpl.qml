@@ -8,7 +8,6 @@ import "../helptour"
 
 DialogTemplate2{
     id:aboutDialogT
-    anchors.centerIn: mainView
 
     insideWidth: page1.width
     insideHeight: page1.height

@@ -310,95 +310,10 @@ Rectangle {
         }
     }
 
-    /*--------------------Dialogs ---------------- */
 
-    //Just to ignore the warnings
-    signal completed;
-    property bool disablePreviews;
-
-    property variant removeDialog:mainView
-    property variant cloningDialog:mainView
-    property variant desktopDialog:mainView
-    property variant calibrationDialog:mainView
-    property variant busyIndicatorDialog:mainView
-
-    property variant liveTourDialog:mainView
-    property variant aboutDialog:mainView
-
-    property variant firstHelpTourDialog:mainView
-    property variant firstCalibrationDialog:mainView
-
-    /************* Deleteing Dialogs  ***********************/
-    Connections{
-        target:removeDialog
-        onCompleted:{
-            //   console.debug("Delete Remove...");
-            mainView.getDynLib().deleteRemoveDialog();
-        }
+    UIConnections{
+        id:uiConnect
     }
-
-    Connections{
-        target:cloningDialog
-        onCompleted:{
-            //    console.debug("Delete Cloning...");
-            mainView.getDynLib().deleteCloneDialog();
-        }
-    }
-
-    Connections{
-        target:desktopDialog
-        onCompleted:{
-            //  console.debug("Delete Desktop Dialog...");
-            mainView.getDynLib().deleteDesktopDialog();
-        }
-
-        onDisablePreviewsChanged:{
-            mainView.disablePreviewsWasForcedInDesktopDialog = desktopDialog.disablePreviewsWasForced;
-        }
-    }
-
-    Connections{
-        target:calibrationDialog
-        onCompleted:{
-            //  console.debug("Delete Calibration Dialog...");
-            mainView.getDynLib().deleteCalibrationDialog();
-        }
-    }
-
-    Connections{
-        target:liveTourDialog
-        onCompleted:{
-            // console.debug("Delete Livetour Dialog...");
-            mainView.getDynLib().deleteLiveTourDialog();
-        }
-    }
-
-    Connections{
-        target:aboutDialog
-        onCompleted:{
-            mainView.getDynLib().deleteAboutDialog();
-        }
-    }
-
-    Connections{
-        target:firstHelpTourDialog
-        onCompleted:{
-            mainView.getDynLib().deleteFirstHelpTourDialog();
-            if(Settings.global.firstRunLiveTour === false)
-                Settings.global.firstRunLiveTour = true;
-        }
-    }
-
-    Connections{
-        target:firstCalibrationDialog
-        onCompleted:{
-            mainView.getDynLib().deleteFirstCalibrationDialog();
-            if(Settings.global.firstRunCalibrationPreviews === false){
-                Settings.global.firstRunCalibrationPreviews = true;
-            }
-        }
-    }
-
    // CalibrationDialogTmpl{}
   //      TourDialog{
   //  }
