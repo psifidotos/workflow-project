@@ -1,6 +1,6 @@
 #include "info.h"
 
-namespace Workareas{
+//namespace Workareas{
 
 Info::Info(QString id,QObject *parent) :
     QObject(parent),
@@ -74,9 +74,9 @@ void Info::renameWorkarea(int desktop, QString name)
     }
 }
 
-Workareas::Info *Info::copy(QObject *parent)
+Info *Info::copy(QObject *parent)
 {
-    Workareas::Info *copy = new Workareas::Info(m_id, parent);
+    Info *copy = new Info(m_id, parent);
 
     copy->setBackground(m_background);
     foreach (const QString &name, m_workareas)
@@ -85,6 +85,6 @@ Workareas::Info *Info::copy(QObject *parent)
     return copy;
 }
 
-}
+//}
 
 #include "info.moc"

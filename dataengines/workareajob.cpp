@@ -1,11 +1,11 @@
 #include "workareajob.h"
 
-#include "workareas/store.h"
+#include "../qdbus/client/storeinterface.h"
 
 WorkareaJob::WorkareaJob(const QString &id,
                                      const QString &operation,
                                      QMap<QString, QVariant> &parameters,
-                                     Workareas::Store *store,
+                                     StoreInterface *store,
                                      QObject *parent) :
     ServiceJob(parent->objectName(), operation, parameters, parent),
     m_id(id),
@@ -30,7 +30,7 @@ void WorkareaJob::start()
         QString name = parameters()["Name"].toString();
 
         if(m_store)
-            m_store->addWorkarea(m_id, name);
+            m_store->AddWorkarea(m_id, name);
 
         setResult("name: " + name);
         return;
@@ -40,7 +40,7 @@ void WorkareaJob::start()
         int desktop = parameters()["Desktop"].toInt();
 
         if(m_store)
-            m_store->removeWorkarea(m_id, desktop);
+            m_store->RemoveWorkarea(m_id, desktop);
 
         setResult("remove workarea: " + desktop);
         return;
@@ -51,7 +51,7 @@ void WorkareaJob::start()
         int desktop = parameters()["Desktop"].toInt();
 
         if(m_store)
-            m_store->renameWorkarea(m_id, desktop, name);
+            m_store->RenameWorkarea(m_id, desktop, name);
 
         setResult("rename workarea: " + name);
         return;
@@ -61,7 +61,7 @@ void WorkareaJob::start()
         QString activity = parameters()["Activity"].toString();
 
         if(m_store)
-            m_store->cloneActivity(m_id, activity);
+            m_store->CloneActivity(m_id, activity);
 
         setResult("clone activity: " + activity);
         return;
@@ -71,18 +71,18 @@ void WorkareaJob::start()
         int order = parameters()["Order"].toInt();
 
         if(m_store)
-            m_store->moveActivity(m_id, order-1);
+            m_store->MoveActivity(m_id, order-1);
 
         setResult("activity order: " + QString::number(order));
         return;
     }
     else if (operation == "setCurrentNextActivity") {
-        m_store->setCurrentNextActivity();
+        m_store->SetCurrentNextActivity();
         setResult("next activity... ");
         return;
     }
     else if (operation == "setCurrentPreviousActivity") {
-        m_store->setCurrentPreviousActivity();
+        m_store->SetCurrentPreviousActivity();
         setResult("previous activity... ");
         return;
     }

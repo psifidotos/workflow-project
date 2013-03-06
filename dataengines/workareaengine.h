@@ -7,9 +7,9 @@
 #include <Plasma/DataEngine>
 #include <KActionCollection>
 
-namespace Workareas{
-    class Store;
-}
+//namespace Workareas{
+    class StoreInterface;
+//}
 
 
 class WorkareaEngine : public Plasma::DataEngine
@@ -28,21 +28,21 @@ private slots:
     void nextActivitySlot();
     void previousActivitySlot();
 
-    void workareaAddedSlot(QString,QString);
-    void workareaRemovedSlot(QString,int);
-    void workareaInfoUpdatedSlot(QString);
+    void workareaAddedSlot(QString, QStringList);
+    void workareaRemovedSlot(QString, QStringList);
+    void activityInfoUpdatedSlot(QString, QString, QStringList);
 
-    void activitiesOrderChangedSlot();
+    void activitiesOrderChangedSlot(QStringList);
 
     void maxWorkareasChangedSlot(int);
 private:
-    Workareas::Store *m_store;
+    StoreInterface *m_store;
+    //Workareas::Store *m_store;
     KActionCollection *actionCollection;
-    QSignalMapper * m_signalMapper;
     //void insertDesktop(const int id, const QString activity);
 
     void loadActivity(QString);
-    void updateOrders();
+    void updateOrders(QStringList);
 };
 
 #endif /*WORKAREAENGINE_H */

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QStringList>
 
-namespace Workareas{
+//namespace Workareas{
 
 class Info : public QObject
 {
@@ -29,7 +29,7 @@ protected:
     void renameWorkarea(int desktop, QString name);
     void removeWorkarea(int desktop);
 
-    Workareas::Info *copy(QObject *parent = 0);
+    Info *copy(QObject *parent = 0);
 private:
     QString m_id;
     QString m_background;
@@ -40,5 +40,5 @@ private:
     friend class Store;
 };
 
-}
+//}
 #endif // INFO_H

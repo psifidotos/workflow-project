@@ -22,6 +22,7 @@ include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+#add_subdirectory(qdbus)
 add_subdirectory(components)
 add_subdirectory(package)
 add_subdirectory(dataengines)

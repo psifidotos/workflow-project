@@ -27,22 +27,22 @@
 
 using namespace Plasma;
 
-namespace Workareas{
-    class Store;
-}
+//namespace Workareas{
+    class StoreInterface;
+//}
 
 class WorkareaService : public Plasma::Service
 {
     Q_OBJECT
 
 public:
-    WorkareaService(const QString &source, Workareas::Store *store);
+    WorkareaService(const QString &source, StoreInterface *store);
     ServiceJob *createJob(const QString &operation,
                           QMap<QString, QVariant> &parameters);
 
 private:
     QString m_id;
-    Workareas::Store *m_store;
+    StoreInterface *m_store;
 };
 
 #endif

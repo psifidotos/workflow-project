@@ -10,12 +10,14 @@ class PluginUpdateWorkareasName;
 class PluginSyncActivitiesWorkareas;
 class PluginFindWallpaper;
 
-namespace Workareas{
+//namespace Workareas{
 class Info;
+//}
 
 class Store : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager.Store")
 
 public:
     explicit Store(QObject *parent = 0);
@@ -23,36 +25,38 @@ public:
 
     void initBackgrounds();
 
-    void addWorkarea(QString id, QString name);
-    void removeWorkarea(QString id, int desktop);
-    void renameWorkarea(QString id, int desktop, QString name);
+public Q_SLOTS:
+    void SetCurrentNextActivity();
+    void SetCurrentPreviousActivity();
+
+    void AddWorkarea(QString id, QString name);
+    void RemoveWorkarea(QString id, int desktop);
+    void RenameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models
-    void cloneActivity(QString, QString);
-    void moveActivity(QString, int);
+    void CloneActivity(QString, QString);
+    void MoveActivity(QString, int);
 
-    void setUpdateBackgrounds(bool);
+    void SetUpdateBackgrounds(bool);
 
-    Workareas::Info *get(QString);
-    int maxWorkareas() const;
-    QStringList activities() const;   
+    int MaxWorkareas() const;
+    QStringList Activities() const;
+    QString ActivityBackground(QString actId);
+    QStringList Workareas(QString actId);
 
-public slots:
-    void setBackground(QString, QString);
-    void setCurrentNextActivity();
-    void setCurrentPreviousActivity();
+Q_SIGNALS:
+    void ActivityAdded(QString id);
+    void ActivityRemoved(QString id);
 
-signals:
-    void activityAdded(QString id);
-    void activityRemoved(QString id);
+    void WorkareaAdded(QString id, QStringList workareas);
+    void WorkareaRemoved(QString id, QStringList workareas);
+    void ActivityInfoUpdated(QString id, QString background, QStringList workareas);
 
-    void workareaAdded(QString id, QString name);
-    void workareaRemoved(QString id, int position);
-    void workareaInfoUpdated(QString id);
+    void ActivityOrdersChanged(QStringList activities);
 
-    void activityOrdersChanged();
+    void MaxWorkareasChanged(int);
 
-    void maxWorkareasChanged(int);
 private slots:
+    void setBackground(QString, QString);
     void activityAddedSlot(QString);
     void activityRemovedSlot(QString);
 
@@ -66,8 +70,8 @@ protected:
     void init();
 
 private:
-  //  QHash <QString, Workareas::Info *> m_workareasHash;
-    QList <Workareas::Info *> m_workareasList;
+  //  QHash <QString, Info *> m_workareasHash;
+    QList <Info *> m_workareasList;
 
     KActivities::Controller *m_activitiesController;
 
@@ -88,8 +92,10 @@ private:
     QString nextRunningActivity();
     QString previousRunningActivity();
     int findActivity(QString activityId);
+    Info *get(QString);
+    void createActivityChangedSignal(QString actId);
 };
 
-}
+//}
 
 #endif // STORE_H
