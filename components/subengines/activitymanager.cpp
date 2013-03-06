@@ -222,13 +222,15 @@ QString ActivityManager::chooseIcon(QString id)
 }
 
 void ActivityManager::add(QString name) {
-    if(!m_plAddActivity){
-        m_plAddActivity = new PluginAddActivity(this, m_activitiesCtrl);
+  //  if(!m_plAddActivity){
+  //      m_plAddActivity = new PluginAddActivity(this, m_activitiesCtrl);
 
-        connect(m_plAddActivity, SIGNAL(addActivityEnded()), this, SLOT(addActivityEnded()) );
+        //connect(m_plAddActivity, SIGNAL(addActivityEnded()), this, SLOT(addActivityEnded()) );
 
-        m_plAddActivity->execute(name);
-    }
+        //m_plAddActivity->execute(name);
+    //}
+    m_activitiesCtrl->addActivity(name);
+
 }
 
 void ActivityManager::setCurrent(QString id) {
