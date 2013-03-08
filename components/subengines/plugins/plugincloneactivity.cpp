@@ -86,13 +86,13 @@ void PluginCloneActivity::timerTrigerred(){
 void PluginCloneActivity::initCloningPhase02()
 {
     m_timerPhase = 2;
-    m_timer->start(300);
+    m_timer->start(600);
 }
 
 void PluginCloneActivity::initCloningPhase04()
 {
     m_timerPhase = 4;
-    m_timer->start(300);
+    m_timer->start(600);
 }
 
 

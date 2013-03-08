@@ -36,6 +36,7 @@ class PluginFindWallpaper : public QObject{
     void activityAddedSlot(QString);
     void activityStateChangedSlot();
     void currentActivityChangedSlot(QString);
+    void currentDesktopChangedSlot(int);
 
   private:
     KActivities::Controller *m_activitiesCtrl;
@@ -49,6 +50,8 @@ class PluginFindWallpaper : public QObject{
     QString getWallpaper(QString source);
 
     KStandardDirs kStdDrs;
+    QString m_previousActivity;
+    int m_previousDesktop;
   //  Plasma::Containment *m_mainContainment;
 
 };

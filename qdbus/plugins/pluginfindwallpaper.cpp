@@ -8,12 +8,15 @@
 #include <Plasma/Containment>
 
 #include <KActivities/Controller>
+#include <KWindowSystem>
 
 PluginFindWallpaper::PluginFindWallpaper(KActivities::Controller *actControl, QObject *parent):
     QObject(parent),
     m_activitiesCtrl(actControl),
     m_active(true)
 {
+    m_previousActivity = m_activitiesCtrl->currentActivity();
+    m_previousDesktop = KWindowSystem::self()->currentDesktop();
 }
 
 PluginFindWallpaper::~PluginFindWallpaper()
@@ -24,6 +27,7 @@ void PluginFindWallpaper::initBackgrounds()
 {
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
+    connect(KWindowSystem::self(), SIGNAL(currentDesktopChanged(int)), this, SLOT(currentDesktopChangedSlot(int)) );
 
     //Load backgrounds in the beginning
     QStringList activities = m_activitiesCtrl->listActivities();
@@ -189,6 +193,20 @@ void PluginFindWallpaper::currentActivityChangedSlot(QString id)
     if(m_active){
         QString wallpaper = getWallpaper(id);
         emit updateWallpaper( id, wallpaper );
+
+        QString prevWallpaper = getWallpaper(m_previousActivity);
+        emit updateWallpaper( m_previousActivity , prevWallpaper );
+        m_previousActivity = id;
     }
 }
 
+void PluginFindWallpaper::currentDesktopChangedSlot(int desktop)
+{
+    if(m_active){
+        if(desktop != m_previousDesktop){
+            QString wallpaper = getWallpaper(m_previousActivity);
+            emit updateWallpaper( m_previousActivity, wallpaper );
+            m_previousDesktop = desktop;
+        }
+    }
+}
