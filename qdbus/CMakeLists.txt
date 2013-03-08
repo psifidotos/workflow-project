@@ -55,19 +55,14 @@ set_target_properties (workarea-manager
 
 ########### install application ###############
 
-#install (FILES
-#    files/kactivitymanagerd.desktop
-#    DESTINATION ${SERVICES_INSTALL_DIR}
-#    )
+install (FILES
+    workareamanagerd.desktop
+    DESTINATION ${SERVICES_INSTALL_DIR}
+    )
 
-#install (TARGETS
-#    activity-manager ${INSTALL_TARGETS_DEFAULT_ARGS}
-#    )
-
-#install (FILES
-#    files/activitymanager-plugin.desktop
-#    DESTINATION ${SERVICETYPES_INSTALL_DIR}
-#    )
+install (TARGETS
+    workarea-manager ${INSTALL_TARGETS_DEFAULT_ARGS}
+    )
 
 install(FILES workareas.kcfg
         DESTINATION ${KCFG_INSTALL_DIR}

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+Icon=preferences-activities
+X-KDE-ServiceTypes=
+X-DBUS-StartupType=Unique
+X-KDE-StartupNotify=false
+Exec=workareamanagerd
+
+Name=Workarea Manager
+
+Comment=The workarea management backend
