@@ -7,6 +7,7 @@
 #include "../qdbus/client/storeinterface.h"
 
 #include <QDBusPendingReply>
+#include <QDBusServiceWatcher>
 #include <QDebug>
 
 #include <KAction>
@@ -29,46 +30,65 @@ WorkareaEngine::~WorkareaEngine()
 
 void WorkareaEngine::init()
 {
-  //  m_store = new Workareas::Store(this);
-    QStringList activities = m_store->Activities();
-    foreach(QString activity, activities)
-        activityAddedSlot(activity);
 
-    connect(m_store, SIGNAL(ActivityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
-    connect(m_store, SIGNAL(ActivityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
-    connect(m_store, SIGNAL(WorkareaAdded(QString,QStringList)), this, SLOT(workareaAddedSlot(QString, QStringList)));
-    connect(m_store, SIGNAL(WorkareaRemoved(QString, QStringList)), this, SLOT(workareaRemovedSlot(QString, QStringList)));
-    connect(m_store, SIGNAL(ActivityInfoUpdated(QString,QString,QStringList)), this, SLOT(activityInfoUpdatedSlot(QString,QString,QStringList)));
+    // Listen to activitymanagerd for starting/stopping
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.opentoolsandspace.WorkareaManager",
+                                                           QDBusConnection::sessionBus(),
+                                                           QDBusServiceWatcher::WatchForRegistration);
+    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
 
-    connect(m_store, SIGNAL(ActivityOrdersChanged(QStringList)), this, SLOT(activitiesOrderChangedSlot(QStringList)));
-
-    connect(m_store, SIGNAL(MaxWorkareasChanged(int)), this, SLOT(maxWorkareasChangedSlot(int)));
-
-  //  m_store->initBackgrounds();
-
-    QDBusPendingReply<int> replyMaxWorkareas = m_store->MaxWorkareas();
-    replyMaxWorkareas.waitForFinished();
-    if(!replyMaxWorkareas.isError())
-        setData("Settings", "MaxWorkareas", replyMaxWorkareas.value());
-    else{
-        setData("Settings", "MaxWorkareas", 1);
-        qDebug() << replyMaxWorkareas.error();
+    if( (watcher->connection()).isConnected()){
+            initSession();
     }
-//    setData("Settings", "MaxWorkareas", m_store->MaxWorkareas());
+}
+
+void WorkareaEngine::managerServiceRegistered()
+{
+    initSession();
+}
+
+void WorkareaEngine::initSession()
+{
+    //  m_store = new Workareas::Store(this);
+      QStringList activities = m_store->Activities();
+      foreach(QString activity, activities)
+          activityAddedSlot(activity);
+
+      connect(m_store, SIGNAL(ActivityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
+      connect(m_store, SIGNAL(ActivityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
+      connect(m_store, SIGNAL(WorkareaAdded(QString,QStringList)), this, SLOT(workareaAddedSlot(QString, QStringList)));
+      connect(m_store, SIGNAL(WorkareaRemoved(QString, QStringList)), this, SLOT(workareaRemovedSlot(QString, QStringList)));
+      connect(m_store, SIGNAL(ActivityInfoUpdated(QString,QString,QStringList)), this, SLOT(activityInfoUpdatedSlot(QString,QString,QStringList)));
+
+      connect(m_store, SIGNAL(ActivityOrdersChanged(QStringList)), this, SLOT(activitiesOrderChangedSlot(QStringList)));
+
+      connect(m_store, SIGNAL(MaxWorkareasChanged(int)), this, SLOT(maxWorkareasChangedSlot(int)));
+
+    //  m_store->initBackgrounds();
+
+      QDBusPendingReply<int> replyMaxWorkareas = m_store->MaxWorkareas();
+      replyMaxWorkareas.waitForFinished();
+      if(!replyMaxWorkareas.isError())
+          setData("Settings", "MaxWorkareas", replyMaxWorkareas.value());
+      else{
+          setData("Settings", "MaxWorkareas", 1);
+          qDebug() << replyMaxWorkareas.error();
+      }
+  //    setData("Settings", "MaxWorkareas", m_store->MaxWorkareas());
 
 
-    //Global Shortcuts//
-    actionCollection = new KActionCollection(this);
-    actionCollection->setConfigGlobal(true);
-    actionCollection->setConfigGroup("workareas");
+      //Global Shortcuts//
+      actionCollection = new KActionCollection(this);
+      actionCollection->setConfigGlobal(true);
+      actionCollection->setConfigGroup("workareas");
 
-    KAction* a;
-    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Next Activity", this, SLOT(nextActivitySlot())));
-    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Tab));
-    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Previous Activity", this, SLOT(previousActivitySlot())));
-    a->setGlobalShortcut(KShortcut( (Qt::META + Qt::SHIFT) + Qt::Key_Tab));
+      KAction* a;
+      a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Next Activity", this, SLOT(nextActivitySlot())));
+      a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Tab));
+      a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Previous Activity", this, SLOT(previousActivitySlot())));
+      a->setGlobalShortcut(KShortcut( (Qt::META + Qt::SHIFT) + Qt::Key_Tab));
 
-    actionCollection->writeSettings();
+      actionCollection->writeSettings();
 }
 
 Plasma::Service * WorkareaEngine::serviceForSource(const QString &source)

@@ -21,6 +21,7 @@ public:
 
     Plasma::Service *serviceForSource(const QString &source);
     void init();
+    void initSession();
 
 private slots:
     void activityAddedSlot(QString id);
@@ -35,6 +36,8 @@ private slots:
     void activitiesOrderChangedSlot(QStringList);
 
     void maxWorkareasChangedSlot(int);
+
+    void managerServiceRegistered();
 private:
     StoreInterface *m_store;
     //Workareas::Store *m_store;
