@@ -1,0 +1,72 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.opentoolsandspace.WorkareaManager">
+    <signal name="ActivityAdded">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="ActivityRemoved">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="WorkareaAdded">
+      <arg name="id" type="s" direction="out"/>
+      <arg name="workareas" type="as" direction="out"/>
+    </signal>
+    <signal name="WorkareaRemoved">
+      <arg name="id" type="s" direction="out"/>
+      <arg name="workareas" type="as" direction="out"/>
+    </signal>
+    <signal name="ActivityInfoUpdated">
+      <arg name="id" type="s" direction="out"/>
+      <arg name="background" type="s" direction="out"/>
+      <arg name="workareas" type="as" direction="out"/>
+    </signal>
+    <signal name="ActivityOrdersChanged">
+      <arg name="activities" type="as" direction="out"/>
+    </signal>
+    <signal name="MaxWorkareasChanged">
+      <arg type="i" direction="out"/>
+    </signal>
+    <method name="SetCurrentNextActivity">
+    </method>
+    <method name="SetCurrentPreviousActivity">
+    </method>
+    <method name="AddWorkarea">
+      <arg name="id" type="s" direction="in"/>
+      <arg name="name" type="s" direction="in"/>
+    </method>
+    <method name="RemoveWorkarea">
+      <arg name="id" type="s" direction="in"/>
+      <arg name="desktop" type="i" direction="in"/>
+    </method>
+    <method name="RenameWorkarea">
+      <arg name="id" type="s" direction="in"/>
+      <arg name="desktop" type="i" direction="in"/>
+      <arg name="name" type="s" direction="in"/>
+    </method>
+    <method name="CloneActivity">
+      <arg type="s" direction="in"/>
+      <arg type="s" direction="in"/>
+    </method>
+    <method name="MoveActivity">
+      <arg type="s" direction="in"/>
+      <arg type="i" direction="in"/>
+    </method>
+    <method name="SetUpdateBackgrounds">
+      <arg type="b" direction="in"/>
+    </method>
+    <method name="MaxWorkareas">
+      <arg type="i" direction="out"/>
+    </method>
+    <method name="Activities">
+      <arg type="as" direction="out"/>
+    </method>
+    <method name="ActivityBackground">
+      <arg type="s" direction="out"/>
+      <arg name="actId" type="s" direction="in"/>
+    </method>
+    <method name="Workareas">
+      <arg type="as" direction="out"/>
+      <arg name="actId" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

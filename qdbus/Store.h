@@ -3,45 +3,46 @@
 
 #include <QObject>
 #include <QHash>
+#include <QDBusContext>
 
+#include <KDEDModule>
 #include <KActivities/Controller>
 
 class PluginUpdateWorkareasName;
 class PluginSyncActivitiesWorkareas;
 class PluginFindWallpaper;
 
-//namespace Workareas{
 class Info;
-//}
 
-class Store : public QObject
+class Store : public KDEDModule,
+              protected QDBusContext
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager.Store")
+//    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager")
 
 public:
-    explicit Store(QObject *parent = 0);
+    explicit Store(QObject* parent, const QList<QVariant>&);
     ~Store();
 
     void initBackgrounds();
 
 public Q_SLOTS:
-    void SetCurrentNextActivity();
-    void SetCurrentPreviousActivity();
+    Q_SCRIPTABLE void SetCurrentNextActivity();
+    Q_SCRIPTABLE void SetCurrentPreviousActivity();
 
-    void AddWorkarea(QString id, QString name);
-    void RemoveWorkarea(QString id, int desktop);
-    void RenameWorkarea(QString id, int desktop, QString name);
+    Q_SCRIPTABLE void AddWorkarea(QString id, QString name);
+    Q_SCRIPTABLE void RemoveWorkarea(QString id, int desktop);
+    Q_SCRIPTABLE void RenameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models
-    void CloneActivity(QString, QString);
-    void MoveActivity(QString, int);
+    Q_SCRIPTABLE void CloneActivity(QString, QString);
+    Q_SCRIPTABLE void MoveActivity(QString, int);
 
-    void SetUpdateBackgrounds(bool);
+    Q_SCRIPTABLE void SetUpdateBackgrounds(bool);
 
-    int MaxWorkareas() const;
-    QStringList Activities() const;
-    QString ActivityBackground(QString actId);
-    QStringList Workareas(QString actId);
+    Q_SCRIPTABLE int MaxWorkareas() const;
+    Q_SCRIPTABLE QStringList Activities() const;
+    Q_SCRIPTABLE QString ActivityBackground(QString actId);
+    Q_SCRIPTABLE QStringList Workareas(QString actId);
 
 Q_SIGNALS:
     void ActivityAdded(QString id);
@@ -78,6 +79,7 @@ private:
     bool m_loading;
     int m_maxWorkareas;
     int m_nextDefaultWallpaper;
+    QString m_service;
 
     PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
     PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
@@ -91,6 +93,8 @@ private:
     QString getNextDefWallpaper();
     QString nextRunningActivity();
     QString previousRunningActivity();
+    bool connectToBus(const QString& service = QString(), const QString& path = QString());
+
     int findActivity(QString activityId);
     Info *get(QString);
     void createActivityChangedSignal(QString actId);

@@ -16,7 +16,7 @@ WorkareaEngine::WorkareaEngine(QObject *parent, const QVariantList& args)
       m_store(0),
       actionCollection(0)
 {
-    m_store = new StoreInterface("org.opentoolsandspace.WorkareaManager", "/Store", QDBusConnection::sessionBus(), 0);
+    m_store = new StoreInterface("org.kde.kded", "/modules/workareamanagerd", QDBusConnection::sessionBus(), 0);
 }
 
 WorkareaEngine::~WorkareaEngine()

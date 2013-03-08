@@ -16,10 +16,20 @@
 
 #include "info.h"
 
-//namespace Workareas{
 
-Store::Store(QObject *parent) :
-    QObject(parent),
+#include <KPluginFactory>
+#include <KPluginLoader>
+
+K_PLUGIN_FACTORY(StoreFactory,
+                 registerPlugin<Store>();
+    )
+K_EXPORT_PLUGIN(StoreFactory("workareamanagerd"))
+
+static const char* DBUS_SERVICE = "org.kde.kded";
+static const char* DBUS_OBJECT_PATH = "/modules/workareamanagerd";
+
+Store::Store(QObject* parent, const QList<QVariant>&) :
+    KDEDModule(parent),
     m_activitiesController(new KActivities::Controller(this)),
     m_loading(false),
     m_maxWorkareas(0),
@@ -28,13 +38,16 @@ Store::Store(QObject *parent) :
     m_plgSyncActivitiesWorkareas(0),
     m_plgFindWallpaper(0)
 {
-    new StoreAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(
-                "/Store", this);
+ //   new StoreAdaptor(this);
+  //  QDBusConnection::sessionBus().registerObject(
+   //             "/Store", this);
+    
 
-    init();
+    //connectToBus();
 
-    loadWorkareas();
+    //init();
+
+   // loadWorkareas();
 }
 
 Store::~Store()
@@ -59,6 +72,20 @@ Store::~Store()
 
     if(m_plgFindWallpaper)
         delete m_plgFindWallpaper;
+}
+
+bool Store::connectToBus(const QString& service, const QString& path)
+{
+    m_service = service.isEmpty() ? DBUS_SERVICE : service;
+    QString newPath = path.isEmpty() ? DBUS_OBJECT_PATH : path;
+
+    if (!QDBusConnection::sessionBus().registerService(m_service)) {
+        return false;
+    }
+    new StoreAdaptor(this);
+    QDBusConnection::sessionBus().registerObject(newPath, this);
+
+    return true;
 }
 
 void Store::init()
