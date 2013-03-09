@@ -43,6 +43,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE QStringList Activities() const;
     Q_SCRIPTABLE QString ActivityBackground(QString actId);
     Q_SCRIPTABLE QStringList Workareas(QString actId);
+    Q_SCRIPTABLE bool ServiceStatus();
 
 Q_SIGNALS:
     void ActivityAdded(QString id);
@@ -55,6 +56,7 @@ Q_SIGNALS:
     void ActivityOrdersChanged(QStringList activities);
 
     void MaxWorkareasChanged(int);
+    void ServiceStatusChanged(bool);
 
 private slots:
     void setBackground(QString, QString);
@@ -67,8 +69,15 @@ private slots:
 
     void pluginUpdateWorkareasNameSlot(int);
 
+    void managerServiceRegistered();
+    void onServiceStatusChanged (KActivities::Consumer::ServiceStatus status);
+
+    //init thread
+    void handleActivityReply();
+
 protected:
-    void init();
+    void initSignals();
+    void initSession();
 
 private:
   //  QHash <QString, Info *> m_workareasHash;
@@ -80,6 +89,7 @@ private:
     int m_maxWorkareas;
     int m_nextDefaultWallpaper;
     QString m_service;
+    bool m_isRunning;
 
     PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
     PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
@@ -98,6 +108,8 @@ private:
     int findActivity(QString activityId);
     Info *get(QString);
     void createActivityChangedSignal(QString actId);
+    //init thread
+    void updateActivityList();
 };
 
 //}

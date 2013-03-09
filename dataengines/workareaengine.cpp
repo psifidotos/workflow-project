@@ -30,21 +30,18 @@ WorkareaEngine::~WorkareaEngine()
 
 void WorkareaEngine::init()
 {
+    connect(m_store, SIGNAL(ServiceStatusChanged(bool)), this, SLOT(managerServiceRegistered(bool)));
 
-    // Listen to activitymanagerd for starting/stopping
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.opentoolsandspace.WorkareaManager",
-                                                           QDBusConnection::sessionBus(),
-                                                           QDBusServiceWatcher::WatchForRegistration);
-    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
-
-    if( (watcher->connection()).isConnected()){
-            initSession();
+    if(m_store->ServiceStatus()){
+        initSession();
     }
 }
 
-void WorkareaEngine::managerServiceRegistered()
+void WorkareaEngine::managerServiceRegistered(bool status)
 {
-    initSession();
+    if (status){
+        initSession();
+    }
 }
 
 void WorkareaEngine::initSession()

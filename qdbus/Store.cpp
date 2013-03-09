@@ -1,15 +1,20 @@
 #include "Store.h"
 
 #include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusReply>
 #include <QDebug>
 #include <QList>
+#include <QVariant>
 
 #include <KActivities/Controller>
+#include <KActivities/Consumer>
 #include <KActivities/Info>
+#include <KWindowSystem>
 
 #include "storeadaptor.h"
 #include "workareasdata.h"
-#include <taskmanager/task.h>
+//#include <taskmanager/task.h>
 #include "plugins/pluginupdateworkareasname.h"
 #include "plugins/pluginsyncactivitiesworkareas.h"
 #include "plugins/pluginfindwallpaper.h"
@@ -22,7 +27,7 @@
 
 K_PLUGIN_FACTORY(StoreFactory,
                  registerPlugin<Store>();
-    )
+)
 K_EXPORT_PLUGIN(StoreFactory("workareamanagerd"))
 
 static const char* DBUS_SERVICE = "org.kde.kded";
@@ -34,20 +39,26 @@ Store::Store(QObject* parent, const QList<QVariant>&) :
     m_loading(false),
     m_maxWorkareas(0),
     m_nextDefaultWallpaper(0),
+    m_isRunning(false),
     m_plgUpdateWorkareasName(0),
     m_plgSyncActivitiesWorkareas(0),
     m_plgFindWallpaper(0)
 {
- //   new StoreAdaptor(this);
-  //  QDBusConnection::sessionBus().registerObject(
-   //             "/Store", this);
-    
+ /*
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.kde.kactivitymanagerd",
+                                                           QDBusConnection::sessionBus(),
+                                                           QDBusServiceWatcher::WatchForRegistration);
+    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
 
-    //connectToBus();
-
-    //init();
-
-   // loadWorkareas();
+    QDBusServiceWatcher *watcher2 = new QDBusServiceWatcher("org.kde.kwin",
+                                                            QDBusConnection::sessionBus(),
+                                                            QDBusServiceWatcher::WatchForRegistration);
+    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
+*/
+   // connect(m_activitiesController, SIGNAL(serviceStatusChanged(KActivities::Consumer::ServiceStatus)),
+         //   this, SLOT(onServiceStatusChanged(KActivities::Consumer::ServiceStatus)));
+  //  managerServiceRegistered();
+    updateActivityList();
 }
 
 Store::~Store()
@@ -74,6 +85,93 @@ Store::~Store()
         delete m_plgFindWallpaper;
 }
 
+//Create a separate thread in order to trigger initialization based on the
+//kwin approach in workspace.cpp
+static QStringList
+fetchActivityList(KActivities::Controller *controller) // could be member function, but actually it's much simpler this way
+{
+    return controller->listActivities();
+}
+
+void Store::updateActivityList()
+{
+    QFutureWatcher<QStringList>* watcher = new QFutureWatcher<QStringList>;
+    connect( watcher, SIGNAL(finished()), SLOT(handleActivityReply()) );
+    watcher->setFuture(QtConcurrent::run(fetchActivityList, m_activitiesController ));
+}
+
+void Store::handleActivityReply()
+{
+    QObject *watcherObject = 0;
+    if (QFutureWatcher<QStringList>* watcher = dynamic_cast< QFutureWatcher<QStringList>* >(sender())) {
+        QStringList res = watcher->result();
+        qDebug() << res;
+        //now the initialization can be started
+        initSession();
+    }
+
+    if (watcherObject) {
+        watcherObject->deleteLater(); // has done it's job
+    }
+}
+/////////////////End of thread definition......
+
+void Store::managerServiceRegistered()
+{
+
+ /*   QDBusServiceWatcher *watcher1 = new QDBusServiceWatcher("org.kde.kactivitymanagerd",
+                                                     QDBusConnection::sessionBus(),
+                                             QDBusServiceWatcher::WatchForRegistration);
+
+    QDBusServiceWatcher *watcher2 = new QDBusServiceWatcher("org.kde.kwin",
+                                                       QDBusConnection::sessionBus(),
+                                                          QDBusServiceWatcher::WatchForRegistration);
+
+    QDBusMessage message1;
+    message1 = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.DBus"),
+                                              QLatin1String("/"),
+                                              QLatin1String("org.freedesktop.DBus"),
+                                              QLatin1String("NameHasOwner"));
+    message1 << QString("org.kde.kactivitymanagerd");
+    QDBusReply<bool> reply1 = (watcher1->connection()).call(message1);
+    bool connected1 = reply1.value();
+
+    QDBusMessage message2;
+    message2 = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.DBus"),
+                                              QLatin1String("/"),
+                                              QLatin1String("org.freedesktop.DBus"),
+                                              QLatin1String("NameHasOwner"));
+    message2 << QString("org.kde.kwin");
+    QDBusReply<bool> reply2 = (watcher2->connection()).call(message2);
+    bool connected2 = reply2.value();
+*/
+    if ( KActivities::Controller::serviceStatus() == KActivities::Controller::Running ){
+        initSession();
+    }
+}
+
+void Store::onServiceStatusChanged (KActivities::Consumer::ServiceStatus status)
+{
+    if ( status == KActivities::Controller::Running ){
+        initSession();
+    }
+}
+
+void Store::initSession()
+{
+    //QStringList activitiesRunning = m_activitiesController->listActivities();
+    initSignals();
+
+    loadWorkareas();
+
+    connectToBus();
+
+    m_isRunning = true;
+    emit ServiceStatusChanged(m_isRunning);
+    qDebug() << "Ok.....";
+}
+
+
 bool Store::connectToBus(const QString& service, const QString& path)
 {
     m_service = service.isEmpty() ? DBUS_SERVICE : service;
@@ -88,8 +186,9 @@ bool Store::connectToBus(const QString& service, const QString& path)
     return true;
 }
 
-void Store::init()
+void Store::initSignals()
 {
+ //   m_activitiesController = new KActivities::Controller(this);
     connect(m_activitiesController, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesController, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
 
@@ -103,12 +202,16 @@ void Store::init()
 
     m_plgFindWallpaper = new PluginFindWallpaper(m_activitiesController, this);
     connect(m_plgFindWallpaper, SIGNAL(updateWallpaper(QString,QString)), this, SLOT(setBackground(QString,QString)));
-
 }
 
 void Store::initBackgrounds()
 {
     m_plgFindWallpaper->initBackgrounds();
+}
+
+bool Store::ServiceStatus()
+{
+    return m_isRunning;
 }
 
 
@@ -171,7 +274,7 @@ void Store::AddWorkarea(QString id, QString name)
 
         if(name==""){
             int counter = info->m_workareas.size();
-            name = TaskManager::TaskManager::self()->desktopName(counter+1);
+            name = KWindowSystem::self()->desktopName(counter+1);
         }
 
         info->addWorkArea(name);
@@ -187,7 +290,7 @@ void Store::RenameWorkarea(QString id, int desktop, QString name)
     if (pos>=0 && pos<m_workareasList.size()){
         Info *info = m_workareasList[pos];
         if(name == ""){
-            name = TaskManager::TaskManager::self()->desktopName(desktop);
+            name = KWindowSystem::self()->desktopName(desktop);
         }
 
         info->renameWorkarea(desktop, name);
@@ -284,10 +387,10 @@ void Store::activityAddedSlot(QString id)
     if(pos<0 || pos>=m_workareasList.size() ){
         Info *info = new Info(id, this);
 
-        int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
+        int numberOfDesktops = KWindowSystem::self()->numberOfDesktops();
 
         for(int j=0; j<numberOfDesktops; j++)
-            info->addWorkArea(TaskManager::TaskManager::self()->desktopName(j+1));
+            info->addWorkArea(KWindowSystem::self()->desktopName(j+1));
 
         m_workareasList.append(info);
         //m_workareasHash[id] = info;
@@ -447,10 +550,10 @@ void Store::loadWorkareas()
     foreach(const QString &id, activitiesRunning){
         Info *info = new Info(id, this);
 
-        int numberOfDesktops = TaskManager::TaskManager::self()->numberOfDesktops();
+        int numberOfDesktops = KWindowSystem::self()->numberOfDesktops();
 
         for(int j=0; j<numberOfDesktops; j++)
-            info->addWorkArea(TaskManager::TaskManager::self()->desktopName(j+1));
+            info->addWorkArea(KWindowSystem::self()->desktopName(j+1));
 
         m_workareasList.append(info);
 
@@ -524,7 +627,7 @@ QString Store::nextRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return info->id();
+                return info->id();
         }
 
         for(int j=0; j<pos; ++j){
@@ -532,7 +635,7 @@ QString Store::nextRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return info->id();
+                return info->id();
         }
     }
 
@@ -549,14 +652,14 @@ QString Store::previousRunningActivity()
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return info->id();
+                return info->id();
         }
         for(int j=m_workareasList.size()-1; j>pos; j--){
             Info *info = m_workareasList[j];
             KActivities::Info *activity = new KActivities::Info(info->id(), this);
 
             if ( (activity) && (activity->state() == KActivities::Info::Running) )
-              return info->id();
+                return info->id();
         }
     }
     return "";
@@ -566,7 +669,7 @@ QString Store::previousRunningActivity()
 //PLUGINS
 
 void Store::pluginUpdateWorkareasNameSlot(int w_pos)
-{   
+{
     QListIterator<Info *> i(m_workareasList);
 
     while (i.hasNext()) {

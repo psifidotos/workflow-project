@@ -21,14 +21,14 @@
 #include <QtDBus/QtDBus>
 
 /*
- * Proxy class for interface org.opentoolsandspace.WorkareaManager
+ * Proxy class for interface local.Store
  */
 class StoreInterface: public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "org.opentoolsandspace.WorkareaManager"; }
+    { return "local.Store"; }
 
 public:
     StoreInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);
@@ -90,6 +90,12 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("RenameWorkarea"), argumentList);
     }
 
+    inline QDBusPendingReply<bool> ServiceStatus()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QLatin1String("ServiceStatus"), argumentList);
+    }
+
     inline QDBusPendingReply<> SetCurrentNextActivity()
     {
         QList<QVariant> argumentList;
@@ -122,13 +128,12 @@ Q_SIGNALS: // SIGNALS
     void ActivityOrdersChanged(const QStringList &activities);
     void ActivityRemoved(const QString &id);
     void MaxWorkareasChanged(int in0);
+    void ServiceStatusChanged(bool in0);
     void WorkareaAdded(const QString &id, const QStringList &workareas);
     void WorkareaRemoved(const QString &id, const QStringList &workareas);
 };
 
-namespace org {
-  namespace opentoolsandspace {
-    typedef ::StoreInterface WorkareaManager;
-  }
+namespace local {
+  typedef ::StoreInterface Store;
 }
 #endif

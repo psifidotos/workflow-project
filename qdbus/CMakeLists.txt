@@ -49,7 +49,7 @@ target_link_libraries (kded_workareamanagerd
 #    ${KDE4_PLASMA_LIBS}
 #    ${KDE4_KIO_LIBS}
     ${KDE4_KFILE_LIBS}
-    taskmanager
+#    taskmanager
 #    ${ADDITIONAL_LINK_LIBS}
     )
 

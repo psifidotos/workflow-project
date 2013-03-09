@@ -37,7 +37,7 @@ private slots:
 
     void maxWorkareasChangedSlot(int);
 
-    void managerServiceRegistered();
+    void managerServiceRegistered(bool);
 private:
     StoreInterface *m_store;
     //Workareas::Store *m_store;
