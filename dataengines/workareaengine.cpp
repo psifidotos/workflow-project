@@ -1,8 +1,6 @@
 #include "workareaengine.h"
 #include "workareaservice.h"
 
-//#include "workareas/store.h"
-//#include "workareas/info.h"
 
 #include "../qdbus/client/storeinterface.h"
 
@@ -10,12 +8,10 @@
 #include <QDBusServiceWatcher>
 #include <QDebug>
 
-#include <KAction>
 
 WorkareaEngine::WorkareaEngine(QObject *parent, const QVariantList& args)
     : Plasma::DataEngine(parent, args),
-      m_store(0),
-      actionCollection(0)
+      m_store(0)
 {
     m_store = new StoreInterface("org.kde.kded", "/modules/workareamanagerd", QDBusConnection::sessionBus(), 0);
 }
@@ -24,8 +20,6 @@ WorkareaEngine::~WorkareaEngine()
 {
     if(m_store)
         delete m_store;
-    if(actionCollection)
-        delete actionCollection;
 }
 
 void WorkareaEngine::init()
@@ -72,20 +66,6 @@ void WorkareaEngine::initSession()
           qDebug() << replyMaxWorkareas.error();
       }
   //    setData("Settings", "MaxWorkareas", m_store->MaxWorkareas());
-
-
-      //Global Shortcuts//
-      actionCollection = new KActionCollection(this);
-      actionCollection->setConfigGlobal(true);
-      actionCollection->setConfigGroup("workareas");
-
-      KAction* a;
-      a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Next Activity", this, SLOT(nextActivitySlot())));
-      a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Tab));
-      a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Previous Activity", this, SLOT(previousActivitySlot())));
-      a->setGlobalShortcut(KShortcut( (Qt::META + Qt::SHIFT) + Qt::Key_Tab));
-
-      actionCollection->writeSettings();
 }
 
 Plasma::Service * WorkareaEngine::serviceForSource(const QString &source)

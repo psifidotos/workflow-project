@@ -12,6 +12,8 @@ class PluginUpdateWorkareasName;
 class PluginSyncActivitiesWorkareas;
 class PluginFindWallpaper;
 
+class KActionCollection;
+
 class Info;
 
 class Store : public KDEDModule,
@@ -69,9 +71,6 @@ private slots:
 
     void pluginUpdateWorkareasNameSlot(int);
 
-    void managerServiceRegistered();
-    void onServiceStatusChanged (KActivities::Consumer::ServiceStatus status);
-
     //init thread
     void handleActivityReply();
 
@@ -84,6 +83,7 @@ private:
     QList <Info *> m_workareasList;
 
     KActivities::Controller *m_activitiesController;
+    KActionCollection *actionCollection;
 
     bool m_loading;
     int m_maxWorkareas;

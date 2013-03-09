@@ -11,6 +11,8 @@
 #include <KActivities/Consumer>
 #include <KActivities/Info>
 #include <KWindowSystem>
+#include <KAction>
+#include <KActionCollection>
 
 #include "storeadaptor.h"
 #include "workareasdata.h"
@@ -36,6 +38,7 @@ static const char* DBUS_OBJECT_PATH = "/modules/workareamanagerd";
 Store::Store(QObject* parent, const QList<QVariant>&) :
     KDEDModule(parent),
     m_activitiesController(new KActivities::Controller(this)),
+    actionCollection(0),
     m_loading(false),
     m_maxWorkareas(0),
     m_nextDefaultWallpaper(0),
@@ -44,20 +47,6 @@ Store::Store(QObject* parent, const QList<QVariant>&) :
     m_plgSyncActivitiesWorkareas(0),
     m_plgFindWallpaper(0)
 {
- /*
-    QDBusServiceWatcher *watcher = new QDBusServiceWatcher("org.kde.kactivitymanagerd",
-                                                           QDBusConnection::sessionBus(),
-                                                           QDBusServiceWatcher::WatchForRegistration);
-    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
-
-    QDBusServiceWatcher *watcher2 = new QDBusServiceWatcher("org.kde.kwin",
-                                                            QDBusConnection::sessionBus(),
-                                                            QDBusServiceWatcher::WatchForRegistration);
-    connect(watcher, SIGNAL(serviceRegistered(QString)), this, SLOT(managerServiceRegistered()));
-*/
-   // connect(m_activitiesController, SIGNAL(serviceStatusChanged(KActivities::Consumer::ServiceStatus)),
-         //   this, SLOT(onServiceStatusChanged(KActivities::Consumer::ServiceStatus)));
-  //  managerServiceRegistered();
     updateActivityList();
 }
 
@@ -83,6 +72,9 @@ Store::~Store()
 
     if(m_plgFindWallpaper)
         delete m_plgFindWallpaper;
+
+    if(actionCollection)
+        delete actionCollection;
 }
 
 //Create a separate thread in order to trigger initialization based on the
@@ -116,46 +108,6 @@ void Store::handleActivityReply()
 }
 /////////////////End of thread definition......
 
-void Store::managerServiceRegistered()
-{
-
- /*   QDBusServiceWatcher *watcher1 = new QDBusServiceWatcher("org.kde.kactivitymanagerd",
-                                                     QDBusConnection::sessionBus(),
-                                             QDBusServiceWatcher::WatchForRegistration);
-
-    QDBusServiceWatcher *watcher2 = new QDBusServiceWatcher("org.kde.kwin",
-                                                       QDBusConnection::sessionBus(),
-                                                          QDBusServiceWatcher::WatchForRegistration);
-
-    QDBusMessage message1;
-    message1 = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.DBus"),
-                                              QLatin1String("/"),
-                                              QLatin1String("org.freedesktop.DBus"),
-                                              QLatin1String("NameHasOwner"));
-    message1 << QString("org.kde.kactivitymanagerd");
-    QDBusReply<bool> reply1 = (watcher1->connection()).call(message1);
-    bool connected1 = reply1.value();
-
-    QDBusMessage message2;
-    message2 = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.DBus"),
-                                              QLatin1String("/"),
-                                              QLatin1String("org.freedesktop.DBus"),
-                                              QLatin1String("NameHasOwner"));
-    message2 << QString("org.kde.kwin");
-    QDBusReply<bool> reply2 = (watcher2->connection()).call(message2);
-    bool connected2 = reply2.value();
-*/
-    if ( KActivities::Controller::serviceStatus() == KActivities::Controller::Running ){
-        initSession();
-    }
-}
-
-void Store::onServiceStatusChanged (KActivities::Consumer::ServiceStatus status)
-{
-    if ( status == KActivities::Controller::Running ){
-        initSession();
-    }
-}
 
 void Store::initSession()
 {
@@ -166,9 +118,23 @@ void Store::initSession()
 
     connectToBus();
 
+    //Global Shortcuts//
+    actionCollection = new KActionCollection(this);
+    actionCollection->setConfigGlobal(true);
+    actionCollection->setConfigGroup("WorkFlow");
+
+    KAction* a;
+    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Next Activity", this, SLOT(SetCurrentNextActivity())));
+    a->setGlobalShortcut(KShortcut(Qt::META + Qt::Key_Tab));
+    a = static_cast< KAction* >(actionCollection->addAction("WorkFlow: Previous Activity", this, SLOT(SetCurrentPreviousActivity())));
+    a->setGlobalShortcut(KShortcut( (Qt::META + Qt::SHIFT) + Qt::Key_Tab));
+
+    actionCollection->writeSettings();
+
     m_isRunning = true;
     emit ServiceStatusChanged(m_isRunning);
-    qDebug() << "Ok.....";
+
+//    qDebug() << "Ok.....";
 }
 
 

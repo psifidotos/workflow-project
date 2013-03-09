@@ -2,10 +2,8 @@
 #define WORKAREAENGINE_H
 
 #include <QObject>
-#include <QSignalMapper>
 
 #include <Plasma/DataEngine>
-#include <KActionCollection>
 
 //namespace Workareas{
     class StoreInterface;
@@ -40,8 +38,6 @@ private slots:
     void managerServiceRegistered(bool);
 private:
     StoreInterface *m_store;
-    //Workareas::Store *m_store;
-    KActionCollection *actionCollection;
     //void insertDesktop(const int id, const QString activity);
 
     void loadActivity(QString);
