@@ -35,12 +35,6 @@ void WorkflowManager::init()
     m_activityManager = new ActivityManager(m_model,this);
     m_workareaManager = new WorkareasManager(m_model, this);
 
-    /*connect(m_activityManager, SIGNAL(cloningStarted(bool)),
-            m_workareaManager, SLOT(setUpdateBackgrounds(bool)) );
-
-    connect(m_activityManager, SIGNAL(cloningEnded(bool)),
-            m_workareaManager, SLOT(setUpdateBackgrounds(bool)) );*/
-
     connect(m_activityManager, SIGNAL(cloningCopyWorkareas(QString,QString)),
             m_workareaManager, SLOT(cloneWorkareas(QString,QString)) );
 

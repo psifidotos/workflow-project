@@ -5,7 +5,6 @@
 #include <KActivities/Controller>
 
 
-
 PluginChangeWorkarea::PluginChangeWorkarea(QObject *obj, KActivities::Controller *actControl) :
     QObject(obj),
     m_activitiesCtrl(actControl),

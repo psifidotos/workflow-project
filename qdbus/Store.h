@@ -20,7 +20,6 @@ class Store : public KDEDModule,
               protected QDBusContext
 {
     Q_OBJECT
-//    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager")
 
 public:
     explicit Store(QObject* parent, const QList<QVariant>&);
@@ -38,8 +37,6 @@ public Q_SLOTS:
     //Only for the values contained in the workareas models
     Q_SCRIPTABLE void CloneActivity(QString, QString);
     Q_SCRIPTABLE void MoveActivity(QString, int);
-
-    Q_SCRIPTABLE void SetUpdateBackgrounds(bool);
 
     Q_SCRIPTABLE int MaxWorkareas() const;
     Q_SCRIPTABLE QStringList Activities() const;

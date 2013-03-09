@@ -646,12 +646,6 @@ void Store::pluginUpdateWorkareasNameSlot(int w_pos)
 
 }
 
-void Store::SetUpdateBackgrounds(bool active)
-{
-    if(m_plgFindWallpaper)
-        m_plgFindWallpaper->setPluginActive(active);
-}
-
 int Store::findActivity(QString activityId)
 {
     for(int i=0; i<m_workareasList.size(); ++i){

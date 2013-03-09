@@ -43,7 +43,6 @@ private slots:
 
 private:
     KActivities::Controller *m_activitiesCtrl;
-    TaskManager::TaskManager *m_taskMainM;
     KStandardDirs kStdDrs;
 
     QTimer *m_timer;

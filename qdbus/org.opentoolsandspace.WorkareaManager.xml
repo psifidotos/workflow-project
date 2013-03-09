@@ -54,9 +54,6 @@
       <arg type="s" direction="in"/>
       <arg type="i" direction="in"/>
     </method>
-    <method name="SetUpdateBackgrounds">
-      <arg type="b" direction="in"/>
-    </method>
     <method name="MaxWorkareas">
       <arg type="i" direction="out"/>
     </method>

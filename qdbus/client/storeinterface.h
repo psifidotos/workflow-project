@@ -108,13 +108,6 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("SetCurrentPreviousActivity"), argumentList);
     }
 
-    inline QDBusPendingReply<> SetUpdateBackgrounds(bool in0)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(in0);
-        return asyncCallWithArgumentList(QLatin1String("SetUpdateBackgrounds"), argumentList);
-    }
-
     inline QDBusPendingReply<QStringList> Workareas(const QString &actId)
     {
         QList<QVariant> argumentList;
