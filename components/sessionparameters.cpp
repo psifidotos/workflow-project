@@ -184,5 +184,13 @@ bool SessionParameters::isInPanel()
     return m_isInPanel;
 }
 
+void SessionParameters::triggerKWinScript()
+{
+    QDBusInterface* kwin_dbus = new QDBusInterface("org.kde.kglobalaccel", "/component/kwin");
+    if(kwin_dbus){
+        kwin_dbus->call( "invokeShortcut", "WorkFlow: KWin Script" );
+    }
+}
+
 #include <sessionparameters.moc>
 

@@ -37,7 +37,7 @@ Item{
 
     MouseEventListener {
         id:wheelListener
-        anchors.fill:parent       
+        anchors.fill:parent
         property bool enabledTimer:false
 
         onWheelMoved:{
@@ -59,10 +59,14 @@ Item{
             id:mouseAreaContainer
             anchors.fill:parent
             onClicked:{
-                if (plasmoidWrapper.isPopupShowing())
-                    plasmoid.hidePopup();
+                if(!Settings.global.triggerKWinScript){
+                    if (plasmoidWrapper.isPopupShowing())
+                        plasmoid.hidePopup();
+                    else
+                        plasmoid.showPopup();
+                }
                 else
-                    plasmoid.showPopup();
+                    sessionParameters.triggerKWinScript();
             }
         }
 

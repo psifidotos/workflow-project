@@ -54,5 +54,8 @@
     <entry name="DisableBackground" type="bool">
         <default>false</default>
     </entry>
+    <entry name="TriggerKWinScript" type="bool">
+        <default>false</default>
+    </entry>
 </group>
 </kcfg>

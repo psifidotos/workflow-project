@@ -39,6 +39,7 @@ public:
 
 
     Q_INVOKABLE void setIsInPanel(bool);
+    Q_INVOKABLE void triggerKWinScript();
 
 signals:
     void currentActivityChanged(QString);

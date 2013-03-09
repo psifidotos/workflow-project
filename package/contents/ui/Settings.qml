@@ -20,6 +20,7 @@ QtObject {
     property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
     property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
     property bool disableBackground: plasmoid.readConfig("DisableBackground")
+    property bool triggerKWinScript: plasmoid.readConfig("TriggerKWinScript")
 
 
     // Small hack to make sure the global settings object is set
@@ -45,6 +46,7 @@ QtObject {
     onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
     onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
     onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; }
+    onTriggerKWinScriptChanged: { plasmoid.writeConfig("TriggerKWinScript", triggerKWinScript) ;}
     
 
     function configChanged() {
@@ -53,6 +55,7 @@ QtObject {
         useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
         disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
         disableBackground = plasmoid.readConfig("DisableBackground");
+        triggerKWinScript = plasmoid.readConfig("TriggerKWinScript")
     }
 
     Component.onCompleted: {
