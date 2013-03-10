@@ -1,17 +1,15 @@
-#ifndef INFO_H
-#define INFO_H
+#ifndef WORKAREAINFO_H
+#define WORKAREAINFO_H
 
 #include <QObject>
 #include <QStringList>
 
-//namespace Workareas{
-
-class Info : public QObject
+class WorkareaInfo : public QObject
 {
     Q_OBJECT
 public:
-    explicit Info(QString id, QObject *parent = 0);
-    ~Info();
+    explicit WorkareaInfo(QString id, QObject *parent = 0);
+    ~WorkareaInfo();
 
     QString id() const;
     QString background() const;
@@ -29,7 +27,7 @@ protected:
     void renameWorkarea(int desktop, QString name);
     void removeWorkarea(int desktop);
 
-    Info *copy(QObject *parent = 0);
+    WorkareaInfo *copy(QObject *parent = 0);
 private:
     QString m_id;
     QString m_background;
@@ -37,8 +35,7 @@ private:
 
     void setBackground(QString);
 
-    friend class Store;
+    friend class WorkareaManager;
 };
 
-//}
-#endif // INFO_H
+#endif // WORKAREAINFO_H

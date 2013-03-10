@@ -1,16 +1,17 @@
-#include "pluginfindwallpaper.h"
+#include "findwallpaper.h"
 
 #include <QFileInfo>
 #include <QDir>
 
 #include <KStandardDirs>
+#include <KConfig>
 
-#include <Plasma/Containment>
+//#include <Plasma/Containment>
 
 #include <KActivities/Controller>
 #include <KWindowSystem>
 
-PluginFindWallpaper::PluginFindWallpaper(KActivities::Controller *actControl, QObject *parent):
+FindWallpaper::FindWallpaper(KActivities::Controller *actControl, QObject *parent):
     QObject(parent),
     m_activitiesCtrl(actControl),
     m_active(true)
@@ -19,11 +20,11 @@ PluginFindWallpaper::PluginFindWallpaper(KActivities::Controller *actControl, QO
     m_previousDesktop = KWindowSystem::self()->currentDesktop();
 }
 
-PluginFindWallpaper::~PluginFindWallpaper()
+FindWallpaper::~FindWallpaper()
 {
 }
 
-void PluginFindWallpaper::initBackgrounds()
+void FindWallpaper::initBackgrounds()
 {
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesCtrl, SIGNAL(currentActivityChanged(QString)), this, SLOT(currentActivityChangedSlot(QString)));
@@ -37,12 +38,12 @@ void PluginFindWallpaper::initBackgrounds()
 }
 
 
-void PluginFindWallpaper::setPluginActive(bool active)
+void FindWallpaper::setPluginActive(bool active)
 {
     m_active = active;
 }
 
-QString PluginFindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
+QString FindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
 {
     KConfigGroup gWall = conGrp.group("Wallpaper").group("image");
 
@@ -71,7 +72,7 @@ QString PluginFindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
 }
 
 
-QString PluginFindWallpaper::getWallpaperFromFile(QString source, QString file)
+QString FindWallpaper::getWallpaperFromFile(QString source, QString file)
 {
     //QString fpath = QDir::home().filePath(file);
     QString fpath = file;
@@ -111,7 +112,7 @@ QString PluginFindWallpaper::getWallpaperFromFile(QString source, QString file)
 
 }
 /*
-QString PluginFindWallpaper::getWallpaperFromContainment(Plasma::Containment *actContainment)
+QString FindWallpaper::getWallpaperFromContainment(Plasma::Containment *actContainment)
 {
     //QString fpath = QDir::home().filePath(file);
     KConfigGroup mainConf = actContainment->config();
@@ -124,7 +125,7 @@ QString PluginFindWallpaper::getWallpaperFromContainment(Plasma::Containment *ac
 }*/
 
 
-QString  PluginFindWallpaper::getWallpaperForRunning(QString source)
+QString  FindWallpaper::getWallpaperForRunning(QString source)
 {
     QString fPath =KStandardDirs::locate("config","plasma-desktop-appletsrc");
 
@@ -132,7 +133,7 @@ QString  PluginFindWallpaper::getWallpaperForRunning(QString source)
     return getWallpaperFromFile(source,fPath);
 }
 
-QString  PluginFindWallpaper::getWallpaperForStopped(QString source)
+QString  FindWallpaper::getWallpaperForStopped(QString source)
 {
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+source;
 
@@ -142,7 +143,7 @@ QString  PluginFindWallpaper::getWallpaperForStopped(QString source)
 
 /////////////////////////////////////
 
-QString PluginFindWallpaper::getWallpaper(QString source)
+QString FindWallpaper::getWallpaper(QString source)
 {
     QString res = "";
 
@@ -164,7 +165,7 @@ QString PluginFindWallpaper::getWallpaper(QString source)
 }
 //////////////////////////////////
 
-void PluginFindWallpaper::activityAddedSlot(QString id)
+void FindWallpaper::activityAddedSlot(QString id)
 {
     KActivities::Info *activity = new KActivities::Info(id, this);
 
@@ -177,7 +178,7 @@ void PluginFindWallpaper::activityAddedSlot(QString id)
     }
 }
 
-void PluginFindWallpaper::activityStateChangedSlot()
+void FindWallpaper::activityStateChangedSlot()
 {
     if(m_active){
         KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
@@ -188,7 +189,7 @@ void PluginFindWallpaper::activityStateChangedSlot()
     }
 }
 
-void PluginFindWallpaper::currentActivityChangedSlot(QString id)
+void FindWallpaper::currentActivityChangedSlot(QString id)
 {
     if(m_active){
         QString wallpaper = getWallpaper(id);
@@ -200,7 +201,7 @@ void PluginFindWallpaper::currentActivityChangedSlot(QString id)
     }
 }
 
-void PluginFindWallpaper::currentDesktopChangedSlot(int desktop)
+void FindWallpaper::currentDesktopChangedSlot(int desktop)
 {
     if(m_active){
         if(desktop != m_previousDesktop){

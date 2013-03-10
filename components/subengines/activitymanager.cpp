@@ -9,6 +9,7 @@
 #include <KIcon>
 #include <KWindowSystem>
 #include <KMessageBox>
+#include <KDialog>
 #include <KStandardDirs>
 
 #include <KActivities/Controller>
@@ -205,7 +206,7 @@ void ActivityManager::setIcon(QString id, QString name)
 QString ActivityManager::chooseIcon(QString id)
 {
     KIconDialog *dialog = new KIconDialog();
-    dialog->setModal(true);
+    dialog->setModal(false);
     dialog->setup(KIconLoader::Desktop);
     dialog->setProperty("DoNotCloseController", true);
     KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
@@ -220,6 +221,28 @@ QString ActivityManager::chooseIcon(QString id)
 
     return icon;
 }
+
+QString ActivityManager::chooseIconInKWin(QString id)
+{
+    KIconDialog *dialog = new KIconDialog();
+    dialog->setModal(false);
+    dialog->setWindowFlags(Qt::Popup | Qt::X11BypassWindowManagerHint);
+    dialog->setup(KIconLoader::Desktop);
+    dialog->setProperty("DoNotCloseController", true);
+    KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
+    dialog->showDialog();
+    KDialog::centerOnScreen(dialog);
+    KWindowSystem::forceActiveWindow(dialog->winId());
+
+    QString icon = dialog->openDialog();
+    dialog->deleteLater();
+
+    if (icon != "")
+        setIcon(id,icon);
+
+    return icon;
+}
+
 
 void ActivityManager::add(QString name) {
   //  if(!m_plAddActivity){

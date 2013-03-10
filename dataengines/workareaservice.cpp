@@ -1,10 +1,9 @@
 #include "workareaservice.h"
 #include "workareajob.h"
 
-//#include "workareas/store.h"
-#include "../qdbus/client/storeinterface.h"
+#include "../qdbus/client/workareainterface.h"
 
-WorkareaService::WorkareaService(const QString &source, StoreInterface *store)
+WorkareaService::WorkareaService(const QString &source, WorkareaInterface *store)
       : m_id(source),
         m_store(store)
 {
