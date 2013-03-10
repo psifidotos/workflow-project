@@ -39,7 +39,8 @@ public:
     Q_INVOKABLE void setName(QString id, QString name);
     Q_INVOKABLE void remove(QString id);
     Q_INVOKABLE void setIcon(QString id, QString name);
-    Q_INVOKABLE QString chooseIcon(QString);
+    Q_INVOKABLE QString chooseIcon(QString id);
+    Q_INVOKABLE QString chooseIconInKWin(QString);
     Q_INVOKABLE QString name(QString id);
     Q_INVOKABLE QString cstate(QString id);
 
