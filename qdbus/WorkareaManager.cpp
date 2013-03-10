@@ -16,9 +16,9 @@
 #include "workareamanageradaptor.h"
 #include "workareasdata.h"
 
-#include "mechanism/mechanismupdateworkareasname.h"
-#include "mechanism/pluginsyncactivitiesworkareas.h"
-#include "mechanism/pluginfindwallpaper.h"
+#include "mechanism/updateworkareasname.h"
+#include "mechanism/syncactivitiesworkareas.h"
+#include "mechanism/findwallpaper.h"
 
 #include "workareainfo.h"
 
@@ -43,8 +43,8 @@ WorkareaManager::WorkareaManager(QObject* parent, const QList<QVariant>&) :
     m_nextDefaultWallpaper(0),
     m_isRunning(false),
     m_mcmUpdateWorkareasName(0),
-    m_plgSyncActivitiesWorkareas(0),
-    m_plgFindWallpaper(0)
+    m_mcmSyncActivitiesWorkareas(0),
+    m_mcmFindWallpaper(0)
 {
     connectToBus();
 
@@ -68,11 +68,11 @@ WorkareaManager::~WorkareaManager()
     if(m_mcmUpdateWorkareasName)
         delete m_mcmUpdateWorkareasName;
 
-    if(m_plgSyncActivitiesWorkareas)
-        delete m_plgSyncActivitiesWorkareas;
+    if(m_mcmSyncActivitiesWorkareas)
+        delete m_mcmSyncActivitiesWorkareas;
 
-    if(m_plgFindWallpaper)
-        delete m_plgFindWallpaper;
+    if(m_mcmFindWallpaper)
+        delete m_mcmFindWallpaper;
 
     if(actionCollection)
         delete actionCollection;
@@ -154,21 +154,21 @@ void WorkareaManager::initSignals()
     connect(m_activitiesController, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_activitiesController, SIGNAL(activityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
 
-    m_plgSyncActivitiesWorkareas = new PluginSyncActivitiesWorkareas(this);
+    m_mcmSyncActivitiesWorkareas = new SyncActivitiesWorkareas(this);
     connect(this, SIGNAL(MaxWorkareasChanged(int)),
-            m_plgSyncActivitiesWorkareas, SLOT(maxWorkareasUpdated(int)) );
+            m_mcmSyncActivitiesWorkareas, SLOT(maxWorkareasUpdated(int)) );
 
-    m_mcmUpdateWorkareasName = new MechanismUpdateWorkareasName(this);
+    m_mcmUpdateWorkareasName = new UpdateWorkareasName(this);
     connect(m_mcmUpdateWorkareasName, SIGNAL(updateWorkareasName(int)),
             this, SLOT(updateWorkareasNameSlot(int)) );
 
-    m_plgFindWallpaper = new PluginFindWallpaper(m_activitiesController, this);
-    connect(m_plgFindWallpaper, SIGNAL(updateWallpaper(QString,QString)), this, SLOT(setBackground(QString,QString)));
+    m_mcmFindWallpaper = new FindWallpaper(m_activitiesController, this);
+    connect(m_mcmFindWallpaper, SIGNAL(updateWallpaper(QString,QString)), this, SLOT(setBackground(QString,QString)));
 }
 
 void WorkareaManager::initBackgrounds()
 {
-    m_plgFindWallpaper->initBackgrounds();
+    m_mcmFindWallpaper->initBackgrounds();
 }
 
 bool WorkareaManager::ServiceStatus()
@@ -241,7 +241,7 @@ void WorkareaManager::AddWorkarea(QString id, QString name)
 
         info->addWorkArea(name);
 
-        // m_plgUpdateWorkareasName->checkFlag(info->m_workareas.size());
+        // m_mcmUpdateWorkareasName->checkFlag(info->m_workareas.size());
     }
 }
 

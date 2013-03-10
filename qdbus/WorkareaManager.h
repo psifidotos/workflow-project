@@ -8,9 +8,9 @@
 #include <KDEDModule>
 #include <KActivities/Controller>
 
-class MechanismUpdateWorkareasName;
-class PluginSyncActivitiesWorkareas;
-class PluginFindWallpaper;
+class UpdateWorkareasName;
+class SyncActivitiesWorkareas;
+class FindWallpaper;
 
 class KActionCollection;
 
@@ -88,9 +88,10 @@ private:
     QString m_service;
     bool m_isRunning;
 
-    MechanismUpdateWorkareasName *m_mcmUpdateWorkareasName;
-    PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
-    PluginFindWallpaper *m_plgFindWallpaper;
+    /*Mechanisms from the relevant classes*/
+    UpdateWorkareasName *m_mcmUpdateWorkareasName;
+    SyncActivitiesWorkareas *m_mcmSyncActivitiesWorkareas;
+    FindWallpaper *m_mcmFindWallpaper;
 
     ///Workareas Storing/Accessing
     void loadWorkareas();

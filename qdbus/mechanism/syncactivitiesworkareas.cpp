@@ -1,4 +1,4 @@
-#include "pluginsyncactivitiesworkareas.h"
+#include "syncactivitiesworkareas.h"
 
 #include <KWindowSystem>
 
@@ -9,7 +9,7 @@
 #include <fixx11h.h>
 #endif
 
-PluginSyncActivitiesWorkareas::PluginSyncActivitiesWorkareas(QObject *obj) :
+SyncActivitiesWorkareas::SyncActivitiesWorkareas(QObject *obj) :
     QObject(obj),
     m_desktops(0),
     m_workareas(0)
@@ -17,11 +17,11 @@ PluginSyncActivitiesWorkareas::PluginSyncActivitiesWorkareas(QObject *obj) :
     init();
 }
 
-PluginSyncActivitiesWorkareas::~PluginSyncActivitiesWorkareas()
+SyncActivitiesWorkareas::~SyncActivitiesWorkareas()
 {
 }
 
-void PluginSyncActivitiesWorkareas::init()
+void SyncActivitiesWorkareas::init()
 {
     m_desktops = KWindowSystem::KWindowSystem::self()->numberOfDesktops();
 
@@ -29,7 +29,7 @@ void PluginSyncActivitiesWorkareas::init()
             this, SLOT(numberOfDesktopsChangedSlot(int)) );
 }
 
-void PluginSyncActivitiesWorkareas::maxWorkareasUpdated(int maxWorkareas)
+void SyncActivitiesWorkareas::maxWorkareasUpdated(int maxWorkareas)
 {
     m_workareas = maxWorkareas;
     if (maxWorkareas>m_desktops)
@@ -38,7 +38,7 @@ void PluginSyncActivitiesWorkareas::maxWorkareasUpdated(int maxWorkareas)
         removeDesktop();
 }
 
-void PluginSyncActivitiesWorkareas::numberOfDesktopsChangedSlot(int desktops)
+void SyncActivitiesWorkareas::numberOfDesktopsChangedSlot(int desktops)
 {
     m_desktops = desktops;
     if (m_desktops > m_workareas)
@@ -50,13 +50,13 @@ void PluginSyncActivitiesWorkareas::numberOfDesktopsChangedSlot(int desktops)
 
 
 #ifdef Q_WS_X11
-void PluginSyncActivitiesWorkareas::addDesktop()
+void SyncActivitiesWorkareas::addDesktop()
 {
     NETRootInfo info(QX11Info::display(), NET::NumberOfDesktops);
     info.setNumberOfDesktops(info.numberOfDesktops() + 1);
 }
 
-void PluginSyncActivitiesWorkareas::removeDesktop()
+void SyncActivitiesWorkareas::removeDesktop()
 {
     NETRootInfo info(QX11Info::display(), NET::NumberOfDesktops);
     int desktops = info.numberOfDesktops();
@@ -66,6 +66,4 @@ void PluginSyncActivitiesWorkareas::removeDesktop()
 }
 #endif
 
-
-
-#include "pluginsyncactivitiesworkareas.moc"
+#include "syncactivitiesworkareas.moc"

@@ -1,4 +1,4 @@
-#include "mechanismupdateworkareasname.h"
+#include "updateworkareasname.h"
 
 #include <KWindowSystem>
 
@@ -9,18 +9,18 @@
 #include <fixx11h.h>
 #endif
 
-MechanismUpdateWorkareasName::MechanismUpdateWorkareasName(QObject *obj) :
+UpdateWorkareasName::UpdateWorkareasName(QObject *obj) :
     QObject(obj),
     m_desktops(0)
 {
     init();
 }
 
-MechanismUpdateWorkareasName::~MechanismUpdateWorkareasName()
+UpdateWorkareasName::~UpdateWorkareasName()
 {
 }
 
-void MechanismUpdateWorkareasName::init()
+void UpdateWorkareasName::init()
 {
     m_desktops = KWindowSystem::KWindowSystem::self()->numberOfDesktops();
 
@@ -29,7 +29,7 @@ void MechanismUpdateWorkareasName::init()
 }
 
 /*
-void MechanismUpdateWorkareasName::checkFlag(int workarea)
+void UpdateWorkareasName::checkFlag(int workarea)
 {
     if (workarea>m_desktops)
         m_awaitingName = true;
@@ -37,7 +37,7 @@ void MechanismUpdateWorkareasName::checkFlag(int workarea)
         m_awaitingName = false;
 }*/
 
-void MechanismUpdateWorkareasName::numberOfDesktopsChangedSlot(int desktops)
+void UpdateWorkareasName::numberOfDesktopsChangedSlot(int desktops)
 {
 
  //   if( (m_awaitingName) &&
@@ -52,4 +52,4 @@ void MechanismUpdateWorkareasName::numberOfDesktopsChangedSlot(int desktops)
 
 }
 
-#include "mechanismupdateworkareasname.moc"
+#include "updateworkareasname.moc"

@@ -1,5 +1,5 @@
-#ifndef PLUGINFINDWALLPAPER_H
-#define PLUGINFINDWALLPAPER_H
+#ifndef FINDWALLPAPER_H
+#define FINDWALLPAPER_H
 
 #include <QObject>
 
@@ -16,11 +16,11 @@ namespace Plasma {
 }*/
 
 //Tries to find the wallpaper for an activity
-class PluginFindWallpaper : public QObject{
+class FindWallpaper : public QObject{
   Q_OBJECT
   public:
-    explicit PluginFindWallpaper(KActivities::Controller *actControl, QObject *parent = 0);
-    ~PluginFindWallpaper();
+    explicit FindWallpaper(KActivities::Controller *actControl, QObject *parent = 0);
+    ~FindWallpaper();
 
     void initBackgrounds();
 

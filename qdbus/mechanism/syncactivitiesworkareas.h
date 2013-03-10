@@ -1,5 +1,5 @@
-#ifndef PLUGINSYNCACTIVITIESWORKAREAS_H
-#define PLUGINSYNCACTIVITIESWORKAREAS_H
+#ifndef SYNCACTIVITIESWORKAREAS_H
+#define SYNCACTIVITIESWORKAREAS_H
 
 #include <QObject>
 
@@ -8,12 +8,12 @@
 //every time the number of workareas first.
 //BE CAREFUL:You can not add a desktop outside of the plasmoid
 //because there is not a relevant workarea
-class PluginSyncActivitiesWorkareas : public QObject
+class SyncActivitiesWorkareas : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginSyncActivitiesWorkareas(QObject *);
-    ~PluginSyncActivitiesWorkareas();
+    explicit SyncActivitiesWorkareas(QObject *);
+    ~SyncActivitiesWorkareas();
 
     void execute();
 
