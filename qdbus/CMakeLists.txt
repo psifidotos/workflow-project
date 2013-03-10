@@ -2,8 +2,8 @@ project (WorkareaManager)
 
 # General
 # Find the required Libaries
-find_package(KDE4 REQUIRED)
-find_package(KActivities REQUIRED)
+# find_package(KDE4 REQUIRED)
+# find_package(KActivities REQUIRED)
 
 # Standard stuff
 include_directories (
