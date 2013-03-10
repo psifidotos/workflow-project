@@ -1,6 +1,6 @@
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
-  <interface name="local.Store">
+  <interface name="org.opentoolsandspace.WorkareaManager">
     <signal name="ActivityAdded">
       <arg name="id" type="s" direction="out"/>
     </signal>
@@ -53,9 +53,6 @@
     <method name="MoveActivity">
       <arg type="s" direction="in"/>
       <arg type="i" direction="in"/>
-    </method>
-    <method name="SetUpdateBackgrounds">
-      <arg type="b" direction="in"/>
     </method>
     <method name="MaxWorkareas">
       <arg type="i" direction="out"/>

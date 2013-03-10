@@ -1,5 +1,5 @@
-#ifndef STORE_H
-#define STORE_H
+#ifndef WORKAREAMANAGER_H
+#define WORKAREAMANAGER_H
 
 #include <QObject>
 #include <QHash>
@@ -8,23 +8,23 @@
 #include <KDEDModule>
 #include <KActivities/Controller>
 
-class PluginUpdateWorkareasName;
+class MechanismUpdateWorkareasName;
 class PluginSyncActivitiesWorkareas;
 class PluginFindWallpaper;
 
 class KActionCollection;
 
-class Info;
+class WorkareaInfo;
 
-class Store : public KDEDModule,
-              protected QDBusContext
+class WorkareaManager : public KDEDModule,
+        protected QDBusContext
 {
     Q_OBJECT
-//    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager")
+    Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager")
 
 public:
-    explicit Store(QObject* parent, const QList<QVariant>&);
-    ~Store();
+    explicit WorkareaManager(QObject* parent, const QList<QVariant>&);
+    ~WorkareaManager();
 
     void initBackgrounds();
 
@@ -38,8 +38,6 @@ public Q_SLOTS:
     //Only for the values contained in the workareas models
     Q_SCRIPTABLE void CloneActivity(QString, QString);
     Q_SCRIPTABLE void MoveActivity(QString, int);
-
-    Q_SCRIPTABLE void SetUpdateBackgrounds(bool);
 
     Q_SCRIPTABLE int MaxWorkareas() const;
     Q_SCRIPTABLE QStringList Activities() const;
@@ -69,7 +67,7 @@ private slots:
     void workareaRemovedSlot(QString id, int position);
     void workareaInfoUpdatedSlot(QString id);
 
-    void pluginUpdateWorkareasNameSlot(int);
+    void updateWorkareasNameSlot(int);
 
     //init thread
     void handleActivityReply();
@@ -79,8 +77,7 @@ protected:
     void initSession();
 
 private:
-  //  QHash <QString, Info *> m_workareasHash;
-    QList <Info *> m_workareasList;
+    QList <WorkareaInfo *> m_workareasList;
 
     KActivities::Controller *m_activitiesController;
     KActionCollection *actionCollection;
@@ -91,7 +88,7 @@ private:
     QString m_service;
     bool m_isRunning;
 
-    PluginUpdateWorkareasName *m_plgUpdateWorkareasName;
+    MechanismUpdateWorkareasName *m_mcmUpdateWorkareasName;
     PluginSyncActivitiesWorkareas *m_plgSyncActivitiesWorkareas;
     PluginFindWallpaper *m_plgFindWallpaper;
 
@@ -106,12 +103,10 @@ private:
     bool connectToBus(const QString& service = QString(), const QString& path = QString());
 
     int findActivity(QString activityId);
-    Info *get(QString);
+    WorkareaInfo *get(QString);
     void createActivityChangedSignal(QString actId);
     //init thread
     void updateActivityList();
 };
 
-//}
-
-#endif // STORE_H
+#endif // WORKAREAMANAGER_H

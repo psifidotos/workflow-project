@@ -1,29 +1,27 @@
-#include "info.h"
+#include "workareainfo.h"
 
-//namespace Workareas{
-
-Info::Info(QString id,QObject *parent) :
+WorkareaInfo::WorkareaInfo(QString id,QObject *parent) :
     QObject(parent),
     m_id(id),
     m_background("")
 {
 }
 
-Info::~Info()
+WorkareaInfo::~WorkareaInfo()
 {
 }
 
-QString Info::id() const
+QString WorkareaInfo::id() const
 {
     return m_id;
 }
 
-QString Info::background() const
+QString WorkareaInfo::background() const
 {
     return m_background;
 }
 
-QString Info::name(int desktop) const
+QString WorkareaInfo::name(int desktop) const
 {
     if(m_workareas.size() >= desktop)
         return m_workareas.at(desktop-1);
@@ -31,12 +29,12 @@ QString Info::name(int desktop) const
     return "";
 }
 
-QStringList Info::workareas() const
+QStringList WorkareaInfo::workareas() const
 {
     return m_workareas;
 }
 
-void Info::setBackground(QString background)
+void WorkareaInfo::setBackground(QString background)
 {
     if (m_background != background)
     {
@@ -45,19 +43,19 @@ void Info::setBackground(QString background)
     }
 }
 
-int Info::numberOfWorkareas() const
+int WorkareaInfo::numberOfWorkareas() const
 {
     return m_workareas.count();
 }
 
-void Info::addWorkArea(QString name)
+void WorkareaInfo::addWorkArea(QString name)
 {
     m_workareas.append(name);
 
     emit workareaAdded(m_id, name);
 }
 
-void Info::removeWorkarea(int desktop)
+void WorkareaInfo::removeWorkarea(int desktop)
 {
     if(m_workareas.size() >= desktop){
         m_workareas.removeAt(desktop-1);
@@ -65,7 +63,7 @@ void Info::removeWorkarea(int desktop)
     }
 }
 
-void Info::renameWorkarea(int desktop, QString name)
+void WorkareaInfo::renameWorkarea(int desktop, QString name)
 {
     if(m_workareas.size() >= desktop){
         m_workareas.replace(desktop-1,name);
@@ -74,9 +72,9 @@ void Info::renameWorkarea(int desktop, QString name)
     }
 }
 
-Info *Info::copy(QObject *parent)
+WorkareaInfo *WorkareaInfo::copy(QObject *parent)
 {
-    Info *copy = new Info(m_id, parent);
+    WorkareaInfo *copy = new WorkareaInfo(m_id, parent);
 
     copy->setBackground(m_background);
     foreach (const QString &name, m_workareas)
@@ -85,6 +83,4 @@ Info *Info::copy(QObject *parent)
     return copy;
 }
 
-//}
-
-#include "info.moc"
+#include "workareainfo.moc"

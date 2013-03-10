@@ -4,14 +4,8 @@ project (WorkareaManager)
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
 find_package(KActivities REQUIRED)
-#find_package(KDeclarative)
-
-#include(KDE4Defaults)
-
-#add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
 # Standard stuff
-
 include_directories (
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_BINARY_DIR}/src
@@ -21,43 +15,29 @@ include_directories (
     )
 
 set (workarea_manager_SRCS
-    Store.cpp
-    info.cpp
+    WorkareaManager.cpp
+    workareainfo.cpp
     )
 
-add_subdirectory (plugins)
-
-
+add_subdirectory (mechanism)
 
 qt4_add_dbus_adaptor (
     workarea_manager_SRCS
     org.opentoolsandspace.WorkareaManager.xml
-    Store.h Store
-    storeadaptor StoreAdaptor
+    WorkareaManager.h WorkareaManager
+    workareamanageradaptor WorkareaManagerAdaptor
     )
 
 kde4_add_kcfg_files(workarea_manager_SRCS GENERATE_MOC workareasdata.kcfgc)
 
 kde4_add_plugin(kded_workareamanagerd ${workarea_manager_SRCS})
 
-#kde4_add_executable (workarea-manager ${workarea_manager_SRCS})
-
 target_link_libraries (kded_workareamanagerd
-#    ${KDE4_KDECORE_LIBS}
-#    ${KDE4_KDEUI_LIBS}   # KUniqueApplication
     ${KACTIVITIES_LIBRARY}
-#    ${KDE4_PLASMA_LIBS}
-#    ${KDE4_KIO_LIBS}
     ${KDE4_KFILE_LIBS}
-#    taskmanager
-#    ${ADDITIONAL_LINK_LIBS}
     )
 
-#set_target_properties (workarea-manager
-#    PROPERTIES OUTPUT_NAME workareamanagerd
-#    )
-
-########### install application ###############
+########### install KDEDModule ###############
 
 install (FILES
     workareamanagerd.desktop
@@ -69,12 +49,3 @@ install(TARGETS kded_workareamanagerd DESTINATION ${PLUGIN_INSTALL_DIR})
 install(FILES org.opentoolsandspace.WorkareaManager.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
 
 
-
-
-#install (TARGETS
- #   workarea-manager ${INSTALL_TARGETS_DEFAULT_ARGS}
- #   )
-
-#install(FILES workareas.kcfg
-#        DESTINATION ${KCFG_INSTALL_DIR}
-#)

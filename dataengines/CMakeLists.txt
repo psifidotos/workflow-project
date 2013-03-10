@@ -5,7 +5,7 @@ set(workareas_engine_SRCS
         workareaengine.cpp
         workareajob.cpp
         workareaservice.cpp
-        ../qdbus/client/storeinterface.cpp)
+        ../qdbus/client/workareainterface.cpp)
 
 #add_subdirectory(workareas)
 

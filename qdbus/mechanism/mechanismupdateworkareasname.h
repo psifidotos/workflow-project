@@ -1,17 +1,17 @@
-#ifndef PLUGINUPDATEWORKAREASNAME_H
-#define PLUGINUPDATEWORKAREASNAME_H
+#ifndef MECHANISMUPDATEWORKAREASNAME_H
+#define MECHANISMUPDATEWORKAREASNAME_H
 
 #include <QObject>
 
 //This Plugin class fixes a bug when adding a workarea in a greater position
 //than the number of desktops. More spesific updates correctly the workarea's
 //name
-class PluginUpdateWorkareasName : public QObject
+class MechanismUpdateWorkareasName : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginUpdateWorkareasName(QObject *);
-    ~PluginUpdateWorkareasName();
+    explicit MechanismUpdateWorkareasName(QObject *);
+    ~MechanismUpdateWorkareasName();
 
 //    void checkFlag(int);
 

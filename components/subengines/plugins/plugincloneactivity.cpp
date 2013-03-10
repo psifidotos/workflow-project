@@ -10,8 +10,6 @@
 #include <KConfig>
 #include <KStandardDirs>
 
-#include <taskmanager/taskmanager.h>
-
 
 PluginCloneActivity::PluginCloneActivity(QObject *parent, KActivities::Controller *actControl) :
     QObject(parent),
@@ -21,7 +19,6 @@ PluginCloneActivity::PluginCloneActivity(QObject *parent, KActivities::Controlle
     m_toActivity(""),
     m_timerPhase(0)
 {
-    m_taskMainM = TaskManager::TaskManager::self();
     m_timer = new QTimer(this);
 
     init();
@@ -313,7 +310,6 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
 
         emit copyWorkareas(m_fromActivity, m_toActivity);
 
-       // m_plasmoid->setCurrentActivityAndDesktop(m_toActivity, m_taskMainM->currentDesktop());
         m_activitiesCtrl->setCurrentActivity(m_toActivity);
 
         m_activitiesCtrl->stopActivity(m_fromActivity);

@@ -5,10 +5,8 @@
 
 #include <Plasma/DataEngine>
 
-//namespace Workareas{
-    class StoreInterface;
-//}
-
+class WorkareaInterface;
+class QDBusPendingCallWatcher;
 
 class WorkareaEngine : public Plasma::DataEngine
 {
@@ -35,9 +33,11 @@ private slots:
 
     void maxWorkareasChangedSlot(int);
 
-    void managerServiceRegistered(bool);
+    void onServiceRegistered(bool);
+    //asychronous checking the service status in init
+    void serviceCallFinishedSlot(QDBusPendingCallWatcher*);
 private:
-    StoreInterface *m_store;
+    WorkareaInterface *m_store;
     //void insertDesktop(const int id, const QString activity);
 
     void loadActivity(QString);

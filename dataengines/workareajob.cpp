@@ -1,11 +1,11 @@
 #include "workareajob.h"
 
-#include "../qdbus/client/storeinterface.h"
+#include "../qdbus/client/workareainterface.h"
 
 WorkareaJob::WorkareaJob(const QString &id,
                                      const QString &operation,
                                      QMap<QString, QVariant> &parameters,
-                                     StoreInterface *store,
+                                     WorkareaInterface *store,
                                      QObject *parent) :
     ServiceJob(parent->objectName(), operation, parameters, parent),
     m_id(id),

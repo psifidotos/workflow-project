@@ -4,9 +4,7 @@
 // plasma
 #include <Plasma/ServiceJob>
 
-//namespace Workareas{
-class StoreInterface;
-//}
+class WorkareaInterface;
 
 class WorkareaJob : public Plasma::ServiceJob
 {
@@ -16,7 +14,7 @@ class WorkareaJob : public Plasma::ServiceJob
         WorkareaJob(const QString &id,
                           const QString &operation,
                           QMap<QString, QVariant> &parameters,
-                          StoreInterface *store,
+                          WorkareaInterface *store,
                           QObject *parent = 0);
         ~WorkareaJob();
 
@@ -25,7 +23,7 @@ class WorkareaJob : public Plasma::ServiceJob
 
     private:
         QString m_id;
-        StoreInterface *m_store;
+        WorkareaInterface *m_store;
 };
 
 #endif
