@@ -47,7 +47,9 @@ set_target_properties (workarea-manager
 
 ########### install KDEDModule ###############
 
-install (FILES workareamanagerd.desktop DESTINATION  ${AUTOSTART_INSTALL_DIR} )
+#install (FILES workareamanagerd.desktop DESTINATION  ${AUTOSTART_INSTALL_DIR} )
+
+install (FILES org.opentoolsandspace.WorkareaManager.service DESTINATION  ${DBUS_SERVICES_INSTALL_DIR} )
 
 install(TARGETS workarea-manager ${INSTALL_TARGETS_DEFAULT_ARGS})
 
