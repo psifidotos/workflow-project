@@ -15,6 +15,7 @@ include_directories (
     )
 
 set (workarea_manager_SRCS
+    Application.cpp
     WorkareaManager.cpp
     workareainfo.cpp
     )
@@ -33,19 +34,23 @@ kde4_add_kcfg_files(workarea_manager_SRCS GENERATE_MOC workareasdata.kcfgc)
 kde4_add_plugin(kded_workareamanagerd ${workarea_manager_SRCS})
 
 target_link_libraries (kded_workareamanagerd
+    ${KDE4_KDEUI_LIBS}
     ${KACTIVITIES_LIBRARY}
     ${KDE4_KFILE_LIBS}
     )
 
-########### install KDEDModule ###############
-
-install (FILES
-    workareamanagerd.desktop
-    DESTINATION ${SERVICES_INSTALL_DIR}/kded
+#create executable
+set_target_properties (workarea-manager
+    PROPERTIES OUTPUT_NAME workareamanagerd
     )
 
-install(TARGETS kded_workareamanagerd DESTINATION ${PLUGIN_INSTALL_DIR})
+
+########### install KDEDModule ###############
+
+install (FILES workareamanagerd.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+
+install(TARGETS workarea-manager ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES org.opentoolsandspace.WorkareaManager.xml DESTINATION ${DBUS_INTERFACES_INSTALL_DIR} )
 
-
+install(FILES workareas.kcfg DESTINATION ${KCFG_INSTALL_DIR})
