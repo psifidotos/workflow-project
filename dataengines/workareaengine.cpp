@@ -13,7 +13,7 @@ WorkareaEngine::WorkareaEngine(QObject *parent, const QVariantList& args)
     : Plasma::DataEngine(parent, args),
       m_store(0)
 {
-    m_store = new WorkareaInterface("org.kde.kded", "/modules/workareamanagerd", QDBusConnection::sessionBus(), 0);
+    m_store = new WorkareaInterface("org.opentoolsandspace.WorkareaManager", "/", QDBusConnection::sessionBus(), 0);
 }
 
 WorkareaEngine::~WorkareaEngine()

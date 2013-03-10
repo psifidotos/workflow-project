@@ -1,9 +1,14 @@
 [Desktop Entry]
 Type=Service
-X-KDE-ServiceTypes=KDEDModule
-X-KDE-Library=workareamanagerd
-X-KDE-DBus-ModuleName=workareamanagerd
-X-KDE-Kded-autoload=true
+StartupNotify=true
+Terminal=false
+Exec=workareamanagerd
+TerminalOptions=
+X-DBUS-ServiceName=
+X-DBUS-StartupType=wait
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+OnlyShowIn=KDE;
 
 Name=Workarea Manager
 

@@ -23,19 +23,8 @@
 #include "workareainfo.h"
 
 
-#include <KPluginFactory>
-#include <KPluginLoader>
-
-K_PLUGIN_FACTORY(WorkareaManagerFactory,
-                 registerPlugin<WorkareaManager>();
-)
-K_EXPORT_PLUGIN(WorkareaManagerFactory("workareamanagerd"))
-
-static const char* DBUS_SERVICE = "org.kde.kded";
-static const char* DBUS_OBJECT_PATH = "/modules/workareamanagerd";
-
-WorkareaManager::WorkareaManager(QObject* parent, const QList<QVariant>&) :
-    KDEDModule(parent),
+WorkareaManager::WorkareaManager(QObject* parent) :
+    QObject(parent),
     m_activitiesController(new KActivities::Controller(this)),
     actionCollection(0),
     m_loading(false),
@@ -46,9 +35,11 @@ WorkareaManager::WorkareaManager(QObject* parent, const QList<QVariant>&) :
     m_mcmSyncActivitiesWorkareas(0),
     m_mcmFindWallpaper(0)
 {
-    connectToBus();
+    new WorkareaManagerAdaptor(this);
+    QDBusConnection::sessionBus().registerObject(
+                "/", this);
 
-    updateActivityList();
+    initSession();
 }
 
 WorkareaManager::~WorkareaManager()
@@ -132,21 +123,6 @@ void WorkareaManager::initSession()
     m_isRunning = true;
     emit ServiceStatusChanged(m_isRunning);
 //    qDebug() << "Ok.....";
-}
-
-
-bool WorkareaManager::connectToBus(const QString& service, const QString& path)
-{
-    m_service = service.isEmpty() ? DBUS_SERVICE : service;
-    QString newPath = path.isEmpty() ? DBUS_OBJECT_PATH : path;
-
-    if (!QDBusConnection::sessionBus().registerService(m_service)) {
-        return false;
-    }
-    new WorkareaManagerAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(newPath, this);
-
-    return true;
 }
 
 void WorkareaManager::initSignals()
@@ -537,8 +513,10 @@ void WorkareaManager::loadWorkareas()
 
     initBackgrounds();
     m_loading = false;
+
     m_maxWorkareas = max;
-    emit MaxWorkareasChanged(m_maxWorkareas);
+   // emit MaxWorkareasChanged(m_maxWorkareas);
+    setMaxWorkareas();
 }
 
 

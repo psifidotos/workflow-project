@@ -16,14 +16,13 @@ class KActionCollection;
 
 class WorkareaInfo;
 
-class WorkareaManager : public KDEDModule,
-        protected QDBusContext
+class WorkareaManager : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.opentoolsandspace.WorkareaManager")
 
 public:
-    explicit WorkareaManager(QObject* parent, const QList<QVariant>&);
+    explicit WorkareaManager(QObject* parent = 0);
     ~WorkareaManager();
 
     void initBackgrounds();
@@ -101,7 +100,6 @@ private:
     QString getNextDefWallpaper();
     QString nextRunningActivity();
     QString previousRunningActivity();
-    bool connectToBus(const QString& service = QString(), const QString& path = QString());
 
     int findActivity(QString activityId);
     WorkareaInfo *get(QString);

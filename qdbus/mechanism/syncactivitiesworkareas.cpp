@@ -1,6 +1,7 @@
 #include "syncactivitiesworkareas.h"
 
 #include <KWindowSystem>
+#include <QDebug>
 
 #ifdef Q_WS_X11
 #include <QX11Info>
@@ -45,7 +46,6 @@ void SyncActivitiesWorkareas::numberOfDesktopsChangedSlot(int desktops)
         removeDesktop();
     else if (m_desktops < m_workareas)
         addDesktop();
-
 }
 
 

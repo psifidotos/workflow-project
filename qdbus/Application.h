@@ -22,9 +22,9 @@
 
 #include <KUniqueApplication>
 //#include <utils/d_ptr.h>
+//class ApplicationPrivate;
+class WorkareaManager;
 
-class Store;
-class ApplicationPrivate;
 
 /**
  * Main application object
@@ -38,7 +38,7 @@ public:
     static Application * self();
     static void quit();
 
-    Store  & store()  const;
+    WorkareaManager  & store()  const;
 
 private Q_SLOTS:
 
@@ -46,7 +46,7 @@ private:
     Application();
     virtual ~Application();
 
-    Store  * m_store;
+    WorkareaManager *m_store;
 
     static Application * s_instance;
     //Q_DECLARE_PRIVATE(Application);

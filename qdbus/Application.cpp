@@ -29,7 +29,7 @@
 #include <KServiceTypeTrader>
 #include <KSharedConfig>
 
-#include "Store.h"
+#include "WorkareaManager.h"
 
 #include <signal.h>
 #include <stdlib.h>
@@ -40,7 +40,7 @@ Application * Application::s_instance=0;
 
 Application::Application()
     : KUniqueApplication(),
-      m_store(new Store)
+      m_store(0)
 {
     // TODO: We should move away from any GUI code
     setQuitOnLastWindowClosed(false);
@@ -48,6 +48,8 @@ Application::Application()
     if (!QDBusConnection::sessionBus().registerService("org.opentoolsandspace.WorkareaManager")) {
         exit(0);
     }
+    m_store = new WorkareaManager;
+
 
     // KAMD is a daemon, if it crashes it is not a problem as
     // long as it restarts properly
@@ -66,7 +68,7 @@ int Application::newInstance()
     return 0;
 }
 
-Store & Application::store() const
+WorkareaManager & Application::store() const
 {
     return *m_store;
 }
