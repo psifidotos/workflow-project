@@ -22,9 +22,11 @@ WorkflowManager::~WorkflowManager()
     if(m_workareaManager)
         delete m_workareaManager;
     //Delete model here in order not to trigger the countChanged from
-    //workareas signals
-    if(m_model)
-        delete m_model;
+    //workareas signals for activityManager and m_workflowManager
+    //No need, the children will be deleted by the parent
+    //was creating occussionaly crashes
+    //if(m_model)
+     //   delete m_model;
 }
 
 void WorkflowManager::init()

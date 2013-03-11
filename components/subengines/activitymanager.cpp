@@ -227,12 +227,13 @@ QString ActivityManager::chooseIconInKWin(QString id)
     KIconDialog *dialog = new KIconDialog();
     dialog->setModal(false);
     dialog->setWindowFlags(Qt::Popup | Qt::X11BypassWindowManagerHint);
-    dialog->setup(KIconLoader::Desktop);
-    dialog->setProperty("DoNotCloseController", true);
-    KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
+   // dialog->setup(KIconLoader::Desktop);
+   // dialog->setProperty("DoNotCloseController", true);
+   // KWindowSystem::setOnDesktop(dialog->winId(), KWindowSystem::currentDesktop());
     dialog->showDialog();
     KDialog::centerOnScreen(dialog);
-    KWindowSystem::forceActiveWindow(dialog->winId());
+    dialog->activateWindow();
+    //KWindowSystem::forceActiveWindow(dialog->winId());
 
     QString icon = dialog->openDialog();
     dialog->deleteLater();

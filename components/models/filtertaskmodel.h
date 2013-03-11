@@ -13,6 +13,7 @@ class FilterTaskModel : public QmlSortFilterProxyModel
 
 public:
     explicit FilterTaskModel(QObject *parent = 0);
+    ~FilterTaskModel(){}
 
     inline QString activity(){return m_activity;}
     void setActivity(QString);

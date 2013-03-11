@@ -15,6 +15,8 @@ PreviewsManager::PreviewsManager(QObject *parent) :
 
 
 PreviewsManager::~PreviewsManager(){
+    //No need, the children will be deleted by the parent
+    //was creating occussionaly crashes
     hideWindowsPreviews();
 }
 

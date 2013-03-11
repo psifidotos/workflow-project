@@ -44,8 +44,10 @@ PTaskManager::PTaskManager(QObject *parent) :
 PTaskManager::~PTaskManager(){
     //something probably is not going too well with the
     //qt raster interface, it was crashing kwin
-    if(m_taskModel)
-        delete m_taskModel;
+    //No need, the children will be deleted by the parent
+    //was creating occussionaly crashes
+    //if(m_taskModel)
+     //   delete m_taskModel;
 }
 
 void PTaskManager::init()

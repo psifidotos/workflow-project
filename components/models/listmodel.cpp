@@ -18,7 +18,9 @@ ListModel::ListModel(ListItem* prototype, QObject *parent) :
 
 ListModel::~ListModel() {
     delete m_prototype;
-    clear();
+    //No need, the children will be deleted by the parent
+    //was creating occussionaly crashes
+    //clear();
 }
 
 int ListModel::rowCount(const QModelIndex &parent) const
