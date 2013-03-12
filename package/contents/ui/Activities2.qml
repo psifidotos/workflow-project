@@ -24,8 +24,8 @@ Rectangle {
     objectName: "instMainView"
     focus:true
 
-    property int minimumWidth: 100
-    property int minimumHeight: 100
+    property int minimumWidth: 400
+    property int minimumHeight: 300
     property int maximumWidth
     property int maximumHeight
     property int preferredWidth: 500
@@ -37,6 +37,8 @@ Rectangle {
     property Component compactRepresentation: plasmoidWrapper.isInPanel ?
                                                   compactRepresentationPanel :
                                                   compactRepresentationEmpty
+   // property Component compactRepresentation: compactRepresentationPanel
+
 
     Settings {
         id: settings
@@ -250,7 +252,7 @@ Rectangle {
         toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
         plasmoid.popupIconToolTip = toolTipData;
 
-        plasmoid.popupIcon = QIcon("preferences-activities");
+      //  plasmoid.popupIcon = QIcon("preferences-activities");
         plasmoid.aspectRatioMode = IgnoreAspectRatio;
 
         plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);

@@ -10,26 +10,13 @@ Item{
     id:container
     anchors.centerIn: parent
 
-    Rectangle{
-        id:hoverCompactRect
-        width:mainIcon.width
-        height:mainIcon.height
-        color:"#9CD4FF"
-        opacity:0
-        radius:7
 
-        Behavior on opacity{
-            NumberAnimation {
-                duration: 2*Settings.global.animationStep;
-                easing.type: Easing.InOutQuad;
-            }
-        }
-    }
 
     QIconItem{
         id:mainIcon
-        width:parent.width
-        height:parent.height
+        anchors.centerIn: parent
+        width:Math.min (parent.width,parent.height)-6
+        height:Math.min (parent.width,parent.height)-6
         icon: QIcon(iconPath)
         smooth:true
 
@@ -46,7 +33,27 @@ Item{
             visible: Settings.global.useCurrentActivityIcon
         }
 
+        Rectangle{
+            id:hoverCompactRect
+            width:parent.width-5
+            height:parent.height-5
+            anchors.centerIn: parent
+            //color:"#ffffff"
+            opacity:0
+            radius:10
 
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#ffffffff" }
+                GradientStop { position: 1.0; color: "#00666666" }
+            }
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep;
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
     }
 
     PlasmaExtras.PressedAnimation{
@@ -105,7 +112,7 @@ Item{
                     sessionParameters.triggerKWinScript();
             }
 
-            onEntered: hoverCompactRect.opacity = 0.5;
+            onEntered: hoverCompactRect.opacity = 0.6;
             onExited: hoverCompactRect.opacity = 0;
             onPressed: pressedAnimation.start();
             onReleased: releasedAnimation.start();
