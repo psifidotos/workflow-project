@@ -16,6 +16,12 @@ public:
     ~SyncActivitiesWorkareas();
 
     void execute();
+    int numberOfDesktops();
+    void addDesktop();
+    void removeDesktop();
+
+signals:
+    void updateWorkareasForDesktopsSize(int);
 
 protected:
     void init();
@@ -29,9 +35,9 @@ private slots:
 private:
     int m_desktops;
     int m_workareas;
-
-    void addDesktop();
-    void removeDesktop();
+    //it used to determine when a desktop was added or removed from
+    //workflow components or from outside e.g. official pager
+    bool m_myAction;
 };
 
 #endif

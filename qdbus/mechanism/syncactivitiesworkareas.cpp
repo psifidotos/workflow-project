@@ -13,7 +13,8 @@
 SyncActivitiesWorkareas::SyncActivitiesWorkareas(QObject *obj) :
     QObject(obj),
     m_desktops(0),
-    m_workareas(0)
+    m_workareas(0),
+    m_myAction(false)
 {
     init();
 }
@@ -30,22 +31,46 @@ void SyncActivitiesWorkareas::init()
             this, SLOT(numberOfDesktopsChangedSlot(int)) );
 }
 
+int SyncActivitiesWorkareas::numberOfDesktops()
+{
+    return m_desktops;
+}
+
 void SyncActivitiesWorkareas::maxWorkareasUpdated(int maxWorkareas)
 {
     m_workareas = maxWorkareas;
-    if (maxWorkareas>m_desktops)
+    if (maxWorkareas>m_desktops){
+        m_myAction = true;
         addDesktop();
-    else if (maxWorkareas<m_desktops)
+    }
+    else if (maxWorkareas<m_desktops){
+        m_myAction = true;
         removeDesktop();
+    }
 }
 
 void SyncActivitiesWorkareas::numberOfDesktopsChangedSlot(int desktops)
 {
     m_desktops = desktops;
-    if (m_desktops > m_workareas)
-        removeDesktop();
-    else if (m_desktops < m_workareas)
-        addDesktop();
+    if(m_myAction){
+        if (m_desktops > m_workareas)
+            removeDesktop();
+        else if (m_desktops < m_workareas)
+            addDesktop();
+        m_myAction = false;
+    }
+    else{
+        if (m_desktops > m_workareas)
+        {
+            // it can done nothing actually.... :)
+         //   emit updateWorkareasForDesktopsSize(m_desktops);
+        }
+        else if (m_desktops < m_workareas){
+            // it can done nothing actually... :)
+             // TODO
+        }
+
+    }
 }
 
 

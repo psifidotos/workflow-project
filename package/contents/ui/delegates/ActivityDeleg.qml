@@ -183,6 +183,12 @@ Item{
         id:activityName
         text: Name
 
+        //Workaround for a bug not changing the title when used with dbus
+        property string activityName:Name
+        onActivityNameChanged: {
+                text = Name;
+        }
+
         x:activityIcon.x+0.9*activityIcon.width
 
         width:mainActivity.width - 1.05*activityIcon.width

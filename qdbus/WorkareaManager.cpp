@@ -122,7 +122,7 @@ void WorkareaManager::initSession()
 
     m_isRunning = true;
     emit ServiceStatusChanged(m_isRunning);
-//    qDebug() << "Ok.....";
+    //    qDebug() << "Ok.....";
 }
 
 void WorkareaManager::initSignals()
@@ -205,17 +205,27 @@ void WorkareaManager::createActivityChangedSignal(QString actId)
 
 void WorkareaManager::AddWorkarea(QString id, QString name)
 {
-    int pos = findActivity(id);
+    WorkareaInfo *activity = get(id);
+    if (activity){
+        bool addTheWorkarea = false;
 
-    if (pos>=0 && pos<m_workareasList.size()){
-        WorkareaInfo *info = m_workareasList[pos];
-
-        if(name==""){
-            int counter = info->m_workareas.size();
-            name = KWindowSystem::self()->desktopName(counter+1);
+        if (m_mcmSyncActivitiesWorkareas &&   //This is used to determine if old workareas information exist
+                (activity->workareas().size()<=m_mcmSyncActivitiesWorkareas->numberOfDesktops()) ) {
+            addTheWorkarea = true;
         }
 
-        info->addWorkArea(name);
+        if(addTheWorkarea){
+            if(name==""){
+                int counter = activity->m_workareas.size();
+                name = KWindowSystem::self()->desktopName(counter+1);
+            }
+
+            activity->addWorkArea(name);
+        }
+        else{
+            //Add a desktop just to show hidden workarea
+            m_mcmSyncActivitiesWorkareas->addDesktop();
+        }
 
         // m_mcmUpdateWorkareasName->checkFlag(info->m_workareas.size());
     }
@@ -223,26 +233,21 @@ void WorkareaManager::AddWorkarea(QString id, QString name)
 
 void WorkareaManager::RenameWorkarea(QString id, int desktop, QString name)
 {
-    int pos = findActivity(id);
-
-    if (pos>=0 && pos<m_workareasList.size()){
-        WorkareaInfo *info = m_workareasList[pos];
+    WorkareaInfo *activity = get(id);
+    if (activity){
         if(name == ""){
             name = KWindowSystem::self()->desktopName(desktop);
         }
 
-        info->renameWorkarea(desktop, name);
+        activity->renameWorkarea(desktop, name);
     }
-
 }
 
 void WorkareaManager::RemoveWorkarea(QString id, int desktop)
 {
-    int pos = findActivity(id);
-
-    if (pos>=0 && pos<m_workareasList.size()){
-        WorkareaInfo *info = m_workareasList[pos];
-        info->removeWorkarea(desktop);
+    WorkareaInfo *activity = get(id);
+    if (activity){
+        activity->removeWorkarea(desktop);
     }
 }
 
@@ -515,7 +520,7 @@ void WorkareaManager::loadWorkareas()
     m_loading = false;
 
     m_maxWorkareas = max;
-   // emit MaxWorkareasChanged(m_maxWorkareas);
+    // emit MaxWorkareasChanged(m_maxWorkareas);
     setMaxWorkareas();
 }
 

@@ -18,7 +18,8 @@ Item{
     property int classicH:workList.workAreaImageHeight+workList.realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent
 
     width: isCurrentW === true?classicW+0.2*mainView.scaleMeter:classicW
-    height: classicH
+    height: desktop <= sessionParameters.numberOfDesktops ? classicH : 0
+    opacity:  (desktop <= sessionParameters.numberOfDesktops)
 
     x:isCurrentW !== true ? 0.1*mainView.scaleMeter:0
 
@@ -54,6 +55,22 @@ Item{
     property bool isHoveredFromDragging: ( mDragInt.isActive &&
                                           (mDragInt.drActiv === actCode) &&
                                           (mDragInt.drDesktop === desktop) )
+
+
+    //when it is hidden
+    Behavior on height{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep
+            easing.type: Easing.InOutQuad;
+        }
+    }
+    //when it is hidden
+    Behavior on opacity{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep
+            easing.type: Easing.InOutQuad;
+        }
+    }
 
     SelectedArea{
         x: normalWorkArea.x - marginLeft
@@ -296,6 +313,11 @@ Item{
             width: mainWorkArea.width
             height: workList.workAreaNameHeight
             text: title
+            //Workaround for a bug not changing the title when used with dbus
+            property string workareaTitle:title
+            onWorkareaTitleChanged: {
+                    text = title;
+            }
 
             onTextAcceptedSignal: {
                 workflowManager.workareaManager().renameWorkarea(mainWorkArea.actCode,mainWorkArea.desktop, finalText);

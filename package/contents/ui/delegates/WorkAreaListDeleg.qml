@@ -29,7 +29,8 @@ Item{
 
     property int bWidth: mainView.workareaWidth
 
-    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.02)
+    //property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(workalist.model.count+0.02)
+    property int bHeight: (workAreaImageHeight+realWorkAreaNameHeight+0.7*workalist.addedHeightForCurrent)*(Math.min(sessionParameters.numberOfDesktops,workalist.model.count)+0.03)
 
     visible: CState === neededState
     //    width: bWidth
@@ -43,6 +44,14 @@ Item{
     onAddedHeightChanged: allareas.changedChildHeight();
 
     onStateChanged: allareas.changedChildHeight();
+
+
+    Behavior on bHeight{
+        NumberAnimation {
+            duration: 2*Settings.global.animationStep
+            easing.type: Easing.InOutQuad;
+        }
+    }
 
     Rectangle{
         id:draggingRectangle

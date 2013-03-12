@@ -1,5 +1,6 @@
 #include "workareaitem.h"
 #include "listitem.h"
+#include <QDebug>
 
 WorkareaItem::WorkareaItem(const QString &code, const QString &title,
                            const bool &enabled, QObject *parent) :
@@ -41,6 +42,7 @@ void WorkareaItem::setCode(QString code)
 void WorkareaItem::setTitle(QString title)
 {
     if(m_title != title){
+        qDebug() << "Was set:"<<title;
         m_title = title;
         emit dataChanged();
     }

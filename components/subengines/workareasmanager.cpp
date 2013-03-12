@@ -114,21 +114,38 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
             int prevSize = workareasModel->getCount();
 
             QStringList newWorkareas = data["Workareas"].toStringList();
+
             int newSize = newWorkareas.size();
 
+            qDebug() <<"ACtivity: " << source;
             for(int i=0; i<newSize; ++i )
             {
+
                 WorkareaItem *workarea = static_cast<WorkareaItem *>(workareasModel->at(i));
 
-                if (i>=0 && i<prevSize)
-                    workarea->setTitle(newWorkareas.at(i));
+                if (i>=0 && i<prevSize){
+                    if( (workarea->title() != newWorkareas[i]) &&
+                            prevSize>newSize )
+                        removeWorkareaInModel(source, i+1);
+                    else{
+                        qDebug() << "Old: "<<workarea->title();
+                        workarea->setTitle(newWorkareas[i]);
+                    }
+                }
                 else
                     addWorkareaInModel(source, newWorkareas.at(i));
+
+                qDebug() << newWorkareas[i];
             }
 
-            if(prevSize > newSize)
-                for(int j=newSize; j<prevSize; ++j )
-                    removeWorkareaInModel(source, j+1);
+            newSize = newWorkareas.size();
+
+            //Delete last Workarea if it is needed
+            if(prevSize > newSize){
+                for(int j=newSize; j<prevSize; ++j ){
+                    removeWorkareaInModel(source, newSize+1);
+                }
+            }
             //////
 
             //update order
