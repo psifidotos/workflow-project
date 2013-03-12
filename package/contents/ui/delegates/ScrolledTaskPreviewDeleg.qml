@@ -271,7 +271,7 @@ Item{
 
     ////////////////Functionality///////////////////////
     function onClicked(){
-        desktopDialog.clickedCancel();
+        uiConnect.desktopDialog.clickedCancel();
     }
 
     function onDraggingStarted(mouse, obj) {
@@ -295,16 +295,16 @@ Item{
 
         desktopView.forceState1();
         forcedState1InDialog = true;
-        desktopDialog.closeD();
+        uiConnect.desktopDialog.closeD();
     }
 
     function onDraggingEnded(mouse){
-        desktopDialog.emptyDialog();
+        uiConnect.desktopDialog.emptyDialog();
         if (forcedState1InDialog === true){
             desktopView.unForceState1();
             forcedState1InDialog=false;
         }
-        desktopDialog.completed();
+        uiConnect.desktopDialog.completed();
     }
 
     function updatePreview(){
