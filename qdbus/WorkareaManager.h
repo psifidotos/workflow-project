@@ -86,6 +86,8 @@ private:
     int m_nextDefaultWallpaper;
     QString m_service;
     bool m_isRunning;
+    //Activity id to update Workarea Name
+    QString m_updateWorkareaName;
 
     /*Mechanisms from the relevant classes*/
     UpdateWorkareasName *m_mcmUpdateWorkareasName;

@@ -116,8 +116,6 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
             QStringList newWorkareas = data["Workareas"].toStringList();
 
             int newSize = newWorkareas.size();
-
-            qDebug() <<"ACtivity: " << source;
             for(int i=0; i<newSize; ++i )
             {
 
@@ -128,14 +126,11 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
                             prevSize>newSize )
                         removeWorkareaInModel(source, i+1);
                     else{
-                        qDebug() << "Old: "<<workarea->title();
                         workarea->setTitle(newWorkareas[i]);
                     }
                 }
                 else
                     addWorkareaInModel(source, newWorkareas.at(i));
-
-                qDebug() << newWorkareas[i];
             }
 
             newSize = newWorkareas.size();

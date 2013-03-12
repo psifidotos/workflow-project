@@ -10,8 +10,6 @@ Item{
     id:container
     anchors.centerIn: parent
 
-
-
     QIconItem{
         id:mainIcon
         anchors.centerIn: parent

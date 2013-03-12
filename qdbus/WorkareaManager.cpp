@@ -31,6 +31,7 @@ WorkareaManager::WorkareaManager(QObject* parent) :
     m_maxWorkareas(0),
     m_nextDefaultWallpaper(0),
     m_isRunning(false),
+    m_updateWorkareaName(""),
     m_mcmUpdateWorkareasName(0),
     m_mcmSyncActivitiesWorkareas(0),
     m_mcmFindWallpaper(0)
@@ -167,7 +168,6 @@ int WorkareaManager::MaxWorkareas() const
 QStringList WorkareaManager::Activities() const
 {
     QStringList result;
-
     QListIterator<WorkareaInfo *> i(m_workareasList);
 
     while (i.hasNext()) {
@@ -218,6 +218,14 @@ void WorkareaManager::AddWorkarea(QString id, QString name)
             if(name==""){
                 int counter = activity->m_workareas.size();
                 name = KWindowSystem::self()->desktopName(counter+1);
+
+                if(counter == m_mcmSyncActivitiesWorkareas->numberOfDesktops()){
+                    m_updateWorkareaName = id;
+
+                    //the maxWorkareas signal is not going to catch that one...
+                    if(counter<m_maxWorkareas)
+                        m_mcmSyncActivitiesWorkareas->addDesktop();
+                }
             }
 
             activity->addWorkArea(name);
@@ -247,6 +255,14 @@ void WorkareaManager::RemoveWorkarea(QString id, int desktop)
 {
     WorkareaInfo *activity = get(id);
     if (activity){
+        int worksNumber = activity->m_workareas.size();
+        int desksNumber = m_mcmSyncActivitiesWorkareas->numberOfDesktops();
+        //remove hidden workareas when the user deletes any shown workarea
+        if(worksNumber > desksNumber ){
+            for(int i=desksNumber+1; i<=worksNumber; i++)
+                activity->removeWorkarea(desksNumber+1);
+        }
+
         activity->removeWorkarea(desktop);
     }
 }
@@ -617,14 +633,18 @@ QString WorkareaManager::previousRunningActivity()
 
 void WorkareaManager::updateWorkareasNameSlot(int w_pos)
 {
-    QListIterator<WorkareaInfo *> i(m_workareasList);
+    if(m_updateWorkareaName != ""){
+        QListIterator<WorkareaInfo *> i(m_workareasList);
 
-    while (i.hasNext()) {
-        WorkareaInfo *curWorks = i.next();
-        if(curWorks && (curWorks->workareas().size() == w_pos) )
-            RenameWorkarea(curWorks->id(), w_pos, "");
+        while (i.hasNext()) {
+            WorkareaInfo *curWorks = i.next();
+            //rename only the workarea which was added
+            if(curWorks && (curWorks->id() == m_updateWorkareaName) && (curWorks->workareas().size() == w_pos) )
+                RenameWorkarea(curWorks->id(), w_pos, "");
+        }
+
+        m_updateWorkareaName = "";
     }
-
 }
 
 int WorkareaManager::findActivity(QString activityId)

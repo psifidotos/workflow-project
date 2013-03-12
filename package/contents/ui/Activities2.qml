@@ -4,6 +4,7 @@ import QtQuick 1.1
 import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1
 
 import "delegates"
@@ -24,20 +25,20 @@ Rectangle {
     objectName: "instMainView"
     focus:true
 
-    property int minimumWidth: 400
-    property int minimumHeight: 300
-    property int maximumWidth
-    property int maximumHeight
+    property int minimumWidth: plasmoidWrapper.isInPanel? 400 : 1000
+    property int minimumHeight: plasmoidWrapper.isInPanel? 300 : 1000
+  //  property int maximumWidth: plasmoidWrapper.isInPanel? minimumWidth : 0
+ //   property int maximumHeight: plasmoidWrapper.isInPanel? minimumHeight : 0
     property int preferredWidth: 500
     property int preferredHeight: 350
 
     property Component compactRepresentationEmpty: undefined
     property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
 
-    property Component compactRepresentation: plasmoidWrapper.isInPanel ?
+    /*property Component compactRepresentation: plasmoidWrapper.isInPanel ?
                                                   compactRepresentationPanel :
-                                                  compactRepresentationEmpty
-   // property Component compactRepresentation: compactRepresentationPanel
+                                                  compactRepresentationEmpty*/
+    property Component compactRepresentation:  compactRepresentationPanel
 
 
     Settings {
@@ -252,8 +253,9 @@ Rectangle {
         toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
         plasmoid.popupIconToolTip = toolTipData;
 
-      //  plasmoid.popupIcon = QIcon("preferences-activities");
-        plasmoid.aspectRatioMode = IgnoreAspectRatio;
+        plasmoid.popupIcon = QIcon("preferences-activities");
+        // plasmoid.aspectRatioMode = IgnoreAspectRatio;
+        plasmoid.aspectRatioMode = "ConstrainedSquare"
 
         plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
         plasmoid.popupEvent.connect(popupEventSlot);
@@ -316,9 +318,9 @@ Rectangle {
     UIConnections{
         id:uiConnect
     }
-   // CalibrationDialogTmpl{}
-  //      TourDialog{
-  //  }
+    // CalibrationDialogTmpl{}
+    //      TourDialog{
+    //  }
 
 }
 
