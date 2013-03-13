@@ -68,7 +68,10 @@ Item{
          color:Settings.global.disableBackground ? theme.textColor : mainIText.color
          elide:Text.ElideRight
          anchors {left:parent.left; top: parent.top; leftMargin:10; topMargin:5}
-         opacity: container.focused ? 0 : 1
+
+         property real notEditingOpacities: mainWorkArea.isFilteredNoResults ? 0.3 : 1
+
+         opacity: container.focused ? 0 : notEditingOpacities
     }
 
     TextInput {

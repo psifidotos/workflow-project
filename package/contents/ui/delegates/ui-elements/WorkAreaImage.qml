@@ -6,7 +6,7 @@ BorderImage {
     id:workBordImage
 
 
-    source: (isCurrentW && !isFilteredNoResults) ?
+    source: (isCurrentW && !mainWorkArea.isFilteredNoResults) ?
                 "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
 
     property alias mainImgP: mainImg.source
@@ -15,8 +15,6 @@ BorderImage {
     border.right: 14; border.bottom: 14;
     horizontalTileMode: BorderImage.Repeat
     verticalTileMode: BorderImage.Repeat
-
-    property bool isFilteredNoResults: (tasksSList.shownTasks === 0)&&(filterWindows.text!=="")
 
     Rectangle{
         x:mainWorkArea.imagex-5
@@ -28,7 +26,7 @@ BorderImage {
         opacity: Settings.global.disableBackground ? opacityForDisableBackground : 0
         color:Settings.global.disableBackground ?  theme.textColor : "#00000000"
 
-        visible: !isFilteredNoResults
+        visible: !mainWorkArea.isFilteredNoResults
     }
 
     Rectangle{
@@ -42,7 +40,7 @@ BorderImage {
 
         //color:Settings.global.disableBackground ?  theme.textColor : "#00000000"
 
-        opacity: isFilteredNoResults ? 0.10 : 1
+        opacity: mainWorkArea.isFilteredNoResults ? 0.10 : 1
 
        // clip:true
         /*Rectangle{

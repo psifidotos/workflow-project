@@ -35,6 +35,8 @@ Item{
     property int imagewidth:width - 2*imagex
     property int imageheight:height - 2*imagey
 
+    property bool isFilteredNoResults: (tasksSList.shownTasks === 0)&&(filterWindows.text!=="")
+
     property bool isCurrentW:((mainWorkArea.actCode === sessionParameters.currentActivity) &&
                               (mainWorkArea.desktop === sessionParameters.currentDesktop))
 
