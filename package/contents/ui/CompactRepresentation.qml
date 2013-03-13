@@ -10,48 +10,29 @@ Item{
     id:container
     anchors.centerIn: parent
 
-    QIconItem{
-        id:mainIcon
-        anchors.centerIn: parent
-        width:Math.min (parent.width,parent.height)-6
-        height:Math.min (parent.width,parent.height)-6
-        icon: QIcon(iconPath)
-        smooth:true
+    PlasmaCore.IconItem{
+           id:mainIcon
+           anchors.centerIn: parent
 
-        property string iconPath: Settings.global.useCurrentActivityIcon ? sessionParameters.currentActivityIcon:
-                                                                           "preferences-activities"
-        QIconItem{
-            anchors.right: parent.horizontalCenter
-            anchors.bottom: parent.verticalCenter
+           width:parent.width
+           height:parent.height
+           source: iconPath
+           smooth:true
+           active:mouseAreaContainer.containsMouse
 
-            width:parent.width/2
-            height:parent.height/2
-            icon: QIcon("preferences-activities")
-            smooth:true
-            visible: Settings.global.useCurrentActivityIcon
-        }
+           property string iconPath: Settings.global.useCurrentActivityIcon ? sessionParameters.currentActivityIcon:
+                                                                              "preferences-activities"
+           PlasmaCore.IconItem{
+               anchors.right: parent.horizontalCenter
+               anchors.bottom: parent.verticalCenter
 
-        Rectangle{
-            id:hoverCompactRect
-            width:parent.width-5
-            height:parent.height-5
-            anchors.centerIn: parent
-            //color:"#ffffff"
-            opacity:0
-            radius:10
-
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#ffffffff" }
-                GradientStop { position: 1.0; color: "#00666666" }
-            }
-
-            Behavior on opacity{
-                NumberAnimation {
-                    duration: 2*Settings.global.animationStep;
-                    easing.type: Easing.InOutQuad;
-                }
-            }
-        }
+               width:parent.width/2
+               height:parent.height/2
+               source:"preferences-activities"
+               smooth:true
+               visible: Settings.global.useCurrentActivityIcon
+               active:mouseAreaContainer.containsMouse
+           }
     }
 
     PlasmaExtras.PressedAnimation{
@@ -63,17 +44,14 @@ Item{
         targetItem:mainIcon
     }
 
-
     //this timer helps in order not to send too many signal
-    //of changing current activity
+    //of changing current activity through mouse wheel
     //(changing activities with not logical order fixed this way)
     Timer {
         id:timer
         interval: 150; running: false; repeat: false
         onTriggered: wheelListener.enabledTimer = false;
     }
-
-
 
     MouseEventListener {
         id:wheelListener
@@ -88,7 +66,6 @@ Item{
                     workflowManager.workareaManager().setCurrentPreviousActivity();
                 else
                     workflowManager.workareaManager().setCurrentNextActivity();
-
 
                 //Probably not working...
                 mainView.forceActiveFocus();
@@ -110,8 +87,6 @@ Item{
                     sessionParameters.triggerKWinScript();
             }
 
-            onEntered: hoverCompactRect.opacity = 0.6;
-            onExited: hoverCompactRect.opacity = 0;
             onPressed: pressedAnimation.start();
             onReleased: releasedAnimation.start();
         }
