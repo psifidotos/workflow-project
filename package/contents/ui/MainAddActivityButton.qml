@@ -16,14 +16,14 @@ Rectangle{
     x:mainView.width - width - marginRight
     color: "#00ffffff"
 
-    y:oxygenT.height
+    y:oxygenT.height+1
 
     opacity: (Settings.global.lockActivities===true) ? 0 : 1
 
-    property color openStpActiv1: "#77333333"
+    property color openStpActiv1: "#66333333"
     property color openStpActiv2: "transparent"
-    property color closStpActiv1: "#77333333"
-    property color closStpActiv2: "#77333333"
+    property color closStpActiv1: "#66333333"
+    property color closStpActiv2: "#66333333"
 
     property color currentColor1: showRedCross===true ? openStpActiv1 : closStpActiv1
     property color currentColor2: showRedCross===true ? openStpActiv2 : closStpActiv2

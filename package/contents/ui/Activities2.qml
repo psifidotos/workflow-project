@@ -35,10 +35,10 @@ Rectangle {
     property Component compactRepresentationEmpty: undefined
     property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
 
-    /*property Component compactRepresentation: plasmoidWrapper.isInPanel ?
+    property Component compactRepresentation: plasmoidWrapper.isInPanel ?
                                                   compactRepresentationPanel :
-                                                  compactRepresentationEmpty*/
-    property Component compactRepresentation:  compactRepresentationPanel
+                                                  compactRepresentationEmpty
+  //  property Component compactRepresentation:  compactRepresentationPanel
 
 
     Settings {
@@ -178,6 +178,15 @@ Rectangle {
         MainAddActivityButton{
             id: mAddActivityBtn
             z:7
+        }
+
+        //Create a consistent look underTitleMainView
+        Rectangle {
+            id: actImagBackTitle
+            width: oxygenT.width
+            height: oxygenT.height
+            color: "#646464"
+            anchors.top:oxygenT.top
         }
 
         TitleMainView{
