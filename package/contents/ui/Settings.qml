@@ -19,10 +19,10 @@ QtObject {
     property bool firstRunCalibration: plasmoid.readConfig("FirstRunCalibration")
     property bool hideOnClick: plasmoid.readConfig("HideOnClick")
     property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
-    property bool hideActivityIndicator: plasmoid.readConfig("HideActivityIndicator")
     property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
     property bool disableBackground: plasmoid.readConfig("DisableBackground")
     property bool triggerKWinScript: plasmoid.readConfig("TriggerKWinScript")
+    property bool disableCompactRepresentation: plasmoid.readConfig("DisableCompactRepresentation")
 
 
     // Small hack to make sure the global settings object is set
@@ -46,27 +46,19 @@ QtObject {
     onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; }
     onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; }
     onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
-    onHideActivityIndicatorChanged: { plasmoid.writeConfig("HideActivityIndicator", hideActivityIndicator) ; }
     onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
     onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; }
     onTriggerKWinScriptChanged: { plasmoid.writeConfig("TriggerKWinScript", triggerKWinScript) ;}
+    //onDisableCompactRepresentationChanged: { plasmoid.writeConfig("DisableCompactRepresentation", disableCompactRepresentation) ; }
     
 
     function configChanged() {
         hideOnClick = plasmoid.readConfig("HideOnClick");
         animations = plasmoid.readConfig("Animations");
         useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
-        hideActivityIndicator = plasmoid.readConfig("HideActivityIndicator");
         disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
         disableBackground = plasmoid.readConfig("DisableBackground");
-        triggerKWinScript = plasmoid.readConfig("TriggerKWinScript")
-
-        if(hideActivityIndicator){
-            if(useCurrentActivityIcon)
-                plasmoid.popupIcon = QIcon(sessionParameters.currentActivityIcon);
-            else
-                plasmoid.popupIcon = QIcon("preferences-activities");
-        }
+        triggerKWinScript = plasmoid.readConfig("TriggerKWinScript");
     }
 
     Component.onCompleted: {

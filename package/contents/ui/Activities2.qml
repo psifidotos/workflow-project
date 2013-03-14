@@ -35,7 +35,7 @@ Rectangle {
     property Component compactRepresentationEmpty: undefined
     property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
 
-    property Component compactRepresentation: (plasmoidWrapper.isInPanel && (!Settings.global.hideActivityIndicator)) ?
+    property Component compactRepresentation: (plasmoidWrapper.isInPanel && (!Settings.global.disableCompactRepresentation)) ?
                                                   compactRepresentationPanel :
                                                   compactRepresentationEmpty
 

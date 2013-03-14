@@ -48,7 +48,7 @@
     <entry name="UseCurrentActivityIcon" type="bool">
         <default>false</default>
     </entry>
-    <entry name="HideActivityIndicator" type="bool">
+    <entry name="DisableCompactRepresentation" type="bool">
         <default>false</default>
     </entry>
     <entry name="DisableEverywherePanel" type="bool">
