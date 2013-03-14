@@ -96,8 +96,6 @@ void CloneActivityClass::initCloningPhase04()
 void CloneActivityClass::initCloningPhase05()
 {
   //  emit updateWallpaper(m_toActivity);
-    emit copyWorkareas(m_fromActivity, m_toActivity);
-
     m_fromActivity = "";
     m_toActivity = "";
 
@@ -312,6 +310,8 @@ void CloneActivityClass::activityAddedSlot(QString actId)
         m_activitiesCtrl->setCurrentActivity(m_toActivity);
 
         m_activitiesCtrl->stopActivity(m_fromActivity);
+
+        emit copyWorkareas(m_fromActivity, m_toActivity);
     }
 
 }

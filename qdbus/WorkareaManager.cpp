@@ -95,7 +95,6 @@ void WorkareaManager::handleActivityReply()
     QObject *watcherObject = 0;
     if (QFutureWatcher<QStringList>* watcher = dynamic_cast< QFutureWatcher<QStringList>* >(sender())) {
         QStringList res = watcher->result();
-        qDebug() << res;
         //now the initialization can be started
         initSession();
     }
@@ -287,7 +286,6 @@ void WorkareaManager::cloneWorkareas(QString from, QString to)
 
     //The signal to clone comes earlier than the activityAdded one
     if (posTo<0 || posTo>=m_workareasList.size()){
-        qDebug() << "inside 22..";
         activityAddedSlot(to);
         posTo = findActivity(to);
         infoTo = m_workareasList[posTo];
@@ -298,22 +296,7 @@ void WorkareaManager::cloneWorkareas(QString from, QString to)
 
     if(infoFrom && infoTo){
         infoTo->cloneWorkareaInfo(infoFrom);
-    /*    WorkareaInfo *copy = infoFrom->copy(this);
-        qDebug() << copy->workareas();
-        copy->m_id = infoTo->m_id;
 
-        disconnect( m_workareasList[posTo], SIGNAL(workareaAdded(QString,QString)) );
-        disconnect( m_workareasList[posTo], SIGNAL(workareaRemoved(QString,int)) );
-        disconnect( m_workareasList[posTo], SIGNAL(workareaInfoUpdated(QString)) );
-
-        m_workareasList.removeAt(posTo);
-
-        connect(copy, SIGNAL(workareaAdded(QString,QString)), this, SLOT(workareaAddedSlot(QString,QString)) );
-        connect(copy, SIGNAL(workareaRemoved(QString,int)), this, SLOT(workareaRemovedSlot(QString,int)) );
-        connect(copy, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
-
-        m_workareasList.append(copy);
-      */
         workareaInfoUpdatedSlot(to);
     }
 }
