@@ -216,7 +216,8 @@ Item{
         icon: QIcon("media-playback-start")
 
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: stpActivityName.top
+        //anchors.verticalCenter: parent.verticalCenter
 
         width: 0.45 * stpActivity.width
         height: width

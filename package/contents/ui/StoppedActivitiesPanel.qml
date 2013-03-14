@@ -91,8 +91,8 @@ Rectangle {
         height:35
 
         color:"transparent"
-       // radius:1
-    //    border.width: 1
+        // radius:1
+        //    border.width: 1
 
         x:-width+radius-1
 
@@ -214,6 +214,14 @@ Rectangle {
 
             interactive:false
             model: stoppedActivitiesModel
+
+            //with this code any issues when adding the first element and
+            //some appearing issues are resolved
+            Connections {
+                target: stoppedActivitiesModel
+                onRowsInserted: stoppedActivitiesList.positionViewAtBeginning()
+            }
+
             delegate: ActivityStoppedDeleg{
                 id:activityInstance
 
