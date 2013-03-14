@@ -17,10 +17,12 @@ Item{
 
     property bool shown: CState === neededState
 
-    opacity: shown ? 1 : 0.001
-
+    //  opacity: shown ? 1 : 0.001
     width: stoppedActivitiesList.width
-    height: shown ? basicHeight : 0
+    height: basicHeight
+    opacity: 1
+
+    // height: shown ? basicHeight : 0
 
     property real basicHeight:0.62*mainView.workareaHeight
     property int buttonsSize:0.5 * mainView.scaleMeter
@@ -30,7 +32,7 @@ Item{
     property real defOpacity: activityDragged ? 0.001 : opacityDisBackground
 
     property bool containsMouse:( ((deleteActivityBtn.containsMouse) ||
-                                  (mouseArea.containsMouse))&&
+                                   (mouseArea.containsMouse))&&
                                  (!activityDragged))
 
     property bool activityDragged: (draggingActivities.activityId === code) &&
@@ -56,7 +58,7 @@ Item{
             //stoppedPanel.changedChildState();
         }*/
 
-/*
+    /*
     Behavior on opacity{
         NumberAnimation {
             duration: 2*Settings.global.animationStep;
@@ -81,9 +83,9 @@ Item{
 
 
     //Item{
-        ///Ghost Element in order for the activityIcon to be the
-        ///second children
-   // }
+    ///Ghost Element in order for the activityIcon to be the
+    ///second children
+    // }
 
 
     Item{
@@ -232,8 +234,8 @@ Item{
         anchors.fill: parent
         draggingInterface: draggingActivities
 
-         onClickedOverrideSignal: {
-             activateActivity();
+        onClickedOverrideSignal: {
+            activateActivity();
         }
 
         onDraggingStarted: {
@@ -289,12 +291,16 @@ Item{
         image: "media-playback-start"
     }
 
-    ListView.onAdd: ParallelAnimation {
-        PropertyAction { target: stpActivity; property: "width"; value: 0 }
-        PropertyAction { target: stpActivity; property: "opacity"; value: 0 }
+    ListView.onAdd: SequentialAnimation{
+        PropertyAction { target: stpActivity; property: "width"; value: 1 }
+        PropertyAction { target: stpActivity; property: "opacity"; value: 0.1 }
+        PropertyAction { target: stpActivity; property: "height"; value: 0.62*mainView.workareaHeight }
+        PropertyAction { target: stpActivity; property: "visible"; value: true }
 
-        NumberAnimation { target: stpActivity; property: "width"; to: stoppedActivitiesList.width; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
-        NumberAnimation { target: stpActivity; property: "opacity"; to: 1; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        ParallelAnimation{
+            NumberAnimation { target: stpActivity; property: "width"; to: stoppedActivitiesList.width; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: stpActivity; property: "opacity"; to: 1; duration: 2*Settings.global.animationStep; easing.type: Easing.InOutQuad }
+        }
     }
 
     ListView.onRemove: SequentialAnimation {
