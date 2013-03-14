@@ -48,7 +48,6 @@
     </method>
     <method name="CloneActivity">
       <arg type="s" direction="in"/>
-      <arg type="s" direction="in"/>
     </method>
     <method name="MoveActivity">
       <arg type="s" direction="in"/>

@@ -11,6 +11,7 @@
 class UpdateWorkareasName;
 class SyncActivitiesWorkareas;
 class FindWallpaper;
+class CloneActivityClass;
 
 class KActionCollection;
 
@@ -35,7 +36,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void RemoveWorkarea(QString id, int desktop);
     Q_SCRIPTABLE void RenameWorkarea(QString id, int desktop, QString name);
     //Only for the values contained in the workareas models
-    Q_SCRIPTABLE void CloneActivity(QString, QString);
+    Q_SCRIPTABLE void CloneActivity(QString);
     Q_SCRIPTABLE void MoveActivity(QString, int);
 
     Q_SCRIPTABLE int MaxWorkareas() const;
@@ -56,6 +57,11 @@ Q_SIGNALS:
 
     void MaxWorkareasChanged(int);
     void ServiceStatusChanged(bool);
+
+protected slots:
+    void cloneWorkareas(QString from, QString to);
+    //remove it as it is not needed very ofter
+    void cloningEndedSlot();
 
 private slots:
     void setBackground(QString, QString);
@@ -93,6 +99,7 @@ private:
     UpdateWorkareasName *m_mcmUpdateWorkareasName;
     SyncActivitiesWorkareas *m_mcmSyncActivitiesWorkareas;
     FindWallpaper *m_mcmFindWallpaper;
+    CloneActivityClass *m_mcmCloneActiviy;
 
     ///Workareas Storing/Accessing
     void loadWorkareas();

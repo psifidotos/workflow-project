@@ -1,5 +1,5 @@
-#ifndef PLUGINCLONEACTIVITY_H
-#define PLUGINCLONEACTIVITY_H
+#ifndef CLONEACTIVITYCLASS_H
+#define CLONEACTIVITYCLASS_H
 
 #include <QTimer>
 
@@ -16,12 +16,12 @@ namespace KActivities
 //Clones an activity and creates many signals
 //in the process in order to update the workareas and
 //the backgrounds of the relevant activities
-class PluginCloneActivity : public QObject
+class CloneActivityClass : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginCloneActivity(QObject *, KActivities::Controller *);
-    ~PluginCloneActivity();
+    explicit CloneActivityClass(QObject *, KActivities::Controller *);
+    ~CloneActivityClass();
 
     void execute(QString);
 

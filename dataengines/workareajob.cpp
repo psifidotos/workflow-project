@@ -26,7 +26,6 @@ void WorkareaJob::start()
     }
 
     if (operation == "addWorkarea") {
-
         QString name = parameters()["Name"].toString();
 
         if(m_store)
@@ -36,7 +35,6 @@ void WorkareaJob::start()
         return;
     }
     else if (operation == "removeWorkarea") {
-
         int desktop = parameters()["Desktop"].toInt();
 
         if(m_store)
@@ -46,7 +44,6 @@ void WorkareaJob::start()
         return;
     }
     else if (operation == "renameWorkarea") {
-
         QString name = parameters()["Name"].toString();
         int desktop = parameters()["Desktop"].toInt();
 
@@ -56,18 +53,14 @@ void WorkareaJob::start()
         setResult("rename workarea: " + name);
         return;
     }
-    else if (operation == "cloneWorkareas") {
-
-        QString activity = parameters()["Activity"].toString();
-
+    else if (operation == "cloneActivity") {
         if(m_store)
-            m_store->CloneActivity(m_id, activity);
+            m_store->CloneActivity(m_id);
 
-        setResult("clone activity: " + activity);
+        setResult("clone activity: " + m_id);
         return;
     }
     else if (operation == "setOrder") {
-
         int order = parameters()["Order"].toInt();
 
         if(m_store)
@@ -86,7 +79,6 @@ void WorkareaJob::start()
         setResult("previous activity... ");
         return;
     }
-
 
     //m_id is needed for the rest
     if (m_id.isEmpty()) {

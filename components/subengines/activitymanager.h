@@ -3,11 +3,7 @@
 
 #include <KActivities/Controller>
 
-//class PluginShowWidgets;
-class PluginCloneActivity;
 class PluginChangeWorkarea;
-class PluginAddActivity;
-
 class ActivitiesEnhancedModel;
 
 namespace KActivities
@@ -44,7 +40,6 @@ public:
     Q_INVOKABLE QString name(QString id);
     Q_INVOKABLE QString cstate(QString id);
 
-    Q_INVOKABLE void cloneActivity(QString);
     Q_INVOKABLE void moveActivityInModel(QString activity, int position);
     Q_INVOKABLE void setCurrentInModel(QString activity, QString status);
 
@@ -58,11 +53,7 @@ protected:
 
 signals:
     void activityAdded(QString);
-    void activityRemoved(QString);
-
-    void cloningStarted(bool updateBackgrounds);
-    void cloningEnded(bool updateBackgrounds);
-    void cloningCopyWorkareas(QString from, QString to);        
+    void activityRemoved(QString);     
 
 public slots:
     void activityAddedSlot(QString id);
@@ -71,18 +62,14 @@ public slots:
     void activityStateChangedSlot();
 
     //SIGNALS FROM THE PLUGINS
-    void cloningEndedSlot(bool updateWallpapers);
     void changeWorkareaEnded(QString, int);
-    void addActivityEnded();
 
     Q_INVOKABLE void setCurrentActivityAndDesktop(QString, int);
 private:
 
     KActivities::Controller *m_activitiesCtrl;
 
-    PluginCloneActivity *m_plCloneActivity;
     PluginChangeWorkarea *m_plChangeWorkarea;
-    PluginAddActivity *m_plAddActivity;
 
     bool m_firstTime;
 

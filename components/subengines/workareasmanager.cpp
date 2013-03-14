@@ -212,11 +212,11 @@ void WorkareasManager::removeWorkarea(QString id, int desktop)
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }
 
-void WorkareasManager::cloneWorkareas(QString from, QString to)
+void WorkareasManager::cloneActivity(QString id)
 {
-    Plasma::Service *service = m_dataEngine->serviceForSource(from);
-    KConfigGroup op = service->operationDescription("cloneWorkareas");
-    op.writeEntry("Activity", to);
+    Plasma::Service *service = m_dataEngine->serviceForSource(id);
+    KConfigGroup op = service->operationDescription("cloneActivity");
+    //op.writeEntry("Activity", id);
     Plasma::ServiceJob *job = service->startOperationCall(op);
     connect(job, SIGNAL(finished(KJob*)), service, SLOT(deleteLater()));
 }

@@ -36,10 +36,6 @@ void WorkflowManager::init()
     //First fill the activities in the model
     m_activityManager = new ActivityManager(m_model,this);
     m_workareaManager = new WorkareasManager(m_model, this);
-
-    connect(m_activityManager, SIGNAL(cloningCopyWorkareas(QString,QString)),
-            m_workareaManager, SLOT(cloneWorkareas(QString,QString)) );
-
 }
 
 #include "workflowmanager.moc"

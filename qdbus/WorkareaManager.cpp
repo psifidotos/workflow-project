@@ -19,6 +19,7 @@
 #include "mechanism/updateworkareasname.h"
 #include "mechanism/syncactivitiesworkareas.h"
 #include "mechanism/findwallpaper.h"
+#include "mechanism/cloneactivityclass.h"
 
 #include "workareainfo.h"
 
@@ -34,7 +35,8 @@ WorkareaManager::WorkareaManager(QObject* parent) :
     m_updateWorkareaName(""),
     m_mcmUpdateWorkareasName(0),
     m_mcmSyncActivitiesWorkareas(0),
-    m_mcmFindWallpaper(0)
+    m_mcmFindWallpaper(0),
+    m_mcmCloneActiviy(0)
 {
     new WorkareaManagerAdaptor(this);
     QDBusConnection::sessionBus().registerObject(
@@ -65,6 +67,9 @@ WorkareaManager::~WorkareaManager()
 
     if(m_mcmFindWallpaper)
         delete m_mcmFindWallpaper;
+
+    if(m_mcmCloneActiviy)
+        delete m_mcmCloneActiviy;
 
     if(actionCollection)
         delete actionCollection;
@@ -268,7 +273,7 @@ void WorkareaManager::RemoveWorkarea(QString id, int desktop)
 }
 
 
-void WorkareaManager::CloneActivity(QString from, QString to)
+void WorkareaManager::cloneWorkareas(QString from, QString to)
 {
     int posFrom = findActivity(from);
     int posTo = findActivity(to);
@@ -282,13 +287,19 @@ void WorkareaManager::CloneActivity(QString from, QString to)
 
     //The signal to clone comes earlier than the activityAdded one
     if (posTo<0 || posTo>=m_workareasList.size()){
+        qDebug() << "inside 22..";
         activityAddedSlot(to);
         posTo = findActivity(to);
         infoTo = m_workareasList[posTo];
     }
+    else{
+        infoTo = m_workareasList[posTo];
+    }
 
     if(infoFrom && infoTo){
-        WorkareaInfo *copy = infoFrom->copy(this);
+        infoTo->cloneWorkareaInfo(infoFrom);
+    /*    WorkareaInfo *copy = infoFrom->copy(this);
+        qDebug() << copy->workareas();
         copy->m_id = infoTo->m_id;
 
         disconnect( m_workareasList[posTo], SIGNAL(workareaAdded(QString,QString)) );
@@ -302,10 +313,9 @@ void WorkareaManager::CloneActivity(QString from, QString to)
         connect(copy, SIGNAL(workareaInfoUpdated(QString)), this, SLOT(workareaInfoUpdatedSlot(QString)));
 
         m_workareasList.append(copy);
-
+      */
         workareaInfoUpdatedSlot(to);
     }
-
 }
 
 void WorkareaManager::MoveActivity(QString id, int toPosition)
@@ -409,6 +419,15 @@ void WorkareaManager::workareaInfoUpdatedSlot(QString id)
     createActivityChangedSignal(id);
     //emit WorkareaInfoUpdated(id);
 }
+
+void WorkareaManager::cloningEndedSlot()
+{
+    if(m_mcmCloneActiviy){
+        delete m_mcmCloneActiviy;
+        m_mcmCloneActiviy = 0;
+    }
+}
+
 
 void WorkareaManager::SetCurrentNextActivity()
 {
@@ -630,6 +649,17 @@ QString WorkareaManager::previousRunningActivity()
 
 
 //PLUGINS
+void WorkareaManager::CloneActivity(QString actId)
+{
+    if(!m_mcmCloneActiviy){
+        m_mcmCloneActiviy = new CloneActivityClass(this, m_activitiesController);
+
+        connect(m_mcmCloneActiviy, SIGNAL(copyWorkareas(QString,QString)),this,SLOT(cloneWorkareas(QString,QString)));
+        connect(m_mcmCloneActiviy, SIGNAL(cloningEnded(bool)),this,SLOT(cloningEndedSlot()));
+
+        m_mcmCloneActiviy->execute(actId);
+    }
+}
 
 void WorkareaManager::updateWorkareasNameSlot(int w_pos)
 {

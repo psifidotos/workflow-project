@@ -27,7 +27,7 @@ public:
     Q_INVOKABLE int numberOfWorkareas(QString);
     Q_INVOKABLE void moveActivity(QString id, int position);
 
-    //Q_INVOKABLE void setWallpaper(QString, QString);
+    Q_INVOKABLE void cloneActivity(QString);
 
     inline int maxWorkareas(){return m_maxWorkareas;}
 
@@ -37,8 +37,6 @@ signals:
     void maxWorkareasChanged(int);
 
 public slots:
-    void cloneWorkareas(QString, QString);
-
     void dataUpdated(QString source, Plasma::DataEngine::Data data);   
 
 protected:

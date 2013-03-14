@@ -1,4 +1,4 @@
-#include "plugincloneactivity.h"
+#include "cloneactivityclass.h"
 
 #include <QDebug>
 #include <QTimer>
@@ -11,7 +11,7 @@
 #include <KStandardDirs>
 
 
-PluginCloneActivity::PluginCloneActivity(QObject *parent, KActivities::Controller *actControl) :
+CloneActivityClass::CloneActivityClass(QObject *parent, KActivities::Controller *actControl) :
     QObject(parent),
     m_activitiesCtrl(actControl),
     m_currentActivityInBegin(""),
@@ -24,17 +24,17 @@ PluginCloneActivity::PluginCloneActivity(QObject *parent, KActivities::Controlle
     init();
 }
 
-PluginCloneActivity::~PluginCloneActivity()
+CloneActivityClass::~CloneActivityClass()
 {
 }
 
-void PluginCloneActivity::init()
+void CloneActivityClass::init()
 {
     connect(m_activitiesCtrl, SIGNAL(activityAdded(QString)), this, SLOT(activityAddedSlot(QString)));
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timerTrigerred()));
 }
 
-void PluginCloneActivity::timerTrigerred(){
+void CloneActivityClass::timerTrigerred(){
     QString cacheFile;
 
     if(m_timerPhase == 2)
@@ -80,22 +80,23 @@ void PluginCloneActivity::timerTrigerred(){
 
 }
 
-void PluginCloneActivity::initCloningPhase02()
+void CloneActivityClass::initCloningPhase02()
 {
     m_timerPhase = 2;
     m_timer->start(600);
 }
 
-void PluginCloneActivity::initCloningPhase04()
+void CloneActivityClass::initCloningPhase04()
 {
     m_timerPhase = 4;
     m_timer->start(600);
 }
 
 
-void PluginCloneActivity::initCloningPhase05()
+void CloneActivityClass::initCloningPhase05()
 {
   //  emit updateWallpaper(m_toActivity);
+    emit copyWorkareas(m_fromActivity, m_toActivity);
 
     m_fromActivity = "";
     m_toActivity = "";
@@ -103,7 +104,7 @@ void PluginCloneActivity::initCloningPhase05()
     emit cloningEnded(true);
 }
 
-QString PluginCloneActivity::getContainmentId(QString txt) const
+QString CloneActivityClass::getContainmentId(QString txt) const
 {
     QString findText1 = "[Containments][";
     QString findText2 = "]";
@@ -116,7 +117,7 @@ QString PluginCloneActivity::getContainmentId(QString txt) const
 }
 
 
-int PluginCloneActivity::loadCloneActivitySettings(){
+int CloneActivityClass::loadCloneActivitySettings(){
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+m_fromActivity;
     // qDebug() << "Load file:"<<fPath<<"...";
 
@@ -163,7 +164,7 @@ int PluginCloneActivity::loadCloneActivitySettings(){
 
 
 
-int PluginCloneActivity::storeCloneActivitySettings(){
+int CloneActivityClass::storeCloneActivitySettings(){
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+m_toActivity;
 
     QString line;
@@ -241,7 +242,7 @@ int PluginCloneActivity::storeCloneActivitySettings(){
 }
 
 
-void PluginCloneActivity::activityStateChangedSlot()
+void CloneActivityClass::activityStateChangedSlot()
 {
     KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
     const QString id = activity->id();
@@ -293,7 +294,7 @@ void PluginCloneActivity::activityStateChangedSlot()
 
 
 //Phase-01
-void PluginCloneActivity::activityAddedSlot(QString actId)
+void CloneActivityClass::activityAddedSlot(QString actId)
 {
     if(m_fromActivity != ""){
         m_toActivity = actId;
@@ -308,8 +309,6 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
         m_activitiesCtrl->setActivityName(m_toActivity,QString(tr("Copy of ")+activityFrom->name()));
         m_activitiesCtrl->setActivityIcon(m_toActivity,activityFrom->icon());
 
-        emit copyWorkareas(m_fromActivity, m_toActivity);
-
         m_activitiesCtrl->setCurrentActivity(m_toActivity);
 
         m_activitiesCtrl->stopActivity(m_fromActivity);
@@ -319,7 +318,7 @@ void PluginCloneActivity::activityAddedSlot(QString actId)
 
 
 //Phase-00
-void PluginCloneActivity::execute(QString actId)
+void CloneActivityClass::execute(QString actId)
 {
     m_currentActivityInBegin = m_activitiesCtrl->currentActivity();
 
@@ -331,4 +330,4 @@ void PluginCloneActivity::execute(QString actId)
 }
 
 
-#include "plugincloneactivity.moc"
+#include "cloneactivityclass.moc"

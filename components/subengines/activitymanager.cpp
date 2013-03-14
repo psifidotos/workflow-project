@@ -19,9 +19,7 @@
 #include <Plasma/Corona>
 
 ////Plugins/////
-#include "plugins/plugincloneactivity.h"
 #include "plugins/pluginchangeworkarea.h"
-#include "plugins/pluginaddactivity.h"
 
 #include "../models/activitiesenhancedmodel.h"
 #include "../models/activityitem.h"
@@ -30,9 +28,7 @@
 ActivityManager::ActivityManager(ActivitiesEnhancedModel *model,QObject *parent) :
     QObject(parent),
     m_activitiesCtrl(0),
-    m_plCloneActivity(0),
     m_plChangeWorkarea(0),
-    m_plAddActivity(0),
     m_firstTime(true),
     m_actModel(model)
 {
@@ -45,12 +41,8 @@ ActivityManager::~ActivityManager()
 {
     if (m_activitiesCtrl)
         delete m_activitiesCtrl;
-    if (m_plCloneActivity)
-        delete m_plCloneActivity;
     if (m_plChangeWorkarea)
         delete m_plChangeWorkarea;
-    if (m_plAddActivity)
-        delete m_plAddActivity;
 }
 
 void ActivityManager::init()
@@ -70,16 +62,6 @@ QPixmap ActivityManager::disabledPixmapForIcon(const QString &ic)
     return icon3.pixmap(KIconLoader::SizeHuge, QIcon::Disabled);
 }
 
-void ActivityManager::cloningEndedSlot(bool updateWallpapers)
-{
-    emit cloningEnded(updateWallpapers);
-
-    if(m_plCloneActivity){
-        delete m_plCloneActivity;
-        m_plCloneActivity = 0;
-    }
-}
-
 void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
 {
     Q_UNUSED(actId);
@@ -90,15 +72,6 @@ void ActivityManager::changeWorkareaEnded(QString actId, int desktop)
         m_plChangeWorkarea = 0;
     }
 }
-
-void ActivityManager::addActivityEnded()
-{
-    if (m_plAddActivity){
-        delete m_plAddActivity;
-        m_plAddActivity = 0;
-    }
-}
-
 
 void ActivityManager::activityAddedSlot(QString id) {
 
@@ -246,15 +219,7 @@ QString ActivityManager::chooseIconInKWin(QString id)
 
 
 void ActivityManager::add(QString name) {
-  //  if(!m_plAddActivity){
-  //      m_plAddActivity = new PluginAddActivity(this, m_activitiesCtrl);
-
-        //connect(m_plAddActivity, SIGNAL(addActivityEnded()), this, SLOT(addActivityEnded()) );
-
-        //m_plAddActivity->execute(name);
-    //}
     m_activitiesCtrl->addActivity(name);
-
 }
 
 void ActivityManager::setCurrent(QString id) {
@@ -321,20 +286,6 @@ void ActivityManager::moveActivityInModel(QString activity, int position)
 }
 
 ///////////////Plugins
-void ActivityManager::cloneActivity(QString actId)
-{
-    if(!m_plCloneActivity){
-        m_plCloneActivity = new PluginCloneActivity(this, m_activitiesCtrl);
-
-        connect(m_plCloneActivity, SIGNAL(cloningStarted(bool)),this,SIGNAL(cloningStarted(bool)));
-        connect(m_plCloneActivity, SIGNAL(cloningEnded(bool)),this,SLOT(cloningEndedSlot(bool)));
-        connect(m_plCloneActivity, SIGNAL(copyWorkareas(QString,QString)),this,SIGNAL(cloningCopyWorkareas(QString,QString)));
-        //connect(m_plCloneActivity, SIGNAL(updateWallpaper(QString)),this,SIGNAL(updateWallpaper(QString)));
-
-        m_plCloneActivity->execute(actId);
-    }
-
-}
 
 void ActivityManager::setCurrentActivityAndDesktop(QString actId, int desktop)
 {

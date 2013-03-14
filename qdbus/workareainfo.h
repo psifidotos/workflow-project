@@ -28,6 +28,7 @@ protected:
     void removeWorkarea(int desktop);
 
     WorkareaInfo *copy(QObject *parent = 0);
+    bool cloneWorkareaInfo(WorkareaInfo *);
 private:
     QString m_id;
     QString m_background;

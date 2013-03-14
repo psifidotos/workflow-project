@@ -49,7 +49,7 @@ DialogTemplate2{
     Connections {
         target: clonDialog
         onClickedOk:{
-            workflowManager.activityManager().cloneActivity(activityCode);
+            workflowManager.workareaManager().cloneActivity(activityCode);
             completed();
         }
 

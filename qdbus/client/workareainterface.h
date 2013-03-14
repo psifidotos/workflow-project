@@ -56,10 +56,10 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("AddWorkarea"), argumentList);
     }
 
-    inline QDBusPendingReply<> CloneActivity(const QString &in0, const QString &in1)
+    inline QDBusPendingReply<> CloneActivity(const QString &in0)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(in0) << QVariant::fromValue(in1);
+        argumentList << QVariant::fromValue(in0);
         return asyncCallWithArgumentList(QLatin1String("CloneActivity"), argumentList);
     }
 

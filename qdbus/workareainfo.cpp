@@ -83,4 +83,23 @@ WorkareaInfo *WorkareaInfo::copy(QObject *parent)
     return copy;
 }
 
+bool WorkareaInfo::cloneWorkareaInfo(WorkareaInfo *toClone)
+{
+    if(toClone){
+        setBackground(toClone->background());
+
+        for(int i=m_workareas.size()-1; i>=0; i--)
+            removeWorkarea(i+1); //workareas start from 1
+
+        QStringList newWorkareas = toClone->workareas();
+        for(int i=0; i<newWorkareas.size(); i++)
+            addWorkArea(newWorkareas[i]);
+
+        return true;
+    }
+    else{
+        return true;
+    }
+}
+
 #include "workareainfo.moc"

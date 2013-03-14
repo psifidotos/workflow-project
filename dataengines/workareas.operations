@@ -20,10 +20,7 @@
             <label>The name to give the workarea.</label>
         </entry>
     </group>
-    <group name="cloneWorkareas">
-        <entry name="Activity" type="String">
-            <label>The Activity into which the workareas will be cloned.</label>
-        </entry>
+    <group name="cloneActivity">
     </group>
     <group name="setOrder">
         <entry name="Order" type="Int">
