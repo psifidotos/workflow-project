@@ -8,7 +8,7 @@ Item{
     //disable previews
     property bool previewsWereEnabled:false
 
-    Connections{
+/*    Connections{
 
         target: workflowManager.activityManager()
 
@@ -35,12 +35,8 @@ Item{
 
         //Update Wallpaper signal
 
-/*        onUpdateWallpaper:{
-            var wall = environmentManager.getWallpaper(activity);
-            workflowManager.workareaManager().setWallpaper(activity, wall);
-        }*/
 
-    }
+    }*/
 
    /* Connections{
         target: plasmoidWrapper
