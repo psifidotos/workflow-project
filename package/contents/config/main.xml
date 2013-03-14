@@ -48,6 +48,9 @@
     <entry name="UseCurrentActivityIcon" type="bool">
         <default>false</default>
     </entry>
+    <entry name="HideActivityIndicator" type="bool">
+        <default>false</default>
+    </entry>
     <entry name="DisableEverywherePanel" type="bool">
         <default>false</default>
     </entry>

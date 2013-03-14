@@ -35,10 +35,11 @@ Rectangle {
     property Component compactRepresentationEmpty: undefined
     property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
 
-    property Component compactRepresentation: plasmoidWrapper.isInPanel ?
+    property Component compactRepresentation: (plasmoidWrapper.isInPanel && (!Settings.global.hideActivityIndicator)) ?
                                                   compactRepresentationPanel :
                                                   compactRepresentationEmpty
-  //  property Component compactRepresentation:  compactRepresentationPanel
+
+    //property Component compactRepresentation:  compactRepresentationEmpty
 
 
     Settings {
@@ -263,8 +264,9 @@ Rectangle {
         plasmoid.popupIconToolTip = toolTipData;
 
         plasmoid.popupIcon = QIcon("preferences-activities");
-        // plasmoid.aspectRatioMode = IgnoreAspectRatio;
-        plasmoid.aspectRatioMode = "ConstrainedSquare"
+
+        plasmoid.aspectRatioMode = IgnoreAspectRatio;
+        //plasmoid.aspectRatioMode = "ConstrainedSquare"
 
         plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
         plasmoid.popupEvent.connect(popupEventSlot);
