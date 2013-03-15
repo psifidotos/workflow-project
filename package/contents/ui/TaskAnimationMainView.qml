@@ -23,13 +23,13 @@ QIconItem{
 
     function animateDesktopToEverywhere(cid, coord, anim){
         //ListView of running activities
-        console.debug("animateDesktopToEverywhere:"+coord.x+"-"+coord.y);
+    //    console.debug("animateDesktopToEverywhere:"+coord.x+"-"+coord.y);
         animateTask(cid,coord,allActT.getList(),anim );
     }
 
     function animateEverywhereToXY(cid, coord1, coord2, anim){
         var pos = taskManager.model().getIndexFor(cid);
-        console.debug("animateEverywhereToXY:"+pos);
+   //     console.debug("animateEverywhereToXY:"+pos);
 
         taskAnimation.x = coord1.x
         taskAnimation.y = coord1.y
@@ -49,7 +49,7 @@ QIconItem{
     function animateEverywhereToActivity(cid, coord, anim){
 
         var pos = taskManager.model().getIndexFor(cid);
-        console.log("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
+   //     console.log("animateEverywhereToActivity:"+pos+"-"+coord.x+"-"+coord.y);
 
         taskAnimation.x = coord.x
         taskAnimation.y = coord.y
@@ -67,7 +67,7 @@ QIconItem{
         var elem = taskManager.model().get(pos);
         var desktopPos = elem.desktop - 1;//desktops count from 0?
 
-        console.log("Element Desktop:"+elem.desktop+" Element activity:"+activities[0]);
+  //      console.log("Element Desktop:"+elem.desktop+" Element activity:"+activities[0]);
 
         if (desktopPos < 0)
             desktopPos = sessionParameters.currentDesktop - 1;
@@ -75,7 +75,7 @@ QIconItem{
 
         var col2 = allWorkareas.getActivityColumn(activityCode);
 
-        console.debug("Desktop:"+desktopPos);
+    //    console.debug("Desktop:"+desktopPos);
 
         var work = col2.getWorkarea(desktopPos);
 

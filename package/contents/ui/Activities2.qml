@@ -102,7 +102,7 @@ Rectangle {
     Connections{
         target:filterWindows
         onTextChanged:{
-            console.log(filterWindows.text);
+         //   console.log(filterWindows.text);
             if(filterWindows.text === ""){
                 filteredTasksModel.fixBugString = "'''";
                 timerBug.start();

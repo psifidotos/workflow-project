@@ -231,7 +231,7 @@ Item{
 
         onInDraggingChanged: {
             if(inDragging)
-                textWasNotAccepted();
+                mainView.forceActiveFocus();
         }
 
         onClickedOverrideSignal: {

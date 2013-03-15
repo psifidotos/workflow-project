@@ -56,7 +56,7 @@ Rectangle{
         currentActivity = activity;
         intIndex = currentIndex;
 
-        console.log("----- Dragging Starting Current Index: "+currentIndex);
+    //    console.log("----- Dragging Starting Current Index: "+currentIndex);
 
         iconImg.x = coords.x + 1;
         iconImg.y = coords.y + 1;
@@ -101,7 +101,7 @@ Rectangle{
         var iX1 = iconImg.x;
         var iY1 = iconImg.y;
 
-        console.log("Data Engine Move - "+container.activityId + " - "+intIndex + " - " + currentIndex);
+     //   console.log("Data Engine Move - "+container.activityId + " - "+intIndex + " - " + currentIndex);
         if(intIndex !== currentIndex){
             workflowManager.activityManager().moveActivityInModel(container.activityId, currentIndex);
             workflowManager.workareaManager().moveActivity(container.activityId, currentIndex);
