@@ -3,6 +3,9 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusReply>
+#include <QDBusInterface>
+#include <QDBusPendingCall>
+#include <QDBusPendingCallWatcher>
 #include <QDebug>
 #include <QList>
 #include <QVariant>
@@ -28,6 +31,7 @@ WorkareaManager::WorkareaManager(QObject* parent) :
     QObject(parent),
     m_activitiesController(new KActivities::Controller(this)),
     actionCollection(0),
+    m_plasma(0),
     m_loading(false),
     m_maxWorkareas(0),
     m_nextDefaultWallpaper(0),
@@ -73,6 +77,9 @@ WorkareaManager::~WorkareaManager()
 
     if(actionCollection)
         delete actionCollection;
+
+    if(m_plasma)
+        delete m_plasma;
 }
 
 //Create a separate thread in order to trigger initialization based on the
@@ -127,6 +134,7 @@ void WorkareaManager::initSession()
 
     m_isRunning = true;
     emit ServiceStatusChanged(m_isRunning);
+
     //    qDebug() << "Ok.....";
 }
 
@@ -144,12 +152,22 @@ void WorkareaManager::initSignals()
             this, SLOT(updateWorkareasNameSlot(int)) );
 
     m_mcmFindWallpaper = new FindWallpaper(m_activitiesController, this);
-    connect(m_mcmFindWallpaper, SIGNAL(updateWallpaper(QString,QString)), this, SLOT(setBackground(QString,QString)));
+    connect(m_mcmFindWallpaper, SIGNAL(updateWallpaper(QString,QStringList)), this, SLOT(setBackgrounds(QString,QStringList)));
 }
 
-void WorkareaManager::initBackgrounds()
+void WorkareaManager::initBackgrounds(QDBusPendingCallWatcher* call)
 {
-    m_mcmFindWallpaper->initBackgrounds();
+    //qdbus org.kde.plasma-desktop /App perVirtualDesktopViews
+
+    QDBusPendingReply<bool> replyStatus = *call;
+    if (replyStatus.isError()) {
+        qDebug() << replyStatus.error();
+    } else {
+        qDebug() << replyStatus.value();
+        m_mcmFindWallpaper->setPerVirtualDesktopViews(replyStatus.value());
+        m_mcmFindWallpaper->initBackgrounds();
+    }
+    call->deleteLater();
 }
 
 bool WorkareaManager::ServiceStatus()
@@ -182,13 +200,13 @@ QStringList WorkareaManager::Activities() const
     return result;
 }
 
-QString WorkareaManager::ActivityBackground(QString actId)
+QStringList WorkareaManager::ActivityBackgrounds(QString actId)
 {
     WorkareaInfo *activity = get(actId);
     if (activity)
-        return activity->background();
+        return activity->backgrounds();
     else
-        return "";
+        return QStringList();
 }
 
 QStringList WorkareaManager::Workareas(QString actId)
@@ -204,7 +222,7 @@ void WorkareaManager::createActivityChangedSignal(QString actId)
 {
     WorkareaInfo *activity = get(actId);
     if (activity)
-        emit ActivityInfoUpdated(actId, activity->background(), activity->workareas());
+        emit ActivityInfoUpdated(actId, activity->backgrounds(), activity->workareas());
 }
 
 void WorkareaManager::AddWorkarea(QString id, QString name)
@@ -318,16 +336,23 @@ void WorkareaManager::MoveActivity(QString id, int toPosition)
     }
 }
 
-void WorkareaManager::setBackground(QString id, QString background)
+void WorkareaManager::setBackgrounds(QString id, QStringList backgrounds)
 {
     int pos = findActivity(id);
 
     if(pos>=0 && pos<m_workareasList.size() ){
         WorkareaInfo *info = m_workareasList[pos];
-        if (background != "")
-            info->setBackground(background);
-        else
-            info->setBackground(getNextDefWallpaper());
+        for(int i=0; i<backgrounds.size(); i++){
+            if(backgrounds[i] == "")
+                backgrounds[i] = getNextDefWallpaper();
+        }
+
+        info->setBackgrounds(backgrounds);
+
+        //if (background != "")
+        //   info->setBackground(background);
+        //else
+        //   info->setBackground(getNextDefWallpaper());
     }
 }
 
@@ -534,12 +559,21 @@ void WorkareaManager::loadWorkareas()
             max = numberOfDesktops;
     }
 
-    initBackgrounds();
     m_loading = false;
 
     m_maxWorkareas = max;
     // emit MaxWorkareasChanged(m_maxWorkareas);
     setMaxWorkareas();
+
+    // initBackgrounds();
+    m_plasma = new QDBusInterface( "org.kde.plasma-desktop", "/App", "local.PlasmaApp");
+    if(m_plasma){
+        QDBusPendingCall async = m_plasma->asyncCall("perVirtualDesktopViews");
+        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);
+
+        QObject::connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
+                         this, SLOT(initBackgrounds(QDBusPendingCallWatcher*)));
+    }
 }
 
 

@@ -3,7 +3,7 @@
 WorkareaInfo::WorkareaInfo(QString id,QObject *parent) :
     QObject(parent),
     m_id(id),
-    m_background("")
+    m_backgrounds(QStringList())
 {
 }
 
@@ -16,9 +16,9 @@ QString WorkareaInfo::id() const
     return m_id;
 }
 
-QString WorkareaInfo::background() const
+QStringList WorkareaInfo::backgrounds() const
 {
-    return m_background;
+    return m_backgrounds;
 }
 
 QString WorkareaInfo::name(int desktop) const
@@ -34,11 +34,11 @@ QStringList WorkareaInfo::workareas() const
     return m_workareas;
 }
 
-void WorkareaInfo::setBackground(QString background)
+void WorkareaInfo::setBackgrounds(QStringList backgrounds)
 {
-    if (m_background != background)
+    if (m_backgrounds != backgrounds)
     {
-        m_background = background;
+        m_backgrounds = backgrounds;
         emit workareaInfoUpdated(m_id);
     }
 }
@@ -76,7 +76,7 @@ WorkareaInfo *WorkareaInfo::copy(QObject *parent)
 {
     WorkareaInfo *copy = new WorkareaInfo(m_id, parent);
 
-    copy->setBackground(m_background);
+    copy->setBackgrounds(m_backgrounds);
     foreach (const QString &name, m_workareas)
         copy->m_workareas.append(name);
 
@@ -86,7 +86,7 @@ WorkareaInfo *WorkareaInfo::copy(QObject *parent)
 bool WorkareaInfo::cloneWorkareaInfo(WorkareaInfo *toClone)
 {
     if(toClone){
-        setBackground(toClone->background());
+        setBackgrounds(toClone->backgrounds());
 
         for(int i=m_workareas.size()-1; i>=0; i--)
             removeWorkarea(i+1); //workareas start from 1

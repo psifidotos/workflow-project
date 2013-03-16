@@ -4,13 +4,13 @@
 
 ActivityItem::ActivityItem(const QString &code, const QString &name,
                            const QString &icon, const QString &cstate,
-                           const QString &background, QObject *parent) :
+                           const QStringList &backgrounds, QObject *parent) :
     ListItem(parent),
     m_code(code),
     m_name(name),
     m_icon(icon),
     m_cstate(cstate),
-    m_background(background),
+    m_backgrounds(backgrounds),
     m_order(0),
     m_workareas(0)
 {
@@ -39,7 +39,7 @@ void ActivityItem::setProperty(QString role,QVariant value)
     else if(role == names[CStateRole])
         setCState(value.toString());
     else if(role == names[BackgroundRole])
-        setBackground(value.toString());
+        setBackgrounds(value.toStringList());
     else if(role == names[OrderRole])
         setOrder(value.toInt());
 }
@@ -75,10 +75,10 @@ void ActivityItem::setCState(QString cstate)
     }
 }
 
-void ActivityItem::setBackground(QString background)
+void ActivityItem::setBackgrounds(QStringList backgrounds)
 {
-    if(m_background != background){
-        m_background = background;
+    if(m_backgrounds != backgrounds){
+        m_backgrounds = backgrounds;
         emit dataChanged();
     }
 }
@@ -99,7 +99,7 @@ QHash<int, QByteArray> ActivityItem::roleNames() const
     names[NameRole] = "Name";
     names[IconRole] = "Icon";
     names[CStateRole] = "CState";
-    names[BackgroundRole] = "background";
+    names[BackgroundRole] = "backgrounds";
     names[OrderRole] = "Order";
     return names;
 }
@@ -116,7 +116,7 @@ QVariant ActivityItem::data(int role) const
     case CStateRole:
         return cstate();
     case BackgroundRole:
-        return background();
+        return backgrounds();
     case OrderRole:
         return order();
     default:

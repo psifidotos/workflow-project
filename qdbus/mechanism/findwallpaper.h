@@ -25,9 +25,9 @@ class FindWallpaper : public QObject{
     void initBackgrounds();
 
     void setPluginActive(bool);
-
+    void setPerVirtualDesktopViews(bool);
   signals:
-    void updateWallpaper(QString id, QString background);
+    void updateWallpaper(QString id, QStringList backgrounds);
 
   protected:
     void init();
@@ -42,16 +42,17 @@ class FindWallpaper : public QObject{
     KActivities::Controller *m_activitiesCtrl;
     bool m_active;
 
-    QString getWallpaperForRunning(QString source);
-    QString getWallpaperForStopped(QString source);
-    QString getWallpaperFromFile(QString source,QString file);
+    QStringList getWallpapersForRunning(QString source);
+    QStringList getWallpapersForStopped(QString source);
+    QStringList getWallpapersFromFile(QString source,QString file);
   //  QString getWallpaperFromContainment(Plasma::Containment *actContainment);
     QString getWallpaperForSingleImage(KConfigGroup &);
-    QString getWallpaper(QString source);
+    QStringList getWallpapers(QString source);
 
     KStandardDirs kStdDrs;
     QString m_previousActivity;
     int m_previousDesktop;
+    bool m_perVirtualDesktopsViews;
   //  Plasma::Containment *m_mainContainment;
 
 };

@@ -12,7 +12,7 @@ public:
     ~WorkareaInfo();
 
     QString id() const;
-    QString background() const;
+    QStringList backgrounds() const;
     QString name(int position) const;
     int numberOfWorkareas() const;
     QStringList workareas() const;
@@ -31,10 +31,10 @@ protected:
     bool cloneWorkareaInfo(WorkareaInfo *);
 private:
     QString m_id;
-    QString m_background;
+    QStringList m_backgrounds;
     QStringList m_workareas;
 
-    void setBackground(QString);
+    void setBackgrounds(QStringList);
 
     friend class WorkareaManager;
 };

@@ -76,7 +76,7 @@ void WorkareaEngine::initSession()
     connect(m_store, SIGNAL(ActivityRemoved(QString)), this, SLOT(activityRemovedSlot(QString)));
     connect(m_store, SIGNAL(WorkareaAdded(QString,QStringList)), this, SLOT(workareaAddedSlot(QString, QStringList)));
     connect(m_store, SIGNAL(WorkareaRemoved(QString, QStringList)), this, SLOT(workareaRemovedSlot(QString, QStringList)));
-    connect(m_store, SIGNAL(ActivityInfoUpdated(QString,QString,QStringList)), this, SLOT(activityInfoUpdatedSlot(QString,QString,QStringList)));
+    connect(m_store, SIGNAL(ActivityInfoUpdated(QString,QStringList,QStringList)), this, SLOT(activityInfoUpdatedSlot(QString,QStringList,QStringList)));
 
     connect(m_store, SIGNAL(ActivityOrdersChanged(QStringList)), this, SLOT(activitiesOrderChangedSlot(QStringList)));
 
@@ -140,10 +140,10 @@ void WorkareaEngine::workareaRemovedSlot(QString id,QStringList workareas)
     //loadActivity(id);
 }
 
-void WorkareaEngine::activityInfoUpdatedSlot(QString id, QString background, QStringList workareas)
+void WorkareaEngine::activityInfoUpdatedSlot(QString id, QStringList backgrounds, QStringList workareas)
 {
     //loadActivity(id);
-    setData(id, "Background", background);
+    setData(id, "Backgrounds", backgrounds);
     setData(id, "Workareas", workareas);
 }
 
@@ -173,15 +173,15 @@ void WorkareaEngine::loadActivity(QString id)
         int pos = storeActivities.indexOf(id);
         setData(id, "Order", pos+1);
 
-        QDBusPendingReply<QString> replyBackground = m_store->ActivityBackground(id);
+        QDBusPendingReply<QStringList> replyBackgrounds = m_store->ActivityBackgrounds(id);
         QDBusPendingReply<QStringList> replyWorkareas = m_store->Workareas(id);
-        replyBackground.waitForFinished();
+        replyBackgrounds.waitForFinished();
         replyWorkareas.waitForFinished();
 
-        if(!replyBackground.isError())
-            setData(id, "Background", replyBackground.value());
+        if(!replyBackgrounds.isError())
+            setData(id, "Backgrounds", replyBackgrounds.value());
         else
-            qDebug() << replyBackground.error();
+            qDebug() << replyBackgrounds.error();
 
         if(!replyWorkareas.isError())
             setData(id, "Workareas", replyWorkareas.value());

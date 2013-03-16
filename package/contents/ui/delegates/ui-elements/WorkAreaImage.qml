@@ -51,7 +51,7 @@ BorderImage {
 
         Image {
             id: mainImg
-            source: background
+            source: mainWorkArea.desktop > backgrounds.length ? backgrounds[0] : backgrounds[desktop-1]
            // fillMode:Image.
             anchors.centerIn: parent
             width:parent.width

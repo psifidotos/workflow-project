@@ -42,11 +42,11 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("Activities"), argumentList);
     }
 
-    inline QDBusPendingReply<QString> ActivityBackground(const QString &actId)
+    inline QDBusPendingReply<QStringList> ActivityBackgrounds(const QString &actId)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(actId);
-        return asyncCallWithArgumentList(QLatin1String("ActivityBackground"), argumentList);
+        return asyncCallWithArgumentList(QLatin1String("ActivityBackgrounds"), argumentList);
     }
 
     inline QDBusPendingReply<> AddWorkarea(const QString &id, const QString &name)
@@ -117,7 +117,7 @@ public Q_SLOTS: // METHODS
 
 Q_SIGNALS: // SIGNALS
     void ActivityAdded(const QString &id);
-    void ActivityInfoUpdated(const QString &id, const QString &background, const QStringList &workareas);
+    void ActivityInfoUpdated(const QString &id, const QStringList &backgrounds, const QStringList &workareas);
     void ActivityOrdersChanged(const QStringList &activities);
     void ActivityRemoved(const QString &id);
     void MaxWorkareasChanged(int in0);

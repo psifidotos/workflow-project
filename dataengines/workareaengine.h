@@ -27,7 +27,7 @@ private slots:
 
     void workareaAddedSlot(QString, QStringList);
     void workareaRemovedSlot(QString, QStringList);
-    void activityInfoUpdatedSlot(QString, QString, QStringList);
+    void activityInfoUpdatedSlot(QString, QStringList, QStringList);
 
     void activitiesOrderChangedSlot(QStringList);
 

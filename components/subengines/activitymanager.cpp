@@ -83,7 +83,7 @@ void ActivityManager::activityAddedSlot(QString id) {
     m_actModel->appendRow(new ActivityItem(id,activity->name(),
                                            activity->icon(),
                                            state,
-                                           "",
+                                           QStringList(),
                                            m_actModel));
 
 

@@ -12,9 +12,10 @@ class UpdateWorkareasName;
 class SyncActivitiesWorkareas;
 class FindWallpaper;
 class CloneActivityClass;
+class QDBusPendingCallWatcher;
+class QDBusInterface;
 
 class KActionCollection;
-
 class WorkareaInfo;
 
 class WorkareaManager : public QObject
@@ -25,8 +26,6 @@ class WorkareaManager : public QObject
 public:
     explicit WorkareaManager(QObject* parent = 0);
     ~WorkareaManager();
-
-    void initBackgrounds();
 
 public Q_SLOTS:
     Q_SCRIPTABLE void SetCurrentNextActivity();
@@ -41,7 +40,7 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE int MaxWorkareas() const;
     Q_SCRIPTABLE QStringList Activities() const;
-    Q_SCRIPTABLE QString ActivityBackground(QString actId);
+    Q_SCRIPTABLE QStringList ActivityBackgrounds(QString actId);
     Q_SCRIPTABLE QStringList Workareas(QString actId);
     Q_SCRIPTABLE bool ServiceStatus();
 
@@ -51,7 +50,7 @@ Q_SIGNALS:
 
     void WorkareaAdded(QString id, QStringList workareas);
     void WorkareaRemoved(QString id, QStringList workareas);
-    void ActivityInfoUpdated(QString id, QString background, QStringList workareas);
+    void ActivityInfoUpdated(QString id, QStringList backgrounds, QStringList workareas);
 
     void ActivityOrdersChanged(QStringList activities);
 
@@ -62,9 +61,10 @@ protected slots:
     void cloneWorkareas(QString from, QString to);
     //remove it as it is not needed very ofter
     void cloningEndedSlot();
+    void initBackgrounds(QDBusPendingCallWatcher *);
 
 private slots:
-    void setBackground(QString, QString);
+    void setBackgrounds(QString, QStringList);
     void activityAddedSlot(QString);
     void activityRemovedSlot(QString);
 
@@ -86,6 +86,7 @@ private:
 
     KActivities::Controller *m_activitiesController;
     KActionCollection *actionCollection;
+    QDBusInterface *m_plasma;
 
     bool m_loading;
     int m_maxWorkareas;

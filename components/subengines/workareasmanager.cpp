@@ -108,7 +108,7 @@ void WorkareasManager::dataUpdated(QString source, Plasma::DataEngine::Data data
 
         if(workareasModel && activity ){
             //update background
-            activity->setBackground(data["Background"].toString());
+            activity->setBackgrounds(data["Backgrounds"].toStringList());
 
             //update workareas
             int prevSize = workareasModel->getCount();

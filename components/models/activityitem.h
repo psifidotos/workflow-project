@@ -29,7 +29,7 @@ public:
   ActivityItem(QObject *parent = 0): ListItem(parent) {}
   explicit ActivityItem(const QString &code, const QString &name,
                         const QString &icon, const QString &cstate,
-                        const QString &background,
+                        const QStringList &backgrounds,
                         QObject *parent = 0);
   ~ActivityItem();
 
@@ -43,7 +43,7 @@ public:
   inline QString name() const { return m_name; }
   inline QString icon() const { return m_icon; }
   inline QString cstate() const { return m_cstate; }
-  inline QString background() const { return m_background; }
+  inline QStringList backgrounds() const { return m_backgrounds; }
   inline int order() const { return m_order; }
 
   void setProperty(QString role,QVariant value);
@@ -51,7 +51,7 @@ public:
   void setName(QString);
   void setIcon(QString);
   void setCState(QString);
-  void setBackground(QString);
+  void setBackgrounds(QStringList);
   void setOrder(int);
 
   WorkareasModel* workareas() const {
@@ -63,7 +63,7 @@ private:
   QString m_name;
   QString m_icon;
   QString m_cstate;
-  QString m_background;
+  QStringList m_backgrounds;
   int m_order;
 
   WorkareasModel *m_workareas;

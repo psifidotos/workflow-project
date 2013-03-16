@@ -1,5 +1,6 @@
 #include "findwallpaper.h"
 
+#include <QDebug>
 #include <QFileInfo>
 #include <QDir>
 
@@ -14,7 +15,8 @@
 FindWallpaper::FindWallpaper(KActivities::Controller *actControl, QObject *parent):
     QObject(parent),
     m_activitiesCtrl(actControl),
-    m_active(true)
+    m_active(true),
+    m_perVirtualDesktopsViews(false)
 {
     m_previousActivity = m_activitiesCtrl->currentActivity();
     m_previousDesktop = KWindowSystem::self()->currentDesktop();
@@ -41,6 +43,11 @@ void FindWallpaper::initBackgrounds()
 void FindWallpaper::setPluginActive(bool active)
 {
     m_active = active;
+}
+
+void FindWallpaper::setPerVirtualDesktopViews(bool perVirtual)
+{
+    m_perVirtualDesktopsViews = perVirtual;
 }
 
 QString FindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
@@ -72,7 +79,7 @@ QString FindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
 }
 
 
-QString FindWallpaper::getWallpaperFromFile(QString source, QString file)
+QStringList FindWallpaper::getWallpapersFromFile(QString source, QString file)
 {
     //QString fpath = QDir::home().filePath(file);
     QString fpath = file;
@@ -83,6 +90,8 @@ QString FindWallpaper::getWallpaperFromFile(QString source, QString file)
     int iterat = 0;
     bool found = false;
 
+    QStringList wallpapers;
+
     while((iterat<conGps.groupList().size() && (!found))){
         QString gps = conGps.groupList().at(iterat);
         KConfigGroup tempG = conGps.group(gps);
@@ -90,26 +99,57 @@ QString FindWallpaper::getWallpaperFromFile(QString source, QString file)
         if(tempG.readPathEntry("activityId",QString("null")) == source){
             //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
 
-            int desktop = tempG.readEntry("desktop",-1);
-            int screen = tempG.readEntry("screen",-1);
+            if(!m_perVirtualDesktopsViews){
+                int desktop = tempG.readEntry("desktop",-1);
+                int screen = tempG.readEntry("screen",-1);
 
-            if( (desktop == -1) &&
-                ((screen == -1)||(screen == 0)) ){
-                found = true;
+                if( (desktop == -1) &&
+                        ((screen == -1)||(screen == 0)) ){
+                    found = true;
 
-                QString res1 = getWallpaperForSingleImage(tempG);
+                    QString res1 = getWallpaperForSingleImage(tempG);
 
-                if (QFile::exists(res1))
-                    return res1;
+                    if (QFile::exists(res1)){
+                        wallpapers << res1;
+                        return wallpapers;
+                    }
+                    else
+                        wallpapers << "";
+                }
             }
+            else{//when each Desktop has different widgets
+              //  int desktop = tempG.readEntry("desktop",-1);
+                int lastDesktop = tempG.readEntry("lastDesktop", -1);
+               // int screen = tempG.readEntry("screen",-1);
 
+                if (lastDesktop == -1){//When lastDesktop is the default...
+                    QString res1 = getWallpaperForSingleImage(tempG);
+
+                    if (QFile::exists(res1)){
+                        wallpapers << res1;
+                    }
+                    else{
+                        wallpapers << "";
+                    }
+                }
+                else{//In case lastDesktop record exists
+                    if (lastDesktop>=wallpapers.size()){
+                        for (int i=wallpapers.size(); i<lastDesktop+1; i++)
+                            wallpapers << "";
+                    }
+
+                    QString res1 = getWallpaperForSingleImage(tempG);
+
+                    if (QFile::exists(res1)){
+                        wallpapers[lastDesktop] = res1;
+                    }
+                }
+            }
         }
-
-
         iterat++;
     }
-    return "";
 
+    return wallpapers;
 }
 /*
 QString FindWallpaper::getWallpaperFromContainment(Plasma::Containment *actContainment)
@@ -125,27 +165,27 @@ QString FindWallpaper::getWallpaperFromContainment(Plasma::Containment *actConta
 }*/
 
 
-QString  FindWallpaper::getWallpaperForRunning(QString source)
+QStringList  FindWallpaper::getWallpapersForRunning(QString source)
 {
     QString fPath =KStandardDirs::locate("config","plasma-desktop-appletsrc");
 
     //QString(".kde4/share/config/plasma-desktop-appletsrc")
-    return getWallpaperFromFile(source,fPath);
+    return getWallpapersFromFile(source,fPath);
 }
 
-QString  FindWallpaper::getWallpaperForStopped(QString source)
+QStringList  FindWallpaper::getWallpapersForStopped(QString source)
 {
     QString fPath = kStdDrs.localkdedir()+"share/apps/plasma-desktop/activities/"+source;
 
     //QString actPath(".kde4/share/apps/plasma-desktop/activities/"+source);
-    return getWallpaperFromFile(source,fPath);
+    return getWallpapersFromFile(source,fPath);
 }
 
 /////////////////////////////////////
 
-QString FindWallpaper::getWallpaper(QString source)
+QStringList FindWallpaper::getWallpapers(QString source)
 {
-    QString res = "";
+    QStringList res;
 
     /* Plasma::Containment *currentContainment = m_mainContainment;
     if(currentContainment){
@@ -155,13 +195,15 @@ QString FindWallpaper::getWallpaper(QString source)
             return res;
     }*/
 
-    res = getWallpaperForStopped(source);
+    res = getWallpapersForStopped(source);
     //qDebug()<<"From Stopped:"<<res;
-    if (res=="")
-        res = getWallpaperForRunning(source);
+    if ( res.isEmpty() )
+        res = getWallpapersForRunning(source);
 
     //qDebug()<<"From Running:"<<res;
-    return res;
+
+    QStringList backgrounds(res);
+    return backgrounds;
 }
 //////////////////////////////////
 
@@ -173,8 +215,8 @@ void FindWallpaper::activityAddedSlot(QString id)
             this, SLOT(activityStateChangedSlot()) );
 
     if(m_active){
-        QString wallpaper = getWallpaper(id);
-        emit updateWallpaper( id, wallpaper );
+        QStringList wallpapers = getWallpapers(id);
+        emit updateWallpaper( id, wallpapers );
     }
 }
 
@@ -184,19 +226,19 @@ void FindWallpaper::activityStateChangedSlot()
         KActivities::Info *activity = qobject_cast<KActivities::Info*>(sender());
         const QString id = activity->id();
 
-        QString wallpaper = getWallpaper(id);
-        emit updateWallpaper( id, wallpaper );
+        QStringList wallpapers = getWallpapers(id);
+        emit updateWallpaper( id, wallpapers );
     }
 }
 
 void FindWallpaper::currentActivityChangedSlot(QString id)
 {
     if(m_active){
-        QString wallpaper = getWallpaper(id);
-        emit updateWallpaper( id, wallpaper );
+        QStringList wallpapers = getWallpapers(id);
+        emit updateWallpaper( id, wallpapers );
 
-        QString prevWallpaper = getWallpaper(m_previousActivity);
-        emit updateWallpaper( m_previousActivity , prevWallpaper );
+        QStringList prevWallpapers = getWallpapers(m_previousActivity);
+        emit updateWallpaper( m_previousActivity , prevWallpapers );
         m_previousActivity = id;
     }
 }
@@ -205,8 +247,8 @@ void FindWallpaper::currentDesktopChangedSlot(int desktop)
 {
     if(m_active){
         if(desktop != m_previousDesktop){
-            QString wallpaper = getWallpaper(m_previousActivity);
-            emit updateWallpaper( m_previousActivity, wallpaper );
+            QStringList wallpapers = getWallpapers(m_previousActivity);
+            emit updateWallpaper( m_previousActivity, wallpapers );
             m_previousDesktop = desktop;
         }
     }
