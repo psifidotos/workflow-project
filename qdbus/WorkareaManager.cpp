@@ -214,7 +214,7 @@ void WorkareaManager::AddWorkarea(QString id, QString name)
     if (activity){
         bool addTheWorkarea = false;
 
-        if (m_mcmSyncActivitiesWorkareas &&   //This is used to determine if old workareas information exist
+        if (m_mcmSyncActivitiesWorkareas && //This is used to determine if old workareas information exist
                 (activity->workareas().size()<=m_mcmSyncActivitiesWorkareas->numberOfDesktops()) ) {
             addTheWorkarea = true;
         }

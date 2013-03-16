@@ -3,7 +3,8 @@
 WorkareaInfo::WorkareaInfo(QString id,QObject *parent) :
     QObject(parent),
     m_id(id),
-    m_backgrounds(QStringList())
+    m_backgrounds(QStringList()),
+    m_workareas(QSrtingList())
 {
 }
 
