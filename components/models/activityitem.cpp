@@ -20,10 +20,10 @@ ActivityItem::ActivityItem(const QString &code, const QString &name,
 ActivityItem::~ActivityItem()
 {
     //It crashes the model for some reason when closing the application...
-    // if(m_workareas){
-    //    m_workareas->clear();
-    //   delete m_workareas;
-    //}
+   // if(m_workareas){
+        //      m_workareas->clear();
+     //   delete m_workareas;
+   // }
 }
 
 void ActivityItem::setProperty(QString role,QVariant value)

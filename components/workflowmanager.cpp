@@ -25,8 +25,8 @@ WorkflowManager::~WorkflowManager()
     //workareas signals for activityManager and m_workflowManager
     //No need, the children will be deleted by the parent
     //was creating occussionaly crashes
-    //if(m_model)
-     //   delete m_model;
+    if(m_model)
+        delete m_model;
 }
 
 void WorkflowManager::init()
