@@ -566,7 +566,9 @@ void WorkareaManager::loadWorkareas()
     setMaxWorkareas();
 
     // initBackgrounds();
+    //bid startup delays from this interface ???
     m_plasma = new QDBusInterface( "org.kde.plasma-desktop", "/App", "local.PlasmaApp");
+
     if(m_plasma){
         QDBusPendingCall async = m_plasma->asyncCall("perVirtualDesktopViews");
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);

@@ -98,12 +98,13 @@ QStringList FindWallpaper::getWallpapersFromFile(QString source, QString file)
 
         if(tempG.readPathEntry("activityId",QString("null")) == source){
             //     qDebug()<<"Found:"<<gps<<"-"<<tempG.readPathEntry("activityId",QString("null"));
+            int desktop = tempG.readEntry("desktop",-1);
+            int screen = tempG.readEntry("screen",-1);
+            int lastDesktop = tempG.readEntry("lastDesktop", -1);
 
             if(!m_perVirtualDesktopsViews){
-                int desktop = tempG.readEntry("desktop",-1);
-                int screen = tempG.readEntry("screen",-1);
 
-                if( (desktop == -1) &&
+                if( (desktop == -1) && (lastDesktop == -1) &&
                         ((screen == -1)||(screen == 0)) ){
                     found = true;
 
@@ -118,9 +119,6 @@ QStringList FindWallpaper::getWallpapersFromFile(QString source, QString file)
                 }
             }
             else{//when each Desktop has different widgets
-              //  int desktop = tempG.readEntry("desktop",-1);
-                int lastDesktop = tempG.readEntry("lastDesktop", -1);
-               // int screen = tempG.readEntry("screen",-1);
 
                 if (lastDesktop == -1){//When lastDesktop is the default...
                     QString res1 = getWallpaperForSingleImage(tempG);
