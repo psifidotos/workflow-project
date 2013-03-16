@@ -25,7 +25,6 @@ class FindWallpaper : public QObject{
     void initBackgrounds();
 
     void setPluginActive(bool);
-    void setPerVirtualDesktopViews(bool);
   signals:
     void updateWallpaper(QString id, QStringList backgrounds);
 
@@ -53,6 +52,7 @@ class FindWallpaper : public QObject{
     QString m_previousActivity;
     int m_previousDesktop;
     bool m_perVirtualDesktopsViews;
+    void updatePerDesktopViews();
   //  Plasma::Containment *m_mainContainment;
 
 };

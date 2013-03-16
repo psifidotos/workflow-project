@@ -3,9 +3,6 @@
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusReply>
-#include <QDBusInterface>
-#include <QDBusPendingCall>
-#include <QDBusPendingCallWatcher>
 #include <QDebug>
 #include <QList>
 #include <QVariant>
@@ -31,7 +28,6 @@ WorkareaManager::WorkareaManager(QObject* parent) :
     QObject(parent),
     m_activitiesController(new KActivities::Controller(this)),
     actionCollection(0),
-    m_plasma(0),
     m_loading(false),
     m_maxWorkareas(0),
     m_nextDefaultWallpaper(0),
@@ -77,9 +73,6 @@ WorkareaManager::~WorkareaManager()
 
     if(actionCollection)
         delete actionCollection;
-
-    if(m_plasma)
-        delete m_plasma;
 }
 
 //Create a separate thread in order to trigger initialization based on the
@@ -155,19 +148,9 @@ void WorkareaManager::initSignals()
     connect(m_mcmFindWallpaper, SIGNAL(updateWallpaper(QString,QStringList)), this, SLOT(setBackgrounds(QString,QStringList)));
 }
 
-void WorkareaManager::initBackgrounds(QDBusPendingCallWatcher* call)
+void WorkareaManager::initBackgrounds()
 {
-    //qdbus org.kde.plasma-desktop /App perVirtualDesktopViews
-
-    QDBusPendingReply<bool> replyStatus = *call;
-    if (replyStatus.isError()) {
-        qDebug() << replyStatus.error();
-    } else {
-        qDebug() << replyStatus.value();
-        m_mcmFindWallpaper->setPerVirtualDesktopViews(replyStatus.value());
-        m_mcmFindWallpaper->initBackgrounds();
-    }
-    call->deleteLater();
+    m_mcmFindWallpaper->initBackgrounds();
 }
 
 bool WorkareaManager::ServiceStatus()
@@ -565,17 +548,7 @@ void WorkareaManager::loadWorkareas()
     // emit MaxWorkareasChanged(m_maxWorkareas);
     setMaxWorkareas();
 
-    // initBackgrounds();
-    //bid startup delays from this interface ???
-    m_plasma = new QDBusInterface( "org.kde.plasma-desktop", "/App", "local.PlasmaApp");
-
-    if(m_plasma){
-        QDBusPendingCall async = m_plasma->asyncCall("perVirtualDesktopViews");
-        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);
-
-        QObject::connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
-                         this, SLOT(initBackgrounds(QDBusPendingCallWatcher*)));
-    }
+     initBackgrounds();
 }
 
 

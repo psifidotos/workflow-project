@@ -12,8 +12,6 @@ class UpdateWorkareasName;
 class SyncActivitiesWorkareas;
 class FindWallpaper;
 class CloneActivityClass;
-class QDBusPendingCallWatcher;
-class QDBusInterface;
 
 class KActionCollection;
 class WorkareaInfo;
@@ -61,7 +59,7 @@ protected slots:
     void cloneWorkareas(QString from, QString to);
     //remove it as it is not needed very ofter
     void cloningEndedSlot();
-    void initBackgrounds(QDBusPendingCallWatcher *);
+    void initBackgrounds();
 
 private slots:
     void setBackgrounds(QString, QStringList);
@@ -86,7 +84,6 @@ private:
 
     KActivities::Controller *m_activitiesController;
     KActionCollection *actionCollection;
-    QDBusInterface *m_plasma;
 
     bool m_loading;
     int m_maxWorkareas;

@@ -45,11 +45,6 @@ void FindWallpaper::setPluginActive(bool active)
     m_active = active;
 }
 
-void FindWallpaper::setPerVirtualDesktopViews(bool perVirtual)
-{
-    m_perVirtualDesktopsViews = perVirtual;
-}
-
 QString FindWallpaper::getWallpaperForSingleImage(KConfigGroup &conGrp)
 {
     KConfigGroup gWall = conGrp.group("Wallpaper").group("image");
@@ -192,19 +187,29 @@ QStringList FindWallpaper::getWallpapers(QString source)
         if(res != "")
             return res;
     }*/
+    updatePerDesktopViews();
 
     res = getWallpapersForStopped(source);
-    //qDebug()<<"From Stopped:"<<res;
+
     if ( res.isEmpty() )
         res = getWallpapersForRunning(source);
-
-    //qDebug()<<"From Running:"<<res;
 
     QStringList backgrounds(res);
     return backgrounds;
 }
 //////////////////////////////////
+void FindWallpaper::updatePerDesktopViews()
+{
+    QString fpath = KStandardDirs::locate("config","plasma-desktoprc");
+    KConfig config( fpath, KConfig::SimpleConfig );
+    bool perVirtualDesktopViews = config.group("General").readEntry("perVirtualDesktopViews",false);
+    if(perVirtualDesktopViews != m_perVirtualDesktopsViews){
+        m_perVirtualDesktopsViews = perVirtualDesktopViews;
+        initBackgrounds();
+    }
+}
 
+////////////////////////////////
 void FindWallpaper::activityAddedSlot(QString id)
 {
     KActivities::Info *activity = new KActivities::Info(id, this);
