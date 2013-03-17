@@ -2,6 +2,7 @@
 import QtQuick 1.1
 
 import org.kde.plasma.components 0.1 as PlasmaComponents
+import org.kde.plasma.extras 0.1 as PlasmaExtras
 
 import "../helptour/uielements"
 import "../helptour"
@@ -28,7 +29,7 @@ DialogTemplate2{
         anchors.top:parent.top
         anchors.topMargin:parent.margins.top+10
 
-        width:0.7*mainView.width
+        width:0.85*mainView.width
         height:0.6*mainView.height
 
         Rectangle{
@@ -59,8 +60,6 @@ DialogTemplate2{
             }
         }
 
-
-
         AnimatedText{
             id:versionText
             fullText:i18n("Plasmoid Version:")+" <i>"+plasmoidWrapper.version+"</i>"
@@ -81,31 +80,22 @@ DialogTemplate2{
 
         property int defTextSize:0.6*width
 
-        AnimatedText{
+        PlasmaComponents.Label{
             id:authorsTitleTxt
-            fullText:i18n("Author(s):")
-
-            font.pixelSize: mediumFont
-
-            color:defColor
-
-            width:parent.defTextSize
-
+            text:i18n("Author(s):")
             y:0.3*parent.height
 
             anchors.left: parent.left
             anchors.leftMargin: 0.025*parent.width
-
+            font.pointSize: theme.defaultFont.pointSize+2
+            font.weight: Font.Bold
+            font.italic: true
         }
 
-        AnimatedText{
+
+        PlasmaComponents.Label{
             id:authorsTxt
-            fullText: "Michail Vourlakos<br>Michael Daffin"
-
-            font.pixelSize: mediumFont
-            font.italic: true
-
-            color:defColor
+            text: "Michail Vourlakos"
 
             width:parent.defTextSize
 
@@ -114,46 +104,40 @@ DialogTemplate2{
             anchors.top: authorsTitleTxt.bottom
             anchors.topMargin: 2
 
+            font.pointSize: theme.defaultFont.pointSize+1
+            font.italic: true
         }
 
-
-        AnimatedText{
+        PlasmaComponents.Label{
             id:webTitleTxt
-            fullText:i18n("Project Website:")
-
-            font.pixelSize: mediumFont
-
-            color:defColor
-
-            width:parent.defTextSize
+            text:i18n("Project Website:")
 
             anchors.top:authorsTxt.bottom
             anchors.topMargin: 0.025*parent.width
-
             anchors.left: authorsTitleTxt.left
+
+            font.pointSize: theme.defaultFont.pointSize+2
+            font.weight: Font.Bold
+            font.italic: true
         }
 
-        AnimatedText{
+        PlasmaComponents.Label{
             id:webTxt
-            fullText: "http://workflow.opentoolsandspace.org/"
-
-            font.pixelSize: mediumFont
-            font.italic: true
-
-            color:defColor
-
-            width:parent.defTextSize
+            text: "http://workflow.opentoolsandspace.org/"
 
             anchors.left: webTitleTxt.left
             anchors.leftMargin: 0.04*parent.width
             anchors.top: webTitleTxt.bottom
             anchors.topMargin: 2
 
+            font.pointSize: theme.defaultFont.pointSize+1
+            font.italic: true
+
             MouseArea{
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked:{
-                    Qt.openUrlExternally(webTxt.fullText);
+                    Qt.openUrlExternally(webTxt.text);
                 }
                 onEntered:{
                     webTxt.font.underline = true
@@ -162,40 +146,33 @@ DialogTemplate2{
                     webTxt.font.underline = false
                 }
             }
-
         }
 
-        AnimatedText{
+
+        PlasmaComponents.Label{
             id:licenseTitleTxt
-
-            fullText:i18n("License:")
-            font.pixelSize: mediumFont
-
-            color:defColor
-
-            width:parent.defTextSize
+            text:i18n("License:")
 
             anchors.top:webTxt.bottom
             anchors.topMargin: 0.025*parent.width
-
             anchors.left: webTitleTxt.left
+
+            font.pointSize: theme.defaultFont.pointSize+2
+            font.weight: Font.Bold
+            font.italic: true
         }
 
-        AnimatedText{
+        PlasmaComponents.Label{
             id:licenseTxt
-            fullText: "GNU General Public License,<br/>ver.2.0 (GPL-2.0)"
-
-            font.pixelSize: mediumFont
-            font.italic: true
-
-            color:defColor
-
-            width:parent.defTextSize
+            text: "GNU General Public License,<br/>ver.2.0 (GPL-2.0)"
 
             anchors.left: licenseTitleTxt.left
             anchors.leftMargin: 0.04*parent.width
             anchors.top: licenseTitleTxt.bottom
             anchors.topMargin: 2
+
+            font.pointSize: theme.defaultFont.pointSize+1
+            font.italic: true
 
             MouseArea{
                 anchors.fill: parent
@@ -210,9 +187,7 @@ DialogTemplate2{
                     licenseTxt.font.underline = false
                 }
             }
-
         }
-
 
         AnimatedLine{
             id:line1
@@ -222,7 +197,7 @@ DialogTemplate2{
             opacity:0.7
 
             y:authorsTitleTxt.y+authorsTitleTxt.height
-            x:0.65*parent.width - lengthEnd
+            x:0.5*parent.width - lengthEnd
 
             isVertical: false
             lengthEnd: 0.4*parent.height
@@ -233,39 +208,98 @@ DialogTemplate2{
             transformOrigin: Item.TopRight
         }
 
-        AnimatedText{
-            id:translatorsTitleTxt
-            fullText:i18n("Translator(s):")
-
-            font.pixelSize: smallFont
-
-            color:defColor
-
-            width:0.3*parent.width
-
+        Item{
+            id: navigation
             x:line1.x+line1.lengthEnd+authorsTitleTxt.height
             anchors.top:authorsTitleTxt.top
+            width:0.45*parent.width
+            height:0.6 * parent.height
 
-        }
+            PlasmaComponents.TabBar {
+                id: appTabBar
+                anchors { left: parent.left; right: parent.right; top: parent.top}
 
-        AnimatedText{
-            id:translatorsTxt
-            fullText: "Open Source Community(French)\nOpen Source Community(German)"+
-                      "\nMichail Vourlakos(Greek)\nAnthony David Atencio Moscote(Spanish)"
+                PlasmaComponents.TabButton {
+                    id: contributorsBtn
+                    tab: contribsPage
+                    text: i18n("Contributors")
+                    iconSource: "x-office-contact"
+                }
+                PlasmaComponents.TabButton {
+                    id: translatorsBtn
+                    tab: translatorsPage
+                    text: i18n("Translators")
+                    iconSource: "x-office-contact"
+                }
+            }
 
-            font.pixelSize: smallFont
-            font.italic: true
+            PlasmaComponents.TabGroup {
+                id: tabGroup
+                anchors { left: parent.left; right: parent.right; top: appTabBar.bottom; topMargin: 5; bottom: parent.bottom }
 
-            color:defColor
+                PlasmaComponents.Page{
+                    id:contribsPage
 
-            width:0.3*parent.width
+                    Flickable{
+                        id:flick2
+                        anchors.fill: parent
+                        width: navigation.width
+                        height: navigation.height
 
-            anchors.left: translatorsTitleTxt.left
-            anchors.leftMargin: 0.025*parent.width
-            anchors.top: translatorsTitleTxt.bottom
-            anchors.topMargin: 2
+                        contentWidth: paragraph2.width
+                        contentHeight: paragraph2.height
 
-        }
+                        clip: true
+
+                        boundsBehavior: Flickable.StopAtBounds
+                        PlasmaExtras.Paragraph {
+                            id:paragraph2
+                            width: tabGroup.width-20
+
+                            text: "Michael Daffin\nBogdan Mihaila "
+                        }
+                    }
+
+                    PlasmaComponents.ScrollBar{
+                        flickableItem: flick1
+                        orientation:Qt.Vertical
+                        stepSize:3
+                    }
+                }
+
+                PlasmaComponents.Page{
+                    id:translatorsPage
+
+                    Flickable{
+                        id:flick1
+                        anchors.fill: parent
+                        width: navigation.width
+                        height: navigation.height
+
+                        contentWidth: paragraph1.width
+                        contentHeight: paragraph1.height
+
+                        clip: true
+
+                        boundsBehavior: Flickable.StopAtBounds
+                        PlasmaExtras.Paragraph {
+                            id:paragraph1
+                            width: tabGroup.width-20
+
+                            text: "Open Source Community(French)\nOpen Source Community(German)"+
+                                  "\nMichail Vourlakos(Greek)\nAnthony David Atencio Moscote(Spanish)"
+                        }
+                    }
+
+                    PlasmaComponents.ScrollBar{
+                        flickableItem: flick1
+                        orientation:Qt.Vertical
+                        stepSize:3
+                    }
+                }
+            }
+
+        }//Item
     }
 
 
