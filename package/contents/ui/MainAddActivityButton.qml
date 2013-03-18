@@ -113,7 +113,68 @@ Rectangle{
         }
     }
 
-    Image{
+    Item{
+        id:plusIcon
+        anchors.centerIn: addActivityBtn
+        width: addActivityBtn.showRedCross===true ? addActivityBtn.width/5 : addActivityBtn.height/2
+        height:width
+
+        Item{
+            id:showStoppedIcon
+            anchors.fill: parent
+            opacity: addActivityBtn.showRedCross
+            Rectangle{
+                id:firstRec
+                height:0.18* parent.width
+                width: parent.width
+                color: Settings.global.disableBackground ?  theme.textColor : "#C00000"
+                opacity: Settings.global.disableBackground ? 0.8 : 1
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Rectangle{
+                height:firstRec.height
+                width: parent.width
+                color: firstRec.color
+                opacity: firstRec.opacity
+                anchors.verticalCenter: parent.verticalCenter
+                transformOrigin: Item.Center
+                rotation: 90
+            }
+        }
+
+
+        Image{
+            id:hideStoppedIcon
+            anchors.fill: parent
+            opacity: !addActivityBtn.showRedCross
+            source: "Images/buttons/addActivity2.png"
+
+            Behavior on opacity{
+                NumberAnimation {
+                    duration: 2*Settings.global.animationStep
+                    easing.type: Easing.InOutQuad;
+                }
+            }
+        }
+
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration: 2*Settings.global.animationStep
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        Behavior on scale{
+            NumberAnimation {
+                duration: 2*Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+    }
+
+    /*  Image{
         id:plusIcon
         opacity:0.7
         anchors.centerIn: addActivityBtn
@@ -134,7 +195,7 @@ Rectangle{
                 easing.type: Easing.InOutQuad;
             }
         }
-    }
+    }*/
 
     Rectangle{
         id:addActShad1
