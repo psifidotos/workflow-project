@@ -9,7 +9,7 @@ BorderImage {
     source: (isCurrentW && !mainWorkArea.isFilteredNoResults) ?
                 "../../Images/activeActivitiesBorderImage.png" : "../../Images/activitiesBorderImage.png"
 
-    property alias mainImgP: mainImg.source
+//    property alias mainImgP: mainImg.source
 
     border.left: 10; border.top: 10;
     border.right: 14; border.bottom: 14;
@@ -22,15 +22,15 @@ BorderImage {
         width:parent.width-2*x-1+2
         height:parent.height-2*y+2
         radius:7
-        property real opacityForDisableBackground : mainWorkArea.isCurrentW ? 0.8 : 0.25
-        opacity: Settings.global.disableBackground ? opacityForDisableBackground : 0
-        color:Settings.global.disableBackground ?  theme.textColor : "#00000000"
+        property real opacityForDisableBackground : mainWorkArea.isCurrentW ? 0.9 : 0.1
+        property real opacityForTheme: mainWorkArea.isCurrentW ? 0.9 : 0
+        opacity: Settings.global.disableBackground ? opacityForDisableBackground : opacityForTheme
+        color:Settings.global.disableBackground ?  theme.textColor : "#ff353535"
 
         visible: !mainWorkArea.isFilteredNoResults
     }
 
     Rectangle{
-
         id:workBordImageMainImage
         x:mainWorkArea.imagex
         y:mainWorkArea.imagey
@@ -43,11 +43,6 @@ BorderImage {
         opacity: mainWorkArea.isFilteredNoResults ? 0.10 : 1
 
        // clip:true
-        /*Rectangle{
-            width:parent.width
-            height:parent.height
-            color:"#ffffff"
-        }*/
 
         Image {
             id: mainImg
@@ -77,8 +72,6 @@ BorderImage {
             width:parent.width
             height:parent.height
         }
-
-
     }
 
 }
