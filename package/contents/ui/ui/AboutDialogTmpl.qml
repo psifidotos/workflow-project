@@ -286,8 +286,12 @@ DialogTemplate2{
                             id:paragraph1
                             width: tabGroup.width-20
 
-                            text: "Open Source Community(French)\nOpen Source Community(German)"+
-                                  "\nMichail Vourlakos(Greek)\nAnthony David Atencio Moscote(Spanish)"
+                            text: "\
+Anthony David Atencio Moscote(Spanish)\n\
+Rodrigo Emmanuel Santana Borges(Portuguese)\n\
+Michail Vourlakos(Greek)\n\
+Open Source Community(French)\n\
+Open Source Community(German)\n"
                         }
                     }
 
