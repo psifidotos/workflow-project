@@ -27,7 +27,7 @@ Item{
         height: width
 
         tooltipTitle: i18n("Delete Workarea")
-        tooltipText: i18n("Delete WorkArea, <b>be careful</b> this action can not be undone.")
+        tooltipText: i18n("Delete Workarea, <b>be careful</b> this action can not be undone.")
 
         Behavior on scale{
             NumberAnimation {

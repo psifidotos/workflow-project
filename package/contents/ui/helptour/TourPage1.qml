@@ -111,7 +111,7 @@ TourPage{
 
         textOnlyOpacity:true
 
-        fullText:i18n("<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></font> WorkAreas etc.")
+        fullText:i18n("<big><u>Workareas(Virtual Desktops)</u></big><br/><br/>Is a way to sub-organize an Activity. For example your <font color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font> can be separated in <font color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, <i>\"Restaurants\"</i></font> Workareas etc.")
     }
 
     RowB{

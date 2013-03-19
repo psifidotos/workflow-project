@@ -285,6 +285,7 @@ DialogTemplate2{
                         PlasmaExtras.Paragraph {
                             id:paragraph1
                             width: tabGroup.width-20
+                            horizontalAlignment: Text.AlignLeft
 
                             text: "\
 Anthony David Atencio Moscote(Spanish)\n\

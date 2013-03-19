@@ -127,7 +127,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("1. In <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state the window will be available only in one specific WorkArea.")
+        fullText:i18n("1. In <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state the window will be available only in one specific Workarea.")
     }
 
     AnimatedText{
@@ -142,7 +142,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state the window will be available in every WorkArea for specific Activity.")
+        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state the window will be available in every Workarea for specific Activity.")
     }
 
     AnimatedText{
@@ -157,7 +157,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the window will be available in the same WorkAreas (position) in all Activities.")
+        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the window will be available in the same Workareas (position) in all Activities.")
     }
 
     AnimatedText{
@@ -172,7 +172,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window will be available in every WorkArea and every Activity.")
+        fullText:i18n("4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window will be available in every Workarea and every Activity.")
     }
 
 }

@@ -133,7 +133,7 @@
       <bool>true</bool>
      </property>
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option is available only when the plasmoid is in a panel. You can hide the PopUp when you click on a WorkArea&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option is available only when the plasmoid is in a panel. You can hide the PopUp when you click on a Workarea&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Hide popup when clicking a Workarea</string>
