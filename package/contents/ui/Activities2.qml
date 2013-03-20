@@ -274,6 +274,7 @@ Rectangle {
         plasmoid.passivePopup = !Settings.global.hideOnClick;
         mainView.forceActiveFocus();
 
+        taskManager.initSignals();
     }
 
     function popupEventSlot(show){

@@ -3,9 +3,8 @@
 
 #include <QObject>
 
-#include <taskmanager/taskmanager.h>
 #include <KWindowSystem>
-#include <KTempDir>
+#include <KActivities/Controller>
 
 #include "models/listmodel.h"
 
@@ -42,8 +41,15 @@ public:
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
 #endif
-
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
+
+    //These functions are created in order to workaround the issue
+    //that from kwin scripting no signal triggering from KWindowSystem
+    //should be invoked - caught
+    Q_INVOKABLE void initSignals();
+    Q_INVOKABLE bool windowAddedSlot(QString id);
+    Q_INVOKABLE void windowRemovedSlot(QString id);
+    Q_INVOKABLE void windowChangedSlot(QString id);
 
 signals:
     void taskRemoved(QString win);
@@ -52,19 +58,25 @@ signals:
 protected:
     void init();
 
-public slots:
+private slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
-  void taskAdded(::TaskManager::Task *);
+    void windowAddedSlot(WId id);
+    void windowRemovedSlot(WId id);
+    void windowChangedSlot(WId id, const unsigned long *properties);
+
+ /* void taskAdded(::TaskManager::Task *);
   void taskRemoved(::TaskManager::Task *);
-  void taskUpdated(::TaskManager::TaskChanges changes);
+  void taskUpdated(::TaskManager::TaskChanges changes);*/
 
 private:
-    TaskManager::TaskManager *taskMainM;
+    KActivities::Controller *m_controller;
     KWindowSystem *kwinSystem;
     
-    QObject *qmlTaskEngine;
-
     ListModel *m_taskModel;
+
+    bool m_signalsWereInitialized;
+
+    void updateValues(QString);
 };
 
 #endif // PTASKMANAGER_H

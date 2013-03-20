@@ -3,6 +3,7 @@
 #include <KWindowSystem>
 
 #include <Plasma/WindowEffects>
+#include <taskmanager/task.h>
 
 PreviewsManager::PreviewsManager(QObject *parent) :
     QObject(parent),

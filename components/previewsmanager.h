@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QRect>
 
-#include <taskmanager/taskmanager.h>
+#include <taskmanager/task.h>
 
 class PreviewsManager : public QObject
 {
