@@ -1,12 +1,14 @@
 #include "ptaskmanager.h"
 
 
-#include <KDebug>
+#include <QDebug>
 #include <KWindowSystem>
 #include <KTempDir>
 #include <KStandardDirs>
 #include <KIcon>
 #include <KIconLoader>
+#include <KActivities/Controller>
+
 #include <QDBusInterface>
 #include <QDBusConnection>
 
@@ -29,10 +31,9 @@
 
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),
+    m_controller(new KActivities::Controller(this)),
     m_taskModel(0)
 {
-    taskMainM = TaskManager::TaskManager::self();
-
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
     m_taskModel = new ListModel(new TaskItem, this);
@@ -46,19 +47,21 @@ PTaskManager::~PTaskManager(){
     //qt raster interface, it was crashing kwin
     //No need, the children will be deleted by the parent
     //was creating occussionaly crashes
+    if(m_controller)
+        delete m_controller;
+
     if(m_taskModel)
         delete m_taskModel;
 }
 
 void PTaskManager::init()
 {
-    foreach (TaskManager::Task *source, taskMainM->tasks())
-        taskAdded(source);
+    foreach (WId source, kwinSystem->windows())
+        windowAddedSlot(source);
 
-    // task addition and removal
-    connect(taskMainM , SIGNAL(taskAdded(::TaskManager::Task *)), this, SLOT(taskAdded(::TaskManager::Task *)));
-    connect(taskMainM , SIGNAL(taskRemoved(::TaskManager::Task *)), this, SLOT(taskRemoved(::TaskManager::Task *)));
-
+    connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
+    connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
+  //  connect( kwinSystem, SIGNAL(windowChanged(WId, const unsigned long *)), this, SLOT(windowChangedSlot(WId,const ulong*)) );
 }
 ///////////
 void PTaskManager::hideDashboard()
@@ -74,36 +77,39 @@ void PTaskManager::showDashboard()
 }
 
 
-void PTaskManager::taskAdded(::TaskManager::Task *task)
+void PTaskManager::windowAddedSlot(WId id)
 {
-    QString wId;
-    wId.setNum(task->window());
 
-    QPixmap tempIcn = task->icon(256,256,true);
+    unsigned long properties =  NET::WMDesktop | NET::WMVisibleName |
+            NET::WMWindowType | NET::WMState | NET::XAWMState ;
 
-    TaskItem *taskI = new TaskItem(wId,
-                                   task->isOnAllDesktops(),
-                                   task->isOnAllActivities(),
-                                   task->classClass(),
-                                   task->name(),
-                                   QIcon(tempIcn),
-                                   task->desktop(),
-                                   task->activities(),
-                                   m_taskModel
-                                   );
-    m_taskModel->appendRow(taskI);
+    unsigned long properties2 =  NET::WM2WindowClass ;
 
-    connect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
+    KWindowInfo winInfo = kwinSystem->windowInfo (id, properties, properties2);
 
-    // if(task->isOnAllActivities())
-    //   if(!task->isOnAllDesktops())
-    //      setOnAllDesktops(wId,true);
+    NET::WindowType type = winInfo.windowType(NET::NormalMask | NET::DialogMask | NET::OverrideMask |
+                                           NET::UtilityMask | NET::DesktopMask | NET::DockMask |
+                                           NET::TopMenuMask | NET::SplashMask | NET::ToolbarMask |
+                                           NET::MenuMask);
+
+    if (type != NET::Desktop && type != NET::Dock && type != NET::TopMenu &&
+            type != NET::Splash && type != NET::Menu && type != NET::Toolbar) {
+
+        QString wId;
+        wId.setNum(id);
+
+        TaskItem *taskI = new TaskItem(m_taskModel);
+        taskI->setCode(wId);
+        m_taskModel->appendRow(taskI);
+        updateValues(id);
+    }
+
 }
 
-void PTaskManager::taskRemoved(::TaskManager::Task *task) {
-
+void PTaskManager::windowRemovedSlot(WId id)
+{
     QString wId;
-    wId.setNum(task->window());
+    wId.setNum(id);
     emit taskRemoved(wId);
 
     //removeTaskFromPreviewsLists(task->window());
@@ -113,44 +119,63 @@ void PTaskManager::taskRemoved(::TaskManager::Task *task) {
         QModelIndex ind = m_taskModel->indexFromItem(taskI);
         m_taskModel->removeRow(ind.row());
     }
-
-    disconnect(task,SIGNAL(changed(::TaskManager::TaskChanges)),this,SLOT(taskUpdated(::TaskManager::TaskChanges)));
 }
 
-void PTaskManager::taskUpdated(::TaskManager::TaskChanges changes){
-    ::TaskManager::Task *task = qobject_cast< ::TaskManager::Task * >(sender());
-
-    if (!task) {
-        return;
-    }
+void PTaskManager::windowChangedSlot(WId id, const unsigned long *propertiesNew)
+{
     QString wId;
-    wId.setNum(task->window());
+    wId.setNum(id);
+    activateTask(wId);
+    if (propertiesNew[NETWinInfo::PROTOCOLS] & (NET::WMDesktop | NET::WMVisibleName) ||
+            propertiesNew[NETWinInfo::PROTOCOLS2] & NET::WM2Activities) {
+        updateValues(id);
+    }
+}
 
-    // only a subset of task information is exported
-    QString typeOfMessage="";
 
-    if((changes != TaskManager::TaskUnchanged) ||
-            (changes != TaskManager::GeometryChanged) ||
-            (changes != TaskManager::AttentionChanged)){
+void PTaskManager::updateValues(WId id)
+{
+    QString wId;
+    wId.setNum(id);
 
-        TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
-        if(taskI){
-            QPixmap tempIcn = task->icon(256,256,true);
-            taskI->setValues(wId,
-                             task->isOnAllDesktops(),
-                             task->isOnAllActivities(),
-                             task->classClass(),
-                             task->name(),
-                             task->desktop(),
-                             task->activities() );
+    TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
+    if (taskI){
+        //Activities
+        unsigned long propertiesAct[] = { 0, NET::WM2Activities };
+        NETWinInfo netInfo(QX11Info::display(), id, QX11Info::appRootWindow(), propertiesAct, 2);
+        QString result(netInfo.activities());
+        QStringList activities;
+        bool onAllActivities = false;
+        if (!result.isEmpty() && result != "ALL") {
+            activities = result.split(',');
 
-            taskI->setIcon(QIcon(tempIcn));
+            onAllActivities = false;
+        }
+        else if(result == "ALL"){
+            onAllActivities = true;
+        }
+        else if(result.isEmpty()){
+            onAllActivities = false;
         }
 
+        unsigned long properties =  NET::WMDesktop | NET::WMVisibleName ;
+        unsigned long properties2 =  NET::WM2WindowClass ;
+        KWindowInfo winInfo = kwinSystem->windowInfo (id, properties, properties2);
+
+        QPixmap tempIcn = kwinSystem->icon(id, 256, 256, true);
+
+        taskI->setValues(wId,
+                         winInfo.onAllDesktops(),
+                         onAllActivities,
+                         QString(winInfo.windowClassClass()),
+                         winInfo.visibleName(),
+                         winInfo.desktop(),
+                         activities);
+
+        taskI->setIcon(QIcon(tempIcn));
+
     }
-
 }
-
 
 #ifdef Q_WS_X11
 void PTaskManager::slotAddDesktop()
@@ -226,27 +251,25 @@ void PTaskManager::setOnAllDesktops(QString id, bool b)
 
 void PTaskManager::removeTask(QString id)
 {
-    TaskManager::Task *t = taskMainM->findTask(id.toULong());
-    t->close();
+ //   TaskManager::Task *t = TaskManager::TaskManager::self()->findTask(id.toULong());
+  //  t->close();
 }
 
 void PTaskManager::activateTask(QString id)
 {
-    TaskManager::Task *t = taskMainM->findTask(id.toULong());
-    //   t->restore();
-    t->activate();
+    kwinSystem->activateWindow(id.toULong());
+
     hideDashboard();
     emit hidePopup();
 }
 
 void PTaskManager::minimizeTask(QString id)
 {
-    TaskManager::Task *t = taskMainM->findTask(id.toULong());
-    if(!t->isMinimized())
-        t->setIconified(true);
-    qDebug()<<t->name();
-
-
+    //TaskManager::Task *t = taskMainM->findTask(id.toULong());
+    //if(!t->isMinimized())
+    //   t->setIconified(true);
+    kwinSystem->minimizeWindow(id.toULong());
+    // qDebug()<<t->name();
 }
 
 void PTaskManager::setCurrentDesktop(int desk)
@@ -273,7 +296,7 @@ void PTaskManager::setTaskState(QString wId, QString state, QString activity, in
         QString fActivity = "";
 
         if(activity == "")
-            fActivity = taskMainM->currentActivity();
+            fActivity = m_controller->currentActivity();
         else
             fActivity = activity;
 
@@ -375,17 +398,17 @@ int PTaskManager::tasksNumber(QString activity, int desktop, bool everywhereEnab
             }
 
             bool oneWorkarea = (!task->onAllActivities()&&
-                                 !task->onAllDesktops()&&
-                                 ((task->desktop() == desktop)||(numberOfDesktops == 1))&&
-                                 (taskActivity == activity));
+                                !task->onAllDesktops()&&
+                                ((task->desktop() == desktop)||(numberOfDesktops == 1))&&
+                                (taskActivity == activity));
 
             bool allWorkareas = ( !task->onAllActivities()&&
-                                   (task->onAllDesktops()&&
-                                    (taskActivity == activity)));
+                                  (task->onAllDesktops()&&
+                                   (taskActivity == activity)));
 
             bool sameWorkareas = (task->onAllActivities()&&
-                                 !task->onAllDesktops()&&
-                                 (task->desktop() == desktop));
+                                  !task->onAllDesktops()&&
+                                  (task->desktop() == desktop));
 
             bool everywhere = (task->onAllActivities() &&
                                task->onAllDesktops() &&

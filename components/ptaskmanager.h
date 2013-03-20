@@ -3,9 +3,8 @@
 
 #include <QObject>
 
-#include <taskmanager/taskmanager.h>
 #include <KWindowSystem>
-#include <KTempDir>
+#include <KActivities/Controller>
 
 #include "models/listmodel.h"
 
@@ -52,19 +51,25 @@ signals:
 protected:
     void init();
 
-public slots:
+private slots:
  //void dataUpdated(QString source, Plasma::DataEngine::Data data);
-  void taskAdded(::TaskManager::Task *);
+    void windowAddedSlot(WId id);
+    void windowRemovedSlot(WId id);
+    void windowChangedSlot(WId id, const unsigned long *properties);
+
+ /* void taskAdded(::TaskManager::Task *);
   void taskRemoved(::TaskManager::Task *);
-  void taskUpdated(::TaskManager::TaskChanges changes);
+  void taskUpdated(::TaskManager::TaskChanges changes);*/
 
 private:
-    TaskManager::TaskManager *taskMainM;
+    KActivities::Controller *m_controller;
     KWindowSystem *kwinSystem;
     
     QObject *qmlTaskEngine;
 
     ListModel *m_taskModel;
+
+    void updateValues(WId);
 };
 
 #endif // PTASKMANAGER_H
