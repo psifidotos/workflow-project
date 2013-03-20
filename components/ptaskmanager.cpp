@@ -56,13 +56,18 @@ PTaskManager::~PTaskManager(){
 
 void PTaskManager::init()
 {
-    foreach (WId source, kwinSystem->windows())
-        windowAddedSlot(source);
-
-    connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
-    connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
-  //  connect( kwinSystem, SIGNAL(windowChanged(WId, const unsigned long *)), this, SLOT(windowChangedSlot(WId,const ulong*)) );
 }
+
+void PTaskManager::initSignals()
+{
+    //  foreach (WId source, kwinSystem->windows())
+      //    windowAddedSlot(source);
+
+      connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
+      connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
+      connect( kwinSystem, SIGNAL(windowChanged(WId, const unsigned long *)), this, SLOT(windowChangedSlot(WId,const ulong*)) );
+}
+
 ///////////
 void PTaskManager::hideDashboard()
 {
@@ -75,17 +80,44 @@ void PTaskManager::showDashboard()
     QDBusInterface remoteApp( "org.kde.plasma-desktop", "/App" );
     remoteApp.call( "showDashboard", true );
 }
-
-
+/////////////////////////////
+//Slot for Signals from KWindowSystem
 void PTaskManager::windowAddedSlot(WId id)
 {
+    QString wId;
+    wId.setNum(id);
+    windowAddedSlot(wId);
+}
+
+void PTaskManager::windowRemovedSlot(WId id)
+{
+    QString wId;
+    wId.setNum(id);
+    windowRemovedSlot(wId);
+}
+
+void PTaskManager::windowChangedSlot(WId id, const unsigned long *propertiesNew)
+{
+    QString wId;
+    wId.setNum(id);
+    if (propertiesNew[NETWinInfo::PROTOCOLS] & (NET::WMDesktop | NET::WMVisibleName) ||
+            propertiesNew[NETWinInfo::PROTOCOLS2] & NET::WM2Activities) {
+        updateValues(wId);
+    }
+}
+//////////////////////////
+//Slots to be used from KWin Scripting in order to handle the situation
+//in which KWindowSystem signals should be used at all
+bool PTaskManager::windowAddedSlot(QString id)
+{
+    WId wId = id.toULong();
 
     unsigned long properties =  NET::WMDesktop | NET::WMVisibleName |
             NET::WMWindowType | NET::WMState | NET::XAWMState ;
 
     unsigned long properties2 =  NET::WM2WindowClass ;
 
-    KWindowInfo winInfo = kwinSystem->windowInfo (id, properties, properties2);
+    KWindowInfo winInfo = kwinSystem->windowInfo (wId, properties, properties2);
 
     NET::WindowType type = winInfo.windowType(NET::NormalMask | NET::DialogMask | NET::OverrideMask |
                                            NET::UtilityMask | NET::DesktopMask | NET::DockMask |
@@ -93,50 +125,42 @@ void PTaskManager::windowAddedSlot(WId id)
                                            NET::MenuMask);
 
     if (type != NET::Desktop && type != NET::Dock && type != NET::TopMenu &&
-            type != NET::Splash && type != NET::Menu && type != NET::Toolbar) {
-
-        QString wId;
-        wId.setNum(id);
-
+            type != NET::Splash && type != NET::Menu && type != NET::Toolbar &&
+            !winInfo.hasState(NET::SkipPager)) {
         TaskItem *taskI = new TaskItem(m_taskModel);
-        taskI->setCode(wId);
+        taskI->setCode(id);
         m_taskModel->appendRow(taskI);
         updateValues(id);
+        return true;
     }
-
+    return false;
 }
 
-void PTaskManager::windowRemovedSlot(WId id)
+void PTaskManager::windowRemovedSlot(QString id)
 {
-    QString wId;
-    wId.setNum(id);
-    emit taskRemoved(wId);
+    emit taskRemoved(id);
 
     //removeTaskFromPreviewsLists(task->window());
 
-    TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
+    TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(id));
     if(taskI){
         QModelIndex ind = m_taskModel->indexFromItem(taskI);
         m_taskModel->removeRow(ind.row());
     }
 }
 
-void PTaskManager::windowChangedSlot(WId id, const unsigned long *propertiesNew)
+void PTaskManager::windowChangedSlot(QString id)
 {
-    QString wId;
-    wId.setNum(id);
-    activateTask(wId);
-    if (propertiesNew[NETWinInfo::PROTOCOLS] & (NET::WMDesktop | NET::WMVisibleName) ||
-            propertiesNew[NETWinInfo::PROTOCOLS2] & NET::WM2Activities) {
-        updateValues(id);
-    }
+    updateValues(id);
 }
 
+//////////////////////////
 
-void PTaskManager::updateValues(WId id)
+void PTaskManager::updateValues(QString wId)
 {
-    QString wId;
-    wId.setNum(id);
+    WId id = wId.toULong();
+    //QString wId;
+   // wId.setNum(id);
 
     TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
     if (taskI){
@@ -222,7 +246,6 @@ void PTaskManager::setOnAllActivities(QString wd)
                         PropModeReplace, (const unsigned char *)"ALL", 3);
     }
 }
-
 
 #endif
 

@@ -41,8 +41,15 @@ public:
     Q_INVOKABLE void setOnlyOnActivity(QString, QString);
     Q_INVOKABLE void setOnAllActivities(QString);
 #endif
-
     Q_INVOKABLE inline QObject *model(){return m_taskModel;}
+
+    //These functions are created in order to workaround the issue
+    //that from kwin scripting no signal triggering from KWindowSystem
+    //should be invoked - caught
+    Q_INVOKABLE void initSignals();
+    Q_INVOKABLE bool windowAddedSlot(QString id);
+    Q_INVOKABLE void windowRemovedSlot(QString id);
+    Q_INVOKABLE void windowChangedSlot(QString id);
 
 signals:
     void taskRemoved(QString win);
@@ -69,7 +76,7 @@ private:
 
     ListModel *m_taskModel;
 
-    void updateValues(WId);
+    void updateValues(QString);
 };
 
 #endif // PTASKMANAGER_H
