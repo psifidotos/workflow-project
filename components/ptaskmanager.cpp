@@ -32,7 +32,8 @@
 PTaskManager::PTaskManager(QObject *parent) :
     QObject(parent),
     m_controller(new KActivities::Controller(this)),
-    m_taskModel(0)
+    m_taskModel(0),
+    m_signalsWereInitialized(false)
 {
     kwinSystem = KWindowSystem::KWindowSystem::self();
 
@@ -61,11 +62,13 @@ void PTaskManager::init()
 void PTaskManager::initSignals()
 {
     //  foreach (WId source, kwinSystem->windows())
-      //    windowAddedSlot(source);
+    //    windowAddedSlot(source);
 
-      connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
-      connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
-      connect( kwinSystem, SIGNAL(windowChanged(WId, const unsigned long *)), this, SLOT(windowChangedSlot(WId,const ulong*)) );
+    connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
+    connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
+    connect( kwinSystem, SIGNAL(windowChanged(WId, const unsigned long *)), this, SLOT(windowChangedSlot(WId,const ulong*)) );
+
+    m_signalsWereInitialized = true;
 }
 
 ///////////
@@ -120,9 +123,9 @@ bool PTaskManager::windowAddedSlot(QString id)
     KWindowInfo winInfo = kwinSystem->windowInfo (wId, properties, properties2);
 
     NET::WindowType type = winInfo.windowType(NET::NormalMask | NET::DialogMask | NET::OverrideMask |
-                                           NET::UtilityMask | NET::DesktopMask | NET::DockMask |
-                                           NET::TopMenuMask | NET::SplashMask | NET::ToolbarMask |
-                                           NET::MenuMask);
+                                              NET::UtilityMask | NET::DesktopMask | NET::DockMask |
+                                              NET::TopMenuMask | NET::SplashMask | NET::ToolbarMask |
+                                              NET::MenuMask);
 
     if (type != NET::Desktop && type != NET::Dock && type != NET::TopMenu &&
             type != NET::Splash && type != NET::Menu && type != NET::Toolbar &&
@@ -160,7 +163,7 @@ void PTaskManager::updateValues(QString wId)
 {
     WId id = wId.toULong();
     //QString wId;
-   // wId.setNum(id);
+    // wId.setNum(id);
 
     TaskItem *taskI = static_cast<TaskItem *>(m_taskModel->find(wId));
     if (taskI){
@@ -274,8 +277,11 @@ void PTaskManager::setOnAllDesktops(QString id, bool b)
 
 void PTaskManager::removeTask(QString id)
 {
- //   TaskManager::Task *t = TaskManager::TaskManager::self()->findTask(id.toULong());
-  //  t->close();
+    //This code must not be able to be executed from kwin scripts
+    if(m_signalsWereInitialized){
+        TaskManager::Task *t = TaskManager::TaskManager::self()->findTask(id.toULong());
+        t->close();
+    }
 }
 
 void PTaskManager::activateTask(QString id)

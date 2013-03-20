@@ -72,9 +72,9 @@ private:
     KActivities::Controller *m_controller;
     KWindowSystem *kwinSystem;
     
-    QObject *qmlTaskEngine;
-
     ListModel *m_taskModel;
+
+    bool m_signalsWereInitialized;
 
     void updateValues(QString);
 };
