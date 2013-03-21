@@ -6,6 +6,7 @@
 -- changed behavior with Virtual Desktops. Virtual Desktops are not forced to follow Workareas
       settings. The workarea manager trys to handle every situation
 -- changed the shortcuts become globally available through the workarea manager
+-- changed the appearance of About Dialog in order to be more scalable
 -- improved hover appearance in panel
 -- various bug fixes
 
