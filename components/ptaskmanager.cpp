@@ -61,8 +61,8 @@ void PTaskManager::init()
 
 void PTaskManager::initSignals()
 {
-    //  foreach (WId source, kwinSystem->windows())
-    //    windowAddedSlot(source);
+    foreach (WId source, kwinSystem->windows())
+        windowAddedSlot(source);
 
     connect( kwinSystem, SIGNAL(windowAdded(WId)), this, SLOT(windowAddedSlot(WId)) );
     connect( kwinSystem, SIGNAL(windowRemoved(WId)), this, SLOT(windowRemovedSlot(WId)) );
