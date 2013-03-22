@@ -72,7 +72,7 @@ Item{
                 imgIcon:"../../Images/buttons/plasma_ui/sameDesktops.png"
                 imgIconHov:"../../Images/buttons/plasma_ui/sameDesktopsHov.png"
                 mainIconWidth: 0.55 * winStateItem.width
-                mainIconHeight: 0.36 * mainIconWidth
+                mainIconHeight: 0.32 * mainIconWidth
             }
         },
         State {
