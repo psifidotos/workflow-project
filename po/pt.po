@@ -3,122 +3,119 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Anthony David Atencio Moscote <draco159@gmail.com>, 2013.
-#   <draco159@gmail.com>, 2012.
-#   <juanma@kde.org.ar>, 2012-2013.
 # Rodrigo Emmanuel Santana Borges <rodrigoesborges@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
 "POT-Creation-Date: 2013-03-19 20:08+0200\n"
-"PO-Revision-Date: 2013-03-20 16:28+0000\n"
-"Last-Translator: max_adam <draco159@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/WorkFlow_Project/language/es/)\n"
+"PO-Revision-Date: 2013-03-19 18:17+0000\n"
+"Last-Translator: psifidotos <mvourlakos@gmail.com>\n"
+"Language-Team: Portuguese (http://www.transifex.com/projects/p/WorkFlow_Project/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
+"Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../package/contents/ui/Activities2.qml:262
 #: ../package/contents/ui/CompactRepresentation.qml:96
 msgid "WorkFlow Plasmoid"
-msgstr "Plasmoide WorkFlow"
+msgstr "Plasmóide WorkFlow"
 
 #: ../package/contents/ui/Activities2.qml:263
 msgid ""
 "Activities, Workareas, Windows organize your \n"
 " full workflow through the KDE technologies"
-msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu ⏎ WorkFlow a través de las tecnologías de KDE"
+msgstr ""
 
 #: ../package/contents/ui/CompactRepresentation.qml:97
 msgid ""
 "Activities, Workareas, Windows, organize your \n"
 " full workflow through the KDE technologies"
-msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu ⏎  WorkFlow a través de las tecnologías de KDE"
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:143
 msgid "Change Activity Icon"
-msgstr "Cambiar ícono de la Actividad"
+msgstr "Mudar o Ícone da Atividade"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:143
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:218
 msgid "Activity"
-msgstr "Actividad"
+msgstr "Atividade"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:144
 msgid "Change your Activity Icon to recognize better your work."
-msgstr "Cambia el Icono de tu Actividad para reconocer mejor tu trabajo."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:145
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:220
 msgid "Enable this Activity by clicking on the Activity name or icon"
-msgstr "Habilita esta Actividad haciendo clic en su nombre o icono."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:218
 msgid "Activity Name"
-msgstr "Nombre de la Actividad"
+msgstr "Nome da Atividade"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:219
 msgid "Edit the Activity name by clicking on it."
-msgstr "Edita el nombre de la Actividad haciendo clic en ella."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:263
 msgid "Delete Activity"
-msgstr "Borrar Actividad"
+msgstr "Apagar Atividade"
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:264
 msgid "Delete Activity. Be careful, this action can not be undone."
-msgstr "Borrar Actividad. Cuidado, esta acción no puede deshacerse. "
+msgstr ""
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:290
 msgid "Restore Activity"
-msgstr "Restaurar Actividad"
+msgstr "Restaurar Atividade"
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:291
 msgid "Restore Activity to continue your work from where you had stopped."
-msgstr "Restaura la Actividad para continuar con tu trabajo donde lo dejaste."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:48
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:15
 msgid "Clone Activity"
-msgstr "Clonar Actividad"
+msgstr "Clonar Atividade"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:49
 msgid "Clone Activity and keep its settings."
-msgstr "Clonar la Actividad manteniendo su configuración."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:63
 msgid "Pause Activity"
-msgstr "Pausar Actividad"
+msgstr "Pausar Atividade"
 
 #: ../package/contents/ui/delegates/ui-elements/ActivityBtns.qml:64
 msgid ""
 "Pause Activity and keep it always available to continue your work from where"
 " you stopped."
-msgstr "Pausar la Actividad y mantenerla siempre disponible para continuar con tu trabajo donde lo dejaste."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:69
 msgid "Add Workarea"
-msgstr "Añadir Área de Trabajo "
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:70
 msgid "Add a Workarea to sub-organize better your work."
-msgstr "Añadir un Área de Trabajo para internamente organizar mejor tu trabajo."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:34
 #: ../package/contents/ui/delegates/ui-elements/WATaskDelegButtons.qml:38
 msgid "Close Window"
-msgstr "Cerrar ventana"
+msgstr "Fechar Janela"
 
 #: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:35
 msgid "Close this window."
-msgstr "Cerrar esta ventana."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:37
 msgid "Change Window State"
-msgstr "Cambiar Estado de la Ventana"
+msgstr "Mudar o Estado da Janela"
 
 #: ../package/contents/ui/delegates/ui-elements/WindowPlaceButton.qml:38
 msgid ""
@@ -128,52 +125,52 @@ msgid ""
 "that Activity<br/><br/>3.<b>\"Same Workareas\"</b>,is shown in the same "
 "Workareas (position) in all Activities.<br/><br/>4.<b>\"Everywhere\"</b>, is"
 " shown on all Workareas."
-msgstr "Cambia el estado de la Ventana, hay cuatro estados disponibles:<br/><br/>1.<b>\"Solo Aquí\"</b>, se mostrará solamente en esa Área de Trabajo<br/><br/>2.<b>\"Todas las Áreas de Trabajo\"</b>,se muestra en todas las Áreas de Trabajos en esa Actividad<br/><br/>3.<b>\"Misma Área de Trabajo\"</b>, se muestra en la misma Área de Trabajo de todas las Actividades.<br/><br/>4.<b>\"Siempre\"</b>, se mostrará la ventana en todas las Áreas de Trabajo."
+msgstr ""
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:29
 msgid "Delete Workarea"
-msgstr "Borrar Área de Trabajo"
+msgstr "Apagar a Área de Trabalho"
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:30
 msgid "Delete Workarea, <b>be careful</b> this action can not be undone."
-msgstr "Borrar Área de Trabajo, <b>¡Cuidado!</b>Esta acción no puede deshacerse."
+msgstr ""
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:267
 msgid "Show Windows"
-msgstr "Mostrar Ventanas"
+msgstr "Mostrar Janelas"
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:268
 msgid ""
 "Show windows from that specific Workarea. The counter shows their number."
-msgstr "Mostrar las ventanas de esta Área de Trabajo en específica. El contador muestra el número de ventanas."
+msgstr ""
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:330
 msgid "Edit Workarea"
-msgstr "Editar Área de Trabajo"
+msgstr ""
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:331
 msgid "Edit the Workarea name to personalize more your work."
-msgstr "Edita el nombre del Área de Trabajo para personalizar más tu trabajo."
+msgstr ""
 
 #: ../package/contents/ui/delegates/WorkAreaListDeleg.qml:155
 msgid "Orphaned Windows"
-msgstr "Ventanas Huérfanas"
+msgstr "Janelas Órfãs"
 
 #: ../package/contents/ui/FilterWindows.qml:16
 msgid "Please enter your windows filter..."
-msgstr "Por favor ingresa tu filtro de ventana..."
+msgstr "Por favor insira seu filtro de janelas..."
 
 #: ../package/contents/ui/FilterWindows.qml:46
 msgid "Hide Search Filter"
-msgstr "Ocultar el Filtro de Búsqueda"
+msgstr "Esconder o Filtro de Pesquisa"
 
 #: ../package/contents/ui/FilterWindows.qml:47
 msgid "Hide the search filter."
-msgstr "Ocultar el Filtro de Búsqueda."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourDialog.qml:48
 msgid "WorkFlow Project - Tour Guide"
-msgstr "Proyecto WorkFlow- Tour de Guiá"
+msgstr "Projeto Workflow - Tutorial"
 
 #: ../package/contents/ui/helptour/TourDialog.qml:91
 msgid "Chapters"
@@ -185,36 +182,36 @@ msgstr "Anterior"
 
 #: ../package/contents/ui/helptour/TourDialog.qml:286
 msgid "Next"
-msgstr "Siguiente"
+msgstr "Seguinte"
 
 #: ../package/contents/ui/helptour/TourDialog.qml:301
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:318
 msgid "Close"
-msgstr "Cerrar"
+msgstr "Fechar"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:9
 msgid "Introduction"
-msgstr "Introducción"
+msgstr "Introdução"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:13
 msgid "Welcome to"
-msgstr "Bienvenido a"
+msgstr "Bem-vindo a"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:54
 msgid ""
 "The <i>WorkFlow Project</i> is an effort which tries to experiment with new "
 "technologies of KDE in answering the following question:"
-msgstr "El <i>Proyecto WorkFlow</i> es un esfuerzo que trata de experimentar con las nuevas tecnologías de KDE respondiendo la siguiente pregunta:"
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage1.qml:66
 msgid "\"What is the most efficient way to use my computer?\""
-msgstr "\"¿Cual es el modo mas eficiente de usar mi computadora?\""
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage1.qml:78
 msgid ""
 "The most recent answer from the KDE community is by using <b><i><big><font "
 "color=\"#e58e5b\">Activities</font></big></i></b>..."
-msgstr " La respuesta mas reciente por parte de la comunidad de KDE es utilizando<b><i><big><font color=\"#e58e5b\"> Las Actividades</font></big></i></b>..."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage1.qml:94
 msgid ""
@@ -224,7 +221,7 @@ msgid ""
 "color=\"#a1b6f7\"><i>\"Vacation Planning\"</i></font>, your <font "
 "color=\"#a1b6f7\"><i>\"University Studies\"</i></font>, your <font "
 "color=\"#a1b6f7\"><i>\"Chess Hobby\"</i></font> etc."
-msgstr "<big><u>Actividad</u></big><br/><br/>es la manera de separar tu trabajo in diferentes áreas. Cada actividad puede tener diferentes herramientas(plasmoides), ventanas, documentos. De este modo puedes tener una Actividad diferente para tus<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font>, tus <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font> o tu <font color=\"#a1b6f7\"><i>\"Afición por le Ajedrez\"</i></font> etc."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage1.qml:114
 msgid ""
@@ -233,38 +230,38 @@ msgid ""
 " Planning\"</i></font> can be separated in <font "
 "color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, "
 "<i>\"Restaurants\"</i></font> Workareas etc."
-msgstr "<big><u>Áreas de Trabajo(Escritorios Virtuales)</u></big><br/><br/>son una manera de organizar una Actividad. Por ejemplo tus  <font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> pueden ser separados en las Áreas de Trabajo <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i></font> etc."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage1.qml:131
 #: ../package/contents/ui/helptour/TourPage1.qml:225
 #: ../package/contents/ui/helptour/TourPage2.qml:147
 #: ../package/contents/ui/helptour/TourPage4.qml:148
 msgid "Vacation Planning"
-msgstr "Planes Vacacionales"
+msgstr "Planejamento de Férias"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:142
 #: ../package/contents/ui/helptour/TourPage2.qml:258
 #: ../package/contents/ui/helptour/TourPage4.qml:356
 msgid "University Studies"
-msgstr "Estudios Universitarios"
+msgstr "Estudos Universitários"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:153
 #: ../package/contents/ui/helptour/TourPage2.qml:113
 #: ../package/contents/ui/helptour/TourPage4.qml:112
 msgid "Chess Hobby"
-msgstr "Afición por el Ajedrez"
+msgstr "Passatempo Xadrez"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:257
 #: ../package/contents/ui/helptour/TourPage2.qml:177
 #: ../package/contents/ui/helptour/TourPage4.qml:203
 msgid "Sightseeing Information"
-msgstr "Información Turística "
+msgstr "Informação turística"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:279
 #: ../package/contents/ui/helptour/TourPage2.qml:198
 #: ../package/contents/ui/helptour/TourPage4.qml:276
 msgid "Hotels"
-msgstr "Hoteles"
+msgstr "Hotéis"
 
 #: ../package/contents/ui/helptour/TourPage1.qml:301
 #: ../package/contents/ui/helptour/TourPage2.qml:219
@@ -274,11 +271,11 @@ msgstr "Restaurantes"
 
 #: ../package/contents/ui/helptour/TourPage2.qml:10
 msgid "Interface"
-msgstr "Interfaz"
+msgstr "Interface"
 
 #: ../package/contents/ui/helptour/TourPage2.qml:14
 msgid "Explaining the Interface"
-msgstr "Explicando la Interfaz"
+msgstr "Explicando a interface"
 
 #: ../package/contents/ui/helptour/TourPage2.qml:36
 msgid ""
@@ -296,12 +293,12 @@ msgid ""
 "<font color=\"#a1b6f7\"><i>\"University Studies\"</i></font> contains two "
 "Workareas:<br/> <font color=\"#ea7b7b\"><i>\"Computer Science\"</i></font> "
 "and <font color=\"#ea7b7b\"><i>\"Mathematics I\"</i></font>"
-msgstr "Permite ver como el ejemplo mencionado anteriormente puede ser representado en nuestro WorkFlow.<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> y <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font>.<br/> En las áreas de actividades detenidas(pausadas) puedes encontrar la tercera Actividad<font color=\"#a1b6f7\"><i>\"Afición por el Ajedrez\"<i></font> el cual no consume recursos pero siempre esta disponible para restaurarlo.<br/><br/> La Actividad<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font>dividida en tres<b>Áreas de Trabajo</b>:<br/> <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i> </font> <br/><br/> y por otro lado la Actividad <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font> contiene dos Áreas de Trabajo:<br/> <font color=\"#ea7b7b\"><i>\"Informática\"</i></font> y <font color=\"#ea7b7b\"><i>\"Matemáticas I\"</i></font>"
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage2.qml:288
 #: ../package/contents/ui/helptour/TourPage4.qml:441
 msgid "Computer Science"
-msgstr "Informática"
+msgstr "Ciência da Computação"
 
 #: ../package/contents/ui/helptour/TourPage2.qml:309
 #: ../package/contents/ui/helptour/TourPage4.qml:462
@@ -310,49 +307,49 @@ msgstr "Matemáticas I"
 
 #: ../package/contents/ui/helptour/TourPage3.qml:9
 msgid "Windows"
-msgstr "Ventanas"
+msgstr "Janelas"
 
 #: ../package/contents/ui/helptour/TourPage3.qml:13
 msgid "Windows in Activities"
-msgstr "Ventanas en las Actividades"
+msgstr "Janelas nas Atividades"
 
 #: ../package/contents/ui/helptour/TourPage3.qml:33
 msgid ""
 "Windows in Activities in order to correspond in a general and simple "
 "WorkFlow are enhanced and support three basic states."
-msgstr "Las Ventanas en las Actividades son mejoradas y soportan tres estados básicos para hacer de tu WorkFlow  más simple y general."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage3.qml:130
 msgid ""
 "1. In <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state the window will"
 " be available only in one specific Workarea."
-msgstr "1. En el estado <font color=\"#ea7b7b\"><i>\"Único\"</i></font> la ventana estará disponible solamente en una Área de Trabajo especifica."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage3.qml:145
 msgid ""
 "2. In <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state the "
 "window will be available in every Workarea for specific Activity."
-msgstr "2. En el estado <font color=\"#ea7b7b\"><i>\"Todas las Áreas de Trabajo\"</i></font> la ventana estará disponible en cada Área de Trabajo de la Actividad."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage3.qml:160
 msgid ""
 "2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the "
 "window will be available in the same Workareas (position) in all Activities."
-msgstr "2. En el estado <font color=\"#ea7b7b\"><i>\"Mismas Áreas de Trabajo\"</i></font>la ventana estará disponible en la misma Área de Trabajo(posición) de todas las Actividades."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage3.qml:175
 msgid ""
 "4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window "
 "will be available in every Workarea and every Activity."
-msgstr "4. En el estado <font color=\"#ea7b7b\"><i>\"Siempre\"</i></font> la ventana estará disponible en todas las Áreas de Trabajo de todas las Actividades."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage4.qml:10
 msgid "Full Interface"
-msgstr "Interfaz Completa"
+msgstr "Interface Completa"
 
 #: ../package/contents/ui/helptour/TourPage4.qml:14
 msgid "The Complete Interface"
-msgstr "La Interfaz Completa"
+msgstr "A Interface Completa"
 
 #: ../package/contents/ui/helptour/TourPage4.qml:34
 msgid ""
@@ -363,19 +360,19 @@ msgid ""
 "window is in <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state. "
 "<br/>The Amarok window is in <font "
 "color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state."
-msgstr "Usemos nuestro ejemplo anterior de las Actividades y las Áreas de Trabajo, pero esta vez con Ventanas habilitadas.<br/> Si quieres puedes observar los tres estados de las Ventanas en el siguiente ejemplo.<br/><br/>Okular y Dolphin están en estado <font color=\"#ea7b7b\"><i>\"Único\"</i></font> .<br/> La ventana Word esta en estado<font color=\"#ea7b7b\"><i>\"Todas las Áreas de Trabajo\"</i></font>. <br/> La ventana Amarok esta en estado <font color=\"#ea7b7b\"><i>\"Siempre\"</i></font> ."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage4.qml:486
 msgid "Amarok - Sounds of KDe"
-msgstr "Amarok - Sonidos de KDE"
+msgstr "Amarok - Sons do KDE"
 
 #: ../package/contents/ui/helptour/TourPage5.qml:8
 msgid "Final Tips"
-msgstr "Últimos consejos."
+msgstr "DIcas Finais"
 
 #: ../package/contents/ui/helptour/TourPage5.qml:12
 msgid "Final Guidelines"
-msgstr "Directrices Finales"
+msgstr "Orientações Finais"
 
 #: ../package/contents/ui/helptour/TourPage5.qml:33
 msgid ""
@@ -384,82 +381,82 @@ msgid ""
 "represent your unique WorkFlow, you can always focus on the various tooltips"
 " around.<br/>Dont forget that the plasmoid has also a Configuration Dialog "
 "which may be of good use."
-msgstr "Espero que este tour te haya ayudado a entender un poco el concepto de las Actividades y las Áreas de Trabajo. Para encontrar más información acerca de las varias funciones que te ayudaran a administrar tu WorkFlow, siempre puedes observar en los diferentes mensajes de ayuda que hay.<br/>No olvides que el plasmoide también tiene un Dialogo de Configuración el cual puede ser de mucha ayuda."
+msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage5.qml:49
 msgid "Let's be creative...<br><br/>- End Of Tour -"
-msgstr "Seamos creativos...<br><br/>- Fin del Tour -"
+msgstr "Sejamos criativos...<br><br/>- Fim do Tour -"
 
 #: ../package/contents/ui/MainAddActivityButton.qml:229
 msgid "New Activity"
-msgstr "Nueva Actividad"
+msgstr "Nova Atividade"
 
 #: ../package/contents/ui/MainAddActivityButton.qml:235
 msgid "Add Activity"
-msgstr "Añadir Actividad"
+msgstr "Adicionar Atividade"
 
 #: ../package/contents/ui/MainAddActivityButton.qml:236
 msgid "Add an Activity with default settings."
-msgstr "Añadir una Actividad con la configuración por defecto."
+msgstr ""
 
 #: ../package/contents/ui/StoppedActivitiesPanel.qml:177
 msgid "Show/Hide Stopped Activities List"
-msgstr "Mostrar/Ocultar la Lista de Actividades Detenidas"
+msgstr ""
 
 #: ../package/contents/ui/StoppedActivitiesPanel.qml:178
 msgid "Show or Hide the Stopped Activities List to enhance your workflow."
-msgstr "Mostrar u Ocultar la Lista de  Actividades Detenidas para mejorar tu WorkFlow."
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:118
 msgid "Unlock Activities"
-msgstr "Desbloquear Actividades"
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:118
 msgid "Lock Activities"
-msgstr "Bloquear Actividades"
+msgstr "Travar Atividades"
 
 #: ../package/contents/ui/TitleMainView.qml:119
 msgid "Unlock Activities to enable editing."
-msgstr "Desbloquea las Actividades para habilitar su edición."
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:120
 msgid ""
 "Lock Activities to disable editing. In Locked state only Pause and Restore "
 "actions are enabled."
-msgstr "Bloquea las Actividades para deshabilitar su edición. Estando bloqueadas solamente las acciones Pausar y Restaurar están habilitadas."
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:171
 msgid "Show/Hide Windows"
-msgstr "Mostrar/Ocultar las Ventanas"
+msgstr "Mostrar/Ocultar Janelas"
 
 #: ../package/contents/ui/TitleMainView.qml:172
 msgid "Show or hide all windows to enhance your workflow."
-msgstr "Mostrar u Ocultar todas las ventanas para mejorar tu WorkFlow."
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:256
 msgid "Enable/Disable Previews"
-msgstr "Habilitar/Deshabilitar las Vistas previas"
+msgstr "Habilitar/Desabilitar pré-visualizações"
 
 #: ../package/contents/ui/TitleMainView.qml:257
 msgid ""
 "Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the "
 "Calibration Dialog is appearing."
-msgstr "Habilitar/Deshabilitar la vista previa de las ventanas.<br/> Al<i>\"Mantener presionado este botón\"</i> aparecerá el cuadro de diálogo para calibrar las vistas previas."
+msgstr ""
 
 #: ../package/contents/ui/TitleMainView.qml:278
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:16
 msgid "About Dialog"
-msgstr "Acerca de..."
+msgstr "Caixa de Diálogo \"Sobre\""
 
 #: ../package/contents/ui/TitleMainView.qml:279
 msgid ""
 "This dialog contains information about the application but you can also find"
 " \"Help Tour\" and \"Report Bug\" choices."
-msgstr "Este dialogo contiene información acerca de la aplicación ademas puedes encontrar  las opciones \"Tour de Ayuda\" y \"Reportar Fallo/Solicitar Característica\"."
+msgstr ""
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:65
 msgid "Plasmoid Version:"
-msgstr "Versión del Plasmoide:"
+msgstr "Versão do Plasmoide:"
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:85
 msgid "Author(s):"
@@ -467,91 +464,91 @@ msgstr "Autor(es):"
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:113
 msgid "Project Website:"
-msgstr "Pagina Web del Proyecto:"
+msgstr "Website do Projeto:"
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:154
 msgid "License:"
-msgstr "Licencia:"
+msgstr "Licença:"
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:225
 msgid "Contributors"
-msgstr "Colaboradores"
+msgstr ""
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:231
 msgid "Translators"
-msgstr "Traductores"
+msgstr ""
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:332
 msgid "Report Bug<br/>Request Feature"
-msgstr "Reportar Fallo<br/>Solicitar característica "
+msgstr "Relate um Bug <br/>Peça funcionalidades"
 
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:347
 msgid "Help Tour"
-msgstr "Tour de Ayuda"
+msgstr "Tour de Ajuda"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:24
 msgid "Previews Calibration Dialog"
-msgstr "Dialogo de Calibración de Vistas Previas"
+msgstr "Caixa de Calibração de Miniaturas"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:51
 msgid ""
 "Step 1: Choose a Window from the following list to show its preview on the "
 "side Rectangle..."
-msgstr "Paso 1: Escoge una Ventana de la siguiente lista para mostrar su vista previa en el rectángulo de al lado..."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:280
 msgid ""
 "Step 2: Use the sliders below to move the Preview Window into the center of "
 "the above Rectangle..."
-msgstr "Paso 2: Usa los deslizadores  de abajo para mover la Vista Previa hacia el centro del rectángulo de arriba..."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:332
 msgid "Reduce X"
-msgstr "Reducir X"
+msgstr "Reduzir X"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:333
 msgid "Reduce X offset for the window previews."
-msgstr "Reducir el desplazamiento en X de la vista previa."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:374
 msgid "Increase X"
-msgstr "Incrementar X"
+msgstr "Aumentar X"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:375
 msgid "Increase X offset for the window previews."
-msgstr "Aumentar el desplazamiento en X de la vista previa."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:427
 msgid "Reduce Y"
-msgstr "Reducir Y"
+msgstr "Reduzir Y"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:428
 msgid "Reduce Y offset for the window previews."
-msgstr "Reducir el desplazamiento en Y de la vista previa."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:470
 msgid "Increase Y"
-msgstr "Incrementar Y"
+msgstr "Aumentar Y"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:471
 msgid "Increase Y offset for the window previews."
-msgstr "Aumentar el desplazamiento en Y de la vista previa."
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:493
 msgid "Step 3: Press Ok for confirmation..."
-msgstr "Paso 3: Presiona Aceptar para confirmar..."
+msgstr "Passo 3: Pressione OK para confirmar... "
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:517
 msgid "Refresh Window Previews"
-msgstr "Actualizar las Vistas Previas"
+msgstr ""
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:518
 msgid "Refresh Window Previews until you see one."
-msgstr "Actualiza las Vistas Previas hasta cuando veas una."
+msgstr ""
 
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:40
 msgid "Are you sure you want to clone activity"
-msgstr "Estas seguro de querer clonar la actividad"
+msgstr "Tem certeza que quer clonar a atividade"
 
 #: ../package/contents/ui/ui/CloningDialogTmpl.qml:40
 #: ../package/contents/ui/ui/RemoveDialogTmpl.qml:41
@@ -561,16 +558,16 @@ msgstr "?"
 #: ../package/contents/ui/ui/DialogTemplate2.qml:170
 #: ../package/contents/ui/ui/DialogTemplate.qml:163
 msgid "Yes"
-msgstr "Si"
+msgstr "Sim"
 
 #: ../package/contents/ui/ui/DialogTemplate2.qml:170
 msgid "Ok"
-msgstr "Aceptar"
+msgstr "Ok"
 
 #: ../package/contents/ui/ui/DialogTemplate2.qml:186
 #: ../package/contents/ui/ui/DialogTemplate.qml:179
 msgid "No"
-msgstr "No"
+msgstr "Não"
 
 #: ../package/contents/ui/ui/DialogTemplate2.qml:186
 msgid "Cancel"
@@ -578,57 +575,57 @@ msgstr "Cancelar"
 
 #: ../package/contents/ui/ui/FirstRunCalibrationTmpl.qml:16
 msgid "First Activation for Window Previews"
-msgstr "Primera Activación para Vistas Previas"
+msgstr "Primeira ativação para Miniaturas das Janelas"
 
 #: ../package/contents/ui/ui/FirstRunCalibrationTmpl.qml:52
 msgid ""
 "It is the first time you enable window previews,<br/>Do you want to "
 "configure them according to your plasma theme?"
-msgstr "Es la primera vez que habilitas las Vistas Previas de las ventanas,<br/> ¿Quieres configuraras de acuerdo al tu tema de escritorio?"
+msgstr ""
 
 #: ../package/contents/ui/ui/FirstRunCalibrationTmpl.qml:64
 msgid ""
 "-This option is always available with \"Pressing and Holding\"<br/>the "
 "Windows Previews toolbutton-"
-msgstr "-Esta opción esta siempre disponible \"Manteniendo presionado\"<br/>el botón de Vista Previa."
+msgstr ""
 
 #: ../package/contents/ui/ui/FirstRunHelpTourTmpl.qml:13
 msgid "First Run for Help Tour"
-msgstr "Primera Ejecución para el Tour de Ayuda"
+msgstr "Primeira Execução do Tutorial de Ajuda"
 
 #: ../package/contents/ui/ui/FirstRunHelpTourTmpl.qml:46
 msgid ""
 "It is the first time you use the application,<br/>Do you want to watch a "
 "Help Tour?"
-msgstr "Es la primera vez que usas la aplicación,<br/>¿Quieres ver el Tour de Ayuda?"
+msgstr ""
 
 #: ../package/contents/ui/ui/FirstRunHelpTourTmpl.qml:58
 msgid "-This option is always available from the About Dialog-"
-msgstr "Esta opción esta siempre disponible en el Dialogo Acerca"
+msgstr ""
 
 #: ../package/contents/ui/ui/RemoveDialogTmpl.qml:16
 msgid "Remove Activity"
-msgstr "Quitar Actividad"
+msgstr "Apagar Atividade"
 
 #: ../package/contents/ui/ui/RemoveDialogTmpl.qml:41
 msgid "Are you sure you want to remove activity"
-msgstr "¿Estas seguro de que quieres borrar la actividad"
+msgstr "Tem certeza que quer apagar a atividade"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:30
 msgid "Zoom Out"
-msgstr "Alejar"
+msgstr "Diminuir o Zoom"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:31
 msgid "Zoom out your interface to gain more space."
-msgstr "Aleja tu interfaz para ganar mas espacio."
+msgstr ""
 
 #: ../package/contents/ui/ZoomSliderItem.qml:52
 msgid "Zoom In"
-msgstr "Acercar"
+msgstr "Aumentar o Zoom"
 
 #: ../package/contents/ui/ZoomSliderItem.qml:53
 msgid "Zoom in your interface to focus more on items."
-msgstr "Acerca tu interfaz para enfocarte en más elementos."
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:26
 #. i18n: ectx: property (windowTitle), widget (QWidget, workflowConfig)
@@ -640,31 +637,31 @@ msgstr "Forma"
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: rc.cpp:6
 msgid "Animations Level"
-msgstr "Nivel de Animaciones:"
+msgstr "Nível das Animações"
 
 #. i18n: file: ../package/contents/ui/config.ui:65
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: rc.cpp:9
 msgid "None"
-msgstr "Ninguno"
+msgstr "Nenhuma"
 
 #. i18n: file: ../package/contents/ui/config.ui:75
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: rc.cpp:12
 msgid "Basic"
-msgstr "Bajo"
+msgstr "Básicas"
 
 #. i18n: file: ../package/contents/ui/config.ui:85
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: rc.cpp:15
 msgid "Full"
-msgstr "Alto"
+msgstr "Completa"
 
 #. i18n: file: ../package/contents/ui/config.ui:99
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: rc.cpp:18
 msgid "Appearance"
-msgstr "Apariencia:"
+msgstr "Aparência"
 
 #. i18n: file: ../package/contents/ui/config.ui:106
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_DisableBackground)
@@ -672,13 +669,13 @@ msgstr "Apariencia:"
 msgid ""
 "<html><head/><body><p>Hide the background from the plasmoid and use the "
 "default one.</p></body></html>"
-msgstr "<html><head/><body><p>Ocultar el fondo del plasmoide y usar el fondo por defecto del sistema.</p></body></html>"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:109
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableBackground)
 #: rc.cpp:24
 msgid "Hide background and use plasma theme"
-msgstr "Esconder la imagen de fondo y usar el tema de escritorio"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:116
 #. i18n: ectx: property (toolTip), widget (QCheckBox,
@@ -688,20 +685,20 @@ msgid ""
 "<html><head/><body><p>By enabling this option the plasmoid's icon is using "
 "the current activity's icon every time instead of the default "
 "one.</p></body></html>"
-msgstr "<html><head/><body><p>Habilitando esta opción el icono del plasmoide estará usando el icono de la actividad actual en vez del asignado por defecto en el sistema.</p></body></html>"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:119
 #. i18n: ectx: property (text), widget (QCheckBox,
 #. kcfg_UseCurrentActivityIcon)
 #: rc.cpp:30
 msgid "Use current Activity's icon in the panel"
-msgstr "Usar el ícono de la Actividad actual en el panel"
+msgstr "Usar o ícone da Atividade Atual no Painel"
 
 #. i18n: file: ../package/contents/ui/config.ui:126
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: rc.cpp:33
 msgid "Behavior"
-msgstr "Comportamiento:"
+msgstr "Comportamento"
 
 #. i18n: file: ../package/contents/ui/config.ui:136
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_HideOnClick)
@@ -710,13 +707,13 @@ msgid ""
 "<html><head/><body><p>This option is available only when the plasmoid is in "
 "a panel. You can hide the PopUp when you click on a "
 "Workarea</p></body></html>"
-msgstr "<html><head/><body><p>Esta opción solamente esta disponible cuando el plasmoide esta en un panel. Puedes ocultar el plasmoide cuando haces clic en un Área de Trabajo."
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:139
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideOnClick)
 #: rc.cpp:39
 msgid "Hide popup when clicking a Workarea"
-msgstr "Ocultar el plasmoide cuando se hace clic en una Área de Trabajo"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:146
 #. i18n: ectx: property (toolTip), widget (QCheckBox,
@@ -726,14 +723,14 @@ msgid ""
 "<html><head/><body><p>It disables the panel for windows in \"Everywhere\" "
 "state (windows that are shown in all Activities and all Workareas). Instead "
 "these windows are shown in all Workareas lists.</p></body></html>"
-msgstr "<html><head/><body><p>Se desactiva el panel para las ventanas con el estado \"Siempre\" (ventanas que son mostradas en todas las Actividades y todas las Áreas de Trabajo). En vez de ello esas ventanas son mostradas en las listas de todas las Áreas de Trabajo.</p></body></html>"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:149
 #. i18n: ectx: property (text), widget (QCheckBox,
 #. kcfg_DisableEverywherePanel)
 #: rc.cpp:45
 msgid "Disable \"Everywhere\" windows panel"
-msgstr "Deshabilitar el panel de ventanas \"Siempre\""
+msgstr "Desabilitar o Painel de Janelas \"Sempre\""
 
 #. i18n: file: ../package/contents/ui/config.ui:156
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_TriggerKWinScript)
@@ -741,20 +738,20 @@ msgstr "Deshabilitar el panel de ventanas \"Siempre\""
 msgid ""
 "<html><head/><body><p>This choice enables the plasmoid icon to trigger the "
 "WorkFlow KWin Script and not show the popup window</p></body></html>"
-msgstr "<html><head/><body><p>Esta opción permite al icono del plasmoide permite ejecutar el KWin Script de WorkFlow  y no mostrar la ventana emergente del plasmoide</p></body></html>"
+msgstr ""
 
 #. i18n: file: ../package/contents/ui/config.ui:159
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TriggerKWinScript)
 #: rc.cpp:51
 msgid "Trigger KWin Script instead of popup"
-msgstr "Ejecutar el Kwin Script en vez de la ventana emergente"
+msgstr ""
 
 #: rc.cpp:52
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Sus nombres"
+msgstr "Seus nomes"
 
 #: rc.cpp:53
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "Sus correos electrónicos"
+msgstr "Seus e-mails"
