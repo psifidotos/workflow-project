@@ -5,12 +5,47 @@ import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.plasma.extras 0.1 as PlasmaExtras
 import org.kde.qtextracomponents 0.1
 import "../code/settings.js" as Settings
+import "components"
 
 Item{
     id:container
     anchors.centerIn: parent
 
-    PlasmaCore.IconItem{
+    IconButton{
+        id:mainIcon
+        anchors.centerIn: parent
+
+        width:parent.width
+        height:parent.height
+        icon: iconPath
+        smooth:true
+      //  active:mouseAreaContainer.containsMouse
+        opacity: mouseAreaContainer.containsMouse ? 1 : 0.93
+
+        property string iconPath: Settings.global.useCurrentActivityIcon ? sessionParameters.currentActivityIcon:
+                                                                           "preferences-activities"
+
+        Behavior on opacity{
+            NumberAnimation {
+                duration:  Settings.global.animationStep;
+                easing.type: Easing.InOutQuad;
+            }
+        }
+
+        IconButton{
+            anchors.right: parent.horizontalCenter
+            anchors.bottom: parent.verticalCenter
+
+            width:parent.width/2
+            height:parent.height/2
+            icon: "preferences-activities"
+            smooth:true
+            visible: Settings.global.useCurrentActivityIcon
+        //    active:mouseAreaContainer.containsMouse
+        }
+    }
+
+    /*PlasmaCore.IconItem{
            id:mainIcon
            anchors.centerIn: parent
 
@@ -33,7 +68,7 @@ Item{
                visible: Settings.global.useCurrentActivityIcon
                active:mouseAreaContainer.containsMouse
            }
-    }
+    }*/
 
     PlasmaExtras.PressedAnimation{
         id:pressedAnimation
