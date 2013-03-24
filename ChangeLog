@@ -1,3 +1,7 @@
+0.4.1
+=====
+-- dropped support for Plasma IconItem in order to maintain compatibility with Plasma Desktop 4.9 
+
 0.4.0
 =====
 -- added support for the kwin script :)
