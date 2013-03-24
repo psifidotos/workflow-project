@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: WorkFlow Project -- KDE4 Plasmoid\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
 "POT-Creation-Date: 2013-03-19 20:08+0200\n"
-"PO-Revision-Date: 2013-03-20 16:28+0000\n"
+"PO-Revision-Date: 2013-03-24 19:39+0000\n"
 "Last-Translator: max_adam <draco159@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/WorkFlow_Project/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -30,13 +30,13 @@ msgstr "Plasmoide WorkFlow"
 msgid ""
 "Activities, Workareas, Windows organize your \n"
 " full workflow through the KDE technologies"
-msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu ⏎ WorkFlow a través de las tecnologías de KDE"
+msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu \n  WorkFlow a través de las tecnologías de KDE"
 
 #: ../package/contents/ui/CompactRepresentation.qml:97
 msgid ""
 "Activities, Workareas, Windows, organize your \n"
 " full workflow through the KDE technologies"
-msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu ⏎  WorkFlow a través de las tecnologías de KDE"
+msgstr "Actividades, Áreas de Trabajo y Ventanas organizan todo tu  \n  WorkFlow a través de las tecnologías de KDE"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:143
 msgid "Change Activity Icon"
@@ -62,7 +62,7 @@ msgstr "Nombre de la Actividad"
 
 #: ../package/contents/ui/delegates/ActivityDeleg.qml:219
 msgid "Edit the Activity name by clicking on it."
-msgstr "Edita el nombre de la Actividad haciendo clic en ella."
+msgstr "Edita el nombre de la Actividad haciendo clic en el."
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:263
 msgid "Delete Activity"
@@ -70,7 +70,7 @@ msgstr "Borrar Actividad"
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:264
 msgid "Delete Activity. Be careful, this action can not be undone."
-msgstr "Borrar Actividad. Cuidado, esta acción no puede deshacerse. "
+msgstr "Borrar Actividad. !Cuidado¡, esta acción no puede deshacerse. "
 
 #: ../package/contents/ui/delegates/ActivityStoppedDeleg.qml:290
 msgid "Restore Activity"
@@ -97,7 +97,7 @@ msgstr "Pausar Actividad"
 msgid ""
 "Pause Activity and keep it always available to continue your work from where"
 " you stopped."
-msgstr "Pausar la Actividad y mantenerla siempre disponible para continuar con tu trabajo donde lo dejaste."
+msgstr "Pausa la Actividad podrás mantenerla siempre disponible para continuar con tu trabajo donde lo dejaste."
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:69
 msgid "Add Workarea"
@@ -105,12 +105,12 @@ msgstr "Añadir Área de Trabajo "
 
 #: ../package/contents/ui/delegates/ui-elements/AddWorkAreaButton.qml:70
 msgid "Add a Workarea to sub-organize better your work."
-msgstr "Añadir un Área de Trabajo para internamente organizar mejor tu trabajo."
+msgstr "Añadir un Área de Trabajo para estructurar mejor tu trabajo."
 
 #: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:34
 #: ../package/contents/ui/delegates/ui-elements/WATaskDelegButtons.qml:38
 msgid "Close Window"
-msgstr "Cerrar ventana"
+msgstr "Cerrar Ventana"
 
 #: ../package/contents/ui/delegates/ui-elements/TaskPreviewButtons.qml:35
 msgid "Close this window."
@@ -128,7 +128,7 @@ msgid ""
 "that Activity<br/><br/>3.<b>\"Same Workareas\"</b>,is shown in the same "
 "Workareas (position) in all Activities.<br/><br/>4.<b>\"Everywhere\"</b>, is"
 " shown on all Workareas."
-msgstr "Cambia el estado de la Ventana, hay cuatro estados disponibles:<br/><br/>1.<b>\"Solo Aquí\"</b>, se mostrará solamente en esa Área de Trabajo<br/><br/>2.<b>\"Todas las Áreas de Trabajo\"</b>,se muestra en todas las Áreas de Trabajos en esa Actividad<br/><br/>3.<b>\"Misma Área de Trabajo\"</b>, se muestra en la misma Área de Trabajo de todas las Actividades.<br/><br/>4.<b>\"Siempre\"</b>, se mostrará la ventana en todas las Áreas de Trabajo."
+msgstr "Cambia el estado de la Ventana, hay cuatro estados disponibles:<br/><br/>1.<b>\"Solo Aquí\"</b>, se mostrará solamente en esa Área de Trabajo<br/><br/>2.<b>\"Todas las Áreas de Trabajo\"</b>,se muestra en todas las Áreas de Trabajos de esa Actividad<br/><br/>3.<b>\"Misma Área de Trabajo\"</b>, se muestra en la misma Área de Trabajo(posición) de todas las Actividades.<br/><br/>4.<b>\"Siempre\"</b>, la ventana se mostrará en todas las Áreas de Trabajo de todas las Actividades ."
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:29
 msgid "Delete Workarea"
@@ -136,7 +136,7 @@ msgstr "Borrar Área de Trabajo"
 
 #: ../package/contents/ui/delegates/ui-elements/WorkAreaBtns.qml:30
 msgid "Delete Workarea, <b>be careful</b> this action can not be undone."
-msgstr "Borrar Área de Trabajo, <b>¡Cuidado!</b>Esta acción no puede deshacerse."
+msgstr "Borrar el Área de Trabajo, <b>¡Cuidado!</b>Esta acción no puede deshacerse."
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:267
 msgid "Show Windows"
@@ -145,11 +145,11 @@ msgstr "Mostrar Ventanas"
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:268
 msgid ""
 "Show windows from that specific Workarea. The counter shows their number."
-msgstr "Mostrar las ventanas de esta Área de Trabajo en específica. El contador muestra el número de ventanas."
+msgstr "Mostrar las ventanas de esta Área de Trabajo. El contador muestra el número de ventanas."
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:330
 msgid "Edit Workarea"
-msgstr "Editar Área de Trabajo"
+msgstr "Cambiar nombre"
 
 #: ../package/contents/ui/delegates/WorkAreaDeleg.qml:331
 msgid "Edit the Workarea name to personalize more your work."
@@ -233,7 +233,7 @@ msgid ""
 " Planning\"</i></font> can be separated in <font "
 "color=\"#ea7b7b\"><i>\"Sightseeing information\"</i>, <i>\"Hotels\"</i>, "
 "<i>\"Restaurants\"</i></font> Workareas etc."
-msgstr "<big><u>Áreas de Trabajo(Escritorios Virtuales)</u></big><br/><br/>son una manera de organizar una Actividad. Por ejemplo tus  <font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> pueden ser separados en las Áreas de Trabajo <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i></font> etc."
+msgstr "<big><u>Las Áreas de Trabajo(Escritorios Virtuales)</u></big><br/><br/>son una manera de organizar una Actividad. Por ejemplo tus  <font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> pueden ser separados usando Áreas de Trabajo con los siguientes nombres: <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i></font> etc."
 
 #: ../package/contents/ui/helptour/TourPage1.qml:131
 #: ../package/contents/ui/helptour/TourPage1.qml:225
@@ -296,7 +296,7 @@ msgid ""
 "<font color=\"#a1b6f7\"><i>\"University Studies\"</i></font> contains two "
 "Workareas:<br/> <font color=\"#ea7b7b\"><i>\"Computer Science\"</i></font> "
 "and <font color=\"#ea7b7b\"><i>\"Mathematics I\"</i></font>"
-msgstr "Permite ver como el ejemplo mencionado anteriormente puede ser representado en nuestro WorkFlow.<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> y <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font>.<br/> En las áreas de actividades detenidas(pausadas) puedes encontrar la tercera Actividad<font color=\"#a1b6f7\"><i>\"Afición por el Ajedrez\"<i></font> el cual no consume recursos pero siempre esta disponible para restaurarlo.<br/><br/> La Actividad<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font>dividida en tres<b>Áreas de Trabajo</b>:<br/> <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i> </font> <br/><br/> y por otro lado la Actividad <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font> contiene dos Áreas de Trabajo:<br/> <font color=\"#ea7b7b\"><i>\"Informática\"</i></font> y <font color=\"#ea7b7b\"><i>\"Matemáticas I\"</i></font>"
+msgstr "Observe como el ejemplo antes mencionado puede ser representado en nuestro WorkFlow. En el zona principal del diagrama se encuentran dos Actividades activas <font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> y <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font>.<br/> En el apartado de actividades detenidas(pausadas)puedes encontrar la actividad<font color=\"#a1b6f7\"><i>\"Afición por el Ajedrez\"<i></font> la cual no consume recurso alguno pero esta siempre disponible para reanudarla.<br/><br/> La Actividad<font color=\"#a1b6f7\"><i>\"Planes Vacacionales\"</i></font> esta dividida en tres <b>Áreas de Trabajo</b>:<br/>  <font color=\"#ea7b7b\"><i>\"Información Turística\"</i>, <i>\"Hoteles\"</i>, <i>\"Restaurantes\"</i> </font> <br/><br/> y la otra Actividad <font color=\"#a1b6f7\"><i>\"Estudios Universitarios\"</i></font> contiene dos Áreas de Trabajo:<br/> <font color=\"#ea7b7b\"><i>\"Informática\"</i></font> and <font color=\"#ea7b7b\"><i>\"Matemáticas I\"</i></font>"
 
 #: ../package/contents/ui/helptour/TourPage2.qml:288
 #: ../package/contents/ui/helptour/TourPage4.qml:441
@@ -326,25 +326,25 @@ msgstr "Las Ventanas en las Actividades son mejoradas y soportan tres estados b�
 msgid ""
 "1. In <font color=\"#ea7b7b\"><i>\"Single\"</i></font> state the window will"
 " be available only in one specific Workarea."
-msgstr "1. En el estado <font color=\"#ea7b7b\"><i>\"Único\"</i></font> la ventana estará disponible solamente en una Área de Trabajo especifica."
+msgstr "1. <font color=\"#ea7b7b\"><i>\"Único\"</i></font>. En este estado la ventana estará disponible solamente en una Área de Trabajo especifica."
 
 #: ../package/contents/ui/helptour/TourPage3.qml:145
 msgid ""
 "2. In <font color=\"#ea7b7b\"><i>\"All Workareas\"</i></font> state the "
 "window will be available in every Workarea for specific Activity."
-msgstr "2. En el estado <font color=\"#ea7b7b\"><i>\"Todas las Áreas de Trabajo\"</i></font> la ventana estará disponible en cada Área de Trabajo de la Actividad."
+msgstr "2.<font color=\"#ea7b7b\"><i>\"Todas las Áreas de Trabajo\"</i></font>. En este estado  la ventana estará disponible en cada Área de Trabajo de la Actividad."
 
 #: ../package/contents/ui/helptour/TourPage3.qml:160
 msgid ""
 "2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the "
 "window will be available in the same Workareas (position) in all Activities."
-msgstr "2. En el estado <font color=\"#ea7b7b\"><i>\"Mismas Áreas de Trabajo\"</i></font>la ventana estará disponible en la misma Área de Trabajo(posición) de todas las Actividades."
+msgstr "3. <font color=\"#ea7b7b\"><i>\"Mismas Áreas de Trabajo\"</i></font>. En este estado la ventana estará disponible en la misma Área de Trabajo(posición) de todas las Actividades."
 
 #: ../package/contents/ui/helptour/TourPage3.qml:175
 msgid ""
 "4. In <font color=\"#ea7b7b\"><i>\"Everywhere\"</i></font> state the window "
 "will be available in every Workarea and every Activity."
-msgstr "4. En el estado <font color=\"#ea7b7b\"><i>\"Siempre\"</i></font> la ventana estará disponible en todas las Áreas de Trabajo de todas las Actividades."
+msgstr "4. <font color=\"#ea7b7b\"><i>\"Siempre\"</i></font>. En este estado la ventana estará disponible en todas las Áreas de Trabajo de todas las Actividades."
 
 #: ../package/contents/ui/helptour/TourPage4.qml:10
 msgid "Full Interface"
@@ -420,7 +420,7 @@ msgstr "Bloquear Actividades"
 
 #: ../package/contents/ui/TitleMainView.qml:119
 msgid "Unlock Activities to enable editing."
-msgstr "Desbloquea las Actividades para habilitar su edición."
+msgstr "Desbloquea las Actividades para poder editarlas."
 
 #: ../package/contents/ui/TitleMainView.qml:120
 msgid ""
@@ -434,7 +434,7 @@ msgstr "Mostrar/Ocultar las Ventanas"
 
 #: ../package/contents/ui/TitleMainView.qml:172
 msgid "Show or hide all windows to enhance your workflow."
-msgstr "Mostrar u Ocultar todas las ventanas para mejorar tu WorkFlow."
+msgstr "Mostrar u Ocultar todas las ventanas para simplificar tu WorkFlow."
 
 #: ../package/contents/ui/TitleMainView.qml:256
 msgid "Enable/Disable Previews"
@@ -444,7 +444,7 @@ msgstr "Habilitar/Deshabilitar las Vistas previas"
 msgid ""
 "Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the "
 "Calibration Dialog is appearing."
-msgstr "Habilitar/Deshabilitar la vista previa de las ventanas.<br/> Al<i>\"Mantener presionado este botón\"</i> aparecerá el cuadro de diálogo para calibrar las vistas previas."
+msgstr "Habilitar/Deshabilitar la vistas previas de las ventanas.<br/> Al<i>\"Mantener presionado \"</i> este botón aparecerá el cuadro de diálogo para calibrar las vistas previas."
 
 #: ../package/contents/ui/TitleMainView.qml:278
 #: ../package/contents/ui/ui/AboutDialogTmpl.qml:16
@@ -535,7 +535,7 @@ msgstr "Incrementar Y"
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:471
 msgid "Increase Y offset for the window previews."
-msgstr "Aumentar el desplazamiento en Y de la vista previa."
+msgstr "Aumentar el desplazamiento en Y de las vistas previas."
 
 #: ../package/contents/ui/ui/CalibrationDialogTmpl.qml:493
 msgid "Step 3: Press Ok for confirmation..."
@@ -716,7 +716,7 @@ msgstr "<html><head/><body><p>Esta opción solamente esta disponible cuando el p
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideOnClick)
 #: rc.cpp:39
 msgid "Hide popup when clicking a Workarea"
-msgstr "Ocultar el plasmoide cuando se hace clic en una Área de Trabajo"
+msgstr "Ocultar el plasmoide cuando se haga clic en una Área de Trabajo"
 
 #. i18n: file: ../package/contents/ui/config.ui:146
 #. i18n: ectx: property (toolTip), widget (QCheckBox,
@@ -741,7 +741,7 @@ msgstr "Deshabilitar el panel de ventanas \"Siempre\""
 msgid ""
 "<html><head/><body><p>This choice enables the plasmoid icon to trigger the "
 "WorkFlow KWin Script and not show the popup window</p></body></html>"
-msgstr "<html><head/><body><p>Esta opción permite al icono del plasmoide permite ejecutar el KWin Script de WorkFlow  y no mostrar la ventana emergente del plasmoide</p></body></html>"
+msgstr "<html><head/><body><p>Esta opción permite que el icono del plasmoide ejecute el KWin Script de WorkFlow  y no mostrar la ventana emergente del plasmoide</p></body></html>"
 
 #. i18n: file: ../package/contents/ui/config.ui:159
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TriggerKWinScript)
