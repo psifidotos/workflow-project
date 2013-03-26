@@ -157,7 +157,7 @@ TourPage{
 
         onlyOpacity: false
 
-        fullText:i18n("2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the window will be available in the same Workareas (position) in all Activities.")
+        fullText:i18n("3. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the window will be available in the same Workareas (position) in all Activities.")
     }
 
     AnimatedText{

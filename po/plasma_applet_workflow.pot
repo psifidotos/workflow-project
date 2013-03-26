@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: psifidotos@users.sf.net\n"
-"POT-Creation-Date: 2013-03-19 20:08+0200\n"
+"POT-Creation-Date: 2013-03-25 17:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../package/contents/ui/Activities2.qml:262
-#: ../package/contents/ui/CompactRepresentation.qml:96
+#: ../package/contents/ui/CompactRepresentation.qml:131
 msgid "WorkFlow Plasmoid"
 msgstr ""
 
@@ -28,7 +28,7 @@ msgid ""
 " full workflow through the KDE technologies"
 msgstr ""
 
-#: ../package/contents/ui/CompactRepresentation.qml:97
+#: ../package/contents/ui/CompactRepresentation.qml:132
 msgid ""
 "Activities, Workareas, Windows, organize your \n"
 " full workflow through the KDE technologies"
@@ -331,7 +331,7 @@ msgstr ""
 
 #: ../package/contents/ui/helptour/TourPage3.qml:160
 msgid ""
-"2. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the "
+"3. In <font color=\"#ea7b7b\"><i>\"Same Workareas\"</i></font> state the "
 "window will be available in the same Workareas (position) in all Activities."
 msgstr ""
 
