@@ -13,7 +13,6 @@ import "helptour"
 import "connections"
 import "components"
 import "interfaces"
-
 import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
@@ -25,10 +24,10 @@ Rectangle {
     objectName: "instMainView"
     focus:true
 
-    property int minimumWidth: plasmoidWrapper.isInPanel? 400 : 1000
-    property int minimumHeight: plasmoidWrapper.isInPanel? 300 : 1000
-  //  property int maximumWidth: plasmoidWrapper.isInPanel? minimumWidth : 0
- //   property int maximumHeight: plasmoidWrapper.isInPanel? minimumHeight : 0
+    property int minimumWidth: plasmoidWrapper.isInPanel? 400 : 500
+    property int minimumHeight: plasmoidWrapper.isInPanel? 300 : 350
+    //  property int maximumWidth: plasmoidWrapper.isInPanel? minimumWidth : 0
+    //   property int maximumHeight: plasmoidWrapper.isInPanel? minimumHeight : 0
     property int preferredWidth: 500
     property int preferredHeight: 350
 
@@ -77,8 +76,13 @@ Rectangle {
         objectName:"sessionParameters"
     }
 
-    WorkFlowComponents.WorkflowManager {
-        id: workflowManager
+    WorkFlowComponents.PlasmoidWrapper {
+        id: plasmoidWrapper
+
+        onIsInPanelChanged:{
+            if (!isInPanel && mainLoader.status == Loader.Null)
+                mainLoader.source = "views/View1.qml";
+        }
     }
 
     WorkFlowComponents.TaskManager {
@@ -89,127 +93,21 @@ Rectangle {
         id: previewManager
     }
 
-    WorkFlowComponents.PlasmoidWrapper {
-        id: plasmoidWrapper
-    }
-
     QMLPluginsConnections{}
 
-    //This a temporary solution to fix the issue with filtering windows
-    //in empty fitter text in many cases windows are not shown correctly
-    //so i reset the filter text to something not found and then again
-    //to show all windows
-    Connections{
-        target:filterWindows
-        onTextChanged:{
-         //   console.log(filterWindows.text);
-            if(filterWindows.text === ""){
-                filteredTasksModel.fixBugString = "'''";
-                timerBug.start();
-            }
-        }
+    Loader{
+        id:mainLoader
     }
 
-    Timer {
-        id:timerBug
-        interval: 50; running: false; repeat: false
-        onTriggered: filteredTasksModel.fixBugString = "";
-    }
+    ZoomSliderItem{
+        id:zoomSlider
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        z:10
 
-    ///end fix of bug
+        onValueChanged: Settings.global.scale = value;
 
-    PlasmaCore.SortFilterModel {
-        id:filteredTasksModel
-        filterRole: "name"
-        filterRegExp:".*" + mergedString + ".*"
-        sourceModel: taskManager.model()
-
-        //for fix of bug
-        property string mergedString: filterWindows.text.toLowerCase() + fixBugString
-        property string fixBugString: ""
-        //end of fix
-    }
-
-    PlasmaCore.SortFilterModel {
-        id:stoppedActivitiesModel
-        filterRole: "CState"
-        filterRegExp: "Stopped"
-        sourceModel: workflowManager.model()
-    }
-
-    PlasmaCore.SortFilterModel {
-        id:runningActivitiesModel
-        filterRole: "CState"
-        filterRegExp: "Running"
-        sourceModel: workflowManager.model()
-    }
-
-    Item{
-        id:centralArea
-        anchors.fill: parent
-
-        property string typeId: "centralArea"
-
-        WorkAreasAllLists{
-            id: allWorkareas
-            z:4
-
-            /* Should use anchors, but they seem to break the flickable area */
-            //anchors.top: oxygenT.bottom
-            //anchors.bottom: mainView.bottom
-            //anchors.left: mainView.left
-            //anchors.right: mainView.right
-            y:oxygenT.height
-            width:(mAddActivityBtn.showRedCross) ? mainView.width-mAddActivityBtn.width : mainView.width
-            height:mainView.height - y
-            verticalScrollBarLocation: stoppedPanel.x
-            clip:true
-
-            workareaWidth: mainView.workareaWidth
-            workareaHeight: mainView.workareaHeight
-            scale: mainView.scaleMeter
-            animationsStep: Settings.global.animationStep
-        }
-
-        StoppedActivitiesPanel{
-            id:stoppedPanel
-            z:6
-        }
-
-        MainAddActivityButton{
-            id: mAddActivityBtn
-            z:7
-        }
-
-        //Create a consistent look underTitleMainView
-        Rectangle {
-            id: actImagBackTitle
-            width: oxygenT.width
-            height: oxygenT.height
-            color: "#646464"
-            anchors.top:oxygenT.top
-        }
-
-        TitleMainView{
-            id:oxygenT
-            z:8
-        }
-
-        AllActivitiesTasks{
-            id:allActT
-            z:7
-        }
-
-        ZoomSliderItem{
-            id:zoomSlider
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            z:10
-
-            onValueChanged: Settings.global.scale = value;
-
-            Component.onCompleted: value = Settings.global.scale;
-        }
+        Component.onCompleted: value = Settings.global.scale;
     }
 
     FilterWindows{
@@ -278,8 +176,12 @@ Rectangle {
     }
 
     function popupEventSlot(show){
-        if(show)
+        if(show){
+            if((mainLoader.status == Loader.Null)&&(!Settings.global.triggerKWinScript))
+                mainLoader.source = "views/View1.qml";
+
             mainView.forceActiveFocus();
+        }
         else
             plasmoidWrapper.popupEventSlot(show);
     }

@@ -1,0 +1,301 @@
+commit 5aa0fd025058d18dbc237dfb203594969f4fe7cc
+Author: Michail Vourlakos <mvourlakos@gmail.com>
+Date:   Thu Mar 28 17:58:00 2013 +0200
+
+    first commit for Views in Loader
+
+diff --git a/package/contents/ui/Activities2.qml b/package/contents/ui/Activities2.qml
+index c342484..e066a1d 100644
+--- a/package/contents/ui/Activities2.qml
++++ b/package/contents/ui/Activities2.qml
+@@ -13,7 +13,6 @@ import "helptour"
+ import "connections"
+ import "components"
+ import "interfaces"
+-
+ import "ui"
+ 
+ import "DynamicAnimations.js" as DynamAnim
+@@ -77,8 +76,8 @@ Rectangle {
+         objectName:"sessionParameters"
+     }
+ 
+-    WorkFlowComponents.WorkflowManager {
+-        id: workflowManager
++    WorkFlowComponents.PlasmoidWrapper {
++        id: plasmoidWrapper
+     }
+ 
+     WorkFlowComponents.TaskManager {
+@@ -89,127 +88,24 @@ Rectangle {
+         id: previewManager
+     }
+ 
+-    WorkFlowComponents.PlasmoidWrapper {
+-        id: plasmoidWrapper
+-    }
+-
+-    QMLPluginsConnections{}
+-
+-    //This a temporary solution to fix the issue with filtering windows
+-    //in empty fitter text in many cases windows are not shown correctly
+-    //so i reset the filter text to something not found and then again
+-    //to show all windows
+-    Connections{
+-        target:filterWindows
+-        onTextChanged:{
+-         //   console.log(filterWindows.text);
+-            if(filterWindows.text === ""){
+-                filteredTasksModel.fixBugString = "'''";
+-                timerBug.start();
+-            }
+-        }
+-    }
+-
+-    Timer {
+-        id:timerBug
+-        interval: 50; running: false; repeat: false
+-        onTriggered: filteredTasksModel.fixBugString = "";
+-    }
+-
+-    ///end fix of bug
+-
+-    PlasmaCore.SortFilterModel {
+-        id:filteredTasksModel
+-        filterRole: "name"
+-        filterRegExp:".*" + mergedString + ".*"
+-        sourceModel: taskManager.model()
+ 
+-        //for fix of bug
+-        property string mergedString: filterWindows.text.toLowerCase() + fixBugString
+-        property string fixBugString: ""
+-        //end of fix
+-    }
+ 
+-    PlasmaCore.SortFilterModel {
+-        id:stoppedActivitiesModel
+-        filterRole: "CState"
+-        filterRegExp: "Stopped"
+-        sourceModel: workflowManager.model()
+-    }
++    QMLPluginsConnections{}
+ 
+-    PlasmaCore.SortFilterModel {
+-        id:runningActivitiesModel
+-        filterRole: "CState"
+-        filterRegExp: "Running"
+-        sourceModel: workflowManager.model()
++    Loader{
++        id:mainLoader
++        source: "views/View1.qml"
+     }
+ 
+-    Item{
+-        id:centralArea
+-        anchors.fill: parent
+-
+-        property string typeId: "centralArea"
+-
+-        WorkAreasAllLists{
+-            id: allWorkareas
+-            z:4
+-
+-            /* Should use anchors, but they seem to break the flickable area */
+-            //anchors.top: oxygenT.bottom
+-            //anchors.bottom: mainView.bottom
+-            //anchors.left: mainView.left
+-            //anchors.right: mainView.right
+-            y:oxygenT.height
+-            width:(mAddActivityBtn.showRedCross) ? mainView.width-mAddActivityBtn.width : mainView.width
+-            height:mainView.height - y
+-            verticalScrollBarLocation: stoppedPanel.x
+-            clip:true
+-
+-            workareaWidth: mainView.workareaWidth
+-            workareaHeight: mainView.workareaHeight
+-            scale: mainView.scaleMeter
+-            animationsStep: Settings.global.animationStep
+-        }
++    ZoomSliderItem{
++        id:zoomSlider
++        anchors.bottom: parent.bottom
++        anchors.right: parent.right
++        z:10
+ 
+-        StoppedActivitiesPanel{
+-            id:stoppedPanel
+-            z:6
+-        }
+-
+-        MainAddActivityButton{
+-            id: mAddActivityBtn
+-            z:7
+-        }
++        onValueChanged: Settings.global.scale = value;
+ 
+-        //Create a consistent look underTitleMainView
+-        Rectangle {
+-            id: actImagBackTitle
+-            width: oxygenT.width
+-            height: oxygenT.height
+-            color: "#646464"
+-            anchors.top:oxygenT.top
+-        }
+-
+-        TitleMainView{
+-            id:oxygenT
+-            z:8
+-        }
+-
+-        AllActivitiesTasks{
+-            id:allActT
+-            z:7
+-        }
+-
+-        ZoomSliderItem{
+-            id:zoomSlider
+-            anchors.bottom: parent.bottom
+-            anchors.right: parent.right
+-            z:10
+-
+-            onValueChanged: Settings.global.scale = value;
+-
+-            Component.onCompleted: value = Settings.global.scale;
+-        }
++        Component.onCompleted: value = Settings.global.scale;
+     }
+ 
+     FilterWindows{
+diff --git a/package/contents/ui/views/View1.qml b/package/contents/ui/views/View1.qml
+new file mode 100644
+index 0000000..9b51c82
+--- /dev/null
++++ b/package/contents/ui/views/View1.qml
+@@ -0,0 +1,127 @@
++import QtQuick 1.1
++
++import org.kde.workflow.components 0.1 as WorkFlowComponents
++import org.kde.plasma.core 0.1 as PlasmaCore
++
++//import "../delegates"
++//import "../delegates/ui-elements"
++//import "../helptour"
++//import "connections"
++import ".."
++
++import "../../code/settings.js" as Settings
++
++Item{
++
++    WorkFlowComponents.WorkflowManager {
++        id: workflowManager
++    }
++
++    //This a temporary solution to fix the issue with filtering windows
++    //in empty fitter text in many cases windows are not shown correctly
++    //so i reset the filter text to something not found and then again
++    //to show all windows
++    Connections{
++        target:filterWindows
++        onTextChanged:{
++            //   console.log(filterWindows.text);
++            if(filterWindows.text === ""){
++                filteredTasksModel.fixBugString = "'''";
++                timerBug.start();
++            }
++        }
++    }
++
++    Timer {
++        id:timerBug
++        interval: 50; running: false; repeat: false
++        onTriggered: filteredTasksModel.fixBugString = "";
++    }
++
++    ///end fix of bug
++
++    PlasmaCore.SortFilterModel {
++        id:filteredTasksModel
++        filterRole: "name"
++        filterRegExp:".*" + mergedString + ".*"
++        sourceModel: taskManager.model()
++
++        //for fix of bug
++        property string mergedString: filterWindows.text.toLowerCase() + fixBugString
++        property string fixBugString: ""
++        //end of fix
++    }
++
++    PlasmaCore.SortFilterModel {
++        id:stoppedActivitiesModel
++        filterRole: "CState"
++        filterRegExp: "Stopped"
++        sourceModel: workflowManager.model()
++    }
++
++    PlasmaCore.SortFilterModel {
++        id:runningActivitiesModel
++        filterRole: "CState"
++        filterRegExp: "Running"
++        sourceModel: workflowManager.model()
++    }
++
++    Item{
++        id:centralArea
++        anchors.fill: parent
++
++        property string typeId: "centralArea"
++
++        WorkAreasAllLists{
++            id: allWorkareas
++            z:4
++
++            /* Should use anchors, but they seem to break the flickable area */
++            //anchors.top: oxygenT.bottom
++            //anchors.bottom: mainView.bottom
++            //anchors.left: mainView.left
++            //anchors.right: mainView.right
++            y:oxygenT.height
++            width:(mAddActivityBtn.showRedCross) ? mainView.width-mAddActivityBtn.width : mainView.width
++            height:mainView.height - y
++            verticalScrollBarLocation: stoppedPanel.x
++            clip:true
++
++            workareaWidth: mainView.workareaWidth
++            workareaHeight: mainView.workareaHeight
++            scale: mainView.scaleMeter
++            animationsStep: Settings.global.animationStep
++        }
++
++        StoppedActivitiesPanel{
++            id:stoppedPanel
++            z:6
++        }
++
++        MainAddActivityButton{
++            id: mAddActivityBtn
++            z:7
++        }
++
++        //Create a consistent look underTitleMainView
++        Rectangle {
++            id: actImagBackTitle
++            width: oxygenT.width
++            height: oxygenT.height
++            color: "#646464"
++            anchors.top:oxygenT.top
++        }
++
++        TitleMainView{
++            id:oxygenT
++            z:8
++        }
++
++        AllActivitiesTasks{
++            id:allActT
++            z:7
++        }
++
++
++    }
++}
