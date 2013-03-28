@@ -12,6 +12,7 @@ import ".."
 import "../../code/settings.js" as Settings
 
 Item{
+    anchors.fill:parent
 
     WorkFlowComponents.WorkflowManager {
         id: workflowManager

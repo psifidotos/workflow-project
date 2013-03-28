@@ -97,6 +97,7 @@ Rectangle {
 
     Loader{
         id:mainLoader
+        anchors.fill:parent
     }
 
     ZoomSliderItem{
