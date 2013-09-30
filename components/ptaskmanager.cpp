@@ -103,7 +103,7 @@ void PTaskManager::windowChangedSlot(WId id, const unsigned long *propertiesNew)
 {
     QString wId;
     wId.setNum(id);
-    qDebug() << "Window Name was updated....";
+   // qDebug() << "Window Name was updated....";
     if (propertiesNew[NETWinInfo::PROTOCOLS] & (NET::WMDesktop | NET::WMVisibleName | NET::WMName) ||
             propertiesNew[NETWinInfo::PROTOCOLS2] & NET::WM2Activities) {
         updateValues(wId);
